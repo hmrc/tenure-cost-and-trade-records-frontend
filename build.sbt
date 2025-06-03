@@ -18,6 +18,7 @@ lazy val microservice = Project(appName, file("."))
     scalacOptions += "-Wconf:msg=Implicit parameters should be provided with a \\`using\\` clause&src=views/:s",
     scalacOptions += "-Wconf:cat=deprecation&msg=looks like useless nesting:s",
     scalacOptions += "-Wconf:cat=deprecation&src=/lettingHistory/:s",
+    scalacOptions += "-feature",
     javaOptions += "-XX:+EnableDynamicAgentLoading",
     libraryDependencies ++= AppDependencies.appDependencies,
     PlayKeys.playDefaultPort := defaultPort

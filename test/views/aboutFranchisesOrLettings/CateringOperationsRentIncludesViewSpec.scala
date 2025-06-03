@@ -20,8 +20,6 @@ import actions.SessionRequest
 import form.aboutfranchisesorlettings.IncomeRecordIncludedForm.incomeRecordIncludedForm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
-import models.ForType.*
-import models.pages.Summary
 
 class CateringOperationsRentIncludesViewSpec extends QuestionViewBehaviours[List[String]] {
 

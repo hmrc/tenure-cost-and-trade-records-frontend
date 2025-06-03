@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.CustomerCreditAccountsForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.CustomerCreditAccounts
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours

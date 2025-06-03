@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,22 +54,22 @@ class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with T
         if (isValid) {
           res.hasErrors shouldBe false
         } else {
-          res.errors(0).message shouldBe "error.contact.phone.invalidLength"
+          res.errors.head.message shouldBe "error.contact.phone.invalidLength"
         }
       }
     }
 
     "catch invalid format error" in new Setup {
-      val formats = Table(
-        ("phone number", "validity"),
-        ("phonenumber123456", false),
-        ("phone number 1234", false),
-        ("00447!904098765", false)
+      private val invalidPhoneNumbers = Table(
+        "phone number",
+        "phonenumber123456",
+        "phone number 1234",
+        "00447!904098765"
       )
 
-      TableDrivenPropertyChecks.forAll(formats) { (phone, validity) =>
+      TableDrivenPropertyChecks.forAll(invalidPhoneNumbers) { phone =>
         val res: Form[String] = form.bind(Map("phone" -> phone))
-        res.errors(0).message shouldBe "error.invalid_phone"
+        res.errors.head.message shouldBe "error.invalid_phone"
       }
     }
 
@@ -86,7 +86,7 @@ class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with T
         if (isValid) {
           res.hasErrors shouldBe false
         } else {
-          res.errors(0).message shouldBe "error.contact.phone.required"
+          res.errors.head.message shouldBe "error.contact.phone.required"
         }
       }
     }

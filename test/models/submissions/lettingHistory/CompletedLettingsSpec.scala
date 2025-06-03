@@ -68,7 +68,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
     "copying the session byAddingOrUpdatingTemporaryOccupier" should {
       "set a non-empty completedLettings list although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val (index, session) = byAddingOrUpdatingOccupier(johnBrown)
+        private val session = byAddingOrUpdatingOccupier(johnBrown)._2
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         hasCompletedLettings(session.data).value mustBe true
@@ -76,7 +76,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         completedLettings(session.data).head mustBe johnBrown
       }
       "set the very first list value when lettingHistory is not None" in new SessionWithSomeLettingHistory {
-        val (index, session) = byAddingOrUpdatingOccupier(johnBrown)
+        private val session = byAddingOrUpdatingOccupier(johnBrown)._2
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 1
@@ -85,7 +85,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "confirm resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val (index, session) = byAddingOrUpdatingOccupier(johnBrown, maybeIndex = Some(0))
+        private val session = byAddingOrUpdatingOccupier(johnBrown, maybeIndex = Some(0))._2
         session.changed mustBe false
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 1
@@ -95,7 +95,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         List(johnBrown)
       ) {
         val updatedJohnBrown = OccupierDetail(johnBrown.name, aliceWhite.address, rentalPeriod = None)
-        val (index, session) = byAddingOrUpdatingOccupier(updatedJohnBrown, maybeIndex = Some(0))
+        private val session  = byAddingOrUpdatingOccupier(updatedJohnBrown, maybeIndex = Some(0))._2
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 1
@@ -105,7 +105,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "append a second resident to the existing list" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val (index, session) = byAddingOrUpdatingOccupier(aliceWhite)
+        private val session = byAddingOrUpdatingOccupier(aliceWhite)._2
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 2

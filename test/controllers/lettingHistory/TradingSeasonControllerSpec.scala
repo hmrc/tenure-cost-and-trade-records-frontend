@@ -26,6 +26,8 @@ import views.html.lettingHistory.tradingSeason as TradingSeasonView
 
 import java.time.{LocalDate, Year}
 
+import scala.language.implicitConversions
+
 class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
 
   "the TradingSeasonLength controller" when {

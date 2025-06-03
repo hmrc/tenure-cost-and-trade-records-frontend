@@ -23,6 +23,8 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.checkYourAnswersLettingHistory as CheckYourAnswerLettingHistoryView
 
+import scala.language.implicitConversions
+
 class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControllerSpec:
 
   "the CheckYourAnswersLettingHistory controller" when {

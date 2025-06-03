@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,7 +58,6 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
     "handling GET requests"  should {
       "reply 200 with a fresh HTML form" in new ControllerFixture {
         val result = controller.show(index = Some(4))(fakeRequest)
-        val html   = contentAsJsoup(result)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset

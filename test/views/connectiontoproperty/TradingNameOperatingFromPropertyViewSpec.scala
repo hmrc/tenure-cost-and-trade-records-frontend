@@ -18,7 +18,6 @@ package views.connectiontoproperty
 
 import actions.SessionRequest
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm
-import models.pages.Summary
 import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
 import play.api.data.Form
 import play.twirl.api.Html

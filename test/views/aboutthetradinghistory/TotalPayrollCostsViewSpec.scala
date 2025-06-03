@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.TotalPayrollCostForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.TotalPayrollCost
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

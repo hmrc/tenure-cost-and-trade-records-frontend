@@ -23,6 +23,8 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.howManyNights as HowManyNightsView
 
+import scala.language.implicitConversions
+
 class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
 
   "the HowManyNights controller" when {

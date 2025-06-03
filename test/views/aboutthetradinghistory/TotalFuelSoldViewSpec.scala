@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.TotalFuelSoldForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.TotalFuelSold
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours

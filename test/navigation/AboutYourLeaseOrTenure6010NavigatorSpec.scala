@@ -93,12 +93,11 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to payable within 12 months page when lease or agreement details with no has been completed" in {
-      val session =
-        navigator
-          .nextPage(LeaseOrAgreementDetailsPageId, session6010No)
-          .apply(
-            session6010No
-          ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
+      navigator
+        .nextPage(LeaseOrAgreementDetailsPageId, session6010No)
+        .apply(
+          session6010No
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
     }
 
     "return a function that goes to task list page when current rent payable within 12 months has been completed" in {

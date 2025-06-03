@@ -18,7 +18,6 @@ package views
 
 import actions.SessionRequest
 import form.MaxOfLettingsForm
-import models.pages.Summary
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.ViewBehaviours

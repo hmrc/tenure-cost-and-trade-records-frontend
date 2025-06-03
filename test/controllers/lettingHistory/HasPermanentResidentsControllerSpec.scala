@@ -23,6 +23,8 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasPermanentResidents as HasPermanentResidentsView
 
+import scala.language.implicitConversions
+
 class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
 
   "the HasPermanentResidents controller" when {

@@ -24,6 +24,8 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.residentDetail as ResidentDetailView
 
+import scala.language.implicitConversions
+
 class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
 
   "the ResidentDetail controller" when {
@@ -49,7 +51,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         redirectLocation(result).value shouldBe routes.ResidentListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         permanentResidents(data)         should have size 1
-        permanentResidents(data)(0)    shouldBe ResidentDetail(
+        permanentResidents(data).head  shouldBe ResidentDetail(
           name = "Mr. Unknown",
           address = "Neverland"
         )
@@ -81,7 +83,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           permanentResidents(data)              should have size 2 // instead of 1
-          permanentResidents(data)(0)         shouldBe oneResident.head
+          permanentResidents(data).head       shouldBe oneResident.head
           permanentResidents(data)(1).name    shouldBe "Mr. Unknown"
           permanentResidents(data)(1).address shouldBe "Neverland"
         }
@@ -98,7 +100,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           permanentResidents(data)              should have size 2 // the same as it was before sending the post request
-          permanentResidents(data)(0)         shouldBe oneResident.head
+          permanentResidents(data).head       shouldBe oneResident.head
           permanentResidents(data)(1).name    shouldBe "Mr. Two"
           permanentResidents(data)(1).address shouldBe "22, Different Street"
         }

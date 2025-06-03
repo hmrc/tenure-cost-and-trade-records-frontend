@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.PercentageFromFuelCardsForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.PercentageFromFuelCards
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours

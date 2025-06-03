@@ -37,7 +37,7 @@ trait MaxOfLettingsReachedControllerBehaviours:
     controller: MaxOfLettingsReachedController,
     navigator: AboutFranchisesOrLettingsNavigator
   ) =
-    "reply 303 and location header when sourcing from '$src'" in {
+    s"reply 303 and location header when sourcing from '$src'" in {
       val request = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
       val result  = controller.submit(Some("connection"))(request)
       status(result)                   shouldBe SEE_OTHER
