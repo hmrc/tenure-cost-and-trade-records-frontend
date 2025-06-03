@@ -26,13 +26,13 @@ import play.api.data.Forms.single
 class AlternativePhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
 
   trait Setup {
-    val form = Form(single("phone" -> validateAlternativePhoneNumber))
+    val form: Form[String] = Form(single("phone" -> validateAlternativePhoneNumber))
   }
 
   "phone number validation" should {
 
     "catch invalid length error" in new Setup {
-      val lengths = Table(
+      private val lengths = Table(
         ("phone number", "validity"),
         ("1", false),
         ("12", false),
@@ -69,7 +69,7 @@ class AlternativePhoneNumberMappingSpec extends AnyWordSpecLike with should.Matc
 
       TableDrivenPropertyChecks.forAll(invalidPhoneNumbers) { phone =>
         val res: Form[String] = form.bind(Map("phone" -> phone))
-        res.error.head.message shouldBe "error.invalid_phone"
+        res.errors.head.message shouldBe "error.invalid_phone"
       }
     }
   }
