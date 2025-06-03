@@ -45,7 +45,7 @@
 
 @cyaSupport.pageAnswers("taskList.6076.powerGenerated",
  controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
- answer6076("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod} ${messages("turnover.weeks")}"),
+ answer6076("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.tradingPeriod.getOrElse("")} ${messages("turnover.weeks")}"),
  answer6076("checkYourAnswersAboutTheTradingHistory.electricityGenerated", _.electricityGenerated)
 )
 
