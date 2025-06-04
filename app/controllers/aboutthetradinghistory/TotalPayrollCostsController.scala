@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,16 +51,9 @@ class TotalPayrollCostsController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
-        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
-        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
-          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
-        )
         Ok(
           totalPayrollCostsView(
             totalPayrollCostForm(years(aboutTheTradingHistory)).fill(aboutTheTradingHistory.totalPayrollCostSections),
-            numberOfColumns,
-            financialYears,
-            request.sessionData.toSummary,
             navigator.from
           )
         )
@@ -68,23 +61,16 @@ class TotalPayrollCostsController @Inject() (
 
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
-        val numberOfColumns                = aboutTheTradingHistory.turnoverSections.size
-        val financialYears: Seq[LocalDate] = aboutTheTradingHistory.turnoverSections.foldLeft(Seq.empty[LocalDate])(
-          (sequence, turnoverSection) => sequence :+ turnoverSection.financialYearEnd
-        )
         continueOrSaveAsDraft[Seq[TotalPayrollCost]](
           totalPayrollCostForm(years(aboutTheTradingHistory)),
           formWithErrors =>
             BadRequest(
               totalPayrollCostsView(
                 formWithErrors,
-                numberOfColumns,
-                financialYears,
-                request.sessionData.toSummary,
                 navigator.from
               )
             ),

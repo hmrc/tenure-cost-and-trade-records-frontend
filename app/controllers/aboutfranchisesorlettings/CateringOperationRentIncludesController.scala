@@ -59,15 +59,13 @@ class CateringOperationRentIncludesController @Inject() (
             index,
             "cateringOperationOrLettingAccommodationCheckboxesDetails",
             currentSection.cateringOperationDetails.operatorName,
-            backlink(request.sessionData.forType, index),
-            request.sessionData.toSummary,
-            request.sessionData.forType
+            backlink(request.sessionData.forType, index)
           )
         )
       }
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     (for {
       existingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.cateringOperationSections)
       currentSection   <- existingSections.lift(index)
@@ -80,9 +78,7 @@ class CateringOperationRentIncludesController @Inject() (
             index,
             "cateringOperationOrLettingAccommodationCheckboxesDetails",
             currentSection.cateringOperationDetails.operatorName,
-            backlink(request.sessionData.forType, index),
-            request.sessionData.toSummary,
-            request.sessionData.forType
+            backlink(request.sessionData.forType, index)
           )
         ),
       data => {
@@ -101,12 +97,9 @@ class CateringOperationRentIncludesController @Inject() (
   def backlink(forType: ForType, index: Int): String = {
     val isForType6016Or6015 = forType == FOR6016 || forType == FOR6015
 
-    isForType6016Or6015 match {
-      case true  =>
-        controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(index).url
-      case false =>
-        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url
-    }
+    if isForType6016Or6015 then
+      controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(index).url
+    else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(index).url
   }
 
   private def startRedirect: Result = Redirect(routes.CateringOperationDetailsController.show(None))

@@ -16,15 +16,16 @@
 
 package views.aboutFranchisesOrLettings
 
+import actions.SessionRequest
 import form.aboutfranchisesorlettings.IncomeRecordIncludedForm.incomeRecordIncludedForm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
-import models.ForType.*
-import models.pages.Summary
 
 class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehaviours[List[String]] {
 
   val messageKeyPrefix = "lettingOtherPartOfPropertyCheckboxesDetails"
+
+  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   val backLink      =
     controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0).url
@@ -32,14 +33,14 @@ class LettingOtherPartOfPropertyRentIncludesViewSpec extends QuestionViewBehavio
   override val form = incomeRecordIncludedForm
 
   def createView = () =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(using
-      fakeRequest,
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink)(using
+      sessionRequest,
       messages
     )
 
   def createViewUsingForm = (form: Form[List[String]]) =>
-    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink, Summary("99996010001"), FOR6010)(using
-      fakeRequest,
+    cateringOperationRentIncludesView(form, 0, messageKeyPrefix, "{0}", backLink)(using
+      sessionRequest,
       messages
     )
 

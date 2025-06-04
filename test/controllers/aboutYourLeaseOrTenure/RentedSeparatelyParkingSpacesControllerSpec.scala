@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
@@ -29,11 +28,7 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def rentedSeparatelyParkingSpacesController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
-  ) = new RentedSeparatelyParkingSpacesController(
+  def rentedSeparatelyParkingSpacesController = new RentedSeparatelyParkingSpacesController(
     rentedSeparatelyParkingSpacesView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,
@@ -44,7 +39,7 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec {
 
   "RentedSeparatelyParkingSpacesController GET /" should {
     "return 200 and HTML with Rented Separate parking spaces in the session" in {
-      val result = rentedSeparatelyParkingSpacesController().show(fakeRequest)
+      val result = rentedSeparatelyParkingSpacesController.show(fakeRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -54,8 +49,7 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML Rented Equipment Details with none in the session" in {
-      val controller = rentedSeparatelyParkingSpacesController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
+      val result = rentedSeparatelyParkingSpacesController.show(fakeRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -65,21 +59,21 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec {
     }
 
     "return correct backLink when 'from=TL' query param is present" in {
-      val result = rentedSeparatelyParkingSpacesController().show()(FakeRequest(GET, "/path?from=TL"))
+      val result = rentedSeparatelyParkingSpacesController.show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show().url)
     }
   }
 
   "RentedSeparatelyParkingSpacesController SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
-      val res = rentedSeparatelyParkingSpacesController().submit(
+      val res = rentedSeparatelyParkingSpacesController.submit(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
 
     "Redirect when form data submitted" in {
-      val res = rentedSeparatelyParkingSpacesController().submit(
+      val res = rentedSeparatelyParkingSpacesController.submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "openSpaces"    -> "30",
           "coveredSpaces" -> "20",

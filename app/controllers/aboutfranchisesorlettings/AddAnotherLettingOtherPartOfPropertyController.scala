@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext)
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
@@ -70,7 +70,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     if (request.sessionData.aboutFranchisesOrLettings.exists(_.lettingCurrentIndex >= 4) && navigator.from != "CYA") {
 
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("franchiseLetting")).url
@@ -120,7 +120,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
     }
   }
 
-  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutFranchisesOrLettings
       .flatMap(_.lettingSections.lift(idx))
       .map { lettingSection =>
@@ -130,9 +130,6 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
             theConfirmationView(
               confirmableActionForm,
               name,
-              "label.section.aboutTheFranchiseConcessions",
-              request.sessionData.toSummary,
-              idx,
               controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
                 .performRemove(idx),
               controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx)
@@ -145,7 +142,7 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
       )
   }
 
-  def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
@@ -158,9 +155,6 @@ class AddAnotherLettingOtherPartOfPropertyController @Inject() (
                 theConfirmationView(
                   formWithErrors,
                   name,
-                  "label.section.aboutTheFranchiseConcessions",
-                  request.sessionData.toSummary,
-                  idx,
                   controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
                     .performRemove(idx),
                   controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(idx)

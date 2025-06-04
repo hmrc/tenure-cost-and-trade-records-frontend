@@ -18,7 +18,6 @@ package views
 
 import actions.SessionRequest
 import form.MaxOfLettingsForm
-import models.pages.Summary
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.ViewBehaviours
@@ -41,16 +40,14 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
     maxOfLettingsReachedView(
       form,
       "backLink",
-      "connection",
-      Summary("10000001")
+      "connection"
     )(using sessionRequest, messages)
 
   def prepareViewFranchise(sessionRequest: SessionRequest[?]): () => Html = { () =>
     maxOfLettingsReachedView(
       form,
       "backLink",
-      "franchiseCatering",
-      Summary("10000001")
+      "franchiseCatering"
     )(using sessionRequest, messages)
   }
 
@@ -58,8 +55,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
     maxOfLettingsReachedView(
       form,
       "backLink",
-      "connection",
-      Summary("99996010001")
+      "connection"
     )(using sessionRequest, messages)
 
   "max of Lettings reached view" must {

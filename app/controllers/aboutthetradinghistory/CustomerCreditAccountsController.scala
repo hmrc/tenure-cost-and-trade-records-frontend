@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,15 +57,14 @@ class CustomerCreditAccountsController @Inject() (
           view(
             customerCreditAccountsForm(years(aboutTheTradingHistory))
               .fill(aboutTheTradingHistory.customerCreditAccounts.getOrElse(Seq.empty)),
-            backLink(request.sessionData),
-            request.sessionData.toSummary
+            backLink(request.sessionData)
           )
         )
       }
 
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
@@ -75,8 +74,7 @@ class CustomerCreditAccountsController @Inject() (
             BadRequest(
               view(
                 formWithErrors,
-                backLink(request.sessionData),
-                request.sessionData.toSummary
+                backLink(request.sessionData)
               )
             ),
           success => {

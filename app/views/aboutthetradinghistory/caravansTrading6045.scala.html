@@ -54,7 +54,7 @@
     }
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String = "",finYearEnd: LocalDate) = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String,finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))

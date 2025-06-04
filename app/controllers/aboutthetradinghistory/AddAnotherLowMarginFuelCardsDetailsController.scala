@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,7 +112,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
     )
   }
 
-  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     getCardName(idx)
       .map { cardName =>
         Future.successful(
@@ -120,9 +120,6 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
             theConfirmationView(
               confirmableActionForm,
               cardName,
-              "label.section.aboutYourTradingHistory",
-              request.sessionData.toSummary,
-              idx,
               controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
                 .performRemove(idx),
               routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
@@ -135,7 +132,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
       )
   }
 
-  def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
@@ -146,9 +143,6 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
                 theConfirmationView(
                   formWithErrors,
                   cardName,
-                  "label.section.aboutYourTradingHistory",
-                  request.sessionData.toSummary,
-                  idx,
                   controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
                     .performRemove(idx),
                   routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)

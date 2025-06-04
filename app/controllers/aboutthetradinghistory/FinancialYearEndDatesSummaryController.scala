@@ -52,21 +52,19 @@ class FinancialYearEndDatesSummaryController @Inject() (
           case Some(x) => financialYearEndDatesSummaryForm.fill(x)
           case _       => financialYearEndDatesSummaryForm
         },
-        getBackLink,
-        request.sessionData.toSummary
+        getBackLink
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[Boolean](
       financialYearEndDatesSummaryForm,
       formWithErrors =>
         BadRequest(
           financialYearEndDateSummaryView(
             formWithErrors,
-            getBackLink,
-            request.sessionData.toSummary
+            getBackLink
           )
         ),
       data =>
@@ -75,7 +73,7 @@ class FinancialYearEndDatesSummaryController @Inject() (
             .fill(data)
             .withError("isFinancialYearEndDatesCorrect", Messages("error.financialYearEndDates.incorrect"))
           Future.successful(
-            BadRequest(financialYearEndDateSummaryView(formWithError, getBackLink, request.sessionData.toSummary))
+            BadRequest(financialYearEndDateSummaryView(formWithError, getBackLink))
           )
         } else {
           val updatedData = updateAboutTheTradingHistoryPartOne(_.copy(Some(data)))

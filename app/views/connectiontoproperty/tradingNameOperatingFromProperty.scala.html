@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,11 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
-@import actions.SessionRequest
 @import models.ForType.*
 
 @this(layout: Layout,
@@ -29,7 +28,7 @@
 )
 
 
-@(theForm: Form[TradingNameOperatingFromProperty], backlink: String, summary: Summary, fromLocation:String ="")(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[TradingNameOperatingFromProperty], backlink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @forType = @{request.sessionData.forType}
 
@@ -44,17 +43,16 @@
  @layout(
  pageHeading = heading,
  showSection = true,
- showH1 = true,
- summary = Some(summary),
+ summary = Some(request.sessionData.toSummary),
  sectionName = messages("label.section.connectionToTheProperty"),
  backLinkUrl = backlink,
  theForm = theForm
 ) {
+
  @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {
 
   @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", if(forType == FOR6048) {"tradingNameFromPropertyHeadingLabel6048"} else {"tradingNameFromPropertyHeadingLabel"})
   @includes.continueSaveAsDraftButtons(govukButton)
  }
+
 }
-
-

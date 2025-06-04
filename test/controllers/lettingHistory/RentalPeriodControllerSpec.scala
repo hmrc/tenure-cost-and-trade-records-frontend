@@ -26,6 +26,8 @@ import views.html.lettingHistory.rentalPeriod as RentalPeriodView
 
 import java.time.LocalDate
 
+import scala.language.implicitConversions
+
 class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
 
   "the RentalPeriod controller" when {

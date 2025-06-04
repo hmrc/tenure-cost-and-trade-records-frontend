@@ -66,7 +66,7 @@ class ServicePaidSeparatelyListController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       addServicePaidSeparatelyForm,
       formWithErrors =>
@@ -108,7 +108,7 @@ class ServicePaidSeparatelyListController @Inject() (
     )
   }
 
-  def remove(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def remove(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutLeaseOrAgreementPartThree
       .flatMap(_.servicesPaid.lift(index))
       .map { servicesPaid =>
@@ -118,9 +118,6 @@ class ServicePaidSeparatelyListController @Inject() (
             theConfirmationView(
               confirmableActionForm,
               service,
-              "label.section.aboutYourLeaseOrTenure",
-              request.sessionData.toSummary,
-              index,
               controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.performRemove(index),
               toServicePaidSeparatelyList(index)
             )
@@ -130,7 +127,7 @@ class ServicePaidSeparatelyListController @Inject() (
       .getOrElse(Redirect(toServicePaidSeparatelyList(0)))
   }
 
-  def performRemove(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
@@ -143,9 +140,6 @@ class ServicePaidSeparatelyListController @Inject() (
                 theConfirmationView(
                   formWithErrors,
                   description,
-                  "label.section.connectionToTheProperty",
-                  request.sessionData.toSummary,
-                  index,
                   controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.performRemove(index),
                   toServicePaidSeparatelyList(index)
                 )

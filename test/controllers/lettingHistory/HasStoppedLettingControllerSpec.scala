@@ -23,6 +23,8 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
 
+import scala.language.implicitConversions
+
 class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
 
   "the HasStoppedLetting controller" when {

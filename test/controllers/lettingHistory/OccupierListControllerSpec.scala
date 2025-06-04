@@ -25,6 +25,8 @@ import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.occupierList as OccupierListView
 
+import scala.language.implicitConversions
+
 class OccupierListControllerSpec extends LettingHistoryControllerSpec:
 
   "the OccupierList controller" when {
@@ -66,8 +68,8 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
           val page = contentAsJsoup(result)
-          page.summaryList shouldNot be(empty)
-          page.summaryList(0) should include(oneOccupier.head.name)
+          page.summaryList   shouldNot be(empty)
+          page.summaryList.head should include(oneOccupier.head.name)
         }
         "be handling GET /remove?index=0 by replying 200 with the 'Confirm remove' page" in new ControllerFixture(
           oneOccupier

@@ -18,8 +18,6 @@ package views.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsTextAreaForm
-import models.ForType.*
-import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 

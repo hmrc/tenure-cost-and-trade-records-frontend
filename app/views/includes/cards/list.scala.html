@@ -14,11 +14,10 @@
  * limitations under the License.
  *@
 
-@import actions.SessionRequest
 @import views.includes.cards.CardData
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@(govukSummaryList: GovukSummaryList, cardsType: String, cardsData: Seq[CardData])(implicit request: SessionRequest[AnyContent], messages: Messages)
+@(govukSummaryList: GovukSummaryList, cardsType: String, cardsData: Seq[CardData])(implicit messages: Messages)
 @cardsData.map { data =>
     @govukSummaryList(
         SummaryList(

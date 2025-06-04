@@ -120,9 +120,6 @@ class OccupierListController @Inject() (
     theConfirmationView(
       theForm,
       name = occupierDetail.name,
-      sectionLabel = "label.section.lettingHistory",
-      summary = request.sessionData.toSummary,
-      idx = index,
       confirmAction = routes.OccupierListController.performRemove(index),
       cancelAction = routes.OccupierListController.show // backLinkUrl
     )

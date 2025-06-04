@@ -67,7 +67,7 @@ class RentalIncomeListController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors =>
@@ -122,7 +122,7 @@ class RentalIncomeListController @Inject() (
     case letting: LettingIncomeRecord               => letting.copy(addAnotherRecord = answer)
   }
 
-  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Some(getOperatorName(idx))
       .map { operatorName =>
         successful(
@@ -130,9 +130,6 @@ class RentalIncomeListController @Inject() (
             theConfirmationView(
               confirmableActionForm,
               operatorName,
-              "label.section.aboutTheLettings",
-              request.sessionData.toSummary,
-              idx,
               controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
               controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
             )
@@ -142,7 +139,7 @@ class RentalIncomeListController @Inject() (
       .getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)))
   }
 
-  def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
@@ -153,9 +150,6 @@ class RentalIncomeListController @Inject() (
                 theConfirmationView(
                   formWithErrors,
                   operatorName,
-                  "label.section.aboutTheLettings",
-                  request.sessionData.toSummary,
-                  idx,
                   controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
                   controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
                 )

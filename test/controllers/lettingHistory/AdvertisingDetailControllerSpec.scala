@@ -25,6 +25,8 @@ import play.api.test.Helpers.{charset, contentType, redirectLocation, status, st
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.advertisingDetail as AdvertisingDetailView
 
+import scala.language.implicitConversions
+
 class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
 
   "the AdvertisingDetail controller" when {
@@ -50,7 +52,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         onlineAdvertising(data)          should have size 1
-        onlineAdvertising(data)(0)     shouldBe AdvertisingDetail(
+        onlineAdvertising(data).head   shouldBe AdvertisingDetail(
           websiteAddress = "123.uk",
           propertyReferenceNumber = "123abc"
         )
@@ -82,7 +84,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           redirectLocation(result).value                     shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           onlineAdvertising(data)                              should have size 2 // instead of 1
-          onlineAdvertising(data)(0)                         shouldBe oneAdvertising.head
+          onlineAdvertising(data).head                       shouldBe oneAdvertising.head
           onlineAdvertising(data)(1).websiteAddress          shouldBe "test.pl"
           onlineAdvertising(data)(1).propertyReferenceNumber shouldBe "1234ref"
         }
@@ -111,7 +113,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           redirectLocation(result).value                     shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           onlineAdvertising(data)                              should have size 3
-          onlineAdvertising(data)(0)                         shouldBe oneAdvertising.head
+          onlineAdvertising(data).head                       shouldBe oneAdvertising.head
           onlineAdvertising(data)(1).websiteAddress          shouldBe "456.com"
           onlineAdvertising(data)(1).propertyReferenceNumber shouldBe "aaa456"
         }

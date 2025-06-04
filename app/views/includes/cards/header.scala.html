@@ -14,10 +14,9 @@
  * limitations under the License.
  *@
 
-@import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@(govukSummaryList: GovukSummaryList, messageKey: String, valueAsBoolean: Option[Boolean], changeAction: Call)(implicit request: SessionRequest[AnyContent], messages: Messages)
+@(govukSummaryList: GovukSummaryList, messageKey: String, valueAsBoolean: Option[Boolean], changeAction: Call)(implicit messages: Messages)
 @govukSummaryList(
     SummaryList(
         rows = Seq(

@@ -23,6 +23,8 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsView
 
+import scala.language.implicitConversions
+
 class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
 
   "the HasCompletedLettings controller" when {

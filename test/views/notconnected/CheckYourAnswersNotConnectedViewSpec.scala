@@ -31,9 +31,6 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
   def createView: () => Html = () =>
     checkYourAnswersNotConnectedView(notConnected6010NoSession)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[NotConnectedContactDetails] => Html = (form: Form[NotConnectedContactDetails]) =>
-    checkYourAnswersNotConnectedView(notConnected6010NoSession)(using fakeRequest, messages)
-
   "Check Your Answers Additional Information view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
@@ -97,7 +94,7 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
     }
 
     "contain submit button with the value Accept and Send" in {
-      val doc         = asDocument(createViewUsingForm(form))
+      val doc         = asDocument(createView())
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.send"))
     }
