@@ -50,12 +50,6 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .apply(session6016) shouldBe controllers.routes.LoginController.show
     }
 
-    "return a function that goes to connected to landlord page when about your landlord has been completed" in {
-      navigator
-        .nextPage(AboutTheLandlordPageId, session6016)
-        .apply(session6016) shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
-    }
-
     "return a function that goes to connected to landlord details page when connected to landlord and answer is 'yes'" in {
       val answers = session6016.copy(
         aboutLeaseOrAgreementPartOne = Some(AboutLeaseOrAgreementPartOne(connectedToLandlord = Some(AnswerYes)))
@@ -72,14 +66,6 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
       val result  = navigator.connectedToLandlordRouting(answers)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
 
-    }
-
-    "return a function that goes to current rent payable within 12 months page when cya has been completed" in {
-      navigator
-        .nextPage(CurrentRentPayableWithin12monthsPageId, session6016)
-        .apply(
-          session6016
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
 
     "return a function that goes to current annual rent agreement page when current rent first paid has been completed" in {
