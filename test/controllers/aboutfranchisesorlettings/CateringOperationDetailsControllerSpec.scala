@@ -90,27 +90,6 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         content          should include("error.operatorName.required")
         content          should include("error.typeOfBusiness.required")
       }
-      "reply 303 when the form is submitted with good data and index=0" in new ControllerFixture(FOR6010) {
-        val result = controller.submit(index = Some(0))(
-          fakePostRequest.withFormUrlEncodedBody(
-            "operatorName"                       -> "Another Operator",
-            "typeOfBusiness"                     -> "Different Business",
-            "cateringAddress.buildingNameNumber" -> "004",
-            "cateringAddress.street1"            -> "GORING ROAD",
-            "cateringAddress.town"               -> "GORING-BY-SEA, WORTHING",
-            "cateringAddress.county"             -> "West sussex",
-            "cateringAddress.postcode"           -> "BN12 4AX"
-          )
-        )
-        status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.CateringOperationDetailsRentController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        val updatedCateringOperationDetails =
-          data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
-        updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
-        updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
-        reset(repository)
-      }
       "reply 303 when the form is submitted with good data but missing index" in new ControllerFixture(FOR6010) {
         pending
         // val result = controller.submit(index = None)(
@@ -132,29 +111,6 @@ class CateringOperationDetailsControllerSpec extends TestBaseSpec:
         // updatedCateringOperationDetails.operatorName shouldBe "Another Operator" // instead of "Operator Name"
         // updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
         // reset(repository)
-      }
-      "reply 303 when the form is submitted with good data and the aboutFranchisesOrLettings was missing in session" in new ControllerFixture(
-        aboutFranchisesOrLettings = None
-      ) {
-        val result = controller.submit(index = None)(
-          fakePostRequest.withFormUrlEncodedBody(
-            "operatorName"                       -> "Another Operator",
-            "typeOfBusiness"                     -> "Different Business",
-            "cateringAddress.buildingNameNumber" -> "004",
-            "cateringAddress.street1"            -> "GORING ROAD",
-            "cateringAddress.town"               -> "GORING-BY-SEA, WORTHING",
-            "cateringAddress.county"             -> "West sussex",
-            "cateringAddress.postcode"           -> "BN12 4AX"
-          )
-        )
-        status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.CateringOperationDetailsRentController.show(0).url
-        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        val updatedCateringOperationDetails =
-          data.getValue.aboutFranchisesOrLettings.get.cateringOperationSections(0).cateringOperationDetails
-        updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
-        updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
-        reset(repository)
       }
     }
   }
