@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import controllers.aboutfranchisesorlettings
-import models.submissions.aboutfranchisesorlettings.{CateringOperationBusinessSection, CateringOperationSection, LettingSection}
+import models.submissions.aboutfranchisesorlettings.LettingSection
 import models.ForType
 import models.ForType.*
 import models.Session
