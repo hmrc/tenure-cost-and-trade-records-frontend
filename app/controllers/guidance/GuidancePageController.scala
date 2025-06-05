@@ -33,6 +33,6 @@ class GuidancePageController @Inject() (
     ForType
       .find(forType)
       .fold(NotFound(s"Invalid forType: $forType")) { tpe =>
-        Ok(guidancePageView(tpe, request.session.get("referenceNumber")))
+        Ok(guidancePageView(tpe))
       }
   }

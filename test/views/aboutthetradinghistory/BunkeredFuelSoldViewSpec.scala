@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.BunkeredFuelSoldForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.BunkeredFuelSold
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
@@ -32,10 +31,10 @@ class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSo
   val messageKeyPrefix = "bunkeredFuelSold"
 
   override val form = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq(2023, 2022, 2021).map(_.toString))(using messages)
-  def createView    = () => bunkeredFuelSoldView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
+  def createView    = () => bunkeredFuelSoldView(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[BunkeredFuelSold]]) =>
-    bunkeredFuelSoldView(form, backLink, Summary("99996020001"))(using sessionRequest, messages)
+    bunkeredFuelSoldView(form, backLink)(using sessionRequest, messages)
 
   "Bunkered Fuel Costs view" should {
 

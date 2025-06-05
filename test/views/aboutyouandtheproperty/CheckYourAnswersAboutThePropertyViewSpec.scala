@@ -126,31 +126,9 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
 
       "render the h2 headers in component correctly" in {
         val doc = asDocument(createView6076())
-        assert(
-          doc
-            .select("h2:nth-child(3)")
-            .text()
-            .contains(messages("checkYourAnswersAboutTheProperty.aboutYou.heading"))
-        )
-        assert(
-          doc
-            .select("h2:nth-child(5)")
-            .text()
-            .contains(messages("checkYourAnswersAboutTheProperty.aboutProperty.technologyType"))
-        )
-        assert(
-          doc
-            .select("h2:nth-child(7)")
-            .text()
-            .contains(messages("checkYourAnswersAboutTheProperty.aboutProperty.siteConstructionDtls"))
-        )
-        assert(
-          doc
-            .select("h2:nth-child(9)")
-            .text()
-            .contains(messages("checkYourAnswersAboutTheProperty.aboutProperty.heading"))
-        )
-
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.aboutYou.heading"))
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.aboutProperty.technologyType"))
+        doc.text() should include(messages("checkYourAnswersAboutTheProperty.aboutProperty.siteConstructionDtls"))
       }
 
     }

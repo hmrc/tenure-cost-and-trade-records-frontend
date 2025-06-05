@@ -51,18 +51,18 @@
     request.sessionData.financialYearEndDates6045.size
 }
 
-@rowLabel(labelKey: String, hint: Option[String] = None, explanationMsg: Option[String] = None) = {
+@rowLabel(labelKey: String, hint: Option[String], explanationMsg: Option[String]) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold ">@messages(labelKey)</span>
         <span>@explanationMsg.map {explanationMsg => @messages(explanationMsg)}</span>
     </p>
-       @hint.map { hint =>
-    <p class="govuk-hint">@messages(hint)</p>
-       }
+    @hint.map { hint =>
+        <p class="govuk-hint">@messages(hint)</p>
+    }
 }
 
 @rowLabelWithHint(labelKey: String) = {
-<p class="govuk-hint govuk-!-margin-top-0">@messages(labelKey)</p>
+    <p class="govuk-hint govuk-!-margin-top-0">@messages(labelKey)</p>
 }
 
 @poundPrefix = @{PrefixOrSuffix(content = Text(messages("label.pound")))}
@@ -99,7 +99,7 @@
         ),
         TableRow(
             content = HtmlContent(
-                otherExpensesDetailsContent(idx,labelKey,formField)),
+                otherExpensesDetailsContent(idx,formField)),
             classes = "govuk-!-padding-bottom-0"
         )
     )
@@ -116,7 +116,7 @@
     )
 }
 
-@otherExpensesDetailsContent(idx: Int, labelKey: String, formField: String) = {
+@otherExpensesDetailsContent(idx: Int, formField: String) = {
     @if(columns == 1) {
         @otherExpensesDetailsTextarea(formField)
     } else {
@@ -138,7 +138,7 @@
             ),
             TableRow(
                 content = HtmlContent(
-                    otherExpensesDetailsContentOtherActivities(idx,labelKey,formField)),
+                    otherExpensesDetailsContentOtherActivities(idx,formField)),
                 classes = "govuk-!-padding-bottom-0"
             )
         )
@@ -155,7 +155,7 @@
         )
     }
 
-    @otherExpensesDetailsContentOtherActivities(idx: Int, labelKey: String, formField: String) = {
+    @otherExpensesDetailsContentOtherActivities(idx: Int, formField: String) = {
     @if(columns == 1) {
         @otherExpensesDetailsTextareaOtherActivities(formField)
     } else {

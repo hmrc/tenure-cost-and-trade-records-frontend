@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,15 +55,14 @@ class PercentageFromFuelCardsController @Inject() (
           view(
             percentageFromFuelCardsForm(years(aboutTheTradingHistory))
               .fill(aboutTheTradingHistory.percentageFromFuelCards.getOrElse(Seq.empty)),
-            getBackLink,
-            request.sessionData.toSummary
+            getBackLink
           )
         )
       }
 
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
@@ -73,8 +72,7 @@ class PercentageFromFuelCardsController @Inject() (
             BadRequest(
               view(
                 formWithErrors,
-                getBackLink,
-                request.sessionData.toSummary
+                getBackLink
               )
             ),
           success => {

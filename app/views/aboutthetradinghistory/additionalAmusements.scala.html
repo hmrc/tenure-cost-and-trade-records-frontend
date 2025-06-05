@@ -43,7 +43,7 @@
     .flatMap(_.turnoverSections6045).map(_.map(_.additionalShops.fold(0)(_.tradingPeriod))).getOrElse(Seq.empty)
 }
 
-@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: Option[PrefixOrSuffix] = None,  finYearEnd: LocalDate) = @{
+@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: PrefixOrSuffix, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = Text(messages(labelKey))

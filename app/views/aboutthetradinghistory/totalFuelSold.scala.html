@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import actions.SessionRequest
-@import models.pages.Summary
 @import util.AccessibilityUtil
 
 @this(layout: Layout,
@@ -33,7 +32,7 @@
 )
 
 
-@(form: Form[Seq[TotalFuelSold]], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[TotalFuelSold]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("totalFuelSold.heading"),

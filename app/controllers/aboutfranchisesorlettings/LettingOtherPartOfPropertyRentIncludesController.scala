@@ -60,15 +60,13 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
             currentSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController
               .show(index)
-              .url,
-            request.sessionData.toSummary,
-            request.sessionData.forType
+              .url
           )
         )
       }
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     (for {
       existingSections <- request.sessionData.aboutFranchisesOrLettings.map(_.lettingSections)
       currentSection   <- existingSections.lift(index)
@@ -83,9 +81,7 @@ class LettingOtherPartOfPropertyRentIncludesController @Inject() (
             currentSection.lettingOtherPartOfPropertyInformationDetails.operatorName,
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController
               .show(index)
-              .url,
-            request.sessionData.toSummary,
-            request.sessionData.forType
+              .url
           )
         ),
       data => {

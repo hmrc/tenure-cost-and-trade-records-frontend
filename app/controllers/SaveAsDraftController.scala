@@ -93,7 +93,7 @@ class SaveAsDraftController @Inject() (
 
     backendConnector.saveAsDraft(session.referenceNumberCleaned, submissionDraft, hc).map { _ =>
       audit.sendSavedAsDraft(submissionDraft.toSavedAsDraftEvent)
-      Ok(submissionDraftSavedView(session.saveAsDraftPassword.getOrElse(""), expiryDate, exitPath))
+      Ok(submissionDraftSavedView(expiryDate, exitPath))
     }
   }
 

@@ -18,10 +18,11 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.aboutthetradinghistory._
 @import util.DateUtilLocalised
-@import util.NumberUtil._
+@import util.NumberUtil.{*, given}
 @import util.CyaTradingHistorySupport
 @import models.submissions.common.AnswerYes
 
+@import scala.language.implicitConversions
 
 
 @this(
@@ -72,8 +73,7 @@
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
-@cyaSupport.occupationDetails
-
+@cyaSupport.accountingInformation
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.fuelSales")</h2>
 

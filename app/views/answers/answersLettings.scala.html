@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.submissions.common.AnswerYes
 @import util.DateUtilLocalised
-@import util.NumberUtil._
+@import util.NumberUtil.*
 @import util.SectionAnswersRowBuilder
 @import models.submissions.aboutfranchisesorlettings._
 
@@ -66,7 +66,7 @@
 @createATMRow(atm:ATMLetting, index: Int) = {
     @govukSummaryList(SummaryList(rows =
   sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.atmOperatorDetails",_ => Option(atm.bankOrCompany.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
-      (atm.correspondenceAddress.map(_.escapedHtml).getOrElse("")),
+      atm.correspondenceAddress.map(_.escapedHtml).getOrElse(""),
       controllers.aboutfranchisesorlettings.routes.AtmLettingController.show(Some(index)) ,"bankOrCompany",("valueAsHtml", _ => None))
     ))
   @createRentDetails(atm,index)
@@ -76,7 +76,7 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.operationCompanyDetails",_ => Option(telecom.siteOfMast.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
             Option(telecom.operatingCompanyName.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
-            (telecom.correspondenceAddress.map(_.escapedHtml).getOrElse("")),
+            telecom.correspondenceAddress.map(_.escapedHtml).getOrElse(""),
         controllers.aboutfranchisesorlettings.routes.TelecomMastLettingController.show(Some(index)) ,"operationCompanyDetails",("valueAsHtml", _ => None))
 ))
 @createRentDetails(telecom,index)
@@ -86,7 +86,7 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.advertisingCompanyDetails",_ => Option(advert.descriptionOfSpace.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
             Option(advert.advertisingCompanyName.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
-            (advert.correspondenceAddress.map(_.escapedHtml).getOrElse("")),
+            advert.correspondenceAddress.map(_.escapedHtml).getOrElse(""),
         controllers.aboutfranchisesorlettings.routes.AdvertisingRightLettingController.show(Some(index)) ,"advertisingCompanyDetails",("valueAsHtml", _ => None))
 ))
 @createRentDetails(advert,index)
@@ -96,7 +96,7 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.otherDetails",_ => Option(other.lettingType.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
             Option(other.tenantName.getOrElse("")).map(Text(_).asHtml).mkString("""<p class="govuk-body">""", "", "</p>")+
-            (other.correspondenceAddress.map(_.escapedHtml).getOrElse("")),
+            other.correspondenceAddress.map(_.escapedHtml).getOrElse(""),
         controllers.aboutfranchisesorlettings.routes.OtherLettingController.show(Some(index)) ,"otherDetails",("valueAsHtml", _ => None))
 ))
 @createRentDetails(other,index)

@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
-@import util.NumberUtil._
+@import util.NumberUtil.*
 @import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswerYes
 @import navigation.AboutYourLeaseOrTenureNavigator
@@ -36,8 +36,6 @@
 @sectionAnswers2 = @{SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartTwo)}
 
 @sectionAnswers3 = @{SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartThree)}
-
-@sectionAnswers4 = @{SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartFour)}
 
 @addedTradeServiceMsgKey = @{
     if (request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices).getOrElse(IndexedSeq.empty).length <= 1) {

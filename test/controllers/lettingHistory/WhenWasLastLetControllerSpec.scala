@@ -26,6 +26,8 @@ import views.html.lettingHistory.whenWasLastLet as WhenWasLastLetView
 
 import java.time.LocalDate
 
+import scala.language.implicitConversions
+
 class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
 
   "the LastRental controller" when {

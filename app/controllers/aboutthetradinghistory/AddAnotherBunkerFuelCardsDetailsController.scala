@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -137,7 +137,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
     )
   }
 
-  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     getCardName(idx)
       .map { cardName =>
         Future.successful(
@@ -145,9 +145,6 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
             theRemoveView(
               confirmableActionForm,
               cardName,
-              "label.section.aboutYourTradingHistory",
-              request.sessionData.toSummary,
-              idx,
               controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx),
               routes.AddAnotherBunkerFuelCardsDetailsController.show(idx)
             )
@@ -157,7 +154,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
       .getOrElse(Redirect(controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0)))
   }
 
-  def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
@@ -168,9 +165,6 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
                 theRemoveView(
                   formWithErrors,
                   cardName,
-                  "label.section.aboutYourTradingHistory",
-                  request.sessionData.toSummary,
-                  idx,
                   controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController
                     .performRemove(idx),
                   routes.AddAnotherBunkerFuelCardsDetailsController.show(idx)

@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
-@import util.NumberUtil._
+@import util.NumberUtil.*
 @import util.SectionAnswersRowBuilder
 @import models.ForType.*
 @import models.submissions.common.AnswerYes
@@ -107,7 +107,7 @@
             sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
                 _.currentRentPayableWithin12Months.map(r => Seq(
                 messages(s"label.${r.currentRentWithin12Months.name}"),
-                r.rentActuallyAgreed.map(x => messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", r.rentActuallyAgreed.map(date => dateUtil.formatDayMonthAbbrYear(date).getOrElse("")).getOrElse(""))).getOrElse("")
+                r.rentActuallyAgreed.map(date => messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", dateUtil.formatDayMonthAbbrYear(date))).getOrElse("")
                 ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                 controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "",
                 ("valueAsHtml", _ => None))

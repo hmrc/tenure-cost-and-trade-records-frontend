@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,12 +28,12 @@ import models.submissions.notconnected.PastConnectionType
 import play.api.data.FormError
 import play.api.data.format.Formatter
 
-object Formats {
+object Formats:
 
   def namedEnumFormatter[T <: NamedEnum](named: NamedEnumSupport[T], missingCode: String): Formatter[T] =
     new Formatter[T] {
 
-      override val format = Some((missingCode, Nil))
+      override val format: Option[(String, Seq[Any])] = Some((missingCode, Nil))
 
       def bind(key: String, data: Map[String, String]): Either[Seq[FormError], T] = {
         val resOpt = for
@@ -64,75 +64,46 @@ object Formats {
 
     def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
   }
-  def answersYesNoDefFormat(errorMessage: String): Formatter[AnswersYesNo]                              =
+
+  def answersYesNoDefFormat(errorMessage: String): Formatter[AnswersYesNo] =
     namedEnumFormatter(AnswersYesNo, errorMessage)
-  implicit val userTypeFormat: Formatter[UserType]                                                      = namedEnumFormatter(UserType, Errors.userTypeRequired)
-  implicit val cyaYesNoFormat: Formatter[CYAYesNo]                                                      =
-    namedEnumFormatter(CYAYesNo, Errors.booleanMissing)
 
-  implicit val addressConnectionTypeFormatter: Formatter[AddressConnectionType]              =
-    namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
-  implicit val connectionToPropertyFormat: Formatter[ConnectionToProperty]                   =
-    namedEnumFormatter(ConnectionToProperty, Errors.connectionToPropertyError)
+  given Formatter[UserType]              = namedEnumFormatter(UserType, Errors.userTypeRequired)
+  given Formatter[CYAYesNo]              = namedEnumFormatter(CYAYesNo, Errors.booleanMissing)
+  given Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
+  given Formatter[ConnectionToProperty]  = namedEnumFormatter(ConnectionToProperty, Errors.connectionToPropertyError)
+
   // Not connected
-  implicit val pastConnectionFormat: Formatter[PastConnectionType]                           =
-    namedEnumFormatter(PastConnectionType, Errors.isPastConnected)
+  given Formatter[PastConnectionType]      = namedEnumFormatter(PastConnectionType, Errors.isPastConnected)
   // About the property
-  implicit val aboutYourPropertyFormat: Formatter[CurrentPropertyUsed]                       =
-    namedEnumFormatter(CurrentPropertyUsed, Errors.propertyCurrentlyUsed)
-  implicit val buildingOperatingHaveAWebsiteFormat: Formatter[BuildingOperationHaveAWebsite] =
+  given Formatter[CurrentPropertyUsed]     = namedEnumFormatter(CurrentPropertyUsed, Errors.propertyCurrentlyUsed)
+  given Formatter[VacantPropertiesDetails] = namedEnumFormatter(VacantPropertiesDetails, Errors.vacantProperties)
+  given Formatter[MethodToFixCurrentRents] = namedEnumFormatter(MethodToFixCurrentRents, Errors.methodToFixCurrentRents)
+  given Formatter[TiedForGoodsInformation] = namedEnumFormatter(TiedForGoodsInformation, Errors.tiedForGoodsDetails)
+  given Formatter[RenewablesPlantDetails]  = namedEnumFormatter(RenewablesPlantDetails, Errors.renewablesPlant)
+  given Formatter[OutsideRepairs]          = namedEnumFormatter(OutsideRepairs, Errors.outsideRepairs)
+  given Formatter[InsideRepairs]           = namedEnumFormatter(InsideRepairs, Errors.insideRepairs)
+  given Formatter[BuildingInsurance]       = namedEnumFormatter(BuildingInsurance, Errors.buildingInsurance)
+  given Formatter[IncludeLicensees]        = namedEnumFormatter(IncludeLicensee, Errors.booleanMissing)
+  given Formatter[IncludeOtherProperties]  = namedEnumFormatter(IncludeOtherProperty, Errors.booleanMissing)
+  given Formatter[OnlyPartOfProperties]    = namedEnumFormatter(OnlyPartOfProperty, Errors.booleanMissing)
+  given Formatter[OnlyToLands]             = namedEnumFormatter(OnlyToLand, Errors.booleanMissing)
+  given Formatter[ShellUnits]              = namedEnumFormatter(ShellUnit, Errors.booleanMissing)
+  given Formatter[CurrentRentFixed]        = namedEnumFormatter(CurrentRentFixed, Errors.howIsCurrentRentFixed)
+  given Formatter[TenancyThreeYears]       = namedEnumFormatter(TenancyThreeYears, Errors.tenancy3Years)
+  given Formatter[RentThreeYears]          = namedEnumFormatter(RentThreeYears, Errors.rent3Years)
+  given Formatter[UnderReview]             = namedEnumFormatter(UnderReview, Errors.underReview)
+  given Formatter[CurrentRentBasedOn]      = namedEnumFormatter(CurrentRentBasedOn, Errors.currentRentBasedOn)
+
+  given Formatter[BuildingOperationHaveAWebsite] =
     namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.buildingOperatingHaveAWebsite)
-  implicit val vacantPropertiesFormat: Formatter[VacantPropertiesDetails]                    =
-    namedEnumFormatter(VacantPropertiesDetails, Errors.vacantProperties)
 
-  implicit val methodToFixCurrentRentDetailsFormat: Formatter[MethodToFixCurrentRents] =
-    namedEnumFormatter(MethodToFixCurrentRents, Errors.methodToFixCurrentRents)
-
-  implicit val tiedForGoodsDetailsFormat: Formatter[TiedForGoodsInformation] =
-    namedEnumFormatter(TiedForGoodsInformation, Errors.tiedForGoodsDetails)
-
-  implicit val renewablesPlantFormat: Formatter[RenewablesPlantDetails] =
-    namedEnumFormatter(RenewablesPlantDetails, Errors.renewablesPlant)
-
-  implicit val outsideRepairsFormatter: Formatter[OutsideRepairs]       =
-    namedEnumFormatter(OutsideRepairs, Errors.outsideRepairs)
-  implicit val insideRepairsFormatter: Formatter[InsideRepairs]         =
-    namedEnumFormatter(InsideRepairs, Errors.insideRepairs)
-  implicit val buildingInsuranceFormatter: Formatter[BuildingInsurance] =
-    namedEnumFormatter(BuildingInsurance, Errors.buildingInsurance)
-
-  implicit val includeLicenseeFormatter: Formatter[IncludeLicensees]            =
-    namedEnumFormatter(IncludeLicensee, Errors.booleanMissing)
-  implicit val includeOtherPropertyFormatter: Formatter[IncludeOtherProperties] =
-    namedEnumFormatter(IncludeOtherProperty, Errors.booleanMissing)
-  implicit val onlyPartOfPropertyFormatter: Formatter[OnlyPartOfProperties]     =
-    namedEnumFormatter(OnlyPartOfProperty, Errors.booleanMissing)
-  implicit val onlyToLandFormatter: Formatter[OnlyToLands]                      = namedEnumFormatter(OnlyToLand, Errors.booleanMissing)
-  implicit val shellUnitFormatter: Formatter[ShellUnits]                        = namedEnumFormatter(ShellUnit, Errors.booleanMissing)
-
-  implicit val howIsCurrentRentFixedFormatter: Formatter[CurrentRentFixed] =
-    namedEnumFormatter(CurrentRentFixed, Errors.howIsCurrentRentFixed)
-
-  implicit val currentRentPayableWithin12MonthsFormatter: Formatter[CurrentRentWithin12Months] =
+  given Formatter[CurrentRentWithin12Months] =
     namedEnumFormatter(CurrentRentWithin12Months, Errors.currentRentPayableWithin12Months)
 
-  implicit val tenancy3YearsFormatter: Formatter[TenancyThreeYears] =
-    namedEnumFormatter(TenancyThreeYears, Errors.tenancy3Years)
-  implicit val rent3YearsFormatter: Formatter[RentThreeYears]       =
-    namedEnumFormatter(RentThreeYears, Errors.rent3Years)
-  implicit val underReviewFormatter: Formatter[UnderReview]         =
-    namedEnumFormatter(UnderReview, Errors.underReview)
-
-  implicit val whatIsYourRentBasedOnFormatter: Formatter[CurrentRentBasedOn] =
-    namedEnumFormatter(CurrentRentBasedOn, Errors.currentRentBasedOn)
-
-  implicit val includedInYourRentFormatter: Formatter[IncludedInYourRentInformation] =
+  given Formatter[IncludedInYourRentInformation] =
     namedEnumFormatter(IncludedInYourRentInformation, Errors.currentRentBasedOn)
 
   // About Franchises or Lettings
-  implicit val typeOfLettingFormat: Formatter[TypeOfLetting] =
-    namedEnumFormatter(TypeOfLetting, Errors.typeOfLetting)
-
-  implicit val typeOfIncomeFormat: Formatter[TypeOfIncome] =
-    namedEnumFormatter(TypeOfIncome, Errors.typeOfIncome)
-}
+  given Formatter[TypeOfLetting] = namedEnumFormatter(TypeOfLetting, Errors.typeOfLetting)
+  given Formatter[TypeOfIncome]  = namedEnumFormatter(TypeOfIncome, Errors.typeOfIncome)

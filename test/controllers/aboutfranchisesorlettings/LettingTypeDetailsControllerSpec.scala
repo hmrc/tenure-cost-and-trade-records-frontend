@@ -36,7 +36,6 @@ class LettingTypeDetailsControllerSpec
     "handling GET requests"            should {
       "reply 200 with a fresh HTML form" in new ControllerFixture {
         val result = controller.show(0)(fakeRequest)
-        val html   = contentAsJsoup(result)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
@@ -99,7 +98,7 @@ class LettingTypeDetailsControllerSpec
 trait LettingTypeDetailsControllerBehaviours:
   this: LettingTypeDetailsControllerSpec =>
 
-  def savingIncomeRecordAndRedirectingToAddressLookupService(index: Int) =
+  def savingIncomeRecordAndRedirectingToAddressLookupService(index: Int): Unit =
     s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture {
       val operatorName   = "Godzilla"
       val typeOfBusiness = "Atomic Bomb Factory"
@@ -120,7 +119,7 @@ trait LettingTypeDetailsControllerBehaviours:
       }
     }
 
-  def retrievingConfirmedAddressFromAddressLookupService(index: Int) =
+  def retrievingConfirmedAddressFromAddressLookupService(index: Int): Unit =
     s"save record at index=$index and reply 303 redirect to the next page" in new ControllerFixture {
       val result = controller.addressLookupCallback(index, "confirmedAddress")(fakeRequest)
       status(result)                 shouldBe SEE_OTHER

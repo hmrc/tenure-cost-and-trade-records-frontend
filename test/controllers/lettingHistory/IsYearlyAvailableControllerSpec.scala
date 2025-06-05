@@ -23,6 +23,8 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.isYearlyAvailable as IsYearlyAvailableView
 
+import scala.language.implicitConversions
+
 class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
 
   "the IsYearlyAvailable controller" when {

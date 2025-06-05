@@ -23,6 +23,8 @@ import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasOnlineAdvertising as HasOnlineAdvertisingView
 
+import scala.language.implicitConversions
+
 class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
 
   "the HasOnlineAdvertising controller" when {

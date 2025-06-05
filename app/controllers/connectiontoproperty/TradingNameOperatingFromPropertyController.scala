@@ -62,9 +62,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
               case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
               case _                      => tradingNameOperatingFromProperty6048Form
             },
-            calculateBackLink,
-            request.sessionData.toSummary,
-            navigator.from
+            calculateBackLink
           )
         )
       )
@@ -76,9 +74,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
               case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
               case _                      => tradingNameOperatingFromPropertyForm
             },
-            calculateBackLink,
-            request.sessionData.toSummary,
-            navigator.from
+            calculateBackLink
           )
         )
       )
@@ -93,8 +89,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
           BadRequest(
             nameOfBusinessOperatingFromPropertyView(
               formWithErrors,
-              calculateBackLink,
-              request.sessionData.toSummary
+              calculateBackLink
             )
           ),
         data => {
@@ -115,8 +110,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
           BadRequest(
             nameOfBusinessOperatingFromPropertyView(
               formWithErrors,
-              calculateBackLink,
-              request.sessionData.toSummary
+              calculateBackLink
             )
           ),
         data => {

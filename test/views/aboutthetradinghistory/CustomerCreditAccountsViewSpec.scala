@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.CustomerCreditAccountsForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.CustomerCreditAccounts
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
@@ -36,11 +35,10 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
     .show(0)
     .url
 
-  def createView = () =>
-    customerCreditAccountsView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
+  def createView = () => customerCreditAccountsView(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[CustomerCreditAccounts]]) =>
-    customerCreditAccountsView(form, "", Summary("99996020001"))(using sessionRequest, messages)
+    customerCreditAccountsView(form, "")(using sessionRequest, messages)
 
   "Customer credit accounts view" should {
 

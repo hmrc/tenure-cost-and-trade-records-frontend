@@ -161,7 +161,7 @@ class LoginControllerSpec extends TestBaseSpec {
         .when(audit)
         .sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-      val loginToBackendFunction = (refNum: RefNumber, postcode: Postcode) => {
+      val loginToBackendFunction = (refNum: RefNumber, _: Postcode) => {
         assert(refNum.equals("01234567000"))
         Future.successful(NoExistingDocument("token", "forNum", prefilledAddress, isWelsh = false))
       }

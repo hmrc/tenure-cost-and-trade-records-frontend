@@ -18,7 +18,6 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.PercentageFromFuelCardsForm
-import models.pages.Summary
 import models.submissions.aboutthetradinghistory.PercentageFromFuelCards
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
@@ -33,11 +32,10 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
 
   override val form =
     PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
-  def createView    = () =>
-    percentageFromFuelCardsView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
+  def createView    = () => percentageFromFuelCardsView(form, backLink)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[Seq[PercentageFromFuelCards]]) =>
-    percentageFromFuelCardsView(form, backLink, Summary("99996020001"))(using sessionRequest, messages)
+    percentageFromFuelCardsView(form, backLink)(using sessionRequest, messages)
 
   "Percentage from fuel cards view" should {
 

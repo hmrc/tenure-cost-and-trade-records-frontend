@@ -14,11 +14,10 @@
  * limitations under the License.
  *@
 
-@import actions.SessionRequest
 @import views.includes.summary.SummaryEntry
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@(govukSummaryList: GovukSummaryList, summaryData: Seq[SummaryEntry])(implicit request: SessionRequest[AnyContent], messages: Messages)
+@(govukSummaryList: GovukSummaryList, summaryData: Seq[SummaryEntry])(implicit messages: Messages)
 
 @govukSummaryList(
     SummaryList(

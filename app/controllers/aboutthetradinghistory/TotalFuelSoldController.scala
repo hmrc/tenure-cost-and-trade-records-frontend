@@ -54,8 +54,7 @@ class TotalFuelSoldController @Inject() (
           view(
             totalFuelSoldForm(years(aboutTheTradingHistory))
               .fill(aboutTheTradingHistory.totalFuelSold.getOrElse(Seq.empty)),
-            calculateBackLink(using request),
-            request.sessionData.toSummary
+            calculateBackLink(using request)
           )
         )
       }
@@ -72,8 +71,7 @@ class TotalFuelSoldController @Inject() (
             BadRequest(
               view(
                 formWithErrors,
-                calculateBackLink(using request),
-                request.sessionData.toSummary
+                calculateBackLink(using request)
               )
             ),
           success => {

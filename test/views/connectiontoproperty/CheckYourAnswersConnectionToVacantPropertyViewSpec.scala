@@ -40,10 +40,6 @@ class CheckYourAnswersConnectionToVacantPropertyViewSpec
   def createView: () => Html = () =>
     checkYourAnswersConnectionToVacantProperty(backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[CheckYourAnswersConnectionToVacantProperty] => Html =
-    (form: Form[CheckYourAnswersConnectionToVacantProperty]) =>
-      checkYourAnswersConnectionToVacantProperty(backLink)(using sessionRequest, messages)
-
   "Check Your Answers Connection To Vacant Property view" must {
 
     behave like normalPage(createView, messageKeyPrefix)
@@ -67,7 +63,7 @@ class CheckYourAnswersConnectionToVacantPropertyViewSpec
     }
 
     "contain save and continue button with the value Send" in {
-      val doc         = asDocument(createViewUsingForm(form))
+      val doc         = asDocument(createView())
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.send"))
     }

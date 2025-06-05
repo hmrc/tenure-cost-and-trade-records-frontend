@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@(items: Seq[(String, String)])(implicit request: Request[AnyContent], messages: Messages)
+@(items: Seq[(String, String)])(implicit messages: Messages)
 
 <p id="contents" class="govuk-body-s">@messages("guidance.sections.shared.startingDeclaration.a2")</p>
 
@@ -23,4 +23,3 @@
     <li><a class="govuk-link" href="@href">@messages(key)</a></li>
 }
 </ul>
-

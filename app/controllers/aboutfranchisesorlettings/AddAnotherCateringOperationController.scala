@@ -95,7 +95,7 @@ class AddAnotherCateringOperationController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     if (franchisesOrLettingsData.exists(_.cateringOperationCurrentIndex >= 4) && navigator.from != "CYA") {
 
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("franchiseCatering")).url
@@ -134,7 +134,7 @@ class AddAnotherCateringOperationController @Inject() (
               .fold(
                 Future.successful(
                   Redirect(
-                    if (formData == AnswerNo && fromCYA == true) {
+                    if (formData == AnswerNo && fromCYA) {
                       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
                         .show()
                     } else if (formData == AnswerYes) {
@@ -164,7 +164,7 @@ class AddAnotherCateringOperationController @Inject() (
     }
   }
 
-  def remove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     getOperatorName(idx)
       .map { operatorName =>
         Future.successful(
@@ -172,9 +172,6 @@ class AddAnotherCateringOperationController @Inject() (
             theConfirmationView(
               confirmableActionForm,
               operatorName,
-              "label.section.aboutTheFranchiseConcessions",
-              request.sessionData.toSummary,
-              idx,
               controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.performRemove(idx),
               controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(idx)
             )
@@ -184,7 +181,7 @@ class AddAnotherCateringOperationController @Inject() (
       .getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)))
   }
 
-  def performRemove(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def performRemove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       confirmableActionForm,
       formWithErrors =>
@@ -195,9 +192,6 @@ class AddAnotherCateringOperationController @Inject() (
                 theConfirmationView(
                   formWithErrors,
                   operatorName,
-                  "label.section.aboutTheFranchiseConcessions",
-                  request.sessionData.toSummary,
-                  idx,
                   controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.performRemove(idx),
                   controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(idx)
                 )
