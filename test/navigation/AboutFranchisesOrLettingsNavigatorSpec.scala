@@ -16,9 +16,13 @@
 
 package navigation
 
-import models.submissions.common.AnswerNo
-import navigation.identifiers._
+import models.ForType.{FOR6010, FOR6015, FOR6020}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection, OperatorDetails, PropertyRentDetails}
+import models.submissions.common.{AnswerNo, AnswerYes}
+import navigation.identifiers.*
 import utils.TestBaseSpec
+
+import java.time.LocalDate
 
 class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
@@ -39,7 +43,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
     }
 
-    "return a function that goes to task list page when franchise page has been completed no" in {
+    "return a function that goes to CYA page when franchise page has been completed no" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6010NoSession)
         .apply(
@@ -56,30 +60,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
     }
 
-    "return a function that goes to catering operation page when franchise page has been completed yes 6015123" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6020Session)
-        .apply(
-          sessionAboutFranchiseOrLetting6020Session
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Some(4))
-    }
-
-    "return a function that goes to rent received from page when catering operation page has been completed yes 6015" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationDetailsPageId, sessionAboutFranchiseOrLetting6015YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6015YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(0)
-    }
-
-    "return a function that goes to catering operation details page when rent from concession is completed no 6015" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(RentFromConcessionId, sessionAboutFranchiseOrLetting6015NoSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6015NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
-
     "return a function that goes to task list page when franchise page has been completed no 6015" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6015NoSession)
@@ -88,77 +68,12 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
         .show()
     }
-
-    "return a function that goes to letting page when catering operation page has been completed no" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6010NoSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
-
-    "return a function that continue with incomplete section when catering detail page has been incomplete in 6030" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6030SIncompleteCateringDetail)
-        .apply(
-          sessionAboutFranchiseOrLetting6030SIncompleteCateringDetail
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(0)
-    }
-
-    "return a function that goes to concession or franchise page when franchise page has been completed no 6015" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationPageId, sessionAboutFranchiseOrLetting6015NoSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6015NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
-
-    "return a function that goes to catering operation rent details page when catering operation details page has been completed" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationDetailsPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(0)
-    }
-
     "return a function that goes to rental income included page when rent received from page has been completed" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CalculatingTheRentForPageId, sessionAboutFranchiseOrLetting6015YesSession)
         .apply(
           sessionAboutFranchiseOrLetting6015YesSession
         ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(0)
-    }
-
-    "return a function that goes to catering operation rent included page when rent received calculation page has been completed" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(RentReceivedFromPageId, sessionAboutFranchiseOrLetting6015YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6015YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(0)
-    }
-
-    "return a function that goes to catering operation rent includes page when catering operation rent details page has been completed" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationRentDetailsPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(0)
-    }
-
-    "return a function that goes to add another catering operation page when catering operation rent includes page has been completed" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(CateringOperationRentIncludesPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(0)
-    }
-
-    "return a function that goes to lettings page when letting page has been completed no" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(AddAnotherCateringOperationPageId, sessionAboutFranchiseOrLetting6010NoSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
     "return a function that goes to task list page when letting page has been completed no" in {
@@ -386,6 +301,89 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           .apply(
             sessionAboutFranchiseOrLetting6045
           ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)
+      }
+      "return a function that goes to TypeOfLettingController for form 6020" in {
+        val session = sessionAboutFranchiseOrLetting6020Session.copy(
+          aboutFranchisesOrLettings = Some(
+            AboutFranchisesOrLettings(
+              franchisesOrLettingsTiedToProperty = Some(AnswerYes),
+              lettingSections = IndexedSeq(
+                LettingSection(
+                  lettingOtherPartOfPropertyInformationDetails = OperatorDetails("test", "test", None)
+                )
+              )
+            )
+          )
+        )
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(FranchiseOrLettingsTiedToPropertyId, session)
+          .apply(session) shouldBe
+          controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Some(0))
+      }
+
+      "redirect to add another letting page when no letting exists" in {
+        val session = sessionAboutFranchiseOrLetting6010YesSession.copy(
+          aboutFranchisesOrLettings = Some(
+            AboutFranchisesOrLettings(
+              lettingOtherPartOfProperty = Some(AnswerYes),
+              lettingSections = IndexedSeq.empty,
+              lettingCurrentIndex = 0
+            )
+          )
+        )
+        aboutFranchisesOrLettingsNavigator
+          .nextPage(AddAnotherLettingAccommodationPageId, session)
+          .apply(session) shouldBe
+          controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0)
+      }
+
+      "getIncompleteLettingCall should return correct routes based on incomplete fields" should {
+        val operatorDetails = OperatorDetails("test", "test", None)
+
+        "go to LettingOtherPartOfPropertyDetailsController" in {
+          val detail = LettingSection(
+            lettingOtherPartOfPropertyInformationDetails = operatorDetails,
+            lettingOtherPartOfPropertyRentDetails = Some(PropertyRentDetails(BigDecimal(1000), LocalDate.now)),
+            itemsInRent = List("test")
+          )
+          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6010, 0) shouldBe
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(0))
+        }
+
+        "go to LettingOtherPartOfPropertyDetailsController when informationDetails is null" in {
+          val detail = LettingSection(lettingOtherPartOfPropertyInformationDetails = null)
+          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6010, 0) shouldBe
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(0))
+        }
+
+        "go to LettingOtherPartOfPropertyDetailsRentController when rent6015Details is empty and forType is 6015/6016" in {
+          val detail = LettingSection(
+            lettingOtherPartOfPropertyInformationDetails = operatorDetails,
+            lettingOtherPartOfPropertyRent6015Details = None
+          )
+          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6015, 0) shouldBe
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0)
+        }
+
+        "go to LettingOtherPartOfPropertyDetailsRentController when rentDetails is empty and forType is not 6015/6016" in {
+          val detail = LettingSection(
+            lettingOtherPartOfPropertyInformationDetails = operatorDetails,
+            lettingOtherPartOfPropertyRentDetails = None
+          )
+          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6010, 0) shouldBe
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0)
+        }
+
+        "go to LettingOtherPartOfPropertyRentIncludesController when itemsInRent is empty" in {
+          val detail = LettingSection(
+            lettingOtherPartOfPropertyInformationDetails = operatorDetails,
+            lettingOtherPartOfPropertyRentDetails = Some(PropertyRentDetails(BigDecimal(1000), LocalDate.now)),
+            itemsInRent = List.empty
+          )
+          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6010, 0) shouldBe
+            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(0)
+        }
+
       }
     }
   }

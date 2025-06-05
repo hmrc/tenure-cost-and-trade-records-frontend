@@ -36,26 +36,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   override val overrideRedirectIfFromCYA: Map[String, Session => Call] = Map(
     (
-      aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show().url,
-      _ => aboutfranchisesorlettings.routes.ConcessionOrFranchiseController.show()
-    ),
-    (
-      aboutfranchisesorlettings.routes.CateringOperationController.show().url,
-      _ => aboutfranchisesorlettings.routes.CateringOperationController.show()
-    ),
-    (
-      aboutfranchisesorlettings.routes.ConcessionOrFranchiseController
-        .show()
-        .url,
-      addAnotherCateringOperationsConditionsRouting
-    ),
-    (
-      aboutfranchisesorlettings.routes.CateringOperationDetailsController
-        .show()
-        .url,
-      addAnotherCateringOperationsConditionsRouting
-    ),
-    (
       aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController
         .show()
         .url,
@@ -67,90 +47,18 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
       case Some(AnswerYes) =>
         answers.forType match {
-          case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 | FOR6045 | FOR6046 =>
-            controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
-          case FOR6020                                                             =>
+          case FOR6020 =>
             val idx: Int = answers.aboutFranchisesOrLettings.fold(0)(_.lettings.fold(0)(_.size))
             controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Option(idx))
-          case _                                                                   =>
-            controllers.aboutfranchisesorlettings.routes.CateringOperationController.show()
+          case _       =>
+            controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
         }
       case _               =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
     }
 
-  private def cateringOperationsConditionsRouting: Session => Call = answers =>
-    answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
-      case Some("yes") =>
-        answers.forType match {
-          case FOR6030 =>
-            val maybeCatering =
-              answers.aboutFranchisesOrLettings.flatMap(
-                _.cateringOperationBusinessSections.getOrElse(IndexedSeq.empty).lastOption
-              )
-            val idx           = getCateringOperationsIndex(answers)
-            maybeCatering match {
-              case Some(catering) if isCateringBusinessDetailsIncomplete6030(catering) =>
-                getIncompleteBusinessCateringCall6030(catering, idx)
-              case _                                                                   =>
-                controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
-            }
-          case _       =>
-            logger.warn(
-              s"Navigation for franchise or letting reached without a valid FOR Type"
-            )
-            throw new RuntimeException(
-              "Invalid option exception for franchise or letting without a valid FOR Type routing"
-            )
-        }
-
-      case _ => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
-
-  private def getCateringOperationsIndex(session: Session): Int =
-    session.aboutFranchisesOrLettings.map(_.cateringOperationCurrentIndex).getOrElse(0)
-
   private def getRentalIncomeIndex(session: Session): Int =
     session.aboutFranchisesOrLettings.map(_.rentalIncomeIndex).getOrElse(0)
-
-  private def isCateringDetailsIncomplete(detail: CateringOperationSection, forType: ForType): Boolean =
-    if (forType == FOR6015 || forType == FOR6016) {
-      detail.cateringOperationDetails == null ||
-      detail.rentReceivedFrom.isEmpty ||
-      detail.calculatingTheRent.isEmpty ||
-      detail.itemsInRent.isEmpty
-    } else {
-      detail.cateringOperationDetails == null ||
-      detail.cateringOperationRentDetails.isEmpty ||
-      detail.itemsInRent.isEmpty
-    }
-
-  private def isCateringBusinessDetailsIncomplete6030(detail: CateringOperationBusinessSection): Boolean =
-    detail.feeReceived.isEmpty
-
-  def getIncompleteCateringCall(detail: CateringOperationSection, idx: Int, forType: ForType): Call =
-    if (forType == FOR6015 || forType == FOR6016) {
-      if (detail.rentReceivedFrom.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx)
-      else if (detail.calculatingTheRent.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(idx)
-      else if (detail.itemsInRent.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
-      else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
-    } else {
-      if (detail.cateringOperationRentDetails.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController.show(idx)
-      else if (detail.itemsInRent.isEmpty)
-        controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController.show(idx)
-      else controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show(Some(idx))
-    }
-
-  def getIncompleteBusinessCateringCall6030(detail: CateringOperationBusinessSection, idx: Int): Call =
-    if (detail.feeReceived.isEmpty) {
-      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(idx)
-    } else {
-      controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(Some(idx))
-    }
 
   private def isLettingDetailIncomplete(detail: LettingSection, forType: ForType): Boolean = {
     val isCommonConditionMet   = detail.lettingOtherPartOfPropertyInformationDetails == null || detail.itemsInRent.isEmpty
@@ -182,94 +90,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       case _                 =>
         controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController
           .show(getRentalIncomeIndex(answers))
-    }
-
-  private def cateringOperationsDetailsConditionsRouting: Session => Call = answers =>
-    answers.forType match {
-      case FOR6015 | FOR6016 =>
-        controllers.aboutfranchisesorlettings.routes.RentReceivedFromController
-          .show(getCateringOperationsIndex(answers))
-      case _                 =>
-        controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsRentController
-          .show(getCateringOperationsIndex(answers))
-    }
-
-  private def cateringOperationsRentDetailsConditionsRouting: Session => Call = answers =>
-    controllers.aboutfranchisesorlettings.routes.CateringOperationRentIncludesController
-      .show(getCateringOperationsIndex(answers))
-
-  private def cateringOperationsRentIncludesConditionsRouting: Session => Call = answers =>
-    controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
-      .show(getCateringOperationsIndex(answers))
-
-  private def addAnotherCateringOperationsConditionsRouting: Session => Call = answers => {
-    def getLastCateringOperationIndex(session: Session): Option[Int] =
-      session.aboutFranchisesOrLettings.flatMap { aboutFranchiseOrLettings =>
-        aboutFranchiseOrLettings.cateringOperationSections.lastOption.map(_ =>
-          aboutFranchiseOrLettings.cateringOperationSections.size
-        )
-      }
-    val fromCYA                                                      =
-      answers.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
-    val existingSection                                              =
-      answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
-    existingSection match {
-      case Some(existingSection) if isCateringDetailsIncomplete(existingSection, answers.forType) =>
-        getIncompleteCateringCall(existingSection, getCateringOperationsIndex(answers), answers.forType)
-      case None                                                                                   =>
-        controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
-          .show(getCateringOperationsIndex(answers))
-      case _                                                                                      =>
-        existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
-          case "yes" =>
-            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
-              .show(getLastCateringOperationIndex(answers))
-          case _     =>
-            if (fromCYA == true) {
-              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-            } else {
-              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-            }
-        }
-    }
-  }
-
-  private def addAnotherConcessionRouting: Session => Call = answers => {
-    def getLastCateringOperationConcessionIndex(session: Session): Option[Int] =
-      session.aboutFranchisesOrLettings.flatMap { aboutFranchiseOrLettings =>
-        aboutFranchiseOrLettings.cateringOperationSections.lastOption.map(_ =>
-          aboutFranchiseOrLettings.cateringOperationSections.size
-        )
-      }
-    val fromCYA                                                                =
-      answers.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
-    val existingSection                                                        =
-      answers.aboutFranchisesOrLettings.flatMap(_.cateringOperationSections.lift(getCateringOperationsIndex(answers)))
-    existingSection match {
-      case Some(existingSection) if isCateringDetailsIncomplete(existingSection, answers.forType) =>
-        getIncompleteCateringCall(existingSection, getCateringOperationsIndex(answers), answers.forType)
-      case None                                                                                   =>
-        controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
-          .show(getCateringOperationsIndex(answers))
-      case _                                                                                      =>
-        existingSection.flatMap(_.addAnotherOperationToProperty).get.name match {
-          case "yes" =>
-            controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController
-              .show(getLastCateringOperationConcessionIndex(answers))
-          case _     =>
-            if (fromCYA == true) {
-              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-            } else {
-              controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-            }
-        }
-    }
-  }
-
-  private def rentForConcessionsRouting: Session => Call = answers =>
-    answers.aboutFranchisesOrLettings.flatMap(_.cateringConcessionOrFranchise.map(_.name)) match {
-      case Some("yes") => controllers.aboutfranchisesorlettings.routes.CateringOperationDetailsController.show()
-      case _           => controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     }
 
   private def lettingAccommodationConditionsRouting: Session => Call = answers =>
@@ -307,8 +127,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       session.aboutFranchisesOrLettings.flatMap { aboutFranchiseOrLettings =>
         aboutFranchiseOrLettings.lettingSections.lastOption.map(_ => aboutFranchiseOrLettings.lettingSections.size)
       }
-    val fromCYA                                            =
-      answers.aboutFranchisesOrLettings.flatMap(_.fromCYA).getOrElse(false)
     val existingSection                                    = answers.aboutFranchisesOrLettings.flatMap(_.lettingSections.lift(getLettingsIndex(answers)))
     existingSection match {
       case Some(letting) if isLettingDetailIncomplete(letting, answers.forType) =>
@@ -322,21 +140,13 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
             controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController
               .show(getLastLettingIndex(answers))
           case _     =>
-            if (fromCYA == true) {
-              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-            } else {
-              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-            }
+            controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
         }
     }
   }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
-    CateringOperationPageId                    -> cateringOperationsConditionsRouting,
-    CateringOperationBusinessPageId            -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(getRentalIncomeIndex(answers))
-    ),
     FeeReceivedPageId                          -> (answers =>
       controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
     ),
@@ -356,11 +166,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     RentalIncomeIncludedId                     -> (answers =>
       controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
     ),
-    CateringOperationDetailsPageId             -> cateringOperationsDetailsConditionsRouting,
-    CateringOperationRentDetailsPageId         -> cateringOperationsRentDetailsConditionsRouting,
-    CateringOperationRentIncludesPageId        -> cateringOperationsRentIncludesConditionsRouting,
-    AddAnotherCateringOperationPageId          -> addAnotherCateringOperationsConditionsRouting,
-    AddAnotherConcessionPageId                 -> addAnotherConcessionRouting,
     RentReceivedFromPageId                     -> (answers =>
       controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(getRentalIncomeIndex(answers))
     ),
@@ -372,7 +177,6 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
     LettingAccommodationRentDetailsPageId      -> lettingsRentDetailsConditionsRouting,
     LettingAccommodationRentIncludesPageId     -> lettingsRentIncludesConditionsRouting,
     AddAnotherLettingAccommodationPageId       -> addAnotherLettingsConditionsRouting,
-    RentFromConcessionId                       -> rentForConcessionsRouting,
     MaxOfLettingsReachedCateringId             -> (_ =>
       controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
     ),
