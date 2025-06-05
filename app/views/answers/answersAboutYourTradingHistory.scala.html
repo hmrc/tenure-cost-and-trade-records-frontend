@@ -38,7 +38,7 @@
     cyaSupport.table(
         turnoverSections.map(t => Seq(
             dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
-            s"${t.tradingPeriod} ${messages("turnover.weeks")}",
+            cyaSupport.tradingPeriodWithWeeks(t.tradingPeriod),
             t.alcoholicDrinks.getOrElse(zeroBigDecimal).asMoney,
             t.food.getOrElse(zeroBigDecimal).asMoney,
             t.otherReceipts.getOrElse(zeroBigDecimal).asMoney,
@@ -51,7 +51,7 @@
     cyaSupport.table(
         turnoverSections.map(t => Seq(
             dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
-            s"${t.tradingPeriod} ${messages("turnover.weeks")}",
+            cyaSupport.tradingPeriodWithWeeks(t.tradingPeriod),
             t.grossIncome.getOrElse(zeroBigDecimal).asMoney,
             s"${t.totalVisitorNumbers.getOrElse(0)}"
         ))

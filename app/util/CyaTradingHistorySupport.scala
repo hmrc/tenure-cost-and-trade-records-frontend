@@ -36,19 +36,23 @@ class CyaTradingHistorySupport @Inject() (
   val dateUtil: DateUtilLocalised
 ) {
 
-  def sectionAnswers(implicit
+  def tradingPeriodWithWeeks(tradingPeriod: Int)(using messages: Messages): String =
+    val weeksSuffix = if tradingPeriod == 1 then "turnover.week" else "turnover.weeks"
+    s"$tradingPeriod ${messages(weeksSuffix)}"
+
+  def sectionAnswers(using
     request: SessionRequest[?],
     messages: Messages
   ): SectionAnswersRowBuilder[AboutTheTradingHistory] =
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
 
-  def sectionAnswers1(implicit
+  def sectionAnswers1(using
     request: SessionRequest[?],
     messages: Messages
   ): SectionAnswersRowBuilder[AboutTheTradingHistoryPartOne] =
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
 
-  def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
+  def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def table(valuesGrid: Seq[Seq[String]]): Html = Html(
     valuesGrid.map { values =>
@@ -74,7 +78,7 @@ class CyaTradingHistorySupport @Inject() (
     valueLabelKey: String,
     valueOpt: Option[String],
     classes: String = "no-border-bottom"
-  )(implicit messages: Messages): SummaryListRow =
+  )(using messages: Messages): SummaryListRow =
     answer(valueLabelKey, Seq(valueOpt.getOrElse("")), None, classes)
 
   def answer(
@@ -82,7 +86,7 @@ class CyaTradingHistorySupport @Inject() (
     values: Seq[String],
     additionalParagraph: Option[String] = None,
     classes: String = "no-border-bottom"
-  )(implicit messages: Messages): SummaryListRow =
+  )(using messages: Messages): SummaryListRow =
     SummaryListRow(
       key = Key(Text(messages(valueLabelKey))),
       value = Value(
@@ -93,7 +97,7 @@ class CyaTradingHistorySupport @Inject() (
       classes = classes
     )
 
-  def yearEndChanged(implicit request: SessionRequest[?], messages: Messages): Boolean =
+  def yearEndChanged(using request: SessionRequest[?], messages: Messages): Boolean =
     sectionAnswers.answers
       .flatMap(_.occupationAndAccountingInformation)
       .flatMap(_.financialYearEndHasChanged)
@@ -102,14 +106,14 @@ class CyaTradingHistorySupport @Inject() (
   def financialYearEndDatesTable(
     financialYearEndDates: Seq[LocalDate],
     dateUtil: DateUtilLocalised
-  )(implicit messages: Messages): Html =
+  )(using messages: Messages): Html =
     table(
       financialYearEndDates.map(financialYearEnd => Seq(dateUtil.formatDayMonthAbbrYear(financialYearEnd)))
     )
 
   def financialYearEndDates(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[?]): Seq[LocalDate] =
+  )(using request: SessionRequest[?]): Seq[LocalDate] =
     forType match {
       case FOR6020           => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
       case FOR6030           => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
@@ -119,7 +123,7 @@ class CyaTradingHistorySupport @Inject() (
       case _                 => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
     }
 
-  def actions(implicit messages: Messages): Option[Actions] =
+  def actions(using messages: Messages): Option[Actions] =
     Option(
       Actions(items =
         Seq(
@@ -138,7 +142,7 @@ class CyaTradingHistorySupport @Inject() (
   def financialYearEndRow(
     pageHeadingKey: String,
     editPage: Call
-  )(implicit
+  )(using
     request: SessionRequest[?],
     messages: Messages
   ): SummaryListRow =
@@ -172,7 +176,7 @@ class CyaTradingHistorySupport @Inject() (
     pageHeadingKey: String,
     editPage: Call,
     answerRows: SummaryListRow*
-  )(implicit
+  )(using
     request: SessionRequest[?],
     messages: Messages
   ): Html = {
@@ -184,7 +188,7 @@ class CyaTradingHistorySupport @Inject() (
     )
   }
 
-  def costOfSalesValuesTable(costOfSales: Seq[CostOfSales])(implicit messages: Messages): String =
+  def costOfSalesValuesTable(costOfSales: Seq[CostOfSales])(using messages: Messages): String =
     table(
       costOfSales.map(s =>
         Seq(
@@ -198,7 +202,7 @@ class CyaTradingHistorySupport @Inject() (
       )
     ).body
 
-  def costOfSalesKeys(implicit messages: Messages): String =
+  def costOfSalesKeys(using messages: Messages): String =
     Seq(
       messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
       messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
@@ -212,7 +216,7 @@ class CyaTradingHistorySupport @Inject() (
       "</p>"
     )
 
-  def turnoverKeys60156016(implicit messages: Messages): String =
+  def turnoverKeys60156016(using messages: Messages): String =
     Seq(
       messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
       messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
@@ -228,7 +232,7 @@ class CyaTradingHistorySupport @Inject() (
       "</p>"
     )
 
-  def turnoverValuesTable60156016(turnoverSections: Seq[TurnoverSection])(implicit messages: Messages): String =
+  def turnoverValuesTable60156016(turnoverSections: Seq[TurnoverSection])(using messages: Messages): String =
     table(
       turnoverSections.map(t =>
         Seq(
@@ -244,7 +248,7 @@ class CyaTradingHistorySupport @Inject() (
       )
     ).body
 
-  def accountingInformation(implicit
+  def accountingInformation(using
     request: SessionRequest[?],
     messages: Messages
   ): Html =
@@ -302,7 +306,7 @@ class CyaTradingHistorySupport @Inject() (
       ).body
     )
 
-  def occupationDetails(implicit
+  def occupationDetails(using
     request: SessionRequest[?],
     messages: Messages
   ): Html =
