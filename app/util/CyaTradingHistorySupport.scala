@@ -36,6 +36,10 @@ class CyaTradingHistorySupport @Inject() (
   val dateUtil: DateUtilLocalised
 ) {
 
+  def tradingPeriodWithWeeks(tradingPeriod: Int)(implicit messages: Messages): String =
+    val weeksSuffix = if tradingPeriod == 1 then "turnover.week" else "turnover.weeks"
+    s"$tradingPeriod ${messages(weeksSuffix)}"
+
   def sectionAnswers(implicit
     request: SessionRequest[?],
     messages: Messages

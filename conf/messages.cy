@@ -2139,6 +2139,7 @@ turnover.accommodationCaption = Heb gynnwys prydau o fwyd.
 turnover.averageOccupancyRate = Cyfraddau’r feddiannaeth, ar gyfartaledd
 turnover.averageOccupancyRateCaption = Tai llety a gwestai yn unig.
 turnover.mustInclude.p1 = Mae’n rhaid i chi gynnwys unrhyw incwm rhent a gafwyd o gonsesiynau neu osodiadau, neu incwm a gynhyrchir gan unrhyw fasnachfreintiau a weithredwyd gan {0}.
+turnover.week = week
 turnover.weeks = wythnos
 turnover.details = Help gyda chwblhau trosiant
 turnover.details.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon.

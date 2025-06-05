@@ -34,32 +34,11 @@
 
 @forType = @{request.sessionData.forType}
 
-@tradingPeriodAndWeeks = @{
-
-    request.sessionData.aboutTheTradingHistory.flatMap(
-        _.turnoverSections
-        .getOrElse(Seq.empty)
-        .zipWithIndex
-        .map {
-            case (section, 1)  =>
-                (section.tradingPeriod, "week").getOrElse("")
-            case (section, index) =>
-                (section.tradingPeriod, "weeks").getOrElse("")
-        })
-}
-
-@tradingPeriodOne = @{request.sessionData.aboutTheTradingHistory.flatMap(_.turnoverSections.headOption.flatMap(_.tradingPeriod).drop(0))}
-
-@tradingPeriodTwo = @{request.sessionData.aboutTheTradingHistory.flatMap(_.turnoverSections.getOrElse(Seq.empty).map(_.tradingPeriod).slice(1,2))}
-
-@tradingPeriodThree = @{request.sessionData.aboutTheTradingHistory.flatMap(_.turnoverSections.lastOption.flatMap(_.tradingPeriod).drop(0))}
-
-
 @turnoverValuesTable(turnoverSections: Seq[TurnoverSection]) = @{
     cyaSupport.table(
         turnoverSections.map(t => Seq(
             dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
-            tradingPeriodAndWeeks.getOrElse("").toString,
+            cyaSupport.tradingPeriodWithWeeks(t.tradingPeriod),
             t.alcoholicDrinks.getOrElse(zeroBigDecimal).asMoney,
             t.food.getOrElse(zeroBigDecimal).asMoney,
             t.otherReceipts.getOrElse(zeroBigDecimal).asMoney,
@@ -72,7 +51,7 @@
     cyaSupport.table(
         turnoverSections.map(t => Seq(
             dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
-            s"${t.tradingPeriod} ${messages("turnover.weeks")}",
+            cyaSupport.tradingPeriodWithWeeks(t.tradingPeriod),
             t.grossIncome.getOrElse(zeroBigDecimal).asMoney,
             s"${t.totalVisitorNumbers.getOrElse(0)}"
         ))
@@ -116,12 +95,6 @@
 }
 
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
-
-    println(@tradingPeriodOne)
-    <br>
-    println(@tradingPeriodTwo)
-    <br>
-    println(@tradingPeriodThree)
 
     @forType match {
 
