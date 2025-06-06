@@ -27,7 +27,7 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] 
 
   val messageKeyPrefix = "vacantProperties"
 
-  override val form: Form[VacantProperties] = VacantPropertiesForm.vacantPropertiesForm
+  override val form: Form[VacantProperties] = VacantPropertiesForm.theForm
 
   val backLink: String = controllers.connectiontoproperty.routes.EditAddressController.show().url
 

@@ -19,7 +19,7 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.VacantPropertiesForm.vacantPropertiesForm
+import form.connectiontoproperty.VacantPropertiesForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.{AddressConnectionTypeYesChangeAddress, VacantProperties}
 import navigation.ConnectionToPropertyNavigator
@@ -28,7 +28,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.vacantProperties
+import views.html.connectiontoproperty.vacantProperties as VacantPropertiesView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,46 +38,49 @@ class VacantPropertiesController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: ConnectionToPropertyNavigator,
-  vacantPropertiesView: vacantProperties,
+  theView: VacantPropertiesView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
-    with Logging {
+    with ReadOnlySupport
+    with Logging:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("VacantProperties")
+    val freshForm  = theForm
+    val filledForm =
+      for
+        stillConnectedDetails <- request.sessionData.stillConnectedDetails
+        vacantProperties      <- stillConnectedDetails.vacantProperties
+      yield theForm.fill(vacantProperties)
 
-    Future.successful(
-      Ok(
-        vacantPropertiesView(
-          request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties) match {
-            case Some(vacantProperties) => vacantPropertiesForm.fill(vacantProperties)
-            case _                      => vacantPropertiesForm
-          },
-          calculateBackLink,
-          request.sessionData.toSummary
-        )
+    Ok(
+      theView(
+        filledForm.getOrElse(freshForm),
+        calculateBackLink,
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
-
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[VacantProperties](
-      vacantPropertiesForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          vacantPropertiesView(
+          theView(
             formWithErrors,
             calculateBackLink,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            isReadOnly
           )
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(vacantProperties = Some(data)))
-        session
+        repo
           .saveOrUpdate(updatedData)
           .map(_ =>
             navigator
@@ -101,9 +104,13 @@ class VacantPropertiesController @Inject() (
       case "TL"  => controllers.routes.TaskListController.show().url + "#vacant-properties"
       case _     =>
         request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
-          case Some(AddressConnectionTypeYesChangeAddress) =>
-            controllers.connectiontoproperty.routes.EditAddressController.show().url
-          case _                                           => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+          case Some(AddressConnectionTypeYesChangeAddress) => routes.EditAddressController.show().url
+          case _                                           => routes.AreYouStillConnectedController.show().url
         }
     }
-}
+
+  private def answersChecked(using r: SessionRequest[AnyContent]) =
+    for
+      stillConnectedDetails                <- r.sessionData.stillConnectedDetails
+      checkYourAnswersConnectionToProperty <- stillConnectedDetails.checkYourAnswersConnectionToProperty
+    yield checkYourAnswersConnectionToProperty.checkYourAnswersConnectionToProperty

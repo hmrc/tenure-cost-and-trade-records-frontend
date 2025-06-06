@@ -24,15 +24,16 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[VacantProperties], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[VacantProperties], backLink: String, summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("vacantProperties.heading"),
-  showSection = true,
+    pageHeading = messages("vacantProperties.heading"),
+    showSection = true,
     summary = Some(summary),
-  sectionName = messages("label.section.connectionToTheProperty"),
+    sectionName = messages("label.section.connectionToTheProperty"),
     backLinkUrl = backLink,
-    theForm = theForm
+    theForm = theForm,
+    readOnly = readOnly
 ) {
 
       <p class="govuk-body">@{messages("vacantProperties.p1")}</p>

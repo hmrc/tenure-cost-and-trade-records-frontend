@@ -16,12 +16,13 @@
 
 package models.submissions.connectiontoproperty
 
-import play.api.libs.json.{Json, OFormat}
+import play.api.libs.json.{Json, Format}
 
 case class CheckYourAnswersConnectionToProperty(
-  checkYourAnswersConnectionToProperty: String
+  checkYourAnswersConnectionToProperty: String,
+  confirmAnswersAreCorrect: Option[Boolean]
 )
 
-object CheckYourAnswersConnectionToProperty {
-  implicit val format: OFormat[CheckYourAnswersConnectionToProperty] = Json.format
-}
+object CheckYourAnswersConnectionToProperty:
+  given Format[CheckYourAnswersConnectionToProperty] = Json.format
+

@@ -24,15 +24,16 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("tradingNamePayingRent.heading"),
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.connectionToTheProperty"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("tradingNamePayingRent.heading"),
+    showSection = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm,
+    readOnly = readOnly
 ) {
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNamePayingRentController.submit()) {

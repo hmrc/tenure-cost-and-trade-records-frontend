@@ -26,17 +26,18 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, tradingName:String, summary: Summary, readOnly: Boolean)(implicit request: SessionRequest[?], messages: Messages)
 
 
 @layout(
-  pageHeading = messages("areYouThirdParty6076.heading"),
-  showH1 = true,
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.connectionToTheProperty"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("areYouThirdParty6076.heading"),
+    showH1 = true,
+    showSection = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm,
+    readOnly = readOnly
 ) {
 
   @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit()) {

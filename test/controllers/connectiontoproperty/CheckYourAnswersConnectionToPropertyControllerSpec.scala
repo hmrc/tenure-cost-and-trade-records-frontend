@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.checkYourAnswersConnectionToPropertyForm
+import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import utils.TestBaseSpec
 import play.api.test.Helpers._
@@ -81,7 +81,7 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
   "Check Your Answers Connection To Property form" should {
     "error if checkYourAnswersConnectionToProperty is missing" in {
       val formData = baseFormData - errorKey.checkYourAnswersConnectionToProperty
-      val form     = checkYourAnswersConnectionToPropertyForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.checkYourAnswersConnectionToProperty, "error.checkYourAnswersRadio.required", form)
     }

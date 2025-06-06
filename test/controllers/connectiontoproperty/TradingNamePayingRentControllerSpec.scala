@@ -17,7 +17,7 @@
 package controllers.connectiontoproperty
 
 import connectors.Audit
-import form.connectiontoproperty.TradingNamePayingRentForm.tradingNamePayingRentForm
+import form.connectiontoproperty.TradingNamePayingRentForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -97,7 +97,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
     "Trading Name paying rent form" should {
       "error if areYouThirdParty is missing" in {
         val formData = baseFormData - errorKey.tradingNamePayingRent
-        val form     = tradingNamePayingRentForm.bind(formData)
+        val form     = theForm.bind(formData)
 
         mustContainError(errorKey.tradingNamePayingRent, "error.tradingNamePayingRent.missing", form)
       }

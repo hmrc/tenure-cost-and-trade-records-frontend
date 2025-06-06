@@ -26,7 +26,7 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "areYouThirdParty"
 
-  override val form = AreYouThirdPartyForm.areYouThirdPartyForm
+  override val form = AreYouThirdPartyForm.theForm
 
   val sessionRequest6048 = SessionRequest(baseFilled6048Session, fakeRequest)
   val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)

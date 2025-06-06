@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object TradingNamePayingRentForm {
-  lazy val tradingNamePayingRentForm: Form[AnswersYesNo] = Form(tradingNamePayingRentMapping)
+  lazy val theForm: Form[AnswersYesNo] = Form(tradingNamePayingRentMapping)
 
   val tradingNamePayingRentMapping = mapping(
     "tradingNamePayingRent" -> createYesNoType("error.tradingNamePayingRent.missing")

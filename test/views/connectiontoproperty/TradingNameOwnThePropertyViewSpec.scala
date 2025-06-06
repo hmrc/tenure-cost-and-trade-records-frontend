@@ -27,7 +27,7 @@ class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYe
 
   val messageKeyPrefix = "tradingNameOwnTheProperty"
 
-  override val form: Form[AnswersYesNo] = TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
+  override val form: Form[AnswersYesNo] = TradingNameOwnThePropertyForm.theForm
 
   val backLink: String = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
 

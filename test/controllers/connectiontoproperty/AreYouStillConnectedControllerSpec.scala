@@ -18,7 +18,7 @@ package controllers.connectiontoproperty
 
 import connectors.Audit
 import form.Errors
-import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
+import form.connectiontoproperty.AreYouStillConnectedForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -138,7 +138,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
   "Are you still connected form" should {
     "error if isRelated is missing" in {
       val formData = baseFormData - errorKey.isRelated
-      val form     = areYouStillConnectedForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.isRelated, Errors.isConnectedError, form)
     }

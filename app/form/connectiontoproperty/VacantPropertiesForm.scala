@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object VacantPropertiesForm {
-  val vacantPropertiesForm = Form(
+  val theForm = Form(
     mapping(
       "vacantProperties" -> vacantPropertiesType
     )(VacantProperties.apply)(o => Some(o.vacantProperties))
