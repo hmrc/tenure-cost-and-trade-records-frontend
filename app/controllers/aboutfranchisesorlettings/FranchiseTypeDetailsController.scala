@@ -21,6 +21,7 @@ import connectors.Audit
 import connectors.addressLookup.*
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm.theForm
+import models.ForType._
 import models.Session
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
@@ -76,6 +77,12 @@ class FranchiseTypeDetailsController @Inject() (
   }
 
   def submit(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+    val forType          = request.sessionData.forType
+    val operatorOrTenant = request.sessionData.aboutFranchisesOrLettings
+      .flatMap(_.rentalIncome)
+      .getOrElse(IndexedSeq.empty)
+      .map(_.sourceType.name)
+
     continueOrSaveAsDraft[BusinessDetails](
       theForm,
       formWithErrors =>
@@ -94,9 +101,18 @@ class FranchiseTypeDetailsController @Inject() (
           _                          <- repository.saveOrUpdate(newSession)
           redirectResult             <- redirectToAddressLookupFrontend(
                                           config = AddressLookupConfig(
-                                            lookupPageHeadingKey = "concessionDetails.address.lookupPageHeading",
-                                            selectPageHeadingKey = "concessionDetails.address.selectPageHeading",
-                                            confirmPageLabelKey = "concessionDetails.address.confirmPageHeading",
+                                            lookupPageHeadingKey = forType match {
+                                              case FOR6010 => "concessionDetails.address.lookupPageHeadingOperator"
+                                              case _       => "concessionDetails.address.lookupPageHeading"
+                                            },
+                                            selectPageHeadingKey = forType match {
+                                              case FOR6010 => "concessionDetails.address.selectPageHeadingOperator"
+                                              case _       => "concessionDetails.address.selectPageHeading"
+                                            },
+                                            confirmPageLabelKey = forType match {
+                                              case FOR6010 => "concessionDetails.address.confirmPageHeadingOperator"
+                                              case _       => "concessionDetails.address.confirmPageHeading"
+                                            },
                                             offRampCall = routes.FranchiseTypeDetailsController.addressLookupCallback(
                                               updatedIndex
                                             )

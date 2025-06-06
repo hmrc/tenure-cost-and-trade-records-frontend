@@ -41,7 +41,8 @@
 }
 @pageHeading = @{
     forType match {
-        case FOR6010 | FOR6011     => messages("cateringOperationOrLettingAccommodationDetails.heading")
+        case FOR6010    => messages("cateringOperationOrLettingAccommodationOperator.heading")
+        case FOR6011     => messages("cateringOperationOrLettingAccommodationDetails.heading")
         case _                     => messages("concessionDetails.heading")
 
     }

@@ -41,7 +41,7 @@ class FranchiseTypeDetailsControllerSpec
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
-        page.heading shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
+        page.heading shouldBe "cateringOperationOrLettingAccommodationOperator.heading"
       }
       "reply 200 with a fresh HTML form if given unknown index" in new ControllerFixture {
         val result = controller.show(2)(fakeRequest)

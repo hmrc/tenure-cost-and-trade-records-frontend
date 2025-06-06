@@ -48,6 +48,7 @@
 }
 @pageHeading = @{
     forType match {
+        case FOR6010 => messages("lettingOtherPartOfPropertyDetailsTenants.heading")
         case FOR6015 | FOR6016  => messages("lettingDetails.heading")
         case _                  => messages("lettingOtherPartOfPropertyDetails.heading")
     }

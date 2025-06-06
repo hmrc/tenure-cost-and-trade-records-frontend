@@ -31,6 +31,8 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.lettingTypeDetails as LettingTypeDetailsView
+import models.submissions.aboutfranchisesorlettings.*
+import models.ForType._
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -52,7 +54,9 @@ class LettingTypeDetailsController @Inject() (
     with Logging:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+
     audit.sendChangeLink("LettingTypeDetails")
+
     val freshForm  = theForm
     val filledForm =
       for
@@ -75,6 +79,12 @@ class LettingTypeDetailsController @Inject() (
   }
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val forType          = request.sessionData.forType
+    val operatorOrTenant = request.sessionData.aboutFranchisesOrLettings
+      .flatMap(_.rentalIncome)
+      .getOrElse(IndexedSeq.empty)
+      .map(_.sourceType.name)
+
     continueOrSaveAsDraft[OperatorDetails](
       theForm,
       formWithErrors =>
@@ -91,9 +101,18 @@ class LettingTypeDetailsController @Inject() (
           _                          <- repository.saveOrUpdate(newSession)
           redirectResult             <- redirectToAddressLookupFrontend(
                                           config = AddressLookupConfig(
-                                            lookupPageHeadingKey = "lettingDetails.address.lookupPageHeading",
-                                            selectPageHeadingKey = "lettingDetails.address.selectPageHeading",
-                                            confirmPageLabelKey = "lettingDetails.address.confirmPageHeading",
+                                            lookupPageHeadingKey = forType match {
+                                              case FOR6010 => "lettingDetails.address.lookupPageHeadingTenant"
+                                              case _       => "lettingDetails.address.lookupPageHeading"
+                                            },
+                                            selectPageHeadingKey = forType match {
+                                              case FOR6010 => "lettingDetails.address.selectPageHeadingTenant"
+                                              case _       => "lettingDetails.address.selectPageHeading"
+                                            },
+                                            confirmPageLabelKey = forType match {
+                                              case FOR6010 => "lettingDetails.address.confirmPageHeadingTenant"
+                                              case _       => "lettingDetails.address.confirmPageHeading"
+                                            },
                                             offRampCall = routes.LettingTypeDetailsController.addressLookupCallback(
                                               updatedIndex
                                             )
