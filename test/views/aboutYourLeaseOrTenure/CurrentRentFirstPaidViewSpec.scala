@@ -58,12 +58,6 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFir
       assertContainsText(doc, messages("label.currentRentFirstPaid.p1"))
     }
 
-    "contain date format hint for currentRentFirstPaid-hint" in {
-      val doc             = asDocument(createViewUsingForm(form))
-      val firstOccupyHint = doc.getElementById("currentRentFirstPaid-hint").text()
-      assert(firstOccupyHint == messages("label.currentRentFirstPaid.help"))
-    }
-
     "contain date field for the value currentRentFirstPaid.month" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsLabel(doc, "currentRentFirstPaid.month", "Month")

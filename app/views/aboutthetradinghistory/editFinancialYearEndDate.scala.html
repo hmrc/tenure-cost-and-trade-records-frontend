@@ -31,8 +31,16 @@
     form.value.map(_.getYear).fold("")(_.toString)
 }
 
+@getMonth = @{
+    form.value.map(_.getMonth).fold("")(_.toString.toLowerCase.capitalize)
+}
+
+@getDay = @{
+    form.value.map(_.getDayOfMonth).fold("")(_.toString)
+}
+
 @layout(
-  pageHeading = messages("financialYearEndDates.heading", getYear),
+  pageHeading = messages("financialYearEndDates.heading", getDay, getMonth, getYear),
   showSection = true,
   summary = Some(request.sessionData.toSummary),
   sectionName = messages("label.section.aboutYourTradingHistory"),

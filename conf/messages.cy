@@ -943,9 +943,7 @@ hint.lettingTypeDetails6015 = For example restaurants or car hire kiosks
 ####################
 rentalIncomeList.heading = Rydych wedi ychwanegu 1 ffynhonnell incwm rhent
 rentalIncomeList.plural.heading = Rydych wedi ychwanegu {0} ffynhonnell incwm rhent
-label.rentalIncomeList.letting = Do you need to add another letting?
-label.rentalIncomeList.concession = A oes angen i chi ychwanegu ffynhonnell incwm rhent arall?
-label.rentalIncomeList.income = A oes angen i chi ychwanegu ffynhonnell incwm rhent arall?
+label.rentalIncomeList = A oes angen i chi ychwanegu ffynhonnell incwm rhent arall?
 rentalIncomeList.zeroLetting.heading = Rydych wedi tynnu’ch holl ffynonellau incwm rhent
 error.rentalIncomeList.required = Select yes if you would lke to add another source of income
 
@@ -1516,19 +1514,26 @@ lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
 lettingOtherPartOfPropertyDetails.heading = Rhowch fanylion y tenant
 cateringOperationOrLettingAccommodationDetails.heading = Rhowch fanylion y busnes
 concessionDetails.heading = Rhowch fanylion y consesiwn
+concessionDetails.address.lookupPageHeadingOperator = What is the operator’s correspondence address?
 concessionDetails.address.lookupPageHeading = What is the concession’s property address?
+concessionDetails.address.selectPageHeadingOperator = Choose the concession’s property address
 concessionDetails.address.selectPageHeading = Choose the concession’s property address
+concessionDetails.address.confirmPageHeadingOperator = Check the operator’s correspondence address
 concessionDetails.address.confirmPageHeading = Check the concession’s property address
 lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
 lettingDetails.address.lookupPageHeading = What is the tenant or operator address?
 lettingDetails.address.selectPageHeading = Choose the tenant or operator address
 lettingDetails.address.confirmPageHeading = Check the tenant or operator address
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
-lettingOtherPartOfPropertyDetails.address.lookupPageHeading = What is the tenant’s address?
-lettingOtherPartOfPropertyDetails.address.selectPageHeading = Choose the tenant’s address
-lettingOtherPartOfPropertyDetails.address.confirmPageHeading = Check the tenant’s address
+lettingDetails.address.lookupPageHeadingTenant = What is the tenant’s correspondence address?
+lettingDetails.address.lookupPageHeading = What is the tenant or operator address?
+lettingDetails.address.selectPageHeadingTenant = Choose the tenant or operator address
+lettingDetails.address.selectPageHeading = Choose the tenant’s correspondence address
+lettingDetails.address.confirmPageHeadingTenant = Check the tenant’s correspondence address
+lettingDetails.address.confirmPageHeading = Check the tenant or operator address
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Enw’r gweithredwr
+label.operatorDetails = Operator’s details
 label.lettingOperatorName = Enw’r tenant
 label.tradingName = Enw masnachu
 label.typeOfBusiness = Disgrifiwch y math o fusnes
@@ -1714,7 +1719,7 @@ fieldName.financialYear = the {0} when your current financial year ends
 
 # FINANCIAL YEAR-END DATES
 ##############################
-financialYearEndDates.heading = Update your financial year ending {0}
+financialYearEndDates.heading = Update your financial year ending {0} {1} {2}
 financialYearEndDates.hint = For example, 27 9 2017.
 
 # FINANCIAL YEAR-END DATES SUMMARY
