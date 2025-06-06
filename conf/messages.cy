@@ -943,9 +943,7 @@ hint.lettingTypeDetails6015 = For example restaurants or car hire kiosks
 ####################
 rentalIncomeList.heading = Rydych wedi ychwanegu 1 ffynhonnell incwm rhent
 rentalIncomeList.plural.heading = Rydych wedi ychwanegu {0} ffynhonnell incwm rhent
-label.rentalIncomeList.letting = Do you need to add another letting?
-label.rentalIncomeList.concession = A oes angen i chi ychwanegu ffynhonnell incwm rhent arall?
-label.rentalIncomeList.income = A oes angen i chi ychwanegu ffynhonnell incwm rhent arall?
+label.rentalIncomeList = A oes angen i chi ychwanegu ffynhonnell incwm rhent arall?
 rentalIncomeList.zeroLetting.heading = Rydych wedi tynnu’ch holl ffynonellau incwm rhent
 error.rentalIncomeList.required = Select yes if you would lke to add another source of income
 

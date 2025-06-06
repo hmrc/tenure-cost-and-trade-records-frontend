@@ -972,9 +972,7 @@ lettingDetails.heading = Provide the tenant or operator’s details
 ####################
 rentalIncomeList.heading = You have added 1 source of rental income
 rentalIncomeList.plural.heading = You have added {0} sources of rental income
-label.rentalIncomeList.letting = Do you need to add another source of rental income?
-label.rentalIncomeList.concession = Do you need to add another source of rental income?
-label.rentalIncomeList.income = Do you need to add another source of rental income?
+label.rentalIncomeList = Do you need to add another source of rental income?
 rentalIncomeList.zeroLetting.heading = You have removed all your sources of rental income
 error.rentalIncomeList.required = Select yes if you would lke to add another source of income
 
