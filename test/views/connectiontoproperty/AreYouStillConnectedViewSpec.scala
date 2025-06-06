@@ -26,12 +26,12 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
 
   val messageKeyPrefix = "areYouConnected"
 
-  override val form = AreYouStillConnectedForm.areYouStillConnectedForm
+  override val form = AreYouStillConnectedForm.theForm
 
-  def createView = () => areYouStillConnectedView(form, Summary("99996010001"), "")(using fakeRequest, messages)
+  def createView = () => areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
 
   def createViewUsingForm = (form: Form[AddressConnectionType]) =>
-    areYouStillConnectedView(form, Summary("99996010001"), "")(using fakeRequest, messages)
+    areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
 
   "Are you still connected view" must {
 

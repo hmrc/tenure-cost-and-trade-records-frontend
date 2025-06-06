@@ -31,7 +31,7 @@ class CheckYourAnswersConnectionToPropertyViewSpec
   val messageKeyPrefix = "checkYourAnswersConnectionToProperty"
 
   override val form: Form[CheckYourAnswersConnectionToProperty] =
-    CheckYourAnswersConnectionToPropertyForm.checkYourAnswersConnectionToPropertyForm
+    CheckYourAnswersConnectionToPropertyForm.theForm
 
   val backLink: String = controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
 

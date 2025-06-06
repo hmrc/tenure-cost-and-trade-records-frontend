@@ -28,7 +28,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[?], summary: Summary,backlink: String )(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], summary: Summary, backlink: String, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("areYouConnected.heading"),
@@ -37,7 +37,8 @@
     sectionName = messages("label.section.connectionToTheProperty"),
     summary = Some(summary),
     backLinkUrl = backlink,
-    theForm = theForm
+    theForm = theForm,
+    readOnly = readOnly
 ) {
     @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouStillConnectedController.submit()) {
 

@@ -26,6 +26,6 @@ object AreYouStillConnectedForm {
     "isRelated" -> addressConnectionType
   )(x => x)(b => Some(b))
 
-  val areYouStillConnectedForm = Form(baseAreYouStillConnectedMapping)
+  val theForm = Form(baseAreYouStillConnectedMapping)
 
 }

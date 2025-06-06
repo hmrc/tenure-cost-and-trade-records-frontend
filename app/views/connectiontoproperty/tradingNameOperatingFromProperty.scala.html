@@ -28,8 +28,9 @@
 )
 
 
-@(theForm: Form[TradingNameOperatingFromProperty], backlink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[TradingNameOperatingFromProperty], backlink: String, readOnly: Boolean)(implicit request: SessionRequest[?], messages: Messages)
 
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.fieldset.Fieldset
 @forType = @{request.sessionData.forType}
 
 @heading = @{
@@ -40,19 +41,20 @@
  }
 }
 
- @layout(
- pageHeading = heading,
- showSection = true,
- summary = Some(request.sessionData.toSummary),
- sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = backlink,
- theForm = theForm
+@layout(
+    pageHeading = heading,
+    showSection = true,
+    summary = Some(request.sessionData.toSummary),
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = backlink,
+    theForm = theForm,
+    readOnly = readOnly
 ) {
 
- @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {
-
-  @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", if(forType == FOR6048) {"tradingNameFromPropertyHeadingLabel6048"} else {"tradingNameFromPropertyHeadingLabel"})
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
-
+  @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {
+    <fieldset class="govuk-fieldset">
+      @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", if(forType == FOR6048) {"tradingNameFromPropertyHeadingLabel6048"} else {"tradingNameFromPropertyHeadingLabel"})
+    </fieldset>
+    @includes.continueSaveAsDraftButtons(govukButton)
+  }
 }

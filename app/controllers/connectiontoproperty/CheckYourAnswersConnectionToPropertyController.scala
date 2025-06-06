@@ -18,7 +18,7 @@ package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.checkYourAnswersConnectionToPropertyForm
+import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
 import models.Session
@@ -28,7 +28,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.checkYourAnswersConnectionToProperty
+import views.html.connectiontoproperty.checkYourAnswersConnectionToProperty as CheckYourAnswersConnectionToPropertyView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -37,22 +37,22 @@ import scala.concurrent.{ExecutionContext, Future}
 class CheckYourAnswersConnectionToPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: ConnectionToPropertyNavigator,
-  checkYourAnswersConnectionToPropertyView: checkYourAnswersConnectionToProperty,
+  theView: CheckYourAnswersConnectionToPropertyView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
-    with Logging {
+    with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        checkYourAnswersConnectionToPropertyView(
+        theView(
           request.sessionData.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty) match {
             case Some(checkYourAnswersAboutTheProperty) =>
-              checkYourAnswersConnectionToPropertyForm.fill(checkYourAnswersAboutTheProperty)
-            case _                                      => checkYourAnswersConnectionToPropertyForm
+              theForm.fill(checkYourAnswersAboutTheProperty)
+            case _                                      => theForm
           },
           getBackLink,
           request.sessionData.toSummary
@@ -63,10 +63,10 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CheckYourAnswersConnectionToProperty](
-      checkYourAnswersConnectionToPropertyForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          checkYourAnswersConnectionToPropertyView(
+          theView(
             formWithErrors,
             getBackLink,
             request.sessionData.toSummary
@@ -77,7 +77,7 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url)
           )
-        session.saveOrUpdate(updatedData).flatMap { _ =>
+        repo.saveOrUpdate(updatedData).flatMap { _ =>
           Future.successful(
             Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
           )
@@ -88,4 +88,3 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
 
   private def getBackLink: String =
     controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
-}

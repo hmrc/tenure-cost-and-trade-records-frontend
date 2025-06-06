@@ -18,16 +18,20 @@ package form.connectiontoproperty
 
 import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{boolean, default, mapping, optional, text}
 import play.api.data.validation.Constraints.nonEmpty
 
 object CheckYourAnswersConnectionToPropertyForm {
 
-  val checkYourAnswersConnectionToPropertyForm = Form(
+  val theForm = Form(
     mapping(
       "checkYourAnswersConnectionToProperty" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
-      )
-    )(CheckYourAnswersConnectionToProperty.apply)(o => Some(o.checkYourAnswersConnectionToProperty))
+      ),
+      "confirmAnswersAreCorrect"             -> optional(boolean)
+        .verifying("checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.required", _.contains(true))
+    )(CheckYourAnswersConnectionToProperty.apply)(o =>
+      Some(o.checkYourAnswersConnectionToProperty, o.confirmAnswersAreCorrect)
+    )
   )
 }

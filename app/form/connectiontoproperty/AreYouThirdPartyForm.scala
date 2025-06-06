@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object AreYouThirdPartyForm {
-  lazy val areYouThirdPartyForm: Form[AnswersYesNo] = Form(areYouThirdPartyMapping)
+  lazy val theForm: Form[AnswersYesNo] = Form(areYouThirdPartyMapping)
 
   val areYouThirdPartyMapping = mapping(
     "areYouThirdParty" -> createYesNoType("error.areYouThirdParty.missing")
