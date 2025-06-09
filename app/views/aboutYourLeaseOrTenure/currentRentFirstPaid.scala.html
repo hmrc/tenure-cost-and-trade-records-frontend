@@ -63,12 +63,14 @@
 
   <h2 class="govuk-heading-m">@messages("label.currentRentFirstPaid.p5")</h2>
 
+   <p class="govuk-body">@messages("label.currentRentFirstPaid.help")</p>
+
   @includes.dateFields(
    form = theForm,
    field = "currentRentFirstPaid",
    govukDate = govukDateInput,
    showFieldSet = false,
-   helpText = messages("label.currentRentFirstPaid.help"),
+   helpText = "",
    showDays = true
   )
 

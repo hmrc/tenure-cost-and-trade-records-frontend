@@ -90,21 +90,6 @@
 
 }
 
-
-@formLabel = @{
-        val list = request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
-        list match {
-            case Some(Seq()) => messages("label.rentalIncomeList.income")
-            case Some(list) if list.forall(_.isInstanceOf[LettingIncomeRecord]) =>
-                messages("label.rentalIncomeList.letting")
-            case Some(list) if list.forall(_.isInstanceOf[ConcessionIncomeRecord]) =>
-                messages("label.rentalIncomeList.concession")
-            case _   => messages("label.rentalIncomeList.income")
-        }
-    }
-
-
-
 @layout(
     pageHeading = pageHeading,
     showSection = true,
@@ -157,7 +142,7 @@
                     Fieldset(
                         legend = Option(
                             Legend(
-                                content = Text(formLabel),
+                                content = Text(messages("label.rentalIncomeList")),
                                 classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
                             )
                         )
