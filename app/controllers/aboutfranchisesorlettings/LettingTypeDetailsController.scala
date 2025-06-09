@@ -31,7 +31,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.lettingTypeDetails as LettingTypeDetailsView
-import models.submissions.aboutfranchisesorlettings.*
 import models.ForType._
 
 import javax.inject.{Inject, Named, Singleton}
@@ -145,7 +144,7 @@ class LettingTypeDetailsController @Inject() (
     }(using request)
     (updatedSession, updatedIndex)
 
-  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)
@@ -163,7 +162,7 @@ class LettingTypeDetailsController @Inject() (
     }
 
   extension (confirmed: AddressLookupConfirmedAddress)
-    def asLettingAddress = LettingAddress(
+    def asLettingAddress: LettingAddress = LettingAddress(
       confirmed.buildingNameNumber,
       confirmed.street1,
       confirmed.town,
