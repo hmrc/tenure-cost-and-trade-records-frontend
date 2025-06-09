@@ -144,14 +144,15 @@ class LettingTypeDetailsController @Inject() (
     }(using request)
     (updatedSession, updatedIndex)
 
-  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    given Session = request.sessionData
-    for
-      confirmedAddress <- getConfirmedAddress(id)
-      businessAddress   = confirmedAddress.asLettingAddress
-      newSession       <- successful(newSessionWithLettingAddress(idx, businessAddress))
-      _                <- repository.saveOrUpdate(newSession)
-    yield Redirect(navigator.nextPage(LettingTypeDetailsId, newSession).apply(newSession))
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      given Session = request.sessionData
+      for
+        confirmedAddress <- getConfirmedAddress(id)
+        businessAddress   = confirmedAddress.asLettingAddress
+        newSession       <- successful(newSessionWithLettingAddress(idx, businessAddress))
+        _                <- repository.saveOrUpdate(newSession)
+      yield Redirect(navigator.nextPage(LettingTypeDetailsId, newSession).apply(newSession))
   }
 
   private def backLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
