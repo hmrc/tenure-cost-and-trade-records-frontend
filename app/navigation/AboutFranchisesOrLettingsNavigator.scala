@@ -147,6 +147,9 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
+    CateringOperationBusinessPageId            -> (answers =>
+      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(getRentalIncomeIndex(answers))
+    ),
     FeeReceivedPageId                          -> (answers =>
       controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
     ),
