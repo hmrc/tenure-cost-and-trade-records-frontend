@@ -66,6 +66,40 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         content          should include("error.howBusinessPropertyIsUsed.required")
         reset(repository)
       }
+
+      "reply 303 when the form is submitted with good data and index=0" in new ControllerFixture {
+        val result = controller.submit(index = Some(0))(
+          fakePostRequest.withFormUrlEncodedBody(
+            "operatorName6030"          -> "Another Operator",
+            "typeOfBusiness"            -> "Different Business",
+            "howBusinessPropertyIsUsed" -> "Tea room"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.FeeReceivedController.show(0).url
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
+
+      }
+
+      "reply 303 when the 6030 form is submitted with good data missing index" in new ControllerFixture {
+        val result = controller.submit(index = None)(
+          fakePostRequest.withFormUrlEncodedBody(
+            "operatorName6030"          -> "Another Operator",
+            "typeOfBusiness"            -> "Different Business",
+            "howBusinessPropertyIsUsed" -> "Tea room"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe routes.FeeReceivedController.show(0).url
+        verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
+        val updatedCateringOperationDetails = data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
+          .asInstanceOf[ConcessionIncomeRecord]
+          .businessDetails
+          .value
+        updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
+        updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
+        reset(repository)
+      }
     }
   }
 
