@@ -25,8 +25,8 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.tradingNameOwnTheProperty
-import form.connectiontoproperty.TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
+import views.html.connectiontoproperty.tradingNameOwnTheProperty as TradingNameOwnThePropertyView
+import form.connectiontoproperty.TradingNameOwnThePropertyForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.identifiers.TradingNameOwnThePropertyPageId
 
@@ -38,51 +38,51 @@ class TradingNameOwnThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: ConnectionToPropertyNavigator,
-  tradingNameOwnThePropertyView: tradingNameOwnTheProperty,
+  theView: TradingNameOwnThePropertyView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with ReadOnlySupport
     with I18nSupport
-    with Logging {
+    with Logging:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TradingNameOwnTheProperty")
-
-    Future.successful(
-      Ok(
-        tradingNameOwnThePropertyView(
-          ownThePropertyInSession match {
-            case Some(ownTheProperty) => tradingNameOwnThePropertyForm.fill(ownTheProperty)
-            case _                    => tradingNameOwnThePropertyForm
-          },
-          getBackLink,
-          request.sessionData.stillConnectedDetails
-            .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
-            .getOrElse(""),
-          request.sessionData.toSummary
-        )
+    Ok(
+      theView(
+        ownThePropertyInSession match {
+          case Some(ownTheProperty) => theForm.fill(ownTheProperty)
+          case _                    => theForm
+        },
+        getBackLink,
+        request.sessionData.stillConnectedDetails
+          .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
+          .getOrElse(""),
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      tradingNameOwnThePropertyForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          tradingNameOwnThePropertyView(
+          theView(
             formWithErrors,
             getBackLink,
             request.sessionData.stillConnectedDetails
               .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
               .getOrElse(""),
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            isReadOnly
           )
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(tradingNameOwnTheProperty = Some(data)))
-        session
+        repo
           .saveOrUpdate(updatedData)
           .map { _ =>
             navigator
@@ -106,4 +106,3 @@ class TradingNameOwnThePropertyController @Inject() (
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       case _     => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
     }
-}

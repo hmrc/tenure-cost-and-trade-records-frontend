@@ -27,15 +27,15 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] 
 
   val messageKeyPrefix = "vacantProperties"
 
-  override val form: Form[VacantProperties] = VacantPropertiesForm.vacantPropertiesForm
+  override val form: Form[VacantProperties] = VacantPropertiesForm.theForm
 
   val backLink: String = controllers.connectiontoproperty.routes.EditAddressController.show().url
 
   def createView: () => Html = () =>
-    vacantPropertiesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[VacantProperties] => Html = (form: Form[VacantProperties]) =>
-    vacantPropertiesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
 
   "Vacant properties view" must {
 

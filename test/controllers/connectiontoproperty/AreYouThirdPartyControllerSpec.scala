@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-import form.connectiontoproperty.AreYouThirdPartyForm.areYouThirdPartyForm
+import form.connectiontoproperty.AreYouThirdPartyForm.theForm
 import models.submissions.common.{AnswerNo, AnswerYes}
 
 import scala.language.reflectiveCalls
@@ -108,7 +108,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
     "Are you third party form" should {
       "error if areYouThirdParty is missing" in {
         val formData = baseFormData - errorKey.areYouThirdParty
-        val form     = areYouThirdPartyForm.bind(formData)
+        val form     = theForm.bind(formData)
 
         mustContainError(errorKey.areYouThirdParty, "error.areYouThirdParty.missing", form)
       }

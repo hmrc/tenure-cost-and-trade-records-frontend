@@ -19,7 +19,7 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.AreYouThirdPartyForm.areYouThirdPartyForm
+import form.connectiontoproperty.AreYouThirdPartyForm.theForm
 import models.submissions.common.AnswersYesNo
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
@@ -38,47 +38,51 @@ class AreYouThirdPartyController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: ConnectionToPropertyNavigator,
-  areYouThirdPartyView: areYouThirdParty,
+  theView: areYouThirdParty,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with ReadOnlySupport
     with I18nSupport
-    with Logging {
+    with Logging:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("AreYouThirdParty")
+    val freshForm  = theForm
+    val filledForm =
+      for
+        stillConnectedDetails <- request.sessionData.stillConnectedDetails
+        areYouThirdParty      <- stillConnectedDetails.areYouThirdParty
+      yield theForm.fill(areYouThirdParty)
 
-    Future.successful(
-      Ok(
-        areYouThirdPartyView(
-          request.sessionData.stillConnectedDetails.flatMap(_.areYouThirdParty) match {
-            case Some(enforcementAction) => areYouThirdPartyForm.fill(enforcementAction)
-            case _                       => areYouThirdPartyForm
-          },
-          getBackLink,
-          request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
-          request.sessionData.toSummary
-        )
+    Ok(
+      theView(
+        filledForm.getOrElse(freshForm),
+        getBackLink,
+        request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      areYouThirdPartyForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          areYouThirdPartyView(
+          theView(
             formWithErrors,
             getBackLink,
             request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            isReadOnly
           )
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(areYouThirdParty = Some(data)))
-        session.saveOrUpdate(updatedData).map { _ =>
+        repo.saveOrUpdate(updatedData).map { _ =>
           val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(using request) == "CYA")
           val nextPage      =
             redirectToCYA.getOrElse(navigator.nextPage(AreYouThirdPartyPageId, updatedData).apply(updatedData))
@@ -101,4 +105,3 @@ class AreYouThirdPartyController @Inject() (
             controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show().url
         }
     }
-}

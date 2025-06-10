@@ -592,6 +592,9 @@ checkYourAnswersConnectionToProperty.nameOfOccupier = Name of occupier
 checkYourAnswersConnectionToProperty.ownsTheProperty = Owns the property?
 checkYourAnswersConnectionToProperty.payRent = Pays rent?
 checkYourAnswersConnectionToProperty.thirdParty = Third party?
+checkYourAnswersConnectionToProperty.thirdParty = Third party?
+checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.label = I confirm that my answers are correct, and I understand that I will not be able to change these answers after this page
+checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.required = Confirm that the answers you have provided are correct
 
 # VACANT PROPERTY START DATE
 ############################

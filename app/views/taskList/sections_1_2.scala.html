@@ -21,6 +21,7 @@
 @(forType: ForType, isLeaseHolder: Boolean, section1Completed: Option[String], section2Completed: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
+@isReadOnly = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).flatMap(_.checkYourAnswersConnectionToProperty).contains("yes") }
 
 <li>
  <h2 id="connectionToTheProperty" class="app-task-list__section">
@@ -31,7 +32,9 @@
   @includes.taskListItem("are-you-still-connected", "checkYourAnswersConnectionToProperty.connectionStatus.heading",
    controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(),
    section1Completed,
-   session.stillConnectedDetails.flatMap(_.addressConnectionType)
+   pageAnswer = session.stillConnectedDetails.flatMap(_.addressConnectionType),
+   cannotStartYet = false,
+   readOnly = isReadOnly,
   )
 
   @if(forType != FOR6076) {
@@ -39,16 +42,18 @@
    @includes.taskListItem("vacant-properties", "checkYourAnswersConnectionToProperty.vacancyStatus.heading",
     controllers.connectiontoproperty.routes.VacantPropertiesController.show(),
     section1Completed,
-    session.stillConnectedDetails.flatMap(_.vacantProperties),
-    session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty
+    pageAnswer = session.stillConnectedDetails.flatMap(_.vacantProperties),
+    cannotStartYet = session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty,
+    readOnly = isReadOnly,
    )
   }
 
   @includes.taskListItem("name-of-operator-from-property", "checkYourAnswersConnectionToProperty.occupierDetails.heading",
    controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(),
    section1Completed,
-   session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
-   session.stillConnectedDetails.flatMap(_.vacantProperties).isEmpty
+   pageAnswer = session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
+   cannotStartYet = session.stillConnectedDetails.flatMap(_.vacantProperties).isEmpty,
+   readOnly = isReadOnly
   )
  </ul>
 </li>
@@ -62,22 +67,22 @@
   @includes.taskListItem("about-you", "checkYourAnswersAboutTheProperty.aboutYou.heading",
    controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
    section2Completed,
-   session.aboutYouAndTheProperty.flatMap(_.customerDetails),
-   section1Completed.isEmpty
+   pageAnswer = session.aboutYouAndTheProperty.flatMap(_.customerDetails),
+   cannotStartYet = section1Completed.isEmpty
   )
 
   @if(forType == FOR6048) {
    @includes.taskListItem("technology-type", "taskList.lettingAvailability",
     controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show(),
     section2Completed,
-    session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate),
-    session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+    pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate),
+    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
    )
    @includes.taskListItem("family-use", "taskList.familyUse",
     controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show(),
     section2Completed,
-    session.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable),
-    session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate).isEmpty
+    pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable),
+    cannotStartYet = session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate).isEmpty
    )
   }
 
@@ -85,20 +90,20 @@
    @includes.taskListItem("technology-type", "taskList.technologyType",
     controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
     section2Completed,
-    session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
-    session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+    pageAnswer = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
+    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
    )
    @includes.taskListItem("site-construction-details", "taskList.siteConstructionDetails",
     controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
     section2Completed,
-    session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
-    session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty
+    pageAnswer = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
+    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty
    )
    @includes.taskListItem("how-is-used", "taskList.howIsUsed",
     controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
     section2Completed,
-    session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
-    session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty
+    pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
+    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty
    )
   } else {
 
@@ -109,16 +114,16 @@
        controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()}
       else {controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()},
       section2Completed,
-      session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
-      session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+      pageAnswer = session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+      cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
      )
     }
    } else {
     @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
      controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
      section2Completed,
-     session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
-     session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+     pageAnswer = session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+     cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
     )
    }
 
@@ -127,8 +132,8 @@
     @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
      controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
      section2Completed,
-     session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
-     session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+     pageAnswer = session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
+     cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
     )
    }
 
@@ -140,12 +145,12 @@
       controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
      },
      section2Completed,
-     if(forType == FOR6015 || forType == FOR6016) {
+     pageAnswer = if(forType == FOR6015 || forType == FOR6016) {
       session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
      } else {
       session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
      },
-     session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+     cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
     )
    }
   }

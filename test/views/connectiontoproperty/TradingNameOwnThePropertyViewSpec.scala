@@ -27,15 +27,15 @@ class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYe
 
   val messageKeyPrefix = "tradingNameOwnTheProperty"
 
-  override val form: Form[AnswersYesNo] = TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
+  override val form: Form[AnswersYesNo] = TradingNameOwnThePropertyForm.theForm
 
   val backLink: String = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
 
   def createView: () => Html = () =>
-    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"))(using fakeRequest, messages)
+    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"), false)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"))(using fakeRequest, messages)
+    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"), false)(using fakeRequest, messages)
 
   "Trading name own the property view" must {
 

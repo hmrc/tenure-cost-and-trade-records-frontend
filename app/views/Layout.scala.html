@@ -61,7 +61,8 @@
         backLinkUrl: Option[String] = None,
         beforeContentBlock: Option[Html] = None,
         withTimeoutDialog: Boolean = true,
-        fullWidth: Boolean = false
+        fullWidth: Boolean = false,
+        readOnly: Boolean = false
 )(contentBlock: Html)(implicit request: Request[?], messages: Messages)
 
 @headerBlock ={
@@ -121,6 +122,9 @@
 
     @contentBlock
 
+    <script type="text/javascript">
+        @readOnly && document.querySelectorAll('form fieldset').forEach(form => form.setAttribute('inert', 'true'));
+    </script>
 }
 
 @title = @{
