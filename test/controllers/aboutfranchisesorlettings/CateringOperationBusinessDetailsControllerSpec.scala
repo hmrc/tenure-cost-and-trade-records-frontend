@@ -19,6 +19,7 @@ package controllers.aboutfranchisesorlettings
 import connectors.Audit
 import models.ForType.*
 import models.Session
+import models.submissions.aboutfranchisesorlettings.ConcessionIncomeRecord
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
