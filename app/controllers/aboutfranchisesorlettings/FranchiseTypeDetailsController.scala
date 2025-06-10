@@ -76,12 +76,8 @@ class FranchiseTypeDetailsController @Inject() (
     )
   }
 
-  def submit(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
-    val forType          = request.sessionData.forType
-    val operatorOrTenant = request.sessionData.aboutFranchisesOrLettings
-      .flatMap(_.rentalIncome)
-      .getOrElse(IndexedSeq.empty)
-      .map(_.sourceType.name)
+  def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    val forType = request.sessionData.forType
 
     continueOrSaveAsDraft[BusinessDetails](
       theForm,
@@ -149,23 +145,24 @@ class FranchiseTypeDetailsController @Inject() (
     (updatedSession, updatedIndex)
   }
 
-  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
-    given Session = request.sessionData
-    for
-      confirmedAddress <- getConfirmedAddress(id)
-      businessAddress   = confirmedAddress.asBusinessAddress
-      newSession       <- successful(newSessionWithBusinessAddress(idx, businessAddress))
-      _                <- repository.saveOrUpdate(newSession)
-    yield Redirect(navigator.nextPage(FranchiseTypeDetailsId, newSession).apply(newSession))
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      given Session = request.sessionData
+      for
+        confirmedAddress <- getConfirmedAddress(id)
+        businessAddress   = confirmedAddress.asBusinessAddress
+        newSession       <- successful(newSessionWithBusinessAddress(idx, businessAddress))
+        _                <- repository.saveOrUpdate(newSession)
+      yield Redirect(navigator.nextPage(FranchiseTypeDetailsId, newSession).apply(newSession))
   }
 
   private def backLink(idx: Int)(using request: SessionRequest[AnyContent]): String =
-    if request.getQueryString("from") == Some("CYA")
+    if request.getQueryString("from").contains("CYA")
     then routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     else routes.TypeOfIncomeController.show(Some(idx)).url
 
   extension (confirmed: AddressLookupConfirmedAddress)
-    def asBusinessAddress = BusinessAddress(
+    def asBusinessAddress: BusinessAddress = BusinessAddress(
       confirmed.buildingNameNumber,
       confirmed.street1,
       confirmed.town,

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.vacantProperties as VacantPropertiesView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class VacantPropertiesController @Inject() (
@@ -108,9 +108,3 @@ class VacantPropertiesController @Inject() (
           case _                                           => routes.AreYouStillConnectedController.show().url
         }
     }
-
-  private def answersChecked(using r: SessionRequest[AnyContent]) =
-    for
-      stillConnectedDetails                <- r.sessionData.stillConnectedDetails
-      checkYourAnswersConnectionToProperty <- stillConnectedDetails.checkYourAnswersConnectionToProperty
-    yield checkYourAnswersConnectionToProperty.checkYourAnswersConnectionToProperty

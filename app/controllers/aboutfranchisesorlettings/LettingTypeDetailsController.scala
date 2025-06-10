@@ -78,11 +78,7 @@ class LettingTypeDetailsController @Inject() (
   }
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val forType          = request.sessionData.forType
-    val operatorOrTenant = request.sessionData.aboutFranchisesOrLettings
-      .flatMap(_.rentalIncome)
-      .getOrElse(IndexedSeq.empty)
-      .map(_.sourceType.name)
+    val forType = request.sessionData.forType
 
     continueOrSaveAsDraft[OperatorDetails](
       theForm,

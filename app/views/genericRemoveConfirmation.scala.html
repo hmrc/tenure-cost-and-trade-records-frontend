@@ -31,6 +31,12 @@
     request.sessionData.forType
 }
 
+@from = @{
+    request.queryString.get("from").flatMap(_.headOption)
+    .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)))
+    .getOrElse("")
+}
+
 @sectionName = @{
     forType match {
         case FOR6015 | FOR6016 => messages("label.section.aboutTheFranchiseConcessions")
@@ -60,6 +66,8 @@
             classes = "govuk-fieldset__legend--l",
             isHeading = true
         )
+
+        <input type="hidden" name="from" value="@from" />
 
         <div class="govuk-button-group">
         @govukButton(
