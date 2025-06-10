@@ -19,7 +19,7 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.TradingNamePayingRentForm.tradingNamePayingRentForm
+import form.connectiontoproperty.TradingNamePayingRentForm.theForm
 import models.submissions.common.AnswersYesNo
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
@@ -28,7 +28,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.tradingNamePayingRent
+import views.html.connectiontoproperty.tradingNamePayingRent as TradingNamePayingRentView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,47 +38,51 @@ class TradingNamePayingRentController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: ConnectionToPropertyNavigator,
-  tradingNamePayingRentView: tradingNamePayingRent,
+  theView: TradingNamePayingRentView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with ReadOnlySupport
     with I18nSupport
-    with Logging {
+    with Logging:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TradingNamePayingRent")
+    val freshForm  = theForm
+    val filledForm =
+      for {
+        stillConnectedDetails <- request.sessionData.stillConnectedDetails
+        tradingNamePayingRent <- stillConnectedDetails.tradingNamePayingRent
+      } yield theForm.fill(tradingNamePayingRent)
 
-    Future.successful(
-      Ok(
-        tradingNamePayingRentView(
-          request.sessionData.stillConnectedDetails.flatMap(_.tradingNamePayingRent) match {
-            case Some(tradingNamePayingRent) => tradingNamePayingRentForm.fill(tradingNamePayingRent)
-            case _                           => tradingNamePayingRentForm
-          },
-          getBackLink,
-          request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
-          request.sessionData.toSummary
-        )
+    Ok(
+      theView(
+        filledForm.getOrElse(freshForm),
+        getBackLink,
+        request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      tradingNamePayingRentForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          tradingNamePayingRentView(
+          theView(
             formWithErrors,
             getBackLink,
             request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            isReadOnly
           )
         ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(tradingNamePayingRent = Some(data)))
-        session.saveOrUpdate(updatedData).map { _ =>
+        repo.saveOrUpdate(updatedData).map { _ =>
           val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(using request) == "CYA")
           val nextPage      =
             redirectToCYA.getOrElse(navigator.nextPage(TradingNamePayingRentPageId, updatedData).apply(updatedData))
@@ -95,4 +99,3 @@ class TradingNamePayingRentController @Inject() (
       case _     =>
         controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
     }
-}

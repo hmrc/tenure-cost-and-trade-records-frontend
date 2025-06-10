@@ -19,13 +19,13 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.AreYouStillConnectedForm.areYouStillConnectedForm
+import form.connectiontoproperty.AreYouStillConnectedForm.theForm
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AreYouStillConnectedPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc._
 import repositories.SessionRepo
-import views.html.connectiontoproperty.areYouStillConnected
+import views.html.connectiontoproperty.areYouStillConnected as AreYouStillConnectedView
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.{AddressConnectionType, AddressConnectionTypeNo, AddressConnectionTypeYes}
 
@@ -37,24 +37,26 @@ class AreYouStillConnectedController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: ConnectionToPropertyNavigator,
-  areYouStillConnectedView: areYouStillConnected,
+  theView: AreYouStillConnectedView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with ReadOnlySupport
+    with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AreYouStillConnected")
+    val freshForm  = theForm
+    val filledForm = addressConnectionType.map(theForm.fill(_))
+
     Future.successful(
       Ok(
-        areYouStillConnectedView(
-          connectionTypeInSession match {
-            case Some(addressConnectionType) => areYouStillConnectedForm.fill(addressConnectionType)
-            case _                           => areYouStillConnectedForm
-          },
+        theView(
+          filledForm.getOrElse(freshForm),
           request.sessionData.toSummary,
-          calculateBackLink
+          calculateBackLink,
+          isReadOnly
         )
       )
     )
@@ -62,19 +64,19 @@ class AreYouStillConnectedController @Inject() (
 
   def submit                                                                  = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AddressConnectionType](
-      areYouStillConnectedForm,
+      theForm,
       formWithErrors =>
-        BadRequest(areYouStillConnectedView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
+        BadRequest(theView(formWithErrors, request.sessionData.toSummary, calculateBackLink, isReadOnly)),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
-        session
+        repo
           .saveOrUpdate(updatedData)
           .map(_ =>
             navigator
               .cyaPageDependsOnSession(updatedData)
-              .filter(_ => navigator.from == "CYA" && connectionTypeInSession.contains(data))
+              .filter(_ => navigator.from == "CYA" && addressConnectionType.contains(data))
               .getOrElse(
-                if (data == AddressConnectionTypeNo || connectionTypeInSession.contains(AddressConnectionTypeNo)) {
+                if (data == AddressConnectionTypeNo || addressConnectionType.contains(AddressConnectionTypeNo)) {
                   navigator.nextWithoutRedirectToCYA(AreYouStillConnectedPageId, updatedData).apply(updatedData)
                 } else if (navigator.from == "CYA" && data == AddressConnectionTypeYes) {
                   navigator.cyaPageDependsOnSession(updatedData).orElse(navigator.cyaPage).get
@@ -94,9 +96,5 @@ class AreYouStillConnectedController @Inject() (
       case _     => controllers.routes.LoginController.show.url
     }
 
-  private def connectionTypeInSession(implicit
-    request: SessionRequest[AnyContent]
-  ): Option[AddressConnectionType] =
-    request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType)
-
-}
+  private def addressConnectionType(using r: SessionRequest[AnyContent]) =
+    r.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType)

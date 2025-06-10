@@ -31,7 +31,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.connectiontoproperty.tradingNameOperatingFromProperty
+import views.html.connectiontoproperty.tradingNameOperatingFromProperty as TradingNameOperatingFromPropertyVie
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -41,41 +41,40 @@ class TradingNameOperatingFromPropertyController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: ConnectionToPropertyNavigator,
-  nameOfBusinessOperatingFromPropertyView: tradingNameOperatingFromProperty,
+  theView: TradingNameOperatingFromPropertyVie,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repo: SessionRepo
 )(implicit val ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with ReadOnlySupport
     with I18nSupport
-    with Logging {
+    with Logging:
 
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TradingNameOperatingFromProperty")
 
     if (forType == FOR6048) {
-      Future.successful(
-        Ok(
-          nameOfBusinessOperatingFromPropertyView(
-            request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-              case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
-              case _                      => tradingNameOperatingFromProperty6048Form
-            },
-            calculateBackLink
-          )
+      Ok(
+        theView(
+          request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+            case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
+            case _                      => tradingNameOperatingFromProperty6048Form
+          },
+          calculateBackLink,
+          isReadOnly
         )
       )
     } else {
-      Future.successful(
-        Ok(
-          nameOfBusinessOperatingFromPropertyView(
-            request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
-              case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
-              case _                      => tradingNameOperatingFromPropertyForm
-            },
-            calculateBackLink
-          )
+      Ok(
+        theView(
+          request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+            case Some(vacantProperties) => tradingNameOperatingFromPropertyForm.fill(vacantProperties)
+            case _                      => tradingNameOperatingFromPropertyForm
+          },
+          calculateBackLink,
+          isReadOnly
         )
       )
     }
@@ -87,14 +86,15 @@ class TradingNameOperatingFromPropertyController @Inject() (
         tradingNameOperatingFromProperty6048Form,
         formWithErrors =>
           BadRequest(
-            nameOfBusinessOperatingFromPropertyView(
+            theView(
               formWithErrors,
-              calculateBackLink
+              calculateBackLink,
+              isReadOnly
             )
           ),
         data => {
           val updatedData = updateStillConnectedDetails(_.copy(tradingNameOperatingFromProperty = Some(data)))
-          session.saveOrUpdate(updatedData).map { _ =>
+          repo.saveOrUpdate(updatedData).map { _ =>
             val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(using request) == "CYA")
             val nextPage      =
               redirectToCYA
@@ -108,14 +108,15 @@ class TradingNameOperatingFromPropertyController @Inject() (
         tradingNameOperatingFromPropertyForm,
         formWithErrors =>
           BadRequest(
-            nameOfBusinessOperatingFromPropertyView(
+            theView(
               formWithErrors,
-              calculateBackLink
+              calculateBackLink,
+              isReadOnly
             )
           ),
         data => {
           val updatedData = updateStillConnectedDetails(_.copy(tradingNameOperatingFromProperty = Some(data)))
-          session.saveOrUpdate(updatedData).map { _ =>
+          repo.saveOrUpdate(updatedData).map { _ =>
             val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(using request) == "CYA")
             val nextPage      =
               redirectToCYA
@@ -131,20 +132,19 @@ class TradingNameOperatingFromPropertyController @Inject() (
     navigator.from match {
       case "TL"  =>
         controllers.routes.TaskListController.show().url + "#name-of-operator-from-property"
-      case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      case "CYA" => routes.CheckYourAnswersConnectionToPropertyController.show().url
       case _     =>
         request.sessionData.forType match {
           case FOR6076 =>
             request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
               case Some(AddressConnectionTypeYes)              =>
-                controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+                routes.AreYouStillConnectedController.show().url
               case Some(AddressConnectionTypeYesChangeAddress) =>
-                controllers.connectiontoproperty.routes.EditAddressController.show().url
+                routes.EditAddressController.show().url
               case _                                           =>
                 controllers.routes.TaskListController.show().url
             }
-          case _       => controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+          case _       => routes.VacantPropertiesController.show().url
         }
 
     }
-}

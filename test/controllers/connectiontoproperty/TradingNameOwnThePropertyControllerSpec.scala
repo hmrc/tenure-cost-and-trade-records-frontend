@@ -17,7 +17,7 @@
 package controllers.connectiontoproperty
 
 import connectors.Audit
-import form.connectiontoproperty.TradingNameOwnThePropertyForm.tradingNameOwnThePropertyForm
+import form.connectiontoproperty.TradingNameOwnThePropertyForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -97,7 +97,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
     "Trading Name own the property form" should {
       "error if areYouThirdParty is missing" in {
         val formData = baseFormData - errorKey.tradingNameOwnTheProperty
-        val form     = tradingNameOwnThePropertyForm.bind(formData)
+        val form     = theForm.bind(formData)
 
         mustContainError(errorKey.tradingNameOwnTheProperty, "error.tradingNameOwnTheProperty.missing", form)
       }

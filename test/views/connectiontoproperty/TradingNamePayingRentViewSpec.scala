@@ -30,14 +30,14 @@ class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo]
   val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
   override val form: Form[AnswersYesNo] =
-    TradingNamePayingRentForm.tradingNamePayingRentForm
+    TradingNamePayingRentForm.theForm
 
   def createView: () => Html = () =>
-    tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"))(using fakeRequest, messages)
+    tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html =
     (form: Form[AnswersYesNo]) =>
-      tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"))(using fakeRequest, messages)
+      tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
 
   "Trading name operating from property view" must {
 

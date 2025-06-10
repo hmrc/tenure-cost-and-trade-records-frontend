@@ -33,7 +33,7 @@
     taskId = "residential-tenants",
     taskNameKey = "checkYourAnswersLettingHistory.residentialTenants",
     taskPage = controllers.lettingHistory.routes.HasPermanentResidentsController.show,
-    sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("residential-tenants"),
+    sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("residential-tenants"),
     pageAnswer = LettingHistory.hasPermanentResidents(session),
     cannotStartYet = {
      section2Completed.isEmpty
@@ -43,7 +43,7 @@
     taskId = "temporary-occupiers",
     taskNameKey = "checkYourAnswersLettingHistory.temporaryOccupiers",
     taskPage = controllers.lettingHistory.routes.HasCompletedLettingsController.show,
-    sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("temporary-occupiers"),
+    sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("temporary-occupiers"),
     pageAnswer = LettingHistory.hasCompletedLettings(session),
     cannotStartYet = {
      LettingHistory.hasPermanentResidents(session).isEmpty
@@ -53,7 +53,7 @@
     taskId = "intended-lettings",
     taskNameKey = "checkYourAnswersLettingHistory.intendedLettings",
     taskPage = controllers.lettingHistory.routes.HowManyNightsController.show,
-    sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("intended-lettings"),
+    sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("intended-lettings"),
     pageAnswer = LettingHistory.intendedLettings(session),
     cannotStartYet = {
      LettingHistory.hasCompletedLettings(session).isEmpty
@@ -63,7 +63,7 @@
     taskId = "online-advertising",
     taskNameKey = "checkYourAnswersLettingHistory.onlineAdvertising",
     taskPage = controllers.lettingHistory.routes.HasOnlineAdvertisingController.show,
-    sectionCompletedRadioValue = LettingHistoryTaskListHelper.isTaskComplete("online-advertising"),
+    sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("online-advertising"),
     pageAnswer = LettingHistory.hasOnlineAdvertising(session),
     cannotStartYet = {
      LettingHistory.intendedLettingsNights(session).isEmpty ||

@@ -34,11 +34,12 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[Tr
   override val form: Form[TradingNameOperatingFromProperty] =
     TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 
-  def createView: () => Html = () => tradingNameOperatingFromProperty(form, backLink)(using sessionRequest, messages)
+  def createView: () => Html = () =>
+    tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
 
   def createViewUsingForm: Form[TradingNameOperatingFromProperty] => Html =
     (form: Form[TradingNameOperatingFromProperty]) =>
-      tradingNameOperatingFromProperty(form, backLink)(using sessionRequest, messages)
+      tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
 
   "Trading name operating from property view" must {
 

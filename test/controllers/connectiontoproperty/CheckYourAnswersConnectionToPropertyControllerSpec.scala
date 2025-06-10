@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.checkYourAnswersConnectionToPropertyForm
+import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import utils.TestBaseSpec
 import play.api.test.Helpers._
@@ -72,7 +72,10 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
 
     "Redirect when form data submitted" in {
       val res = checkYourAnswersConnectionToPropertyController().submit()(
-        FakeRequest(POST, "").withFormUrlEncodedBody("checkYourAnswersConnectionToProperty" -> "yes")
+        FakeRequest(POST, "").withFormUrlEncodedBody(
+          "checkYourAnswersConnectionToProperty" -> "yes",
+          "confirmAnswersAreCorrect" -> "true"
+        )
       )
       status(res) shouldBe SEE_OTHER
     }
@@ -81,7 +84,7 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
   "Check Your Answers Connection To Property form" should {
     "error if checkYourAnswersConnectionToProperty is missing" in {
       val formData = baseFormData - errorKey.checkYourAnswersConnectionToProperty
-      val form     = checkYourAnswersConnectionToPropertyForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.checkYourAnswersConnectionToProperty, "error.checkYourAnswersRadio.required", form)
     }
