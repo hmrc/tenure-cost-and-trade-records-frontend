@@ -74,7 +74,7 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
       val res = checkYourAnswersConnectionToPropertyController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "checkYourAnswersConnectionToProperty" -> "yes",
-          "confirmAnswersAreCorrect" -> "true"
+          "confirmAnswersAreCorrect"             -> "true"
         )
       )
       status(res) shouldBe SEE_OTHER

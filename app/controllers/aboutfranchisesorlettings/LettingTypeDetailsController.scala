@@ -31,7 +31,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.lettingTypeDetails as LettingTypeDetailsView
-import models.submissions.aboutfranchisesorlettings.*
 import models.ForType._
 
 import javax.inject.{Inject, Named, Singleton}
@@ -79,11 +78,7 @@ class LettingTypeDetailsController @Inject() (
   }
 
   def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val forType          = request.sessionData.forType
-    val operatorOrTenant = request.sessionData.aboutFranchisesOrLettings
-      .flatMap(_.rentalIncome)
-      .getOrElse(IndexedSeq.empty)
-      .map(_.sourceType.name)
+    val forType = request.sessionData.forType
 
     continueOrSaveAsDraft[OperatorDetails](
       theForm,
@@ -145,14 +140,15 @@ class LettingTypeDetailsController @Inject() (
     }(using request)
     (updatedSession, updatedIndex)
 
-  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
-    given Session = request.sessionData
-    for
-      confirmedAddress <- getConfirmedAddress(id)
-      businessAddress   = confirmedAddress.asLettingAddress
-      newSession       <- successful(newSessionWithLettingAddress(idx, businessAddress))
-      _                <- repository.saveOrUpdate(newSession)
-    yield Redirect(navigator.nextPage(LettingTypeDetailsId, newSession).apply(newSession))
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      given Session = request.sessionData
+      for
+        confirmedAddress <- getConfirmedAddress(id)
+        businessAddress   = confirmedAddress.asLettingAddress
+        newSession       <- successful(newSessionWithLettingAddress(idx, businessAddress))
+        _                <- repository.saveOrUpdate(newSession)
+      yield Redirect(navigator.nextPage(LettingTypeDetailsId, newSession).apply(newSession))
   }
 
   private def backLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
@@ -163,7 +159,7 @@ class LettingTypeDetailsController @Inject() (
     }
 
   extension (confirmed: AddressLookupConfirmedAddress)
-    def asLettingAddress = LettingAddress(
+    def asLettingAddress: LettingAddress = LettingAddress(
       confirmed.buildingNameNumber,
       confirmed.street1,
       confirmed.town,

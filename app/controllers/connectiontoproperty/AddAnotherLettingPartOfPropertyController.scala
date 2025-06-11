@@ -15,7 +15,7 @@
  */
 
 package controllers.connectiontoproperty
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
@@ -25,7 +25,7 @@ import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AddAnotherLettingPartOfPropertyPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.addAnotherLettingPartOfProperty as AddAnotherLettingPartOfPropertyView
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
@@ -44,7 +44,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   @Named("session") repository: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AddAnotherLettingPartOfProperty")
@@ -134,7 +134,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
               confirmableActionForm,
               name,
               routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
-              routes.AddAnotherLettingPartOfPropertyController.show(idx)
+              callBackToCYAor(routes.AddAnotherLettingPartOfPropertyController.show(idx))
             )
           )
         )
@@ -178,10 +178,16 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
               )
             )
           }
-          Redirect(routes.AddAnotherLettingPartOfPropertyController.show(0))
+          redirectBackToCYAor(routes.AddAnotherLettingPartOfPropertyController.show(0))
         case AnswerNo  =>
-          Redirect(routes.AddAnotherLettingPartOfPropertyController.show(idx))
+          redirectBackToCYAor(routes.AddAnotherLettingPartOfPropertyController.show(idx))
       }
     )
   }
-}
+
+  private def callBackToCYAor(call: Call)(using request: SessionRequest[AnyContent]): Call =
+    if navigator.from == "CYA" then navigator.cyaPageDependsOnSession(request.sessionData).get
+    else call
+
+  private def redirectBackToCYAor(call: Call)(using request: SessionRequest[AnyContent]): Result =
+    Redirect(callBackToCYAor(call))

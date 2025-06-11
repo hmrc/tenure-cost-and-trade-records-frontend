@@ -16,7 +16,7 @@
 
 package navigation
 
-import models.ForType.{FOR6010, FOR6015, FOR6020}
+import models.ForType.{FOR6010, FOR6015}
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection, OperatorDetails, PropertyRentDetails}
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers.*

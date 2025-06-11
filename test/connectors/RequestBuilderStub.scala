@@ -22,7 +22,6 @@ import play.api.libs.ws.{BodyWritable, WSRequest}
 import uk.gov.hmrc.http.client.{RequestBuilder, StreamHttpReads}
 import uk.gov.hmrc.http.{HttpReads, HttpResponse}
 
-import scala.annotation.nowarn
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
@@ -33,7 +32,6 @@ case class RequestBuilderStub(responseStatusOrFailure: Either[Throwable, Int], r
 
   override def transform(transform: WSRequest => WSRequest): RequestBuilder = this
 
-  @nowarn
   override def execute[A: HttpReads](implicit ec: ExecutionContext): Future[A] =
     responseStatusOrFailure match
       case Right(responseStatus) => Future.successful(HttpResponse(responseStatus, requestBody).asInstanceOf[A])
@@ -45,7 +43,6 @@ case class RequestBuilderStub(responseStatusOrFailure: Either[Throwable, Int], r
 
   override def withProxy: RequestBuilder = this
 
-  @nowarn
   override def withBody[B: {BodyWritable, Tag}](body: B)(implicit ec: ExecutionContext): RequestBuilder =
     val bodyString = body match {
       case json: JsValue => Json.stringify(json)

@@ -76,15 +76,31 @@
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.lettings.heading")</h2>
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isRentReceived", _.isAnyRentReceived.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.oes") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show(), "isRentReceivedFromLetting")
+    .map(_.copy(classes = "no-border-bottom"))
 ))
 
 @if(sectionAnswers.answers.flatMap(_.isAnyRentReceived).contains(AnswerYes)) {
     @for((letting, idx) <- sectionAnswers.answers.map(_.lettingPartOfPropertyDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber",idx+1)</h2>
-        @govukSummaryList(SummaryList(rows =
-            sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.tenantDetails",
-                _ => Option(letting.tenantDetails.escapedHtml),
-                controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(idx)), "", ("valueAsHtml", _ => None)) ++
+        @govukSummaryList(
+            SummaryList(
+                card = Some(Card(
+                    title = Some(CardTitle(Text(messages("checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber", idx + 1)))),
+                    actions = Some(Actions(
+                        items = Seq(
+                            ActionItem(
+                                href = s"${controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url}&from=CYA",
+                                content = Text(messages("label.remove")),
+                                attributes = Map(
+                                    "aria-label" -> s"${messages("label.remove")} ${messages("checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber", idx + 1)}"
+                                )
+                            )
+                        ),
+                        classes = "govuk-!-font-weight-regular"
+                    ))
+                )),
+                rows =
+                    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.tenantDetails", _ => Option(letting.tenantDetails.escapedHtml),
+                        controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(idx)), "", ("valueAsHtml", _ => None)) ++
                     sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.annualRent",
                         _ => letting.lettingPartOfPropertyRentDetails.map(lrd => s"""<p class="govuk-body">${lrd.annualRent.asMoney} </br> ${messages("checkYourAnswersConnectionToVacantProperty.fixedOn")} ${dateUtil.formatDayMonthAbbrYear(lrd.dateInput)} </p>"""),
                         controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(idx), "annualRent", ("valueAsHtml", _ => None)) ++
@@ -94,7 +110,8 @@
                         .mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
                         controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.show(idx), "itemsInRent",
                         ("valueAsHtml", _ => None))
-        ))
+            )
+        )
     }
     @govukSummaryList(SummaryList(rows =
         List(
