@@ -21,14 +21,35 @@ import play.api.i18n.Messages
 import play.api.mvc.Call
 import uk.gov.hmrc.govukfrontend.views.Aliases.{Text, Value}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryListRow}
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Card, CardTitle, Key, SummaryListRow}
 
 /**
   * Rows builder for CYA section answers.
   *
   * @author Yuriy Tumakha
   */
-case class SectionAnswersRowBuilder[T](answers: Option[T])(using messages: Messages) {
+case class SectionAnswersRowBuilder[T](answers: Option[T])(using messages: Messages):
+
+  def summaryListCard(itemTitle: String, removeItemLink: String): Option[Card] =
+    Some(
+      Card(
+        title = Some(CardTitle(Text(itemTitle))),
+        actions = Some(
+          Actions(
+            items = Seq(
+              ActionItem(
+                href = removeItemLink,
+                content = Text(messages("label.remove")),
+                attributes = Map(
+                  "aria-label" -> s"${messages("label.remove")} $itemTitle"
+                )
+              )
+            ),
+            classes = "govuk-!-font-weight-regular"
+          )
+        )
+      )
+    )
 
   /**
     * Render [[uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow]] with action to edit answer value.
@@ -181,5 +202,3 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(using messages: Messa
 
   private def editFieldTag(editFieldId: String): String =
     Option.when(editFieldId.nonEmpty)(editFieldId).fold("")(fieldId => s"#$fieldId")
-
-}

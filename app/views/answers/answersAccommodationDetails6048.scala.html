@@ -55,21 +55,10 @@
 
     @govukSummaryList(
         SummaryList(
-            card = Some(Card(
-                title = Some(CardTitle(Text(messages("accommodation.CYA.unit", index + 1)))),
-                actions = Some(Actions(
-                    items = Seq(
-                        ActionItem(
-                            href = s"${controllers.accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index&from=CYA",
-                            content = Text(messages("label.remove")),
-                            attributes = Map(
-                                "aria-label" -> s"${messages("label.remove")} ${messages("accommodation.CYA.unit", index + 1)}"
-                            )
-                        )
-                    ),
-                    classes = "govuk-!-font-weight-regular"
-                ))
-            )),
+            card = sectionAnswers.summaryListCard(
+                messages("accommodation.CYA.unit", index + 1),
+                s"${controllers.accommodation.routes.AccommodationUnitList6048Controller.remove.url}?idx=$index&from=CYA"
+            ),
             rows = sectionAnswers.row("accommodation.CYA.unitDetails",
                 _ => Seq(accommodationUnit.unitName, accommodationUnit.unitType)
                 .map(_.escapedHtml).mkString("""<p class="govuk-body">""", "<br/> ", "</p>"),
