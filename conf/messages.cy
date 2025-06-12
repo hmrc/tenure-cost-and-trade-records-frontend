@@ -2627,6 +2627,7 @@ turnover.6076.electricityGenerated = Trydan a gynhyrchir
 turnover.6076.electricityGenerated.hint = (mewn kWh neu MWh)
 turnover.6076.otherIncome.heading = Incwm arall
 turnover.6076.otherIncome.p1 = Provide us with details of any other income not listed previously.
+turnover.6076.otherIncome.p2 = Provide us with details if you have any other sources of income not listed previously.
 turnover.6076.otherIncome = Cyfanswm incwm arall
 turnover.6076.otherIncome.hint = Dylech gynnwys incwm o unrhyw ffynhonnell na restrir hyd yn hyn.
 turnover.6076.otherIncomeDetails = Rhowch fanylion ffynonellau eich incwm arall
