@@ -30,6 +30,7 @@
         govukButton: GovukButton,
         govukInput: GovukInput,
         govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
         hmrcCharacterCount: HmrcCharacterCount,
         dateUtil: DateUtilLocalised,
         accessibilityUtil: AccessibilityUtil
@@ -80,7 +81,12 @@
     theForm = form
 ) {
 
-    <p class="govuk-body govuk-!-width-three-quarters">@messages("fieldsAreMandatory.label")</p>
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("turnover.6076.otherIncome.p2")</p>
+
+
+    @govukInsetText(InsetText(
+        content = Text(messages("turnover.inset"))
+    ))
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.OtherIncomeController.submit()) {
         <table class="hmrc-responsive-table">

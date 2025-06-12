@@ -2685,6 +2685,7 @@ turnover.6076.electricityGenerated = Electricity generated
 turnover.6076.electricityGenerated.hint = (in kWh or MWh)
 turnover.6076.otherIncome.heading = Other income
 turnover.6076.otherIncome.p1 = Provide us with details of any other income not listed previously.
+turnover.6076.otherIncome.p2 = Provide us with details if you have any other sources of income not listed previously.
 turnover.6076.otherIncome = Other income
 turnover.6076.otherIncome.hint = Include income from any source not listed previously
 turnover.6076.otherIncomeDetails = Give details of the sources of your other income
