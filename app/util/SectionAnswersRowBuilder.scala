@@ -30,6 +30,9 @@ import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actio
   */
 case class SectionAnswersRowBuilder[T](answers: Option[T])(using messages: Messages):
 
+  /**
+    * Create [[uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Card Card]] with title and Remove link for each item in SummaryList.
+    */
   def summaryListCard(itemTitle: String, removeItemLink: String): Option[Card] =
     Some(
       Card(
