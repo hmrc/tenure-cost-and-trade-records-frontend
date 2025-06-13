@@ -3362,7 +3362,8 @@ error.additionalBarsClubs.costOfEntertainment.negative = Cost of entertainment i
 
 additionalAmusements.heading = Amusements
 additionalAmusements.p = If you run any on-site amusements such as gaming machines, juke boxes or pool tables, enter the receipts after the deduction of any prices and licence fee. Where accounts do not relate to the whole of your season, state the relevant number of weeks.
-additionalAmusements.receipts.label = Receipts (after deduction of prizes and licence fee)
+additionalAmusements.receipts.label = Receipts
+additionalAmusements.receipts.explanation = (after deduction of prizes and licence fee)
 
 error.additionalAmusements.receipts.required = Enter 0 if you did not have any receipts from on-site amusements in the year ending {0}
 error.additionalAmusements.receipts.range    = Receipts from on-site amusements in the year ending {0} must be a number, for example 100 or 100.00

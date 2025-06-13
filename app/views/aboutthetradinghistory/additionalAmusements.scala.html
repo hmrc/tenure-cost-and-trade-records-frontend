@@ -43,10 +43,17 @@
     .flatMap(_.turnoverSections6045).map(_.map(_.additionalShops.fold(0)(_.tradingPeriod))).getOrElse(Seq.empty)
 }
 
-@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: PrefixOrSuffix, finYearEnd: LocalDate) = @{
+@rowLabel(labelKey: String, explanationMsg: Option[String]) = {
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold ">@messages(labelKey)</span>
+        <span>@explanationMsg.map {explanationMsg => @messages(explanationMsg)}</span>
+    </p>
+}
+
+@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: PrefixOrSuffix, explanationMsg: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
-            content = Text(messages(labelKey))
+            content = HtmlContent(rowLabel(labelKey, explanationMsg)),
         ),
         TableRow(
             content = HtmlContent(
@@ -109,6 +116,7 @@
                                 "additionalAmusements.receipts.label",
                                 "govuk-input--width-5",
                                 PrefixOrSuffix(content = Text(messages("label.pound"))),
+                                explanationMsg = "additionalAmusements.receipts.explanation",
                                 finYearEnd))))
                 </td>
                 }
