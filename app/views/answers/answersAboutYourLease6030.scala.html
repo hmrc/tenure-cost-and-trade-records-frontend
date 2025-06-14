@@ -215,29 +215,31 @@
                         controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(),
                         "ultimatelyResponsibleBI",
                         ("valueAsHtml", _ => None)
-                    ) ++
-                    sectionAnswers.row(
+                    ) ++ {
+                        val lastRows = sectionAnswers.row(
                             "checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                             _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                             controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(),
                             "rentIncludeTradeServices"
-                    ) ++
-                    sectionAnswers.conditionRow(
+                        ) ++ sectionAnswers.conditionRow(
                             answers => answers.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).contains("yes") && answers.rentIncludeTradeServicesInformation.isDefined,
                             "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                             _.rentIncludeTradeServicesInformation.map(info =>
-                            Seq(info.sumIncludedInRent.map(_.asMoney), Option(info.describeTheServices))
-                            .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                                Seq(info.sumIncludedInRent.map(_.asMoney), Option(info.describeTheServices))
+                                .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                             controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
                             ("valueAsHtml", _ => None)
-                    ) ++
-                    sectionAnswers3.conditionRow(
+                        ) ++ sectionAnswers3.conditionRow(
                             _.rentIncludeTradeServicesDetailsTextArea.isDefined && sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).map(_.rentIncludeTradeServices).contains(AnswerYes),
                             "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                             _.rentIncludeTradeServicesDetailsTextArea,
                             controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(),
                             "describeServicesTextArea"
-                    )))
+                        )
+                        lastRows.init :+ lastRows.last.copy(classes = if(sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).exists(_.rentIncludeTradeServices == AnswerYes)) "no-border-bottom" else "")
+                    },
+            classes = "govuk-!-margin-bottom-1"
+        ))
 
     @if(sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).exists(_.rentIncludeTradeServices contains AnswerYes)) {
         @for((tradingService, idx) <- sectionAnswers3.answers.map(_.tradeServices).getOrElse(IndexedSeq.empty).zipWithIndex) {
@@ -265,6 +267,8 @@
         sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.paymentForTradeServices",
             _.paymentForTradeServices.map(_.paymentForTradeService.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
             controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show(), "paymentForTradeServices")
+        .map(_.copy(classes = if (sectionAnswers3.answers.flatMap(_.paymentForTradeServices).exists(_.paymentForTradeService == AnswerYes)) "no-border-bottom" else "")),
+        classes = "govuk-!-margin-bottom-1"
     ))
 
     @if(sectionAnswers3.answers.flatMap(_.paymentForTradeServices).exists(_.paymentForTradeService contains AnswerYes)) {

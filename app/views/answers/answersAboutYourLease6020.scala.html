@@ -164,6 +164,8 @@
             sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                  _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                  controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(), "rentIncludeTradeServices")
+            .map(_.copy(classes = if (sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).exists(_.rentIncludeTradeServices == AnswerYes)) "no-border-bottom" else "")),
+            classes = "govuk-!-margin-bottom-1"
         ))
 
     @if(sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).exists(_.rentIncludeTradeServices contains AnswerYes)) {
@@ -181,7 +183,7 @@
             @govukSummaryList(SummaryList(rows =
                 List(
                     SummaryListRow(
-                        Key(Text(messages(addedTradeServiceMsgKey, request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
+                        Key(Text(messages(addedTradeServiceMsgKey, request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m govuk-!-width-one-half"),
                         actions = Some(Actions(items = List(ActionItem(navigator.routeMap(TradeServicesDescriptionId)(request.sessionData).url + "&from=CYA", Text(messages("checkYourAnswersAboutYourLeaseOrTenure.addOrRemoveTradingService"))))))
                     )
                 )
@@ -192,7 +194,9 @@
             sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.paymentForTradeServices",
                 _.paymentForTradeServices.map(_.paymentForTradeService.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                 controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show(), "paymentForTradeServices")
-        ))
+            .map(_.copy(classes = if (sectionAnswers3.answers.flatMap(_.paymentForTradeServices).exists(_.paymentForTradeService == AnswerYes)) "no-border-bottom" else "")),
+        classes = "govuk-!-margin-bottom-1"
+    ))
 
         @if(sectionAnswers3.answers.flatMap(_.paymentForTradeServices).exists(_.paymentForTradeService contains AnswerYes)) {
             @for((servicePaid, idx) <- sectionAnswers3.answers.map(_.servicesPaid).getOrElse(IndexedSeq.empty).zipWithIndex) {
@@ -212,7 +216,7 @@
             @govukSummaryList(SummaryList(rows =
                 List(
                     SummaryListRow(
-                        Key(Text(messages(addedPaidServiceMsgKey, request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m"),
+                        Key(Text(messages(addedPaidServiceMsgKey, request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m govuk-!-width-one-half"),
                         actions = Some(Actions(items = List(ActionItem(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0).url + "&from=CYA", Text(messages("checkYourAnswersAboutYourLeaseOrTenure.addOrRemovePaidService"))))))
                     )
                 )
