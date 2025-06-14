@@ -119,12 +119,12 @@ class ServicePaidSeparatelyListController @Inject() (
               confirmableActionForm,
               service,
               controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.performRemove(index),
-              toServicePaidSeparatelyList(index)
+              navigator.callBackToCYAor(toServicePaidSeparatelyList(index))
             )
           )
         )
       }
-      .getOrElse(Redirect(toServicePaidSeparatelyList(0)))
+      .getOrElse(navigator.redirectBackToCYAor(toServicePaidSeparatelyList(0)))
   }
 
   def performRemove(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -141,12 +141,12 @@ class ServicePaidSeparatelyListController @Inject() (
                   formWithErrors,
                   description,
                   controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.performRemove(index),
-                  toServicePaidSeparatelyList(index)
+                  navigator.callBackToCYAor(toServicePaidSeparatelyList(index))
                 )
               )
             )
           }
-          .getOrElse(Redirect(toServicePaidSeparatelyList(0))),
+          .getOrElse(navigator.redirectBackToCYAor(toServicePaidSeparatelyList(0))),
       {
         case AnswerYes =>
           request.sessionData.aboutLeaseOrAgreementPartThree.map(_.servicesPaid).map { servicesPaid =>
@@ -157,9 +157,9 @@ class ServicePaidSeparatelyListController @Inject() (
               )
             )
           }
-          Redirect(toServicePaidSeparatelyList(0))
+          navigator.redirectBackToCYAor(toServicePaidSeparatelyList(0))
         case AnswerNo  =>
-          Redirect(toServicePaidSeparatelyList(index))
+          navigator.redirectBackToCYAor(toServicePaidSeparatelyList(index))
       }
     )
   }

@@ -16,29 +16,21 @@
 
 @import views.includes.cards.CardData
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import util.SectionAnswersRowBuilder
 
 @(govukSummaryList: GovukSummaryList, cardsType: String, cardsData: Seq[CardData])(implicit messages: Messages)
+
+@sectionAnswers = @{
+    SectionAnswersRowBuilder(None)
+}
+
 @cardsData.map { data =>
     @govukSummaryList(
         SummaryList(
-            card = Some(Card(
-                title = Some(CardTitle(
-                    content = Text(s"$cardsType ${data.index + 1}")
-                )),
-                actions = Some(Actions(
-                    items = Seq(
-                        ActionItem(
-                            href = data.removeAction.toString,
-                            content = Text(messages("label.remove")),
-                            attributes = Map(
-                                "aria-label" -> (messages("label.remove") + s" $cardsType ${data.index + 1}")
-                            )
-                        )
-                    ),
-                    classes = "govuk-!-font-weight-regular"
-                )),
-                classes = "govuk-!-margin-bottom-1"
-            )),
+            card = sectionAnswers.summaryListCard(
+                s"$cardsType ${data.index + 1}",
+                data.removeAction.toString
+            ),
             rows = data.entries.map { entry =>
                 SummaryListRow(
                     key = Key(
