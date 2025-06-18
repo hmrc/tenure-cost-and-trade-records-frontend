@@ -21,7 +21,8 @@ import controllers.routes
 import models.Session
 import navigation.UrlHelpers.urlPlusParamPrefix
 import navigation.identifiers.Identifier
-import play.api.mvc.{AnyContent, Call, Request}
+import play.api.mvc.Results.Redirect
+import play.api.mvc.{AnyContent, Call, Request, Result}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import javax.inject.Inject
@@ -34,6 +35,12 @@ abstract class Navigator @Inject() (audit: Audit):
   val routeMap: Map[Identifier, Session => Call]
 
   def cyaPage: Option[Call] = None
+
+  def callBackToCYAor(call: Call)(using request: Request[AnyContent]): Call =
+    cyaPage.filter(_ => from == "CYA").getOrElse(call)
+
+  def redirectBackToCYAor(call: Call)(using request: Request[AnyContent]): Result =
+    Redirect(callBackToCYAor(call))
 
   /**
     * Postpone redirect to CYA in case the next page is in this Set.

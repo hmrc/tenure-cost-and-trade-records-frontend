@@ -50,7 +50,7 @@
     </p>
 }
 
-@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: PrefixOrSuffix, explanationMsg: String = "", finYearEnd: LocalDate) = @{
+@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: PrefixOrSuffix, explanationMsg: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, explanationMsg)),

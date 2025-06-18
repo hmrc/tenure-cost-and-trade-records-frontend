@@ -215,58 +215,70 @@
                         controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show(),
                         "ultimatelyResponsibleBI",
                         ("valueAsHtml", _ => None)
-                    ) ++
-                    sectionAnswers.row(
+                    ) ++ {
+                        val lastRows = sectionAnswers.row(
                             "checkYourAnswersAboutYourLeaseOrTenure.rentIncludesTradeServices",
                             _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                             controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show(),
                             "rentIncludeTradeServices"
-                    ) ++
-                    sectionAnswers.conditionRow(
+                        ) ++ sectionAnswers.conditionRow(
                             answers => answers.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name).contains("yes") && answers.rentIncludeTradeServicesInformation.isDefined,
                             "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                             _.rentIncludeTradeServicesInformation.map(info =>
-                            Seq(info.sumIncludedInRent.map(_.asMoney), Option(info.describeTheServices))
-                            .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
+                                Seq(info.sumIncludedInRent.map(_.asMoney), Option(info.describeTheServices))
+                                .flatten[String].map(_.escapedHtml).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                             controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(), "",
                             ("valueAsHtml", _ => None)
-                    ) ++
-                    sectionAnswers3.conditionRow(
+                        ) ++ sectionAnswers3.conditionRow(
                             _.rentIncludeTradeServicesDetailsTextArea.isDefined && sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).map(_.rentIncludeTradeServices).contains(AnswerYes),
                             "checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeServices",
                             _.rentIncludeTradeServicesDetailsTextArea,
                             controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show(),
                             "describeServicesTextArea"
-                    )))
+                        )
+                        lastRows.init :+ lastRows.last.copy(classes = if(sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).exists(_.rentIncludeTradeServices == AnswerYes)) "no-border-bottom" else "")
+                    },
+            classes = "govuk-!-margin-bottom-1"
+        ))
 
     @if(sectionAnswers.answers.flatMap(_.rentIncludeTradeServicesDetails).exists(_.rentIncludeTradeServices contains AnswerYes)) {
         @for((tradingService, idx) <- sectionAnswers3.answers.map(_.tradeServices).getOrElse(IndexedSeq.empty).zipWithIndex) {
-
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.tradingServiceCount", idx + 1)</h2>
-
-            @govukSummaryList(SummaryList(rows =
-                sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeService",
+            @govukSummaryList(SummaryList(
+                card = sectionAnswers.summaryListCard(
+                    messages("checkYourAnswersAboutYourLeaseOrTenure.tradingServiceCount", idx + 1),
+                    s"${controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.remove(idx).url}&from=CYA"
+                ),
+                rows = sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeService",
                     _ => Option(tradingService.details.description).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
-                    controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Option(idx)), "tradeServiceDescription", ("valueAsHtml", _ => None))))}
-            @govukSummaryList(SummaryList(rows =
-                        List(
-                            SummaryListRow(
-                                Key(Text(messages(addedTradeServiceMsgKey, request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m govuk-!-width-one-half"),
-                                actions = Option(Actions(items = List(ActionItem(navigator.routeMap(TradeServicesDescriptionId)(request.sessionData).url + "&from=CYA", Text(messages("checkYourAnswersAboutYourLeaseOrTenure.addOrRemoveTradingService"))))))
-                        ))))
+                    controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Option(idx)), "tradeServiceDescription", ("valueAsHtml", _ => None))
+            ))
+        }
+        @govukSummaryList(SummaryList(
+            rows = List(
+                SummaryListRow(
+                    Key(Text(messages(addedTradeServiceMsgKey, request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices).getOrElse(IndexedSeq.empty).length)), classes = "govuk-heading-m govuk-!-width-one-half"),
+                    actions = Option(Actions(items = List(ActionItem(navigator.routeMap(TradeServicesDescriptionId)(request.sessionData).url + "&from=CYA", Text(messages("checkYourAnswersAboutYourLeaseOrTenure.addOrRemoveTradingService"))))))
+                )
+            )
+        ))
     }
 
     @govukSummaryList(SummaryList(rows =
         sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.paymentForTradeServices",
             _.paymentForTradeServices.map(_.paymentForTradeService.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
             controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show(), "paymentForTradeServices")
+        .map(_.copy(classes = if (sectionAnswers3.answers.flatMap(_.paymentForTradeServices).exists(_.paymentForTradeService == AnswerYes)) "no-border-bottom" else "")),
+        classes = "govuk-!-margin-bottom-1"
     ))
 
     @if(sectionAnswers3.answers.flatMap(_.paymentForTradeServices).exists(_.paymentForTradeService contains AnswerYes)) {
         @for((servicePaid, idx) <- sectionAnswers3.answers.map(_.servicesPaid).getOrElse(IndexedSeq.empty).zipWithIndex) {
-            <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.paidServiceCount", idx + 1)</h2>
-            @govukSummaryList(SummaryList(rows =
-                sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfPaidService",
+            @govukSummaryList(SummaryList(
+                card = sectionAnswers.summaryListCard(
+                    messages("checkYourAnswersAboutYourLeaseOrTenure.paidServiceCount", idx + 1),
+                    s"${controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.remove(idx).url}&from=CYA"
+                ),
+                rows = sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfPaidService",
                     _ => Option(servicePaid.details.description).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
                     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(idx)), "paidServiceDescription", ("valueAsHtml", _ => None)) ++
                         sectionAnswers3.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.costOfPaidService",

@@ -83,21 +83,10 @@
     @for((letting, idx) <- sectionAnswers.answers.map(_.lettingPartOfPropertyDetails).getOrElse(IndexedSeq.empty).zipWithIndex) {
         @govukSummaryList(
             SummaryList(
-                card = Some(Card(
-                    title = Some(CardTitle(Text(messages("checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber", idx + 1)))),
-                    actions = Some(Actions(
-                        items = Seq(
-                            ActionItem(
-                                href = s"${controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url}&from=CYA",
-                                content = Text(messages("label.remove")),
-                                attributes = Map(
-                                    "aria-label" -> s"${messages("label.remove")} ${messages("checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber", idx + 1)}"
-                                )
-                            )
-                        ),
-                        classes = "govuk-!-font-weight-regular"
-                    ))
-                )),
+                card = sectionAnswers.summaryListCard(
+                    messages("checkYourAnswersConnectionToVacantProperty.lettingOperatorNumber", idx + 1),
+                    s"${controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url}&from=CYA"
+                ),
                 rows =
                     sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.tenantDetails", _ => Option(letting.tenantDetails.escapedHtml),
                         controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(idx)), "", ("valueAsHtml", _ => None)) ++
