@@ -58,7 +58,7 @@ class RentReceivedFromController @Inject() (
         existingDetails.fold(theForm)(theForm.fill),
         index,
         getOperatorName(index),
-        backLinkUrl(index)
+        Option(routes.FranchiseTypeDetailsController.show(index).url)
       )
     )
   }
@@ -72,7 +72,7 @@ class RentReceivedFromController @Inject() (
             formWithErrors,
             index,
             getOperatorName(index),
-            backLinkUrl(index)
+            Option(routes.FranchiseTypeDetailsController.show(index).url)
           )
         ),
       formData => {
@@ -98,13 +98,3 @@ class RentReceivedFromController @Inject() (
       }
     )
   }
-
-  private def backLinkUrl(index: Int)(using request: SessionRequest[AnyContent]): Option[String] =
-    for
-      aboutFranchisesOrLettings <- request.sessionData.aboutFranchisesOrLettings
-      rentalIncome              <- aboutFranchisesOrLettings.rentalIncome
-      incomeRecord              <- rentalIncome.lift(index)
-    yield incomeRecord match
-      case _: FranchiseIncomeRecord      => routes.FranchiseTypeDetailsController.show(index).url
-      case _: Concession6015IncomeRecord => routes.FranchiseTypeDetailsController.show(index).url
-      case _                             => routes.CateringOperationDetailsController.show(Some(index)).url
