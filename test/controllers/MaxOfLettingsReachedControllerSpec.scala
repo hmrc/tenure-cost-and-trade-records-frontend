@@ -119,17 +119,11 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
 
     "return the correct back link for each src parameter" in {
       val testCases = Seq(
-        "connection"        -> controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
-        "franchiseCatering" -> controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController
-          .show(4)
-          .url,
-        "franchiseLetting"  -> controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController
-          .show(4)
-          .url,
-        "typeOfIncome"      -> controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(4).url,
-        "rentalIncome"      -> controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(4).url,
-        "lettings"          -> controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(9).url,
-        ""                  -> routes.TaskListController.show().url
+        "connection"   -> controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
+        "typeOfIncome" -> controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(4).url,
+        "rentalIncome" -> controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(4).url,
+        "lettings"     -> controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(9).url,
+        ""             -> routes.TaskListController.show().url
       )
 
       for ((src, expectedBackLink) <- testCases) {

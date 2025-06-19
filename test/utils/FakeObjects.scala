@@ -968,161 +968,22 @@ trait FakeObjects {
       aboutTheTradingHistory = prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails
     )
 
-  // Franchises or lettings
-  val prefilledCateringOperationSectionYes: CateringOperationSection = CateringOperationSection(
-    BusinessDetails("Operator Name", "Type of Business", prefilledCateringAddress),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(RentReceivedFrom(BigDecimal(1500), true)),
-    Some(CalculatingTheRent("test", prefilledDateInput)),
-    Some(AnswerYes),
-    itemsInRent = List("Other")
-  )
-
-  val prefilledCateringOperationBusinessSectionYes: CateringOperationBusinessSection = CateringOperationBusinessSection(
-    ConcessionBusinessDetails("Operator Name", "Type of Business", "Describe business"),
-    Some(FeeReceived(Seq(FeeReceivedPerYear(LocalDate.now, 52, Some(1000))), Some("Fee calculation details"))),
-    Some(AnswerYes)
-  )
-
-  val prefilledCateringOperationSectionIncompleteCatering: CateringOperationSection = CateringOperationSection(
-    BusinessDetails("Operator Name", "Type of Business", prefilledCateringAddress),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(RentReceivedFrom(BigDecimal(1500), true)),
-    Some(CalculatingTheRent("test", prefilledDateInput))
-  )
-
-  val prefilledCateringOperationBusinessSectionIncompleteCatering: CateringOperationBusinessSection =
-    CateringOperationBusinessSection(
-      ConcessionBusinessDetails("Operator Name", "Type of Business", "Describe business")
-    )
-
-  val prefilledCateringOperationSectionIncompleteCateringRentDetails: CateringOperationSection =
-    CateringOperationSection(
-      BusinessDetails("Operator Name", "Type of Business", prefilledCateringAddress)
-    )
-
-  val prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails: CateringOperationBusinessSection =
-    CateringOperationBusinessSection(
-      ConcessionBusinessDetails("Operator Name", "Type of Business", "Describe business")
-    )
-
-  val prefilledCateringOperationSectionNo: CateringOperationSection = CateringOperationSection(
-    BusinessDetails("Operator Name", "Type of Business", prefilledCateringAddress),
-    Some(CateringOperationRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(RentReceivedFrom(BigDecimal(1500), true)),
-    Some(CalculatingTheRent("test", prefilledDateInput)),
-    Some(AnswerNo),
-    itemsInRent = List("Other")
-  )
-
-  val prefilledCateringOperationBusinessSectionNo: CateringOperationBusinessSection = CateringOperationBusinessSection(
-    ConcessionBusinessDetails("Operator Name", "Type of Business", "Describe business"),
-    None,
-    Some(AnswerNo)
-  )
-
-  val prefilledLettingSectionYes: LettingSection               = LettingSection(
-    aboutfranchisesorlettings.OperatorDetails(
-      "Operator Name",
-      "Type of Business",
-      prefilledLettingAddress
-    ),
-    Some(PropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true)),
-    Some(AnswerYes),
-    itemsInRent = List("Other")
-  )
-  val prefilledLettingSectionIncompleteLetting: LettingSection = LettingSection(
-    aboutfranchisesorlettings.OperatorDetails(
-      "Operator Name",
-      "Type of Business",
-      prefilledLettingAddress
-    ),
-    Some(PropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true))
-  )
-  val prefilledLettingSectionIncomplete: LettingSection        = LettingSection(
-    aboutfranchisesorlettings.OperatorDetails(
-      "Operator Name",
-      "Type of Business",
-      prefilledLettingAddress
-    ),
-    Some(PropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true))
-  )
-  val prefilledLettingSectionNo: LettingSection                = LettingSection(
-    aboutfranchisesorlettings.OperatorDetails(
-      "Operator Name",
-      "Type of Business",
-      prefilledLettingAddress
-    ),
-    Some(PropertyRentDetails(BigDecimal(1500), prefilledDateInput)),
-    Some(LettingOtherPartOfPropertyRent6015Details(BigDecimal(1500), prefilledDateInput, true)),
-    Some(AnswerNo),
-    itemsInRent = List("Other")
-  )
-  val rentDetails                                              = Some(RentDetails(100, prefilledDateInput))
-  val atmLetting                                               = ATMLetting(Some("HSBC"), Some(prefilledLettingAddress), rentDetails)
-  val telcoLetting                                             = TelecomMastLetting(Some("Vodafone"), Some("roof"), Some(prefilledLettingAddress), rentDetails)
-  val advert                                                   = AdvertisingRightLetting(Some("Billboard"), Some("JCDx"), Some(prefilledLettingAddress), rentDetails)
-  val otherLetting                                             = OtherLetting(Some("Charging point"), Some("Tesla"), Some(prefilledLettingAddress), rentDetails)
-
-  val prefilledAboutFranchiseOrLettings6016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
-    Some(AnswerYes),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledCateringOperationSectionYes),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledLettingSectionYes),
-    None,
-    Some(false)
-  )
-
-  val prefilledAboutFranchiseOrLettingsNo6016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
-    Some(AnswerNo),
-    Some(AnswerNo),
-    0,
-    None,
-    IndexedSeq(prefilledCateringOperationSectionNo),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionNo)),
-    Some(AnswerNo),
-    0,
-    None,
-    IndexedSeq(prefilledLettingSectionNo),
-    None,
-    Some(false)
-  )
+  val rentDetails  = Some(RentDetails(100, prefilledDateInput))
+  val atmLetting   = ATMLetting(Some("HSBC"), Some(prefilledLettingAddress), rentDetails)
+  val telcoLetting = TelecomMastLetting(Some("Vodafone"), Some("roof"), Some(prefilledLettingAddress), rentDetails)
+  val advert       = AdvertisingRightLetting(Some("Billboard"), Some("JCDx"), Some(prefilledLettingAddress), rentDetails)
+  val otherLetting = OtherLetting(Some("Charging point"), Some("Tesla"), Some(prefilledLettingAddress), rentDetails)
 
   val prefilledAboutFranchiseOrLettings: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
-    Some(AnswerYes),
+    None,
+    None,
+    None,
+    None,
+    None,
     0,
-    None,
-    IndexedSeq(prefilledCateringOperationSectionYes),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
-    Some(AnswerYes),
     0,
-    None,
-    IndexedSeq(prefilledLettingSectionYes),
-    None,
-    Some(false)
-  )
-
-  val prefilledAboutFranchiseOrLettingsIncompleteLetting: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
-    Some(AnswerYes),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
-    Some(IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails)),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledLettingSectionIncomplete)
+    None
   )
 
   // Fake objects for Franchise/ Concession / Lettings:
@@ -1188,6 +1049,10 @@ trait FakeObjects {
       IndexedSeq(franchiseIncomeRecord, lettingIncomeRecord)
     )
   )
+  val prefilledAboutFranchiseOrLettingsNo6016: AboutFranchisesOrLettings   = AboutFranchisesOrLettings(
+    Some(AnswerNo),
+    rentalIncome = None
+  )
   val prefilledAboutFranchiseOrLettings60156016: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
     rentalIncome = Some(
@@ -1202,112 +1067,42 @@ trait FakeObjects {
     )
   )
 
-  val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings                           = AboutFranchisesOrLettings(
+  val prefilledAboutFranchiseOrLettingsNo: AboutFranchisesOrLettings     = AboutFranchisesOrLettings(
     Some(AnswerNo),
-    Some(AnswerNo),
-    0,
     None,
-    IndexedSeq(prefilledCateringOperationSectionNo),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionNo)),
-    Some(AnswerNo),
-    0,
     None,
-    IndexedSeq(prefilledLettingSectionNo)
+    None,
+    None,
+    None,
+    0,
+    0,
+    None
   )
-  val prefilledAboutFranchiseOrLettings6015: AboutFranchisesOrLettings                         = AboutFranchisesOrLettings(
-    Some(AnswerYes),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledCateringOperationSectionYes),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledLettingSectionYes)
-  )
-  val prefilledIncompleteAboutFranchiseOrLettings6015: AboutFranchisesOrLettings               = AboutFranchisesOrLettings(
-    Some(AnswerYes),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledCateringOperationSectionIncompleteCatering),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionIncompleteCatering)),
-    Some(AnswerYes),
-    0,
-    None,
-    IndexedSeq(prefilledLettingSectionIncompleteLetting)
-  )
-  val prefilledIncompleteCateringDetailAboutFranchiseOrLettings6015: AboutFranchisesOrLettings =
-    AboutFranchisesOrLettings(
-      Some(AnswerYes),
-      Some(AnswerYes),
-      0,
-      None,
-      IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
-      Some(IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails)),
-      Some(AnswerYes),
-      0,
-      None,
-      IndexedSeq(prefilledLettingSectionIncompleteLetting)
-    )
-
-  val prefilledIncompleteCateringDetailAboutFranchiseOrLettings6030: AboutFranchisesOrLettings =
-    AboutFranchisesOrLettings(
-      Some(AnswerYes),
-      Some(AnswerYes),
-      0,
-      None,
-      IndexedSeq(prefilledCateringOperationSectionIncompleteCateringRentDetails),
-      Some(IndexedSeq(prefilledCateringBusinessOperationSectionIncompleteCateringRentDetails)),
-      Some(AnswerYes),
-      0,
-      None,
-      IndexedSeq(prefilledLettingSectionIncompleteLetting)
-    )
-
   val prefilledAboutFranchiseOrLettingsNo6015: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerNo),
-    Some(AnswerNo),
-    0,
     None,
-    IndexedSeq(prefilledCateringOperationSectionNo),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionNo)),
-    Some(AnswerNo),
-    0,
     None,
-    IndexedSeq(prefilledLettingSectionNo)
+    None,
+    None,
+    None,
+    0,
+    0,
+    None
   )
 
   val prefilledAboutFranchiseOrLettingsWith6020LettingsAll: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
-    Some(AnswerYes),
-    0,
     None,
-    IndexedSeq(prefilledCateringOperationSectionYes),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
-    Some(AnswerYes),
-    0,
     None,
-    IndexedSeq(prefilledLettingSectionYes),
     None,
-    Some(false),
     Some(IndexedSeq(atmLetting, telcoLetting, advert, otherLetting))
   )
 
   val prefilledAboutFranchiseOrLettingsWith6020MaxLettings: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
     Some(AnswerYes),
-    Some(AnswerYes),
-    0,
     None,
-    IndexedSeq(prefilledCateringOperationSectionYes),
-    Some(IndexedSeq(prefilledCateringOperationBusinessSectionYes)),
-    Some(AnswerYes),
-    0,
     None,
-    IndexedSeq(prefilledLettingSectionYes),
     None,
-    Some(false),
     Some(
       IndexedSeq(
         atmLetting,
@@ -1325,37 +1120,18 @@ trait FakeObjects {
   )
   val sessionAboutFranchiseOrLetting6010YesSession: Session                           =
     aboutYouAndTheProperty6010YesSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6010))
-  val sessionAboutFranchiseOrLetting6010Incomplete: Session                           =
-    aboutYouAndTheProperty6010YesSession.copy(aboutFranchisesOrLettings =
-      Some(prefilledAboutFranchiseOrLettingsIncompleteLetting)
-    )
-  val sessionAboutFranchiseOrLetting6010NoSession: Session                            =
+
+  val sessionAboutFranchiseOrLetting6010NoSession: Session =
     aboutYouAndTheProperty6010NoSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo))
 
   val sessionAboutFranchiseOrLetting6045: Session =
     stillConnectedDetails6045NoSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6045))
 
-  val sessionAboutFranchiseOrLetting6015YesSession: Session                =
+  val sessionAboutFranchiseOrLetting6015YesSession: Session =
     aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
       Some(prefilledAboutFranchiseOrLettings60156016)
     )
-  val sessionAboutFranchiseOrLetting6015SIncompleteCatering: Session       =
-    aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
-      Some(prefilledIncompleteAboutFranchiseOrLettings6015)
-    )
-  val sessionAboutFranchiseOrLetting6015SIncompleteCateringDetail: Session =
-    aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
-      Some(prefilledIncompleteCateringDetailAboutFranchiseOrLettings6015)
-    )
-  val sessionAboutFranchiseOrLetting6030SIncompleteCateringDetail: Session =
-    aboutYouAndTheProperty6030YesSession.copy(aboutFranchisesOrLettings =
-      Some(prefilledIncompleteCateringDetailAboutFranchiseOrLettings6030)
-    )
-  val sessionAboutFranchiseOrLetting6015SIncompleteLetting: Session        =
-    aboutYouAndTheProperty6015YesSession.copy(aboutFranchisesOrLettings =
-      Some(prefilledIncompleteAboutFranchiseOrLettings6015)
-    )
-  val sessionAboutFranchiseOrLetting6015NoSession: Session                 =
+  val sessionAboutFranchiseOrLetting6015NoSession: Session  =
     aboutYouAndTheProperty6015NoSession.copy(aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsNo6015))
 
   val prefilledAboutFranchiseOrLettings6030: AboutFranchisesOrLettings = AboutFranchisesOrLettings(
