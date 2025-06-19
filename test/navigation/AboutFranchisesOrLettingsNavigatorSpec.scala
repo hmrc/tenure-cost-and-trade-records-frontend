@@ -16,13 +16,9 @@
 
 package navigation
 
-import models.ForType.{FOR6010, FOR6015, FOR6020}
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, OperatorDetails, PropertyRentDetails}
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswerNo
 import navigation.identifiers.*
 import utils.TestBaseSpec
-
-import java.time.LocalDate
 
 class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 

@@ -16,13 +16,12 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CateringOperationBusinessDetails6030Form.cateringOperationBusinessDetails6030Form
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{ConcessionBusinessDetails, ConcessionIncomeRecord}
-import models.ForType
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CateringOperationBusinessPageId
 import play.api.i18n.I18nSupport
@@ -45,9 +44,6 @@ class CateringOperationBusinessDetailsController @Inject() (
     extends FORDataCaptureController(mcc)
     with I18nSupport {
 
-  private def forType(implicit request: SessionRequest[AnyContent]): ForType =
-    request.sessionData.forType
-
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[ConcessionBusinessDetails] = for {
       requestedIndex            <- index
@@ -65,16 +61,14 @@ class CateringOperationBusinessDetailsController @Inject() (
       cateringOperationDetailsView(
         existingDetails.fold(cateringOperationBusinessDetails6030Form)(cateringOperationBusinessDetails6030Form.fill),
         index,
-        "concessionDetails",
         "cateringOperationOrLettingAccommodationDetails",
         getBackLink(index),
-        request.sessionData.toSummary,
-        forType
+        request.sessionData.toSummary
       )
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ConcessionBusinessDetails](
       cateringOperationBusinessDetails6030Form,
       formWithErrors =>
@@ -82,11 +76,9 @@ class CateringOperationBusinessDetailsController @Inject() (
           cateringOperationDetailsView(
             formWithErrors,
             index,
-            "concessionDetails",
             "cateringOperationOrLettingAccommodationDetails",
             getBackLink(index),
-            request.sessionData.toSummary,
-            request.sessionData.forType
+            request.sessionData.toSummary
           )
         ),
       data => {

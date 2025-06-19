@@ -28,8 +28,7 @@
         answers6030: answersAboutTheProperty6030,
         answers6048: answersAboutTheProperty6048,
         answers6076: answersAboutTheProperty6076,
-        govukWarningText: GovukWarningText,
-        govukCheckboxes: GovukCheckboxes,
+        govukWarningText: GovukWarningText
 )
 
 @()(implicit request: SessionRequest[?], messages: Messages)
@@ -181,6 +180,3 @@
 
 @govukWarningText(WarningText(
     content = Text(messages("checkYourAnswersAboutTheProperty.warning"))))
-
-
-

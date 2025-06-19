@@ -18,7 +18,6 @@ package navigation
 
 import connectors.Audit
 import controllers.aboutfranchisesorlettings
-import models.ForType
 import models.ForType.*
 import models.Session
 import models.submissions.common.AnswerYes
