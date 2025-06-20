@@ -22,6 +22,7 @@
 @import models.submissions.common.AnswerYes
 
 
+
 @this(
         govukSummaryList: GovukSummaryList,
         answers6030: answersAboutTheProperty6030,
@@ -176,6 +177,5 @@
                     controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show(), "tiedForGoodsDetails",
                     ("tiedForGoodsDetails.partialTie", _.tiedForGoodsDetails.flatMap(_.partialTieConditional)))
         ))}
-
 
 

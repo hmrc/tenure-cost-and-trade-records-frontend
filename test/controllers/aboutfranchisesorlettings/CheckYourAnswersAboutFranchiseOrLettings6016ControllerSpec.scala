@@ -31,7 +31,7 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
   import TestData._
 
   def checkYourAnswersAboutFranchiseOrLettingsController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6016)
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings60156016)
   ) =
     new CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),

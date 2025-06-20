@@ -16,8 +16,8 @@
 
 package navigation
 
-import models.ForType.{FOR6010, FOR6015}
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingSection, OperatorDetails, PropertyRentDetails}
+import models.ForType.{FOR6010, FOR6015, FOR6020}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, OperatorDetails, PropertyRentDetails}
 import models.submissions.common.{AnswerNo, AnswerYes}
 import navigation.identifiers.*
 import utils.TestBaseSpec
@@ -76,62 +76,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(0)
     }
 
-    "return a function that goes to task list page when letting page has been completed no" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(LettingAccommodationPageId, sessionAboutFranchiseOrLetting6010NoSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
-        .show()
-    }
-
-    "return a function that goes to letting rent details page when lettings page has been completed" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(LettingAccommodationDetailsPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0)
-    }
-
-    "return a function that goes to letting rent includes page when lettings rent details page has been completed" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(LettingAccommodationRentDetailsPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(0)
-    }
-
-    "return a function that goes to add another letting page when lettings rent includes page has been completed" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(LettingAccommodationRentIncludesPageId, sessionAboutFranchiseOrLetting6010YesSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010YesSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0)
-    }
-
-    "return a function that goes to rent includes if the section has not been completed" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(AddAnotherLettingAccommodationPageId, sessionAboutFranchiseOrLetting6015SIncompleteCatering)
-        .apply(
-          sessionAboutFranchiseOrLetting6015SIncompleteCatering
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(0)
-    }
-
-    "return a function that goes to task list page when add another letting page has been completed no" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(AddAnotherLettingAccommodationPageId, sessionAboutFranchiseOrLetting6010NoSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
-        .show()
-    }
-    "return a function that goes to lettings other part when max lettings catering page reached" in {
-      aboutFranchisesOrLettingsNavigator
-        .nextPage(MaxOfLettingsReachedCateringId, sessionAboutFranchiseOrLetting6010NoSession)
-        .apply(
-          sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyController.show()
-    }
     "return a function that goes to CYA when max lettings current page reached" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(MaxOfLettingsReachedCurrentId, sessionAboutFranchiseOrLetting6010NoSession)
@@ -304,86 +248,12 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       }
       "return a function that goes to TypeOfLettingController for form 6020" in {
         val session = sessionAboutFranchiseOrLetting6020Session.copy(
-          aboutFranchisesOrLettings = Some(
-            AboutFranchisesOrLettings(
-              franchisesOrLettingsTiedToProperty = Some(AnswerYes),
-              lettingSections = IndexedSeq(
-                LettingSection(
-                  lettingOtherPartOfPropertyInformationDetails = OperatorDetails("test", "test", None)
-                )
-              )
-            )
-          )
+          aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsWith6020LettingsAll)
         )
         aboutFranchisesOrLettingsNavigator
           .nextPage(FranchiseOrLettingsTiedToPropertyId, session)
           .apply(session) shouldBe
-          controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Some(0))
-      }
-
-      "redirect to add another letting page when no letting exists" in {
-        val session = sessionAboutFranchiseOrLetting6010YesSession.copy(
-          aboutFranchisesOrLettings = Some(
-            AboutFranchisesOrLettings(
-              lettingOtherPartOfProperty = Some(AnswerYes),
-              lettingSections = IndexedSeq.empty,
-              lettingCurrentIndex = 0
-            )
-          )
-        )
-        aboutFranchisesOrLettingsNavigator
-          .nextPage(AddAnotherLettingAccommodationPageId, session)
-          .apply(session) shouldBe
-          controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(0)
-      }
-
-      "getIncompleteLettingCall should return correct routes based on incomplete fields" should {
-        val operatorDetails = OperatorDetails("test", "test", None)
-
-        "go to LettingOtherPartOfPropertyDetailsController" in {
-          val detail = LettingSection(
-            lettingOtherPartOfPropertyInformationDetails = operatorDetails,
-            lettingOtherPartOfPropertyRentDetails = Some(PropertyRentDetails(BigDecimal(1000), LocalDate.now)),
-            itemsInRent = List("test")
-          )
-          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6010, 0) shouldBe
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(0))
-        }
-
-        "go to LettingOtherPartOfPropertyDetailsController when informationDetails is null" in {
-          val detail = LettingSection(lettingOtherPartOfPropertyInformationDetails = null)
-          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6010, 0) shouldBe
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsController.show(Some(0))
-        }
-
-        "go to LettingOtherPartOfPropertyDetailsRentController when rent6015Details is empty and forType is 6015/6016" in {
-          val detail = LettingSection(
-            lettingOtherPartOfPropertyInformationDetails = operatorDetails,
-            lettingOtherPartOfPropertyRent6015Details = None
-          )
-          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6015, 0) shouldBe
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0)
-        }
-
-        "go to LettingOtherPartOfPropertyDetailsRentController when rentDetails is empty and forType is not 6015/6016" in {
-          val detail = LettingSection(
-            lettingOtherPartOfPropertyInformationDetails = operatorDetails,
-            lettingOtherPartOfPropertyRentDetails = None
-          )
-          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6010, 0) shouldBe
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyDetailsRentController.show(0)
-        }
-
-        "go to LettingOtherPartOfPropertyRentIncludesController when itemsInRent is empty" in {
-          val detail = LettingSection(
-            lettingOtherPartOfPropertyInformationDetails = operatorDetails,
-            lettingOtherPartOfPropertyRentDetails = Some(PropertyRentDetails(BigDecimal(1000), LocalDate.now)),
-            itemsInRent = List.empty
-          )
-          aboutFranchisesOrLettingsNavigator.getIncompleteLettingCall(detail, FOR6010, 0) shouldBe
-            controllers.aboutfranchisesorlettings.routes.LettingOtherPartOfPropertyRentIncludesController.show(0)
-        }
-
+          controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Some(4))
       }
     }
   }

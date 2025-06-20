@@ -18,7 +18,6 @@ package utils
 
 import play.api.test.Injecting
 import views.html.aboutYourLeaseOrTenure._
-import views.html.aboutconcessionsorlettings.rentFromConcessions
 import views.html.aboutfranchisesorlettings._
 import views.html.aboutthetradinghistory.{whatYouWillNeed, _}
 import views.html.aboutyouandtheproperty._
@@ -227,56 +226,39 @@ trait FakeViews { this: Injecting =>
     inject[checkYourAnswersAboutTheTradingHistory]
 
   // About the franchise or letting
-  lazy val franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty                        =
+  lazy val franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty              =
     inject[franchiseOrLettingsTiedToProperty]
-  lazy val cateringOperationView: cateringOperationOrLettingAccommodation                                  =
-    inject[cateringOperationOrLettingAccommodation]
-  lazy val cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails                    =
+  lazy val cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails          =
     inject[cateringOperationOrLettingAccommodationDetails]
-  lazy val franchiseTypeDetailsView: franchiseTypeDetails                                                  =
+  lazy val franchiseTypeDetailsView: franchiseTypeDetails                                        =
     inject[franchiseTypeDetails]
-  lazy val concessionTypeDetailsView: concessionTypeDetails                                                =
+  lazy val concessionTypeDetailsView: concessionTypeDetails                                      =
     inject[concessionTypeDetails]
-  lazy val lettingTypeDetailsView: lettingTypeDetails                                                      =
+  lazy val lettingTypeDetailsView: lettingTypeDetails                                            =
     inject[lettingTypeDetails]
-  lazy val rentalIncomeRentView: rentalIncomeRent                                                          =
+  lazy val rentalIncomeRentView: rentalIncomeRent                                                =
     inject[rentalIncomeRent]
-  lazy val rentalIncomeIncludedView: rentalIncomeIncluded                                                  =
+  lazy val rentalIncomeIncludedView: rentalIncomeIncluded                                        =
     inject[rentalIncomeIncluded]
-  lazy val cateringOperationRentDetailsView: cateringOperationOrLettingAccommodationRentDetails            =
-    inject[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val cateringOperationRentIncludesView: cateringOperationOrLettingAccommodationRentIncludes          =
-    inject[cateringOperationOrLettingAccommodationRentIncludes]
-  lazy val feeReceivedView: feeReceived                                                                    = inject[feeReceived]
-  lazy val lettingOtherPartOfPropertyView: cateringOperationOrLettingAccommodation                         =
-    inject[cateringOperationOrLettingAccommodation]
-  lazy val lettingOtherPartOfPropertyDetailsView: cateringOperationOrLettingAccommodationDetails           =
+  lazy val feeReceivedView: feeReceived                                                          = inject[feeReceived]
+  lazy val lettingOtherPartOfPropertyDetailsView: cateringOperationOrLettingAccommodationDetails =
     inject[cateringOperationOrLettingAccommodationDetails]
-  lazy val lettingOtherPartOfPropertyRentDetailsView: cateringOperationOrLettingAccommodationRentDetails   =
-    inject[cateringOperationOrLettingAccommodationRentDetails]
-  lazy val lettingOtherPartOfPropertyRentIncludesView: cateringOperationOrLettingAccommodationRentIncludes =
-    inject[cateringOperationOrLettingAccommodationRentIncludes]
-  lazy val concessionOrFranchiseView: cateringOperationOrLettingAccommodation                              =
-    inject[cateringOperationOrLettingAccommodation]
-  lazy val addAnotherOperationConcessionFranchise: addAnotherCateringOperationOrLettingAccommodation       =
-    inject[addAnotherCateringOperationOrLettingAccommodation]
-  lazy val checkYourAnswersAboutFranchiseOrLettings: checkYourAnswersAboutFranchiseOrLettings              =
+  lazy val checkYourAnswersAboutFranchiseOrLettings: checkYourAnswersAboutFranchiseOrLettings    =
     inject[checkYourAnswersAboutFranchiseOrLettings]
-  lazy val rentFromConcession: rentFromConcessions                                                         = inject[rentFromConcessions]
-  lazy val rentReceivedFromView: rentReceivedFrom                                                          = inject[rentReceivedFrom]
-  lazy val calculatingTheRentView: calculatingTheRentFor                                                   = inject[calculatingTheRentFor]
-  lazy val typeOfLettingView: typeOfLetting                                                                = inject[typeOfLetting]
-  lazy val typeOfIncomeView: typeOfIncome                                                                  = inject[typeOfIncome]
-  lazy val telecomMastLettingView: telecomMastLetting                                                      = inject[telecomMastLetting]
-  lazy val rentDetailsView: rentDetails                                                                    = inject[rentDetails]
-  lazy val otherLettingView: otherLetting                                                                  = inject[otherLetting]
-  lazy val atmLettingView: atmLetting                                                                      = inject[atmLetting]
-  lazy val advertisingRightView: advertisingRightLetting                                                   = inject[advertisingRightLetting]
-  lazy val addOrRemoveLettingView: addOrRemoveLetting                                                      = inject[addOrRemoveLetting]
-  lazy val rentalIncomeListView: rentalIncomeList                                                          = inject[rentalIncomeList]
+  lazy val rentReceivedFromView: rentReceivedFrom                                                = inject[rentReceivedFrom]
+  lazy val calculatingTheRentView: calculatingTheRentFor                                         = inject[calculatingTheRentFor]
+  lazy val typeOfLettingView: typeOfLetting                                                      = inject[typeOfLetting]
+  lazy val typeOfIncomeView: typeOfIncome                                                        = inject[typeOfIncome]
+  lazy val telecomMastLettingView: telecomMastLetting                                            = inject[telecomMastLetting]
+  lazy val rentDetailsView: rentDetails                                                          = inject[rentDetails]
+  lazy val otherLettingView: otherLetting                                                        = inject[otherLetting]
+  lazy val atmLettingView: atmLetting                                                            = inject[atmLetting]
+  lazy val advertisingRightView: advertisingRightLetting                                         = inject[advertisingRightLetting]
+  lazy val addOrRemoveLettingView: addOrRemoveLetting                                            = inject[addOrRemoveLetting]
+  lazy val rentalIncomeListView: rentalIncomeList                                                = inject[rentalIncomeList]
   // About the lease or tenure
-  lazy val aboutYourLandlordView: aboutYourLandlord                                                        = inject[aboutYourLandlord]
-  lazy val typeOfTenureView: typeOfTenure                                                                  = inject[typeOfTenure]
+  lazy val aboutYourLandlordView: aboutYourLandlord                                              = inject[aboutYourLandlord]
+  lazy val typeOfTenureView: typeOfTenure                                                        = inject[typeOfTenure]
 
   lazy val currentRentPayableWithin12MonthsView                               = inject[currentRentPayableWithin12Months]
   lazy val propertyUseLeasebackAgreementView: propertyUseLeasebackArrangement = inject[propertyUseLeasebackArrangement]

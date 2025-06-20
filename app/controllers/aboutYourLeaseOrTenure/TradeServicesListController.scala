@@ -119,12 +119,16 @@ class TradeServicesListController @Inject() (
               confirmableActionForm,
               service,
               controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.performRemove(index),
-              controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
+              navigator.callBackToCYAor(
+                controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
+              )
             )
           )
         )
       }
-      .getOrElse(Redirect(controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0)))
+      .getOrElse(
+        navigator.redirectBackToCYAor(controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0))
+      )
   }
 
   def performRemove(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -141,12 +145,16 @@ class TradeServicesListController @Inject() (
                   formWithErrors,
                   description,
                   controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.performRemove(index),
-                  controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
+                  navigator.callBackToCYAor(
+                    controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
+                  )
                 )
               )
             )
           }
-          .getOrElse(Redirect(controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0))),
+          .getOrElse(
+            navigator.redirectBackToCYAor(controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0))
+          ),
       {
         case AnswerYes =>
           request.sessionData.aboutLeaseOrAgreementPartThree.map(_.tradeServices).map { services =>
@@ -157,9 +165,9 @@ class TradeServicesListController @Inject() (
               )
             )
           }
-          Redirect(controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0))
+          navigator.redirectBackToCYAor(controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0))
         case AnswerNo  =>
-          Redirect(
+          navigator.redirectBackToCYAor(
             controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController
               .show(request.sessionData.aboutLeaseOrAgreementPartThree.map(_.tradeServices.size - 1).getOrElse(0))
           )

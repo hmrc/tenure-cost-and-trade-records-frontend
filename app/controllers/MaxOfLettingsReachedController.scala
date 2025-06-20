@@ -72,16 +72,11 @@ class MaxOfLettingsReachedController @Inject() (
         ),
       data => {
         val updatedData = src match {
-          case Some("connection")        =>
-            updateStillConnectedDetails(_.copy(maxOfLettings = Some(data)))
-          case Some("franchiseCatering") =>
-            updateAboutFranchisesOrLettings(_.copy(cateringMaxOfLettings = Some(data)))
-          case Some("franchiseLetting")  =>
-            updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
-          case Some("lettings")          => updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
-          case Some("typeOfIncome")      => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = Some(data)))
-          case Some("rentalIncome")      => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = Some(data)))
-          case _                         => request.sessionData
+          case Some("connection")   => updateStillConnectedDetails(_.copy(maxOfLettings = Some(data)))
+          case Some("lettings")     => updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
+          case Some("typeOfIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = Some(data)))
+          case Some("rentalIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = Some(data)))
+          case _                    => request.sessionData
         }
         session
           .saveOrUpdate(updatedData)
@@ -109,37 +104,27 @@ class MaxOfLettingsReachedController @Inject() (
     request: SessionRequest[AnyContent]
   ): (String, Option[Boolean]) =
     source match {
-      case Some("connection")        =>
+      case Some("connection")   =>
         (
           controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
           request.sessionData.stillConnectedDetails.flatMap(_.maxOfLettings)
         )
-      case Some("franchiseCatering") =>
-        (
-          controllers.aboutfranchisesorlettings.routes.AddAnotherCateringOperationController.show(4).url,
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.cateringMaxOfLettings)
-        )
-      case Some("franchiseLetting")  =>
-        (
-          controllers.aboutfranchisesorlettings.routes.AddAnotherLettingOtherPartOfPropertyController.show(4).url,
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting)
-        )
-      case Some("typeOfIncome")      =>
+      case Some("typeOfIncome") =>
         (
           controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(4).url,
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncomeMax)
         )
-      case Some("rentalIncome")      =>
+      case Some("rentalIncome") =>
         (
           controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(4).url,
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncomeMax)
         )
-      case Some("lettings")          =>
+      case Some("lettings")     =>
         (
           controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(9).url,
           request.sessionData.aboutFranchisesOrLettings.flatMap(_.currentMaxOfLetting)
         )
-      case _                         =>
+      case _                    =>
         (
           routes.TaskListController.show().url,
           None

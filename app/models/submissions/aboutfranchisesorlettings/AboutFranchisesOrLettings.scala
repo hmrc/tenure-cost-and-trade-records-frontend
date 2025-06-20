@@ -24,20 +24,13 @@ import play.api.libs.json._
 
 case class AboutFranchisesOrLettings(
   franchisesOrLettingsTiedToProperty: Option[AnswersYesNo] = None,
-  cateringConcessionOrFranchise: Option[AnswersYesNo] = None,
-  cateringOperationCurrentIndex: Int = 0,
-  cateringMaxOfLettings: Option[Boolean] = None,
-  cateringOperationSections: IndexedSeq[CateringOperationSection] = IndexedSeq.empty,
-  cateringOperationBusinessSections: Option[IndexedSeq[CateringOperationBusinessSection]] = None, // 6030 journey
-  lettingOtherPartOfProperty: Option[AnswersYesNo] = None,
-  lettingCurrentIndex: Int = 0,
   currentMaxOfLetting: Option[Boolean] = None,
-  lettingSections: IndexedSeq[LettingSection] = IndexedSeq.empty,
   checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
   fromCYA: Option[Boolean] = None,
   lettings: Option[IndexedSeq[LettingPartOfProperty]] = None, // 6020 lettings
   rentalIncome: Option[IndexedSeq[IncomeRecord]] = None,
   rentalIncomeIndex: Int = 0,
+  lettingCurrentIndex: Int = 0,
   rentalIncomeMax: Option[Boolean] = None
 )
 
@@ -45,20 +38,13 @@ object AboutFranchisesOrLettings {
 
   implicit val aboutFranchisesOrLettingsReads: Reads[AboutFranchisesOrLettings] = (
     (__ \ "franchisesOrLettingsTiedToProperty").readNullable[AnswersYesNo] and
-      (__ \ "cateringConcessionOrFranchise").readNullable[AnswersYesNo] and
-      (__ \ "cateringOperationCurrentIndex").read[Int] and
-      (__ \ "cateringMaxOfLettings").readNullable[Boolean] and
-      (__ \ "cateringOperationSections").read[IndexedSeq[CateringOperationSection]] and
-      (__ \ "cateringOperationBusinessSections").readNullable[IndexedSeq[CateringOperationBusinessSection]] and
-      (__ \ "lettingOtherPartOfProperty").readNullable[AnswersYesNo] and
-      (__ \ "lettingCurrentIndex").read[Int] and
       (__ \ "currentMaxOfLetting").readNullable[Boolean] and
-      (__ \ "lettingSections").read[IndexedSeq[LettingSection]] and
       (__ \ "checkYourAnswersAboutFranchiseOrLettings").readNullable[CheckYourAnswersAboutFranchiseOrLettings] and
       (__ \ "fromCYA").readNullable[Boolean] and
       (__ \ "lettings").readNullable[IndexedSeq[LettingPartOfProperty]] and
       (__ \ "rentalIncome").readNullable[IndexedSeq[IncomeRecord]] and
       (__ \ "rentalIncomeIndex").read[Int] and
+      (__ \ "lettingCurrentIndex").read[Int] and
       (__ \ "rentalIncomeMax").readNullable[Boolean]
   )(AboutFranchisesOrLettings.apply)
 
