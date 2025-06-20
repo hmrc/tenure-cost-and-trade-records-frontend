@@ -20,15 +20,14 @@
 @import util.NumberUtil.*
 @import models.ForType.*
 @import models.submissions.common.AnswerYes
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+
 
 
 @this(
         govukSummaryList: GovukSummaryList,
         answers6030: answersAboutTheProperty6030,
         answers6048: answersAboutTheProperty6048,
-        answers6076: answersAboutTheProperty6076,
-        govukWarningText: GovukWarningText
+        answers6076: answersAboutTheProperty6076
 )
 
 @()(implicit request: SessionRequest[?], messages: Messages)
@@ -177,6 +176,3 @@
                     controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show(), "tiedForGoodsDetails",
                     ("tiedForGoodsDetails.partialTie", _.tiedForGoodsDetails.flatMap(_.partialTieConditional)))
         ))}
-
-@govukWarningText(WarningText(
-    content = Text(messages("checkYourAnswersAboutTheProperty.warning"))))
