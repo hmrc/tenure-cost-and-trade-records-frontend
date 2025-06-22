@@ -16,7 +16,6 @@ lazy val microservice = Project(appName, file("."))
     scalacOptions += "-Wconf:msg=Flag .* set repeatedly:s",
     scalacOptions += "-Wconf:msg=unused import&src=views/&origin=^(views\\.html\\.\\W|controllers|models\\.\\W|play|_root_):s",
     scalacOptions += "-Wconf:msg=Implicit parameters should be provided with a \\`using\\` clause&src=views/:s",
-    scalacOptions += "-Wconf:cat=deprecation&msg=looks like useless nesting:s",
     scalacOptions += "-Wconf:cat=deprecation&src=/lettingHistory/:s",
     scalacOptions += "-feature",
     javaOptions += "-XX:+EnableDynamicAgentLoading",

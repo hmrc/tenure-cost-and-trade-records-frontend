@@ -17,18 +17,18 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.currencyMapping
-import models.AnnualRent
+
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import util.NumberUtil.*
 
-object CurrentAnnualRentForm {
+object CurrentAnnualRentForm:
 
   val cdbMaxCurrencyAmount = 9999999.99
 
-  def currentAnnualRentForm(includedPartsSum: BigDecimal = 0): Form[AnnualRent] = Form(
-    mapping(
+  def currentAnnualRentForm(includedPartsSum: BigDecimal = 0): Form[BigDecimal] = Form(
+    single(
       "currentAnnualRent" -> currencyMapping()
         .verifying(
           Constraint[BigDecimal] { (rent: BigDecimal) =>
@@ -37,7 +37,5 @@ object CurrentAnnualRentForm {
             else Valid
           }
         )
-    )(AnnualRent.apply)(o => Some(o.amount))
+    )
   )
-
-}

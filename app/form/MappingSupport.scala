@@ -26,7 +26,6 @@ import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import form.Formats.{answersYesNoDefFormat, given}
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
-import models.AnnualRent
 import models.submissions.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
@@ -104,19 +103,19 @@ object MappingSupport:
 
   private val numberRegex: Regex = """^[-+]?\d+$""".r
 
-  lazy val annualRent: Mapping[AnnualRent] = mapping(
+  lazy val annualRent: Mapping[BigDecimal] = single(
     "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
-  )(AnnualRent.apply)(o => Some(o.amount)).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+  ).verifying(Errors.maxCurrencyAmountExceeded, _ <= cdbMaxCurrencyAmount)
 
   lazy val currentPropertyUsedMapping: Mapping[CurrentPropertyUsed] = Forms.of[CurrentPropertyUsed]
 
-  lazy val rentIncludeFixturesAndFittingsDetails: Mapping[AnnualRent] = mapping(
+  lazy val rentIncludeFixturesAndFittingsDetails: Mapping[BigDecimal] = single(
     "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")
-  )(AnnualRent.apply)(o => Some(o.amount)).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+  ).verifying(Errors.maxCurrencyAmountExceeded, _ <= cdbMaxCurrencyAmount)
 
-  lazy val rentIncludeTradeServiceDetails: Mapping[AnnualRent] = mapping(
+  lazy val rentIncludeTradeServiceDetails: Mapping[BigDecimal] = single(
     "sumIncludedInRent" -> currencyMapping(".sumIncludedInRent")
-  )(AnnualRent.apply)(o => Some(o.amount)).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
+  ).verifying(Errors.maxCurrencyAmountExceeded, _ <= cdbMaxCurrencyAmount)
 
   val currency: Mapping[BigDecimal] = currencyMapping()
 

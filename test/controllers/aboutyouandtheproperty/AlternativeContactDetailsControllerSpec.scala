@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,21 +110,21 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
 
     class ErrorKey {
       val fullName: String   = "alternativeContactFullName"
-      val phone              = "alternativeContactDetails.phone"
-      val email              = "alternativeContactDetails.email"
+      val phone              = "phone"
+      val email              = "email"
       val email1TooLong      = "contactDetails.email.email.tooLong"
-      val buildingNameNumber = "alternativeContactAddress.buildingNameNumber"
-      val town               = "alternativeContactAddress.town"
-      val postcode           = "alternativeContactAddress.postcode"
+      val buildingNameNumber = "buildingNameNumber"
+      val town               = "town"
+      val postcode           = "postcode"
     }
 
     val tooLongEmail                      = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
     val baseFormData: Map[String, String] = Map(
-      "contactDetails.phone"               -> "12345678901",
-      "contactDetails.phone"               -> "01234 123123",
-      "contactDetails.email1"              -> "blah.blah@test.com",
-      "alternativeContactFullName"         -> "Mr John Smith",
-      "alternativeContactAddress.postcode" -> "BN12 4AX"
+      "contactDetails.phone"       -> "12345678901",
+      "contactDetails.phone"       -> "01234 123123",
+      "contactDetails.email1"      -> "blah.blah@test.com",
+      "alternativeContactFullName" -> "Mr John Smith",
+      "postcode"                   -> "BN12 4AX"
     )
   }
 

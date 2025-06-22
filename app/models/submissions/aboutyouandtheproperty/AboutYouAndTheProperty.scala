@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import play.api.libs.json.{Json, OFormat}
 case class AboutYouAndTheProperty(
   customerDetails: Option[CustomerDetails] = None,
   altDetailsQuestion: Option[ContactDetailsQuestion] = None,
-  altContactInformation: Option[AlternativeContactDetails] = None,
+  alternativeContactAddress: Option[AlternativeAddress] = None,
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,

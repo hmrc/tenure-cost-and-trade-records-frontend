@@ -144,7 +144,7 @@
             controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement"
         ) ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
-                    _.annualRent.map(_.amount.asMoney),
+                    _.annualRent.map(_.asMoney),
                     controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent"
                 ) ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
@@ -164,7 +164,7 @@
 
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
-            _.annualRent.map(_.amount.asMoney),
+            _.annualRent.map(_.asMoney),
             controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent"
         ) ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.rentIncludesVat",

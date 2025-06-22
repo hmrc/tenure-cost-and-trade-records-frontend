@@ -111,7 +111,7 @@
                 _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                 controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show(), "leasebackArrangement") ++
                     sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentAnnualRent",
-                        _.annualRent.map(_.amount.asMoney),
+                        _.annualRent.map(_.asMoney),
                         controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent") ++
                     sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.rentVariesWithThroughput",
                         _.throughputAffectsRent.map(_.doesRentVaryToThroughput.name).flatMap(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),

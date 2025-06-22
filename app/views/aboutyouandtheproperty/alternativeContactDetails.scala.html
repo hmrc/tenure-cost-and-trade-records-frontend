@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
-@import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
+@import models.submissions.aboutyouandtheproperty.AlternativeAddress
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -27,7 +27,7 @@
 )
 
 
-@(theForm: Form[AlternativeContactDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AlternativeAddress], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("alternativeContactDetails.heading"),
@@ -86,5 +86,3 @@
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-

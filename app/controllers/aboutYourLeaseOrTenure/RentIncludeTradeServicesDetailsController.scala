@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ class RentIncludeTradeServicesDetailsController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val leaseOrAgreement1     = request.sessionData.aboutLeaseOrAgreementPartOne
-    val annualRent            = leaseOrAgreement1.flatMap(_.annualRent.map(_.amount))
+    val annualRent            = leaseOrAgreement1.flatMap(_.annualRent)
     val otherIncludedPartsSum = leaseOrAgreement1
       .flatMap(_.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent))
       .getOrElse(zeroBigDecimal)

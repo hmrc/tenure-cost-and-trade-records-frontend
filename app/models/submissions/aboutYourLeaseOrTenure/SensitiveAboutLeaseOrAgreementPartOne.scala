@@ -17,7 +17,6 @@
 package models.submissions.aboutYourLeaseOrTenure
 
 import crypto.MongoCrypto
-import models.AnnualRent
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
@@ -29,7 +28,7 @@ case class SensitiveAboutLeaseOrAgreementPartOne(
   leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
   currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
   propertyUseLeasebackAgreement: Option[PropertyUseLeasebackArrangement] = None,
-  annualRent: Option[AnnualRent] = None,
+  annualRent: Option[BigDecimal] = None,
   currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
   currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
   includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,

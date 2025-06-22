@@ -106,7 +106,7 @@
     sectionAnswers.conditionRow(
         _.altDetailsQuestion.map(_.contactDetailsQuestion).contains(AnswerYes),
         "checkYourAnswersAboutTheProperty.alternative.correspondence.address",
-        _.altContactInformation.map { x =>x.alternativeContactAddress.escapedHtml},
+        _.alternativeContactAddress.map(_.escapedHtml),
         controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
         "",
         ("valueAsHtml", _ => None)

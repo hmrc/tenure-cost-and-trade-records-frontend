@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
-import models.{AnnualRent, Session}
+import models.Session
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
@@ -29,7 +29,7 @@ case class AboutLeaseOrAgreementPartOne(
   leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
   currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
   propertyUseLeasebackAgreement: Option[PropertyUseLeasebackArrangement] = None,
-  annualRent: Option[AnnualRent] = None,
+  annualRent: Option[BigDecimal] = None,
   currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
   currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
   includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,

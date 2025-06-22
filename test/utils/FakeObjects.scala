@@ -32,7 +32,7 @@ import models.submissions.ReferenceNumber
 import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
-import models.{AnnualRent, Session, SubmissionDraft}
+import models.{Session, SubmissionDraft}
 
 import java.time.temporal.ChronoUnit.MILLIS
 import java.time.{Instant, LocalDate}
@@ -58,16 +58,6 @@ trait FakeObjects {
     "WORTHING",
     Some("West sussex"),
     "BN12 4AX"
-  )
-
-  val prefilledAlternativeCONTACTAddress: AlternativeContactDetails = AlternativeContactDetails(
-    AlternativeAddress(
-      "004",
-      Some("GORING ROAD"),
-      "WORTHING",
-      Some("West sussex"),
-      "BN12 4AX"
-    )
   )
 
   val prefilledNoRefContactDetails: RequestReferenceNumberContactDetails =
@@ -308,9 +298,7 @@ trait FakeObjects {
   val prefilledAboutYouAndThePropertyYes: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(ContactDetailsQuestion(AnswerYes)),
-    Some(
-      AlternativeContactDetails(prefilledAlternativeAddress)
-    ),
+    Some(prefilledAlternativeAddress),
     Some(PropertyDetails(CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
     Some(AnswerYes),
@@ -334,9 +322,7 @@ trait FakeObjects {
   val prefilledAboutYouAndThePropertyYesBaseload: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(ContactDetailsQuestion(AnswerYes)),
-    Some(
-      AlternativeContactDetails(prefilledAlternativeAddress)
-    ),
+    Some(prefilledAlternativeAddress),
     Some(PropertyDetails(CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
     Some(AnswerYes),
@@ -359,9 +345,7 @@ trait FakeObjects {
   val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty   = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
     Some(ContactDetailsQuestion(AnswerYes)),
-    Some(
-      AlternativeContactDetails(prefilledAlternativeAddress)
-    ),
+    Some(prefilledAlternativeAddress),
     None,
     Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
     Some(AnswerYes),
@@ -1162,7 +1146,7 @@ trait FakeObjects {
   val prefilledFirstOccupy                       = MonthsYearDuration(2, 2000)
   val prefilledFinancialYear                     = Some(DayMonthsDuration(2, 12))
   val prefilledBigDecimal                        = BigDecimal(9999999)
-  val prefilledAnnualRent                        = AnnualRent(prefilledBigDecimal)
+  val prefilledAnnualRent                        = prefilledBigDecimal
   val prefilledCurrentRentPayableWithin12Months  =
     CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, Some(prefilledDateInput))
   val prefilledPropertyUseLeasebackArrangement   =

@@ -22,7 +22,7 @@ import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddr
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.theForm
 import models.Session
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress, AlternativeContactDetails, ContactDetailsQuestion}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress, ContactDetailsQuestion}
 import models.submissions.common.AnswerYes
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.ContactDetailsQuestionId
@@ -65,7 +65,7 @@ class ContactDetailsQuestionController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ContactDetailsQuestion](
       theForm,
       formWithErrors =>
@@ -97,14 +97,15 @@ class ContactDetailsQuestionController @Inject() (
     )
   }
 
-  def addressLookupCallback(id: String) = (Action andThen withSessionRefiner).async { implicit request =>
-    given Session = request.sessionData
-    for
-      confirmedAddress  <- getConfirmedAddress(id)
-      alternativeAddress = confirmedAddress.asAlternativeAddress
-      newSession        <- successful(sessionWithAlternativeAddress(alternativeAddress))
-      _                 <- repository.saveOrUpdate(newSession)
-    yield Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession))
+  def addressLookupCallback(id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      given Session = request.sessionData
+      for
+        confirmedAddress  <- getConfirmedAddress(id)
+        alternativeAddress = confirmedAddress.asAlternativeAddress
+        newSession        <- successful(sessionWithAlternativeAddress(alternativeAddress))
+        _                 <- repository.saveOrUpdate(newSession)
+      yield Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession))
   }
 
   private def sessionWithFormData(formData: ContactDetailsQuestion)(using session: Session) =
@@ -126,23 +127,22 @@ class ContactDetailsQuestionController @Inject() (
       )
     )
 
-  private def sessionWithAlternativeAddress(address: AlternativeContactDetails)(using session: Session) =
+  private def sessionWithAlternativeAddress(address: AlternativeAddress)(using session: Session) =
     assert(session.aboutYouAndTheProperty.isDefined)
     session.copy(aboutYouAndTheProperty =
       session.aboutYouAndTheProperty.map(
         _.copy(
-          altContactInformation = Some(address)
+          alternativeContactAddress = Some(address)
         )
       )
     )
 
   extension (confirmed: AddressLookupConfirmedAddress)
-    private def asAlternativeAddress = AlternativeContactDetails(
-      alternativeContactAddress = AlternativeAddress(
+    private def asAlternativeAddress =
+      AlternativeAddress(
         confirmed.buildingNameNumber,
         confirmed.street1,
         confirmed.town,
         confirmed.county,
         confirmed.postcode
       )
-    )

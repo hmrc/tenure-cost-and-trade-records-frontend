@@ -145,7 +145,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
 
         val session = captor[Session]
         verify(repository, once).saveOrUpdate(session)(using any)
-        session.getValue.aboutYouAndTheProperty.value.altContactInformation.value.alternativeContactAddress shouldBe AlternativeAddress(
+        session.getValue.aboutYouAndTheProperty.value.alternativeContactAddress.value shouldBe AlternativeAddress(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
           street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
           town = addressLookupConfirmedAddress.address.lines.get.last,
