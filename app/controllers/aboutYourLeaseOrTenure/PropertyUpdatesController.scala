@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PropertyUpdatesForm.propertyUpdatesForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.PropertyUpdates
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUpdatesId
 import play.api.i18n.I18nSupport
@@ -83,14 +84,11 @@ class PropertyUpdatesController @Inject() (
     answers.forType match {
       case FOR6045 | FOR6046 =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.tenantAdditionsDisregardedDetails.flatMap(_.tenantAdditionalDisregarded.name)
+          _.tenantAdditionsDisregardedDetails.flatMap(_.tenantAdditionalDisregarded)
         ) match {
-          case Some("yes") =>
+          case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
-          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-          case _           =>
-            logger.warn(s"Back link for property updates page reached with unknown value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
         }
       case _                 => controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
     }

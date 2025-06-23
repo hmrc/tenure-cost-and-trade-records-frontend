@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
-@import models.submissions.common.AnswerNo
+@import models.submissions.common.AnswersYesNo.*
 @import models.submissions.aboutthetradinghistory.TurnoverSection6045
 @import models.submissions.aboutthetradinghistory.TotalSiteCapacity
 @import util.DateUtilLocalised
@@ -142,14 +142,14 @@
     <h2 class="govuk-heading-m">@messages("checkYourAnswersOtherHolidayAccommodation.h2")</h2>
     @govukSummaryList(SummaryList(rows =
         sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.onSite",
-            _.otherHolidayAccommodation.map(yesNo => messages(s"label.${yesNo.name}")),
+            _.otherHolidayAccommodation.map(yesNo => messages(s"label.$yesNo")),
             controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation")
     ))
     }else{
         <h2 class="govuk-heading-m">@messages("checkYourAnswersOtherHolidayAccommodation.h2")</h2>
         @govukSummaryList(SummaryList(rows =
             sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.onSite",
-                _.otherHolidayAccommodation.map(yesNo => messages(s"label.${yesNo.name}")),
+                _.otherHolidayAccommodation.map(yesNo => messages(s"label.$yesNo")),
                 controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation")
         ))
     @pageAnswers("turnover.6045.lettingUnits.grossReceipts.heading",

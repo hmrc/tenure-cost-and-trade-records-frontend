@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -61,7 +61,7 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
         doc,
         "rentIncreaseAnnuallyWithRPI",
         "rentIncreasedAnnuallyWithRPIs",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +73,7 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
         doc,
         "rentIncreaseAnnuallyWithRPI-2",
         "rentIncreasedAnnuallyWithRPIs",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

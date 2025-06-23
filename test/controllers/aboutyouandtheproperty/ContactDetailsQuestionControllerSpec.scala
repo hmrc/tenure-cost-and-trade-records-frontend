@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import connectors.{Audit, MockAddressLookup}
 import models.Session
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress, ContactDetailsQuestion}
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}

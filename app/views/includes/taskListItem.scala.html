@@ -14,12 +14,13 @@
  * limitations under the License.
  *@
 
+@import models.submissions.common.AnswersYesNo.*
 @import navigation.UrlHelpers.urlPlusParamPrefix
 
 @(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[String], pageAnswer: Option[?], cannotStartYet: Boolean = false, readOnly: Boolean = false)(implicit messages: Messages)
 
 @statusText = @{
-    if (sectionCompleted.contains("yes")) {
+    if (sectionCompleted.contains(AnswerYes.toString)) {
         messages("taskList.status.completed")
     } else if (pageAnswer.isDefined) {
         messages("taskList.status.inProgress")
@@ -31,7 +32,7 @@
 }
 
 @itemTagClass = @{
-    if (sectionCompleted.contains("yes")) {
+    if (sectionCompleted.contains(AnswerYes.toString)) {
         ""
     } else if (pageAnswer.isDefined) {
         "govuk-tag--blue"

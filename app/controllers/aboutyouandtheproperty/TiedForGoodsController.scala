@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import form.aboutyouandtheproperty.TiedForGoodsForm.tiedForGoodsForm
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.TiedForGoodsPageId
 import play.api.Logging
@@ -86,12 +87,10 @@ class TiedForGoodsController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
-      case Some("yes") =>
+    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction) match {
+      case Some(AnswerYes) =>
         controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
-      case Some("no")  => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
-      case _           =>
-        logger.warn(s"Back link for tied goods page reached with unknown enforcement taken value")
-        controllers.routes.TaskListController.show().url
+      case _               => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
     }
+
 }

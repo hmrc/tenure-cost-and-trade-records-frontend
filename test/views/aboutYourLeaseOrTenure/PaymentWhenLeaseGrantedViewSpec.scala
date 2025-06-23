@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -61,7 +61,7 @@ class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[PaymentWhen
         doc,
         "receivePaymentWhenLeaseGranted",
         "receivePaymentWhenLeaseGranted",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +73,7 @@ class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[PaymentWhen
         doc,
         "receivePaymentWhenLeaseGranted-2",
         "receivePaymentWhenLeaseGranted",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

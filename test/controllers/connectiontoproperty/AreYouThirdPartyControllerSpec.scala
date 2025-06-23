@@ -25,7 +25,7 @@ import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import form.connectiontoproperty.AreYouThirdPartyForm.theForm
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 
 import scala.language.reflectiveCalls
 
@@ -73,7 +73,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
-        controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show().url
+        controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
       )
     }
   }
@@ -167,7 +167,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
 
       val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsNone)).show(fakeRequest)
       contentAsString(result) should include(
-        controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show().url
+        controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
       )
     }
   }

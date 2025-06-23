@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package form.aboutyouandtheproperty
 
 import form.MappingSupport.createYesNoType
 import models.submissions.aboutyouandtheproperty.TradingActivity
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
 import play.api.data.validation.Constraints.maxLength
@@ -31,7 +31,7 @@ object TradingActivityForm {
       "tradingActivityQuestion" -> createYesNoType("error.tradingActivity.missing"),
       "tradingActivityDetails"  -> mandatoryIfEqual(
         "tradingActivityQuestion",
-        AnswerYes.name,
+        AnswerYes.toString,
         text
           .verifying("error.tradingActivity.details.missing", details => details.nonEmpty)
           .verifying(maxLength(500, "error.tradingActivity.maxLength"))

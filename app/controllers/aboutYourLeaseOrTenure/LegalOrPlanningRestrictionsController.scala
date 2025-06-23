@@ -23,11 +23,10 @@ import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanning
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictions
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.LegalOrPlanningRestrictionId
 import play.api.i18n.I18nSupport
-import play.api.i18n.Lang.logger
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.legalOrPlanningRestrictions
@@ -90,10 +89,7 @@ class LegalOrPlanningRestrictionsController @Inject() (
           .flatMap(_.payACapitalSumDetails)
           .map(_.capitalSumOrPremium) match {
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
-          case Some(AnswerNo)  => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
-          case _               =>
-            logger.warn(s"Back link for pay capital sum page reached with unknown benefits given value")
-            controllers.routes.TaskListController.show().url
+          case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
         }
       case FOR6045 | FOR6046 =>
         request.sessionData.aboutLeaseOrAgreementPartTwo

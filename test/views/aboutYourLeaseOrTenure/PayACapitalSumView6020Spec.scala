@@ -20,7 +20,7 @@ import form.aboutYourLeaseOrTenure.PayACapitalSumForm
 import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -62,7 +62,7 @@ class PayACapitalSumView6020Spec extends QuestionViewBehaviours[PayACapitalSumDe
         doc,
         "payACapitalSum",
         "payACapitalSum",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -74,7 +74,7 @@ class PayACapitalSumView6020Spec extends QuestionViewBehaviours[PayACapitalSumDe
         doc,
         "payACapitalSum-2",
         "payACapitalSum",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

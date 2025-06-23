@@ -18,7 +18,7 @@ package views.notconnected
 
 import form.notconnected.PastConnectionForm
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import models.submissions.notconnected.PastConnectionType
 import play.api.data.Form
 import play.twirl.api.Html
@@ -70,7 +70,7 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[PastConnectionType] 
         doc,
         "pastConnectionType",
         "pastConnectionType",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -82,7 +82,7 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[PastConnectionType] 
         doc,
         "pastConnectionType-2",
         "pastConnectionType",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

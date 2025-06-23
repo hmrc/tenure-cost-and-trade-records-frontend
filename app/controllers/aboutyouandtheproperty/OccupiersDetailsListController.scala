@@ -22,7 +22,8 @@ import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.OccupiersDetailsListForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.OccupiersDetailsListId
 import play.api.i18n.I18nSupport

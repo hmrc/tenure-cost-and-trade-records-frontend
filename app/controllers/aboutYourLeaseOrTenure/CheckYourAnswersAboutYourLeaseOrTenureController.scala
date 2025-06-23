@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
+import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -100,12 +101,12 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name)
+      _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions)
     ) match {
-      case Some("yes") =>
+      case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show().url
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
-      case _           =>
+      case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
+      case _               =>
         (
           answers.aboutLeaseOrAgreementPartOne.flatMap(
             _.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name)

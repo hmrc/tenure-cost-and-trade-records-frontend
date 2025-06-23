@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import controllers.aboutthetradinghistory
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -74,7 +75,7 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
   }
 
   private def validFormData(answer: AnswersYesNo): Seq[(String, String)] =
-    Seq("staticCaravans" -> answer.name)
+    Seq("staticCaravans" -> answer.toString)
 
   "SUBMIT /" should {
     "save the form data and redirect to the next page on answer Yes" in {

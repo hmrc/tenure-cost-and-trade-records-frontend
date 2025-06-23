@@ -16,7 +16,8 @@
 
 package form.accommodation
 
-import form.MappingSupport.{enumMappingSeq, nonEmptySeq, noneCantBeSelectedWithOtherSeq}
+import form.MappingSupport.{nonEmptySeq, noneCantBeSelectedWithOtherSeq}
+import form.Scala3EnumFieldMapping.enumMappingSeq
 import models.submissions.accommodation.AccommodationTariffItem
 import play.api.data.Form
 import play.api.data.Forms.*
@@ -29,7 +30,7 @@ object IncludedTariffItems6048Form:
   val includedTariffItems6048Form: Form[Seq[AccommodationTariffItem]] =
     Form {
       single(
-        "includedTariffItems" -> enumMappingSeq(AccommodationTariffItem.fromName, _.toString)
+        "includedTariffItems" -> enumMappingSeq(AccommodationTariffItem)
           .verifying(
             nonEmptySeq("error.includedTariffItems.required"),
             noneCantBeSelectedWithOtherSeq(

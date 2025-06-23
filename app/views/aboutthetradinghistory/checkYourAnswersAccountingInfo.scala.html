@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,7 +100,7 @@
             if(forType == FOR6048) {
                 summaryListRow(
                     keyText = messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered"),
-                    valueContent = Text(sectionAnswersPartOne.answers.flatMap(_.areYouVATRegistered.flatMap(_.name.capitalize).getOrElse("")).getOrElse("")),
+                    valueContent = Text(sectionAnswersPartOne.answers.flatMap(_.areYouVATRegistered.map(yesNo => messages(s"label.$yesNo"))).getOrElse("")),
                     changeCall = controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show,
                     noBorder = true
                 )

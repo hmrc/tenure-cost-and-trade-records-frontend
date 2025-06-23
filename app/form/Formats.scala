@@ -18,11 +18,10 @@ package form
 
 import models._
 import models.submissions.Form6010._
-import models.submissions._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings.{TypeOfIncome, TypeOfLetting}
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.common.{AnswersYesNo, BuildingInsurance, CYAYesNo, InsideRepairs, OutsideRepairs}
+import models.submissions.common.{BuildingInsurance, CYAYesNo, InsideRepairs, OutsideRepairs}
 import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, VacantPropertiesDetails}
 import models.submissions.notconnected.PastConnectionType
 import play.api.data.FormError
@@ -30,7 +29,8 @@ import play.api.data.format.Formatter
 
 object Formats:
 
-  def namedEnumFormatter[T <: NamedEnum](named: NamedEnumSupport[T], missingCode: String): Formatter[T] =
+  // TODO: substitute by Scala3EnumFieldMapping.enumMappingRequired
+  private def namedEnumFormatter[T <: NamedEnum](named: NamedEnumSupport[T], missingCode: String): Formatter[T] =
     new Formatter[T] {
 
       override val format: Option[(String, Seq[Any])] = Some((missingCode, Nil))
@@ -46,29 +46,6 @@ object Formats:
       def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
     }
 
-  def namedEnumFormatterWithKeys[T <: NamedEnum](
-    named: NamedEnumSupport[T],
-    missingCodes: Map[String, String]
-  ): Formatter[T] = new Formatter[T] {
-
-    override val format: Option[(String, Nil.type)] = Some((Errors.required, Nil))
-
-    def bind(key: String, data: Map[String, String]): Either[Seq[FormError], T] = {
-      val resOpt      = for
-        keyVal        <- data.get(key)
-        enumTypeValue <- named.fromName(keyVal)
-      yield Right(enumTypeValue)
-      val maybeString = missingCodes.get(key)
-      resOpt.getOrElse(Left(Seq(FormError(key, maybeString.getOrElse(Errors.required), Nil))))
-    }
-
-    def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
-  }
-
-  def answersYesNoDefFormat(errorMessage: String): Formatter[AnswersYesNo] =
-    namedEnumFormatter(AnswersYesNo, errorMessage)
-
-  given Formatter[UserType]              = namedEnumFormatter(UserType, Errors.userTypeRequired)
   given Formatter[CYAYesNo]              = namedEnumFormatter(CYAYesNo, Errors.booleanMissing)
   given Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
   given Formatter[ConnectionToProperty]  = namedEnumFormatter(ConnectionToProperty, Errors.connectionToPropertyError)

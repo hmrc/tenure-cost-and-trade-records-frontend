@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -59,7 +59,7 @@ class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[Pro
         doc,
         "propertyUseLeasebackArrangement",
         "propertyUseLeasebackArrangement",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -71,7 +71,7 @@ class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[Pro
         doc,
         "propertyUseLeasebackArrangement-2",
         "propertyUseLeasebackArrangement",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

@@ -18,7 +18,8 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.EnforcementActionForm
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -61,7 +62,7 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
         doc,
         "enforcementActionBeenTaken",
         "enforcementActionBeenTaken",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +74,7 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
         doc,
         "enforcementActionBeenTaken-2",
         "enforcementActionBeenTaken",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

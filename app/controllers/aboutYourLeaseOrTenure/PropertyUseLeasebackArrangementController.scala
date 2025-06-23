@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.up
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUseLeasebackAgreementId
 import play.api.Logging
@@ -99,9 +100,9 @@ class PropertyUseLeasebackArrangementController @Inject() (
       case _    =>
         answers.forType match {
           case FOR6020 | FOR6076 | FOR6045 | FOR6046 | FOR6048 =>
-            answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
-              case Some("yes") => aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
-              case _           => aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+            answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
+              case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
+              case _               => aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
             }
           case _                                               => aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
         }

@@ -19,7 +19,7 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.TradingActivityForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.TradingActivity
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -61,7 +61,7 @@ class TradingActivityViewSpec extends QuestionViewBehaviours[TradingActivity] {
         doc,
         "tradingActivityQuestion",
         "tradingActivityQuestion",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +73,7 @@ class TradingActivityViewSpec extends QuestionViewBehaviours[TradingActivity] {
         doc,
         "tradingActivityQuestion-2",
         "tradingActivityQuestion",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

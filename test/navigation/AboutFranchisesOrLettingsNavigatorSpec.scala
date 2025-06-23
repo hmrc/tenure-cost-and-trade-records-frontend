@@ -16,7 +16,7 @@
 
 package navigation
 
-import models.submissions.common.AnswerNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import utils.TestBaseSpec
 

@@ -15,7 +15,7 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.common.AnswerYes
+@import models.submissions.common.AnswersYesNo.*
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.NumberUtil.*
 @import util.{DateUtilLocalised, SectionAnswersRowBuilder}
@@ -75,7 +75,7 @@
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.lettings.heading")</h2>
 @govukSummaryList(SummaryList(rows =
-    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isRentReceived", _.isAnyRentReceived.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.oes") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show(), "isRentReceivedFromLetting")
+    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isRentReceived", _.isAnyRentReceived.map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show(), "isRentReceivedFromLetting")
     .map(_.copy(classes = "no-border-bottom"))
 ))
 

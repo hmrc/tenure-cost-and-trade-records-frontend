@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayCapitalSumId
 import play.api.Logging
@@ -109,17 +109,12 @@ class PayACapitalSumController @Inject() (
             else controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show().url
           case _                 =>
             answers.aboutLeaseOrAgreementPartTwo.flatMap(
-              _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded.name)
+              _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded)
             ) match {
-              case Some("yes") =>
+              case Some(AnswerYes) =>
                 controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
-              case Some("no")  =>
+              case _               =>
                 controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-              case _           =>
-                logger.warn(
-                  s"Back link for pay capital sum page reached with unknown tenants additions disregarded value"
-                )
-                controllers.routes.TaskListController.show().url
             }
         }
     }

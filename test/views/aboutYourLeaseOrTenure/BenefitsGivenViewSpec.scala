@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.BenefitsGivenForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.BenefitsGiven
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -58,7 +58,7 @@ class BenefitsGivenViewSpec extends QuestionViewBehaviours[BenefitsGiven] {
         doc,
         "benefitsGiven",
         "benefitsGiven",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -70,7 +70,7 @@ class BenefitsGivenViewSpec extends QuestionViewBehaviours[BenefitsGiven] {
         doc,
         "benefitsGiven-2",
         "benefitsGiven",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import identifiers._
 import play.api.mvc.Call
 import models.ForType.*
 import models.Session
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails, VacantPropertiesDetailsYes}
 import play.api.Logging
 
@@ -91,8 +91,8 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     }
 
   private def isAnyRentReceived: Session => Call                          = answers =>
-    answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name)) match {
-      case Some("yes") =>
+    answers.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+      case Some(AnswerYes) =>
         answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty match {
           case true  => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
           case false =>
@@ -105,12 +105,12 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
                 controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx)
             }
         }
-      case _           => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
+      case _               => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
     }
   private def tradingNameOwnTheProperty: Session => Call                  = answers =>
-    answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty.map(_.name)) match {
-      case Some("yes") => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
-      case _           => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
+    answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match {
+      case Some(AnswerYes) => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
+      case _               => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
     }
   private def getLettingPartOfPropertyDetailsIndex(session: Session): Int =
     session.stillConnectedDetails.map(_.lettingPartOfPropertyDetailsIndex).getOrElse(0)

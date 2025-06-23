@@ -20,7 +20,7 @@ import connectors.Audit
 import controllers.aboutfranchisesorlettings
 import models.ForType.*
 import models.Session
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import play.api.Logging
 import play.api.mvc.Call

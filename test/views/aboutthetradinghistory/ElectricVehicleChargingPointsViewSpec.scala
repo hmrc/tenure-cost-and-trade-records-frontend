@@ -19,7 +19,7 @@ package views.aboutthetradinghistory
 import form.aboutthetradinghistory.ElectricVehicleChargingPointsForm
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -69,7 +69,7 @@ class ElectricVehicleChargingPointsViewSpec extends QuestionViewBehaviours[Elect
         doc,
         "electricVehicleChargingPoints",
         "electricVehicleChargingPoints",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -81,7 +81,7 @@ class ElectricVehicleChargingPointsViewSpec extends QuestionViewBehaviours[Elect
         doc,
         "electricVehicleChargingPoints-2",
         "electricVehicleChargingPoints",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

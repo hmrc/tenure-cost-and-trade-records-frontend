@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import form.aboutyouandtheproperty.EnforcementActionForm.enforcementActionForm
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.EnforcementActionBeenTakenPageId
 import play.api.Logging
@@ -85,12 +86,10 @@ class EnforcementActionBeenTakenController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions.map(_.name)) match {
-      case Some("yes") =>
+    answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match {
+      case Some(AnswerYes) =>
         controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show().url
-      case Some("no")  => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
-      case _           =>
-        logger.warn(s"Back link for enforcement action page reached with unknown premises licence conditions value")
-        controllers.routes.TaskListController.show().url
+      case _               => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
     }
+
 }

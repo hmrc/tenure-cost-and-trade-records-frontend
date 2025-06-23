@@ -20,7 +20,8 @@ import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartTwo, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PropertyUseLeasebackArrangement, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs}
-import models.submissions.common.{AnswerNo, BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
+import models.submissions.common.AnswersYesNo.*
+import models.submissions.common.{BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier

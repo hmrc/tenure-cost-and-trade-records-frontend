@@ -19,7 +19,7 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -62,7 +62,7 @@ class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetai
         doc,
         "contactDetailsQuestion",
         "contactDetailsQuestion",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -74,7 +74,7 @@ class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetai
         doc,
         "contactDetailsQuestion-2",
         "contactDetailsQuestion",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

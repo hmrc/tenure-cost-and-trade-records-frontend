@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -58,7 +58,7 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Incent
         doc,
         "formerLeaseSurrendered",
         "formerLeaseSurrendered",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -70,7 +70,7 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Incent
         doc,
         "formerLeaseSurrendered-2",
         "formerLeaseSurrendered",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

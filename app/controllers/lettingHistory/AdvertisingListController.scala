@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmationForm
 import form.lettingHistory.AdvertisingListForm.theForm
 import models.Session
-import models.submissions.common.{AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.lettingHistory.LettingHistory.byRemovingOnlineAdvertisingAt
 import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory}

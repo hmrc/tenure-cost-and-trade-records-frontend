@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package models.submissions.aboutthetradinghistory
 
-import models.Scala3EnumFormat
+import models.Scala3EnumJsonFormat
 import models.submissions.aboutthetradinghistory.Caravans.CaravanLettingType.{OwnedByOperator, SubletByOperator}
 import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.{Single, Twin}
 import models.submissions.common.AnswersYesNo
@@ -37,7 +37,7 @@ case class Caravans(
   annualPitchFee: Option[CaravansAnnualPitchFee] = None
 )
 
-object Caravans {
+object Caravans:
   implicit val format: OFormat[Caravans] = Json.format
 
   enum CaravanUnitType(unitType: String):
@@ -80,11 +80,6 @@ object Caravans {
   end CaravansPitchFeeServices
 
   object CaravansPitchFeeServices:
-    implicit val format: Format[CaravansPitchFeeServices] = Scala3EnumFormat.format
+    implicit val format: Format[CaravansPitchFeeServices] = Scala3EnumJsonFormat.format
 
     val stringValues: Seq[String] = CaravansPitchFeeServices.values.toSeq.map(_.toString)
-
-    def fromName(name: String): Option[CaravansPitchFeeServices] =
-      CaravansPitchFeeServices.values.find(_.toString == name)
-
-}

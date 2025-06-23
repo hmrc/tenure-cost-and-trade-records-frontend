@@ -23,9 +23,10 @@ import form.BuildingNameNumberMapping.validateBuildingNameNumber
 import form.CountyMapping.validateCounty
 import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
-import form.Formats.{answersYesNoDefFormat, given}
+import form.Formats.given
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
+import form.Scala3EnumFieldMapping.enumMappingRequired
 import models.submissions.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
@@ -57,7 +58,6 @@ object MappingSupport:
       case _            => None
     }
 
-  val userType: Mapping[UserType]                                               = Forms.of[UserType]
   val typeOfLettingMapping: Mapping[TypeOfLetting]                              = Forms.of[TypeOfLetting]
   val typeOfIncomeMapping: Mapping[TypeOfIncome]                                = Forms.of[TypeOfIncome]
   val connectionToThePropertyType: Mapping[ConnectionToProperty]                = Forms.of[ConnectionToProperty]
@@ -119,8 +119,7 @@ object MappingSupport:
 
   val currency: Mapping[BigDecimal] = currencyMapping()
 
-  def createYesNoType(errorMessage: String): Mapping[AnswersYesNo] =
-    Forms.of[AnswersYesNo](using answersYesNoDefFormat(errorMessage))
+  def createYesNoType(errorMessage: String): Mapping[AnswersYesNo] = enumMappingRequired(AnswersYesNo, errorMessage)
 
   def currencyMapping(fieldErrorPart: String = ""): Mapping[BigDecimal] = default(text, "")
     .verifying(nonEmpty(errorMessage = Errors.annualRentExcludingVAT + fieldErrorPart))
@@ -264,14 +263,6 @@ object MappingSupport:
       if seq.size > 1 && seq.contains(noneOfTheseValue) then Invalid(ValidationError(errorMessage))
       else Valid
     }
-
-  def enumMapping[E](enumFromNameMethod: String => Option[E], getName: E => String): Mapping[Option[E]] =
-    default(text, "")
-      .transform(enumFromNameMethod, _.fold("")(getName))
-
-  def enumMappingSeq[E](enumFromNameMethod: String => Option[E], getName: E => String): Mapping[Seq[E]] =
-    seq(text)
-      .transform(_.flatMap(enumFromNameMethod), _.map(getName))
 
   def weeksInYearMapping: Mapping[Int] =
     weeksMapping("error.weeksInYearMapping.blank", "error.weeksInYearMapping.invalid")

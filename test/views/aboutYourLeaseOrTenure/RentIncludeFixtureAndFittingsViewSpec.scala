@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -61,7 +61,7 @@ class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[RentI
         doc,
         "rentIncludeFixturesAndFittings",
         "rentIncludeFixturesAndFittings",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +73,7 @@ class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[RentI
         doc,
         "rentIncludeFixturesAndFittings-2",
         "rentIncludeFixturesAndFittings",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

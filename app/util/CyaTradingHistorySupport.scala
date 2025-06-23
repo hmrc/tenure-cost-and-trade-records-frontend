@@ -257,9 +257,9 @@ class CyaTradingHistorySupport @Inject() (
         SummaryList(rows =
           sectionAnswers1
             .conditionRow(
-              _.areYouVATRegistered.map(_.name).isDefined,
+              _.areYouVATRegistered.isDefined,
               "checkYourAnswersAboutTheTradingHistory.areYouVATRegistered",
-              _.areYouVATRegistered.flatMap(_.name.capitalize),
+              _.areYouVATRegistered.map(yesNo => messages(s"label.$yesNo")),
               controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show,
               "areYouVatRegistered"
             )

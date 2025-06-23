@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package form.aboutthetradinghistory
 
 import form.ConditionalConstraintMappings.mandatoryIfOneOfValuesIs
 import form.MappingSupport.*
+import form.Scala3EnumFieldMapping.enumMappingSeq
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices
 import models.submissions.aboutthetradinghistory.CaravansAnnualPitchFee
 import play.api.data.Form
@@ -35,7 +36,7 @@ object CaravansAnnualPitchFeeForm {
     Form(
       mapping(
         "totalPitchFee"              -> moneyMappingRequired("caravans.totalPitchFee"),
-        "servicesIncludedInPitchFee" -> enumMappingSeq(CaravansPitchFeeServices.fromName, _.toString),
+        "servicesIncludedInPitchFee" -> enumMappingSeq(CaravansPitchFeeServices),
         "rates"                      -> mandatoryIfOneOfValuesIs(
           "servicesIncludedInPitchFee",
           "rates",

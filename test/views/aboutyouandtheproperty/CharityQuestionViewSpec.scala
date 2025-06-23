@@ -18,7 +18,8 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.CharityQuestionForm
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -60,7 +61,7 @@ class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         doc,
         "charityQuestion",
         "charityQuestion",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -72,7 +73,7 @@ class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         doc,
         "charityQuestion-2",
         "charityQuestion",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

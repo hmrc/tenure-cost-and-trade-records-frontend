@@ -26,6 +26,7 @@ import models.submissions.aboutyouandtheproperty.*
 import models.submissions.accommodation.*
 import models.submissions.additionalinformation.*
 import models.submissions.common.*
+import models.submissions.common.AnswersYesNo.*
 import models.submissions.connectiontoproperty.*
 import models.submissions.downloadFORTypeForm.*
 import models.submissions.ReferenceNumber

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import form.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateOtherHolidayAccommodation
 import models.submissions.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodation
 import models.Session
+import models.submissions.common.AnswersYesNo.AnswerYes
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersOtherHolidayAccommodationId
 import play.api.Logging
@@ -86,8 +87,9 @@ class CheckYourAnswersOtherHolidayAccommodationController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.aboutTheTradingHistoryPartOne.flatMap(
-      _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation.map(_.name))
+      _.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)
     ) match
-      case Some(s) if s == "yes" => controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show().url
-      case _                     => controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
+      case Some(AnswerYes) => controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show().url
+      case _               => controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
+
 }

@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.LeaseSurrenderedEarly
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -60,7 +60,7 @@ class LeaseSurrenderedEarlyViewSpec extends QuestionViewBehaviours[LeaseSurrende
         doc,
         "leaseSurrenderedEarly",
         "leaseSurrenderedEarly",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -72,7 +72,7 @@ class LeaseSurrenderedEarlyViewSpec extends QuestionViewBehaviours[LeaseSurrende
         doc,
         "leaseSurrenderedEarly-2",
         "leaseSurrenderedEarly",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

@@ -21,7 +21,8 @@ import controllers.FORDataCaptureController
 import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmationForm
 import form.lettingHistory.OccupierListForm.theForm as theListForm
 import models.Session
-import models.submissions.common.{AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, OccupierDetail, SessionWrapper}
 import navigation.LettingHistoryNavigator

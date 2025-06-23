@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import models.Session
 import models.ForType.*
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -98,10 +98,7 @@ class CurrentAnnualRentController @Inject() (
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
-          case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
-          case _               =>
-            logger.warn(s"Back link for current annual rent page reached with unknown value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
         }
       case _       => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
     }

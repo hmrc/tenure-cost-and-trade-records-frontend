@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -61,7 +61,7 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantA
         doc,
         "tenantsAdditionsDisregarded",
         "tenantsAdditionsDisregarded",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +73,7 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantA
         doc,
         "tenantsAdditionsDisregarded-2",
         "tenantsAdditionsDisregarded",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

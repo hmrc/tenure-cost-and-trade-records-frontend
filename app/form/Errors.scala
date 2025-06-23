@@ -53,7 +53,6 @@ object Errors {
   // Not connected
   val isPastConnected                 = "error.pastConnectionType"
   // About You Errors
-  val userTypeRequired                = "error.userType.required"
   val contactDetailsMissing           = "error.contact.details.missing"
   val contactPhoneRequired            = "error.contact.phone.required"
   val contactPhoneAboutYouRequired    = "error.contact.phoneAboutYou.required"

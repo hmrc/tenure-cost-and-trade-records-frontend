@@ -21,6 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AreYouThirdPartyForm.theForm
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AreYouThirdPartyPageId
@@ -97,11 +98,8 @@ class AreYouThirdPartyController @Inject() (
       case "CYA" =>
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       case _     =>
-        request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty.map(_.name)) match {
-          case Some("yes") => controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
-          case Some("no")  => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
-          case _           =>
-            logger.warn(s"Back link for are you third party reached with unknown trade services value")
-            controllers.connectiontoproperty.routes.ConnectionToThePropertyController.show().url
+        request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match {
+          case Some(AnswerYes) => controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+          case _               => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
         }
     }

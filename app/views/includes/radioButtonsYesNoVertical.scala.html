@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.AnswerNo
-@import models.submissions.common.AnswerYes
+@import models.submissions.common.AnswersYesNo.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
@@ -56,8 +55,8 @@
                 )
             ),
             items = Seq(
-                item(AnswerYes.name, messages(yesLabel), conditionalHtmlOnYes),
-                item(AnswerNo.name, messages(noLabel), conditionalHtmlOnNo)
+                item(AnswerYes.toString, messages(yesLabel), conditionalHtmlOnYes),
+                item(AnswerNo.toString, messages(noLabel), conditionalHtmlOnNo)
             ),
             hint = Hint(content = Text(messages(hint)))
         ).withFormField(theForm(name))

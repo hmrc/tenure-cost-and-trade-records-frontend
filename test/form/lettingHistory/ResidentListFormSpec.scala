@@ -17,7 +17,7 @@
 package form.lettingHistory
 
 import form.lettingHistory.ResidentListForm.theForm
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 
 class ResidentListFormSpec extends FormSpec:
 

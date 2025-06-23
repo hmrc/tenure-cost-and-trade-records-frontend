@@ -14,22 +14,6 @@
  * limitations under the License.
  */
 
-/*
- * Copyright 2025 HM Revenue & Customs
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
@@ -39,6 +23,7 @@ import form.aboutYourLeaseOrTenure.PayACapitalSumAmountDetailsForm.payACapitalSu
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumAmountDetails
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayCapitalSumAmountDetailsId
 import play.api.Logging
@@ -106,11 +91,10 @@ class PayACapitalSumAmountDetailsController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-amount-details"
       case _    =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.payACapitalSumDetails.map(_.capitalSumOrPremium.name)
+          _.payACapitalSumDetails.map(_.capitalSumOrPremium)
         ) match {
-          case Some("yes") =>
-            controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
-          case _           => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
         }
     }
 }

@@ -18,7 +18,8 @@ package views.connectiontoproperty
 
 import actions.SessionRequest
 import form.connectiontoproperty.AreYouThirdPartyForm
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -105,13 +106,13 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
     "contain radio buttons for the value yes with hint 6076" in {
       val doc = asDocument(createViewUsingForm6076(form))
-      assertContainsRadioButton(doc, "areYouThirdParty", "areYouThirdParty", AnswerYes.name, false)
+      assertContainsRadioButton(doc, "areYouThirdParty", "areYouThirdParty", AnswerYes.toString, false)
       assertContainsText(doc, messages("label.yes"))
     }
 
     "contain radio buttons for the value no with hint 6076" in {
       val doc = asDocument(createViewUsingForm6076(form))
-      assertContainsRadioButton(doc, "areYouThirdParty-2", "areYouThirdParty", AnswerNo.name, false)
+      assertContainsRadioButton(doc, "areYouThirdParty-2", "areYouThirdParty", AnswerNo.toString, false)
       assertContainsText(doc, messages("label.no"))
     }
 

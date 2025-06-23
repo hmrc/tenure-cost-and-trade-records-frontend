@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -78,7 +78,7 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
       contentAsString(result)   should include(
-        controllers.routes.TaskListController.show().url
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
       )
     }
 

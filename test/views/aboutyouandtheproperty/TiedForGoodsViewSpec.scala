@@ -18,7 +18,8 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.TiedForGoodsForm
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -71,7 +72,7 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         doc,
         "tiedForGoods",
         "tiedForGoods",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -83,7 +84,7 @@ class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         doc,
         "tiedForGoods-2",
         "tiedForGoods",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))
