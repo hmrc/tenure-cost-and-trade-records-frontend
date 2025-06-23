@@ -17,11 +17,12 @@
 package models.submissions.connectiontoproperty
 
 import crypto.MongoCrypto
+import models.submissions.common.SensitiveAddress
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveEditTheAddress(
-  editAddress: SensitiveEditAddress
+  editAddress: SensitiveAddress
 ) extends Sensitive[EditTheAddress] {
 
   override def decryptedValue: EditTheAddress = EditTheAddress(
@@ -34,6 +35,6 @@ object SensitiveEditTheAddress {
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveEditTheAddress] = Json.format
 
   def apply(editTheAddress: EditTheAddress): SensitiveEditTheAddress = SensitiveEditTheAddress(
-    SensitiveEditAddress(editTheAddress.editAddress)
+    SensitiveAddress(editTheAddress.editAddress)
   )
 }

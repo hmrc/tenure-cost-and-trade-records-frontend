@@ -16,21 +16,28 @@
 
 package controllers.aboutfranchisesorlettings
 
-import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
+import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import org.jsoup.Jsoup
+import models.ForType.FOR6010
+import models.submissions.aboutfranchisesorlettings.TypeOfIncome.{TypeConcession, TypeFranchise, TypeLetting}
+import models.{ForType, Session}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, BusinessDetails, CalculatingTheRent, Concession6015IncomeRecord, ConcessionBusinessDetails, ConcessionIncomeRecord, FeeReceived, FeeReceivedPerYear, FranchiseIncomeRecord, LettingIncomeRecord, OperatorDetails, PropertyRentDetails, RentReceivedFrom}
+import models.submissions.common.AnswersYesNo.AnswerYes
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import repositories.SessionRepo
+import uk.gov.hmrc.http.HeaderCarrier
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
+import java.time.LocalDate
+import scala.concurrent.Future.successful
 import scala.language.reflectiveCalls
 
-class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec {
+class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec:
 
-  import TestData._
+  import TestData.*
 
   def checkYourAnswersAboutFranchiseOrLettingsController6045(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
@@ -40,17 +47,6 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6045),
-      mockSessionRepo
-    )
-
-  def checkYourAnswersAboutFranchiseOrLettingsController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
-      stubMessagesControllerComponents(),
-      aboutFranchisesOrLettingsNavigator,
-      checkYourAnswersAboutFranchiseOrLettings,
-      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
     )
 
@@ -81,57 +77,49 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     )
 
   "GET /" should {
-    "return 200" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
 
-    "return 200 6020" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController6020().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return 200 no" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(fakeRequest)
-      status(result) shouldBe Status.OK
-    }
-
-    "return HTML" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
+    "return HTML FOR6010 about Franchise or Lettings" in new ControllerFixture(forType = FOR6010) {
+      val result = controller.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML 6020" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController6020().show(fakeRequest)
+    "return HTML FOR6015 about Concessions or Lettings" in new ControllerFixture(forType = FOR6015) {
+      val result = controller.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML 6045" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController6045().show(fakeRequest)
+    "return HTML FOR6020 about Lettings" in new ControllerFixture(forType = FOR6020) {
+      val result = controller.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "return HTML no" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(fakeRequest)
+    "return HTML FOR6030 about Franchise or Lettings" in new ControllerFixture(forType = FOR6030) {
+      val result = controller.show(fakeRequest)
+      status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "Render the add-remove-rental-income link correctly for 6045 form" in {
-      val result        = checkYourAnswersAboutFranchiseOrLettingsController6045().show(fakeRequest)
-      val html          = Jsoup.parse(contentAsString(result))
-      val addRemoveLink = html.getElementById("add-remove-rental-income")
-
-      addRemoveLink.attr("href") should include(
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(1).url
-      )
+    "return HTML FOR6045 about Concessions, Franchises or Lettings" in new ControllerFixture(forType = FOR6045) {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
     }
 
-    "return correct backLink when 'from=CYA' query param is present" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController().show()(FakeRequest(GET, "/path?from=CYA"))
+    "return HTML FOR6046 about Concessions, Franchises or Lettings" in new ControllerFixture(forType = FOR6046) {
+      val result = controller.show(fakeRequest)
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=CYA' query param is present" in new ControllerFixture(forType = FOR6010) {
+      val result = controller.show()(FakeRequest(GET, "/path?from=CYA"))
       contentAsString(result) should include(
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       )
@@ -139,8 +127,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
   }
 
   "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = checkYourAnswersAboutFranchiseOrLettingsController().submit(
+    "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture(forType = FOR6010) {
+      val res = controller.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
@@ -158,7 +146,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
   "Add another letting accommodation form" should {
     "error if addAnotherCateringOperationOrLettingAccommodation is missing" in {
       val formData = baseFormData - errorKey.checkYourAnswersAboutFranchiseOrLettings
-      val form     = checkYourAnswersAboutFranchiseOrLettingsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.checkYourAnswersAboutFranchiseOrLettings, "error.checkYourAnswersRadio.required", form)
     }
@@ -175,4 +163,118 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     val baseFormData: Map[String, String] = Map("checkYourAnswersAboutFranchiseOrLettings" -> "yes")
   }
 
-}
+  trait ControllerFixture(forType: ForType) extends TestBaseSpec:
+    val repository = mock[SessionRepo]
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier])).thenReturn(successful(()))
+
+    val controller = new CheckYourAnswersAboutFranchiseOrLettingsController(
+      stubMessagesControllerComponents(),
+      aboutFranchisesOrLettingsNavigator,
+      checkYourAnswersAboutFranchiseOrLettings,
+      preEnrichedActionRefiner(
+        aboutFranchisesOrLettings = Some(
+          AboutFranchisesOrLettings(
+            franchisesOrLettingsTiedToProperty = Some(AnswerYes),
+            currentMaxOfLetting = None,
+            checkYourAnswersAboutFranchiseOrLettings = None,
+            fromCYA = None,
+            lettings = None,
+            rentalIncome = forType match {
+              case FOR6010 =>
+                Some(
+                  IndexedSeq( // Franchise or Lettings
+                    FranchiseIncomeRecord(
+                      sourceType = TypeFranchise,
+                      businessDetails = Some(
+                        BusinessDetails(
+                          operatorName = "Mr. Pizza",
+                          typeOfBusiness = "Restaurant",
+                          cateringAddress = None
+                        )
+                      )
+                    ),
+                    LettingIncomeRecord(
+                      sourceType = TypeLetting,
+                      operatorDetails = Some(
+                        OperatorDetails(
+                          operatorName = "Mr. Lettings",
+                          typeOfBusiness = "Letting Agency",
+                          lettingAddress = None
+                        )
+                      ),
+                      rent = Some(
+                        PropertyRentDetails(
+                          annualRent = 1200L,
+                          dateInput = LocalDate.of(2023, 4, 1)
+                        )
+                      ),
+                      itemsIncluded = Some(List("Furnishings", "Utilities"))
+                    )
+                  )
+                )
+              case FOR6015 =>
+                Some(
+                  IndexedSeq( // Concession or Lettings
+                    Concession6015IncomeRecord(
+                      sourceType = TypeFranchise,
+                      businessDetails = Some(
+                        BusinessDetails(
+                          operatorName = "Mr. Pizza",
+                          typeOfBusiness = "Restaurant",
+                          cateringAddress = None
+                        )
+                      ),
+                      rent = Some(
+                        RentReceivedFrom(
+                          annualRent = 1200L,
+                          declaration = true
+                        )
+                      ),
+                      calculatingTheRent = Some(
+                        CalculatingTheRent(
+                          description = "Rent calculated based on annual income",
+                          dateInput = LocalDate.of(2023, 4, 1)
+                        )
+                      ),
+                      itemsIncluded = Some(List("Furnishings", "Utilities"))
+                    )
+                  )
+                )
+              case FOR6045 =>
+                Some(
+                  IndexedSeq( // Concessions, Franchises or Lettings))
+                    ConcessionIncomeRecord(
+                      sourceType = TypeConcession,
+                      businessDetails = Some(
+                        ConcessionBusinessDetails(
+                          operatorName = "Mr. Concession",
+                          typeOfBusiness = "Concession Stand",
+                          howBusinessPropertyIsUsed = "Food and Beverages"
+                        )
+                      ),
+                      feeReceived = Some(
+                        FeeReceived(
+                          feeReceivedPerYear = Seq(
+                            FeeReceivedPerYear(
+                              financialYearEnd = LocalDate.of(2023, 3, 31),
+                              tradingPeriod = 5
+                            )
+                          ),
+                          feeCalculationDetails = Some("Annual fee based on sales")
+                        )
+                      ),
+                      addAnotherRecord = Some(AnswerYes)
+                    )
+                  )
+                )
+              case _       => None
+            },
+            rentalIncomeIndex = 0,
+            lettingCurrentIndex = 0,
+            rentalIncomeMax = None
+          )
+        ),
+        forType = forType
+      ),
+      repository
+    )

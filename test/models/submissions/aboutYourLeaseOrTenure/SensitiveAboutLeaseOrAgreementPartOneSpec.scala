@@ -20,7 +20,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
 import play.api.Configuration
 import crypto.MongoCrypto
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{Address, AnswersYesNo}
 import utils.SensitiveTestHelper
 
 class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
@@ -36,7 +36,7 @@ class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Mat
           AboutTheLandlord(
             landlordFullName = "John Doe",
             landlordAddress = Some(
-              LandlordAddress(
+              Address(
                 buildingNameNumber = "123",
                 street1 = Some("Street 1"),
                 town = "Town",

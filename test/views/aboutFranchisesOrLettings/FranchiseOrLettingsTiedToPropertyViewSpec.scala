@@ -54,7 +54,7 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[A
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheFranchiseLettings"))
+      assert(sectionText == messages("label.section.aboutFranchisesOrLettings"))
     }
 
     "Hint text is visible" in {

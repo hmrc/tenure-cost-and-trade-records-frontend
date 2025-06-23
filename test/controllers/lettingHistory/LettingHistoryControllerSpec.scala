@@ -95,11 +95,11 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
     AdvertisingDetail(websiteAddress = "123.com", propertyReferenceNumber = "aaa123")
   )
 
-  val twoAdvertising = oneAdvertising ++ List(
+  val twoAdvertisings = oneAdvertising ++ List(
     AdvertisingDetail(websiteAddress = "456.com", propertyReferenceNumber = "aaa456")
   )
 
-  val fiveAdvertising = twoAdvertising ++ List(
+  val fiveAdvertisings = twoAdvertisings ++ List(
     AdvertisingDetail(websiteAddress = "789.com", propertyReferenceNumber = "aaa789"),
     AdvertisingDetail(websiteAddress = "111.com", propertyReferenceNumber = "aaa111"),
     AdvertisingDetail(websiteAddress = "112.com", propertyReferenceNumber = "aaa112")

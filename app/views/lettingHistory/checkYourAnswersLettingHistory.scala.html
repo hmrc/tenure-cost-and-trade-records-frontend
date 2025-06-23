@@ -18,6 +18,7 @@
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.LettingHistory
 @import models.submissions.common.AnswersYesNo
+@import views.CheckYourAnswersHelpers._
 @import views.lettingHistory.CheckYourAnswersLettingHistoryHelpers._
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
@@ -46,14 +47,13 @@
     )
     @includes.cards.list(
         govukSummaryList,
-        cardsType = messages("lettingHistory.checkYourAnswers.permanentResidents.cardsType"),
         cardsData = permanentResidentsCardsData(fragment = "permanent-residents")
     )
     @if(!LettingHistory.countEntitiesOf(kind = "permanentResidents", request.sessionData).contains(0)) {
         @includes.cards.footer(
             govukSummaryList,
             messageKey = "lettingHistory.checkYourAnswers.permanentResidents.added",
-            valueAsInt = LettingHistory.countEntitiesOf(kind = "permanentResidents", request.sessionData).getOrElse(0),
+            count = LettingHistory.countEntitiesOf(kind = "permanentResidents", request.sessionData).getOrElse(0),
             addActionMessage = messages("lettingHistory.checkYourAnswers.permanentResidents.addOneMore"),
             addActionCall = routes.ResidentDetailController.show(index = None).withFromCheckYourAnswer(fragment = "permanent-residents")
         )
@@ -70,14 +70,13 @@
     )
     @includes.cards.list(
         govukSummaryList,
-        cardsType = messages("lettingHistory.checkYourAnswers.completedLettings.cardsType"),
         cardsData = completedLettingsCardsData(fragment = "completed-lettings"),
     )
     @if(!LettingHistory.countEntitiesOf(kind = "completedLettings", request.sessionData).contains(0)) {
         @includes.cards.footer(
             govukSummaryList,
             messageKey = "lettingHistory.checkYourAnswers.completedLettings.added",
-            valueAsInt = LettingHistory.countEntitiesOf(kind = "completedLettings", request.sessionData).getOrElse(0),
+            count = LettingHistory.countEntitiesOf(kind = "completedLettings", request.sessionData).getOrElse(0),
             addActionMessage = messages("lettingHistory.checkYourAnswers.completedLettings.addOneMore"),
             addActionCall = routes.OccupierDetailController.show(index = None).withFromCheckYourAnswer(fragment = "completed-lettings")
         )
@@ -104,7 +103,6 @@
         )
         @includes.cards.list(
             govukSummaryList,
-            cardsType = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardsType"),
             cardsData = onlineAdvertisingCardsData(fragment = "online-advertising"),
         )
     } else {
@@ -116,13 +114,12 @@
         )
         @includes.cards.list(
             govukSummaryList,
-            cardsType = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardsType"),
             cardsData = onlineAdvertisingCardsData(fragment = "online-advertising"),
         )
         @includes.cards.footer(
             govukSummaryList,
             messageKey = "lettingHistory.checkYourAnswers.onlineAdvertising.added",
-            valueAsInt = LettingHistory.countEntitiesOf(kind = "onlineAdvertising", request.sessionData).getOrElse(0),
+            count = LettingHistory.countEntitiesOf(kind = "onlineAdvertising", request.sessionData).getOrElse(0),
             addActionMessage = messages("lettingHistory.checkYourAnswers.onlineAdvertising.addOneMore"),
             addActionCall = routes.AdvertisingDetailController.show(index = None).withFromCheckYourAnswer(fragment = "online-advertising")
         )

@@ -21,10 +21,11 @@ import connectors.Audit
 import connectors.addressLookup.*
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.FranchiseTypeDetailsForm.theForm
-import models.ForType._
+import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
+import models.submissions.common.Address
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.FranchiseTypeDetailsId
 import play.api.Logging
@@ -150,7 +151,7 @@ class FranchiseTypeDetailsController @Inject() (
       given Session = request.sessionData
       for
         confirmedAddress <- getConfirmedAddress(id)
-        businessAddress   = confirmedAddress.asBusinessAddress
+        businessAddress   = confirmedAddress.asAddress
         newSession       <- successful(newSessionWithBusinessAddress(idx, businessAddress))
         _                <- repository.saveOrUpdate(newSession)
       yield Redirect(navigator.nextPage(FranchiseTypeDetailsId, newSession).apply(newSession))
@@ -161,16 +162,7 @@ class FranchiseTypeDetailsController @Inject() (
     then routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     else routes.TypeOfIncomeController.show(Some(idx)).url
 
-  extension (confirmed: AddressLookupConfirmedAddress)
-    def asBusinessAddress: BusinessAddress = BusinessAddress(
-      confirmed.buildingNameNumber,
-      confirmed.street1,
-      confirmed.town,
-      confirmed.county,
-      confirmed.postcode
-    )
-
-  private def newSessionWithBusinessAddress(idx: Int, addr: BusinessAddress)(using session: Session) =
+  private def newSessionWithBusinessAddress(idx: Int, addr: Address)(using session: Session) =
     assert(session.aboutFranchisesOrLettings.isDefined)
     assert(session.aboutFranchisesOrLettings.get.rentalIncome.isDefined)
     assert(session.aboutFranchisesOrLettings.get.rentalIncome.get.lift(idx).isDefined)

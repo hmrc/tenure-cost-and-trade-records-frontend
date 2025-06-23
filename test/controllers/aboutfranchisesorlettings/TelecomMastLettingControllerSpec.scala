@@ -19,10 +19,11 @@ package controllers.aboutfranchisesorlettings
 import connectors.{Audit, MockAddressLookup}
 import models.ForType.*
 import models.Session
-import models.submissions.aboutfranchisesorlettings.{LettingAddress, TelecomMastLetting}
+import models.submissions.aboutfranchisesorlettings.TelecomMastLetting
+import models.submissions.common.Address
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{status, *}
+import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
@@ -144,7 +145,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         verify(repository, once).saveOrUpdate(session)(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
           case record: TelecomMastLetting =>
-            record.correspondenceAddress.value shouldBe LettingAddress(
+            record.correspondenceAddress.value shouldBe Address(
               buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
               street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
               town = addressLookupConfirmedAddress.address.lines.get.last,

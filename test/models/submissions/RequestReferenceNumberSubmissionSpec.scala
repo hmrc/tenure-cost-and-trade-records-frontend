@@ -16,8 +16,7 @@
 
 package models.submissions
 
-import models.submissions.common.ContactDetails
-import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
+import models.submissions.common.{Address, ContactDetails}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 import play.api.libs.json.Json
@@ -35,7 +34,7 @@ class RequestReferenceNumberSubmissionSpec extends AnyFlatSpec with should.Match
     val requestReferenceNumberSubmissionModel = RequestReferenceNumberSubmission(
       "12345",
       "BusinessTradingName",
-      RequestReferenceNumberAddress(
+      Address(
         buildingNameNumber = "123",
         street1 = Some("Main Street"),
         town = "Bristol",

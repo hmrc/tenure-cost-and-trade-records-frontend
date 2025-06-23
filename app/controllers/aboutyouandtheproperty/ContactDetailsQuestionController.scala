@@ -22,7 +22,8 @@ import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddr
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.theForm
 import models.Session
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress, ContactDetailsQuestion}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
+import models.submissions.common.Address
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.ContactDetailsQuestionId
@@ -102,7 +103,7 @@ class ContactDetailsQuestionController @Inject() (
       given Session = request.sessionData
       for
         confirmedAddress  <- getConfirmedAddress(id)
-        alternativeAddress = confirmedAddress.asAlternativeAddress
+        alternativeAddress = confirmedAddress.asAddress
         newSession        <- successful(sessionWithAlternativeAddress(alternativeAddress))
         _                 <- repository.saveOrUpdate(newSession)
       yield Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession))
@@ -127,7 +128,7 @@ class ContactDetailsQuestionController @Inject() (
       )
     )
 
-  private def sessionWithAlternativeAddress(address: AlternativeAddress)(using session: Session) =
+  private def sessionWithAlternativeAddress(address: Address)(using session: Session) =
     assert(session.aboutYouAndTheProperty.isDefined)
     session.copy(aboutYouAndTheProperty =
       session.aboutYouAndTheProperty.map(
@@ -136,13 +137,3 @@ class ContactDetailsQuestionController @Inject() (
         )
       )
     )
-
-  extension (confirmed: AddressLookupConfirmedAddress)
-    private def asAlternativeAddress =
-      AlternativeAddress(
-        confirmed.buildingNameNumber,
-        confirmed.street1,
-        confirmed.town,
-        confirmed.county,
-        confirmed.postcode
-      )

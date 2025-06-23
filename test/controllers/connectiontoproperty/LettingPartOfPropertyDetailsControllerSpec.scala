@@ -18,6 +18,7 @@ package controllers.connectiontoproperty
 
 import connectors.{Audit, MockAddressLookup}
 import models.Session
+import models.submissions.common.Address
 import models.submissions.connectiontoproperty.*
 import play.api.test.Helpers.*
 import repositories.SessionRepo
@@ -158,7 +159,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         details                                                should have size 1
         details(0).tenantDetails.name                        shouldBe "John Doe"
         details(0).tenantDetails.descriptionOfLetting        shouldBe "Short term rental"
-        details(0).tenantDetails.correspondenceAddress.value shouldBe CorrespondenceAddress(
+        details(0).tenantDetails.correspondenceAddress.value shouldBe Address(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
           street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
           town = addressLookupConfirmedAddress.address.lines.get.last,

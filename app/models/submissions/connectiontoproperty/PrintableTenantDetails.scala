@@ -16,6 +16,7 @@
 
 package models.submissions.connectiontoproperty
 
+import models.submissions.common.Address
 import uk.gov.hmrc.govukfrontend.views.Aliases
 
 trait PrintableTenantDetails {
@@ -24,7 +25,7 @@ trait PrintableTenantDetails {
 
   def descriptionOfLetting: String
 
-  def correspondenceAddress: Option[CorrespondenceAddress]
+  def correspondenceAddress: Option[Address]
 
   def tenantDetails: List[String] =
     List(

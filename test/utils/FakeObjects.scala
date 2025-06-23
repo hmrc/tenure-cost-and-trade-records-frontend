@@ -56,15 +56,15 @@ trait FakeObjects {
     Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
 
-  val prefilledContactDetails: ContactDetails         = ContactDetails("1234567890", "TestEmail@gmail.com")
-  val prefilledContactAddress: ContactDetailsAddress  = ContactDetailsAddress(
+  val prefilledContactDetails: ContactDetails = ContactDetails("1234567890", "TestEmail@gmail.com")
+  val prefilledContactAddress: Address        = Address(
     "004",
     Some("GORING ROAD"),
     "WORTHING",
     Some("West sussex"),
     "BN12 4AX"
   )
-  val prefilledAlternativeAddress: AlternativeAddress = AlternativeAddress(
+  val prefilledAlternativeAddress: Address    = Address(
     "004",
     Some("GORING ROAD"),
     "WORTHING",
@@ -75,20 +75,20 @@ trait FakeObjects {
   val prefilledNoRefContactDetails: RequestReferenceNumberContactDetails =
     RequestReferenceNumberContactDetails("test", prefilledContactDetails, Some("test"))
 
-  val prefilledFakeName                                                 = "John Doe"
-  val prefilledFakePhoneNo                                              = "12345678901"
-  val prefilledFakeEmail                                                = "test@email.com"
-  val prefilledFakeTradingName                                          = "TRADING NAME"
-  val prefilledCateringAddress: BusinessAddress                         =
-    BusinessAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledLettingAddress: LettingAddress                           =
-    LettingAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledLandlordAddress: LandlordAddress                         =
-    LandlordAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledEditAddress: EditAddress                                 =
-    EditAddress("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
-  val prefilledNoReferenceContactAddress: RequestReferenceNumberAddress =
-    RequestReferenceNumberAddress(
+  val prefilledFakeName                           = "John Doe"
+  val prefilledFakePhoneNo                        = "12345678901"
+  val prefilledFakeEmail                          = "test@email.com"
+  val prefilledFakeTradingName                    = "TRADING NAME"
+  val prefilledCateringAddress: Address           =
+    Address("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
+  val prefilledLettingAddress: Address            =
+    Address("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
+  val prefilledLandlordAddress: Address           =
+    Address("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
+  val prefilledEditAddress: Address               =
+    Address("004", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("West sussex"), "BN12 4AX")
+  val prefilledNoReferenceContactAddress: Address =
+    Address(
       "004",
       Some("GORING ROAD"),
       "GORING-BY-SEA, WORTHING",
@@ -164,7 +164,7 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsYesRentReceivedNoLettings: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierAgent),
-    Some(EditTheAddress(EditAddress("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(EditTheAddress(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
     Some(AnswerNo),
     Some(TradingNameOperatingFromProperty("ABC LTD")),
     Some(AnswerNo),
@@ -185,7 +185,7 @@ trait FakeObjects {
     TenantDetails(
       "name",
       "billboard",
-      CorrespondenceAddress("building", Some("street"), "town", Some("county"), "BN12 4AX")
+      Address("building", Some("street"), "town", Some("county"), "BN12 4AX")
     )
 
   val testLettingDetails: Option[LettingPartOfPropertyRentDetails] = Some(
@@ -195,7 +195,7 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsYesToAll: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(EditTheAddress(EditAddress("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(EditTheAddress(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
     Some(AnswerYes),
     Some(TradingNameOperatingFromProperty("ABC LTD")),
     Some(AnswerYes),
@@ -220,7 +220,7 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsNoToAll: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierAgent),
-    Some(EditTheAddress(EditAddress("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(EditTheAddress(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
     Some(AnswerNo),
     Some(TradingNameOperatingFromProperty("ABC LTD")),
     Some(AnswerNo),
@@ -1022,7 +1022,7 @@ trait FakeObjects {
       OperatorDetails(
         operatorName = "Letting Operator",
         typeOfBusiness = "Property Letting",
-        lettingAddress = LettingAddress(
+        lettingAddress = Address(
           buildingNameNumber = "123",
           street1 = Some("Main Street"),
           town = "Bristol",

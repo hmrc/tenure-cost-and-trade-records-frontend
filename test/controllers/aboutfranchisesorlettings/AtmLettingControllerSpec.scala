@@ -19,10 +19,11 @@ package controllers.aboutfranchisesorlettings
 import connectors.{Audit, MockAddressLookup}
 import models.ForType.*
 import models.Session
-import models.submissions.aboutfranchisesorlettings.{ATMLetting, LettingAddress}
+import models.submissions.aboutfranchisesorlettings.ATMLetting
+import models.submissions.common.Address
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{status, *}
+import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
@@ -131,7 +132,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         val session = captor[Session]
         verify(repository, once).saveOrUpdate(session)(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: ATMLetting =>
-          record.correspondenceAddress.value shouldBe LettingAddress(
+          record.correspondenceAddress.value shouldBe Address(
             buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
             street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
             town = addressLookupConfirmedAddress.address.lines.get.last,

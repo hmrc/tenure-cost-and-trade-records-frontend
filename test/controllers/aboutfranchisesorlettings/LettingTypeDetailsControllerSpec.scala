@@ -18,7 +18,8 @@ package controllers.aboutfranchisesorlettings
 
 import connectors.{Audit, MockAddressLookup}
 import models.Session
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress, LettingIncomeRecord}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord}
+import models.submissions.common.Address
 import models.submissions.common.AnswersYesNo.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -133,7 +134,7 @@ trait LettingTypeDetailsControllerBehaviours:
       verify(repository, once).saveOrUpdate(session)(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: LettingIncomeRecord =>
-          record.operatorDetails.value.lettingAddress.value shouldBe LettingAddress(
+          record.operatorDetails.value.lettingAddress.value shouldBe Address(
             buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
             street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
             town = addressLookupConfirmedAddress.address.lines.get.last,

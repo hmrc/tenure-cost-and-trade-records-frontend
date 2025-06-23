@@ -16,7 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
-import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
+import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
@@ -103,7 +103,7 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
   "Add another letting accommodation form" should {
     "error if addAnotherCateringOperationOrLettingAccommodation is missing" in {
       val formData = baseFormData - errorKey.checkYourAnswersAboutFranchiseOrLettings
-      val form     = checkYourAnswersAboutFranchiseOrLettingsForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.checkYourAnswersAboutFranchiseOrLettings, "error.checkYourAnswersRadio.required", form)
     }

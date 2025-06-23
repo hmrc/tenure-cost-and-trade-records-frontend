@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
 import controllers.{AddressLookupSupport, FORDataCaptureController}
-import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, LettingAddress, LettingPartOfProperty}
+import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, LettingPartOfProperty}
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -29,6 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.atmLetting
 import form.aboutfranchisesorlettings.ATMLettingForm.theForm
 import models.Session
+import models.submissions.common.Address
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
@@ -151,7 +152,7 @@ class AtmLettingController @Inject() (
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)
-      lettingAddress   <- confirmedAddress.asLettingAddress
+      lettingAddress   <- confirmedAddress.asAddress
       newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
       _                <- repository.saveOrUpdate(newSession)
     yield
@@ -165,16 +166,7 @@ class AtmLettingController @Inject() (
     then routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     else routes.TypeOfLettingController.show(idx).url
 
-  extension (confirmed: AddressLookupConfirmedAddress)
-    def asLettingAddress = LettingAddress(
-      confirmed.buildingNameNumber,
-      confirmed.street1,
-      confirmed.town,
-      confirmed.county,
-      confirmed.postcode
-    )
-
-  private def newSessionWithLettingAddress(idx: Int, lettingAddress: LettingAddress)(using session: Session) =
+  private def newSessionWithLettingAddress(idx: Int, lettingAddress: Address)(using session: Session) =
     assert(session.aboutFranchisesOrLettings.isDefined)
     assert(session.aboutFranchisesOrLettings.get.lettings.isDefined)
     session.copy(

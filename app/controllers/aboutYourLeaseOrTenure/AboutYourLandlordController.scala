@@ -24,6 +24,7 @@ import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.theForm
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
+import models.submissions.common.Address
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -122,7 +123,7 @@ class AboutYourLandlordController @Inject() (
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)
-      landlordAddress   = confirmedAddress.asLandlordAddress
+      landlordAddress   = confirmedAddress.asAddress
       newSession       <- successful(sessionWithLandlordAddress(landlordAddress))
       _                <- repository.saveOrUpdate(newSession)
     yield navigator.from match {
@@ -143,7 +144,7 @@ class AboutYourLandlordController @Inject() (
         case _    => controllers.routes.TaskListController.show().url
       }
 
-  private def sessionWithLandlordAddress(address: LandlordAddress)(using session: Session) =
+  private def sessionWithLandlordAddress(address: Address)(using session: Session) =
     assert(session.aboutLeaseOrAgreementPartOne.isDefined)
     assert(session.aboutLeaseOrAgreementPartOne.get.aboutTheLandlord.isDefined)
     session.copy(
@@ -156,13 +157,4 @@ class AboutYourLandlordController @Inject() (
           }
         )
       }
-    )
-
-  extension (confirmed: AddressLookupConfirmedAddress)
-    private def asLandlordAddress = LandlordAddress(
-      confirmed.buildingNameNumber,
-      confirmed.street1,
-      confirmed.town,
-      confirmed.county,
-      confirmed.postcode
     )

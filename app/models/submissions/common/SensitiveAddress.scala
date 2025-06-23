@@ -24,7 +24,7 @@ import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 case class SensitiveAddress(
   buildingNameNumber: SensitiveString,
   street1: Option[SensitiveString],
-  street2: SensitiveString,
+  town: SensitiveString,
   county: Option[SensitiveString],
   postcode: SensitiveString
 ) extends Sensitive[Address] {
@@ -32,7 +32,7 @@ case class SensitiveAddress(
   override def decryptedValue: Address = Address(
     buildingNameNumber.decryptedValue,
     street1.map(_.decryptedValue),
-    street2.decryptedValue,
+    town.decryptedValue,
     county.map(_.decryptedValue),
     postcode.decryptedValue
   )
@@ -45,7 +45,7 @@ object SensitiveAddress {
   def apply(address: Address): SensitiveAddress = SensitiveAddress(
     SensitiveString(address.buildingNameNumber),
     address.street1.map(SensitiveString(_)),
-    SensitiveString(address.street2),
+    SensitiveString(address.town),
     address.county.map(SensitiveString(_)),
     SensitiveString(address.postcode)
   )

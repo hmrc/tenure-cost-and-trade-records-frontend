@@ -18,7 +18,8 @@ package controllers.aboutfranchisesorlettings
 
 import connectors.{Audit, MockAddressLookup}
 import models.Session
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, BusinessAddress, Concession6015IncomeRecord, FranchiseIncomeRecord}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, FranchiseIncomeRecord}
+import models.submissions.common.Address
 import models.submissions.common.AnswersYesNo.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -147,7 +148,7 @@ trait FranchiseTypeDetailsControllerBehaviours:
       verify(repository, once).saveOrUpdate(session)(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: Concession6015IncomeRecord =>
-          record.businessDetails.value.cateringAddress.value shouldBe BusinessAddress(
+          record.businessDetails.value.cateringAddress.value shouldBe Address(
             buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
             street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
             town = addressLookupConfirmedAddress.address.lines.get.last,
@@ -155,7 +156,7 @@ trait FranchiseTypeDetailsControllerBehaviours:
             postcode = addressLookupConfirmedAddress.address.postcode.get
           )
         case record: FranchiseIncomeRecord      =>
-          record.businessDetails.value.cateringAddress.value shouldBe BusinessAddress(
+          record.businessDetails.value.cateringAddress.value shouldBe Address(
             buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
             street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
             town = addressLookupConfirmedAddress.address.lines.get.last,

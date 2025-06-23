@@ -16,12 +16,13 @@
 
 package models.submissions.aboutfranchisesorlettings
 
+import models.submissions.common.Address
 import play.api.libs.json.{Format, Json}
 
 case class BusinessDetails(
   operatorName: String,
   typeOfBusiness: String,
-  cateringAddress: Option[BusinessAddress]
+  cateringAddress: Option[Address]
 )
 
 object BusinessDetails:

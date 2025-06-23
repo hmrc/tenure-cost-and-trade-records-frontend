@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutfranchisesorlettings
+package views
 
-import models.submissions.PrintableAddress
-import play.api.libs.json.{Json, OFormat}
+import play.api.mvc.Call
 
-case class LettingAddress(
-  buildingNameNumber: String,
-  street1: Option[String],
-  town: String,
-  county: Option[String],
-  postcode: String
-) extends PrintableAddress
+object CheckYourAnswersHelpers:
 
-object LettingAddress {
-  implicit val format: OFormat[LettingAddress] = Json.format
-}
+  extension (call: Call)
+    def asChangeLink(fragment: String): Call =
+      call.copy(
+        url = withFrom + s"&change=true;$fragment"
+      )
+
+    def withFromCheckYourAnswer(fragment: String): Call =
+      call.copy(
+        url = withFrom + s";$fragment"
+      )
+
+    private def withFrom: String =
+      // Append the "from" query string parameter with a "CYA" value
+      call.url + (if call.url.contains("?") then "&" else "?") + s"from=CYA"
