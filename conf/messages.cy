@@ -3803,6 +3803,7 @@ cya.concessionOrFranchise.operatorDetails = Manylion y gweithredwr
 checkYourAnswersAboutYourLeaseOrTenure.heading = Gwiriwch eich atebion – eich prydles neu eich cytundeb
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Eich landlord
+checkYourAnswersAboutYourLeaseOrTenure.landlordName = Landlord’s name
 checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Manylion y landlord
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord = Yn gysylltiedig â’r landlord?
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails = Perthynas â’r landlord

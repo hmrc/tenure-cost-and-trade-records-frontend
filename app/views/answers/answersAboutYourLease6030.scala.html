@@ -50,11 +50,17 @@
 @addedTradeServiceMsgKey = @{if (request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices).getOrElse(IndexedSeq.empty).length <= 1) {"checkYourAnswersAboutYourLeaseOrTenure.addedTradingService"} else {"checkYourAnswersAboutYourLeaseOrTenure.addedTradingServicePlural"}}
 @addedPaidServiceMsgKey =  @{if (request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid).getOrElse(IndexedSeq.empty).length <= 1) {"checkYourAnswersAboutYourLeaseOrTenure.addedPaidService"} else {"checkYourAnswersAboutYourLeaseOrTenure.addedPaidServicePlural"}}
 
+<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading")</h2>
 @govukSummaryList(SummaryList(rows =
+    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.landlordName",
+        _.aboutTheLandlord.flatMap(l => l.landlordFullName.map( add => s"<p class=\"govuk-body\">${l.landlordFullName.escapedHtml}")),
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
+        ("valueAsHtml", _ => None)
+    ) ++
     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.landlordDetails",
-                _.aboutTheLandlord.flatMap(l => l.landlordAddress.map( add => s"<p class=\"govuk-body\">${l.landlordFullName.escapedHtml}</p>${add.escapedHtml}")),
-                controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
-                ("valueAsHtml", _ => None)
+        _.aboutTheLandlord.flatMap(l => l.landlordAddress.map( add => s"<p class=\"govuk-body\">${add.escapedHtml}")),
+        controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
+        ("valueAsHtml", _ => None)
     ) ++
     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord",
                 _.connectedToLandlord.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.ydw") else messages("label.no.nac.ydw")),
