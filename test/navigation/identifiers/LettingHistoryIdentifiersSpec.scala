@@ -81,6 +81,27 @@ class LettingHistoryIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for check your answers page" in
       assert(CheckYourAnswersPageId.toString.equals("checkYourAnswers"))
-
+  }
+  "Letting history identifiers correctly convert strings" in {
+    "hasPermanentResidentsPage".asPageIdentifier shouldBe Some(HasPermanentResidentsPageId)
+    "residentDetailPage".asPageIdentifier        shouldBe Some(ResidentDetailPageId)
+    "residentRemovePage".asPageIdentifier        shouldBe Some(ResidentRemovePageId)
+    "residentListPage".asPageIdentifier          shouldBe Some(ResidentListPageId)
+    "maxNumberReachedPage".asPageIdentifier      shouldBe Some(MaxNumberReachedPageId)
+    "hasCompletedLettingsPage".asPageIdentifier  shouldBe Some(HasCompletedLettingsPageId)
+    "occupierDetailPage".asPageIdentifier        shouldBe Some(OccupierDetailPageId)
+    "rentalPeriodPage".asPageIdentifier          shouldBe Some(RentalPeriodPageId)
+    "occupierRemovePage".asPageIdentifier        shouldBe Some(OccupierRemovePageId)
+    "occupierListPage".asPageIdentifier          shouldBe Some(OccupierListPageId)
+    "howManyNightsPage".asPageIdentifier         shouldBe Some(HowManyNightsPageId)
+    "hasStoppedLettingPage".asPageIdentifier     shouldBe Some(HasStoppedLettingPageId)
+    "whenWasLastLetPage".asPageIdentifier        shouldBe Some(WhenWasLastLetPageId)
+    "isYearlyAvailablePage".asPageIdentifier     shouldBe Some(IsYearlyAvailablePageId)
+    "tradingSeasonLengthPage".asPageIdentifier   shouldBe Some(TradingSeasonLengthPageId)
+    "hasOnlineAdvertisingPage".asPageIdentifier  shouldBe Some(HasOnlineAdvertisingPageId)
+    "AdvertisingDetailPage".asPageIdentifier     shouldBe Some(AdvertisingDetailPageId)
+    "advertisingListPage".asPageIdentifier       shouldBe Some(AdvertisingListPageId)
+    "advertisingRemovePage".asPageIdentifier     shouldBe Some(AdvertisingRemovePageId)
+    "checkYourAnswers".asPageIdentifier          shouldBe Some(CheckYourAnswersPageId)
   }
 }
