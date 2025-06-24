@@ -33,11 +33,11 @@
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
-@commenceWithinThreeYears = @{request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name))}
+@commenceWithinThreeYears = @{request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears))}
 
-@agreedReviewedAlteredThreeYears = @{request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears.name))}
+@agreedReviewedAlteredThreeYears = @{request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears))}
 
-@rentUnderReviewNegotiated = @{request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated.name))}
+@rentUnderReviewNegotiated = @{request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated))}
 
 @sectionAnswers = @{SectionAnswersRowBuilder(request.sessionData.aboutLeaseOrAgreementPartOne)}
 
@@ -67,13 +67,13 @@
                 controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(), "connectedToLandlordDetails")
 ))
 
-@if(commenceWithinThreeYears.contains("no") && agreedReviewedAlteredThreeYears.contains("no") && rentUnderReviewNegotiated.contains("no")) {
+@if(commenceWithinThreeYears.contains(AnswerNo) && agreedReviewedAlteredThreeYears.contains(AnswerNo) && rentUnderReviewNegotiated.contains(AnswerNo)) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading")</h2>
 
         @govukSummaryList(SummaryList(rows =
             sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseOrAgreementDetails",
                 _.leaseOrAgreementYearsDetails
-                .map(l => (l.commenceWithinThreeYears.name, l.agreedReviewedAlteredThreeYears.name, l.rentUnderReviewNegotiated.name))
+                .map(l => (l.commenceWithinThreeYears, l.agreedReviewedAlteredThreeYears, l.rentUnderReviewNegotiated))
                 .map {
                     case (a, b, c) => Seq(messages(s"checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears.$a"),
                         messages(s"checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears.$b"),
@@ -85,7 +85,7 @@
             ) ++
                     sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.rentDueInNext12Months",
                         _.currentRentPayableWithin12Months.map(r => Seq(
-                            messages(s"label.${r.currentRentWithin12Months.name}"),
+                            messages(s"label.${r.currentRentWithin12Months}"),
                             r.rentActuallyAgreed.map(date => messages("checkYourAnswersAboutYourLeaseOrTenure.nextReviewOrExpiryDate", dateUtil.formatDayMonthAbbrYear(date))).getOrElse("")
                         ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                         controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show(), "",
@@ -99,7 +99,7 @@
         @govukSummaryList(SummaryList(rows =
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseOrAgreementDetails",
             _.leaseOrAgreementYearsDetails
-            .map(l => (l.commenceWithinThreeYears.name, l.agreedReviewedAlteredThreeYears.name, l.rentUnderReviewNegotiated.name))
+            .map(l => (l.commenceWithinThreeYears, l.agreedReviewedAlteredThreeYears, l.rentUnderReviewNegotiated))
             .map {
                 case (a, b, c) => Seq(messages(s"checkYourAnswersAboutYourLeaseOrTenure.commenceWithinThreeYears.$a"),
                     messages(s"checkYourAnswersAboutYourLeaseOrTenure.agreedReviewedAlteredThreeYears.$b"),

@@ -12,7 +12,7 @@ object CodeCoverageSettings extends AutoPlugin {
   override lazy val projectSettings: Seq[Setting[?]] = Seq(
     ScoverageKeys.coverageExcludedPackages := excludedPackages.mkString(","),
     ScoverageKeys.coverageExcludedFiles := excludedFiles.mkString(","),
-    ScoverageKeys.coverageMinimumStmtTotal := 84.5,
+    ScoverageKeys.coverageMinimumStmtTotal := 84.6,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true
   )

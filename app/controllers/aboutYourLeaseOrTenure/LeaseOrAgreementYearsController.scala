@@ -65,7 +65,7 @@ class LeaseOrAgreementYearsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LeaseOrAgreementYearsDetails](
       leaseOrAgreementYearsForm,
       formWithErrors =>
@@ -91,7 +91,7 @@ class LeaseOrAgreementYearsController @Inject() (
 
   private def contains3No(d: LeaseOrAgreementYearsDetails): Boolean =
     Seq(d.commenceWithinThreeYears, d.agreedReviewedAlteredThreeYears, d.rentUnderReviewNegotiated)
-      .forall(_.name == "no")
+      .forall(_ == AnswerNo)
 
   private def leaseOrAgreementDetailsInSession(implicit
     request: SessionRequest[AnyContent]

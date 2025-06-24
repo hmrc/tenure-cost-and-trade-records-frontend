@@ -23,7 +23,7 @@ import play.api.mvc.Call
 import models.ForType.*
 import models.Session
 import models.submissions.common.AnswersYesNo.*
-import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails, VacantPropertiesDetailsYes}
+import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails}
 import play.api.Logging
 
 import javax.inject.Inject
@@ -50,8 +50,8 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
 
   def isVacantPropertySubmission(session: Session): Boolean =
     session.stillConnectedDetails
-      .flatMap(_.vacantProperties)
-      .exists(_.vacantProperties == VacantPropertiesDetailsYes)
+      .flatMap(_.isPropertyVacant)
+      .contains(AnswerYes)
 
   def isNotConnectedPropertySubmission(session: Session): Boolean =
     session.stillConnectedDetails
@@ -85,9 +85,9 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     }
 
   private def isPropertyVacant: Session => Call = answers =>
-    answers.stillConnectedDetails.flatMap(_.vacantProperties.map(_.vacantProperties.name)) match {
-      case Some("yes") => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
-      case _           => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+    answers.stillConnectedDetails.flatMap(_.isPropertyVacant) match {
+      case Some(AnswerYes) => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
+      case _               => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
     }
 
   private def isAnyRentReceived: Session => Call                          = answers =>

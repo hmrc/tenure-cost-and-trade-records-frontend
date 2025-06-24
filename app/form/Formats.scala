@@ -17,13 +17,11 @@
 package form
 
 import models._
-import models.submissions.Form6010._
 import models.submissions.aboutYourLeaseOrTenure._
 import models.submissions.aboutfranchisesorlettings.{TypeOfIncome, TypeOfLetting}
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.common.{BuildingInsurance, CYAYesNo, InsideRepairs, OutsideRepairs}
-import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty, VacantPropertiesDetails}
-import models.submissions.notconnected.PastConnectionType
+import models.submissions.common.{BuildingInsurance, InsideRepairs, OutsideRepairs}
+import models.submissions.connectiontoproperty.{AddressConnectionType, ConnectionToProperty}
 import play.api.data.FormError
 import play.api.data.format.Formatter
 
@@ -46,40 +44,19 @@ object Formats:
       def unbind(key: String, value: T): Map[String, String] = Map(key -> value.name)
     }
 
-  given Formatter[CYAYesNo]              = namedEnumFormatter(CYAYesNo, Errors.booleanMissing)
   given Formatter[AddressConnectionType] = namedEnumFormatter(AddressConnectionType, Errors.isConnectedError)
   given Formatter[ConnectionToProperty]  = namedEnumFormatter(ConnectionToProperty, Errors.connectionToPropertyError)
 
-  // Not connected
-  given Formatter[PastConnectionType]      = namedEnumFormatter(PastConnectionType, Errors.isPastConnected)
   // About the property
   given Formatter[CurrentPropertyUsed]     = namedEnumFormatter(CurrentPropertyUsed, Errors.propertyCurrentlyUsed)
-  given Formatter[VacantPropertiesDetails] = namedEnumFormatter(VacantPropertiesDetails, Errors.vacantProperties)
   given Formatter[MethodToFixCurrentRents] = namedEnumFormatter(MethodToFixCurrentRents, Errors.methodToFixCurrentRents)
   given Formatter[TiedForGoodsInformation] = namedEnumFormatter(TiedForGoodsInformation, Errors.tiedForGoodsDetails)
   given Formatter[RenewablesPlantDetails]  = namedEnumFormatter(RenewablesPlantDetails, Errors.renewablesPlant)
   given Formatter[OutsideRepairs]          = namedEnumFormatter(OutsideRepairs, Errors.outsideRepairs)
   given Formatter[InsideRepairs]           = namedEnumFormatter(InsideRepairs, Errors.insideRepairs)
   given Formatter[BuildingInsurance]       = namedEnumFormatter(BuildingInsurance, Errors.buildingInsurance)
-  given Formatter[IncludeLicensees]        = namedEnumFormatter(IncludeLicensee, Errors.booleanMissing)
-  given Formatter[IncludeOtherProperties]  = namedEnumFormatter(IncludeOtherProperty, Errors.booleanMissing)
-  given Formatter[OnlyPartOfProperties]    = namedEnumFormatter(OnlyPartOfProperty, Errors.booleanMissing)
-  given Formatter[OnlyToLands]             = namedEnumFormatter(OnlyToLand, Errors.booleanMissing)
-  given Formatter[ShellUnits]              = namedEnumFormatter(ShellUnit, Errors.booleanMissing)
   given Formatter[CurrentRentFixed]        = namedEnumFormatter(CurrentRentFixed, Errors.howIsCurrentRentFixed)
-  given Formatter[TenancyThreeYears]       = namedEnumFormatter(TenancyThreeYears, Errors.tenancy3Years)
-  given Formatter[RentThreeYears]          = namedEnumFormatter(RentThreeYears, Errors.rent3Years)
-  given Formatter[UnderReview]             = namedEnumFormatter(UnderReview, Errors.underReview)
   given Formatter[CurrentRentBasedOn]      = namedEnumFormatter(CurrentRentBasedOn, Errors.currentRentBasedOn)
-
-  given Formatter[BuildingOperationHaveAWebsite] =
-    namedEnumFormatter(BuildingOperationHaveAWebsite, Errors.buildingOperatingHaveAWebsite)
-
-  given Formatter[CurrentRentWithin12Months] =
-    namedEnumFormatter(CurrentRentWithin12Months, Errors.currentRentPayableWithin12Months)
-
-  given Formatter[IncludedInYourRentInformation] =
-    namedEnumFormatter(IncludedInYourRentInformation, Errors.currentRentBasedOn)
 
   // About Franchises or Lettings
   given Formatter[TypeOfLetting] = namedEnumFormatter(TypeOfLetting, Errors.typeOfLetting)

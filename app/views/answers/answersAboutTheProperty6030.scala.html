@@ -43,8 +43,8 @@
             sectionAnswers.optionalRow(
                 "checkYourAnswersAboutTheProperty.hasWebsite",
                 _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
-                    """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
-                            + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
+                    """<p class="govuk-body">""" + messages(s"label.$hasWebsite") + "</p>"
+                            + sectionAnswers.answers.filter(_ => hasWebsite == AnswerYes).flatMap(
                         _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                 controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
                 "buildingOperatingHaveAWebsite",

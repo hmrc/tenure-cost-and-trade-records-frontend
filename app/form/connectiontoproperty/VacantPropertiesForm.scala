@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,16 @@
 
 package form.connectiontoproperty
 
-import form.MappingSupport.vacantPropertiesType
-import models.submissions.connectiontoproperty.VacantProperties
+import form.Errors
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object VacantPropertiesForm {
-  val theForm = Form(
-    mapping(
-      "vacantProperties" -> vacantPropertiesType
-    )(VacantProperties.apply)(o => Some(o.vacantProperties))
+object VacantPropertiesForm:
+
+  val theForm: Form[AnswersYesNo] = Form(
+    single(
+      "vacantProperties" -> createYesNoType(Errors.vacantProperties)
+    )
   )
-}

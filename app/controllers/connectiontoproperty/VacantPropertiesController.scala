@@ -20,8 +20,9 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertiesForm.theForm
+import models.submissions.common.AnswersYesNo
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYesChangeAddress, VacantProperties}
+import models.submissions.connectiontoproperty.AddressConnectionTypeYesChangeAddress
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.VacantPropertiesPageId
 import play.api.Logging
@@ -53,8 +54,8 @@ class VacantPropertiesController @Inject() (
     val filledForm =
       for
         stillConnectedDetails <- request.sessionData.stillConnectedDetails
-        vacantProperties      <- stillConnectedDetails.vacantProperties
-      yield theForm.fill(vacantProperties)
+        isPropertyVacant      <- stillConnectedDetails.isPropertyVacant
+      yield theForm.fill(isPropertyVacant)
 
     Ok(
       theView(
@@ -67,7 +68,7 @@ class VacantPropertiesController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[VacantProperties](
+    continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors =>
         BadRequest(
@@ -79,7 +80,7 @@ class VacantPropertiesController @Inject() (
           )
         ),
       data => {
-        val updatedData = updateStillConnectedDetails(_.copy(vacantProperties = Some(data)))
+        val updatedData = updateStillConnectedDetails(_.copy(isPropertyVacant = Some(data)))
         repo
           .saveOrUpdate(updatedData)
           .map(_ =>
@@ -88,8 +89,8 @@ class VacantPropertiesController @Inject() (
               .filter(_ =>
                 navigator.from == "CYA" &&
                   request.sessionData.stillConnectedDetails
-                    .flatMap(_.vacantProperties)
-                    .exists(_.vacantProperties == data.vacantProperties)
+                    .flatMap(_.isPropertyVacant)
+                    .contains(data)
               )
               .getOrElse(navigator.nextWithoutRedirectToCYA(VacantPropertiesPageId, updatedData).apply(updatedData))
           )

@@ -53,7 +53,7 @@
 @if(forType != FOR6076) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.vacancyStatus.heading")</h2>
     @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row("checkYourAnswersConnectionToProperty.isPropertyVacant", _.vacantProperties.map(_.vacantProperties).map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties")
+        sectionAnswers.row("checkYourAnswersConnectionToProperty.isPropertyVacant", _.isPropertyVacant.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties")
     ))
 }
 

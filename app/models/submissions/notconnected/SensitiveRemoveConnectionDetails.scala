@@ -17,20 +17,20 @@
 package models.submissions.notconnected
 
 import crypto.MongoCrypto
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveRemoveConnectionDetails(
   removeConnectionDetails: Option[SensitiveRemoveConnectionsDetails] = None,
-  pastConnectionType: Option[PastConnectionType] = None
-) extends Sensitive[RemoveConnectionDetails] {
+  pastConnectionType: Option[AnswersYesNo] = None
+) extends Sensitive[RemoveConnectionDetails]:
   override def decryptedValue: RemoveConnectionDetails = RemoveConnectionDetails(
     removeConnectionDetails.map(_.decryptedValue),
     pastConnectionType
   )
-}
 
-object SensitiveRemoveConnectionDetails {
+object SensitiveRemoveConnectionDetails:
 
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRemoveConnectionDetails] = Json.format
 
@@ -39,4 +39,3 @@ object SensitiveRemoveConnectionDetails {
       removeConnectionDetails.removeConnectionDetails.map(SensitiveRemoveConnectionsDetails(_)),
       removeConnectionDetails.pastConnectionType
     )
-}

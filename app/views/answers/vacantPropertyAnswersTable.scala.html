@@ -69,7 +69,7 @@
 }
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading")</h2>
 @govukSummaryList(SummaryList(rows =
-    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isPropertyVacant", _.vacantProperties.map(_.vacantProperties.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties") ++
+    sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isPropertyVacant", _.isPropertyVacant.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties") ++
             sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.vacantDate", _.vacantPropertyStartDate.map(_.datePropertyBecomeVacant).map(v => dateUtil.formatDayMonthAbbrYear(v)), controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show(), "startDateOfVacantProperty.day")
 ))
 

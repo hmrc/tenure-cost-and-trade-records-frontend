@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import form.Feedback
 import models.Session
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.i18n.I18nSupport
@@ -101,13 +102,12 @@ class FeedbackController @Inject() (
         feedbackForm => {
           val addressConnectionType  =
             request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType.flatMap(_.name))
-          val vacantPropertySelected =
-            request.sessionData.stillConnectedDetails.flatMap(_.vacantProperties.flatMap(_.vacantProperties.name))
+          val vacantPropertySelected = request.sessionData.stillConnectedDetails.flatMap(_.isPropertyVacant)
 
           if (addressConnectionType.contains("no")) {
             sendFeedback("NotConnectedFeedback", feedbackForm, request.sessionData)
             Future.successful(Redirect(routes.FeedbackController.feedbackThx))
-          } else if (vacantPropertySelected.contains("yes")) {
+          } else if (vacantPropertySelected.contains(AnswerYes)) {
             sendFeedback("VacantPropertyFeedback", feedbackForm, request.sessionData)
             Future.successful(Redirect(routes.FeedbackController.feedbackThx))
           } else {
@@ -150,7 +150,7 @@ class FeedbackController @Inject() (
 }
 
 object FeedbackFormMapper {
-  val feedbackForm = Form(
+  val feedbackForm: Form[Feedback] = Form(
     mapping(
       "feedback-rating"   -> optional(text).verifying("feedback.rating.required", _.isDefined),
       "feedback-comments" -> optional(text).verifying("feedback.comments.maxLength", it => it.forall(_.length <= 2000))

@@ -17,7 +17,8 @@
 package models.submissions.notconnected
 
 import models.submissions.MongoCryptoSupport
-import models.submissions.common.ContactDetails
+import models.submissions.common.AnswersYesNo.*
+import models.submissions.common.{AnswersYesNo, ContactDetails}
 import models.submissions.notconnected.RemoveConnectionsDetails.*
 import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
@@ -41,8 +42,8 @@ class SensitiveRemoveConnectionDetailsSpec extends AnyFlatSpec with Matchers wit
     removeConnectionsDetails.removeConnectionDetails.phone    should not be clearEnvelope.removeConnectionDetails.get.removeConnectionDetails.phone
     removeConnectionsDetails.removeConnectionAdditionalInfo shouldBe clearEnvelope.removeConnectionDetails.get.removeConnectionAdditionalInfo
 
-    val pastConnectionType = (jsValue \ "pastConnectionType").as[PastConnectionType]
-    pastConnectionType.name shouldBe clearEnvelope.pastConnectionType.get.name
+    val pastConnectionType = (jsValue \ "pastConnectionType").as[AnswersYesNo]
+    pastConnectionType shouldBe clearEnvelope.pastConnectionType.value
   }
 
   it should "deserialize from encrypted JSON" in {
@@ -63,5 +64,5 @@ class SensitiveRemoveConnectionDetailsSpec extends AnyFlatSpec with Matchers wit
         removeConnectionAdditionalInfo = Some("additional information")
       )
     ),
-    pastConnectionType = PastConnectionType.fromName("yes")
+    pastConnectionType = Some(AnswerYes)
   )

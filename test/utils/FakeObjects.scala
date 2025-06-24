@@ -129,19 +129,19 @@ trait FakeObjects {
 
   val prefilledStillConnectedVacantYes: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
-    vacantProperties = Some(VacantProperties(VacantPropertiesDetailsYes))
+    isPropertyVacant = Some(AnswerYes)
   )
 
   val prefilledStillConnectedVacantNo: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
-    vacantProperties = Some(VacantProperties(VacantPropertiesDetailsNo))
+    isPropertyVacant = Some(AnswerNo)
   )
 
   val prefilledStillConnectedDetailsEdit: StillConnectedDetails                      = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
     Some(prefilledEditTheAddress),
-    Some(VacantProperties(VacantPropertiesDetailsNo))
+    Some(AnswerNo)
   )
   val prefilledStillConnectedDetailsNoneOwnProperty: StillConnectedDetails           = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
@@ -154,7 +154,7 @@ trait FakeObjects {
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierAgent),
     Some(EditTheAddress(EditAddress("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
-    Some(VacantProperties(VacantPropertiesDetailsNo)),
+    Some(AnswerNo),
     Some(TradingNameOperatingFromProperty("ABC LTD")),
     Some(AnswerNo),
     Some(AnswerNo),
@@ -185,7 +185,7 @@ trait FakeObjects {
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
     Some(EditTheAddress(EditAddress("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
-    Some(VacantProperties(VacantPropertiesDetailsYes)),
+    Some(AnswerYes),
     Some(TradingNameOperatingFromProperty("ABC LTD")),
     Some(AnswerYes),
     Some(AnswerYes),
@@ -210,7 +210,7 @@ trait FakeObjects {
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierAgent),
     Some(EditTheAddress(EditAddress("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
-    Some(VacantProperties(VacantPropertiesDetailsNo)),
+    Some(AnswerNo),
     Some(TradingNameOperatingFromProperty("ABC LTD")),
     Some(AnswerNo),
     Some(AnswerNo),
@@ -283,7 +283,7 @@ trait FakeObjects {
         Some("Additional Info")
       )
     ),
-    Some(PastConnectionTypeYes)
+    Some(AnswerYes)
   )
   val prefilledNotConnectedNone: RemoveConnectionDetails = RemoveConnectionDetails(
     Some(RemoveConnectionsDetails(prefilledFakeName, ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail), None)),
@@ -301,7 +301,7 @@ trait FakeObjects {
     Some(ContactDetailsQuestion(AnswerYes)),
     Some(prefilledAlternativeAddress),
     Some(PropertyDetails(CurrentPropertyHotel, None)),
-    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerYes),
     Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
     Some(AnswerYes),
@@ -325,7 +325,7 @@ trait FakeObjects {
     Some(ContactDetailsQuestion(AnswerYes)),
     Some(prefilledAlternativeAddress),
     Some(PropertyDetails(CurrentPropertyHotel, None)),
-    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerYes),
     Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
     Some(AnswerYes),
@@ -348,7 +348,7 @@ trait FakeObjects {
     Some(ContactDetailsQuestion(AnswerYes)),
     Some(prefilledAlternativeAddress),
     None,
-    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerYes),
     Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
     Some(AnswerYes),
@@ -368,7 +368,7 @@ trait FakeObjects {
     Some(ContactDetailsQuestion(AnswerNo)),
     None,
     None,
-    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerNo),
     None,
     Some(AnswerNo),
@@ -387,7 +387,7 @@ trait FakeObjects {
     Some(ContactDetailsQuestion(AnswerNo)),
     None,
     Some(PropertyDetails(CurrentPropertyHotel, None)),
-    Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteYes, Some("webAddress"))),
+    Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerNo),
     None,
     Some(AnswerNo),
@@ -1149,7 +1149,7 @@ trait FakeObjects {
   val prefilledBigDecimal                        = BigDecimal(9999999)
   val prefilledAnnualRent                        = prefilledBigDecimal
   val prefilledCurrentRentPayableWithin12Months  =
-    CurrentRentPayableWithin12Months(CurrentRentWithin12MonthsYes, Some(prefilledDateInput))
+    CurrentRentPayableWithin12Months(AnswerYes, Some(prefilledDateInput))
   val prefilledPropertyUseLeasebackArrangement   =
     PropertyUseLeasebackArrangement(AnswerYes)
   val prefilledPropertyUseLeasebackArrangementNo =
@@ -1172,23 +1172,18 @@ trait FakeObjects {
       prefilledNoReferenceContactAddress
     )
 
-  val prefilledVacantPropertiesDetails =
-    VacantProperties(
-      VacantPropertiesDetailsYes
-    )
-
   val prefilledConnectedToLandlordDetails     =
     ConnectedToLandlordInformationDetails(
       "This is some test information"
     )
   val prefilledLeaseOrAgreementYearsDetails   =
     LeaseOrAgreementYearsDetails(
-      TenancyThreeYearsYes,
-      RentThreeYearsYes,
-      UnderReviewYes
+      AnswerYes,
+      AnswerYes,
+      AnswerYes
     )
   val prefilledLeaseOrAgreementYearsDetailsNo =
-    LeaseOrAgreementYearsDetails(TenancyThreeYearsNo, RentThreeYearsNo, UnderReviewNo)
+    LeaseOrAgreementYearsDetails(AnswerNo, AnswerNo, AnswerNo)
   val prefilledBaseSession                    =
     Session(
       "99996010004",
@@ -1278,7 +1273,7 @@ trait FakeObjects {
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
     Some(prefilledEditTheAddress),
-    Some(prefilledVacantPropertiesDetails),
+    Some(AnswerYes),
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),
     Some(AnswerYes),
@@ -1290,7 +1285,7 @@ trait FakeObjects {
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierTrustee),
     Some(prefilledEditTheAddress),
-    Some(prefilledVacantPropertiesDetails),
+    Some(AnswerYes),
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),
     Some(AnswerYes),
@@ -1301,7 +1296,7 @@ trait FakeObjects {
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
     Some(prefilledEditTheAddress),
-    Some(prefilledVacantPropertiesDetails),
+    Some(AnswerYes),
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),
     Some(AnswerYes),

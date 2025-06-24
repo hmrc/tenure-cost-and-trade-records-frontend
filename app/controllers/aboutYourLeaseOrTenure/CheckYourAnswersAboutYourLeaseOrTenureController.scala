@@ -67,7 +67,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CheckYourAnswersAboutYourLeaseOrTenure](
       checkYourAnswersAboutYourLeaseOrTenureForm,
       formWithErrors =>
@@ -109,18 +109,18 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
       case _               =>
         (
           answers.aboutLeaseOrAgreementPartOne.flatMap(
-            _.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name)
+            _.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears)
           ),
           answers.aboutLeaseOrAgreementPartOne.flatMap(
-            _.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears.name)
+            _.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears)
           ),
           answers.aboutLeaseOrAgreementPartOne.flatMap(
-            _.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated.name)
+            _.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated)
           )
         ) match {
-          case (Some("no"), Some("no"), Some("no")) =>
+          case (Some(AnswerNo), Some(AnswerNo), Some(AnswerNo)) =>
             controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show().url
-          case _                                    =>
+          case _                                                =>
             answers.forType match {
               case FOR6010 =>
                 controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url

@@ -18,7 +18,8 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CurrentRentPayableWithin12MonthsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{CurrentRentPayableWithin12Months, CurrentRentWithin12MonthsNo, CurrentRentWithin12MonthsYes}
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentPayableWithin12Months
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -57,7 +58,7 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
         doc,
         "currentRentPayableWithin12Months",
         "rentPayable",
-        CurrentRentWithin12MonthsYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -69,7 +70,7 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
         doc,
         "currentRentPayableWithin12Months-2",
         "rentPayable",
-        CurrentRentWithin12MonthsNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

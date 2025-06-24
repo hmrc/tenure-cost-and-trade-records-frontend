@@ -17,22 +17,21 @@
 package form.aboutYourLeaseOrTenure
 
 import form.DateMappings.requiredDateMapping
-import form.MappingSupport.currentRentPayableWithin12MonthsType
+import form.Errors
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentPayableWithin12Months
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 import play.api.i18n.Messages
 
-object CurrentRentPayableWithin12MonthsForm {
+object CurrentRentPayableWithin12MonthsForm:
 
   def currentRentPayableWithin12MonthsForm(using messages: Messages): Form[CurrentRentPayableWithin12Months] =
     Form(
       mapping(
-        "rentPayable" -> currentRentPayableWithin12MonthsType,
+        "rentPayable" -> createYesNoType(Errors.currentRentPayableWithin12Months),
         "dateReview"  -> optional(
           requiredDateMapping("dateReview", allowFutureDates = true)
         )
       )(CurrentRentPayableWithin12Months.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
-
-}

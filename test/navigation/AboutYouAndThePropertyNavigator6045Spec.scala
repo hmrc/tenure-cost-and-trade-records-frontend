@@ -75,9 +75,7 @@ class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
       "navigate to CheckYourAnswersAboutThePropertyController after completing WebsiteForProperty" in {
         val answers = baseFilled6045Session.copy(
           aboutYouAndTheProperty = Some(
-            AboutYouAndTheProperty(websiteForPropertyDetails =
-              Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteNo, Some("test")))
-            )
+            AboutYouAndTheProperty(websiteForPropertyDetails = Some(WebsiteForPropertyDetails(AnswerNo, Some("test"))))
           )
         )
         navigator

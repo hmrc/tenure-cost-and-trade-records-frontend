@@ -122,15 +122,15 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def leaseOrAgreementDetailsRouting: Session => Call = answers =>
     (
-      answers.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name)),
+      answers.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears)),
       answers.aboutLeaseOrAgreementPartOne.flatMap(
-        _.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears.name)
+        _.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears)
       ),
-      answers.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated.name))
+      answers.aboutLeaseOrAgreementPartOne.flatMap(_.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated))
     ) match {
-      case (Some("no"), Some("no"), Some("no")) =>
+      case (Some(AnswerNo), Some(AnswerNo), Some(AnswerNo)) =>
         controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
-      case _                                    => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
+      case _                                                => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
     }
 
   private def currentRentFirstPaidRouting: Session => Call = answers =>
