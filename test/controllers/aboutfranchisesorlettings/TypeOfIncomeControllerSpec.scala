@@ -20,6 +20,7 @@ import actions.SessionRequest
 import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.*
+import models.submissions.aboutfranchisesorlettings.TypeOfIncome.*
 import play.api.http.Status.*
 import play.api.libs.json.{JsError, Json}
 import play.api.test.FakeRequest

@@ -38,7 +38,7 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.aboutProperty.renewable",
-        _.renewablesPlant.map(x => x.renewablesPlant.name.capitalize),
+        _.renewablesPlant.map(x => x.renewablesPlant.toString.capitalize),
         controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
         "renewablesPlant",
         ("valueAsHtml", _ => None))

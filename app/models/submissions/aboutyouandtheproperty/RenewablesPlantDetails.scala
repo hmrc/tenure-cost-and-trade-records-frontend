@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,25 +16,18 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
 
-sealed trait RenewablesPlantDetails extends NamedEnum {
-  override def key: String = "renewablesPlantDetails"
-}
-object Intermittent extends RenewablesPlantDetails {
-  override def name: String = "intermittent"
-}
-object BaseLoad extends RenewablesPlantDetails {
-  override def name: String = "baseload"
-}
+/**
+  * @author Yuriy Tumakha
+  */
+enum RenewablesPlantDetails(renewablesPlantDetails: String):
+  override def toString: String = renewablesPlantDetails
 
-object RenewablesPlantDetails extends NamedEnumSupport[RenewablesPlantDetails] {
-  implicit val format: Format[RenewablesPlantDetails] = EnumFormat(RenewablesPlantDetails)
+  case Intermittent extends RenewablesPlantDetails("intermittent")
+  case Baseload extends RenewablesPlantDetails("baseload")
+end RenewablesPlantDetails
 
-  val all: Seq[RenewablesPlantDetails] = List(
-    Intermittent,
-    BaseLoad
-  )
-  val key: String                      = all.head.key
-}
+object RenewablesPlantDetails:
+  implicit val format: Format[RenewablesPlantDetails] = Scala3EnumJsonFormat.format

@@ -19,6 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure._
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -59,7 +60,7 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
         doc,
         "currentRentBasedOn",
         "currentRentBasedOn",
-        CurrentRentBasedOnPercentageOpenMarket.name,
+        CurrentRentBasedOnPercentageOpenMarket.toString,
         false
       )
       assertContainsText(doc, messages("label.percentageOpenMarket"))
@@ -71,7 +72,7 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
         doc,
         "currentRentBasedOn-2",
         "currentRentBasedOn",
-        CurrentRentBasedOnFixedAmount.name,
+        CurrentRentBasedOnFixedAmount.toString,
         false
       )
       assertContainsText(doc, messages("label.fixed"))
@@ -83,7 +84,7 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
         doc,
         "currentRentBasedOn-3",
         "currentRentBasedOn",
-        CurrentRentBasedOnPercentageTurnover.name,
+        CurrentRentBasedOnPercentageTurnover.toString,
         false
       )
       assertContainsText(doc, messages("label.percentageTurnover"))
@@ -95,7 +96,7 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
         doc,
         "currentRentBasedOn-4",
         "currentRentBasedOn",
-        CurrentRentBasedOnIndexedToRPI.name,
+        CurrentRentBasedOnIndexedToRPI.toString,
         false
       )
       assertContainsText(doc, messages("label.indexed"))
@@ -107,7 +108,7 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
         doc,
         "currentRentBasedOn-5",
         "currentRentBasedOn",
-        CurrentRentBasedOnSteppedRent.name,
+        CurrentRentBasedOnSteppedRent.toString,
         false
       )
       assertContainsText(doc, messages("label.stepped"))
@@ -119,7 +120,7 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
         doc,
         "currentRentBasedOn-6",
         "currentRentBasedOn",
-        CurrentRentBasedOnOther.name,
+        CurrentRentBasedOnOther.toString,
         false
       )
       assertContainsText(doc, messages("label.other"))

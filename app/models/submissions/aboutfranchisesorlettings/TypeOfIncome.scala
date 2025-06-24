@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,38 +16,20 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
 
-sealed trait TypeOfIncome extends NamedEnum {
-  override def key: String = "typeOfIncome"
-}
+/**
+  * @author Yuriy Tumakha
+  */
+enum TypeOfIncome(typeOfIncome: String):
+  override def toString: String = typeOfIncome
 
-object TypeFranchise extends TypeOfIncome {
-  override def name: String = "typeFranchise"
-}
+  case TypeFranchise extends TypeOfIncome("typeFranchise")
+  case TypeConcession6015 extends TypeOfIncome("typeConcession6015")
+  case TypeConcession extends TypeOfIncome("typeConcession")
+  case TypeLetting extends TypeOfIncome("typeLetting")
+end TypeOfIncome
 
-object TypeConcession6015 extends TypeOfIncome {
-  override def name: String = "typeConcession6015"
-}
-
-object TypeConcession extends TypeOfIncome {
-  override def name: String = "typeConcession"
-}
-
-object TypeLetting extends TypeOfIncome {
-  override def name: String = "typeLetting"
-}
-
-object TypeOfIncome extends NamedEnumSupport[TypeOfIncome] {
-  implicit val format: Format[TypeOfIncome] = EnumFormat(TypeOfIncome)
-
-  override def all: Seq[TypeOfIncome] = List(
-    TypeFranchise,
-    TypeConcession6015,
-    TypeConcession,
-    TypeLetting
-  )
-
-  val key: String = all.head.key
-}
+object TypeOfIncome:
+  implicit val format: Format[TypeOfIncome] = Scala3EnumJsonFormat.format

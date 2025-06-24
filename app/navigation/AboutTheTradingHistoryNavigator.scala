@@ -21,6 +21,7 @@ import controllers.aboutthetradinghistory.routes
 import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
+import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
 import navigation.identifiers.*
 import play.api.Logging
 import play.api.mvc.{AnyContent, Call, Request}
@@ -193,17 +194,17 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def intermittentRouting: Session => Call = answers =>
-    val intermittent = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+    val intermittent = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant))
     intermittent match {
-      case Some("intermittent") => routes.CostOfSales6076IntermittentController.show()
-      case _                    => routes.CostOfSales6076Controller.show()
+      case Some(Intermittent) => routes.CostOfSales6076IntermittentController.show()
+      case _                  => routes.CostOfSales6076Controller.show()
     }
 
   private def grossReceiptsRouting: Session => Call = answers =>
-    val intermittent = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+    val intermittent = answers.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant))
     intermittent match {
-      case Some("intermittent") => routes.OtherIncomeController.show()
-      case _                    => routes.GrossReceiptsForBaseLoadController.show()
+      case Some(Intermittent) => routes.OtherIncomeController.show()
+      case _                  => routes.GrossReceiptsForBaseLoadController.show()
     }
 
   private def whatYouWillNeedRouting: Session => Call =

@@ -20,7 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.IncomeRecordRentForm.incomeRecordRentForm as theForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, FranchiseIncomeRecord, LettingIncomeRecord, PropertyRentDetails, TypeLetting}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, FranchiseIncomeRecord, LettingIncomeRecord, PropertyRentDetails}
+import models.submissions.aboutfranchisesorlettings.TypeOfIncome.TypeLetting
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentalIncomeRentId
 import play.api.Logging

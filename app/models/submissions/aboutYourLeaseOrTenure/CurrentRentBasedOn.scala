@@ -22,14 +22,16 @@ import play.api.libs.json.Format
 /**
   * @author Yuriy Tumakha
   */
-enum IncludedInYourRentInformation(includedInRent: String):
-  override def toString: String = includedInRent
+enum CurrentRentBasedOn(whatIsRentBasedOn: String):
+  override def toString: String = whatIsRentBasedOn
 
-  case IncludedInYourRentInformationVat extends IncludedInYourRentInformation("vat")
-  case IncludedInYourRentInformationNonDomesticRates extends IncludedInYourRentInformation("nondomesticRates")
-  case IncludedInYourRentInformationWaterCharges extends IncludedInYourRentInformation("waterCharges")
-  case IncludedInYourRentInformationNone extends IncludedInYourRentInformation("none")
-end IncludedInYourRentInformation
+  case CurrentRentBasedOnPercentageOpenMarket extends CurrentRentBasedOn("percentageOpenMarket")
+  case CurrentRentBasedOnFixedAmount extends CurrentRentBasedOn("fixed")
+  case CurrentRentBasedOnPercentageTurnover extends CurrentRentBasedOn("percentageTurnover")
+  case CurrentRentBasedOnIndexedToRPI extends CurrentRentBasedOn("indexed")
+  case CurrentRentBasedOnSteppedRent extends CurrentRentBasedOn("stepped")
+  case CurrentRentBasedOnOther extends CurrentRentBasedOn("other")
+end CurrentRentBasedOn
 
-object IncludedInYourRentInformation:
-  implicit val format: Format[IncludedInYourRentInformation] = Scala3EnumJsonFormat.format
+object CurrentRentBasedOn:
+  implicit val format: Format[CurrentRentBasedOn] = Scala3EnumJsonFormat.format

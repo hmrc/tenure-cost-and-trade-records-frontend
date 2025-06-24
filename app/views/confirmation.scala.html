@@ -16,6 +16,7 @@
 
 @import actions.SessionRequest
 @import models.submissions.common.AnswersYesNo.*
+@import models.submissions.connectiontoproperty.AddressConnectionType.*
 @import views.html.answers.answersAllSectionsTable
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
@@ -40,12 +41,12 @@
 @(theForm: Form[Feedback])(implicit request: SessionRequest[?], messages: Messages)
 
 @needsBusinessRateBill = @{
-    request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType.flatMap(_.name))
+    request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType).contains(AddressConnectionTypeNo)
 }
 
-    @isVacant = @{
-        request.sessionData.stillConnectedDetails.flatMap(_.isPropertyVacant)
-    }
+@isVacant = @{
+    request.sessionData.stillConnectedDetails.flatMap(_.isPropertyVacant).contains(AnswerYes)
+}
 
 @layout(
     pageHeading = messages("confirmation.heading"),
@@ -73,7 +74,7 @@
         @answersAllSections()
     </div>
 
-    @if(isVacant.contains(AnswerYes) || needsBusinessRateBill.contains("no")) {
+    @if(isVacant || needsBusinessRateBill) {
         <div class="govuk-!-display-none-print">
             <h2 class="govuk-heading-m">@messages("confirmation.whatNext")</h2>
             <p class="govuk-body">@messages("confirmation.list.1")</p>

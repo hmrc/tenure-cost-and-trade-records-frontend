@@ -27,12 +27,23 @@ import models.submissions.accommodation.*
 import models.submissions.additionalinformation.*
 import models.submissions.common.*
 import models.submissions.common.AnswersYesNo.*
+import models.submissions.common.ResponsibilityParty.InsideRepairs.*
+import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
+import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import models.submissions.connectiontoproperty.*
+import models.submissions.connectiontoproperty.AddressConnectionType.*
+import models.submissions.connectiontoproperty.ConnectionToProperty.*
 import models.submissions.downloadFORTypeForm.*
 import models.submissions.ReferenceNumber
+import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
+import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
+import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
 import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import models.{Session, SubmissionDraft}
 
 import java.time.temporal.ChronoUnit.MILLIS
@@ -339,7 +350,7 @@ trait FakeObjects {
     checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("Yes")),
     charityQuestion = Some(AnswerYes),
     tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
-    renewablesPlant = Some(RenewablesPlant(BaseLoad)),
+    renewablesPlant = Some(RenewablesPlant(Baseload)),
     threeYearsConstructed = Some(AnswerYes),
     costsBreakdown = Some("breakdown")
   )
@@ -1457,7 +1468,7 @@ trait FakeObjects {
     rentPayableVaryOnQuantityOfBeersInformationDetails =
       Some(RentPayableVaryOnQuantityOfBeersInformationDetails("Test Content")),
     howIsCurrentRentFixed = Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, prefilledDateInput)),
-    methodToFixCurrentRentDetails = Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentsAgreement)),
+    methodToFixCurrentRentDetails = Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentAgreement)),
     intervalsOfRentReview = Some(IntervalsOfRentReview(Some("test"), Some(prefilledDateInput))),
     canRentBeReducedOnReviewDetails = Some(CanRentBeReducedOnReviewDetails(AnswerYes)),
     incentivesPaymentsConditionsDetails = Some(IncentivesPaymentsConditionsDetails(AnswerYes)),

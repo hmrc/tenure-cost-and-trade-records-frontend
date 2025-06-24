@@ -24,7 +24,8 @@ import form.connectiontoproperty.TradingNameOperatingFromProperty6048Form.tradin
 import models.ForType
 import models.ForType.*
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress, TradingNameOperatingFromProperty}
+import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
+import models.submissions.connectiontoproperty.AddressConnectionType.*
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.TradingNameOperatingFromPropertyPageId
 import play.api.Logging

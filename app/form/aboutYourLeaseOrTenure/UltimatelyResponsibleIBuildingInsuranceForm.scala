@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,20 @@ package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.buildingInsuranceType
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsurance
-import models.submissions.common.BuildingInsuranceBoth
+import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
-object UltimatelyResponsibleIBuildingInsuranceForm {
+object UltimatelyResponsibleIBuildingInsuranceForm:
 
-  val ultimatelyResponsibleBuildingInsuranceForm = Form(
+  val ultimatelyResponsibleBuildingInsuranceForm: Form[UltimatelyResponsibleBuildingInsurance] = Form(
     mapping(
       "buildingInsurance"        -> buildingInsuranceType,
       "sharedResponsibilitiesBI" -> mandatoryIfEqual(
         "buildingInsurance",
-        BuildingInsuranceBoth.name,
+        BuildingInsuranceBoth.toString,
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.sharedResponsibilitiesBI.required"),
           maxLength(500, "error.sharedResponsibilitiesBI.maxLength")
@@ -39,5 +39,3 @@ object UltimatelyResponsibleIBuildingInsuranceForm {
       )
     )(UltimatelyResponsibleBuildingInsurance.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-
-}

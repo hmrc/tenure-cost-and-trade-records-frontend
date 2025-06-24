@@ -118,7 +118,7 @@
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row(
            "checkYourAnswersAboutTheProperty.propertyUsage",
-           _.propertyDetails.map(usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed.name}")}"
+           _.propertyDetails.map(usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed}")}"
                + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField.map(_.escapedHtml))).fold("")(v => s"<p class=\"govuk-body\">$v")
                ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
            controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
@@ -172,7 +172,7 @@
                     controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show(), "tiedForGoods") ++
                 sectionAnswers.conditionRow(_.tiedForGoods.contains(AnswerYes),
                     "checkYourAnswersAboutTheProperty.tiedForGoodsDetails",
-                    _.tiedForGoodsDetails.map(_.tiedGoodsDetails).map(details => s"${details.key}.${details.name}"),
+                    _.tiedForGoodsDetails.map(_.tiedGoodsDetails).map(details => s"tiedForGoodsDetails.$details"),
                     controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show(), "tiedForGoodsDetails",
                     ("tiedForGoodsDetails.partialTie", _.tiedForGoodsDetails.flatMap(_.partialTieConditional)))
         ))}

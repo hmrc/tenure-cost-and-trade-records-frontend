@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfLettingForm.typeOfLettingForm
-import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, TelecomMastLetting, TypeOfLetting, TypeOfLettingAdvertisingRight, TypeOfLettingAutomatedTellerMachine, TypeOfLettingOther, TypeOfLettingTelecomMast}
+import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, TelecomMastLetting, TypeOfLetting}
+import models.submissions.aboutfranchisesorlettings.TypeOfLetting.*
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -67,7 +68,7 @@ class TypeOfLettingController @Inject() (
     )
   }
 
-  def submit(index: Option[Int])                                                     = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent]                                 = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TypeOfLetting](
       typeOfLettingForm,
       formWithErrors =>

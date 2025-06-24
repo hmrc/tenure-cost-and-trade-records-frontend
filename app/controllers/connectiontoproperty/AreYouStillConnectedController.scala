@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ import play.api.mvc._
 import repositories.SessionRepo
 import views.html.connectiontoproperty.areYouStillConnected as AreYouStillConnectedView
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.{AddressConnectionType, AddressConnectionTypeNo, AddressConnectionTypeYes}
+import models.submissions.connectiontoproperty.AddressConnectionType
+import models.submissions.connectiontoproperty.AddressConnectionType.*
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -48,7 +49,7 @@ class AreYouStillConnectedController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AreYouStillConnected")
     val freshForm  = theForm
-    val filledForm = addressConnectionType.map(theForm.fill(_))
+    val filledForm = addressConnectionType.map(theForm.fill)
 
     Future.successful(
       Ok(
@@ -62,7 +63,7 @@ class AreYouStillConnectedController @Inject() (
     )
   }
 
-  def submit                                                                  = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent]                                              = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AddressConnectionType](
       theForm,
       formWithErrors =>

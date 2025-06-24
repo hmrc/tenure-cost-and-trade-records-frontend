@@ -23,7 +23,6 @@ import form.BuildingNameNumberMapping.validateBuildingNameNumber
 import form.CountyMapping.validateCounty
 import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
-import form.Formats.given
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
 import form.Scala3EnumFieldMapping.enumMappingRequired
@@ -32,11 +31,12 @@ import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutyouandtheproperty.*
 import models.submissions.common.*
+import models.submissions.common.ResponsibilityParty.*
 import models.submissions.connectiontoproperty.*
 import play.api.data.Forms.*
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
-import play.api.data.{Forms, Mapping}
+import play.api.data.Mapping
 import play.api.i18n.Messages
 import util.NumberUtil.zeroBigDecimal
 
@@ -56,20 +56,29 @@ object MappingSupport:
       case _            => None
     }
 
-  val typeOfLettingMapping: Mapping[TypeOfLetting]                  = Forms.of[TypeOfLetting]
-  val typeOfIncomeMapping: Mapping[TypeOfIncome]                    = Forms.of[TypeOfIncome]
-  val connectionToThePropertyType: Mapping[ConnectionToProperty]    = Forms.of[ConnectionToProperty]
-  val addressConnectionType: Mapping[AddressConnectionType]         = Forms.of[AddressConnectionType]
-  val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents] = Forms.of[MethodToFixCurrentRents]
-  val renewablesPlantMapping: Mapping[RenewablesPlantDetails]       = Forms.of[RenewablesPlantDetails]
-  val outsideRepairsType: Mapping[OutsideRepairs]                   = Forms.of[OutsideRepairs]
-  val insideRepairsType: Mapping[InsideRepairs]                     = Forms.of[InsideRepairs]
-  val buildingInsuranceType: Mapping[BuildingInsurance]             = Forms.of[BuildingInsurance]
+  val typeOfLettingMapping: Mapping[TypeOfLetting]                = enumMappingRequired(TypeOfLetting, Errors.typeOfLetting)
+  val typeOfIncomeMapping: Mapping[TypeOfIncome]                  = enumMappingRequired(TypeOfIncome, Errors.typeOfIncome)
+  val connectionToThePropertyType: Mapping[ConnectionToProperty]  =
+    enumMappingRequired(ConnectionToProperty, Errors.connectionToPropertyError)
+  val addressConnectionType: Mapping[AddressConnectionType]       =
+    enumMappingRequired(AddressConnectionType, Errors.isConnectedError)
+  val methodToFixCurrentRentType: Mapping[MethodToFixCurrentRent] =
+    enumMappingRequired(MethodToFixCurrentRent, Errors.methodToFixCurrentRents)
+  val renewablesPlantMapping: Mapping[RenewablesPlantDetails]     =
+    enumMappingRequired(RenewablesPlantDetails, Errors.renewablesPlant)
+  val outsideRepairsType: Mapping[OutsideRepairs]                 = enumMappingRequired(OutsideRepairs, Errors.outsideRepairs)
+  val insideRepairsType: Mapping[InsideRepairs]                   = enumMappingRequired(InsideRepairs, Errors.insideRepairs)
+  val buildingInsuranceType: Mapping[BuildingInsurance]           =
+    enumMappingRequired(BuildingInsurance, Errors.buildingInsurance)
 
-  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed]      = Forms.of[CurrentRentFixed]
-  val whatIsYourRentBasedOnType: Mapping[CurrentRentBasedOn]    = Forms.of[CurrentRentBasedOn]
-  val currentPropertyUsedMapping: Mapping[CurrentPropertyUsed]  = Forms.of[CurrentPropertyUsed]
-  val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] = Forms.of[TiedForGoodsInformation]
+  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed]      =
+    enumMappingRequired(CurrentRentFixed, Errors.howIsCurrentRentFixed)
+  val whatIsYourRentBasedOnType: Mapping[CurrentRentBasedOn]    =
+    enumMappingRequired(CurrentRentBasedOn, Errors.currentRentBasedOn)
+  val currentPropertyUsedMapping: Mapping[CurrentPropertyUsed]  =
+    enumMappingRequired(CurrentPropertyUsed, Errors.propertyCurrentlyUsed)
+  val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] =
+    enumMappingRequired(TiedForGoodsInformation, Errors.tiedForGoodsDetails)
 
   val postcode: Mapping[String] = PostcodeMapping.postcode()
 

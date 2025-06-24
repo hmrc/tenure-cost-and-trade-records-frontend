@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.StaffCostsForm.staffCostsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.{StaffCosts, TurnoverSection6076}
+import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.StaffCostsId
 import play.api.i18n.I18nSupport
@@ -100,10 +101,10 @@ class StaffCostsController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     val intermittentCheck =
-      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant))
 
     intermittentCheck match {
-      case Some("intermittent") =>
+      case Some(Intermittent) =>
         navigator.from match {
           case "CYA" =>
             aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
@@ -112,7 +113,7 @@ class StaffCostsController @Inject() (
           case _     =>
             aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show().url
         }
-      case Some("baseload")     =>
+      case Some(Baseload)     =>
         navigator.from match {
           case "CYA" =>
             aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
@@ -121,7 +122,7 @@ class StaffCostsController @Inject() (
           case _     =>
             aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
         }
-      case _                    => controllers.routes.TaskListController.show().url
+      case _                  => controllers.routes.TaskListController.show().url
     }
 
 }

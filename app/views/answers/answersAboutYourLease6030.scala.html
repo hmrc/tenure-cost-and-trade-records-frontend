@@ -53,12 +53,12 @@
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading")</h2>
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.landlordName",
-        _.aboutTheLandlord.flatMap(l => l.landlordFullName.map( add => s"<p class=\"govuk-body\">${l.landlordFullName.escapedHtml}")),
+        _.aboutTheLandlord.flatMap(l => s"<p class=\"govuk-body\">${l.landlordFullName.escapedHtml}</p>"),
         controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
         ("valueAsHtml", _ => None)
     ) ++
     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.landlordDetails",
-        _.aboutTheLandlord.flatMap(l => l.landlordAddress.map( add => s"<p class=\"govuk-body\">${add.escapedHtml}")),
+        _.aboutTheLandlord.flatMap(l => l.landlordAddress.map(address => s"<p class=\"govuk-body\">${address.escapedHtml}</p>")),
         controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
         ("valueAsHtml", _ => None)
     ) ++
@@ -189,8 +189,8 @@
                     sectionAnswers2.optionalRow(
                         "checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR",
                         _.ultimatelyResponsibleOutsideRepairs.map(_.outsideRepairs).map(bothOR =>
-                            """<p class="govuk-body">""" + messages(s"label.${bothOR.name}") + "</p>"
-                                    + sectionAnswers2.answers.filter(_ => bothOR.name == "both").flatMap(
+                            """<p class="govuk-body">""" + messages(s"label.$bothOR") + "</p>"
+                                    + sectionAnswers2.answers.filter(_ => bothOR.toString == "both").flatMap(
                                 _.ultimatelyResponsibleOutsideRepairs.flatMap(_.sharedResponsibilitiesOR).map(_.escapedHtml)
                             ).fold("")(v => s"<p class=\"govuk-body\">$v</p>")
                         ),
@@ -201,8 +201,8 @@
                     sectionAnswers2.optionalRow(
                         "checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsIR",
                         _.ultimatelyResponsibleInsideRepairs.map(_.insideRepairs).map(bothIR =>
-                            """<p class="govuk-body">""" + messages(s"label.${bothIR.name}") + "</p>"
-                                    + sectionAnswers2.answers.filter(_ => bothIR.name == "both").flatMap(
+                            """<p class="govuk-body">""" + messages(s"label.$bothIR") + "</p>"
+                                    + sectionAnswers2.answers.filter(_ => bothIR.toString == "both").flatMap(
                                 _.ultimatelyResponsibleInsideRepairs.flatMap(_.sharedResponsibilitiesIR).map(_.escapedHtml)
                             ).fold("")(v => s"<p class=\"govuk-body\">$v</p>")
                         ),
@@ -213,8 +213,8 @@
                     sectionAnswers2.optionalRow(
                         "checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsBI",
                         _.ultimatelyResponsibleBuildingInsurance.map(_.buildingInsurance).map(bothBI =>
-                            """<p class="govuk-body">""" + messages(s"label.${bothBI.name}") + "</p>"
-                                    + sectionAnswers2.answers.filter(_ => bothBI.name == "both").flatMap(
+                            """<p class="govuk-body">""" + messages(s"label.$bothBI") + "</p>"
+                                    + sectionAnswers2.answers.filter(_ => bothBI.toString == "both").flatMap(
                                 _.ultimatelyResponsibleBuildingInsurance.flatMap(_.sharedResponsibilitiesBI).map(_.escapedHtml)
                             ).fold("")(v => s"<p class=\"govuk-body\">$v</p>")
                         ),
@@ -328,7 +328,7 @@
                         _.rentOpenMarketValueDetails.map(_.rentOpenMarketValues).contains(AnswerNo),
                         "checkYourAnswersAboutYourLeaseOrTenure.currentRentBasedOn",
                         _.whatIsYourCurrentRentBasedOnDetails.map(r =>
-                            Seq(r.currentRentBasedOn.name).map(item => messages(s"label.currentRentBasedOn.$item")) ++
+                            Seq(r.currentRentBasedOn).map(item => messages(s"label.currentRentBasedOn.$item")) ++
                                     r.describe.fold(Seq.empty[String])(d => Seq(d.escapedHtml))
                         ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")),
                         controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show(), "",
@@ -358,7 +358,7 @@
                     sectionAnswers2.row(
                         "checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed",
                         _.howIsCurrentRentFixed.map(r =>
-                            Seq(messages(s"label.${r.currentRentFixed.name}"),
+                            Seq(messages(s"label.${r.currentRentFixed}"),
                                 dateUtil.formatDayMonthAbbrYear(r.rentActuallyAgreed)
                             ).mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>")
                         ),
@@ -367,7 +367,7 @@
                     ) ++
                     sectionAnswers2.row(
                         "checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
-                        _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent.name).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
+                        _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
                         controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(),
                         "methodUsedToFixCurrentRent"
                     ) ++

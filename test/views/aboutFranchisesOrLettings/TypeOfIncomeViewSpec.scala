@@ -19,7 +19,8 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.TypeOfIncomeForm
 import models.ForType.FOR6045
 import models.pages.Summary
-import models.submissions.aboutfranchisesorlettings.{TypeConcession, TypeLetting, TypeOfIncome}
+import models.submissions.aboutfranchisesorlettings.TypeOfIncome
+import models.submissions.aboutfranchisesorlettings.TypeOfIncome.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -63,7 +64,7 @@ class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome] {
         doc,
         "typeOfIncome",
         "typeOfIncome",
-        TypeConcession.name,
+        TypeConcession.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("typeOfIncome.concession.label"))
@@ -75,7 +76,7 @@ class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome] {
         doc,
         "typeOfIncome-2",
         "typeOfIncome",
-        TypeLetting.name,
+        TypeLetting.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("typeOfIncome.letting.label"))

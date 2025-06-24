@@ -18,7 +18,8 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.MethodToFixCurrentRentForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{MethodToFixCurrentRentDetails, MethodToFixCurrentRentIndependentExpert, MethodToFixCurrentRentsACourt, MethodToFixCurrentRentsAgreement, MethodToFixCurrentRentsArbitration}
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRentDetails
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -57,7 +58,7 @@ class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixC
         doc,
         "methodUsedToFixCurrentRent",
         "methodUsedToFixCurrentRent",
-        MethodToFixCurrentRentsAgreement.name,
+        MethodToFixCurrentRentAgreement.toString,
         false
       )
       assertContainsText(doc, messages("label.methodUsedToFixCurrentRent.agreement"))
@@ -69,7 +70,7 @@ class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixC
         doc,
         "methodUsedToFixCurrentRent-2",
         "methodUsedToFixCurrentRent",
-        MethodToFixCurrentRentsArbitration.name,
+        MethodToFixCurrentRentArbitration.toString,
         false
       )
       assertContainsText(doc, messages("label.methodUsedToFixCurrentRent.arbitration"))
@@ -81,7 +82,7 @@ class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixC
         doc,
         "methodUsedToFixCurrentRent-3",
         "methodUsedToFixCurrentRent",
-        MethodToFixCurrentRentIndependentExpert.name,
+        MethodToFixCurrentRentIndependentExpert.toString,
         false
       )
       assertContainsText(doc, messages("label.methodUsedToFixCurrentRent.independentExpert"))
@@ -93,7 +94,7 @@ class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixC
         doc,
         "methodUsedToFixCurrentRent-4",
         "methodUsedToFixCurrentRent",
-        MethodToFixCurrentRentsACourt.name,
+        MethodToFixCurrentRentACourt.toString,
         false
       )
       assertContainsText(doc, messages("label.methodUsedToFixCurrentRent.aCourt"))

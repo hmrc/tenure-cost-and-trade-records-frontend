@@ -23,7 +23,7 @@
 @import models.submissions.aboutfranchisesorlettings.TypeOfIncome
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import models.ForType._
-@import models.submissions.aboutfranchisesorlettings.{TypeConcession, TypeFranchise, TypeConcession6015}
+@import models.submissions.aboutfranchisesorlettings.TypeOfIncome.*
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -58,15 +58,14 @@
 }
 @concessionOrfranchise = @{
     forType match {
-        case FOR6010 | FOR6011  => TypeFranchise.name
-        case FOR6015 | FOR6016  => TypeConcession6015.name
-        case _                  => TypeConcession.name
+        case FOR6010 | FOR6011  => TypeFranchise.toString
+        case FOR6015 | FOR6016  => TypeConcession6015.toString
+        case _                  => TypeConcession.toString
     }
 }
 
     @layout(
         pageHeading = messages("typeOfIncome.heading"),
-        showH1 = true,
         showSection = true,
         summary = Some(summary),
         sectionName = sectionName,

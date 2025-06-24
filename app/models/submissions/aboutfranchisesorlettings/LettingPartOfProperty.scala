@@ -16,8 +16,9 @@
 
 package models.submissions.aboutfranchisesorlettings
 
+import models.submissions.aboutfranchisesorlettings.TypeOfLetting.*
 import models.submissions.common.AnswersYesNo
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import java.time.LocalDate
 

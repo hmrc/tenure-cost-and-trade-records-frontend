@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,21 @@
 package form.aboutyouandtheproperty
 
 import form.MappingSupport.tiedForGoodsDetailsType
-import models.submissions.aboutyouandtheproperty.{TiedForGoodsInformationDetails, TiedForGoodsInformationDetailsPartialTie}
+import models.submissions.aboutyouandtheproperty.TiedForGoodsInformationDetails
+import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
-object TiedForGoodsDetailsForm {
+object TiedForGoodsDetailsForm:
 
-  val tiedForGoodsDetailsForm = Form(
+  val tiedForGoodsDetailsForm: Form[TiedForGoodsInformationDetails] = Form(
     mapping(
       "tiedForGoodsDetails"   -> tiedForGoodsDetailsType,
       "partialTieConditional" -> mandatoryIfEqual(
         "tiedForGoodsDetails",
-        TiedForGoodsInformationDetailsPartialTie.name,
+        TiedForGoodsInformationDetailsPartialTie.toString,
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.tiedForGoodsDetailsText.required"),
           maxLength(100, "error.tiedForGoodsDetailsText.maxLength")
@@ -38,4 +39,3 @@ object TiedForGoodsDetailsForm {
       )
     )(TiedForGoodsInformationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

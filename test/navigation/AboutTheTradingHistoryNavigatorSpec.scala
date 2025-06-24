@@ -20,10 +20,12 @@ import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, BunkeredFuelQuestion, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OtherHolidayAccommodation, TouringAndTentingPitches}
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, BaseLoad, Intermittent, RenewablesPlant}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, RenewablesPlant}
+import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.common.ContactDetails
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
+import models.submissions.connectiontoproperty.AddressConnectionType.*
+import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
@@ -89,7 +91,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       stillConnectedDetailsYes,
       removeConnection,
       aboutYouAndTheProperty = AboutYouAndTheProperty(
-        renewablesPlant = Some(RenewablesPlant(BaseLoad))
+        renewablesPlant = Some(RenewablesPlant(Baseload))
       )
     )
 

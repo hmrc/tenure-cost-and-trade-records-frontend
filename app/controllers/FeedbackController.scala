@@ -21,6 +21,7 @@ import connectors.Audit
 import form.Feedback
 import models.Session
 import models.submissions.common.AnswersYesNo.*
+import models.submissions.connectiontoproperty.AddressConnectionType.*
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.i18n.I18nSupport
@@ -100,11 +101,10 @@ class FeedbackController @Inject() (
             BadRequest(confirmationConnectedView(formWithErrors))
           },
         feedbackForm => {
-          val addressConnectionType  =
-            request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType.flatMap(_.name))
+          val addressConnectionType  = request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType)
           val vacantPropertySelected = request.sessionData.stillConnectedDetails.flatMap(_.isPropertyVacant)
 
-          if (addressConnectionType.contains("no")) {
+          if (addressConnectionType.contains(AddressConnectionTypeNo)) {
             sendFeedback("NotConnectedFeedback", feedbackForm, request.sessionData)
             Future.successful(Redirect(routes.FeedbackController.feedbackThx))
           } else if (vacantPropertySelected.contains(AnswerYes)) {

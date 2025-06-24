@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutYourLeaseOrTenure
+package models.submissions.connectiontoproperty
 
 import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
@@ -22,14 +22,13 @@ import play.api.libs.json.Format
 /**
   * @author Yuriy Tumakha
   */
-enum IncludedInYourRentInformation(includedInRent: String):
-  override def toString: String = includedInRent
+enum AddressConnectionType(connectionType: String):
+  override def toString: String = connectionType
 
-  case IncludedInYourRentInformationVat extends IncludedInYourRentInformation("vat")
-  case IncludedInYourRentInformationNonDomesticRates extends IncludedInYourRentInformation("nondomesticRates")
-  case IncludedInYourRentInformationWaterCharges extends IncludedInYourRentInformation("waterCharges")
-  case IncludedInYourRentInformationNone extends IncludedInYourRentInformation("none")
-end IncludedInYourRentInformation
+  case AddressConnectionTypeYes extends AddressConnectionType("yes")
+  case AddressConnectionTypeNo extends AddressConnectionType("no")
+  case AddressConnectionTypeYesChangeAddress extends AddressConnectionType("yes-change-address")
+end AddressConnectionType
 
-object IncludedInYourRentInformation:
-  implicit val format: Format[IncludedInYourRentInformation] = Scala3EnumJsonFormat.format
+object AddressConnectionType:
+  implicit val format: Format[AddressConnectionType] = Scala3EnumJsonFormat.format

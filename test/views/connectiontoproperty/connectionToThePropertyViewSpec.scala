@@ -18,7 +18,8 @@ package views.connectiontoproperty
 
 import form.connectiontoproperty.ConnectionToThePropertyForm
 import models.pages.Summary
-import models.submissions.connectiontoproperty.{ConnectionToProperty, ConnectionToThePropertyOccupierAgent, ConnectionToThePropertyOccupierTrustee, ConnectionToThePropertyOwnerAgent, ConnectionToThePropertyOwnerTrustee}
+import models.submissions.connectiontoproperty.ConnectionToProperty
+import models.submissions.connectiontoproperty.ConnectionToProperty.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -54,7 +55,7 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
         doc,
         "connectionToTheProperty",
         "connectionToTheProperty",
-        ConnectionToThePropertyOccupierTrustee.name,
+        ConnectionToThePropertyOccupierTrustee.toString,
         false
       )
       assertContainsText(doc, messages("label.occupierTrustee"))
@@ -67,7 +68,7 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
         doc,
         "connectionToTheProperty-2",
         "connectionToTheProperty",
-        ConnectionToThePropertyOwnerTrustee.name,
+        ConnectionToThePropertyOwnerTrustee.toString,
         false
       )
       assertContainsText(doc, messages("label.ownerTrustee"))
@@ -80,7 +81,7 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
         doc,
         "connectionToTheProperty-3",
         "connectionToTheProperty",
-        ConnectionToThePropertyOccupierAgent.name,
+        ConnectionToThePropertyOccupierAgent.toString,
         false
       )
       assertContainsText(doc, messages("label.occupierAgent"))
@@ -92,7 +93,7 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
         doc,
         "connectionToTheProperty-4",
         "connectionToTheProperty",
-        ConnectionToThePropertyOwnerAgent.name,
+        ConnectionToThePropertyOwnerAgent.toString,
         false
       )
       assertContainsText(doc, messages("label.ownerAgent"))

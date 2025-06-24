@@ -22,7 +22,8 @@ import models.Session
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import models.submissions.additionalinformation.{AdditionalInformation, FurtherInformationOrRemarksDetails}
 import models.submissions.common.ContactDetails
-import models.submissions.connectiontoproperty.{AddressConnectionTypeYes, StillConnectedDetails}
+import models.submissions.connectiontoproperty.AddressConnectionType.*
+import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
 import navigation.identifiers.{Identifier, PastConnectionId, RemoveConnectionId}
 import play.api.libs.json.JsObject

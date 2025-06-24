@@ -17,6 +17,7 @@
 @import actions.SessionRequest
 @import models.ForType.*
 @import models.submissions.common.AnswersYesNo.*
+@import models.submissions.connectiontoproperty.AddressConnectionType.*
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 
@@ -32,10 +33,10 @@
         SectionAnswersRowBuilder(request.sessionData.stillConnectedDetails)
     }
 
-    @if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) {
+    @if(sectionAnswers.answers.exists(_.addressConnectionType.contains(AddressConnectionTypeYesChangeAddress))) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.connectionStatus.heading")</h2>
 
-        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(_.name).map(v => messages(s"label.$v")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
+        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(v => messages(s"label.$v")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
                 sectionAnswers.row("checkYourAnswersConnectionToProperty.proposedAddress",
                     _.editAddress.map(l => s"${l.editAddress.escapedHtml}"),
                     controllers.connectiontoproperty.routes.EditAddressController.show(), "",
@@ -44,9 +45,9 @@
         )
     } else {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.connectionStatus.heading")</h2>
-        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(_.name).map(v =>
-            if(v.equals("yes")) messages("label.yes.iawn")
-            else if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) messages("label.areYouConnected.addressUpdate")
+        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(v =>
+            if(v == AddressConnectionTypeYes) messages("label.yes.iawn")
+            else if(sectionAnswers.answers.exists(_.addressConnectionType.contains(AddressConnectionTypeYesChangeAddress))) messages("label.areYouConnected.addressUpdate")
             else messages("label.no.na")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated")))
     }
 

@@ -22,7 +22,8 @@ import play.api.test.Helpers._
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, CurrentPropertyHotel}
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
 import play.api.test.FakeRequest
 
 import scala.language.reflectiveCalls
@@ -114,7 +115,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
     "Redirect when form data submitted" in {
       val res = aboutThePropertyController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
-          "propertyCurrentlyUsed" -> CurrentPropertyHotel.name
+          "propertyCurrentlyUsed" -> CurrentPropertyHotel.toString
         )
       )
       status(res) shouldBe SEE_OTHER
@@ -138,6 +139,6 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
     }
 
     val baseFormData: Map[String, String] =
-      Map("propertyCurrentlyUsed" -> CurrentPropertyHotel.name)
+      Map("propertyCurrentlyUsed" -> CurrentPropertyHotel.toString)
   }
 }

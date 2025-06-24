@@ -20,6 +20,7 @@
 @import util.NumberUtil.*
 @import util.{DateUtilLocalised, SectionAnswersRowBuilder}
 @import models.submissions.connectiontoproperty._
+@import models.submissions.connectiontoproperty.AddressConnectionType.*
 
 @this(
         govukSummaryList: GovukSummaryList,
@@ -50,10 +51,10 @@
   }
 }
 
-@if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) {
+@if(sectionAnswers.answers.exists(_.addressConnectionType.contains(AddressConnectionTypeYesChangeAddress))) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.connectionStatus.heading")</h2>
 
-    @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(_.name).map(v => messages(s"label.$v")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
+    @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(v => messages(s"label.$v")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
             sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.proposedAddress",
                 _.editAddress.map(l => s"${l.editAddress.escapedHtml}"),
                 controllers.connectiontoproperty.routes.EditAddressController.show(), "",
@@ -62,9 +63,9 @@
     )
 } else {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.connectionStatus.heading")</h2>
-    @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(_.name).map(v =>
-        if(v.equals("yes")) messages("label.yes.iawn")
-        else if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) messages("label.areYouConnected.addressUpdate")
+    @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(v =>
+        if(v == AddressConnectionTypeYes) messages("label.yes.iawn")
+        else if(sectionAnswers.answers.exists(_.addressConnectionType.contains(AddressConnectionTypeYesChangeAddress))) messages("label.areYouConnected.addressUpdate")
         else messages("label.no.na")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated")))
 }
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading")</h2>

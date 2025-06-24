@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,15 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.methodToFixCurrentRentsType
+import form.MappingSupport.methodToFixCurrentRentType
 import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRentDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object MethodToFixCurrentRentForm {
+object MethodToFixCurrentRentForm:
 
-  val methodToFixCurrentRentForm = Form(
+  val methodToFixCurrentRentForm: Form[MethodToFixCurrentRentDetails] = Form(
     mapping(
-      "methodUsedToFixCurrentRent" -> methodToFixCurrentRentsType
+      "methodUsedToFixCurrentRent" -> methodToFixCurrentRentType
     )(MethodToFixCurrentRentDetails.apply)(o => Some(o.methodToFixCurrentRent))
   )
-}

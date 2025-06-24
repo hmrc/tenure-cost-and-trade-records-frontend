@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,34 +16,20 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
 
-sealed trait MethodToFixCurrentRents extends NamedEnum {
-  override def key: String = "methodUsedToFixCurrentRent"
-}
-object MethodToFixCurrentRentsAgreement extends MethodToFixCurrentRents {
-  override def name: String = "agreement"
-}
-object MethodToFixCurrentRentsArbitration extends MethodToFixCurrentRents {
-  override def name: String = "arbitration"
-}
+/**
+  * @author Yuriy Tumakha
+  */
+enum MethodToFixCurrentRent(methodUsedToFixCurrentRent: String):
+  override def toString: String = methodUsedToFixCurrentRent
 
-object MethodToFixCurrentRentIndependentExpert extends MethodToFixCurrentRents {
-  override def name: String = "independentExpert"
-}
-object MethodToFixCurrentRentsACourt extends MethodToFixCurrentRents {
-  override def name: String = "aCourt"
-}
+  case MethodToFixCurrentRentAgreement extends MethodToFixCurrentRent("agreement")
+  case MethodToFixCurrentRentArbitration extends MethodToFixCurrentRent("arbitration")
+  case MethodToFixCurrentRentIndependentExpert extends MethodToFixCurrentRent("independentExpert")
+  case MethodToFixCurrentRentACourt extends MethodToFixCurrentRent("aCourt")
+end MethodToFixCurrentRent
 
-object MethodToFixCurrentRents extends NamedEnumSupport[MethodToFixCurrentRents] {
-  implicit val format: Format[MethodToFixCurrentRents] = EnumFormat(MethodToFixCurrentRents)
-
-  val all: Seq[MethodToFixCurrentRents] = List(
-    MethodToFixCurrentRentsAgreement,
-    MethodToFixCurrentRentsArbitration,
-    MethodToFixCurrentRentIndependentExpert,
-    MethodToFixCurrentRentsACourt
-  )
-  val key: String                       = all.head.key
-}
+object MethodToFixCurrentRent:
+  implicit val format: Format[MethodToFixCurrentRent] = Scala3EnumJsonFormat.format

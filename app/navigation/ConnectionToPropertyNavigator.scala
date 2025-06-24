@@ -23,7 +23,8 @@ import play.api.mvc.Call
 import models.ForType.*
 import models.Session
 import models.submissions.common.AnswersYesNo.*
-import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails}
+import models.submissions.connectiontoproperty.AddressConnectionType.*
+import models.submissions.connectiontoproperty.LettingPartOfPropertyDetails
 import play.api.Logging
 
 import javax.inject.Inject
@@ -64,16 +65,17 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   ).map(_.url)
 
   private def areYouStillConnectedRouting: Session => Call = answers =>
-    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-      case Some("yes")                =>
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+      case Some(AddressConnectionTypeYes)              =>
         answers.forType match {
           case FOR6076 =>
             controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
           case _       =>
             controllers.connectiontoproperty.routes.VacantPropertiesController.show()
         }
-      case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
-      case _                          => controllers.notconnected.routes.PastConnectionController.show()
+      case Some(AddressConnectionTypeYesChangeAddress) =>
+        controllers.connectiontoproperty.routes.EditAddressController.show()
+      case _                                           => controllers.notconnected.routes.PastConnectionController.show()
     }
 
   private def editAddressRouting: Session => Call = answers =>
