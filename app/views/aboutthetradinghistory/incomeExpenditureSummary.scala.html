@@ -22,6 +22,8 @@
 @import util.NumberUtil.*
 @import util.DateUtilLocalised
 @import java.time.LocalDate
+@import util.AccessibilityUtil
+
 
 @this(
         layout: Layout,
@@ -29,9 +31,9 @@
         govukButton: GovukButton,
         govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF,
-        dateUtil: DateUtilLocalised
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
-
 
 @(theForm: Form[IncomeExpenditureSummary], summary: Summary, entries: Seq[IncomeExpenditureEntry])(implicit request: Request[?], messages: Messages)
 
@@ -40,7 +42,10 @@
 @rowWithLink(msgkey: String, entryValue: IncomeExpenditureEntry => BigDecimal, url: IncomeExpenditureEntry => String) = @{
     val headerRow = TableRow(content = Text(messages(s"incomeExpenditureSummary.$msgkey")), classes = classes)
     val valueRows = entries.map { entry =>
-        TableRow(content = Text(entryValue(entry).asMoney))
+        TableRow(content = Text(entryValue(entry).asMoney),
+                attributes = Map(
+            "aria-label" -> accessibilityUtil.ariaBuilder(s"incomeExpenditureSummary.$msgkey", LocalDate.parse(entry.financialYearEnd))
+        ))
     }
     val changeLinkRow = url(entries.head) match {
         case urlValue if urlValue.nonEmpty =>
@@ -69,13 +74,13 @@
                             classes = "govuk-!-font-weight-bold")) ++ Seq(TableRow(content = Empty))) ++
                    Seq(
                        rowWithLink("totalTurnoverLabel", _.totalTurnover, _.turnoverUrl),
-                        rowWithLink("totalCostOfSalesLabel", _.totalCostOfSales, _.costOfSalesUrl),
+                       rowWithLink("totalCostOfSalesLabel", _.totalCostOfSales, _.costOfSalesUrl),
                        Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalGrossProfitsLabel")))) ++
                                entries.map(entry => TableRow(content = Text(entry.totalGrossProfits.asMoney)))++
                                Seq(TableRow(content = Empty)),
                        rowWithLink("totalPayrollCostLabel", _.totalPayrollCost, _.totalPayrollCostURL),
-                        rowWithLink("variableExpenses", _.variableExpenses, _.variableExpensesURL),
-                        rowWithLink("fixedExpensesLabel", _.fixedExpenses, _.fixedExpensesUrl),
+                       rowWithLink("variableExpenses", _.variableExpenses, _.variableExpensesURL),
+                       rowWithLink("fixedExpensesLabel", _.fixedExpenses, _.fixedExpensesUrl),
                        rowWithLink("otherCostsLabel", _.otherCost, _.otherCostsUrl),
                        Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalNetProfitLabel")))) ++
                                entries.map(entry => TableRow(content = Text(entry.totalNetProfit.asMoney)))++
