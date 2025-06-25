@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,35 +16,20 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
 
-sealed trait IncludedInYourRentInformation extends NamedEnum {
-  override def key: String = "includedInYourRent"
-}
-object IncludedInYourRentInformationVat extends IncludedInYourRentInformation {
-  override def name: String = "vat"
-}
-object IncludedInYourRentInformationNonDomesticRates extends IncludedInYourRentInformation {
-  override def name: String = "nondomesticRates"
-}
-object IncludedInYourRentInformationWaterCharges extends IncludedInYourRentInformation {
-  override def name: String = "waterCharges"
-}
-object IncludedInYourRentInformationNone extends IncludedInYourRentInformation {
-  override def name: String = "none"
-}
+/**
+  * @author Yuriy Tumakha
+  */
+enum IncludedInYourRentInformation(includedInRent: String):
+  override def toString: String = includedInRent
 
-object IncludedInYourRentInformation extends NamedEnumSupport[IncludedInYourRentInformation] {
+  case IncludedInYourRentInformationVat extends IncludedInYourRentInformation("vat")
+  case IncludedInYourRentInformationNonDomesticRates extends IncludedInYourRentInformation("nondomesticRates")
+  case IncludedInYourRentInformationWaterCharges extends IncludedInYourRentInformation("waterCharges")
+  case IncludedInYourRentInformationNone extends IncludedInYourRentInformation("none")
+end IncludedInYourRentInformation
 
-  implicit val format: Format[IncludedInYourRentInformation] = EnumFormat(IncludedInYourRentInformation)
-
-  val all: Seq[IncludedInYourRentInformation] = List(
-    IncludedInYourRentInformationVat,
-    IncludedInYourRentInformationNonDomesticRates,
-    IncludedInYourRentInformationWaterCharges,
-    IncludedInYourRentInformationNone
-  )
-
-  val key: String = all.head.key
-}
+object IncludedInYourRentInformation:
+  implicit val format: Format[IncludedInYourRentInformation] = Scala3EnumJsonFormat.format

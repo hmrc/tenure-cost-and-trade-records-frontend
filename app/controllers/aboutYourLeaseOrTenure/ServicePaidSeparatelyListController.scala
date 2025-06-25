@@ -23,7 +23,8 @@ import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidS
 import form.confirmableActionForm.confirmableActionForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.ServicePaidSeparatelyListId
 import play.api.i18n.I18nSupport

@@ -20,7 +20,7 @@ import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.Session
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.{UltimatelyResponsibleBusinessInsurancePageId, *}
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier

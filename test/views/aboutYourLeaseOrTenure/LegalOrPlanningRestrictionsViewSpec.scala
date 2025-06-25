@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictions
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -61,7 +61,7 @@ class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[LegalOr
         doc,
         "legalOrPlanningRestrictions",
         "legalOrPlanningRestrictions",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +73,7 @@ class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[LegalOr
         doc,
         "legalOrPlanningRestrictions-2",
         "legalOrPlanningRestrictions",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

@@ -18,7 +18,8 @@ package views.connectiontoproperty
 
 import form.connectiontoproperty.AreYouStillConnectedForm
 import models.pages.Summary
-import models.submissions.connectiontoproperty.{AddressConnectionType, AddressConnectionTypeNo, AddressConnectionTypeYes, AddressConnectionTypeYesChangeAddress}
+import models.submissions.connectiontoproperty.AddressConnectionType
+import models.submissions.connectiontoproperty.AddressConnectionType.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -75,19 +76,19 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
 
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(doc, "isRelated", "isRelated", AddressConnectionTypeYes.name, false)
+      assertContainsRadioButton(doc, "isRelated", "isRelated", AddressConnectionTypeYes.toString, false)
       assertContainsText(doc, messages("label.yes.oes"))
     }
 
     "contain radio buttons for the value yes edit address" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(doc, "isRelated-2", "isRelated", AddressConnectionTypeYesChangeAddress.name, false)
+      assertContainsRadioButton(doc, "isRelated-2", "isRelated", AddressConnectionTypeYesChangeAddress.toString, false)
       assertContainsText(doc, messages("label.areYouConnected.addressUpdate"))
     }
 
     "contain radio buttons for the value no" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertContainsRadioButton(doc, "isRelated-3", "isRelated", AddressConnectionTypeNo.name, false)
+      assertContainsRadioButton(doc, "isRelated-3", "isRelated", AddressConnectionTypeNo.toString, false)
       assertContainsText(doc, messages("label.no.nac.oes"))
     }
 

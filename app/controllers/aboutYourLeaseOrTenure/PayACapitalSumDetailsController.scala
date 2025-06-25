@@ -1,21 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,6 +23,7 @@ import form.aboutYourLeaseOrTenure.PayACapitalSumDetailsForm.payACapitalSumDetai
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumInformationDetails
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayCapitalSumDetailsId
 import play.api.Logging
@@ -102,14 +87,11 @@ class PayACapitalSumDetailsController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-details"
       case _    =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.payACapitalSumDetails.map(_.capitalSumOrPremium.name)
+          _.payACapitalSumDetails.map(_.capitalSumOrPremium)
         ) match {
-          case Some("yes") =>
+          case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
-          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-          case _           =>
-            logger.warn(s"Back link for pay capital sum page reached with unknown tenants additions disregarded value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
         }
     }
 }

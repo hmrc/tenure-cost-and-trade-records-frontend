@@ -19,17 +19,18 @@ package controllers.notconnected
 import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
-import models.submissions.NotConnectedSubmission
 import controllers.{FORDataCaptureController, FeedbackFormMapper}
 import models.Session
+import models.submissions.NotConnectedSubmission
+import models.submissions.common.AnswersYesNo.*
 import play.api.Logging
 import play.api.i18n.{I18nSupport, Messages}
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
-import views.html.notconnected.checkYourAnswersNotConnected
 import views.html.confirmation
+import views.html.notconnected.checkYourAnswersNotConnected
 
 import java.time.Instant
 import javax.inject.{Inject, Named, Singleton}
@@ -100,10 +101,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
       sessionRemoveConnection.map(_.removeConnectionDetails.phone),
       sessionRemoveConnection.map(_.removeConnectionAdditionalInfo).getOrElse(Some("")),
       Instant.now(),
-      session.removeConnectionDetails.map(_.pastConnectionType.map(_.name)) match {
-        case Some(_) => true
-        case None    => false
-      },
+      session.removeConnectionDetails.flatMap(_.pastConnectionType).contains(AnswerYes),
       Some(messages.lang.language)
     )
 

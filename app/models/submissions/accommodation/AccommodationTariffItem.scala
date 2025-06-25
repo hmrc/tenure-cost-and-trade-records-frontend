@@ -16,7 +16,7 @@
 
 package models.submissions.accommodation
 
-import models.Scala3EnumFormat
+import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
 
 /**
@@ -34,9 +34,6 @@ enum AccommodationTariffItem(item: String):
 end AccommodationTariffItem
 
 object AccommodationTariffItem:
-  implicit val format: Format[AccommodationTariffItem] = Scala3EnumFormat.format
+  implicit val format: Format[AccommodationTariffItem] = Scala3EnumJsonFormat.format
 
   val stringValues: Seq[String] = AccommodationTariffItem.values.toSeq.map(_.toString)
-
-  def fromName(name: String): Option[AccommodationTariffItem] =
-    AccommodationTariffItem.values.find(_.toString == name)

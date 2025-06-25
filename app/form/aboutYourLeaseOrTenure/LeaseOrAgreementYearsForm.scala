@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,18 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.{rent3Years, tenancy3Years, underReview}
+import form.Errors
+import form.MappingSupport.createYesNoType
 import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object LeaseOrAgreementYearsForm {
+object LeaseOrAgreementYearsForm:
 
-  val leaseOrAgreementYearsForm = Form(
+  val leaseOrAgreementYearsForm: Form[LeaseOrAgreementYearsDetails] = Form(
     mapping(
-      "commenceWithinThreeYears"        -> tenancy3Years,
-      "agreedReviewedAlteredThreeYears" -> rent3Years,
-      "rentUnderReviewNegotiated"       -> underReview
+      "commenceWithinThreeYears"        -> createYesNoType(Errors.tenancy3Years),
+      "agreedReviewedAlteredThreeYears" -> createYesNoType(Errors.rent3Years),
+      "rentUnderReviewNegotiated"       -> createYesNoType(Errors.underReview)
     )(LeaseOrAgreementYearsDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

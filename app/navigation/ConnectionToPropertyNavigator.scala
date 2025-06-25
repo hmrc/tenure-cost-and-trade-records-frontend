@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,9 @@ import identifiers._
 import play.api.mvc.Call
 import models.ForType.*
 import models.Session
-import models.submissions.common.AnswerYes
-import models.submissions.connectiontoproperty.{AddressConnectionTypeNo, LettingPartOfPropertyDetails, VacantPropertiesDetailsYes}
+import models.submissions.common.AnswersYesNo.*
+import models.submissions.connectiontoproperty.AddressConnectionType.*
+import models.submissions.connectiontoproperty.LettingPartOfPropertyDetails
 import play.api.Logging
 
 import javax.inject.Inject
@@ -50,8 +51,8 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
 
   def isVacantPropertySubmission(session: Session): Boolean =
     session.stillConnectedDetails
-      .flatMap(_.vacantProperties)
-      .exists(_.vacantProperties == VacantPropertiesDetailsYes)
+      .flatMap(_.isPropertyVacant)
+      .contains(AnswerYes)
 
   def isNotConnectedPropertySubmission(session: Session): Boolean =
     session.stillConnectedDetails
@@ -64,16 +65,17 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   ).map(_.url)
 
   private def areYouStillConnectedRouting: Session => Call = answers =>
-    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-      case Some("yes")                =>
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+      case Some(AddressConnectionTypeYes)              =>
         answers.forType match {
           case FOR6076 =>
             controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
           case _       =>
             controllers.connectiontoproperty.routes.VacantPropertiesController.show()
         }
-      case Some("yes-change-address") => controllers.connectiontoproperty.routes.EditAddressController.show()
-      case _                          => controllers.notconnected.routes.PastConnectionController.show()
+      case Some(AddressConnectionTypeYesChangeAddress) =>
+        controllers.connectiontoproperty.routes.EditAddressController.show()
+      case _                                           => controllers.notconnected.routes.PastConnectionController.show()
     }
 
   private def editAddressRouting: Session => Call = answers =>
@@ -85,14 +87,14 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     }
 
   private def isPropertyVacant: Session => Call = answers =>
-    answers.stillConnectedDetails.flatMap(_.vacantProperties.map(_.vacantProperties.name)) match {
-      case Some("yes") => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
-      case _           => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+    answers.stillConnectedDetails.flatMap(_.isPropertyVacant) match {
+      case Some(AnswerYes) => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
+      case _               => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
     }
 
   private def isAnyRentReceived: Session => Call                          = answers =>
-    answers.stillConnectedDetails.flatMap(_.isAnyRentReceived.map(_.name)) match {
-      case Some("yes") =>
+    answers.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+      case Some(AnswerYes) =>
         answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty match {
           case true  => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
           case false =>
@@ -105,12 +107,12 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
                 controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx)
             }
         }
-      case _           => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
+      case _               => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
     }
   private def tradingNameOwnTheProperty: Session => Call                  = answers =>
-    answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty.map(_.name)) match {
-      case Some("yes") => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
-      case _           => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
+    answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match {
+      case Some(AnswerYes) => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
+      case _               => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
     }
   private def getLettingPartOfPropertyDetailsIndex(session: Session): Int =
     session.stillConnectedDetails.map(_.lettingPartOfPropertyDetailsIndex).getOrElse(0)

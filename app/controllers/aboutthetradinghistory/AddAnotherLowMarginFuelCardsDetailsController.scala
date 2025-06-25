@@ -23,7 +23,8 @@ import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.theFo
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AddAnotherLowMarginFuelCardsDetailsId
 import play.api.i18n.I18nSupport

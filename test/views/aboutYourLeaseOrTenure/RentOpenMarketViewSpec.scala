@@ -20,7 +20,7 @@ import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.RentOpenMarketValueForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentOpenMarketValueDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
@@ -75,7 +75,7 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueD
         doc,
         "rentOpenMarketValue",
         "rentOpenMarketValue",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -87,7 +87,7 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[RentOpenMarketValueD
         doc,
         "rentOpenMarketValue-2",
         "rentOpenMarketValue",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

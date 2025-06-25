@@ -18,7 +18,8 @@ package views.connectiontoproperty
 
 import form.connectiontoproperty.TradingNamePayingRentForm
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -61,7 +62,7 @@ class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo]
         doc,
         "tradingNamePayingRent",
         "tradingNamePayingRent",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +74,7 @@ class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo]
         doc,
         "tradingNamePayingRent-2",
         "tradingNamePayingRent",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

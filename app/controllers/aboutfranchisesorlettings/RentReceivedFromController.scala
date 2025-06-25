@@ -16,12 +16,11 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.SessionRequest
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentReceivedFromForm.rentReceivedFromForm as theForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, FranchiseIncomeRecord, RentReceivedFrom}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, RentReceivedFrom}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentReceivedFromPageId
 import play.api.i18n.I18nSupport
@@ -63,7 +62,7 @@ class RentReceivedFromController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RentReceivedFrom](
       theForm,
       formWithErrors =>

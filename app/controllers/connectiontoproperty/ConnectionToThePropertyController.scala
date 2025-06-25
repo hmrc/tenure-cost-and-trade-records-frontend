@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToThePropertyForm
 import models.Session
+import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.ConnectionToProperty
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ConnectionToPropertyPageId
@@ -69,7 +70,7 @@ class ConnectionToThePropertyController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ConnectionToProperty](
       connectionToThePropertyForm,
       formWithErrors =>
@@ -91,9 +92,11 @@ class ConnectionToThePropertyController @Inject() (
   }
 
   private def getBackLink(answers: Session): Either[String, String] =
-    answers.stillConnectedDetails.flatMap(_.addressConnectionType.map(_.name)) match {
-      case Some("yes-change-address") => Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
-      case Some("yes")                => Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
-      case _                          => Left(s"Unknown connection to property back link")
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+      case Some(AddressConnectionTypeYesChangeAddress) =>
+        Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
+      case Some(AddressConnectionTypeYes)              =>
+        Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
+      case _                                           => Left(s"Unknown connection to property back link")
     }
 }

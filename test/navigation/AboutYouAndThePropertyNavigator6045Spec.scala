@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import models.submissions.aboutyouandtheproperty._
-import models.submissions.common.AnswerNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -75,9 +75,7 @@ class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
       "navigate to CheckYourAnswersAboutThePropertyController after completing WebsiteForProperty" in {
         val answers = baseFilled6045Session.copy(
           aboutYouAndTheProperty = Some(
-            AboutYouAndTheProperty(websiteForPropertyDetails =
-              Some(WebsiteForPropertyDetails(BuildingOperationHaveAWebsiteNo, Some("test")))
-            )
+            AboutYouAndTheProperty(websiteForPropertyDetails = Some(WebsiteForPropertyDetails(AnswerNo, Some("test"))))
           )
         )
         navigator

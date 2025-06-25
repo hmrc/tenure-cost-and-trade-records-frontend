@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -87,37 +87,28 @@ class HowIsCurrentRentFixedController @Inject() (
     answers.forType match {
       case FOR6010                     =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails.name)
+          _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails)
         ) match {
-          case Some("yes") =>
+          case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show().url
-          case Some("no")  =>
+          case _               =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
-          case _           =>
-            logger.warn(s"Back link for 6010 rent payable vary beer page reached with unknown value")
-            controllers.routes.TaskListController.show().url
         }
       case FOR6020 | FOR6045 | FOR6046 =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues)) match {
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
-          case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
-          case _               =>
-            logger.warn(s"Back link for 6020 rent open market value page reached with unknown value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
         }
       case FOR6048                     =>
         controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url
       case _                           =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets.name)
+          _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets)
         ) match {
-          case Some("yes") =>
+          case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
-          case Some("no")  =>
+          case _               =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
-          case _           =>
-            logger.warn(s"Back link for rent increase by RPI page reached with unknown open market value")
-            controllers.routes.TaskListController.show().url
         }
     }
 }

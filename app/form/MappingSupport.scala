@@ -23,22 +23,20 @@ import form.BuildingNameNumberMapping.validateBuildingNameNumber
 import form.CountyMapping.validateCounty
 import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
-import form.Formats.{answersYesNoDefFormat, given}
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
-import models.AnnualRent
+import form.Scala3EnumFieldMapping.enumMappingRequired
 import models.submissions.*
-import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutyouandtheproperty.*
 import models.submissions.common.*
+import models.submissions.common.ResponsibilityParty.*
 import models.submissions.connectiontoproperty.*
-import models.submissions.notconnected.PastConnectionType
 import play.api.data.Forms.*
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
-import play.api.data.{Forms, Mapping}
+import play.api.data.Mapping
 import play.api.i18n.Messages
 import util.NumberUtil.zeroBigDecimal
 
@@ -58,70 +56,39 @@ object MappingSupport:
       case _            => None
     }
 
-  val userType: Mapping[UserType]                                               = Forms.of[UserType]
-  val typeOfLettingMapping: Mapping[TypeOfLetting]                              = Forms.of[TypeOfLetting]
-  val typeOfIncomeMapping: Mapping[TypeOfIncome]                                = Forms.of[TypeOfIncome]
-  val connectionToThePropertyType: Mapping[ConnectionToProperty]                = Forms.of[ConnectionToProperty]
-  val buildingOperatingHaveAWebsiteType: Mapping[BuildingOperationHaveAWebsite] =
-    Forms.of[BuildingOperationHaveAWebsite]
-  val vacantPropertiesType: Mapping[VacantPropertiesDetails]                    = Forms.of[VacantPropertiesDetails]
-  val cyaYesNo: Mapping[CYAYesNo]                                               = Forms.of[CYAYesNo]
-  val addressConnectionType: Mapping[AddressConnectionType]                     = Forms.of[AddressConnectionType]
-  val pastConnectionType: Mapping[PastConnectionType]                           = Forms.of[PastConnectionType]
-  val methodToFixCurrentRentsType: Mapping[MethodToFixCurrentRents]             = Forms.of[MethodToFixCurrentRents]
-  val renewablesPlantMapping: Mapping[RenewablesPlantDetails]                   = Forms.of[RenewablesPlantDetails]
-  val outsideRepairsType: Mapping[OutsideRepairs]                               = Forms.of[OutsideRepairs]
-  val insideRepairsType: Mapping[InsideRepairs]                                 = Forms.of[InsideRepairs]
-  val buildingInsuranceType: Mapping[BuildingInsurance]                         = Forms.of[BuildingInsurance]
+  val typeOfLettingMapping: Mapping[TypeOfLetting]                = enumMappingRequired(TypeOfLetting, Errors.typeOfLetting)
+  val typeOfIncomeMapping: Mapping[TypeOfIncome]                  = enumMappingRequired(TypeOfIncome, Errors.typeOfIncome)
+  val connectionToThePropertyType: Mapping[ConnectionToProperty]  =
+    enumMappingRequired(ConnectionToProperty, Errors.connectionToPropertyError)
+  val addressConnectionType: Mapping[AddressConnectionType]       =
+    enumMappingRequired(AddressConnectionType, Errors.isConnectedError)
+  val methodToFixCurrentRentType: Mapping[MethodToFixCurrentRent] =
+    enumMappingRequired(MethodToFixCurrentRent, Errors.methodToFixCurrentRents)
+  val renewablesPlantMapping: Mapping[RenewablesPlantDetails]     =
+    enumMappingRequired(RenewablesPlantDetails, Errors.renewablesPlant)
+  val outsideRepairsType: Mapping[OutsideRepairs]                 = enumMappingRequired(OutsideRepairs, Errors.outsideRepairs)
+  val insideRepairsType: Mapping[InsideRepairs]                   = enumMappingRequired(InsideRepairs, Errors.insideRepairs)
+  val buildingInsuranceType: Mapping[BuildingInsurance]           =
+    enumMappingRequired(BuildingInsurance, Errors.buildingInsurance)
 
-  val includeLicenseeType: Mapping[IncludeLicensees]            = Forms.of[IncludeLicensees]
-  val includeOtherPropertyType: Mapping[IncludeOtherProperties] = Forms.of[IncludeOtherProperties]
-  val onlyPartOfPropertyType: Mapping[OnlyPartOfProperties]     = Forms.of[OnlyPartOfProperties]
-  val onlyToLandType: Mapping[OnlyToLands]                      = Forms.of[OnlyToLands]
-  val shellUnitType: Mapping[ShellUnits]                        = Forms.of[ShellUnits]
+  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed]      =
+    enumMappingRequired(CurrentRentFixed, Errors.howIsCurrentRentFixed)
+  val whatIsYourRentBasedOnType: Mapping[CurrentRentBasedOn]    =
+    enumMappingRequired(CurrentRentBasedOn, Errors.currentRentBasedOn)
+  val currentPropertyUsedMapping: Mapping[CurrentPropertyUsed]  =
+    enumMappingRequired(CurrentPropertyUsed, Errors.propertyCurrentlyUsed)
+  val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] =
+    enumMappingRequired(TiedForGoodsInformation, Errors.tiedForGoodsDetails)
 
-  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed] = Forms.of[CurrentRentFixed]
+  val postcode: Mapping[String] = PostcodeMapping.postcode()
 
-  val whatIsYourRentBasedOnType: Mapping[CurrentRentBasedOn]                = Forms.of[CurrentRentBasedOn]
-  val includedInYourRentInformation: Mapping[IncludedInYourRentInformation] = Forms.of[IncludedInYourRentInformation]
+  private val postcodeAlternativeContact: Mapping[String] = PostcodeMapping.postcodeAlternativeContact()
 
-  val currentRentPayableWithin12MonthsType: Mapping[CurrentRentWithin12Months] = Forms.of[CurrentRentWithin12Months]
+  private val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
+  private val cdbMaxCurrencyAmount = 9999999.99
+  private val numberRegex: Regex   = """^[-+]?\d+$""".r
 
-  val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] = Forms.of[TiedForGoodsInformation]
-
-  // Lease or Agreement Details - Three Radio buttons on one page
-  val tenancy3Years: Mapping[TenancyThreeYears] = Forms.of[TenancyThreeYears]
-  val rent3Years: Mapping[RentThreeYears]       = Forms.of[RentThreeYears]
-  val underReview: Mapping[UnderReview]         = Forms.of[UnderReview]
-
-  val postcode: Mapping[String]                   = PostcodeMapping.postcode()
-  val postcodeAlternativeContact: Mapping[String] = PostcodeMapping.postcodeAlternativeContact()
-
-  val decimalRegex         = """^[0-9]{1,10}\.?[0-9]{0,2}$"""
-  val cdbMaxCurrencyAmount = 9999999.99
-  val intRegex: Regex      = """^\d{1,3}$""".r
-  val invalidCharRegex     = """^[0-9A-Za-z\s\-\,]+$"""
-
-  private val numberRegex: Regex = """^[-+]?\d+$""".r
-
-  lazy val annualRent: Mapping[AnnualRent] = mapping(
-    "annualRentExcludingVat" -> currencyMapping(".annualRentExcludingVat")
-  )(AnnualRent.apply)(o => Some(o.amount)).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
-
-  lazy val currentPropertyUsedMapping: Mapping[CurrentPropertyUsed] = Forms.of[CurrentPropertyUsed]
-
-  lazy val rentIncludeFixturesAndFittingsDetails: Mapping[AnnualRent] = mapping(
-    "rentIncludeFixturesAndFittingsDetails" -> currencyMapping(".rentIncludeFixturesAndFittingsDetails")
-  )(AnnualRent.apply)(o => Some(o.amount)).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
-
-  lazy val rentIncludeTradeServiceDetails: Mapping[AnnualRent] = mapping(
-    "sumIncludedInRent" -> currencyMapping(".sumIncludedInRent")
-  )(AnnualRent.apply)(o => Some(o.amount)).verifying(Errors.maxCurrencyAmountExceeded, _.amount <= cdbMaxCurrencyAmount)
-
-  val currency: Mapping[BigDecimal] = currencyMapping()
-
-  def createYesNoType(errorMessage: String): Mapping[AnswersYesNo] =
-    Forms.of[AnswersYesNo](using answersYesNoDefFormat(errorMessage))
+  def createYesNoType(errorMessage: String): Mapping[AnswersYesNo] = enumMappingRequired(AnswersYesNo, errorMessage)
 
   def currencyMapping(fieldErrorPart: String = ""): Mapping[BigDecimal] = default(text, "")
     .verifying(nonEmpty(errorMessage = Errors.annualRentExcludingVAT + fieldErrorPart))
@@ -211,20 +178,6 @@ object MappingSupport:
     "postcode"           -> postcode
   )(CorrespondenceAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def mandatoryBooleanWithError(message: String): Mapping[Boolean] =
-    optional(boolean)
-      .verifying(message, _.isDefined)
-      .transform((s: Option[Boolean]) => s.get, (v: Boolean) => Some(v))
-
-  val mandatoryBoolean: Mapping[Boolean] = optional(boolean)
-    .verifying(Errors.booleanMissing, _.isDefined)
-    .transform((s: Option[Boolean]) => s.get, (v: Boolean) => Some(v))
-
-  def intMapping(): Mapping[Int] = default(text, "0")
-    .verifying("error.invalid_number", x => x == "0" || intRegex.findFirstIn(x).isDefined)
-    .transform[Int](_.replace(",", "").toInt, _.toString)
-    .verifying(s"error.empty.required", _ >= 1)
-
   def between[T](
     minValue: T,
     maxValue: T,
@@ -265,14 +218,6 @@ object MappingSupport:
       if seq.size > 1 && seq.contains(noneOfTheseValue) then Invalid(ValidationError(errorMessage))
       else Valid
     }
-
-  def enumMapping[E](enumFromNameMethod: String => Option[E], getName: E => String): Mapping[Option[E]] =
-    default(text, "")
-      .transform(enumFromNameMethod, _.fold("")(getName))
-
-  def enumMappingSeq[E](enumFromNameMethod: String => Option[E], getName: E => String): Mapping[Seq[E]] =
-    seq(text)
-      .transform(_.flatMap(enumFromNameMethod), _.map(getName))
 
   def weeksInYearMapping: Mapping[Int] =
     weeksMapping("error.weeksInYearMapping.blank", "error.weeksInYearMapping.invalid")

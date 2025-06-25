@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,19 @@
 
 package models.submissions.connectiontoproperty
 
-import play.api.libs.json.{Json, OFormat}
+import models.Scala3EnumJsonFormat
+import play.api.libs.json.Format
 
-case class VacantProperties(
-  vacantProperties: VacantPropertiesDetails
-)
+/**
+  * @author Yuriy Tumakha
+  */
+enum AddressConnectionType(connectionType: String):
+  override def toString: String = connectionType
 
-object VacantProperties {
-  implicit val format: OFormat[VacantProperties] = Json.format
-}
+  case AddressConnectionTypeYes extends AddressConnectionType("yes")
+  case AddressConnectionTypeNo extends AddressConnectionType("no")
+  case AddressConnectionTypeYesChangeAddress extends AddressConnectionType("yes-change-address")
+end AddressConnectionType
+
+object AddressConnectionType:
+  implicit val format: Format[AddressConnectionType] = Scala3EnumJsonFormat.format

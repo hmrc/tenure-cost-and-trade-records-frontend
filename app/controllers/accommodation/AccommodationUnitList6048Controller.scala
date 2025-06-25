@@ -22,7 +22,8 @@ import form.accommodation.AccommodationUnitList6048Form.accommodationUnitList604
 import form.accommodation.RemoveLastUnit6048Form.removeLastUnit6048Form
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
 import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit}
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AccommodationNavigator
 import navigation.identifiers.AccommodationUnitListPageId
 import play.api.Logging

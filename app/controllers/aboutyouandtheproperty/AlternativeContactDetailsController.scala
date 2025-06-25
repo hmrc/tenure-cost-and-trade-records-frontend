@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AlternativeContactDetailsForm.alternativeContactDetailsForm
-import models.submissions.aboutyouandtheproperty.AlternativeContactDetails
+import models.submissions.aboutyouandtheproperty.AlternativeAddress
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AlternativeContactDetailsId
@@ -50,7 +50,7 @@ class AlternativeContactDetailsController @Inject() (
     Future.successful(
       Ok(
         alternativeContactDetailsView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.altContactInformation) match {
+          request.sessionData.aboutYouAndTheProperty.flatMap(_.alternativeContactAddress) match {
             case Some(altContactInformation) => alternativeContactDetailsForm.fill(altContactInformation)
             case _                           => alternativeContactDetailsForm
           },
@@ -61,11 +61,11 @@ class AlternativeContactDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AlternativeContactDetails](
+    continueOrSaveAsDraft[AlternativeAddress](
       alternativeContactDetailsForm,
       formWithErrors => BadRequest(alternativeContactDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAboutYouAndTheProperty(_.copy(altContactInformation = Some(data)))
+        val updatedData = updateAboutYouAndTheProperty(_.copy(alternativeContactAddress = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(AlternativeContactDetailsId, updatedData).apply(updatedData)))

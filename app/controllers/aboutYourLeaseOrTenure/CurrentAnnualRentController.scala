@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.common.{AnswerNo, AnswerYes}
-import models.{AnnualRent, Session}
+import models.submissions.common.AnswersYesNo.*
+import models.Session
 import models.ForType.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentAnnualRentPageId
@@ -72,7 +72,7 @@ class CurrentAnnualRentController @Inject() (
         ).flatten.sum
       )
 
-    continueOrSaveAsDraft[AnnualRent](
+    continueOrSaveAsDraft[BigDecimal](
       currentAnnualRentForm(includedPartsSum),
       formWithErrors =>
         BadRequest(
@@ -98,10 +98,7 @@ class CurrentAnnualRentController @Inject() (
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
-          case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
-          case _               =>
-            logger.warn(s"Back link for current annual rent page reached with unknown value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
         }
       case _       => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
     }

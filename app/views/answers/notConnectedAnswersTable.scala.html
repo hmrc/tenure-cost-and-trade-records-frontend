@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
  * limitations under the License.
  *@
 
+@import models.submissions.common.AnswersYesNo.*
+@import models.submissions.connectiontoproperty.AddressConnectionType.*
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 
@@ -33,15 +35,14 @@
 
 @govukSummaryList(SummaryList(rows =
     stillConnectedDetailsAnswers.row("key.still.connected",
-        _.addressConnectionType.map(_.name).map(v =>
-            if(v.equals("yes")) messages("label.yes.iawn")
-            else if(stillConnectedDetailsAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) messages("label.areYouConnected.addressUpdate")
+        _.addressConnectionType.map(v =>
+            if(v == AddressConnectionTypeYes) messages("label.yes.iawn")
+            else if(stillConnectedDetailsAnswers.answers.exists(_.addressConnectionType.contains(AddressConnectionTypeYesChangeAddress))) messages("label.areYouConnected.addressUpdate")
             else messages("label.no.na")
         ),
         controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
             removeConnectionDetailsAnswers.row("key.ever.connected",
-                _.pastConnectionType.map(_.name).map(v =>
-                    if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
+                _.pastConnectionType.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                 controllers.notconnected.routes.PastConnectionController.show(), "pastConnectionType")
 ))
 

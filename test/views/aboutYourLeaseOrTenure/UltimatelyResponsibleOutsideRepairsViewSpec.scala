@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
-import models.submissions.common._
+import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -66,7 +66,7 @@ class UltimatelyResponsibleOutsideRepairsViewSpec extends QuestionViewBehaviours
         doc,
         "outsideRepairs",
         "outsideRepairs",
-        OutsideRepairsLandlord.name,
+        OutsideRepairsLandlord.toString,
         false
       )
       assertContainsText(doc, messages("label.landlord"))
@@ -78,7 +78,7 @@ class UltimatelyResponsibleOutsideRepairsViewSpec extends QuestionViewBehaviours
         doc,
         "outsideRepairs-2",
         "outsideRepairs",
-        OutsideRepairsTenant.name,
+        OutsideRepairsTenant.toString,
         false
       )
       assertContainsText(doc, messages("label.tenant"))
@@ -90,7 +90,7 @@ class UltimatelyResponsibleOutsideRepairsViewSpec extends QuestionViewBehaviours
         doc,
         "outsideRepairs-3",
         "outsideRepairs",
-        OutsideRepairsBoth.name,
+        OutsideRepairsBoth.toString,
         false
       )
       assertContainsText(doc, messages("label.both"))

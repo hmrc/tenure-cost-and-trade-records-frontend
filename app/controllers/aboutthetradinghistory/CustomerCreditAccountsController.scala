@@ -23,7 +23,7 @@ import form.aboutthetradinghistory.CustomerCreditAccountsForm.customerCreditAcco
 import models.Session
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CustomerCreditAccounts}
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CustomerCreditAccountsId
 import play.api.i18n.I18nSupport

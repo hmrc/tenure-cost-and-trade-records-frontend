@@ -20,7 +20,7 @@ import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.{IncentivesPaymentsConditionsDetails, TenantAdditionsDisregardedDetails}
-import models.submissions.common.*
+import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier

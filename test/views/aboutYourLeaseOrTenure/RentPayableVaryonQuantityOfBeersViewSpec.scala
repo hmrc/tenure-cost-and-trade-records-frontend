@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -60,7 +60,7 @@ class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[Re
         doc,
         "rentPayableVaryOnQuantityOfBeers",
         "rentPayableVaryOnQuantityOfBeers",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -72,7 +72,7 @@ class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[Re
         doc,
         "rentPayableVaryOnQuantityOfBeers-2",
         "rentPayableVaryOnQuantityOfBeers",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ package controllers.notconnected
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.notconnected.PastConnectionForm.pastConnectionForm
-import models.submissions.notconnected.PastConnectionType
 import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
+import models.submissions.common.AnswersYesNo
 import navigation.RemoveConnectionNavigator
 import navigation.identifiers.PastConnectionId
 import play.api.i18n.I18nSupport
@@ -46,14 +46,9 @@ class PastConnectionController @Inject() (
     Future.successful(
       Ok(
         pastConnectionView(
-          request.sessionData.removeConnectionDetails match {
-            case Some(removeConnectionDetails) =>
-              removeConnectionDetails.pastConnectionType match {
-                case Some(pastConnection) => pastConnectionForm.fill(pastConnection)
-                case _                    => pastConnectionForm
-              }
-            case _                             => pastConnectionForm
-          },
+          request.sessionData.removeConnectionDetails
+            .flatMap(_.pastConnectionType)
+            .fold(pastConnectionForm)(pastConnectionForm.fill),
           request.sessionData.toSummary,
           calculateBackLink
         )
@@ -62,7 +57,7 @@ class PastConnectionController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PastConnectionType](
+    continueOrSaveAsDraft[AnswersYesNo](
       pastConnectionForm,
       formWithErrors =>
         BadRequest(pastConnectionView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),

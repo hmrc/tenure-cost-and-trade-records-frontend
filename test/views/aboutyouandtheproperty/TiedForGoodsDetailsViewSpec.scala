@@ -19,6 +19,7 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.TiedForGoodsDetailsForm
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty._
+import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -59,7 +60,7 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
         doc,
         "tiedForGoodsDetails",
         "tiedForGoodsDetails",
-        TiedForGoodsInformationDetailsFullTie.name,
+        TiedForGoodsInformationDetailsFullTie.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("tiedForGoodsDetails.fullTie"))
@@ -71,7 +72,7 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
         doc,
         "tiedForGoodsDetails-2",
         "tiedForGoodsDetails",
-        TiedForGoodsInformationDetailsBeerOnly.name,
+        TiedForGoodsInformationDetailsBeerOnly.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("tiedForGoodsDetails.beerOnly"))
@@ -83,7 +84,7 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
         doc,
         "tiedForGoodsDetails-3",
         "tiedForGoodsDetails",
-        TiedForGoodsInformationDetailsPartialTie.name,
+        TiedForGoodsInformationDetailsPartialTie.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("tiedForGoodsDetails.partialTie"))

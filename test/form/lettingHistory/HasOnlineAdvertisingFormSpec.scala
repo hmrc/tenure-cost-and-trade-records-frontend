@@ -17,7 +17,7 @@
 package form.lettingHistory
 
 import form.lettingHistory.HasOnlineAdvertisingForm.theForm
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 
 class HasOnlineAdvertisingFormSpec extends FormSpec:
 

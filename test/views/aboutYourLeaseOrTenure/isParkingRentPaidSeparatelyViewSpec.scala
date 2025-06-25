@@ -18,7 +18,8 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyForm
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -61,7 +62,7 @@ class isParkingRentPaidSeparatelyViewSpec extends QuestionViewBehaviours[Answers
         doc,
         "isParkingRentPaidSeparately",
         "isParkingRentPaidSeparately",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +74,7 @@ class isParkingRentPaidSeparatelyViewSpec extends QuestionViewBehaviours[Answers
         doc,
         "isParkingRentPaidSeparately-2",
         "isParkingRentPaidSeparately",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

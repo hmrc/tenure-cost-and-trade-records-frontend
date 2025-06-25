@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -62,7 +62,7 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec
         doc,
         "rentPayableVaryAccordingToGrossOrNet",
         "rentPayableVaryAccordingToGrossOrNet",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -74,7 +74,7 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec
         doc,
         "rentPayableVaryAccordingToGrossOrNet-2",
         "rentPayableVaryAccordingToGrossOrNet",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

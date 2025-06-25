@@ -20,6 +20,7 @@
 @import util.DateUtilLocalised
 @import java.time.LocalDate
 @import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
+@import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
 @import util.NumberUtil.*
 @import actions.SessionRequest
 
@@ -38,7 +39,7 @@
 @classes = @{"govuk-!-padding-bottom-3 govuk-!-padding-top-3"}
 
     @intermittentChoice = @{
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant))
     }
 
 @rowWithLink(msgkey: String, entryValue: IncomeExpenditure6076Entry => BigDecimal, url: IncomeExpenditure6076Entry => String) = @{
@@ -79,7 +80,7 @@
                     rowWithLink("totalGross", _.totalGrossReceipts, _.grossReceiptsUrl),
                     rowWithLink("totalBaseload", _.totalBaseLoadReceipts, _.baseLoadReceiptsUrl),
                     rowWithLink("totalOther", _.totalOtherIncome, _.otherIncomeUrl),
-                    if(intermittentChoice.contains("intermittent")){
+                    if(intermittentChoice.contains(Intermittent)){
                         rowWithLink("totalCoS", _.totalCostOfSalesIntermittent, _.costOfSalesIntermittentUrl)
                     } else {
                         rowWithLink("totalCoS", _.totalCostOfSales, _.costOfSalesUrl)

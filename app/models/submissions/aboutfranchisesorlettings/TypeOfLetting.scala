@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,38 +16,20 @@
 
 package models.submissions.aboutfranchisesorlettings
 
-import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
 
-sealed trait TypeOfLetting extends NamedEnum {
-  val key = "typeOfLetting"
-}
+/**
+  * @author Yuriy Tumakha
+  */
+enum TypeOfLetting(typeOfLetting: String):
+  override def toString: String = typeOfLetting
 
-object TypeOfLettingAutomatedTellerMachine extends TypeOfLetting {
-  val name = "automatedTellerMachine"
-}
+  case TypeOfLettingAutomatedTellerMachine extends TypeOfLetting("automatedTellerMachine")
+  case TypeOfLettingTelecomMast extends TypeOfLetting("telecomMast")
+  case TypeOfLettingAdvertisingRight extends TypeOfLetting("advertisingRight")
+  case TypeOfLettingOther extends TypeOfLetting("other")
+end TypeOfLetting
 
-object TypeOfLettingTelecomMast extends TypeOfLetting {
-  val name = "telecomMast"
-}
-
-object TypeOfLettingAdvertisingRight extends TypeOfLetting {
-  val name = "advertisingRight"
-}
-
-object TypeOfLettingOther extends TypeOfLetting {
-  val name = "other"
-}
-
-object TypeOfLetting extends NamedEnumSupport[TypeOfLetting] {
-  implicit val format: Format[TypeOfLetting] = EnumFormat(TypeOfLetting)
-
-  override def all: Seq[TypeOfLetting] = List(
-    TypeOfLettingAutomatedTellerMachine,
-    TypeOfLettingTelecomMast,
-    TypeOfLettingAdvertisingRight,
-    TypeOfLettingOther
-  )
-
-  val key = all.head.key
-}
+object TypeOfLetting:
+  implicit val format: Format[TypeOfLetting] = Scala3EnumJsonFormat.format

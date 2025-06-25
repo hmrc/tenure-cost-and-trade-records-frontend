@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,17 +49,15 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
 
     Ok(
       currentRentPayableWithin12MonthsView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentPayableWithin12Months) match {
-          case Some(currentRentPayableWithin12Months) =>
-            currentRentPayableWithin12MonthsForm.fill(currentRentPayableWithin12Months)
-          case _                                      => currentRentPayableWithin12MonthsForm
-        },
+        request.sessionData.aboutLeaseOrAgreementPartOne
+          .flatMap(_.currentRentPayableWithin12Months)
+          .fold(currentRentPayableWithin12MonthsForm)(currentRentPayableWithin12MonthsForm.fill),
         request.sessionData.toSummary
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CurrentRentPayableWithin12Months](
       currentRentPayableWithin12MonthsForm,
       formWithErrors => BadRequest(currentRentPayableWithin12MonthsView(formWithErrors, request.sessionData.toSummary)),

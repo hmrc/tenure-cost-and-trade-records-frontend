@@ -18,7 +18,8 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.RenewablesPlantForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.{BaseLoad, Intermittent, RenewablesPlant}
+import models.submissions.aboutyouandtheproperty.RenewablesPlant
+import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -62,7 +63,7 @@ class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlant] {
         doc,
         "renewablesPlant",
         "renewablesPlant",
-        Intermittent.name,
+        Intermittent.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("renewablesPlant.intermittent.label"))
@@ -74,7 +75,7 @@ class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlant] {
         doc,
         "renewablesPlant-2",
         "renewablesPlant",
-        BaseLoad.name,
+        Baseload.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("renewablesPlant.baseload.label"))

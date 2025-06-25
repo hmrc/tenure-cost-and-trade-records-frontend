@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,51 +16,27 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
 
-sealed trait CurrentPropertyUsed extends NamedEnum { val key = "propertyCurrentlyUsed" }
+/**
+  * @author Yuriy Tumakha
+  */
+enum CurrentPropertyUsed(propertyCurrentlyUsed: String):
+  override def toString: String = propertyCurrentlyUsed
 
-object CurrentPropertyPublicHouse extends CurrentPropertyUsed { val name = "publicHouse" }
+  case CurrentPropertyPublicHouse extends CurrentPropertyUsed("publicHouse")
+  case CurrentPropertyWineBarOrCafe extends CurrentPropertyUsed("wineCafeBar")
+  case CurrentPropertyOtherBar extends CurrentPropertyUsed("otherBar")
+  case CurrentPropertyPubAndRestaurant extends CurrentPropertyUsed("pubRestaurant")
+  case CurrentPropertyLicencedRestaurant extends CurrentPropertyUsed("licencedRestaurant")
+  case CurrentPropertyHotel extends CurrentPropertyUsed("hotel")
+  case CurrentPropertyDiscoOrNightclub extends CurrentPropertyUsed("discoNightclub")
+  case CurrentPropertyOther extends CurrentPropertyUsed("other")
+  case CurrentPropertyHealthSpa extends CurrentPropertyUsed("healthSpa")
+  case CurrentPropertyLodgeAndRestaurant extends CurrentPropertyUsed("lodgeAndRestaurant")
+  case CurrentPropertyConferenceCentre extends CurrentPropertyUsed("conferenceCentre")
+end CurrentPropertyUsed
 
-object CurrentPropertyWineBarOrCafe extends CurrentPropertyUsed { val name = "wineCafeBar" }
-
-object CurrentPropertyOtherBar extends CurrentPropertyUsed { val name = "otherBar" }
-
-object CurrentPropertyPubAndRestaurant extends CurrentPropertyUsed { val name = "pubRestaurant" }
-
-object CurrentPropertyLicencedRestaurant extends CurrentPropertyUsed { val name = "licencedRestaurant" }
-
-object CurrentPropertyHotel extends CurrentPropertyUsed { val name = "hotel" }
-
-object CurrentPropertyDiscoOrNightclub extends CurrentPropertyUsed { val name = "discoNightclub" }
-
-object CurrentPropertyOther extends CurrentPropertyUsed { val name = "other" }
-
-object CurrentPropertyHealthSpa extends CurrentPropertyUsed { val name = "healthSpa" }
-
-object CurrentPropertyLodgeAndRestaurant extends CurrentPropertyUsed { val name = "lodgeAndRestaurant" }
-
-object CurrentPropertyConferenceCentre extends CurrentPropertyUsed { val name = "conferenceCentre" }
-
-object CurrentPropertyUsed extends NamedEnumSupport[CurrentPropertyUsed] {
-  implicit val format: Format[CurrentPropertyUsed] = EnumFormat(CurrentPropertyUsed)
-
-  override def all = List(
-    CurrentPropertyPublicHouse,
-    CurrentPropertyWineBarOrCafe,
-    CurrentPropertyOtherBar,
-    CurrentPropertyPubAndRestaurant,
-    CurrentPropertyLicencedRestaurant,
-    CurrentPropertyHotel,
-    CurrentPropertyDiscoOrNightclub,
-    CurrentPropertyOther,
-    CurrentPropertyHealthSpa,
-    CurrentPropertyLodgeAndRestaurant,
-    CurrentPropertyConferenceCentre
-  )
-
-  val key = all.head.key
-
-  def withName(name: String): Option[CurrentPropertyUsed] = all.find(_.name == name)
-}
+object CurrentPropertyUsed:
+  implicit val format: Format[CurrentPropertyUsed] = Scala3EnumJsonFormat.format

@@ -19,8 +19,12 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartTwo, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, PropertyUseLeasebackArrangement, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs}
-import models.submissions.common.{AnswerNo, BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
+import models.submissions.aboutYourLeaseOrTenure.*
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
+import models.submissions.common.AnswersYesNo.*
+import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
+import models.submissions.common.ResponsibilityParty.InsideRepairs.*
+import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
@@ -181,7 +185,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         aboutLeaseOrAgreementPartTwo = Some(
           session6076Full.aboutLeaseOrAgreementPartTwo.getOrElse(
             AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails =
-              Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentsAgreement))
+              Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentAgreement))
             )
           )
         )

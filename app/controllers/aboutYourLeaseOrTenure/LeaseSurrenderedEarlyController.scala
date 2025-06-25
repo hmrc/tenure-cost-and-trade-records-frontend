@@ -22,7 +22,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyForm.leaseSurrenderedEarlyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.LeaseSurrenderedEarly
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.LeaseSurrenderedEarlyId
 import play.api.i18n.I18nSupport
@@ -81,8 +81,7 @@ class LeaseSurrenderedEarlyController @Inject() (
       .map(_.tenantAdditionalDisregarded) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
-      case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-      case _               => controllers.routes.TaskListController.show().url
+      case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
     }
 
 }

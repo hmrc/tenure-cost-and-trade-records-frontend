@@ -25,7 +25,7 @@ import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CommercialLettingQuestionId
 import play.api.Logging

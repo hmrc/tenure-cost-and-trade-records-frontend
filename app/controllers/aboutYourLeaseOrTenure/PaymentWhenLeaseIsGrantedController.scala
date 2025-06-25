@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayWhenLeaseGrantedId
 import play.api.Logging
@@ -87,18 +88,15 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#payment-when-lease-is-granted"
       case _    =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.payACapitalSumDetails.map(_.capitalSumOrPremium.name)
+          _.payACapitalSumDetails.map(_.capitalSumOrPremium)
         ) match {
-          case Some("yes") =>
+          case Some(AnswerYes) =>
             answers.forType match {
               case FOR6030 =>
                 controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show().url
               case _       => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
             }
-          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
-          case _           =>
-            logger.warn(s"Back link for pay capital sum page reached with unknown tenants additions disregarded value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
         }
     }
 

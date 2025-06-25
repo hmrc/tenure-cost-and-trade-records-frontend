@@ -17,7 +17,7 @@
 package form.lettingHistory
 
 import form.lettingHistory.HasCompletedLettingsForm.theForm
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 
 class HasCompletedLettingsFormSpec extends FormSpec:
 

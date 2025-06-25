@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
+import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -66,7 +67,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CheckYourAnswersAboutYourLeaseOrTenure](
       checkYourAnswersAboutYourLeaseOrTenureForm,
       formWithErrors =>
@@ -100,26 +101,26 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions.name)
+      _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions)
     ) match {
-      case Some("yes") =>
+      case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show().url
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
-      case _           =>
+      case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
+      case _               =>
         (
           answers.aboutLeaseOrAgreementPartOne.flatMap(
-            _.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears.name)
+            _.leaseOrAgreementYearsDetails.map(_.commenceWithinThreeYears)
           ),
           answers.aboutLeaseOrAgreementPartOne.flatMap(
-            _.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears.name)
+            _.leaseOrAgreementYearsDetails.map(_.agreedReviewedAlteredThreeYears)
           ),
           answers.aboutLeaseOrAgreementPartOne.flatMap(
-            _.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated.name)
+            _.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated)
           )
         ) match {
-          case (Some("no"), Some("no"), Some("no")) =>
+          case (Some(AnswerNo), Some(AnswerNo), Some(AnswerNo)) =>
             controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show().url
-          case _                                    =>
+          case _                                                =>
             answers.forType match {
               case FOR6010 =>
                 controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url

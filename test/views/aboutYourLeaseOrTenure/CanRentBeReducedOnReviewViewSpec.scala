@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm
 import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -60,7 +60,7 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeR
         doc,
         "canRentBeReducedOnReview",
         "canRentBeReducedOnReview",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -72,7 +72,7 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeR
         doc,
         "canRentBeReducedOnReview-2",
         "canRentBeReducedOnReview",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import connectors.{Audit, MockAddressLookup}
 import models.Session
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress, ContactDetailsQuestion}
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
@@ -145,7 +145,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
 
         val session = captor[Session]
         verify(repository, once).saveOrUpdate(session)(using any)
-        session.getValue.aboutYouAndTheProperty.value.altContactInformation.value.alternativeContactAddress shouldBe AlternativeAddress(
+        session.getValue.aboutYouAndTheProperty.value.alternativeContactAddress.value shouldBe AlternativeAddress(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
           street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
           town = addressLookupConfirmedAddress.address.lines.get.last,

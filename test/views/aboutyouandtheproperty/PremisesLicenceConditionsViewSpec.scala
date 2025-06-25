@@ -18,7 +18,8 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PremisesLicenseConditionsForm
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -61,7 +62,7 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYe
         doc,
         "premisesLicenseConditions",
         "premisesLicenseConditions",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +74,7 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYe
         doc,
         "premisesLicenseConditions-2",
         "premisesLicenseConditions",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

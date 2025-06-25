@@ -17,12 +17,11 @@
 package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm
-import models.AnnualRent
 import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[AnnualRent] {
+class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[BigDecimal] {
 
   val messageKeyPrefix = "currentAnnualRent"
 
@@ -32,7 +31,7 @@ class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[AnnualRent] {
 
   def createView = () => currentAnnualRentView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnnualRent]) =>
+  def createViewUsingForm = (form: Form[BigDecimal]) =>
     currentAnnualRentView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
   "Current annual rent view" must {
 

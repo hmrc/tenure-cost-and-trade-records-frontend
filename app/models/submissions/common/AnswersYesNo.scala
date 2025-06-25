@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,33 +16,25 @@
 
 package models.submissions.common
 
-import models.{EnumFormat, NamedEnum, NamedEnumSupport}
+import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
 
-sealed trait AnswersYesNo extends NamedEnum {
-  val key = "answersYesNo"
-}
-object AnswerYes extends AnswersYesNo {
-  val name = "yes"
-}
-object AnswerNo extends AnswersYesNo {
-  val name = "no"
-}
+/**
+  * @author Yuriy Tumakha
+  */
+enum AnswersYesNo(answer: String):
+  override def toString: String = answer
 
-object AnswersYesNo extends NamedEnumSupport[AnswersYesNo] {
+  def toBoolean: Boolean = this == AnswerYes
 
-  implicit val format: Format[AnswersYesNo] = EnumFormat(
-    AnswersYesNo
-  )
+  case AnswerYes extends AnswersYesNo("yes")
+  case AnswerNo extends AnswersYesNo("no")
+end AnswersYesNo
 
-  val all: Seq[AnswersYesNo] = List(AnswerYes, AnswerNo)
+object AnswersYesNo:
 
-  val key: String = all.head.key
+  implicit val format: Format[AnswersYesNo] = Scala3EnumJsonFormat.format
 
-  def apply(answerYes: Boolean): AnswersYesNo =
-    if (answerYes) AnswerYes else AnswerNo
+  def apply(answerYes: Boolean): AnswersYesNo = if (answerYes) AnswerYes else AnswerNo
 
-  extension (answer: AnswersYesNo) def toBoolean = answer == AnswerYes
-
-  extension (bool: Boolean) def toAnswer = if bool then AnswerYes else AnswerNo
-}
+  extension (boolean: Boolean) def toAnswer: AnswersYesNo = AnswersYesNo(boolean)

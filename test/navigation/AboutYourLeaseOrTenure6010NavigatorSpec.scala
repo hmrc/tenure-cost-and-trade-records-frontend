@@ -19,9 +19,13 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartTwo, CurrentRentFixedNewLeaseAgreement, HowIsCurrentRentFixed, MethodToFixCurrentRentDetails, MethodToFixCurrentRentsAgreement, UltimatelyResponsibleBuildingInsurance, UltimatelyResponsibleInsideRepairs, UltimatelyResponsibleOutsideRepairs}
-import models.submissions.common.{BuildingInsuranceLandlord, InsideRepairsLandlord, OutsideRepairsLandlord}
-import navigation.identifiers._
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
+import models.submissions.aboutYourLeaseOrTenure.*
+import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
+import models.submissions.common.ResponsibilityParty.InsideRepairs.*
+import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -221,7 +225,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
       val session = session6010.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails =
-            Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentsAgreement))
+            Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentAgreement))
           )
         )
       )

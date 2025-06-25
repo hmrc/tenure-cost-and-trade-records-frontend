@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
 import play.api.Configuration
 import crypto.MongoCrypto
-import models.submissions.aboutyouandtheproperty.{AlternativeAddress, AlternativeContactDetails, SensitiveAlternativeAddress, SensitiveAlternativeContactDetails}
+import models.submissions.aboutyouandtheproperty.{AlternativeAddress, SensitiveAlternativeAddress}
 import utils.SensitiveTestHelper
 
 class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
@@ -31,20 +31,16 @@ class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matche
   "SensitiveAlternativeContactDetails" should {
 
     "encrypt and decrypt sensitive fields correctly" in {
-      val originalAlternativeContactDetails = AlternativeContactDetails(
-        alternativeContactAddress = AlternativeAddress(
+      val originalAlternativeContactDetails =
+        AlternativeAddress(
           buildingNameNumber = "123",
           street1 = Some("Street 1"),
           town = "Town",
           county = Some("County"),
           postcode = "12345"
         )
-      )
 
-      val sensitiveAlternativeContactDetails = SensitiveAlternativeContactDetails(originalAlternativeContactDetails)
-
-      sensitiveAlternativeContactDetails.alternativeContactAddress
-        .isInstanceOf[SensitiveAlternativeAddress] shouldBe true
+      val sensitiveAlternativeContactDetails = SensitiveAlternativeAddress(originalAlternativeContactDetails)
 
       sensitiveAlternativeContactDetails.decryptedValue shouldBe originalAlternativeContactDetails
     }

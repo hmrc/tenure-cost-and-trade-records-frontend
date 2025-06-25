@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.PropertyUpdatesForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.PropertyUpdates
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -60,7 +60,7 @@ class PropertyUpdatesViewSpec extends QuestionViewBehaviours[PropertyUpdates] {
         doc,
         "propertyUpdates",
         "propertyUpdates",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -72,7 +72,7 @@ class PropertyUpdatesViewSpec extends QuestionViewBehaviours[PropertyUpdates] {
         doc,
         "propertyUpdates-2",
         "propertyUpdates",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))

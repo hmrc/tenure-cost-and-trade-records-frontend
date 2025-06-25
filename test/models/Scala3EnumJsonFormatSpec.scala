@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,12 @@ import play.api.libs.json.{Format, JsError, Json}
 /**
   * @author Yuriy Tumakha
   */
-class Scala3EnumFormatSpec extends AnyFlatSpec with should.Matchers {
+class Scala3EnumJsonFormatSpec extends AnyFlatSpec with should.Matchers {
 
   enum Color:
     case Red, Green, Blue
 
-  implicit val format: Format[Color] = Scala3EnumFormat.format
+  implicit val format: Format[Color] = Scala3EnumJsonFormat.format
 
   import Color.*
 

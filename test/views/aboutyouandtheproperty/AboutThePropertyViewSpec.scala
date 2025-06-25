@@ -20,6 +20,7 @@ import form.aboutyouandtheproperty.AboutThePropertyForm
 import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutyouandtheproperty._
+import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -68,7 +69,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed",
         "propertyCurrentlyUsed",
-        CurrentPropertyPublicHouse.name,
+        CurrentPropertyPublicHouse.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.publicHouse"))
@@ -80,7 +81,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-2",
         "propertyCurrentlyUsed",
-        CurrentPropertyWineBarOrCafe.name,
+        CurrentPropertyWineBarOrCafe.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.wineCafeBar"))
@@ -92,7 +93,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-3",
         "propertyCurrentlyUsed",
-        CurrentPropertyOtherBar.name,
+        CurrentPropertyOtherBar.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.otherBar"))
@@ -104,7 +105,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-4",
         "propertyCurrentlyUsed",
-        CurrentPropertyPubAndRestaurant.name,
+        CurrentPropertyPubAndRestaurant.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.pubRestaurant"))
@@ -116,7 +117,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-5",
         "propertyCurrentlyUsed",
-        CurrentPropertyLicencedRestaurant.name,
+        CurrentPropertyLicencedRestaurant.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.licencedRestaurant"))
@@ -128,7 +129,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-6",
         "propertyCurrentlyUsed",
-        CurrentPropertyHotel.name,
+        CurrentPropertyHotel.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.hotel"))
@@ -140,7 +141,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-7",
         "propertyCurrentlyUsed",
-        CurrentPropertyDiscoOrNightclub.name,
+        CurrentPropertyDiscoOrNightclub.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.discoNightclub"))
@@ -152,7 +153,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-8",
         "propertyCurrentlyUsed",
-        CurrentPropertyOther.name,
+        CurrentPropertyOther.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.other"))
@@ -195,7 +196,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed",
         "propertyCurrentlyUsed",
-        CurrentPropertyHotel.name,
+        CurrentPropertyHotel.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.hotel"))
@@ -207,7 +208,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-2",
         "propertyCurrentlyUsed",
-        CurrentPropertyHealthSpa.name,
+        CurrentPropertyHealthSpa.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.healthSpa"))
@@ -219,7 +220,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-3",
         "propertyCurrentlyUsed",
-        CurrentPropertyLodgeAndRestaurant.name,
+        CurrentPropertyLodgeAndRestaurant.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.lodgeAndRestaurant"))
@@ -231,7 +232,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-4",
         "propertyCurrentlyUsed",
-        CurrentPropertyConferenceCentre.name,
+        CurrentPropertyConferenceCentre.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.conferenceCentre"))
@@ -243,71 +244,11 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
         doc,
         "propertyCurrentlyUsed-5",
         "propertyCurrentlyUsed",
-        CurrentPropertyOther.name,
+        CurrentPropertyOther.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("propertyCurrentlyUsed.other"))
     }
-
-    //    "contain checkbox for the value hotel" in {
-    //      val doc = asDocument(createViewUsingForm6015(form))
-    //      assertContainsCheckBox(
-    //        doc,
-    //        "propertyCurrentlyUsed",
-    //        "propertyCurrentlyUsed",
-    //        CurrentPropertyHotel.name,
-//        isChecked = false
-//      )
-//      assertContainsText(doc, messages("propertyCurrentlyUsed.hotel"))
-//    }
-//
-//    "contain checkbox for the value Health spa" in {
-//      val doc = asDocument(createViewUsingForm6015(form))
-//      assertContainsCheckBox(
-//        doc,
-//        "propertyCurrentlyUsed-2",
-//        "propertyCurrentlyUsed",
-//        CurrentPropertyHealthSpa.name,
-//        isChecked = false
-//      )
-//      assertContainsText(doc, messages("propertyCurrentlyUsed.healthSpa"))
-//    }
-//
-//    "contain checkbox for the value lodge and restaurant" in {
-//      val doc = asDocument(createViewUsingForm6015(form))
-//      assertContainsCheckBox(
-//        doc,
-//        "propertyCurrentlyUsed-3",
-//        "propertyCurrentlyUsed",
-//        CurrentPropertyLodgeAndRestaurant.name,
-//        isChecked = false
-//      )
-//      assertContainsText(doc, messages("propertyCurrentlyUsed.lodgeAndRestaurant"))
-//    }
-//
-//    "contain checkbox for the value conference centre" in {
-//      val doc = asDocument(createViewUsingForm6015(form))
-//      assertContainsCheckBox(
-//        doc,
-//        "propertyCurrentlyUsed-4",
-//        "propertyCurrentlyUsed",
-//        CurrentPropertyConferenceCentre.name,
-//        isChecked = false
-//      )
-//      assertContainsText(doc, messages("propertyCurrentlyUsed.conferenceCentre"))
-//    }
-//
-//    "contain checkbox for the value other" in {
-//      val doc = asDocument(createViewUsingForm6015(form))
-//      assertContainsCheckBox(
-//        doc,
-//        "propertyCurrentlyUsed-5",
-//        "propertyCurrentlyUsed",
-//        CurrentPropertyOther.name,
-//        isChecked = false
-//      )
-//      assertContainsText(doc, messages("propertyCurrentlyUsed.other"))
-//    }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm6015(form))

@@ -52,7 +52,7 @@
             vatRegistered.map { vatRegistered =>
                 summaryListRow(
                     keyText    = messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered"),
-                    valueText  = vatRegistered.name.capitalize,
+                    valueText  = messages(s"label.$vatRegistered"),
                     changeCall = controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show,
                     noBorder = true
                 )

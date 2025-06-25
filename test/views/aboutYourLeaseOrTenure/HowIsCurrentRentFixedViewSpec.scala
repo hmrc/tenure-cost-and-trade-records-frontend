@@ -19,7 +19,8 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.{CurrentRentFixedInterimRent, CurrentRentFixedNewLeaseAgreement, CurrentRentFixedRenewalLeaseTenancy, CurrentRentFixedRentReview, CurrentRentFixedSaleLeaseback, HowIsCurrentRentFixed}
+import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
@@ -78,7 +79,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
         doc,
         "howIsCurrentRentFixed",
         "howIsCurrentRentFixed",
-        CurrentRentFixedNewLeaseAgreement.name,
+        CurrentRentFixedNewLeaseAgreement.toString,
         false
       )
       assertContainsText(doc, messages("label.newLeaseAgreement"))
@@ -90,7 +91,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
         doc,
         "howIsCurrentRentFixed-2",
         "howIsCurrentRentFixed",
-        CurrentRentFixedInterimRent.name,
+        CurrentRentFixedInterimRent.toString,
         false
       )
       assertContainsText(doc, messages("label.interimRent"))
@@ -102,7 +103,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
         doc,
         "howIsCurrentRentFixed-3",
         "howIsCurrentRentFixed",
-        CurrentRentFixedRentReview.name,
+        CurrentRentFixedRentReview.toString,
         false
       )
       assertContainsText(doc, messages("label.rentReview"))
@@ -114,7 +115,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
         doc,
         "howIsCurrentRentFixed-4",
         "howIsCurrentRentFixed",
-        CurrentRentFixedRenewalLeaseTenancy.name,
+        CurrentRentFixedRenewalLeaseTenancy.toString,
         false
       )
       assertContainsText(doc, messages("label.renewalLeaseTenancy"))
@@ -126,7 +127,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
         doc,
         "howIsCurrentRentFixed-5",
         "howIsCurrentRentFixed",
-        CurrentRentFixedSaleLeaseback.name,
+        CurrentRentFixedSaleLeaseback.toString,
         false
       )
       assertContainsText(doc, messages("label.saleLeaseback"))

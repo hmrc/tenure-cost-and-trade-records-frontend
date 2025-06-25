@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,10 +23,12 @@ import scala.deriving.Mirror
 
 /**
   * Scala 3 enum JSON (de)serializer.
+  *
+  * @author Yuriy Tumakha
   */
-object Scala3EnumFormat {
+object Scala3EnumJsonFormat:
 
-  inline def format[E](using m: Mirror.SumOf[E]): Format[E] = {
+  inline def format[E](using m: Mirror.SumOf[E]): Format[E] =
     val enumInstances =
       summonAll[Tuple.Map[m.MirroredElemTypes, ValueOf]].productIterator.asInstanceOf[Iterator[ValueOf[E]]].map(_.value)
 
@@ -43,6 +45,3 @@ object Scala3EnumFormat {
       },
       o => JsString(o.asInstanceOf[Any].toString)
     )
-  }
-
-}

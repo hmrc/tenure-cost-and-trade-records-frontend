@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
+@import models.submissions.common.AnswersYesNo.*
+@import models.submissions.connectiontoproperty.AddressConnectionType.*
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 
@@ -31,10 +33,10 @@
         SectionAnswersRowBuilder(request.sessionData.stillConnectedDetails)
     }
 
-    @if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) {
+    @if(sectionAnswers.answers.exists(_.addressConnectionType.contains(AddressConnectionTypeYesChangeAddress))) {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.connectionStatus.heading")</h2>
 
-        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(_.name).map(v => messages(s"label.$v")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
+        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(v => messages(s"label.$v")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
                 sectionAnswers.row("checkYourAnswersConnectionToProperty.proposedAddress",
                     _.editAddress.map(l => s"${l.editAddress.escapedHtml}"),
                     controllers.connectiontoproperty.routes.EditAddressController.show(), "",
@@ -43,26 +45,26 @@
         )
     } else {
         <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.connectionStatus.heading")</h2>
-        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(_.name).map(v =>
-            if(v.equals("yes")) messages("label.yes.iawn")
-            else if(sectionAnswers.answers.exists(_.addressConnectionType.map(_.name).contains("yes-change-address"))) messages("label.areYouConnected.addressUpdate")
+        @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(v =>
+            if(v == AddressConnectionTypeYes) messages("label.yes.iawn")
+            else if(sectionAnswers.answers.exists(_.addressConnectionType.contains(AddressConnectionTypeYesChangeAddress))) messages("label.areYouConnected.addressUpdate")
             else messages("label.no.na")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated")))
     }
 
 @if(forType != FOR6076) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.vacancyStatus.heading")</h2>
     @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row("checkYourAnswersConnectionToProperty.isPropertyVacant", _.vacantProperties.map(_.vacantProperties.name).map(v => if(v.equals("yes")) messages("label.yes.ydy") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties")
+        sectionAnswers.row("checkYourAnswersConnectionToProperty.isPropertyVacant", _.isPropertyVacant.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties")
     ))
 }
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.occupierDetails.heading")</h2>
     @govukSummaryList(SummaryList(rows =
         sectionAnswers.row("checkYourAnswersConnectionToProperty.nameOfOccupier", _.tradingNameOperatingFromProperty.map(_.tradingName), controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(), "tradingNameFromProperty")
-                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.ownsTheProperty", _.tradingNameOwnTheProperty.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.iawn") else messages("label.no.na")), controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show(), "tradingNameOwnTheProperty")
-                ++ sectionAnswers.conditionRow(_.tradingNameOwnTheProperty.map(_.name).contains("no"),
+                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.ownsTheProperty", _.tradingNameOwnTheProperty.map(v => if(v == AnswerYes) messages("label.yes.iawn") else messages("label.no.na")), controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show(), "tradingNameOwnTheProperty")
+                ++ sectionAnswers.conditionRow(_.tradingNameOwnTheProperty.contains(AnswerNo),
             "checkYourAnswersConnectionToProperty.payRent",
-            _.tradingNamePayingRent.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.iawn") else messages("label.no.na")),
+            _.tradingNamePayingRent.map(v => if(v == AnswerYes) messages("label.yes.iawn") else messages("label.no.na")),
             controllers.connectiontoproperty.routes.TradingNamePayingRentController.show(), "tradingNamePayingRent")
-                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.thirdParty", _.areYouThirdParty.map(_.name).map(v => if(v.equals("yes")) messages("label.yes.ydw") else messages("label.no.nac.ydw")), controllers.connectiontoproperty.routes.AreYouThirdPartyController.show(), "areYouThirdParty")
+                ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.thirdParty", _.areYouThirdParty.map(v => if(v == AnswerYes) messages("label.yes.ydw") else messages("label.no.nac.ydw")), controllers.connectiontoproperty.routes.AreYouThirdPartyController.show(), "areYouThirdParty")
     ))

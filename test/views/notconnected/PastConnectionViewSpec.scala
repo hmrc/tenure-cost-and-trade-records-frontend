@@ -18,24 +18,24 @@ package views.notconnected
 
 import form.notconnected.PastConnectionForm
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes}
-import models.submissions.notconnected.PastConnectionType
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PastConnectionViewSpec extends QuestionViewBehaviours[PastConnectionType] {
+class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "pastConnectionType"
 
   val backLink = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
 
-  override val form: Form[PastConnectionType] = PastConnectionForm.pastConnectionForm
+  override val form: Form[AnswersYesNo] = PastConnectionForm.pastConnectionForm
 
   def createView: () => Html = () =>
     pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[PastConnectionType] => Html = (form: Form[PastConnectionType]) =>
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
   "Past connection view" must {
@@ -70,7 +70,7 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[PastConnectionType] 
         doc,
         "pastConnectionType",
         "pastConnectionType",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -82,7 +82,7 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[PastConnectionType] 
         doc,
         "pastConnectionType-2",
         "pastConnectionType",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,8 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.{CurrentRentBasedOnOther, WhatIsYourCurrentRentBasedOnDetails}
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
+import models.submissions.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.WhatRentBasedOnPageId
 import play.api.i18n.I18nSupport
@@ -61,13 +62,13 @@ class WhatIsYourRentBasedOnController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[WhatIsYourCurrentRentBasedOnDetails](
       whatIsYourCurrentRentBasedOnForm,
       formWithErrors => BadRequest(whatIsYourRentBasedOnView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val currentRentBasedOnValue = request.body.asFormUrlEncoded.get("currentRentBasedOn").headOption.getOrElse("")
-        val isOther                 = currentRentBasedOnValue == CurrentRentBasedOnOther.name
+        val isOther                 = currentRentBasedOnValue == CurrentRentBasedOnOther.toString
         if (isOther && data.describe.isEmpty) {
           val formWithCustomError = whatIsYourCurrentRentBasedOnForm
             .fillAndValidate(data)

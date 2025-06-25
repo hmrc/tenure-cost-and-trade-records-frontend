@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import form.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIForm.rentIncrease
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIDetails
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentIncreaseByRPIPageId
 import play.api.Logging
@@ -87,11 +88,8 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues.name)) match {
-      case Some("yes") => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
-      case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
-      case _           =>
-        logger.warn(s"Back link for rent increase by RPI page reached with unknown open market value")
-        controllers.routes.TaskListController.show().url
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues)) match {
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
+      case _               => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import uk.gov.hmrc.crypto.Sensitive
 case class SensitiveAboutYouAndTheProperty(
   customerDetails: Option[SensitiveCustomerDetails] = None,
   altDetailsQuestion: Option[ContactDetailsQuestion] = None,
-  altContactInformation: Option[SensitiveAlternativeContactDetails] = None,
+  alternativeContactAddress: Option[SensitiveAlternativeAddress] = None,
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,
@@ -45,10 +45,11 @@ case class SensitiveAboutYouAndTheProperty(
   threeYearsConstructed: Option[AnswersYesNo] = None,
   costsBreakDown: Option[String] = None
 ) extends Sensitive[AboutYouAndTheProperty] {
+
   override def decryptedValue: AboutYouAndTheProperty = AboutYouAndTheProperty(
     customerDetails.map(_.decryptedValue),
     altDetailsQuestion,
-    altContactInformation.map(_.decryptedValue),
+    alternativeContactAddress.map(_.decryptedValue),
     propertyDetails,
     websiteForPropertyDetails,
     premisesLicenseGrantedDetail,
@@ -79,7 +80,7 @@ object SensitiveAboutYouAndTheProperty {
     SensitiveAboutYouAndTheProperty(
       aboutYouAndTheProperty.customerDetails.map(SensitiveCustomerDetails(_)),
       aboutYouAndTheProperty.altDetailsQuestion,
-      aboutYouAndTheProperty.altContactInformation.map(SensitiveAlternativeContactDetails(_)),
+      aboutYouAndTheProperty.alternativeContactAddress.map(SensitiveAlternativeAddress(_)),
       aboutYouAndTheProperty.propertyDetails,
       aboutYouAndTheProperty.websiteForPropertyDetails,
       aboutYouAndTheProperty.premisesLicenseGrantedDetail,

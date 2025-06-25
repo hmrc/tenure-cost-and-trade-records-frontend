@@ -22,7 +22,8 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TradeServicesListForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.TradeServicesListId
 import play.api.i18n.I18nSupport

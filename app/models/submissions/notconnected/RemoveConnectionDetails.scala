@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,20 @@ package models.submissions.notconnected
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class RemoveConnectionDetails(
   removeConnectionDetails: Option[RemoveConnectionsDetails] = None,
-  pastConnectionType: Option[PastConnectionType] = None
+  pastConnectionType: Option[AnswersYesNo] = None
 )
 
-object RemoveConnectionDetails {
+object RemoveConnectionDetails:
   implicit val format: OFormat[RemoveConnectionDetails] = Json.format
 
   def updateRemoveConnectionDetails(
     copy: RemoveConnectionDetails => RemoveConnectionDetails
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
-
+  )(implicit sessionRequest: SessionRequest[?]): Session =
     val currentRemoveConnectionDetails = sessionRequest.sessionData.removeConnectionDetails
 
     val updatedRemoveConnectionDetails = currentRemoveConnectionDetails match {
@@ -40,6 +40,3 @@ object RemoveConnectionDetails {
     }
 
     sessionRequest.sessionData.copy(removeConnectionDetails = updatedRemoveConnectionDetails)
-
-  }
-}

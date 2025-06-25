@@ -16,7 +16,6 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
-@import models.submissions.common.AnswerYes
 @import models.submissions.common.AnswersYesNo.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
@@ -63,14 +62,14 @@
 @section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.checkYourAnswersAboutYourProperty)) }
 @section3Completed       = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory.map(_.checkYourAnswersAboutTheTradingHistory)) }
 @section3point1Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation).flatMap(_.checkYourAnswersOtherHolidayAccommodation.map(_.checkYourAnswersOtherHolidayAccommodation))}
-@section3point2Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches).flatMap(_.checkYourAnswersTentingPitches.map(_.name))}
-@section3point3Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities).flatMap(_.checkYourAnswersAdditionalActivities.map(_.name))}
+@section3point2Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches).flatMap(_.checkYourAnswersTentingPitches.map(_.toString))}
+@section3point3Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities).flatMap(_.checkYourAnswersAdditionalActivities.map(_.toString))}
 @section4Completed       = @{ session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings.map(_.checkYourAnswersAboutFranchiseOrLettings)) }
 @section5Completed       = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure.map(_.checkYourAnswersAboutYourLeaseOrTenure)) }
 @section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation.map(_.checkYourAnswersAdditionalInformation)) }
 
-@section4AccommodationCompleted = @{session.accommodationDetails.flatMap(_.sectionCompleted).map(_.name)}
-@sectionLettingHistoryCompleted = @{LettingHistory.sectionCompleted(request.sessionData).map(_.toAnswer.name)}
+@section4AccommodationCompleted = @{session.accommodationDetails.flatMap(_.sectionCompleted).map(_.toString)}
+@sectionLettingHistoryCompleted = @{LettingHistory.sectionCompleted(request.sessionData).map(_.toAnswer.toString)}
 
 @completedSections = @{
  (forType match {

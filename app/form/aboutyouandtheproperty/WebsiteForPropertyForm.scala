@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,24 @@
 
 package form.aboutyouandtheproperty
 
-import form.MappingSupport.buildingOperatingHaveAWebsiteType
+import form.Errors
+import form.MappingSupport.createYesNoType
 import form.WebsiteMapping.validateWebaddress
-import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
+import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
+import models.submissions.common.AnswersYesNo.AnswerYes
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
-object WebsiteForPropertyForm {
+object WebsiteForPropertyForm:
 
-  val websiteForPropertyForm = Form(
+  val websiteForPropertyForm: Form[WebsiteForPropertyDetails] = Form(
     mapping(
-      "buildingOperatingHaveAWebsite" -> buildingOperatingHaveAWebsiteType,
+      "buildingOperatingHaveAWebsite" -> createYesNoType(Errors.buildingOperatingHaveAWebsite),
       "websiteAddressForProperty"     -> mandatoryIfEqual(
         "buildingOperatingHaveAWebsite",
-        BuildingOperationHaveAWebsiteYes.name,
+        AnswerYes.toString,
         validateWebaddress
       )
     )(WebsiteForPropertyDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

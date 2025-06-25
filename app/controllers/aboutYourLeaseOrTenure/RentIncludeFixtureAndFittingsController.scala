@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentFixtureAndFittingsPageId
 import play.api.Logging
@@ -110,14 +110,11 @@ class RentIncludeFixtureAndFittingsController @Inject() (
         }
       case _       =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(
-          _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices.name)
+          _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices)
         ) match {
-          case Some("yes") =>
+          case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show().url
-          case Some("no")  => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
-          case _           =>
-            logger.warn(s"Back link for fixture and fittings page reached with unknown trade services value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
         }
     }
   }

@@ -20,7 +20,7 @@
 @import util.DateUtilLocalised
 @import util.NumberUtil.{*, given}
 @import util.CyaTradingHistorySupport
-@import models.submissions.common.AnswerYes
+@import models.submissions.common.AnswersYesNo.*
 
 @import scala.language.implicitConversions
 
@@ -102,7 +102,7 @@
     @govukSummaryList(SummaryList(rows =
     cyaSupport.sectionAnswers.row(
             "checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question",
-            _.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion).map(answerYesNo => answerYesNo.name.capitalize),
+            _.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion).map(yesNo => messages(s"label.$yesNo")),
             controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
             "bunkeredFuelQuestion"
         )
@@ -186,7 +186,7 @@
     @govukSummaryList(SummaryList(rows =
     cyaSupport.sectionAnswers.row(
             "acceptLowMarginFuelCard.heading",
-            _.doYouAcceptLowMarginFuelCard.map(_.name.capitalize),
+            _.doYouAcceptLowMarginFuelCard.map(yesNo => messages(s"label.$yesNo")),
             controllers.aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show(),
             "acceptLowMarginFuelCard"
         )
@@ -258,8 +258,8 @@
     @govukSummaryList(SummaryList(rows =
     cyaSupport.sectionAnswers.row("checkYourAnswersAboutTheTradingHistory.operateEV",
             _.electricVehicleChargingPoints.map(_.electricVehicleChargingPoint).map(hasEVPoint =>
-                """<p class="govuk-body">""" + messages(if(hasEVPoint.name.contains("yes")) {"label.yes.ydw"} else {"label.no.nac.ydw"}) + "</p>"
-                        + cyaSupport.sectionAnswers.answers.filter(_ => hasEVPoint.name == "yes").flatMap(
+                """<p class="govuk-body">""" + messages(if(hasEVPoint == AnswerYes) {"label.yes.ydw"} else {"label.no.nac.ydw"}) + "</p>"
+                        + cyaSupport.sectionAnswers.answers.filter(_ => hasEVPoint == AnswerYes).flatMap(
                     _.electricVehicleChargingPoints.flatMap(_.spacesOrBays)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
             controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(), "electricVehicleChargingPoints", ("valueAsHtml", _ => None))
     ))

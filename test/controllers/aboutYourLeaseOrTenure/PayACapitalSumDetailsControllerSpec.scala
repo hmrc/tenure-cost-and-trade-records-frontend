@@ -70,7 +70,7 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
       )
     }
 

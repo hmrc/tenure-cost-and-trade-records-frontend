@@ -21,7 +21,8 @@ import controllers.FORDataCaptureController
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AddAnotherLettingPartOfPropertyPageId
 import play.api.i18n.I18nSupport

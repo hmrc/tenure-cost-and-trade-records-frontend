@@ -16,7 +16,6 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.AnnualRent
 import play.api.data.FormError
 import util.NumberUtil.*
 import utils.TestBaseSpec
@@ -32,7 +31,7 @@ class CurrentAnnualRentFormSpec extends TestBaseSpec {
       val form = CurrentAnnualRentForm.currentAnnualRentForm().bind(data)
 
       form.errors shouldBe empty
-      form.value  shouldBe Some(AnnualRent(BigDecimal(5000.00)))
+      form.value  shouldBe Some(BigDecimal(5000.00))
     }
 
     "fail to bind when rent is less than includedPartsSum" in {
@@ -65,8 +64,8 @@ class CurrentAnnualRentFormSpec extends TestBaseSpec {
     }
 
     "unbind valid data correctly" in {
-      val model = AnnualRent(BigDecimal(5000.00))
-      val form  = CurrentAnnualRentForm.currentAnnualRentForm().fill(model)
+      val data = BigDecimal(5000.00)
+      val form = CurrentAnnualRentForm.currentAnnualRentForm().fill(data)
 
       form.data should contain("currentAnnualRent" -> "5000.0")
     }

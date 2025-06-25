@@ -22,7 +22,8 @@ import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, TelecomMastLetting}
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}

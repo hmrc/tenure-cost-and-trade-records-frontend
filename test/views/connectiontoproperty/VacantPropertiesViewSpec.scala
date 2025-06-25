@@ -18,23 +18,24 @@ package views.connectiontoproperty
 
 import form.connectiontoproperty.VacantPropertiesForm
 import models.pages.Summary
-import models.submissions.connectiontoproperty.{VacantProperties, VacantPropertiesDetailsNo, VacantPropertiesDetailsYes}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] {
+class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "vacantProperties"
 
-  override val form: Form[VacantProperties] = VacantPropertiesForm.theForm
+  override val form: Form[AnswersYesNo] = VacantPropertiesForm.theForm
 
   val backLink: String = controllers.connectiontoproperty.routes.EditAddressController.show().url
 
   def createView: () => Html = () =>
     vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[VacantProperties] => Html = (form: Form[VacantProperties]) =>
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
 
   "Vacant properties view" must {
@@ -83,7 +84,7 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] 
         doc,
         "vacantProperties",
         "vacantProperties",
-        VacantPropertiesDetailsYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -95,7 +96,7 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[VacantProperties] 
         doc,
         "vacantProperties-2",
         "vacantProperties",
-        VacantPropertiesDetailsNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

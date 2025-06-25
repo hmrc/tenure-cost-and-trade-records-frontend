@@ -19,7 +19,8 @@ package views.aboutFranchisesOrLettings
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm
 import models.ForType.*
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -68,7 +69,7 @@ class FranchiseOrLettingsTiedToPropertyView6030Spec extends QuestionViewBehaviou
         doc,
         "franchiseOrLettingsTiedToProperty",
         "franchiseOrLettingsTiedToProperty",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -80,7 +81,7 @@ class FranchiseOrLettingsTiedToPropertyView6030Spec extends QuestionViewBehaviou
         doc,
         "franchiseOrLettingsTiedToProperty-2",
         "franchiseOrLettingsTiedToProperty",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

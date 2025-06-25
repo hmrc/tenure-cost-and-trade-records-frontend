@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import models.ForType.FOR6030
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PropertyDetailsString
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
 import play.api.Logging
@@ -92,16 +93,13 @@ class AboutThePropertyStringController @Inject() (
       case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
       case _    =>
         answers.aboutYouAndTheProperty.flatMap(
-          _.altDetailsQuestion.map(_.contactDetailsQuestion.name)
+          _.altDetailsQuestion.map(_.contactDetailsQuestion)
         ) match {
-          case Some("yes") =>
+          case Some(AnswerYes) =>
             if answers.forType == FOR6030
             then controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
             else controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
-          case Some("no")  => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-          case _           =>
-            logger.warn(s"Back link for alternative contact page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
         }
     }
 

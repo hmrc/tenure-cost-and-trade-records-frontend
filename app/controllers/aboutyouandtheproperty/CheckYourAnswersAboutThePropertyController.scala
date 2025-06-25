@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAb
 import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 import models.ForType.*
 import models.Session
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
 import play.api.Logging
@@ -93,29 +93,20 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   private def getBackLink(answers: Session): String =
     answers.forType match {
       case FOR6010 | FOR6011 =>
-        answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
-          case Some("yes") => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url
-          case Some("no")  => controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
-          case _           =>
-            logger.warn(s"Back link for enforcement action page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
+        answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
+          case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url
+          case _               => controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
         }
       case FOR6015 | FOR6016 =>
-        answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
-          case Some("yes") =>
+        answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
+          case Some(AnswerYes) =>
             controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show().url
-          case Some("no")  => controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
-          case _           =>
-            logger.warn(s"Back link for premises license page reached with unknown enforcement taken value")
-            controllers.routes.TaskListController.show().url
+          case _               => controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
         }
       case FOR6030           =>
-        answers.aboutYouAndTheProperty.flatMap(_.charityQuestion.map(_.name)) match {
-          case Some("yes") => controllers.aboutyouandtheproperty.routes.TradingActivityController.show().url
-          case Some("no")  => controllers.aboutyouandtheproperty.routes.CharityQuestionController.show().url
-          case _           =>
-            logger.warn(s"Backlink error, No value for charity question")
-            controllers.routes.TaskListController.show().url
+        answers.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
+          case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.TradingActivityController.show().url
+          case _               => controllers.aboutyouandtheproperty.routes.CharityQuestionController.show().url
         }
       case FOR6020           => controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
       case FOR6045 | FOR6046 =>

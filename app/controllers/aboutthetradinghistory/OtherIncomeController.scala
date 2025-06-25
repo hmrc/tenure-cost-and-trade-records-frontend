@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.otherIncome6076
 import controllers.toOpt
+import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -112,10 +113,10 @@ class OtherIncomeController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     val intermittentCheck =
-      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.name))
+      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant))
 
     intermittentCheck match {
-      case Some("intermittent") =>
+      case Some(Intermittent) =>
         navigator.from match {
           case "CYA" =>
             controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
@@ -124,7 +125,7 @@ class OtherIncomeController @Inject() (
           case _     =>
             aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show().url
         }
-      case Some("baseload")     =>
+      case Some(Baseload)     =>
         navigator.from match {
           case "CYA" =>
             controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
@@ -133,7 +134,7 @@ class OtherIncomeController @Inject() (
           case _     =>
             aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
         }
-      case _                    => controllers.routes.TaskListController.show().url
+      case _                  => controllers.routes.TaskListController.show().url
     }
 
 }

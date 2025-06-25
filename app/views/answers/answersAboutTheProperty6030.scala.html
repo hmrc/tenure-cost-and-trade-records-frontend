@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.NumberUtil.*
-@import models.submissions.common.AnswerYes
+@import models.submissions.common.AnswersYesNo.*
 @import util.SectionAnswersRowBuilder
 
 
@@ -43,8 +43,8 @@
             sectionAnswers.optionalRow(
                 "checkYourAnswersAboutTheProperty.hasWebsite",
                 _.websiteForPropertyDetails.map(_.buildingOperatingHaveAWebsite).map(hasWebsite =>
-                    """<p class="govuk-body">""" + messages(s"label.${hasWebsite.name}") + "</p>"
-                            + sectionAnswers.answers.filter(_ => hasWebsite.name == "yes").flatMap(
+                    """<p class="govuk-body">""" + messages(s"label.$hasWebsite") + "</p>"
+                            + sectionAnswers.answers.filter(_ => hasWebsite == AnswerYes).flatMap(
                         _.websiteForPropertyDetails.flatMap(_.websiteAddressForProperty)).fold("")(v => s"<p class=\"govuk-body\">$v</p>")),
                 controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show(),
                 "buildingOperatingHaveAWebsite",
@@ -52,17 +52,17 @@
             ) ++
             sectionAnswers.row(
                 "checkYourAnswersAboutTheProperty.charity",
-                _.charityQuestion.map(x => s"<p class=\"govuk-body\">${x.name.capitalize} </p>"),
+                _.charityQuestion.map(yesNo => messages(s"label.$yesNo")).map(str => s"<p class=\"govuk-body\">$str</p>"),
                 controllers.aboutyouandtheproperty.routes.CharityQuestionController.show(),
                 "propertyCurrentlyUsedString",
                 ("valueAsHtml", _ => None)
             ) ++
             sectionAnswers.conditionalOptionalRow(
-                _.charityQuestion.map(_.name).contains("yes"),
+                _.charityQuestion.contains(AnswerYes),
                 "checkYourAnswersAboutTheProperty.trading",
-                _.tradingActivity.map(_.tradingActivityQuestion).map(x =>
-                    """<p class="govuk-body">""" + x.name.capitalize + "</p>"
-                            + sectionAnswers.answers.filter(_ => AnswerYes.name).flatMap(
+                _.tradingActivity.map(_.tradingActivityQuestion).map(yesNo => messages(s"label.$yesNo")).map(str =>
+                    """<p class="govuk-body">""" + str + "</p>"
+                            + sectionAnswers.answers.filter(_ => AnswerYes.toString).flatMap(
                         _.tradingActivity.flatMap(_.tradingActivityDetails.map(_.escapedHtml))).fold("")(details => s"<p class=\"govuk-body\">$details</p>")),
                 controllers.aboutyouandtheproperty.routes.TradingActivityController.show(),
                 "buildingOperatingHaveAWebsite",

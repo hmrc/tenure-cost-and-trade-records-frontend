@@ -19,7 +19,7 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleIBuildingInsuranceForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleBuildingInsurance
-import models.submissions.common._
+import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -64,7 +64,7 @@ class UltimatelyResponsibleBuildingInsuranceViewSpec
         doc,
         "buildingInsurance",
         "buildingInsurance",
-        BuildingInsuranceLandlord.name,
+        BuildingInsuranceLandlord.toString,
         false
       )
       assertContainsText(doc, messages("label.landlord"))
@@ -76,7 +76,7 @@ class UltimatelyResponsibleBuildingInsuranceViewSpec
         doc,
         "buildingInsurance-2",
         "buildingInsurance",
-        BuildingInsuranceTenant.name,
+        BuildingInsuranceTenant.toString,
         false
       )
       assertContainsText(doc, messages("label.tenant"))
@@ -88,7 +88,7 @@ class UltimatelyResponsibleBuildingInsuranceViewSpec
         doc,
         "buildingInsurance-3",
         "buildingInsurance",
-        BuildingInsuranceBoth.name,
+        BuildingInsuranceBoth.toString,
         false
       )
       assertContainsText(doc, messages("label.both"))

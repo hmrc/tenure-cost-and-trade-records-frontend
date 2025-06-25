@@ -18,7 +18,8 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.WebsiteForPropertyForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.{BuildingOperationHaveAWebsiteNo, BuildingOperationHaveAWebsiteYes, WebsiteForPropertyDetails}
+import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -61,7 +62,7 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
         doc,
         "buildingOperatingHaveAWebsite",
         "buildingOperatingHaveAWebsite",
-        BuildingOperationHaveAWebsiteYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -73,7 +74,7 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
         doc,
         "buildingOperatingHaveAWebsite-2",
         "buildingOperatingHaveAWebsite",
-        BuildingOperationHaveAWebsiteNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

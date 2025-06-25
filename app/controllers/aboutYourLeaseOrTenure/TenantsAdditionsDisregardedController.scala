@@ -23,6 +23,7 @@ import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm.tenantsAdditi
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.TenantsAdditionsDisregardedId
 import play.api.i18n.I18nSupport
@@ -81,11 +82,11 @@ class TenantsAdditionsDisregardedController @Inject() (
       case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
       case FOR6045 | FOR6046 =>
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.incentivesPaymentsConditionsDetails.flatMap(_.formerLeaseSurrendered.name)
+          _.incentivesPaymentsConditionsDetails.flatMap(_.formerLeaseSurrendered)
         ) match {
-          case Some("yes") =>
+          case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
-          case _           => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
         }
       case _                 =>
         controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url

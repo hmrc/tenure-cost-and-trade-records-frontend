@@ -42,7 +42,7 @@
    @includes.taskListItem("vacant-properties", "checkYourAnswersConnectionToProperty.vacancyStatus.heading",
     controllers.connectiontoproperty.routes.VacantPropertiesController.show(),
     section1Completed,
-    pageAnswer = session.stillConnectedDetails.flatMap(_.vacantProperties),
+    pageAnswer = session.stillConnectedDetails.flatMap(_.isPropertyVacant),
     cannotStartYet = session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty,
     readOnly = isReadOnly,
    )
@@ -52,7 +52,7 @@
    controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(),
    section1Completed,
    pageAnswer = session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
-   cannotStartYet = session.stillConnectedDetails.flatMap(_.vacantProperties).isEmpty,
+   cannotStartYet = session.stillConnectedDetails.flatMap(_.isPropertyVacant).isEmpty,
    readOnly = isReadOnly
   )
  </ul>

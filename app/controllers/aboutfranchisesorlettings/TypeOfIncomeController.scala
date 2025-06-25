@@ -23,6 +23,7 @@ import form.aboutfranchisesorlettings.TypeOfIncomeForm.typeOfIncomeForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.*
+import models.submissions.aboutfranchisesorlettings.TypeOfIncome.*
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -69,7 +70,7 @@ class TypeOfIncomeController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
 
     val existingIncomeRecords =
       request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)

@@ -18,7 +18,8 @@ package views.connectiontoproperty
 
 import form.connectiontoproperty.isRentReceivedFromLettingForm
 import models.pages.Summary
-import models.submissions.common.{AnswerNo, AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
@@ -59,7 +60,7 @@ class IsRentReceivedFromLettingViewSpec extends QuestionViewBehaviours[AnswersYe
         doc,
         "isRentReceivedFromLetting",
         "isRentReceivedFromLetting",
-        AnswerYes.name,
+        AnswerYes.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -71,7 +72,7 @@ class IsRentReceivedFromLettingViewSpec extends QuestionViewBehaviours[AnswersYe
         doc,
         "isRentReceivedFromLetting-2",
         "isRentReceivedFromLetting",
-        AnswerNo.name,
+        AnswerNo.toString,
         isChecked = false
       )
       assertContainsText(doc, messages("label.no"))

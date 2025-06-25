@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm.leaseOrAgreementYea
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.LeaseOrAgreementDetailsPageId
 import play.api.Logging
@@ -64,7 +65,7 @@ class LeaseOrAgreementYearsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LeaseOrAgreementYearsDetails](
       leaseOrAgreementYearsForm,
       formWithErrors =>
@@ -90,7 +91,7 @@ class LeaseOrAgreementYearsController @Inject() (
 
   private def contains3No(d: LeaseOrAgreementYearsDetails): Boolean =
     Seq(d.commenceWithinThreeYears, d.agreedReviewedAlteredThreeYears, d.rentUnderReviewNegotiated)
-      .forall(_.name == "no")
+      .forall(_ == AnswerNo)
 
   private def leaseOrAgreementDetailsInSession(implicit
     request: SessionRequest[AnyContent]
@@ -102,14 +103,11 @@ class LeaseOrAgreementYearsController @Inject() (
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#lease-or-agreement-details"
       case _    =>
-        answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord.map(_.name)) match {
-          case Some("yes") =>
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
+          case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
-          case Some("no")  =>
+          case _               =>
             controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
-          case _           =>
-            logger.warn(s"Back link for lease or agreement page reached with unknown enforcement taken value")
-            controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
         }
     }
 

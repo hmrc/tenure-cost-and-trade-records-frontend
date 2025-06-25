@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class LeaseOrAgreementYearsDetails(
-  commenceWithinThreeYears: TenancyThreeYears,
-  agreedReviewedAlteredThreeYears: RentThreeYears,
-  rentUnderReviewNegotiated: UnderReview
+  commenceWithinThreeYears: AnswersYesNo,
+  agreedReviewedAlteredThreeYears: AnswersYesNo,
+  rentUnderReviewNegotiated: AnswersYesNo
 )
 
-object LeaseOrAgreementYearsDetails {
+object LeaseOrAgreementYearsDetails:
   implicit val format: OFormat[LeaseOrAgreementYearsDetails] = Json.format
-
-}

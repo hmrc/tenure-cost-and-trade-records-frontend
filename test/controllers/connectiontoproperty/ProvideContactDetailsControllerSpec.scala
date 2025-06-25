@@ -20,7 +20,7 @@ import connectors.Audit
 import form.Errors
 import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails}
 import form.connectiontoproperty.ProvideContactDetailsForm.provideContactDetailsForm
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._

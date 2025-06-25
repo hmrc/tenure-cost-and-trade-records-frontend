@@ -19,7 +19,7 @@ package controllers.aboutfranchisesorlettings
 import connectors.{Audit, MockAddressLookup}
 import models.Session
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, BusinessAddress, Concession6015IncomeRecord, FranchiseIncomeRecord}
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo

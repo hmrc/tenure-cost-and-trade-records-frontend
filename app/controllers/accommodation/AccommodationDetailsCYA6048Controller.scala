@@ -21,7 +21,8 @@ import controllers.FORDataCaptureController
 import form.accommodation.AccommodationDetailsCYA6048Form.accommodationDetailsCYA6048Form
 import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit}
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
-import models.submissions.common.{AnswerYes, AnswersYesNo}
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AccommodationNavigator
 import navigation.identifiers.AccommodationDetailsCYAPageId
 import play.api.Logging

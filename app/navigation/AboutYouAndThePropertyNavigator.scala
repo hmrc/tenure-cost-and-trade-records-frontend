@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import models.submissions.common.AnswerYes
+import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
 import navigation.identifiers._
@@ -82,10 +82,10 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     }
   private def premisesLicenseGrantedRouting: Session => Call = answers =>
     if (answers.forType.equals(FOR6015) || answers.forType.equals(FOR6016)) {
-      answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail.map(_.name)) match {
-        case Some("yes") =>
+      answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
+        case Some(AnswerYes) =>
           controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
-        case _           =>
+        case _               =>
           controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
       }
     } else {
@@ -99,28 +99,30 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
 
   private def licensableActivityRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.licensableActivities.map(_.name)) match {
-      case Some("yes") => controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show()
-      case _           => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
+    answers.aboutYouAndTheProperty.flatMap(_.licensableActivities) match {
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show()
+      case _               => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
     }
 
   private def premisesLicenceConditionsRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions.map(_.name)) match {
-      case Some("yes") => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show()
-      case _           => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
+    answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match {
+      case Some(AnswerYes) =>
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show()
+      case _               => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
     }
 
   private def enforcementActionTakenRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction.map(_.name)) match {
-      case Some("yes") => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
-      case _           =>
+    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction) match {
+      case Some(AnswerYes) =>
+        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
+      case _               =>
         controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
     }
 
   private def tiedGoodsRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods.map(_.name)) match {
-      case Some("yes") => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
-      case _           => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
+      case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
 
   private def contactDetailsQuestionRouting: Session => Call = answers =>

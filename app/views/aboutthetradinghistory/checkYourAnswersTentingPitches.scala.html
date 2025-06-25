@@ -18,7 +18,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
 @import util.SectionAnswersRowBuilder
-@import models.submissions.common.{AnswerYes, AnswersYesNo}
+@import models.submissions.common.AnswersYesNo
+@import models.submissions.common.AnswersYesNo.*
 @import models.submissions.aboutthetradinghistory.TurnoverSection6045
 @import util.NumberUtil.given
 
@@ -147,7 +148,7 @@
             "tentingPitchesTotal") ++
         tradingHistoryOne.row(
             "cya.touringAndTentingPitches.certificated.label",
-            _.touringAndTentingPitches.flatMap(_.tentingPitchesCertificated).flatMap(x => messages(s"label.${x.name}")).orElse(""),
+            _.touringAndTentingPitches.flatMap(_.tentingPitchesCertificated).flatMap(yesNo => messages(s"label.$yesNo")).orElse(""),
             controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show(),
             "tentingPitchesCertificated")
         ))

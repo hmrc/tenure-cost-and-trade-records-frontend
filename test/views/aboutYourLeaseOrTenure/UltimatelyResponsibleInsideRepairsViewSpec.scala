@@ -19,7 +19,8 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
-import models.submissions.common._
+import models.submissions.common.ResponsibilityParty.InsideRepairs.*
+import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -63,7 +64,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
         doc,
         "insideRepairs",
         "insideRepairs",
-        InsideRepairsLandlord.name,
+        InsideRepairsLandlord.toString,
         false
       )
       assertContainsText(doc, messages("label.landlord"))
@@ -75,7 +76,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
         doc,
         "insideRepairs-2",
         "insideRepairs",
-        InsideRepairsTenant.name,
+        InsideRepairsTenant.toString,
         false
       )
       assertContainsText(doc, messages("label.tenant"))
@@ -87,7 +88,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
         doc,
         "insideRepairs-3",
         "insideRepairs",
-        InsideRepairsBoth.name,
+        InsideRepairsBoth.toString,
         false
       )
       assertContainsText(doc, messages("label.both"))
@@ -99,7 +100,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
         doc,
         "insideRepairs",
         "insideRepairs",
-        BuildingInsuranceLandlord.name,
+        BuildingInsuranceLandlord.toString,
         false
       )
       assertContainsText(doc, messages("label.landlord"))
@@ -111,7 +112,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
         doc,
         "insideRepairs-2",
         "insideRepairs",
-        BuildingInsuranceTenant.name,
+        BuildingInsuranceTenant.toString,
         false
       )
       assertContainsText(doc, messages("label.tenant"))
@@ -123,7 +124,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
         doc,
         "insideRepairs-3",
         "insideRepairs",
-        BuildingInsuranceBoth.name,
+        BuildingInsuranceBoth.toString,
         false
       )
       assertContainsText(doc, messages("label.both"))

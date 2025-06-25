@@ -20,7 +20,7 @@ import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm
 import models.ForType.*
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure._
-import models.submissions.common.{AnswerNo, AnswerYes}
+import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -67,7 +67,7 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
         doc,
         "rentIncludeTradeServices",
         "rentIncludeTradeServices",
-        AnswerYes.name,
+        AnswerYes.toString,
         false
       )
       assertContainsText(doc, messages("label.yes"))
@@ -79,7 +79,7 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
         doc,
         "rentIncludeTradeServices-2",
         "rentIncludeTradeServices",
-        AnswerNo.name,
+        AnswerNo.toString,
         false
       )
       assertContainsText(doc, messages("label.no"))
