@@ -44,7 +44,7 @@
         @answersSectionConnectionToTheProperty()
 
         @govukWarningText(WarningText(
-            content = Text(messages("checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.label"))
+            content = Text(messages("checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.warning"))
         ))
 
         @formWithCSRF(action = controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.submit()) {
