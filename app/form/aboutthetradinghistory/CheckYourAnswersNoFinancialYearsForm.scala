@@ -16,24 +16,20 @@
 
 package form.aboutthetradinghistory
 
-import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.{mapping, optional, text}
 
 object CheckYourAnswersNoFinancialYearsForm:
 
-  val theForm =
-    Form[CheckYourAnswersAboutTheTradingHistory](
+  val theForm: Form[AnswersYesNo] =
+    Form(
       mapping(
         "correct"   ->
           optional(text)
             .transform[Boolean](_.contains("true"), b => Some(b.toString))
             .verifying("error.checkYourAnswers.givenInformation.isCorrect", _ == true),
-        "completed" ->
-          default(text, "")
-            .verifying(nonEmpty(errorMessage = "error.checkYourAnswersRadio.required"))
-      )((_, completed) => CheckYourAnswersAboutTheTradingHistory.apply(completed))(obj =>
-        Some((true, obj.checkYourAnswersAboutTheTradingHistory))
-      )
+        "completed" -> createYesNoType("error.checkYourAnswersRadio.required")
+      )((_, completed) => completed)(completed => Some((true, completed)))
     )

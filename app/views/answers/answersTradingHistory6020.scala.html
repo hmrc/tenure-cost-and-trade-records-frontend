@@ -102,13 +102,13 @@
     @govukSummaryList(SummaryList(rows =
     cyaSupport.sectionAnswers.row(
             "checkYourAnswersAboutTheTradingHistory.bunkeredFuel.question",
-            _.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion).map(yesNo => messages(s"label.$yesNo")),
+            _.bunkeredFuelQuestion.map(yesNo => messages(s"label.$yesNo")),
             controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
             "bunkeredFuelQuestion"
         )
     )
     )
-    @if(request.sessionData.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).flatMap(_.bunkeredFuelQuestion).contains(AnswerYes)) {
+    @if(request.sessionData.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).contains(AnswerYes)) {
 
         @govukSummaryList(SummaryList(rows =
             Seq(

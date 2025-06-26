@@ -16,7 +16,7 @@
 
 @import actions.SessionRequest
 @import controllers.aboutthetradinghistory.routes
-@import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+@import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichFormErrors
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
@@ -24,7 +24,7 @@
 
 @this(layout: Layout, govukSummaryList: GovukSummaryList, govukWarningText: GovukWarningText, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
-@(theForm: Form[CheckYourAnswersAboutTheTradingHistory], backLinkUrl: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLinkUrl: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
 
 @aboutTheTradingHistory = @{
     assert(request.sessionData.aboutTheTradingHistory.isDefined)

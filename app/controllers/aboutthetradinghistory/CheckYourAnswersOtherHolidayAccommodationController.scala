@@ -20,8 +20,8 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationForm.checkYourAnswersOtherHolidayAccommodationForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateOtherHolidayAccommodation
-import models.submissions.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodation
 import models.Session
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.AnswerYes
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersOtherHolidayAccommodationId
@@ -63,8 +63,8 @@ class CheckYourAnswersOtherHolidayAccommodationController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CheckYourAnswersOtherHolidayAccommodation](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersOtherHolidayAccommodationForm,
       formWithErrors =>
         BadRequest(

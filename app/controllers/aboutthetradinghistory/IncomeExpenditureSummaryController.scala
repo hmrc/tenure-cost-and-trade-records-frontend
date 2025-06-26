@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
 import models.pages.IncomeExpenditureEntry
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, IncomeExpenditureSummary, IncomeExpenditureSummaryData, TotalPayrollCost}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, IncomeExpenditureSummaryData, TotalPayrollCost}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.IncomeExpenditureSummaryId
 import play.api.i18n.I18nSupport
@@ -59,8 +59,8 @@ class IncomeExpenditureSummaryController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[IncomeExpenditureSummary](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[String](
       incomeExpenditureSummaryForm,
       formWithErrors => {
         val entries =

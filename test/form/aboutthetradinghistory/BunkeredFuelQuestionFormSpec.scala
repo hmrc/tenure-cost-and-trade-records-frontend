@@ -16,7 +16,6 @@
 
 package form.aboutthetradinghistory
 
-import models.submissions.aboutthetradinghistory.BunkeredFuelQuestion
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.FormError
 import utils.TestBaseSpec
@@ -33,7 +32,7 @@ class BunkeredFuelQuestionFormSpec extends TestBaseSpec {
       val form = BunkeredFuelQuestionForm.bunkeredFuelQuestionForm.bind(data)
 
       form.errors shouldBe empty
-      form.value  shouldBe Some(BunkeredFuelQuestion(AnswerYes))
+      form.value  shouldBe Some(AnswerYes)
     }
 
     "fail to bind when no data is provided" in {
@@ -57,7 +56,7 @@ class BunkeredFuelQuestionFormSpec extends TestBaseSpec {
     }
 
     "unbind valid data correctly" in {
-      val model = BunkeredFuelQuestion(AnswerNo)
+      val model = AnswerNo
       val form  = BunkeredFuelQuestionForm.bunkeredFuelQuestionForm.fill(model)
 
       form.data should contain("bunkeredFuelQuestion" -> "no")

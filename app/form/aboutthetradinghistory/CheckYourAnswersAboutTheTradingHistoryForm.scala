@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 package form.aboutthetradinghistory
 
-import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.single
 
-object CheckYourAnswersAboutTheTradingHistoryForm {
+object CheckYourAnswersAboutTheTradingHistoryForm:
 
-  val checkYourAnswersAboutTheTradingHistoryForm = Form(
-    mapping(
-      "checkYourAnswersAboutTheTradingHistory" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+  val checkYourAnswersAboutTheTradingHistoryForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "checkYourAnswersAboutTheTradingHistory" -> createYesNoType("error.checkYourAnswersRadio.required")
       )
-    )(CheckYourAnswersAboutTheTradingHistory.apply)(o => Some(o.checkYourAnswersAboutTheTradingHistory))
-  )
-}
+    )

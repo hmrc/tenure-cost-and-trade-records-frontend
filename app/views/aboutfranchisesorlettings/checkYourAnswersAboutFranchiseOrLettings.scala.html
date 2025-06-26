@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.ForType.*
-@import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
+@import models.submissions.common.AnswersYesNo
 @import views.html.answers.{answersLettings, answersConcessionAndLettings}
 
 @this(layout: Layout,
@@ -28,7 +28,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutFranchiseOrLettings], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @forType = @{
     request.sessionData.forType

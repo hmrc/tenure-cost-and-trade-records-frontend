@@ -18,11 +18,11 @@ package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.BunkeredFuelQuestionForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.BunkeredFuelQuestion
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class BunkeredFuelQuestionViewSpec extends QuestionViewBehaviours[BunkeredFuelQuestion] {
+class BunkeredFuelQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "bunkeredFuelQuestion"
 
@@ -32,7 +32,7 @@ class BunkeredFuelQuestionViewSpec extends QuestionViewBehaviours[BunkeredFuelQu
 
   def createView = () => bunkeredFuelQuestionView(form, backLink, Summary("99996020001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[BunkeredFuelQuestion]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     bunkeredFuelQuestionView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Bunkered fuel question view" should {

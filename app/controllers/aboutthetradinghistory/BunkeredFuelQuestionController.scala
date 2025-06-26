@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.BunkeredFuelQuestionForm.bunkeredFuelQuestionForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.BunkeredFuelQuestion
+import models.submissions.common.AnswersYesNo
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.BunkeredFuelQuestionId
 import play.api.Logging
@@ -52,10 +52,9 @@ class BunkeredFuelQuestionController @Inject() (
     Future.successful(
       Ok(
         view(
-          request.sessionData.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion) match {
-            case Some(answers) => bunkeredFuelQuestionForm.fill(answers)
-            case _             => bunkeredFuelQuestionForm
-          },
+          request.sessionData.aboutTheTradingHistory
+            .flatMap(_.bunkeredFuelQuestion)
+            .fold(bunkeredFuelQuestionForm)(bunkeredFuelQuestionForm.fill),
           calculateBackLink(using request),
           request.sessionData.toSummary
         )
@@ -63,8 +62,8 @@ class BunkeredFuelQuestionController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[BunkeredFuelQuestion](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       bunkeredFuelQuestionForm,
       formWithErrors =>
         BadRequest(
@@ -90,4 +89,5 @@ class BunkeredFuelQuestionController @Inject() (
       case "TL"  => controllers.routes.TaskListController.show().url + "#bunkered-fuel"
       case _     => controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
     }
+
 }

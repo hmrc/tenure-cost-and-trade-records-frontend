@@ -17,7 +17,6 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
-@import models.submissions.aboutthetradinghistory.AdditionalAmusements
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.AccessibilityUtil
 @import java.time.LocalDate
@@ -36,7 +35,7 @@
 )
 
 
-@(form: Form[Seq[AdditionalAmusements]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[Option[BigDecimal]]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @tradingPeriodSeq = @{
     request.sessionData.aboutTheTradingHistoryPartOne

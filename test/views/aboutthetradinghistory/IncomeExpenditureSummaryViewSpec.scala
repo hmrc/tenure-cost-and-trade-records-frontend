@@ -18,11 +18,10 @@ package views.aboutthetradinghistory
 
 import form.aboutthetradinghistory.IncomeExpenditureSummaryForm
 import models.pages.{IncomeExpenditureEntry, Summary}
-import models.submissions.aboutthetradinghistory.IncomeExpenditureSummary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[IncomeExpenditureSummary] {
+class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[String] {
   // NOTE: this is a holding view test until page is implemented
   val messageKeyPrefix = "incomeExpenditureSummary"
 
@@ -31,7 +30,7 @@ class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[IncomeExpe
   def createView = () =>
     incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[IncomeExpenditureSummary]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(using fakeRequest, messages)
 
   "income and expenditure summary view" must {

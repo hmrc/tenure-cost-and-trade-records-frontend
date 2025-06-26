@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, BunkeredFuelQuestion, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OtherHolidayAccommodation, TouringAndTentingPitches}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OtherHolidayAccommodation, TouringAndTentingPitches}
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, RenewablesPlant}
 import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
 import models.submissions.common.AnswersYesNo.*
@@ -567,7 +567,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       val session = sessionAboutYou6045.copy(
         aboutTheTradingHistory = Some(
           sessionAboutYou6045.aboutTheTradingHistory.getOrElse(
-            AboutTheTradingHistory(bunkeredFuelQuestion = Some(BunkeredFuelQuestion(AnswerYes)))
+            AboutTheTradingHistory(bunkeredFuelQuestion = Some(AnswerYes))
           )
         )
       )
@@ -582,7 +582,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       val session = sessionAboutYou6045.copy(
         aboutTheTradingHistory = Some(
           sessionAboutYou6045.aboutTheTradingHistory.getOrElse(
-            AboutTheTradingHistory(bunkeredFuelQuestion = Some(BunkeredFuelQuestion(AnswerNo)))
+            AboutTheTradingHistory(bunkeredFuelQuestion = Some(AnswerNo))
           )
         )
       )

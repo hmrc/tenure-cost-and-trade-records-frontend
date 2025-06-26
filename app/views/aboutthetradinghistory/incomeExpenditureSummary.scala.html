@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutthetradinghistory.IncomeExpenditureSummary
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
 @import models.pages.IncomeExpenditureEntry
@@ -35,7 +34,7 @@
         accessibilityUtil: AccessibilityUtil
 )
 
-@(theForm: Form[IncomeExpenditureSummary], summary: Summary, entries: Seq[IncomeExpenditureEntry])(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], summary: Summary, entries: Seq[IncomeExpenditureEntry])(implicit request: Request[?], messages: Messages)
 
 @classes = @{"govuk-!-padding-bottom-3 govuk-!-padding-top-3"}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@ import models.ForType.*
 import models.Session
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CheckYourAnswersAboutTheTradingHistory, CostOfSales, OccupationalAndAccountingInformation, TotalPayrollCost, TurnoverSection, TurnoverSection6020, TurnoverSection6030}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CostOfSales, OccupationalAndAccountingInformation, TotalPayrollCost, TurnoverSection, TurnoverSection6020, TurnoverSection6030}
+import models.submissions.common.AnswersYesNo
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FinancialYearEndPageId
 import play.api.Logging
@@ -72,7 +73,7 @@ class FinancialYearEndController @Inject() (
       }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
@@ -172,12 +173,9 @@ class FinancialYearEndController @Inject() (
   private def sectionCompleted(
     financialYearsUnchanged: Boolean,
     aboutTheTradingHistory: AboutTheTradingHistory
-  ): Option[CheckYourAnswersAboutTheTradingHistory] =
-    if (financialYearsUnchanged) {
-      aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
-    } else {
-      None
-    }
+  ): Option[AnswersYesNo] =
+    if financialYearsUnchanged then aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
+    else None
 
   private def buildUpdateData(
     firstOccupy: MonthsYearDuration,

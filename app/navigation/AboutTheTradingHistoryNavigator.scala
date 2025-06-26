@@ -101,7 +101,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   private def bunkeredFuelQuestionRouting: Session => Call = answers =>
-    answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion.map(_.bunkeredFuelQuestion)) match {
+    answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion) match {
       case Some(AnswerYes) => routes.BunkeredFuelSoldController.show()
       case _               => routes.CustomerCreditAccountsController.show()
     }

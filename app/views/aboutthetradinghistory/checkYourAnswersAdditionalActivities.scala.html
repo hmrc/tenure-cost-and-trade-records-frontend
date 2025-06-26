@@ -144,7 +144,7 @@
             controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.additionalShops.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
-            answer("cYa.additionalActivities.receipts", _.additionalAmusements.flatMap(_.receipts)),
+            answer("cYa.additionalActivities.receipts", _.additionalAmusements),
         )
         @pageAnswers("cYa.additionalActivities.miscellaneous.heading",
             controllers.aboutthetradinghistory.routes.AdditionalMiscController.show(),

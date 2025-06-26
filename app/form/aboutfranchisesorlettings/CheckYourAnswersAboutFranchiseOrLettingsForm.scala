@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 package form.aboutfranchisesorlettings
 
-import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.single
 
-object CheckYourAnswersAboutFranchiseOrLettingsForm {
+object CheckYourAnswersAboutFranchiseOrLettingsForm:
 
-  val checkYourAnswersAboutFranchiseOrLettingsForm = Form(
-    mapping(
-      "checkYourAnswersAboutFranchiseOrLettings" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+  val checkYourAnswersAboutFranchiseOrLettingsForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "checkYourAnswersAboutFranchiseOrLettings" -> createYesNoType("error.checkYourAnswersRadio.required")
       )
-    )(CheckYourAnswersAboutFranchiseOrLettings.apply)(o => Some(o.checkYourAnswersAboutFranchiseOrLettings))
-  )
-}
+    )

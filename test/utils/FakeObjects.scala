@@ -558,7 +558,7 @@ trait FakeObjects {
       ),
       "Other Costs Details"
     ),
-    incomeExpenditureSummary = IncomeExpenditureSummary("confirmed"),
+    incomeExpenditureSummary = "confirmed",
     incomeExpenditureSummaryData = Seq(IncomeExpenditureSummaryData(today.toString, 1, 2, 3, 4, 5, 6, 7, 8, 9)),
     unusualCircumstances = UnusualCircumstances("Unusual circumstances comment")
   )
@@ -572,7 +572,7 @@ trait FakeObjects {
     ),
     electricVehicleChargingPoints = ElectricVehicleChargingPoints(AnswerYes, 123),
     totalFuelSold = Seq(TotalFuelSold(today, None)),
-    bunkeredFuelQuestion = BunkeredFuelQuestion(AnswerYes),
+    bunkeredFuelQuestion = AnswerYes,
     bunkeredFuelSold = Seq(BunkeredFuelSold(today, 1), BunkeredFuelSold(today, 2), BunkeredFuelSold(today, 3)),
     bunkerFuelCardsDetails = IndexedSeq(BunkerFuelCardsDetails(BunkerFuelCardDetails("Card 1", 2))),
     customerCreditAccounts =
@@ -592,7 +592,7 @@ trait FakeObjects {
     ),
     electricVehicleChargingPoints = ElectricVehicleChargingPoints(AnswerYes, 123),
     totalFuelSold = Seq(TotalFuelSold(today, None)),
-    bunkeredFuelQuestion = BunkeredFuelQuestion(AnswerNo),
+    bunkeredFuelQuestion = AnswerNo,
     bunkerFuelCardsDetails = IndexedSeq(BunkerFuelCardsDetails(BunkerFuelCardDetails("Card 1", 2))),
     customerCreditAccounts =
       Seq(CustomerCreditAccounts(today, 5), CustomerCreditAccounts(today, 15), CustomerCreditAccounts(today, 25)),
@@ -712,11 +712,7 @@ trait FakeObjects {
             costOfEntertainment = Some(BigDecimal(500))
           )
         ),
-        additionalAmusements = Some(
-          AdditionalAmusements(
-            receipts = Some(BigDecimal(2500))
-          )
-        ),
+        additionalAmusements = Some(BigDecimal(2500)),
         additionalMisc = Some(
           AdditionalMisc(Some(100.00), Some(100.00), Some(10), Some(100.00), Some(100.00))
         )

@@ -20,9 +20,9 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 import models.submissions.common.AnswersYesNo.*
 import models.Session
+import models.submissions.common.AnswersYesNo
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CheckYourAnswersAboutFranchiseOrLettingsId
 import play.api.Logging
@@ -61,8 +61,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CheckYourAnswersAboutFranchiseOrLettings](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersAboutFranchiseOrLettingsForm,
       formWithErrors =>
         BadRequest(
