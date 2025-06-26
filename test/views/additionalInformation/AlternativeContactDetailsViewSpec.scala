@@ -41,8 +41,8 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
 
     behave like pageWithTextFields(
       createViewUsingForm,
-      "alternativeContactAddress.buildingNameNumber",
-      "alternativeContactAddress.town"
+      "buildingNameNumber",
+      "town"
     )
 
     "has a link marked with back.link.label leading to the contact details page" in {
@@ -59,14 +59,14 @@ class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Alternati
       assert(sectionText == messages("label.section.aboutTheProperty"))
     }
 
-    "contain an input for alternativeContactAddress.street1" in {
+    "contain an input for street1" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "alternativeContactAddress.street1")
+      assertRenderedById(doc, "street1")
     }
 
-    "contain an input for alternativeContactAddress.county" in {
+    "contain an input for county" in {
       val doc = asDocument(createViewUsingForm(form))
-      assertRenderedById(doc, "alternativeContactAddress.county")
+      assertRenderedById(doc, "county")
     }
 
     "contain continue button with the value Continue" in {
