@@ -28,7 +28,6 @@ import models.submissions.notconnected.RemoveConnectionDetails
 import models.ForType.*
 import models.submissions.accommodation.AccommodationDetails
 import models.{ForType, Session}
-import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.lettingHistory.LettingHistory
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import org.scalatest.{Inside, OptionValues}
@@ -200,7 +199,6 @@ trait TestBaseSpec
       prefilledAboutLeaseOrAgreementPartFour
     ),
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA),
-    downloadPDFDetails: Option[DownloadPDFDetails] = None,
     lettingHistory: Option[LettingHistory] = None,
     accommodationDetails: Option[AccommodationDetails] = None
   ): WithSessionRefiner =
@@ -229,7 +227,6 @@ trait TestBaseSpec
                 aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
                 aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour,
                 requestReferenceNumberDetails = requestReferenceNumberDetails,
-                downloadPDFDetails = downloadPDFDetails,
                 lettingHistory = lettingHistory,
                 accommodationDetails = accommodationDetails
               ),

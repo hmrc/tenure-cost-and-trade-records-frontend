@@ -61,8 +61,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
                 address = None
               )
             ),
-            contactDetails = None,
-            checkYourAnswers = None
+            contactDetails = None
           )
         )
       ) {
@@ -121,8 +120,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
                 address = None
               )
             ),
-            contactDetails = None,
-            checkYourAnswers = None
+            contactDetails = None
           )
         )
       ) {
@@ -148,8 +146,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
                 address = None
               )
             ),
-            contactDetails = None,
-            checkYourAnswers = None
+            contactDetails = None
           )
         )
       ) {

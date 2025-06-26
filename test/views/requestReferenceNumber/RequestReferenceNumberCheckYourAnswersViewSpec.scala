@@ -17,25 +17,19 @@
 package views.requestReferenceNumber
 
 import actions.SessionRequest
-import form.requestReferenceNumber.RequestReferenceNumberCheckYourAnswersForm
-import models.submissions.requestReferenceNumber.RequestReferenceNumberCheckYourAnswers
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RequestReferenceNumberCheckYourAnswersViewSpec
-    extends QuestionViewBehaviours[RequestReferenceNumberCheckYourAnswers] {
+class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "requestReferenceNumber.checkYourAnswers"
 
-  override val form = RequestReferenceNumberCheckYourAnswersForm.theForm
+  override val form: Form[String] = defaultForm
 
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   def createView = () =>
-    requestReferenceNumberCheckYourAnswersView(form, notConnected6010NoSession)(using sessionRequest, messages)
-
-  def createViewUsingForm = (form: Form[RequestReferenceNumberCheckYourAnswers]) =>
-    requestReferenceNumberCheckYourAnswersView(form, notConnected6010NoSession)(using sessionRequest, messages)
+    requestReferenceNumberCheckYourAnswersView(notConnected6010NoSession)(using sessionRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
@@ -52,9 +46,10 @@ class RequestReferenceNumberCheckYourAnswersViewSpec
     }
 
     "contain submit and send button with the value Accept and send" in {
-      val doc         = asDocument(createViewUsingForm(form))
+      val doc         = asDocument(createView())
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.confirm"))
     }
   }
+
 }

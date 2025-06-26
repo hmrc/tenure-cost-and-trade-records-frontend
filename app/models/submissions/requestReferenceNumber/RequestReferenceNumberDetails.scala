@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,16 +22,16 @@ import play.api.libs.json.{Json, OFormat}
 
 case class RequestReferenceNumberDetails(
   propertyDetails: Option[RequestReferenceNumberPropertyDetails] = None,
-  contactDetails: Option[RequestReferenceNumberContactDetails] = None,
-  checkYourAnswers: Option[RequestReferenceNumberCheckYourAnswers] = None
+  contactDetails: Option[RequestReferenceNumberContactDetails] = None
 )
 
-object RequestReferenceNumberDetails {
+object RequestReferenceNumberDetails:
+
   implicit val format: OFormat[RequestReferenceNumberDetails] = Json.format
 
   def updateRequestReferenceNumber(
     copy: RequestReferenceNumberDetails => RequestReferenceNumberDetails
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session =
 
     val currentRequestReferenceNumber = sessionRequest.sessionData.requestReferenceNumberDetails
 
@@ -41,6 +41,3 @@ object RequestReferenceNumberDetails {
     }
 
     sessionRequest.sessionData.copy(requestReferenceNumberDetails = updatedRequestReferenceNumber)
-
-  }
-}

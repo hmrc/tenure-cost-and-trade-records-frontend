@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import models.submissions.accommodation.AccommodationDetails
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.SensitiveAddress
 import models.submissions.connectiontoproperty.SensitiveStillConnectedDetails
-import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.lettingHistory.SensitiveLettingHistory
 import models.submissions.notconnected.SensitiveRemoveConnectionDetails
 import models.submissions.requestReferenceNumber.SensitiveRequestReferenceNumberDetails
@@ -53,11 +52,10 @@ case class SensitiveSession(
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[SensitiveRequestReferenceNumberDetails],
-  downloadPDFDetails: Option[DownloadPDFDetails] = None,
   lettingHistory: Option[SensitiveLettingHistory] = None,
   accommodationDetails: Option[AccommodationDetails] = None
   // Also add more properties to both this.decryptedValue and SensitiveSession.apply methods (see below)
-) extends Sensitive[Session] {
+) extends Sensitive[Session]:
 
   override def decryptedValue: Session = Session(
     referenceNumber,
@@ -80,14 +78,12 @@ case class SensitiveSession(
     saveAsDraftPassword,
     lastCYAPageUrl,
     requestReferenceNumberDetails.map(_.decryptedValue),
-    downloadPDFDetails,
     lettingHistory.map(_.decryptedValue),
     accommodationDetails
     // Add more properties here ...
   )
-}
 
-object SensitiveSession {
+object SensitiveSession:
 
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveSession] = Json.format
 
@@ -112,9 +108,6 @@ object SensitiveSession {
     session.saveAsDraftPassword,
     session.lastCYAPageUrl,
     session.requestReferenceNumberDetails.map(SensitiveRequestReferenceNumberDetails(_)),
-    session.downloadPDFDetails,
     session.lettingHistory.map(SensitiveLettingHistory(_)),
     session.accommodationDetails
   )
-
-}

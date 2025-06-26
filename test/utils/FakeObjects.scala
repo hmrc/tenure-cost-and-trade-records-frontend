@@ -33,8 +33,6 @@ import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import models.submissions.connectiontoproperty.*
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.ConnectionToProperty.*
-import models.submissions.downloadFORTypeForm.*
-import models.submissions.ReferenceNumber
 import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
 import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
@@ -119,7 +117,7 @@ trait FakeObjects {
   val baseFilled6048WelshSession: Session = Session(referenceNumber, FOR6048, prefilledAddress, token, isWelsh = true)
 
   // Request reference number
-  val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
+  val prefilledRequestRefNumCYA = RequestReferenceNumberDetails(
     Some(RequestReferenceNumberPropertyDetails(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
     Some(
       RequestReferenceNumberContactDetails(
@@ -127,9 +125,9 @@ trait FakeObjects {
         ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
         Some("Additional Information")
       )
-    ),
-    Some(RequestReferenceNumberCheckYourAnswers("CYARequestRefNum"))
+    )
   )
+
   val prefilledRequestRefNumBlank = RequestReferenceNumberDetails()
 
   // Are your still connected sessions
@@ -1620,13 +1618,7 @@ trait FakeObjects {
 
   val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
     Some(RequestReferenceNumberPropertyDetails(prefilledFakeName, prefilledNoReferenceContactAddress)),
-    Some(RequestReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test"))),
-    Some(RequestReferenceNumberCheckYourAnswers("CYA"))
-  )
-
-  val prefilledDownloadPDFRef: DownloadPDFDetails = DownloadPDFDetails(
-    Some(ReferenceNumber(referenceNumber)),
-    Some(DownloadPDF(FOR6010.toString))
+    Some(RequestReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test")))
   )
 
   val prefilledFull6020Session = sessionAboutFranchiseOrLetting6020Session.copy(

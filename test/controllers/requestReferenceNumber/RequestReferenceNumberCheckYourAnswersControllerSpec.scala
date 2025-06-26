@@ -17,7 +17,6 @@
 package controllers.requestReferenceNumber
 
 import config.ErrorHandler
-import form.requestReferenceNumber.RequestReferenceNumberCheckYourAnswersForm.theForm
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.RequestReferenceNumberSubmission
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
@@ -25,14 +24,11 @@ import play.api.http.Status
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import utils.TestBaseSpec
-import utils.FormBindingTestAssertions.mustContainError
 
 import scala.language.reflectiveCalls
 import scala.concurrent.Future
 
 class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec {
-
-  import TestData._
 
   trait ControllerWithInjectedSubmissionConnectorFixture(
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
@@ -139,26 +135,6 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
 
       }
     }
-  }
-
-  "Check Your Answers request reference number form" should {
-    "error if checkYourAnswersRequestReferenceNumber is missing" in {
-      val formData = baseFormData - errorKey.checkYourAnswersRequestReferenceNumber
-      val form     = theForm.bind(formData)
-
-      mustContainError(errorKey.checkYourAnswersRequestReferenceNumber, "error.checkYourAnswersRadio.required", form)
-    }
-  }
-
-  object TestData {
-    val errorKey: ErrorKey = new ErrorKey
-
-    class ErrorKey {
-      val checkYourAnswersRequestReferenceNumber: String =
-        "checkYourAnswersRequestReferenceNumber"
-    }
-
-    val baseFormData: Map[String, String] = Map("checkYourAnswersRequestReferenceNumber" -> "yes")
   }
 
 }

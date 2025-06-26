@@ -20,7 +20,6 @@ import actions.{SessionRequest, WithSessionRefiner}
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import controllers.FORDataCaptureController
-import form.requestReferenceNumber.RequestReferenceNumberCheckYourAnswersForm.theForm
 import models.Session
 import models.submissions.RequestReferenceNumberSubmission
 import play.api.Logging
@@ -61,13 +60,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
-        checkYourAnswersView(
-          request.sessionData.requestReferenceNumberDetails.flatMap(_.checkYourAnswers) match {
-            case Some(cya) => theForm.fill(cya)
-            case _         => theForm
-          },
-          request.sessionData
-        )
+        checkYourAnswersView(request.sessionData)
       )
     )
   }
