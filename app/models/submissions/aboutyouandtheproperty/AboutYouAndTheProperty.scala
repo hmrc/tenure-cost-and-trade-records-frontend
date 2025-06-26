@@ -25,35 +25,35 @@ import play.api.libs.json.{Json, OFormat}
 
 case class AboutYouAndTheProperty(
   customerDetails: Option[CustomerDetails] = None,
-  altDetailsQuestion: Option[ContactDetailsQuestion] = None,
+  altDetailsQuestion: Option[AnswersYesNo] = None,
   alternativeContactAddress: Option[AlternativeAddress] = None,
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,
-  premisesLicenseGrantedInformationDetails: Option[PremisesLicenseGrantedInformationDetails] = None,
+  premisesLicenseGrantedInformationDetails: Option[String] = None,
   licensableActivities: Option[AnswersYesNo] = None,
-  licensableActivitiesInformationDetails: Option[LicensableActivitiesInformationDetails] = None,
+  licensableActivitiesInformationDetails: Option[String] = None,
   premisesLicenseConditions: Option[AnswersYesNo] = None,
-  premisesLicenseConditionsDetails: Option[PremisesLicenseConditionsDetails] = None,
+  premisesLicenseConditionsDetails: Option[String] = None,
   enforcementAction: Option[AnswersYesNo] = None,
-  enforcementActionHasBeenTakenInformationDetails: Option[EnforcementActionHasBeenTakenInformationDetails] = None,
+  enforcementActionHasBeenTakenInformationDetails: Option[String] = None,
   tiedForGoods: Option[AnswersYesNo] = None,
   tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None,
-  checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAboutYourProperty] = None,
-  propertyDetailsString: Option[PropertyDetailsString] = None, // added for 6030 - February 2024
+  checkYourAnswersAboutTheProperty: Option[AnswersYesNo] = None,
+  propertyDetailsString: Option[String] = None, // added for 6030 - February 2024
   charityQuestion: Option[AnswersYesNo] = None, // 6030
   tradingActivity: Option[TradingActivity] = None, // 6030
-  renewablesPlant: Option[RenewablesPlant] = None, // 6076
+  renewablesPlant: Option[RenewablesPlantType] = None, // 6076
   threeYearsConstructed: Option[AnswersYesNo] = None, // 6076
   costsBreakdown: Option[String] = None // 6076
 )
 
-object AboutYouAndTheProperty {
+object AboutYouAndTheProperty:
   implicit val format: OFormat[AboutYouAndTheProperty] = Json.format
 
   def updateAboutYouAndTheProperty(
     copy: AboutYouAndTheProperty => AboutYouAndTheProperty
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session =
 
     val currentAboutTheProperty = sessionRequest.sessionData.aboutYouAndTheProperty
 
@@ -63,6 +63,3 @@ object AboutYouAndTheProperty {
     }
 
     sessionRequest.sessionData.copy(aboutYouAndTheProperty = updateAboutTheProperty)
-
-  }
-}

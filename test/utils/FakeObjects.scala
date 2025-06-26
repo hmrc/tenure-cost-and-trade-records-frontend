@@ -36,7 +36,7 @@ import models.submissions.connectiontoproperty.ConnectionToProperty.*
 import models.submissions.downloadFORTypeForm.*
 import models.submissions.ReferenceNumber
 import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
-import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
 import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
@@ -309,74 +309,74 @@ trait FakeObjects {
 
   val prefilledAboutYouAndThePropertyYes: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerYes)),
+    Some(AnswerYes),
     Some(prefilledAlternativeAddress),
     Some(PropertyDetails(CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerYes),
-    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some("Premises licence granted details"),
     Some(AnswerYes),
-    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some("Licensable activities details"),
     Some(AnswerYes),
-    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some("Premises license conditions details"),
     Some(AnswerYes),
-    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some("Enforcement action taken details"),
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
-    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("Yes")),
+    checkYourAnswersAboutTheProperty = Some(AnswerYes),
     charityQuestion = Some(AnswerYes),
     tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
-    renewablesPlant = Some(RenewablesPlant(Intermittent)),
+    renewablesPlant = Some(Intermittent),
     threeYearsConstructed = Some(AnswerYes),
     costsBreakdown = Some("breakdown")
   )
 
   val prefilledAboutYouAndThePropertyYesBaseload: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerYes)),
+    Some(AnswerYes),
     Some(prefilledAlternativeAddress),
     Some(PropertyDetails(CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerYes),
-    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some("Premises licence granted details"),
     Some(AnswerYes),
-    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some("Licensable activities details"),
     Some(AnswerYes),
-    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some("Premises license conditions details"),
     Some(AnswerYes),
-    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some("Enforcement action taken details"),
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
-    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("Yes")),
+    checkYourAnswersAboutTheProperty = Some(AnswerYes),
     charityQuestion = Some(AnswerYes),
     tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
-    renewablesPlant = Some(RenewablesPlant(Baseload)),
+    renewablesPlant = Some(Baseload),
     threeYearsConstructed = Some(AnswerYes),
     costsBreakdown = Some("breakdown")
   )
   val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty   = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerYes)),
+    Some(AnswerYes),
     Some(prefilledAlternativeAddress),
     None,
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerYes),
-    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some("Premises licence granted details"),
     Some(AnswerYes),
-    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some("Licensable activities details"),
     Some(AnswerYes),
-    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some("Premises license conditions details"),
     Some(AnswerYes),
-    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some("Enforcement action taken details"),
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
     None,
-    Some(PropertyDetailsString("This property is a museum"))
+    Some("This property is a museum")
   )
 
   val prefilledAboutYouAndThePropertyNoString: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerNo)),
+    Some(AnswerNo),
     None,
     None,
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
@@ -395,7 +395,7 @@ trait FakeObjects {
 
   val prefilledAboutYouAndThePropertyNo: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerNo)),
+    Some(AnswerNo),
     None,
     Some(PropertyDetails(CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
@@ -409,7 +409,7 @@ trait FakeObjects {
     None,
     Some(AnswerNo),
     None,
-    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("no")),
+    checkYourAnswersAboutTheProperty = Some(AnswerNo),
     charityQuestion = Some(AnswerNo)
   )
 

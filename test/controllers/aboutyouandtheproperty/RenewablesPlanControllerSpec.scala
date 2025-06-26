@@ -17,7 +17,7 @@
 package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.Errors
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
@@ -91,7 +91,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
     }
     "return correct backLink when altDetailsQuestion is AnswerYes" in {
       val aboutYouAndThePropertyWithAltDetails =
-        prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerYes)))
+        prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(AnswerYes))
       val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
       val html                                 = contentAsString(result)
 
@@ -100,7 +100,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
 
     "return correct backLink when altDetailsQuestion is AnswerNo" in {
       val aboutYouAndThePropertyWithAltDetails =
-        prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo)))
+        prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(AnswerNo))
       val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
       val html                                 = contentAsString(result)
 
@@ -113,7 +113,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
       val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
       val html                                 = contentAsString(result)
 
-      html should include(controllers.routes.TaskListController.show().url)
+      html should include(controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url)
     }
 
     "SUBMIT /" should {

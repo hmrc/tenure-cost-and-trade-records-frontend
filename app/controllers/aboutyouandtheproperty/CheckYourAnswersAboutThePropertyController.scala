@@ -20,9 +20,9 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 import models.ForType.*
 import models.Session
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
@@ -64,7 +64,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CheckYourAnswersAboutYourProperty](
+    continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersAboutThePropertyForm,
       formWithErrors =>
         BadRequest(

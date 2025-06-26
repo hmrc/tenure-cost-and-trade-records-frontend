@@ -22,14 +22,13 @@ import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.StaffCostsForm.staffCostsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.{StaffCosts, TurnoverSection6076}
-import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.StaffCostsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.staffCosts
-import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -101,7 +100,7 @@ class StaffCostsController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     val intermittentCheck =
-      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant))
+      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant)
 
     intermittentCheck match {
       case Some(Intermittent) =>

@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, CompletedLettings, ContactDetailsQuestion, LettingAvailability}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, CompletedLettings, LettingAvailability}
 import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.{AlternativeContactDetailsId, CommercialLettingAvailabilityId, CommercialLettingAvailabilityWelshId, CommercialLettingQuestionId, CompletedCommercialLettingsId, CompletedCommercialLettingsWelshId, ContactDetailsQuestionId, OccupiersDetailsId, PartsUnavailableId}
 import play.api.libs.json.JsObject
@@ -38,10 +38,9 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
 
     "handling no answers" should {
 
-      "navigate to CommercialLettingQuestionController after completing ContactDetailsQuestion with no" in {
+      "navigate to CommercialLettingQuestionController after completing Contact Details Question with no" in {
         val answers = baseFilled6048Session.copy(
-          aboutYouAndTheProperty =
-            Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
+          aboutYouAndTheProperty = Some(AboutYouAndTheProperty(altDetailsQuestion = Some(AnswerNo)))
         )
         navigator
           .nextPage(ContactDetailsQuestionId, answers)

@@ -22,7 +22,8 @@ import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddr
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.theForm
 import models.Session
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress, ContactDetailsQuestion}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AlternativeAddress}
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.ContactDetailsQuestionId
@@ -66,7 +67,7 @@ class ContactDetailsQuestionController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ContactDetailsQuestion](
+    continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors =>
         successful(
@@ -80,7 +81,7 @@ class ContactDetailsQuestionController @Inject() (
         repository
           .saveOrUpdate(newSession)
           .flatMap { _ =>
-            if formData.contactDetailsQuestion == AnswerYes
+            if formData == AnswerYes
             then
               redirectToAddressLookupFrontend(
                 config = AddressLookupConfig(
@@ -108,7 +109,7 @@ class ContactDetailsQuestionController @Inject() (
       yield Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession))
   }
 
-  private def sessionWithFormData(formData: ContactDetailsQuestion)(using session: Session) =
+  private def sessionWithFormData(formData: AnswersYesNo)(using session: Session) =
     session.copy(aboutYouAndTheProperty =
       Some(
         session.aboutYouAndTheProperty.fold(

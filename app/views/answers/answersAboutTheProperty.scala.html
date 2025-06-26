@@ -64,7 +64,7 @@
 
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.propertyUsage",
-        _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${x.propertyDetailsString.escapedHtml}</p>"),
+        _.propertyDetailsString.map(str => s"<p class=\"govuk-body\">${str.escapedHtml}</p>"),
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
         "propertyCurrentlyUsedString",
         ("valueAsHtml", _ => None)
@@ -99,12 +99,12 @@
         ("valueAsHtml", _ => None)) ++
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.alternative.address",
-        _.altDetailsQuestion.map(_.contactDetailsQuestion).map(v => if(v.contains(AnswerYes)) messages(s"label.yes.hoffwn") else messages(s"label.no.na.hoffwn")),
+        _.altDetailsQuestion.map(v => if(v.contains(AnswerYes)) messages(s"label.yes.hoffwn") else messages(s"label.no.na.hoffwn")),
         controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
         "contactDetailsQuestion"
             ) ++
     sectionAnswers.conditionRow(
-        _.altDetailsQuestion.map(_.contactDetailsQuestion).contains(AnswerYes),
+        _.altDetailsQuestion.contains(AnswerYes),
         "checkYourAnswersAboutTheProperty.alternative.correspondence.address",
         _.alternativeContactAddress.map(_.escapedHtml),
         controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
@@ -144,28 +144,28 @@
         @govukSummaryList(SummaryList(rows = sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail", _.premisesLicenseGrantedDetail.map(yesNo => messages(s"label.$yesNo")), controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show(), "premisesLicenseGranted") ++
                 sectionAnswers.conditionRow(_.premisesLicenseGrantedDetail.contains(AnswerYes),
                     "checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails",
-                    _.premisesLicenseGrantedInformationDetails.map(_.premisesLicenseGrantedInformationDetails),
+                    _.premisesLicenseGrantedInformationDetails,
                     controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(), "premisesLicenseGrantedInformation") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.licensableActivities",
                     _.licensableActivities.map(yesNo => messages(s"label.$yesNo")),
                     controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(), "licensableActivities") ++
                 sectionAnswers.conditionRow(_.licensableActivities.contains(AnswerYes),
                     "checkYourAnswersAboutTheProperty.licensableActivitiesDetails",
-                    _.licensableActivitiesInformationDetails.map(_.licensableActivitiesDetails),
+                    _.licensableActivitiesInformationDetails,
                     controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(), "licensableActivitiesDetails") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseConditions",
                     _.premisesLicenseConditions.map(yesNo => messages(s"label.$yesNo")),
                     controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show(), "premisesLicenseConditions") ++
                 sectionAnswers.conditionRow(_.premisesLicenseConditions.contains(AnswerYes),
                     "checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails",
-                    _.premisesLicenseConditionsDetails.map(_.premisesLicenseConditionsDetails),
+                    _.premisesLicenseConditionsDetails,
                     controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(), "premisesLicenseConditionsDetails") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.enforcementAction",
                     _.enforcementAction.map(yesNo => messages(s"label.$yesNo")),
                     controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show(), "enforcementActionBeenTaken") ++
                 sectionAnswers.conditionRow(_.enforcementAction.contains(AnswerYes),
                     "checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails",
-                    _.enforcementActionHasBeenTakenInformationDetails.map(_.enforcementActionHasBeenTakenDetails),
+                    _.enforcementActionHasBeenTakenInformationDetails,
                     controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show(), "enforcementActionHasBeenTakenDetails") ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.tiedForGoods",
                     _.tiedForGoods.map(yesNo => messages(s"label.$yesNo")),

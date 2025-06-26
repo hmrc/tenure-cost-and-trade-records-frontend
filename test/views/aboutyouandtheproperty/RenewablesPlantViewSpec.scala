@@ -18,25 +18,25 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.RenewablesPlantForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.RenewablesPlant
-import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlant] {
+class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlantType] {
 
   val messageKeyPrefix = "renewablesPlant"
 
   val backLink = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
 
-  override val form: Form[RenewablesPlant] = RenewablesPlantForm.renewablesPlantForm
+  override val form: Form[RenewablesPlantType] = RenewablesPlantForm.renewablesPlantForm
 
   def createView: () => Html = () =>
     renewablesPlantView(form, backLink, Summary("99996076001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[RenewablesPlant] => Html =
-    (form: Form[RenewablesPlant]) =>
+  def createViewUsingForm: Form[RenewablesPlantType] => Html =
+    (form: Form[RenewablesPlantType]) =>
       renewablesPlantView(form, backLink, Summary("99996076001"))(using fakeRequest, messages)
 
   "Renewables plant view" must {

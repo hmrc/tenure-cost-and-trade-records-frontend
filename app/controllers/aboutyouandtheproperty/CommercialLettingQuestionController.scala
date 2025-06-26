@@ -119,7 +119,7 @@ class CommercialLettingQuestionController @Inject() (
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => s"${controllers.routes.TaskListController.show().url}#about-the-property"
       case _     =>
-        answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion.map(_.contactDetailsQuestion)) match {
+        answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
           case Some(AnswerYes) =>
             controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
           case _               => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url

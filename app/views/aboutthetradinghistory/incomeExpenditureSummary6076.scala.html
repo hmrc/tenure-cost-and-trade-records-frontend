@@ -20,7 +20,7 @@
 @import util.DateUtilLocalised
 @import java.time.LocalDate
 @import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
-@import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
+@import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 @import util.NumberUtil.*
 @import actions.SessionRequest
 
@@ -39,7 +39,7 @@
 @classes = @{"govuk-!-padding-bottom-3 govuk-!-padding-top-3"}
 
     @intermittentChoice = @{
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant))
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant)
     }
 
 @rowWithLink(msgkey: String, entryValue: IncomeExpenditure6076Entry => BigDecimal, url: IncomeExpenditure6076Entry => String) = @{

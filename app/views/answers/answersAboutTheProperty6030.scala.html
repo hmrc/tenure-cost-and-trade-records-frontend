@@ -35,7 +35,7 @@
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row(
         "checkYourAnswersAboutTheProperty.propertyUsage",
-        _.propertyDetailsString.map(x => s"<p class=\"govuk-body\">${x.propertyDetailsString.escapedHtml}</p>"),
+        _.propertyDetailsString.map(str => s"<p class=\"govuk-body\">${str.escapedHtml}</p>"),
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
         "propertyCurrentlyUsedString",
         ("valueAsHtml", _ => None)

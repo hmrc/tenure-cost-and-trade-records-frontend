@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedInformationDetails
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.PremisesLicenseGrantedDetailsId
 import play.api.i18n.I18nSupport
@@ -62,7 +61,7 @@ class PremisesLicenseGrantedDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PremisesLicenseGrantedInformationDetails](
+    continueOrSaveAsDraft[String](
       premisesLicenseGrantedInformationDetailsForm,
       formWithErrors =>
         BadRequest(

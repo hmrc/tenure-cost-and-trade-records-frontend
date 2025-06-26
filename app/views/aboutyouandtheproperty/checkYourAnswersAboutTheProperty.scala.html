@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
 @import views.html.answers.answersAboutTheProperty
 
 @this(layout: Layout,
@@ -27,7 +27,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutYourProperty], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
     @layout(
         pageHeading = messages("checkYourAnswersAboutTheProperty.heading"),
@@ -49,6 +49,5 @@
             )
 
             @includes.continueSaveAsDraftButtons(govukButton)
-
         }
     }

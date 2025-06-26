@@ -18,23 +18,21 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PremisesLicenseConditionsDetailsForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.PremisesLicenseConditionsDetails
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[PremisesLicenseConditionsDetails] {
+class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "premisesLicenseConditionsDetails"
 
-  override val form: Form[PremisesLicenseConditionsDetails] =
-    PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
+  override val form: Form[String] = PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 
   def createView: () => Html = () =>
     premisesLicenceConditionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[PremisesLicenseConditionsDetails] => Html =
-    (form: Form[PremisesLicenseConditionsDetails]) =>
+  def createViewUsingForm: Form[String] => Html =
+    (form: Form[String]) =>
       premisesLicenceConditionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Property licence conditions details view" must {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,15 @@
 package form.aboutyouandtheproperty
 
 import form.MappingSupport.createYesNoType
-import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object ContactDetailsQuestionForm {
+object ContactDetailsQuestionForm:
 
-  val theForm = Form(
-    mapping(
-      "contactDetailsQuestion" -> createYesNoType("error.contactDetailsQuestion.missing")
-    )(ContactDetailsQuestion.apply)(o => Some(o.contactDetailsQuestion))
-  )
-
-}
+  val theForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "contactDetailsQuestion" -> createYesNoType("error.contactDetailsQuestion.missing")
+      )
+    )

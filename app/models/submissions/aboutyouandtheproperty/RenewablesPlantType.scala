@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,18 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import play.api.libs.json.{Json, OFormat}
+import models.Scala3EnumJsonFormat
+import play.api.libs.json.Format
 
-case class PremisesLicenseConditionsDetails(
-  premisesLicenseConditionsDetails: String
-)
+/**
+  * @author Yuriy Tumakha
+  */
+enum RenewablesPlantType(renewablesPlantDetails: String):
+  override def toString: String = renewablesPlantDetails
 
-object PremisesLicenseConditionsDetails {
-  implicit val format: OFormat[PremisesLicenseConditionsDetails] = Json.format
-}
+  case Intermittent extends RenewablesPlantType("intermittent")
+  case Baseload extends RenewablesPlantType("baseload")
+end RenewablesPlantType
+
+object RenewablesPlantType:
+  implicit val format: Format[RenewablesPlantType] = Scala3EnumJsonFormat.format

@@ -89,9 +89,7 @@ class PropertyCurrentlyUsedController @Inject() (
       case "TL"  => controllers.routes.TaskListController.show().url
       case "CYA" => routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     =>
-        answers.aboutYouAndTheProperty.flatMap(
-          _.altDetailsQuestion.map(_.contactDetailsQuestion)
-        ) match {
+        answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
           case Some(AnswerYes) =>
             controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
           case _               => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url

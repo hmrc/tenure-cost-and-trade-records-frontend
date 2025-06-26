@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 package form.aboutyouandtheproperty
 
-import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.single
 
-object CheckYourAnswersAboutThePropertyForm {
+object CheckYourAnswersAboutThePropertyForm:
 
-  val checkYourAnswersAboutThePropertyForm = Form(
-    mapping(
-      "checkYourAnswersAboutTheProperty" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+  val checkYourAnswersAboutThePropertyForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "checkYourAnswersAboutTheProperty" -> createYesNoType("error.checkYourAnswersRadio.required")
       )
-    )(CheckYourAnswersAboutYourProperty.apply)(o => Some(o.checkYourAnswersAboutYourProperty))
-  )
-}
+    )

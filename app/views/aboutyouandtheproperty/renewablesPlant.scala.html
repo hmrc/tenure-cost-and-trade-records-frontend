@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import models.pages.Summary
-@import models.submissions.aboutyouandtheproperty.RenewablesPlant
+@import models.submissions.aboutyouandtheproperty.RenewablesPlantType
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 
 @this(layout: Layout,
@@ -30,7 +30,7 @@
 )
 
 
-@(theForm: Form[RenewablesPlant], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[RenewablesPlantType], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("renewablesPlant.heading"),

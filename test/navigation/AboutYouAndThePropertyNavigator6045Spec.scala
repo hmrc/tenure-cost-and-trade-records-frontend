@@ -39,8 +39,7 @@ class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
 
       "navigate to PropertyCurrentlyUsedController after completing ContactDetailsQuestion with no" in {
         val answers = baseFilled6045Session.copy(
-          aboutYouAndTheProperty =
-            Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
+          aboutYouAndTheProperty = Some(AboutYouAndTheProperty(altDetailsQuestion = Some(AnswerNo)))
         )
         navigator
           .nextPage(ContactDetailsQuestionId, answers)
@@ -85,4 +84,5 @@ class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
       }
     }
   }
+
 }

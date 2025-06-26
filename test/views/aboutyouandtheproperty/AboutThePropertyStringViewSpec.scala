@@ -19,26 +19,25 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.AboutThePropertyStringForm
 import models.ForType.*
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[PropertyDetailsString] {
+class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "aboutProperty"
 
   val backLink = controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
 
-  override val form: Form[PropertyDetailsString] = AboutThePropertyStringForm.aboutThePropertyStringForm
+  override val form: Form[String] = AboutThePropertyStringForm.aboutThePropertyStringForm
 
   def createView: () => Html = () =>
     aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[PropertyDetailsString] => Html = (form: Form[PropertyDetailsString]) =>
+  def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
     aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm6020: Form[PropertyDetailsString] => Html = (form: Form[PropertyDetailsString]) =>
+  def createViewUsingForm6020: Form[String] => Html = (form: Form[String]) =>
     aboutThePropertyStringView(form, FOR6020, Summary("99996020001"), backLink)(using fakeRequest, messages)
 
   "About the property view" must {

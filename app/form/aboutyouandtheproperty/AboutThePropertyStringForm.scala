@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
 
 package form.aboutyouandtheproperty
 
-import models.submissions.aboutyouandtheproperty._
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object AboutThePropertyStringForm {
+object AboutThePropertyStringForm:
 
-  val aboutThePropertyStringForm: Form[PropertyDetailsString] = Form(
-    mapping(
-      "propertyCurrentlyUsedString" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.propertyCurrentlyUsedString.required"),
-        maxLength(200, "error.propertyCurrentlyUsedString.maxLength")
+  val aboutThePropertyStringForm: Form[String] =
+    Form(
+      single(
+        "propertyCurrentlyUsedString" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.propertyCurrentlyUsedString.required"),
+          maxLength(200, "error.propertyCurrentlyUsedString.maxLength")
+        )
       )
-    )(PropertyDetailsString.apply)(o => Some(o.propertyDetailsString))
-  )
-
-}
+    )

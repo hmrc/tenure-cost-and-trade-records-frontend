@@ -23,7 +23,6 @@ import form.aboutyouandtheproperty.AboutThePropertyStringForm.aboutThePropertySt
 import models.ForType.FOR6030
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import models.submissions.aboutyouandtheproperty.PropertyDetailsString
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
@@ -56,8 +55,8 @@ class AboutThePropertyStringController @Inject() (
       Ok(
         aboutThePropertyStringView(
           request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetailsString) match {
-            case Some(propertyDetailsString) => aboutThePropertyStringForm.fill(propertyDetailsString)
-            case _                           => aboutThePropertyStringForm
+            case Some(propertyDetails) => aboutThePropertyStringForm.fill(propertyDetails)
+            case _                     => aboutThePropertyStringForm
           },
           request.sessionData.forType,
           request.sessionData.toSummary,
@@ -68,7 +67,7 @@ class AboutThePropertyStringController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PropertyDetailsString](
+    continueOrSaveAsDraft[String](
       aboutThePropertyStringForm,
       formWithErrors =>
         BadRequest(
@@ -92,9 +91,7 @@ class AboutThePropertyStringController @Inject() (
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
       case _    =>
-        answers.aboutYouAndTheProperty.flatMap(
-          _.altDetailsQuestion.map(_.contactDetailsQuestion)
-        ) match {
+        answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
           case Some(AnswerYes) =>
             if answers.forType == FOR6030
             then controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url

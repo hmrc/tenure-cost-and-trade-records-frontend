@@ -18,24 +18,24 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.ContactDetailsQuestion
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[ContactDetailsQuestion] {
+class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "contactDetailsQuestion"
 
-  override val form: Form[ContactDetailsQuestion] = ContactDetailsQuestionForm.theForm
+  override val form: Form[AnswersYesNo] = ContactDetailsQuestionForm.theForm
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
 
   def createView: () => Html = () =>
     contactDetailsQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[ContactDetailsQuestion] => Html = (form: Form[ContactDetailsQuestion]) =>
+  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     contactDetailsQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Contact details question view" should {
