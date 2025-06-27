@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.RenewablesPlantForm.renewablesPlantForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import models.submissions.aboutyouandtheproperty.RenewablesPlant
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.RenewablesPlantPageId
@@ -62,7 +62,7 @@ class RenewablesPlantController @Inject() (
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[RenewablesPlant](
+    continueOrSaveAsDraft[RenewablesPlantType](
       renewablesPlantForm,
       formWithErrors =>
         BadRequest(
@@ -82,12 +82,11 @@ class RenewablesPlantController @Inject() (
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => controllers.routes.TaskListController.show().url + "#technology-type"
       case _     =>
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion).map(_.contactDetailsQuestion) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
           case Some(AnswerYes) =>
             controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
-          case Some(AnswerNo)  =>
+          case _               =>
             controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-          case _               => controllers.routes.TaskListController.show().url
         }
 
     }

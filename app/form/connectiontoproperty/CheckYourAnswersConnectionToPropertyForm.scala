@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,20 @@
 
 package form.connectiontoproperty
 
+import form.MappingSupport.createYesNoType
 import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
 import play.api.data.Form
-import play.api.data.Forms.{boolean, default, mapping, optional, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.{boolean, mapping, optional}
 
-object CheckYourAnswersConnectionToPropertyForm {
+object CheckYourAnswersConnectionToPropertyForm:
 
-  val theForm = Form(
-    mapping(
-      "checkYourAnswersConnectionToProperty" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
-      ),
-      "confirmAnswersAreCorrect"             -> optional(boolean)
-        .verifying("checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.required", _.contains(true))
-    )(CheckYourAnswersConnectionToProperty.apply)(o =>
-      Some(o.checkYourAnswersConnectionToProperty, o.confirmAnswersAreCorrect)
+  val theForm: Form[CheckYourAnswersConnectionToProperty] =
+    Form(
+      mapping(
+        "checkYourAnswersConnectionToProperty" -> createYesNoType("error.checkYourAnswersRadio.required"),
+        "confirmAnswersAreCorrect"             -> optional(boolean)
+          .verifying("checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.required", _.contains(true))
+      )(CheckYourAnswersConnectionToProperty.apply)(o =>
+        Some(o.checkYourAnswersConnectionToProperty, o.confirmAnswersAreCorrect)
+      )
     )
-  )
-}

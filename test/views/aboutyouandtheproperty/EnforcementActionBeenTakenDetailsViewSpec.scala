@@ -18,24 +18,21 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.EnforcementActionHasBeenTakenInformationDetails
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class EnforcementActionBeenTakenDetailsViewSpec
-    extends QuestionViewBehaviours[EnforcementActionHasBeenTakenInformationDetails] {
+class EnforcementActionBeenTakenDetailsViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "enforcementActionHasBeenTakenDetails"
 
-  override val form: Form[EnforcementActionHasBeenTakenInformationDetails] =
-    EnforcementActionDetailsForm.enforcementActionDetailsForm
+  override val form: Form[String] = EnforcementActionDetailsForm.enforcementActionDetailsForm
 
   def createView: () => Html = () =>
     enforcemenntActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[EnforcementActionHasBeenTakenInformationDetails] => Html =
-    (form: Form[EnforcementActionHasBeenTakenInformationDetails]) =>
+  def createViewUsingForm: Form[String] => Html =
+    (form: Form[String]) =>
       enforcemenntActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Enforcement action taken details view" must {

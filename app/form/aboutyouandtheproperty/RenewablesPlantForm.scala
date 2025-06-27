@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,17 @@
  */
 
 package form.aboutyouandtheproperty
-import models.submissions.aboutyouandtheproperty.RenewablesPlant
-import play.api.data.Form
-import play.api.data.Forms.mapping
+
 import form.MappingSupport.renewablesPlantMapping
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType
+import play.api.data.Form
+import play.api.data.Forms.single
 
-object RenewablesPlantForm {
+object RenewablesPlantForm:
 
-  val renewablesPlantForm = Form(
-    mapping(
-      "renewablesPlant" -> renewablesPlantMapping
-    )(RenewablesPlant.apply)(o => Some(o.renewablesPlant))
-  )
-}
+  val renewablesPlantForm: Form[RenewablesPlantType] =
+    Form(
+      single(
+        "renewablesPlant" -> renewablesPlantMapping
+      )
+    )

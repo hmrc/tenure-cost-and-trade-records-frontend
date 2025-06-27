@@ -20,10 +20,10 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryForm.checkYourAnswersAboutTheTradingHistoryForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
+import models.submissions.common.AnswersYesNo
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
 import play.api.Logging
@@ -64,7 +64,7 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CheckYourAnswersAboutTheTradingHistory](
+    continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersAboutTheTradingHistoryForm,
       formWithErrors =>
         BadRequest(

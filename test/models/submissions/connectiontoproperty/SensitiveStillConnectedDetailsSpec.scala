@@ -17,7 +17,8 @@
 package models.submissions.connectiontoproperty
 
 import crypto.MongoCrypto
-import models.submissions.common.{Address, AnswersYesNo, ContactDetails}
+import models.submissions.common.AnswersYesNo.*
+import models.submissions.common.{Address, ContactDetails}
 import play.api.Configuration
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
@@ -36,39 +37,32 @@ class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers w
       val clearData     = StillConnectedDetails(
         addressConnectionType = Some(AddressConnectionType.AddressConnectionTypeYesChangeAddress),
         connectionToProperty = Some(ConnectionToProperty.ConnectionToThePropertyOccupierAgent),
-        editAddress =
-          Some(EditTheAddress(Address("buildingNameNumber", Some("street1"), "town", Some("county"), "postcode"))),
-        isPropertyVacant = Some(AnswersYesNo.AnswerNo),
-        tradingNameOperatingFromProperty = Some(TradingNameOperatingFromProperty("tradingName")),
-        tradingNameOwnTheProperty = Some(AnswersYesNo.AnswerNo),
-        tradingNamePayingRent = Some(AnswersYesNo.AnswerYes),
-        areYouThirdParty = Some(AnswersYesNo.AnswerYes),
-        vacantPropertyStartDate = Some(StartDateOfVacantProperty(LocalDate.of(2023, 1, 1))),
-        isAnyRentReceived = Some(AnswersYesNo.AnswerYes),
+        editAddress = Some(Address("buildingNameNumber", Some("street1"), "town", Some("county"), "postcode")),
+        isPropertyVacant = Some(AnswerNo),
+        tradingNameOperatingFromProperty = Some("tradingName"),
+        tradingNameOwnTheProperty = Some(AnswerNo),
+        tradingNamePayingRent = Some(AnswerYes),
+        areYouThirdParty = Some(AnswerYes),
+        vacantPropertyStartDate = Some(LocalDate.of(2023, 1, 1)),
+        isAnyRentReceived = Some(AnswerYes),
         provideContactDetails = Some(
-          ProvideContactDetails(
-            YourContactDetails(
-              fullName = "John Doe",
-              contactDetails = ContactDetails("phoneNumber", "emailAddress"),
-              additionalInformation = None
-            )
+          YourContactDetails(
+            fullName = "John Doe",
+            contactDetails = ContactDetails("phoneNumber", "emailAddress"),
+            additionalInformation = None
           )
         ),
-        lettingPartOfPropertyDetailsIndex = 0,
         maxOfLettings = Some(false),
         lettingPartOfPropertyDetails = IndexedSeq(
           LettingPartOfPropertyDetails(
             tenantDetails = TenantDetails("name", "descriptionOfLettings", correspondenceAddress = None),
             lettingPartOfPropertyRentDetails = None,
             itemsIncludedInRent = List("item1", "item2"),
-            addAnotherLettingToProperty = Some(AnswersYesNo.AnswerNo),
+            addAnotherLettingToProperty = Some(AnswerNo),
             maxOfLettings = Some(true)
           )
         ),
-        checkYourAnswersConnectionToProperty =
-          Some(CheckYourAnswersConnectionToProperty("checkYourAnswersConnectionToProperty", Some(true))),
-        checkYourAnswersConnectionToVacantProperty =
-          Some(CheckYourAnswersConnectionToVacantProperty("checkYourAnswersConnectionToVacantProperty"))
+        checkYourAnswersConnectionToProperty = Some(CheckYourAnswersConnectionToProperty(AnswerYes, Some(true)))
       )
       val encryptedData = SensitiveStillConnectedDetails(clearData)
       val d             = encryptedData.decryptedValue

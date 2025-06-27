@@ -17,7 +17,7 @@
 package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
-import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.AddressLookupSupport
 import form.requestReferenceNumber.RequestReferenceNumberPropertyDetailsForm.theForm
 import models.ForType.*
@@ -121,14 +121,15 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
       )
     )
 
-  def addressLookupCallback(id: String) = (Action andThen withSessionRefiner).async { implicit request =>
-    given Session = request.sessionData
-    for
-      confirmedAddress <- getConfirmedAddress(id)
-      convertedAddress  = confirmedAddress.asAddress
-      newSession       <- successful(sessionWithConfirmedAddress(convertedAddress))
-      _                <- repository.saveOrUpdate(newSession)
-    yield Redirect(navigator.nextPage(NoReferenceNumberPageId, newSession).apply(newSession))
+  def addressLookupCallback(id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      given Session = request.sessionData
+      for
+        confirmedAddress <- getConfirmedAddress(id)
+        convertedAddress  = confirmedAddress.asAddress
+        newSession       <- successful(sessionWithConfirmedAddress(convertedAddress))
+        _                <- repository.saveOrUpdate(newSession)
+      yield Redirect(navigator.nextPage(NoReferenceNumberPageId, newSession).apply(newSession))
   }
 
   private def sessionWithConfirmedAddress(addr: Address)(using session: Session) =

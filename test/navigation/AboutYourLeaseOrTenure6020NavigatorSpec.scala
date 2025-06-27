@@ -16,12 +16,12 @@
 
 package navigation
 
-import utils.TestBaseSpec
 import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
+import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
 import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
@@ -29,6 +29,7 @@ import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
+import utils.TestBaseSpec
 
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext
@@ -252,7 +253,8 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           AboutLeaseOrAgreementPartOne(
-            includedInYourRentDetails = Some(IncludedInYourRentDetails(includedInYourRent = List("vat")))
+            includedInYourRentDetails =
+              Some(IncludedInYourRentDetails(includedInYourRent = List(IncludedInYourRentInformationVat)))
           )
         )
       )

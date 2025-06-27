@@ -41,7 +41,7 @@ case class SensitiveAboutLeaseOrAgreementPartOne(
   rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
   whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
   rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
-  checkYourAnswersAboutYourLeaseOrTenure: Option[CheckYourAnswersAboutYourLeaseOrTenure] = None,
+  checkYourAnswersAboutYourLeaseOrTenure: Option[AnswersYesNo] = None,
   rentIncludesVat: Option[RentIncludesVatDetails] = None
 ) extends Sensitive[AboutLeaseOrAgreementPartOne] {
   override def decryptedValue: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(

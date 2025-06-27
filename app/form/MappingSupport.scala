@@ -64,8 +64,8 @@ object MappingSupport:
     enumMappingRequired(AddressConnectionType, Errors.isConnectedError)
   val methodToFixCurrentRentType: Mapping[MethodToFixCurrentRent] =
     enumMappingRequired(MethodToFixCurrentRent, Errors.methodToFixCurrentRents)
-  val renewablesPlantMapping: Mapping[RenewablesPlantDetails]     =
-    enumMappingRequired(RenewablesPlantDetails, Errors.renewablesPlant)
+  val renewablesPlantMapping: Mapping[RenewablesPlantType]        =
+    enumMappingRequired(RenewablesPlantType, Errors.renewablesPlant)
   val outsideRepairsType: Mapping[OutsideRepairs]                 = enumMappingRequired(OutsideRepairs, Errors.outsideRepairs)
   val insideRepairsType: Mapping[InsideRepairs]                   = enumMappingRequired(InsideRepairs, Errors.insideRepairs)
   val buildingInsuranceType: Mapping[BuildingInsurance]           =

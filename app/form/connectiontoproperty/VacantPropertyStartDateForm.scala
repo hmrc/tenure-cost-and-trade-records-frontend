@@ -17,20 +17,20 @@
 package form.connectiontoproperty
 
 import form.DateMappings.requiredDateMapping
-import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 import play.api.i18n.Messages
 
-object VacantPropertyStartDateForm {
+import java.time.LocalDate
 
-  def vacantPropertyStartDateForm(using messages: Messages): Form[StartDateOfVacantProperty] = Form(
-    mapping(
-      "startDateOfVacantProperty" -> requiredDateMapping(
-        "startDateOfVacantProperty",
-        allowPastDates = true
+object VacantPropertyStartDateForm:
+
+  def vacantPropertyStartDateForm(using messages: Messages): Form[LocalDate] =
+    Form(
+      single(
+        "startDateOfVacantProperty" -> requiredDateMapping(
+          "startDateOfVacantProperty",
+          allowPastDates = true
+        )
       )
-    )(StartDateOfVacantProperty.apply)(o => Some(o.datePropertyBecomeVacant))
-  )
-
-}
+    )

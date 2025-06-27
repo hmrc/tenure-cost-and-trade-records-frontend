@@ -25,7 +25,7 @@ import play.api.libs.json._
 case class AboutFranchisesOrLettings(
   franchisesOrLettingsTiedToProperty: Option[AnswersYesNo] = None,
   currentMaxOfLetting: Option[Boolean] = None,
-  checkYourAnswersAboutFranchiseOrLettings: Option[CheckYourAnswersAboutFranchiseOrLettings] = None,
+  checkYourAnswersAboutFranchiseOrLettings: Option[AnswersYesNo] = None,
   fromCYA: Option[Boolean] = None,
   lettings: Option[IndexedSeq[LettingPartOfProperty]] = None, // 6020 lettings
   rentalIncome: Option[IndexedSeq[IncomeRecord]] = None,
@@ -34,12 +34,12 @@ case class AboutFranchisesOrLettings(
   rentalIncomeMax: Option[Boolean] = None
 )
 
-object AboutFranchisesOrLettings {
+object AboutFranchisesOrLettings:
 
   implicit val aboutFranchisesOrLettingsReads: Reads[AboutFranchisesOrLettings] = (
     (__ \ "franchisesOrLettingsTiedToProperty").readNullable[AnswersYesNo] and
       (__ \ "currentMaxOfLetting").readNullable[Boolean] and
-      (__ \ "checkYourAnswersAboutFranchiseOrLettings").readNullable[CheckYourAnswersAboutFranchiseOrLettings] and
+      (__ \ "checkYourAnswersAboutFranchiseOrLettings").readNullable[AnswersYesNo] and
       (__ \ "fromCYA").readNullable[Boolean] and
       (__ \ "lettings").readNullable[IndexedSeq[LettingPartOfProperty]] and
       (__ \ "rentalIncome").readNullable[IndexedSeq[IncomeRecord]] and
@@ -53,7 +53,7 @@ object AboutFranchisesOrLettings {
 
   def updateAboutFranchisesOrLettings(
     copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session =
 
     val currentAboutFranchisesOrLettings = sessionRequest.sessionData.aboutFranchisesOrLettings
 
@@ -63,7 +63,3 @@ object AboutFranchisesOrLettings {
     }
 
     sessionRequest.sessionData.copy(aboutFranchisesOrLettings = updateAboutFranchisesOrLettings)
-
-  }
-
-}

@@ -16,9 +16,10 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
+@import models.submissions.common.AnswersYesNo
 
 
-@(forType: ForType, section3point3Completed: Option[String], section3Completed: Option[String], section4Completed: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+@(forType: ForType, section3point3Completed: Option[AnswersYesNo], section3Completed: Option[AnswersYesNo], section4Completed: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
 

@@ -16,17 +16,15 @@
 
 package views.downloadFORTypeForm
 
-import form.downloadFORTypeForm.DownloadPDFForm
-import models.submissions.downloadFORTypeForm.DownloadPDF
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class DownloadPDFViewSpec extends QuestionViewBehaviours[DownloadPDF] {
+class DownloadPDFViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix    = "downloadPdf"
   val testReferenceNumber = "12345678"
 
-  override val form = DownloadPDFForm.downloadPDFForm
+  override val form: Form[String] = defaultForm
 
   def createView6010      = () => downloadPDFView("FOR6010", testReferenceNumber)(using fakeRequest, messages)
   def createView6011      = () => downloadPDFView("FOR6011", testReferenceNumber)(using fakeRequest, messages)

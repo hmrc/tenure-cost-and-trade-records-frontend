@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 
 package form.aboutyouandtheproperty
 
-import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.{nonEmptyText, single}
 
-object PremisesLicenseGrantedDetailsForm {
+object PremisesLicenseGrantedDetailsForm:
 
-  val premisesLicenseGrantedInformationDetailsForm = Form(
-    mapping(
-      "premisesLicenseGrantedInformation" -> nonEmptyText(maxLength = 2000)
-    )(PremisesLicenseGrantedInformationDetails.apply)(o => Some(o.premisesLicenseGrantedInformationDetails))
-  )
-}
+  val premisesLicenseGrantedInformationDetailsForm: Form[String] =
+    Form(
+      single(
+        "premisesLicenseGrantedInformation" -> nonEmptyText(maxLength = 2000)
+      )
+    )

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,15 @@
 package form.connectiontoproperty
 
 import form.MappingSupport.editAddressMapping
-import models.submissions.connectiontoproperty.EditTheAddress
+import models.submissions.common.Address
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object EditAddressForm {
-  val editAddressForm: Form[EditTheAddress] = Form(
-    mapping(
-      "editAddress" -> editAddressMapping
-    )(EditTheAddress.apply)(Option(_).map(_.editAddress))
-  )
-}
+object EditAddressForm:
+
+  val editAddressForm: Form[Address] =
+    Form(
+      single(
+        "editAddress" -> editAddressMapping
+      )
+    )

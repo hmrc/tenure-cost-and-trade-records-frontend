@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AdditionalAmusementsForm.additionalAmusementsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
-import models.submissions.aboutthetradinghistory.{AdditionalAmusements, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.TurnoverSection6045
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AdditionalAmusementsId
 import play.api.i18n.I18nSupport
@@ -52,7 +52,7 @@ class AdditionalAmusementsController @Inject() (
       Ok(
         view(
           additionalAmusementsForm(years).fill(
-            turnoverSections6045.map(_.additionalAmusements.getOrElse(AdditionalAmusements()))
+            turnoverSections6045.map(_.additionalAmusements)
           ),
           getBackLink
         )
@@ -64,13 +64,13 @@ class AdditionalAmusementsController @Inject() (
     runWithSessionCheck { turnoverSections6045 =>
       val years = turnoverSections6045.map(_.financialYearEnd).map(_.getYear.toString)
 
-      continueOrSaveAsDraft[Seq[AdditionalAmusements]](
+      continueOrSaveAsDraft[Seq[Option[BigDecimal]]](
         additionalAmusementsForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
           val updatedSections =
             (success zip turnoverSections6045).map { case (data, previousSection) =>
-              previousSection.copy(additionalAmusements = Some(data))
+              previousSection.copy(additionalAmusements = data)
             }
 
           val updatedData = updateAboutTheTradingHistoryPartOne(

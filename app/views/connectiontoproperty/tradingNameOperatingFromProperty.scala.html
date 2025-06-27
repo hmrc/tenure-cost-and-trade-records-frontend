@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -28,7 +27,7 @@
 )
 
 
-@(theForm: Form[TradingNameOperatingFromProperty], backlink: String, readOnly: Boolean)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[String], backlink: String, readOnly: Boolean)(implicit request: SessionRequest[?], messages: Messages)
 
 @forType = @{request.sessionData.forType}
 

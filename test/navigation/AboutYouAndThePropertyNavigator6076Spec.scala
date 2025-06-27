@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, ContactDetailsQuestion}
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
@@ -35,10 +35,9 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
 
   "About you and the property navigator for form 6076" when {
 
-    "navigate to RenewablesPlantController after completing ContactDetailsQuestion with no" in {
+    "navigate to RenewablesPlantController after completing Contact Details Question with no" in {
       val answers = baseFilled6076Session.copy(
-        aboutYouAndTheProperty =
-          Some(AboutYouAndTheProperty(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerNo))))
+        aboutYouAndTheProperty = Some(AboutYouAndTheProperty(altDetailsQuestion = Some(AnswerNo)))
       )
       navigator
         .nextPage(ContactDetailsQuestionId, answers)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,19 +36,19 @@ case class AboutTheTradingHistory(
   otherCosts: Option[OtherCosts] = None,
   totalPayrollCostSections: Seq[TotalPayrollCost] = Seq.empty,
   variableOperatingExpenses: Option[VariableOperatingExpensesSections] = None,
-  incomeExpenditureSummary: Option[IncomeExpenditureSummary] = None,
+  incomeExpenditureSummary: Option[String] = None,
   incomeExpenditureSummaryData: Seq[IncomeExpenditureSummaryData] = Seq.empty,
   unusualCircumstances: Option[UnusualCircumstances] = None,
   electricVehicleChargingPoints: Option[ElectricVehicleChargingPoints] = None, // added March 2024
   totalFuelSold: Option[Seq[TotalFuelSold]] = None,
-  bunkeredFuelQuestion: Option[BunkeredFuelQuestion] = None,
+  bunkeredFuelQuestion: Option[AnswersYesNo] = None,
   bunkeredFuelSold: Option[Seq[BunkeredFuelSold]] = None,
   bunkerFuelCardsDetails: Option[IndexedSeq[BunkerFuelCardsDetails]] = None,
   customerCreditAccounts: Option[Seq[CustomerCreditAccounts]] = None,
   doYouAcceptLowMarginFuelCard: Option[AnswersYesNo] = None,
   percentageFromFuelCards: Option[Seq[PercentageFromFuelCards]] = None,
   lowMarginFuelCardsDetails: Option[IndexedSeq[LowMarginFuelCardsDetails]] = None,
-  checkYourAnswersAboutTheTradingHistory: Option[CheckYourAnswersAboutTheTradingHistory] = None
+  checkYourAnswersAboutTheTradingHistory: Option[AnswersYesNo] = None
 )
 
 object AboutTheTradingHistory {
@@ -63,19 +63,19 @@ object AboutTheTradingHistory {
       (__ \ "otherCosts").readNullable[OtherCosts] and
       (__ \ "totalPayrollCostSections").read[Seq[TotalPayrollCost]] and
       (__ \ "variableOperatingExpenses").readNullable[VariableOperatingExpensesSections] and
-      (__ \ "incomeExpenditureSummary").readNullable[IncomeExpenditureSummary] and
+      (__ \ "incomeExpenditureSummary").readNullable[String] and
       (__ \ "incomeExpenditureSummaryData").read[Seq[IncomeExpenditureSummaryData]] and
       (__ \ "unusualCircumstances").readNullable[UnusualCircumstances] and
       (__ \ "electricVehicleChargingPoints").readNullable[ElectricVehicleChargingPoints] and
       (__ \ "totalFuelSold").readNullable[Seq[TotalFuelSold]] and
-      (__ \ "bunkeredFuelQuestion").readNullable[BunkeredFuelQuestion] and
+      (__ \ "bunkeredFuelQuestion").readNullable[AnswersYesNo] and
       (__ \ "bunkeredFuelSold").readNullable[Seq[BunkeredFuelSold]] and
       (__ \ "bunkerFuelCardsDetails").readNullable[IndexedSeq[BunkerFuelCardsDetails]] and
       (__ \ "customerCreditAccounts").readNullable[Seq[CustomerCreditAccounts]] and
       (__ \ "doYouAcceptLowMarginFuelCard").readNullable[AnswersYesNo] and
       (__ \ "percentageFromFuelCards").readNullable[Seq[PercentageFromFuelCards]] and
       (__ \ "lowMarginFuelCardsDetails").readNullable[IndexedSeq[LowMarginFuelCardsDetails]] and
-      (__ \ "checkYourAnswersAboutTheTradingHistory").readNullable[CheckYourAnswersAboutTheTradingHistory]
+      (__ \ "checkYourAnswersAboutTheTradingHistory").readNullable[AnswersYesNo]
   )(AboutTheTradingHistory.apply)
 
   implicit val format: Format[AboutTheTradingHistory] =

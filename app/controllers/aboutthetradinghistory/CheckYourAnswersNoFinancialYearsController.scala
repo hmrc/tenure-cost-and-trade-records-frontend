@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersNoFinancialYearsForm.theForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+import models.submissions.common.AnswersYesNo
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
 import play.api.i18n.I18nSupport
@@ -48,7 +48,7 @@ class CheckYourAnswersNoFinancialYearsController @Inject (
   }
 
   def submit(): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CheckYourAnswersAboutTheTradingHistory](
+    continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors => successful(BadRequest(theView(formWithErrors, backLinkUrl))),
       formData =>

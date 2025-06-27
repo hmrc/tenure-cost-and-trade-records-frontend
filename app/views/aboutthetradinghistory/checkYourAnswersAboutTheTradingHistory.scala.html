@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.ForType.*
-@import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
 @import views.html.answers.{answersAboutYourTradingHistory,answersTradingHistory6048, answersTradingHistory6045, answersTradingHistory6076, answersTradingHistory6020, answersTradingHistory6015}
 
 @this(layout: Layout,
@@ -33,7 +33,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutTheTradingHistory], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
 @forType = @{
     request.sessionData.forType

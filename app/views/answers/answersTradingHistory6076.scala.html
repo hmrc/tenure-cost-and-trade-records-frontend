@@ -18,7 +18,7 @@
 @import models.submissions.aboutthetradinghistory._
 @import util.NumberUtil.given
 @import util.CyaTradingHistorySupport
-@import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
+@import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 
 @import scala.language.implicitConversions
 
@@ -29,7 +29,7 @@
 @()(implicit request: SessionRequest[?], messages: Messages)
 
 @intermittentAnswer = @{
- request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant.contains(Intermittent)))
+ request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant).contains(Intermittent)
 }
 
 @answers =@{cyaSupport.sectionAnswers1.answers}
@@ -63,7 +63,7 @@
  answer6076("grossReceipts.total", _.grossReceiptsExcludingVAT.map(_.total))
 )
 
-@if(request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant).exists(_.renewablesPlant == Baseload)) {
+@if(request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant).contains(Baseload)) {
  @cyaSupport.pageAnswers("checkYourAnswersAboutTheTradingHistory.grossReceiptsForBaseLoad",
   controllers.aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show(),
   answer6076("checkYourAnswersAboutTheTradingHistory.bioMethane", _.grossReceiptsForBaseLoad.flatMap(_.renewableHeatIncentiveBioMethane)),

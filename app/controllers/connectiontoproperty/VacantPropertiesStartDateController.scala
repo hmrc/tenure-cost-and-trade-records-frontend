@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertyStartDateForm.vacantPropertyStartDateForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.PropertyBecomeVacantPageId
 import play.api.Logging
@@ -30,6 +29,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.vacantPropertyStartDate
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -65,7 +65,7 @@ class VacantPropertiesStartDateController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[StartDateOfVacantProperty](
+    continueOrSaveAsDraft[LocalDate](
       vacantPropertyStartDateForm,
       formWithErrors =>
         BadRequest(

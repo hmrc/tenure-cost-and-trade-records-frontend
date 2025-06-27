@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import models.submissions.accommodation.AccommodationDetails
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.libs.json.{Json, OFormat}
@@ -50,12 +49,11 @@ case class ConnectedSubmission(
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
-  downloadPDFDetails: Option[DownloadPDFDetails] = None,
   accommodationDetails: Option[AccommodationDetails] = None,
   createdAt: Instant
 )
 
-object ConnectedSubmission {
+object ConnectedSubmission:
 
   implicit val format: OFormat[ConnectedSubmission] = Json.format
 
@@ -76,8 +74,6 @@ object ConnectedSubmission {
     session.saveAsDraftPassword,
     session.lastCYAPageUrl,
     session.requestReferenceNumberDetails,
-    session.downloadPDFDetails,
     session.accommodationDetails,
     Instant.now()
   )
-}

@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import connectors.{Audit, MockAddressLookup}
 import models.Session
-import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, ContactDetailsQuestion}
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.common.Address
 import models.submissions.common.AnswersYesNo.*
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
@@ -61,8 +61,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
         page.radios("contactDetailsQuestion") should haveNoneChecked
       }
       "reply 200 with a pre-filled form" in new ControllerFixture(
-        aboutYouAndTheProperty =
-          Some(prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(ContactDetailsQuestion(AnswerYes))))
+        aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(AnswerYes)))
       ) {
         val result = controller.show(fakeRequest)
         status(result)            shouldBe OK
@@ -131,7 +130,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
         redirectLocation(result).value shouldBe "/on-ramp"
         val session = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
-        session.getValue.aboutYouAndTheProperty.value.altDetailsQuestion.value.contactDetailsQuestion shouldBe AnswerYes
+        session.getValue.aboutYouAndTheProperty.value.altDetailsQuestion.value shouldBe AnswerYes
       }
     }
     "retrieving the confirmed address" should {

@@ -18,11 +18,10 @@ package views.aboutthetradinghistory
 
 import actions.SessionRequest
 import form.aboutthetradinghistory.AdditionalAmusementsForm
-import models.submissions.aboutthetradinghistory.AdditionalAmusements
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[AdditionalAmusements]] {
+class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[BigDecimal]]] {
 
   val years = Seq("2023", "2022", "2021")
 
@@ -36,7 +35,7 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Additional
 
   def createView = () => additionalAmusementsView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[AdditionalAmusements]]) =>
+  def createViewUsingForm = (form: Form[Seq[Option[BigDecimal]]]) =>
     additionalAmusementsView(form, backLink)(using sessionRequest, messages)
 
   "Additional amusements 6045 view" must {

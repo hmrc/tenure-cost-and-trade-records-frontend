@@ -77,7 +77,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
 
         result.status shouldBe CREATED
         result.body     should include(
-          """"stillConnectedDetails":{"tradingNameOperatingFromProperty":{"tradingName":"ABC LTD"},"""
+          """"stillConnectedDetails":{"tradingNameOperatingFromProperty":"ABC LTD","""
         )
 
         verify(httpMock)

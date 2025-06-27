@@ -18,24 +18,24 @@ package views.connectiontoproperty
 
 import form.connectiontoproperty.VacantPropertyStartDateForm
 import models.pages.Summary
-import models.submissions.connectiontoproperty.StartDateOfVacantProperty
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[StartDateOfVacantProperty] {
+import java.time.LocalDate
+
+class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate] {
 
   val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
   val messageKeyPrefix = "vacantPropertyStartDate"
 
-  override val form: Form[StartDateOfVacantProperty] =
-    VacantPropertyStartDateForm.vacantPropertyStartDateForm(using messages)
+  override val form: Form[LocalDate] = VacantPropertyStartDateForm.vacantPropertyStartDateForm(using messages)
 
   def createView: () => Html = () =>
     vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[StartDateOfVacantProperty] => Html = (form: Form[StartDateOfVacantProperty]) =>
+  def createViewUsingForm: Form[LocalDate] => Html = (form: Form[LocalDate]) =>
     vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   "Vacant property start date view" must {

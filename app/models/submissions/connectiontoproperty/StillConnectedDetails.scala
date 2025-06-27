@@ -18,26 +18,27 @@ package models.submissions.connectiontoproperty
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{Address, AnswersYesNo}
 import play.api.libs.json.{Json, OFormat}
+
+import java.time.LocalDate
 
 case class StillConnectedDetails(
   addressConnectionType: Option[AddressConnectionType] = None,
   connectionToProperty: Option[ConnectionToProperty] = None,
-  editAddress: Option[EditTheAddress] = None,
+  editAddress: Option[Address] = None,
   isPropertyVacant: Option[AnswersYesNo] = None,
-  tradingNameOperatingFromProperty: Option[TradingNameOperatingFromProperty] = None,
+  tradingNameOperatingFromProperty: Option[String] = None,
   tradingNameOwnTheProperty: Option[AnswersYesNo] = None,
   tradingNamePayingRent: Option[AnswersYesNo] = None,
   areYouThirdParty: Option[AnswersYesNo] = None,
-  vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,
+  vacantPropertyStartDate: Option[LocalDate] = None,
   isAnyRentReceived: Option[AnswersYesNo] = None,
-  provideContactDetails: Option[ProvideContactDetails] = None,
+  provideContactDetails: Option[YourContactDetails] = None,
   lettingPartOfPropertyDetailsIndex: Int = 0,
   maxOfLettings: Option[Boolean] = None,
   lettingPartOfPropertyDetails: IndexedSeq[LettingPartOfPropertyDetails] = IndexedSeq.empty,
-  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None,
-  checkYourAnswersConnectionToVacantProperty: Option[CheckYourAnswersConnectionToVacantProperty] = None
+  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
 )
 
 object StillConnectedDetails:

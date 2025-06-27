@@ -42,16 +42,17 @@ case class AboutLeaseOrAgreementPartOne(
   rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
   whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
   rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
-  checkYourAnswersAboutYourLeaseOrTenure: Option[CheckYourAnswersAboutYourLeaseOrTenure] = None,
+  checkYourAnswersAboutYourLeaseOrTenure: Option[AnswersYesNo] = None,
   rentIncludesVat: Option[RentIncludesVatDetails] = None
 )
 
-object AboutLeaseOrAgreementPartOne {
+object AboutLeaseOrAgreementPartOne:
+
   implicit val format: OFormat[AboutLeaseOrAgreementPartOne] = Json.format
 
   def updateAboutLeaseOrAgreementPartOne(
     copy: AboutLeaseOrAgreementPartOne => AboutLeaseOrAgreementPartOne
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session =
     val currentAboutLeaseOrAgreementPartOne = sessionRequest.sessionData.aboutLeaseOrAgreementPartOne
 
     val updatedAboutLeaseOrAgreementPartOne = currentAboutLeaseOrAgreementPartOne match {
@@ -60,6 +61,3 @@ object AboutLeaseOrAgreementPartOne {
     }
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartOne = updatedAboutLeaseOrAgreementPartOne)
-
-  }
-}

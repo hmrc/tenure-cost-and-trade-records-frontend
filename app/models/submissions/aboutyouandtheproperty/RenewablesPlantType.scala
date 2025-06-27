@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutthetradinghistory
+package models.submissions.aboutyouandtheproperty
 
-import play.api.libs.json.{Json, OFormat}
+import models.Scala3EnumJsonFormat
+import play.api.libs.json.Format
 
-case class AdditionalAmusements(
-  receipts: Option[BigDecimal] = None
-)
+/**
+  * @author Yuriy Tumakha
+  */
+enum RenewablesPlantType(renewablesPlantDetails: String):
+  override def toString: String = renewablesPlantDetails
 
-object AdditionalAmusements {
-  implicit val format: OFormat[AdditionalAmusements] = Json.format
-}
+  case Intermittent extends RenewablesPlantType("intermittent")
+  case Baseload extends RenewablesPlantType("baseload")
+end RenewablesPlantType
+
+object RenewablesPlantType:
+  implicit val format: Format[RenewablesPlantType] = Scala3EnumJsonFormat.format

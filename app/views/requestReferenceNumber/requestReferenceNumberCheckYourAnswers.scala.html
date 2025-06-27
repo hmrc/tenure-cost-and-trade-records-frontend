@@ -16,7 +16,6 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import models.submissions.requestReferenceNumber.RequestReferenceNumberCheckYourAnswers
 @import util.SectionAnswersRowBuilder
 
 @this(layout: Layout,
@@ -25,7 +24,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[RequestReferenceNumberCheckYourAnswers], session: models.Session)(implicit request: Request[?], messages: Messages)
+@(session: models.Session)(implicit request: Request[?], messages: Messages)
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(session.requestReferenceNumberDetails)
@@ -35,7 +34,6 @@
     pageHeading = messages("requestReferenceNumber.checkYourAnswers.heading"),
     fullWidth = true,
     backLinkUrl = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show().url,
-    theForm = theForm
 ) {
 
     @formWithCSRF(action = controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.submit()) {

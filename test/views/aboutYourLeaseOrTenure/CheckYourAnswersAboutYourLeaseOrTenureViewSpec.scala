@@ -19,13 +19,12 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutYourLeaseOrTenureViewSpec
-    extends QuestionViewBehaviours[CheckYourAnswersAboutYourLeaseOrTenure] {
+class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "checkYourAnswersAboutYourLeaseOrTenure"
 
@@ -55,7 +54,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec
 
   def createView6030      = () =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996030001"))(using sessionRequest6030, messages)
-  def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourLeaseOrTenure]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {

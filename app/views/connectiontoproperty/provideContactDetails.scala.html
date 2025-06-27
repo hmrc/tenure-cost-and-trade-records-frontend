@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
  * limitations under the License.
  *@
 
-@import models.submissions.connectiontoproperty.ProvideContactDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
+@import models.submissions.connectiontoproperty.YourContactDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 @this(layout: Layout,
@@ -26,7 +26,7 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[ProvideContactDetails],backLink:String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[YourContactDetails], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
   pageHeading = messages("provideContactDetails.heading"),
@@ -49,5 +49,3 @@
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-

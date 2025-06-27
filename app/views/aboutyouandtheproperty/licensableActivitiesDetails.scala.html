@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutyouandtheproperty.LicensableActivitiesInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.pages.Summary
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
@@ -27,7 +26,7 @@
   formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[LicensableActivitiesInformationDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
   pageHeading = messages("licensableActivitiesDetails.heading"),

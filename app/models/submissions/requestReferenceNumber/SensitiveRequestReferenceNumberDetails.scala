@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,25 +22,20 @@ import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveRequestReferenceNumberDetails(
   requestReferenceNumberPropertyDetails: Option[SensitiveRequestReferenceNumberPropertyDetails] = None,
-  requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None,
-  requestReferenceNumberCheckYourAnswers: Option[RequestReferenceNumberCheckYourAnswers] = None
-) extends Sensitive[RequestReferenceNumberDetails] {
+  requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None
+) extends Sensitive[RequestReferenceNumberDetails]:
 
   override def decryptedValue: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
     requestReferenceNumberPropertyDetails.map(_.decryptedValue),
-    requestReferenceContactDetails,
-    requestReferenceNumberCheckYourAnswers
+    requestReferenceContactDetails
   )
-}
 
-object SensitiveRequestReferenceNumberDetails {
+object SensitiveRequestReferenceNumberDetails:
 
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRequestReferenceNumberDetails] = Json.format
 
   def apply(requestReferenceNumber: RequestReferenceNumberDetails): SensitiveRequestReferenceNumberDetails =
     SensitiveRequestReferenceNumberDetails(
       requestReferenceNumber.propertyDetails.map(SensitiveRequestReferenceNumberPropertyDetails(_)),
-      requestReferenceNumber.contactDetails,
-      requestReferenceNumber.checkYourAnswers
+      requestReferenceNumber.contactDetails
     )
-}

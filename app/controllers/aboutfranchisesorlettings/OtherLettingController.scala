@@ -18,7 +18,7 @@ package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.OtherLettingForm.theForm
 import models.Session
@@ -74,7 +74,7 @@ class OtherLettingController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[OtherLetting](
       theForm,
       formWithErrors =>
@@ -106,7 +106,7 @@ class OtherLettingController @Inject() (
                                 lookupPageHeadingKey = "otherLetting.address.lookupPageHeading",
                                 selectPageHeadingKey = "otherLetting.address.selectPageHeading",
                                 confirmPageLabelKey = "otherLetting.address.confirmPageHeading",
-                                offRampCall = routes.OtherLettingController.addressLookupCallback(updatedIndex, "")
+                                offRampCall = routes.OtherLettingController.addressLookupCallback(updatedIndex)
                               )
                             )
         yield redirectResult
@@ -155,17 +155,18 @@ class OtherLettingController @Inject() (
     then routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     else routes.TypeOfLettingController.show(idx).url
 
-  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
-    given Session = request.sessionData
-    for
-      confirmedAddress <- getConfirmedAddress(id)
-      lettingAddress   <- confirmedAddress.asAddress
-      newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
-      _                <- repository.saveOrUpdate(newSession)
-    yield
-      if navigator.from == "CYA"
-      then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
-      else Redirect(routes.RentDetailsController.show(idx))
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      given Session = request.sessionData
+      for
+        confirmedAddress <- getConfirmedAddress(id)
+        lettingAddress   <- confirmedAddress.asAddress
+        newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+        _                <- repository.saveOrUpdate(newSession)
+      yield
+        if navigator.from == "CYA"
+        then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+        else Redirect(routes.RentDetailsController.show(idx))
   }
 
   private def newSessionWithLettingAddress(idx: Int, lettingAddress: Address)(using session: Session) =

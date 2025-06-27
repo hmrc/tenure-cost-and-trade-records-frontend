@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,15 @@
 package form.connectiontoproperty
 
 import form.MappingSupport.yourContactDetailsMapping
-import models.submissions.connectiontoproperty.ProvideContactDetails
+import models.submissions.connectiontoproperty.YourContactDetails
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object ProvideContactDetailsForm {
-  val provideContactDetailsForm: Form[ProvideContactDetails] = Form(
-    mapping(
-      "yourContactDetails" -> yourContactDetailsMapping
-    )(ProvideContactDetails.apply)(Option(_).map(_.yourContactDetails))
-  )
-}
+object ProvideContactDetailsForm:
+
+  val provideContactDetailsForm: Form[YourContactDetails] =
+    Form(
+      single(
+        "yourContactDetails" -> yourContactDetailsMapping
+      )
+    )

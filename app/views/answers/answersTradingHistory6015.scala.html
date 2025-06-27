@@ -164,7 +164,7 @@
                 summary.totalNetProfit.asMoney,
                 summary.profitMargin.withScale(2) + "% <br/> <br/> ",
                 Option.when(idx == 0)(
-                    trading.incomeExpenditureSummary.filter(_.incomeExpenditureSummary == "confirmed").fold("No")(_ => "Yes")
+                    trading.incomeExpenditureSummary.filter(_ == "confirmed").fold("No")(_ => "Yes")
                 ).getOrElse(" ")
             )
         }

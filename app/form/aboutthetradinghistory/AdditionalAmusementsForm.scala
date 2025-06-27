@@ -17,24 +17,20 @@
 package form.aboutthetradinghistory
 
 import form.MappingSupport.{mappingPerYear, turnoverSalesMappingWithYear}
-import models.submissions.aboutthetradinghistory.AdditionalAmusements
 import play.api.data.Forms.single
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object AdditionalAmusementsForm {
+object AdditionalAmusementsForm:
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[AdditionalAmusements] =
+  private def columnMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] =
     single(
       "receipts" -> turnoverSalesMappingWithYear("additionalAmusements.receipts", year)
-        .transform(AdditionalAmusements.apply, _.receipts)
     )
 
   def additionalAmusementsForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[AdditionalAmusements]] =
+  )(using messages: Messages): Form[Seq[Option[BigDecimal]]] =
     Form {
       mappingPerYear(years, (year, idx) => s"additionalAmusements[$idx]" -> columnMapping(year))
     }
-
-}

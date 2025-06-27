@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import models.submissions.connectiontoproperty.EditTheAddress
+@import models.submissions.common.Address
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -26,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[EditTheAddress], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[Address], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @getAddressFieldValueOrDefaultUnlessErrors(field:String, defaultAddressValue: String) = @{
     if(theForm.hasErrors) {
@@ -68,5 +68,3 @@
       @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-

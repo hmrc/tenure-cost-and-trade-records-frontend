@@ -18,10 +18,12 @@ package views.lettingHistory
 
 import actions.SessionRequest
 import models.submissions.lettingHistory.LettingHistory.*
+import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 
 object LettingHistoryTaskListHelper:
 
-  def isTaskComplete(taskId: String)(using request: SessionRequest[?]) =
+  def isTaskComplete(taskId: String)(using request: SessionRequest[?]): AnswersYesNo =
     val data = request.sessionData
     taskId match
       case "residential-tenants" =>
@@ -30,9 +32,9 @@ object LettingHistoryTaskListHelper:
           doesNotHavePermanentResidents = !hasPermanentResidents
           permanentResidentList         = permanentResidents(data)
         yield
-          if doesNotHavePermanentResidents then "yes"
-          else if permanentResidentList.nonEmpty then "yes"
-          else "no").getOrElse("no")
+          if doesNotHavePermanentResidents then AnswerYes
+          else if permanentResidentList.nonEmpty then AnswerYes
+          else AnswerNo).getOrElse(AnswerNo)
 
       case "temporary-occupiers" =>
         (for
@@ -40,9 +42,9 @@ object LettingHistoryTaskListHelper:
           doesNotHaveCompletedLettings = !hasCompletedLettings
           completedLettingsList        = completedLettings(data)
         yield
-          if doesNotHaveCompletedLettings then "yes"
-          else if completedLettingsList.nonEmpty then "yes"
-          else "no").getOrElse("no")
+          if doesNotHaveCompletedLettings then AnswerYes
+          else if completedLettingsList.nonEmpty then AnswerYes
+          else AnswerNo).getOrElse(AnswerNo)
 
       case "intended-lettings" =>
         (
@@ -51,12 +53,12 @@ object LettingHistoryTaskListHelper:
             isYearlyAvailable <- intendedLettingsIsYearlyAvailable(data)
           yield
             if isYearlyAvailable
-            then "yes"
+            then AnswerYes
             else
               intendedLettingsTradingPeriod(data) match
-                case Some(_) => "yes"
-                case None    => "no"
-        ).getOrElse("no")
+                case Some(_) => AnswerYes
+                case None    => AnswerNo
+        ).getOrElse(AnswerNo)
 
       case "online-advertising" =>
         (for
@@ -64,9 +66,9 @@ object LettingHistoryTaskListHelper:
           doesNotHaveOnlineAdvertising = !hasOnlineAdvertising
           onlineAdvertisingList        = onlineAdvertising(data)
         yield
-          if doesNotHaveOnlineAdvertising then "yes"
-          else if onlineAdvertisingList.nonEmpty then "yes"
-          else "no").getOrElse("no")
+          if doesNotHaveOnlineAdvertising then AnswerYes
+          else if onlineAdvertisingList.nonEmpty then AnswerYes
+          else AnswerNo).getOrElse(AnswerNo)
 
       case _ =>
-        "no"
+        AnswerNo

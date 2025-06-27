@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,17 @@
 
 package form.aboutYourLeaseOrTenure
 
-import form.MappingSupport.{nonEmptyList, noneCantBeSelectedWithOther}
+import form.MappingSupport.{nonEmptySeq, noneCantBeSelectedWithOtherSeq}
+import form.Scala3EnumFieldMapping.enumMappingSeq
 import models.ForType
 import models.ForType.*
-import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
+import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
+import models.submissions.aboutYourLeaseOrTenure.{IncludedInYourRentDetails, IncludedInYourRentInformation}
 import play.api.data.Form
-import play.api.data.Forms.{list, mapping, optional, text}
-import play.api.data.validation._
+import play.api.data.Forms.{mapping, optional, text}
+import play.api.data.validation.*
 
-object IncludedInYourRentForm {
+object IncludedInYourRentForm:
 
   private val regexForVatValue = """^\d+(\.\d+)?$"""
 
@@ -36,10 +38,10 @@ object IncludedInYourRentForm {
 
   def includedInYourRentForm(forType: ForType): Form[IncludedInYourRentDetails] = Form(
     mapping(
-      "includedInYourRent" -> list(text).verifying(
-        nonEmptyList("error.includedInYourRent.required"),
-        noneCantBeSelectedWithOther(
-          "noneOfThese",
+      "includedInYourRent" -> enumMappingSeq(IncludedInYourRentInformation).verifying(
+        nonEmptySeq("error.includedInYourRent.required"),
+        noneCantBeSelectedWithOtherSeq(
+          IncludedInYourRentInformationNone,
           "error.includedInYourRent.noneSelectedWithOther"
         )
       ),
@@ -59,9 +61,8 @@ object IncludedInYourRentForm {
           fields match {
             case IncludedInYourRentDetails(includedInYourRent, vatValue) =>
               !((forType == FOR6045 || forType == FOR6046) && includedInYourRent.contains(
-                "vat"
+                IncludedInYourRentInformationVat
               ) && vatValue.isEmpty)
           }
       )
   )
-}

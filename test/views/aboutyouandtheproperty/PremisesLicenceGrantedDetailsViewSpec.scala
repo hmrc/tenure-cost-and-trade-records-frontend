@@ -18,11 +18,10 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.PremisesLicenseGrantedDetailsForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.PremisesLicenseGrantedInformationDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[PremisesLicenseGrantedInformationDetails] {
+class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "premisesLicenseGrantedInformation"
 
@@ -30,7 +29,7 @@ class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[Premi
 
   def createView = () => premisesLicenceGrantedDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PremisesLicenseGrantedInformationDetails]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     premisesLicenceGrantedDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Property licence granted view" must {

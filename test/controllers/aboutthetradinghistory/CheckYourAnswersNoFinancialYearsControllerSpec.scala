@@ -18,6 +18,7 @@ package controllers.aboutthetradinghistory
 
 import models.ForType.FOR6010
 import models.Session
+import models.submissions.common.AnswersYesNo.*
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
@@ -73,7 +74,7 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
         val result = controller.submit()(
           fakePostRequest.withFormUrlEncodedBody(
             "correct"   -> "true",
-            "completed" -> "true"
+            "completed" -> "yes"
           )
         )
         status(result) shouldBe SEE_OTHER
@@ -83,7 +84,7 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
           .toString
         val newSession = captor[Session]
         verify(repository).saveOrUpdate(newSession.capture())(using any)
-        newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory shouldBe "true"
+        newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
       }
     }
   }

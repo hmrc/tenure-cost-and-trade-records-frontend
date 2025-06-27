@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import models.submissions.accommodation.AccommodationDetails
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import models.submissions.downloadFORTypeForm.DownloadPDFDetails
 import models.submissions.lettingHistory.LettingHistory
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
@@ -58,11 +57,10 @@ case class Session(
   saveAsDraftPassword: Option[String] = None,
   lastCYAPageUrl: Option[String] = None,
   requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None,
-  downloadPDFDetails: Option[DownloadPDFDetails] = None,
   lettingHistory: Option[LettingHistory] = None,
   accommodationDetails: Option[AccommodationDetails] = None
   // New session properties must be also added to class `UserData` and method `toUserData`
-) {
+):
 
   /**
     * Returns only referenceNumber digits without slash or any other special char to use in endpoint path.
@@ -140,7 +138,6 @@ case class Session(
     aboutLeaseOrAgreementPartThree,
     aboutLeaseOrAgreementPartFour,
     requestReferenceNumberDetails,
-    downloadPDFDetails,
     lettingHistory,
     accommodationDetails
   )
@@ -150,9 +147,5 @@ case class Session(
     Option(address)
   )
 
-}
-
-object Session {
+object Session:
   implicit val format: OFormat[Session] = Json.format
-
-}

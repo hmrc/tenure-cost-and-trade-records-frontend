@@ -18,12 +18,11 @@ package views.aboutFranchisesOrLettings
 
 import actions.SessionRequest
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm
-import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec
-    extends QuestionViewBehaviours[CheckYourAnswersAboutFranchiseOrLettings] {
+class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   def cyaFranchiseOrLettingsView = inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
 
@@ -37,7 +36,7 @@ class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec
 
   def createView = () => cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[CheckYourAnswersAboutFranchiseOrLettings]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
 
   "Check Your Answers About Franchise Or Lettings view" must {

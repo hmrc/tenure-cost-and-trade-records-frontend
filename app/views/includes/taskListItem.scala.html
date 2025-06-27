@@ -14,13 +14,14 @@
  * limitations under the License.
  *@
 
+@import models.submissions.common.AnswersYesNo
 @import models.submissions.common.AnswersYesNo.*
 @import navigation.UrlHelpers.urlPlusParamPrefix
 
-@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[String], pageAnswer: Option[?], cannotStartYet: Boolean = false, readOnly: Boolean = false)(implicit messages: Messages)
+@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[AnswersYesNo], pageAnswer: Option[?], cannotStartYet: Boolean = false, readOnly: Boolean = false)(implicit messages: Messages)
 
 @sectionCompletedAnswerYes = @{
-    sectionCompleted.contains(AnswerYes.toString)
+    sectionCompleted.contains(AnswerYes)
 }
 
 @completedOrDeclared = @{
@@ -35,7 +36,7 @@
   }
 
 @statusText = @{
-    if (sectionCompleted.contains(AnswerYes.toString)) {
+    if (sectionCompleted.contains(AnswerYes)) {
         completedOrDeclared
     } else if (pageAnswer.isDefined) {
         messages("taskList.status.inProgress")
@@ -67,7 +68,7 @@
             <a href="@{urlPlusParamPrefix(taskPage.url)}from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
         }
     </span>
-    @if(sectionCompleted.contains(AnswerYes.toString)){
+    @if(sectionCompleted.contains(AnswerYes)){
         <p class="@itemTagClassClear" id="@taskId">@statusText</p>
     } else {
         <strong class="@itemTagClass" id="@taskId">@statusText</strong>

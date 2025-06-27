@@ -20,7 +20,7 @@ import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
-import models.submissions.additionalinformation.{AdditionalInformation, FurtherInformationOrRemarksDetails}
+import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -54,7 +54,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
     )
   )
   val additionalInformation: Option[AdditionalInformation]    = Some(
-    AdditionalInformation(Some(FurtherInformationOrRemarksDetails("test")))
+    AdditionalInformation(Some("test"))
   )
   val stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(
     StillConnectedDetails(Some(AddressConnectionTypeYes))

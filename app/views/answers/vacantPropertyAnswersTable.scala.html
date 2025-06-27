@@ -56,7 +56,7 @@
 
     @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.checkYourAnswersConnectionToVacantProperty", _.addressConnectionType.map(v => messages(s"label.$v")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
             sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.proposedAddress",
-                _.editAddress.map(l => s"${l.editAddress.escapedHtml}"),
+                _.editAddress.map(address => s"${address.escapedHtml}"),
                 controllers.connectiontoproperty.routes.EditAddressController.show(), "",
                 ("valueAsHtml", _ => None))
     )
@@ -71,7 +71,7 @@
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.vacancyStatus.heading")</h2>
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.isPropertyVacant", _.isPropertyVacant.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")), controllers.connectiontoproperty.routes.VacantPropertiesController.show(), "vacantProperties") ++
-            sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.vacantDate", _.vacantPropertyStartDate.map(_.datePropertyBecomeVacant).map(v => dateUtil.formatDayMonthAbbrYear(v)), controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show(), "startDateOfVacantProperty.day")
+            sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.vacantDate", _.vacantPropertyStartDate.map(v => dateUtil.formatDayMonthAbbrYear(v)), controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show(), "startDateOfVacantProperty.day")
 ))
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.lettings.heading")</h2>
@@ -121,7 +121,7 @@
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToVacantProperty.yourContactDetails.heading")</h2>
 @govukSummaryList(SummaryList(rows = sectionAnswers.row("checkYourAnswersConnectionToVacantProperty.yourContactDetails.title",
-    _.provideContactDetails.map(l => s"${l.yourContactDetails.escapedHtml}"),
+    _.provideContactDetails.map(yourContactDetails => s"${yourContactDetails.escapedHtml}"),
     controllers.connectiontoproperty.routes.ProvideContactDetailsController.show(), "yourContactDetails.fullName",
     ("valueAsHtml", _ => None))
 ))

@@ -19,31 +19,30 @@ package utils
 import models.ForType.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
+import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutthetradinghistory.*
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
 import models.submissions.aboutyouandtheproperty.*
+import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
+import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
 import models.submissions.accommodation.*
 import models.submissions.additionalinformation.*
 import models.submissions.common.*
 import models.submissions.common.AnswersYesNo.*
+import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
-import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import models.submissions.connectiontoproperty.*
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.ConnectionToProperty.*
-import models.submissions.downloadFORTypeForm.*
-import models.submissions.ReferenceNumber
-import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
-import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
-import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
 import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
-import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
-import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
-import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import models.{Session, SubmissionDraft}
 
 import java.time.temporal.ChronoUnit.MILLIS
@@ -102,9 +101,7 @@ trait FakeObjects {
 
   val hundred: BigDecimal = BigDecimal(100)
 
-  val prefilledTradingNameOperatingFromProperty: TradingNameOperatingFromProperty = TradingNameOperatingFromProperty(
-    "TRADING NAME"
-  )
+  val prefilledTradingNameOperatingFromProperty: String = "TRADING NAME"
 
   val baseFilled6010Session: Session      = Session(referenceNumber, FOR6010, prefilledAddress, token, isWelsh = false)
   val baseFilled6011Session: Session      = Session(referenceNumber, FOR6011, prefilledAddress, token, isWelsh = false)
@@ -119,7 +116,7 @@ trait FakeObjects {
   val baseFilled6048WelshSession: Session = Session(referenceNumber, FOR6048, prefilledAddress, token, isWelsh = true)
 
   // Request reference number
-  val prefilledRequestRefNumCYA   = RequestReferenceNumberDetails(
+  val prefilledRequestRefNumCYA = RequestReferenceNumberDetails(
     Some(RequestReferenceNumberPropertyDetails(prefilledFakeTradingName, prefilledNoReferenceContactAddress)),
     Some(
       RequestReferenceNumberContactDetails(
@@ -127,9 +124,9 @@ trait FakeObjects {
         ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
         Some("Additional Information")
       )
-    ),
-    Some(RequestReferenceNumberCheckYourAnswers("CYARequestRefNum"))
+    )
   )
+
   val prefilledRequestRefNumBlank = RequestReferenceNumberDetails()
 
   // Are your still connected sessions
@@ -151,26 +148,26 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsEdit: StillConnectedDetails                      = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     Some(AnswerNo)
   )
   val prefilledStillConnectedDetailsNoneOwnProperty: StillConnectedDetails           = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     None,
-    Some(TradingNameOperatingFromProperty("ABC LTD"))
+    Some("ABC LTD")
   )
   val prefilledStillConnectedDetailsYesRentReceivedNoLettings: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierAgent),
-    Some(EditTheAddress(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX")),
     Some(AnswerNo),
-    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some("ABC LTD"),
     Some(AnswerNo),
     Some(AnswerNo),
     Some(AnswerNo),
-    Some(StartDateOfVacantProperty(LocalDate.now())),
+    Some(LocalDate.now()),
     Some(AnswerYes)
   )
 
@@ -195,15 +192,15 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsYesToAll: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(EditTheAddress(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX")),
     Some(AnswerYes),
-    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some("ABC LTD"),
     Some(AnswerYes),
     Some(AnswerYes),
     Some(AnswerYes),
-    Some(StartDateOfVacantProperty(prefilledDateInput)),
+    Some(prefilledDateInput),
     Some(AnswerYes),
-    Some(ProvideContactDetails(YourContactDetails("fullname", prefilledContactDetails, Some("additional info")))),
+    Some(YourContactDetails("fullname", prefilledContactDetails, Some("additional info"))),
     lettingPartOfPropertyDetailsIndex = 0,
     lettingPartOfPropertyDetails = IndexedSeq(
       LettingPartOfPropertyDetails(
@@ -213,22 +210,27 @@ trait FakeObjects {
         addAnotherLettingToProperty = Some(AnswerYes)
       )
     ),
-    checkYourAnswersConnectionToProperty = None,
-    checkYourAnswersConnectionToVacantProperty = None
+    checkYourAnswersConnectionToProperty = None
   )
 
   val prefilledStillConnectedDetailsNoToAll: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierAgent),
-    Some(EditTheAddress(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX")),
     Some(AnswerNo),
-    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some("ABC LTD"),
     Some(AnswerNo),
     Some(AnswerNo),
     Some(AnswerNo),
-    Some(StartDateOfVacantProperty(LocalDate.now())),
+    Some(LocalDate.now()),
     Some(AnswerNo),
-    Some(prefilledProvideContactDetails)
+    Some(
+      YourContactDetails(
+        fullName = "Tobermory",
+        contactDetails = ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
+        additionalInformation = Some("Additional information")
+      )
+    )
   )
 
   val prefilledAboutLeaseOrAgreementPartThreeNoDevelopedLand: AboutLeaseOrAgreementPartThree =
@@ -309,74 +311,74 @@ trait FakeObjects {
 
   val prefilledAboutYouAndThePropertyYes: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerYes)),
+    Some(AnswerYes),
     Some(prefilledAlternativeAddress),
     Some(PropertyDetails(CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerYes),
-    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some("Premises licence granted details"),
     Some(AnswerYes),
-    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some("Licensable activities details"),
     Some(AnswerYes),
-    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some("Premises license conditions details"),
     Some(AnswerYes),
-    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some("Enforcement action taken details"),
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
-    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("Yes")),
+    checkYourAnswersAboutTheProperty = Some(AnswerYes),
     charityQuestion = Some(AnswerYes),
     tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
-    renewablesPlant = Some(RenewablesPlant(Intermittent)),
+    renewablesPlant = Some(Intermittent),
     threeYearsConstructed = Some(AnswerYes),
     costsBreakdown = Some("breakdown")
   )
 
   val prefilledAboutYouAndThePropertyYesBaseload: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerYes)),
+    Some(AnswerYes),
     Some(prefilledAlternativeAddress),
     Some(PropertyDetails(CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerYes),
-    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some("Premises licence granted details"),
     Some(AnswerYes),
-    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some("Licensable activities details"),
     Some(AnswerYes),
-    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some("Premises license conditions details"),
     Some(AnswerYes),
-    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some("Enforcement action taken details"),
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
-    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("Yes")),
+    checkYourAnswersAboutTheProperty = Some(AnswerYes),
     charityQuestion = Some(AnswerYes),
     tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
-    renewablesPlant = Some(RenewablesPlant(Baseload)),
+    renewablesPlant = Some(Baseload),
     threeYearsConstructed = Some(AnswerYes),
     costsBreakdown = Some("breakdown")
   )
   val prefilledAboutYouAndThePropertyYesString: AboutYouAndTheProperty   = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerYes)),
+    Some(AnswerYes),
     Some(prefilledAlternativeAddress),
     None,
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
     Some(AnswerYes),
-    Some(PremisesLicenseGrantedInformationDetails("Premises licence granted details")),
+    Some("Premises licence granted details"),
     Some(AnswerYes),
-    Some(LicensableActivitiesInformationDetails("Licensable activities details")),
+    Some("Licensable activities details"),
     Some(AnswerYes),
-    Some(PremisesLicenseConditionsDetails("Premises license conditions details")),
+    Some("Premises license conditions details"),
     Some(AnswerYes),
-    Some(EnforcementActionHasBeenTakenInformationDetails("Enforcement action taken details")),
+    Some("Enforcement action taken details"),
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
     None,
-    Some(PropertyDetailsString("This property is a museum"))
+    Some("This property is a museum")
   )
 
   val prefilledAboutYouAndThePropertyNoString: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerNo)),
+    Some(AnswerNo),
     None,
     None,
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
@@ -395,7 +397,7 @@ trait FakeObjects {
 
   val prefilledAboutYouAndThePropertyNo: AboutYouAndTheProperty = AboutYouAndTheProperty(
     Some(CustomerDetails("Tobermory", ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail))),
-    Some(ContactDetailsQuestion(AnswerNo)),
+    Some(AnswerNo),
     None,
     Some(PropertyDetails(CurrentPropertyHotel, None)),
     Some(WebsiteForPropertyDetails(AnswerYes, Some("webAddress"))),
@@ -409,7 +411,7 @@ trait FakeObjects {
     None,
     Some(AnswerNo),
     None,
-    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAboutYourProperty("no")),
+    checkYourAnswersAboutTheProperty = Some(AnswerNo),
     charityQuestion = Some(AnswerNo)
   )
 
@@ -445,14 +447,6 @@ trait FakeObjects {
     ),
     partsUnavailable = Some(AnswerYes),
     occupiersList = IndexedSeq.empty
-  )
-
-  val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(
-    YourContactDetails(
-      fullName = "Tobermory",
-      contactDetails = ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
-      additionalInformation = Some("Additional information")
-    )
   )
 
   val aboutYouAndTheProperty6010YesSession: Session =
@@ -558,7 +552,7 @@ trait FakeObjects {
       ),
       "Other Costs Details"
     ),
-    incomeExpenditureSummary = IncomeExpenditureSummary("confirmed"),
+    incomeExpenditureSummary = "confirmed",
     incomeExpenditureSummaryData = Seq(IncomeExpenditureSummaryData(today.toString, 1, 2, 3, 4, 5, 6, 7, 8, 9)),
     unusualCircumstances = UnusualCircumstances("Unusual circumstances comment")
   )
@@ -572,7 +566,7 @@ trait FakeObjects {
     ),
     electricVehicleChargingPoints = ElectricVehicleChargingPoints(AnswerYes, 123),
     totalFuelSold = Seq(TotalFuelSold(today, None)),
-    bunkeredFuelQuestion = BunkeredFuelQuestion(AnswerYes),
+    bunkeredFuelQuestion = AnswerYes,
     bunkeredFuelSold = Seq(BunkeredFuelSold(today, 1), BunkeredFuelSold(today, 2), BunkeredFuelSold(today, 3)),
     bunkerFuelCardsDetails = IndexedSeq(BunkerFuelCardsDetails(BunkerFuelCardDetails("Card 1", 2))),
     customerCreditAccounts =
@@ -592,7 +586,7 @@ trait FakeObjects {
     ),
     electricVehicleChargingPoints = ElectricVehicleChargingPoints(AnswerYes, 123),
     totalFuelSold = Seq(TotalFuelSold(today, None)),
-    bunkeredFuelQuestion = BunkeredFuelQuestion(AnswerNo),
+    bunkeredFuelQuestion = AnswerNo,
     bunkerFuelCardsDetails = IndexedSeq(BunkerFuelCardsDetails(BunkerFuelCardDetails("Card 1", 2))),
     customerCreditAccounts =
       Seq(CustomerCreditAccounts(today, 5), CustomerCreditAccounts(today, 15), CustomerCreditAccounts(today, 25)),
@@ -712,11 +706,7 @@ trait FakeObjects {
             costOfEntertainment = Some(BigDecimal(500))
           )
         ),
-        additionalAmusements = Some(
-          AdditionalAmusements(
-            receipts = Some(BigDecimal(2500))
-          )
-        ),
+        additionalAmusements = Some(BigDecimal(2500)),
         additionalMisc = Some(
           AdditionalMisc(Some(100.00), Some(100.00), Some(10), Some(100.00), Some(100.00))
         )
@@ -1148,8 +1138,8 @@ trait FakeObjects {
 
   // Additional information sessions
   val prefilledAdditionalInformation: AdditionalInformation = AdditionalInformation(
-    Some(FurtherInformationOrRemarksDetails("Further information or remarks details")),
-    Some(CheckYourAnswersAdditionalInformation("CYA"))
+    Some("Further information or remarks details"),
+    Some(AnswerYes)
   )
 
   val additionalInformationSession: Session =
@@ -1170,11 +1160,6 @@ trait FakeObjects {
     AboutTheLandlord(
       prefilledFakeName,
       Some(prefilledLandlordAddress)
-    )
-
-  val prefilledEditTheAddress =
-    EditTheAddress(
-      prefilledEditAddress
     )
 
   val prefilledNoRefAddress =
@@ -1277,25 +1262,25 @@ trait FakeObjects {
   val prefilledVacantProperties = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress)
+    Some(prefilledEditAddress)
   )
 
   val prefilledNotVacantPropertiesCYA = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     Some(AnswerYes),
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),
     Some(AnswerYes),
     Some(AnswerNo),
-    checkYourAnswersConnectionToProperty = Some(CheckYourAnswersConnectionToProperty("No"))
+    checkYourAnswersConnectionToProperty = Some(CheckYourAnswersConnectionToProperty(AnswerNo))
   )
 
   val prefilledNotVacantPropertiesNoCYA = StillConnectedDetails(
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     Some(AnswerYes),
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),
@@ -1306,7 +1291,7 @@ trait FakeObjects {
   val prefilledNotVacantPropertiesEditCYA = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     Some(AnswerYes),
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),
@@ -1391,7 +1376,8 @@ trait FakeObjects {
     Some(prefilledAnnualRent),
     currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
     currentLeaseOrAgreementBegin = Some(CurrentLeaseOrAgreementBegin(MonthsYearDuration(4, 2024), "Granted for")),
-    includedInYourRentDetails = Some(IncludedInYourRentDetails(List("vat"), BigDecimal(100))),
+    includedInYourRentDetails =
+      Some(IncludedInYourRentDetails(List(IncludedInYourRentInformationVat), BigDecimal(100))),
     doesTheRentPayable = Some(DoesTheRentPayable(List.empty, "Does rent payable details")),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeTradeServicesInformation =
@@ -1402,7 +1388,7 @@ trait FakeObjects {
     whatIsYourCurrentRentBasedOnDetails =
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("Open market"))),
     rentIncreasedAnnuallyWithRPIDetails = Some(RentIncreasedAnnuallyWithRPIDetails(AnswerYes)),
-    checkYourAnswersAboutYourLeaseOrTenure = Some(CheckYourAnswersAboutYourLeaseOrTenure("Yes")),
+    checkYourAnswersAboutYourLeaseOrTenure = Some(AnswerYes),
     rentIncludesVat = Some(RentIncludesVatDetails(AnswerYes))
   )
 
@@ -1423,7 +1409,7 @@ trait FakeObjects {
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo)),
     whatIsYourCurrentRentBasedOnDetails =
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnOther, Some("Other"))),
-    checkYourAnswersAboutYourLeaseOrTenure = Some(CheckYourAnswersAboutYourLeaseOrTenure("Yes"))
+    checkYourAnswersAboutYourLeaseOrTenure = Some(AnswerYes)
   )
 
   val prefilledAboutLeaseOrAgreementPartOneNoStartDate: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
@@ -1624,13 +1610,7 @@ trait FakeObjects {
 
   val prefilledRequestReferenceNumber: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
     Some(RequestReferenceNumberPropertyDetails(prefilledFakeName, prefilledNoReferenceContactAddress)),
-    Some(RequestReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test"))),
-    Some(RequestReferenceNumberCheckYourAnswers("CYA"))
-  )
-
-  val prefilledDownloadPDFRef: DownloadPDFDetails = DownloadPDFDetails(
-    Some(ReferenceNumber(referenceNumber)),
-    Some(DownloadPDF(FOR6010.toString))
+    Some(RequestReferenceNumberContactDetails(prefilledFakeName, prefilledContactDetails, Some("test")))
   )
 
   val prefilledFull6020Session = sessionAboutFranchiseOrLetting6020Session.copy(

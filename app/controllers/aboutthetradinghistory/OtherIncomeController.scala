@@ -29,7 +29,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.otherIncome6076
 import controllers.toOpt
-import models.submissions.aboutyouandtheproperty.RenewablesPlantDetails.*
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -113,7 +113,7 @@ class OtherIncomeController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     val intermittentCheck =
-      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant.flatMap(_.renewablesPlant))
+      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant)
 
     intermittentCheck match {
       case Some(Intermittent) =>

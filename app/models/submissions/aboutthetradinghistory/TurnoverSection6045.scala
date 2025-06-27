@@ -45,10 +45,9 @@ case class TurnoverSection6045(
   additionalShops: Option[AdditionalShops] = None,
   additionalCatering: Option[AdditionalCatering] = None,
   additionalBarsClubs: Option[AdditionalBarsClubs] = None,
-  additionalAmusements: Option[AdditionalAmusements] = None,
+  additionalAmusements: Option[BigDecimal] = None,
   additionalMisc: Option[AdditionalMisc] = None
 )
 
-object TurnoverSection6045 {
+object TurnoverSection6045:
   implicit val format: OFormat[TurnoverSection6045] = Json.format
-}

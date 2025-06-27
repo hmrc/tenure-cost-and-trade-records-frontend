@@ -38,7 +38,7 @@
 
         @govukSummaryList(SummaryList(rows = sectionAnswers.row("label.connectedToTheProperty", _.addressConnectionType.map(v => messages(s"label.$v")), controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(), "isRelated") ++
                 sectionAnswers.row("checkYourAnswersConnectionToProperty.proposedAddress",
-                    _.editAddress.map(l => s"${l.editAddress.escapedHtml}"),
+                    _.editAddress.map(address => s"${address.escapedHtml}"),
                     controllers.connectiontoproperty.routes.EditAddressController.show(), "",
                     ("valueAsHtml", _ => None))
         )
@@ -60,7 +60,7 @@
 
     <h2 class="govuk-heading-m">@messages("checkYourAnswersConnectionToProperty.occupierDetails.heading")</h2>
     @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row("checkYourAnswersConnectionToProperty.nameOfOccupier", _.tradingNameOperatingFromProperty.map(_.tradingName), controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(), "tradingNameFromProperty")
+        sectionAnswers.row("checkYourAnswersConnectionToProperty.nameOfOccupier", _.tradingNameOperatingFromProperty, controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(), "tradingNameFromProperty")
                 ++ sectionAnswers.row("checkYourAnswersConnectionToProperty.ownsTheProperty", _.tradingNameOwnTheProperty.map(v => if(v == AnswerYes) messages("label.yes.iawn") else messages("label.no.na")), controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show(), "tradingNameOwnTheProperty")
                 ++ sectionAnswers.conditionRow(_.tradingNameOwnTheProperty.contains(AnswerNo),
             "checkYourAnswersConnectionToProperty.payRent",

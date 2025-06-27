@@ -19,18 +19,17 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryForm
 import models.pages.Summary
-import models.submissions.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistory
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutTheTradingHistorySpec
-    extends QuestionViewBehaviours[CheckYourAnswersAboutTheTradingHistory] {
+class CheckYourAnswersAboutTheTradingHistorySpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "checkYourAnswersAboutTheTradingHistory"
 
-  override val form: Form[CheckYourAnswersAboutTheTradingHistory] =
+  override val form: Form[AnswersYesNo] =
     CheckYourAnswersAboutTheTradingHistoryForm.checkYourAnswersAboutTheTradingHistoryForm
 
   val backLink: String = controllers.aboutthetradinghistory.routes.TurnoverController.show().url
@@ -82,8 +81,8 @@ class CheckYourAnswersAboutTheTradingHistorySpec
       messages
     )
 
-  def createViewUsingForm: Form[CheckYourAnswersAboutTheTradingHistory] => Html =
-    (form: Form[CheckYourAnswersAboutTheTradingHistory]) =>
+  def createViewUsingForm: Form[AnswersYesNo] => Html =
+    (form: Form[AnswersYesNo]) =>
       checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(using sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {

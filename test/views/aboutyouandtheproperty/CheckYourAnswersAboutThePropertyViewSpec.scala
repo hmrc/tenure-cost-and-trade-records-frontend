@@ -19,11 +19,11 @@ package views.aboutyouandtheproperty
 import actions.SessionRequest
 import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.CheckYourAnswersAboutYourProperty
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAboutYourProperty] {
+class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "checkYourAnswersAboutTheProperty"
 
@@ -66,7 +66,7 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
       messages
     )
 
-  def createViewUsingForm = (form: Form[CheckYourAnswersAboutYourProperty]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {

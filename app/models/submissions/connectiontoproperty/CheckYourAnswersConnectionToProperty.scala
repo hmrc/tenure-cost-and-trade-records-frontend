@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,15 @@
  * limitations under the License.
  */
 
-package form.downloadFORTypeForm
+package models.submissions.connectiontoproperty
 
-import models.submissions.downloadFORTypeForm.DownloadPDF
-import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.{Format, Json}
 
-object DownloadPDFForm {
+case class CheckYourAnswersConnectionToProperty(
+  checkYourAnswersConnectionToProperty: AnswersYesNo,
+  confirmAnswersAreCorrect: Option[Boolean] = None
+)
 
-  val downloadPDFForm = Form(
-    mapping(
-      "downloadPdf" ->
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.downloadPdf.required")
-        )
-    )(DownloadPDF.apply)(o => Some(o.downloadPDF))
-  )
-}
+object CheckYourAnswersConnectionToProperty:
+  given Format[CheckYourAnswersConnectionToProperty] = Json.format

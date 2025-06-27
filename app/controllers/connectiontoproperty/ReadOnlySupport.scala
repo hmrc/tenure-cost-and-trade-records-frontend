@@ -17,6 +17,7 @@
 package controllers.connectiontoproperty
 
 import actions.SessionRequest
+import models.submissions.common.AnswersYesNo.*
 import play.api.mvc.AnyContent
 
 /**
@@ -37,4 +38,4 @@ trait ReadOnlySupport:
         checkYourAnswersConnectionToProperty <- stillConnectedDetails.checkYourAnswersConnectionToProperty
       yield checkYourAnswersConnectionToProperty.checkYourAnswersConnectionToProperty
 
-    answerChecked.contains("yes")
+    answerChecked.contains(AnswerYes)

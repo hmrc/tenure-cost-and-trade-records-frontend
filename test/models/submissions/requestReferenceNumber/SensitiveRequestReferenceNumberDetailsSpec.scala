@@ -68,6 +68,5 @@ class SensitiveRequestReferenceNumberDetailsSpec
         ),
         noReferenceNumberAdditionalInfo = Some("Additional Info")
       )
-    ),
-    checkYourAnswers = Some(RequestReferenceNumberCheckYourAnswers("true"))
+    )
   )

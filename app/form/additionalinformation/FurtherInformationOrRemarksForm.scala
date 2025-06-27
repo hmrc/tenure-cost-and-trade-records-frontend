@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,18 @@
 
 package form.additionalinformation
 
-import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.maxLength
 
-object FurtherInformationOrRemarksForm {
+object FurtherInformationOrRemarksForm:
 
-  val furtherInformationOrRemarksForm = Form(
-    mapping(
-      "furtherInformationOrRemarks" ->
-        default(text, "").verifying(
-          maxLength(2000, "error.furtherInformationOrRemarks.maxLength")
-        )
-    )(FurtherInformationOrRemarksDetails.apply)(o => Some(o.furtherInformationOrRemarksDetails))
-  )
-}
+  val furtherInformationOrRemarksForm: Form[String] =
+    Form(
+      single(
+        "furtherInformationOrRemarks" ->
+          default(text, "").verifying(
+            maxLength(2000, "error.furtherInformationOrRemarks.maxLength")
+          )
+      )
+    )

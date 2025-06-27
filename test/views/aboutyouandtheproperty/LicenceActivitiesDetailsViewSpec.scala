@@ -18,24 +18,22 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.LicensableActivitiesInformationForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.LicensableActivitiesInformationDetails
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[LicensableActivitiesInformationDetails] {
+class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "licensableActivitiesDetails"
 
-  override val form: Form[LicensableActivitiesInformationDetails] =
+  override val form: Form[String] =
     LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 
   def createView: () => Html = () =>
     licensableActivitiesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[LicensableActivitiesInformationDetails] => Html =
-    (form: Form[LicensableActivitiesInformationDetails]) =>
-      licensableActivitiesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  def createViewUsingForm: Form[String] => Html =
+    (form: Form[String]) => licensableActivitiesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Licence Activities details view" must {
 

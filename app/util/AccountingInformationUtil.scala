@@ -22,6 +22,7 @@ import models.Session
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
 import models.submissions.aboutthetradinghistory.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import models.submissions.common.AnswersYesNo
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.mvc.AnyContent
 
@@ -248,7 +249,7 @@ object AccountingInformationUtil {
   private def sectionCompleted(
     isFinancialYearsListUnchanged: Boolean,
     aboutTheTradingHistory: AboutTheTradingHistory
-  ): Option[CheckYourAnswersAboutTheTradingHistory] =
+  ): Option[AnswersYesNo] =
     if isFinancialYearsListUnchanged then aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
     else None
 
