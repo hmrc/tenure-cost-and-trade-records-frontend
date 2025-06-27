@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
+@import models.submissions.common.AnswersYesNo
 @import models.pages.Summary
 @import views.html.answers.{answersAboutYourLeaseOrTenure, answersAboutYourLease6020, answersAboutYourLease6030}
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -31,38 +31,46 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[CheckYourAnswersAboutYourLeaseOrTenure], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
-@forType = @{request.sessionData.forType}
+@forType = @{
+    request.sessionData.forType
+}
 
-    @layout(
-        pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
-        backLinkUrl = backLink,
-        fullWidth = true,
-        summary = Some(summary),
-        sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-        theForm = theForm
-    ) {
+@layout(
+    pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    summary = Some(summary),
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    theForm = theForm
+) {
 
 
     @forType match {
 
-        case FOR6020 => {@answersSection6020()}
-        case FOR6030 => {@answersSection6030()}
-        case _       => {@answersSection()}
-
+        case FOR6020 => {
+            @answersSection6020()
         }
-
-        @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
-
-            @includes.checkYourAnswersRadioButtons(
-                govukRadios,
-                theForm,
-                "checkYourAnswersLeaseOrTenure"
-            )
-
-            @includes.continueSaveAsDraftButtons(govukButton)
-
+        case FOR6030 => {
+            @answersSection6030()
+        }
+        case _ => {
+            @answersSection()
         }
 
     }
+
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
+
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "checkYourAnswersLeaseOrTenure"
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+
+    }
+
+}

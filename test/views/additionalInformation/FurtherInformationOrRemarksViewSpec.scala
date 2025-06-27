@@ -18,23 +18,22 @@ package views.additionalInformation
 
 import form.additionalinformation.FurtherInformationOrRemarksForm
 import models.pages.Summary
-import models.submissions.additionalinformation.FurtherInformationOrRemarksDetails
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[FurtherInformationOrRemarksDetails] {
+class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "furtherInformationOrRemarks"
 
-  override val form: Form[FurtherInformationOrRemarksDetails] =
+  override val form: Form[String] =
     FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 
   def createView: () => Html = () =>
     furtherInformationOrRemarksView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[FurtherInformationOrRemarksDetails] => Html =
-    (form: Form[FurtherInformationOrRemarksDetails]) =>
+  def createViewUsingForm: Form[String] => Html =
+    (form: Form[String]) =>
       furtherInformationOrRemarksView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Further Information or Remarks view" must {

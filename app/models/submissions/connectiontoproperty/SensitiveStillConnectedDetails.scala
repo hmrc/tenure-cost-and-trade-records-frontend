@@ -36,8 +36,7 @@ case class SensitiveStillConnectedDetails(
   lettingPartOfPropertyDetailsIndex: Int = 0,
   maxOfLettings: Option[Boolean] = None,
   lettingPartOfPropertyDetails: IndexedSeq[SensitiveLettingPartOfPropertyDetails] = IndexedSeq.empty,
-  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None,
-  checkYourAnswersConnectionToVacantProperty: Option[CheckYourAnswersConnectionToVacantProperty] = None
+  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
 ) extends Sensitive[StillConnectedDetails]:
 
   override def decryptedValue: StillConnectedDetails = StillConnectedDetails(
@@ -55,8 +54,7 @@ case class SensitiveStillConnectedDetails(
     lettingPartOfPropertyDetailsIndex,
     maxOfLettings,
     lettingPartOfPropertyDetails.map(_.decryptedValue),
-    checkYourAnswersConnectionToProperty,
-    checkYourAnswersConnectionToVacantProperty
+    checkYourAnswersConnectionToProperty
   )
 
 object SensitiveStillConnectedDetails:
@@ -79,6 +77,5 @@ object SensitiveStillConnectedDetails:
       stillConnectedDetails.lettingPartOfPropertyDetailsIndex,
       stillConnectedDetails.maxOfLettings,
       stillConnectedDetails.lettingPartOfPropertyDetails.map(SensitiveLettingPartOfPropertyDetails(_)),
-      stillConnectedDetails.checkYourAnswersConnectionToProperty,
-      stillConnectedDetails.checkYourAnswersConnectionToVacantProperty
+      stillConnectedDetails.checkYourAnswersConnectionToProperty
     )

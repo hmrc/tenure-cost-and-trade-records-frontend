@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,16 @@
 
 package form.additionalinformation
 
-import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
-import play.api.data.validation.Constraints.nonEmpty
+import play.api.data.Forms.single
 
-object CheckYourAnswersAdditionalInformationForm {
+object CheckYourAnswersAdditionalInformationForm:
 
-  val checkYourAnswersAdditionalInformationForm = Form(
-    mapping(
-      "checkYourAnswersAdditionalInformation" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")
+  val checkYourAnswersAdditionalInformationForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "checkYourAnswersAdditionalInformation" -> createYesNoType("error.checkYourAnswersRadio.required")
       )
-    )(CheckYourAnswersAdditionalInformation.apply)(o => Some(o.checkYourAnswersAdditionalInformation))
-  )
-}
+    )

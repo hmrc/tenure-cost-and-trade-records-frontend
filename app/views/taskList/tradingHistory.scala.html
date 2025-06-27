@@ -16,9 +16,10 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
+@import models.submissions.common.AnswersYesNo
 
 
-@(forType: ForType, tradingHistoryNumber: Int, section2Completed: Option[String], section3Completed: Option[String], section3point1Completed: Option[String], section3point2Completed: Option[String], section3point3Completed: Option[String], section4AccommodationCompleted: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+@(forType: ForType, tradingHistoryNumber: Int, section2Completed: Option[AnswersYesNo], section3Completed: Option[AnswersYesNo], section3point1Completed: Option[AnswersYesNo], section3point2Completed: Option[AnswersYesNo], section3point3Completed: Option[AnswersYesNo], section4AccommodationCompleted: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
 
@@ -61,7 +62,7 @@
     cannotStartYet = {
      val info = session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation)
      val turnovers = if(forType == FOR6030) session.aboutTheTradingHistory.flatMap(_.turnoverSections6030) else session.aboutTheTradingHistory.flatMap(_.turnoverSections)
-     info.isEmpty || (turnovers == Some(Seq.empty))
+     info.isEmpty || turnovers.contains(Seq.empty)
     }
    )
   }

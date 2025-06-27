@@ -18,7 +18,7 @@ package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, LettingPartOfProperty}
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -74,7 +74,7 @@ class AtmLettingController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ATMLetting](
       theForm,
       formWithErrors =>
@@ -106,7 +106,7 @@ class AtmLettingController @Inject() (
                                 lookupPageHeadingKey = "atmLetting.address.lookupPageHeading",
                                 selectPageHeadingKey = "atmLetting.address.selectPageHeading",
                                 confirmPageLabelKey = "atmLetting.address.confirmPageHeading",
-                                offRampCall = routes.AtmLettingController.addressLookupCallback(updatedIndex, "")
+                                offRampCall = routes.AtmLettingController.addressLookupCallback(updatedIndex)
                               )
                             )
         yield redirectResult
@@ -148,7 +148,7 @@ class AtmLettingController @Inject() (
     (updatedLetting, updatedIndex)
   }
 
-  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)

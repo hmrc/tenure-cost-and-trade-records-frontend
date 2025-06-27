@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package models.submissions.aboutYourLeaseOrTenure
+package models.submissions.connectiontoproperty
 
-import play.api.libs.json.{Json, OFormat}
+import models.submissions.common.AnswersYesNo
+import play.api.libs.json.{Format, Json}
 
-case class CheckYourAnswersAboutYourLeaseOrTenure(
-  checkYourAnswersAboutYourLeaseOrTenure: String
+case class CheckYourAnswersConnectionToProperty(
+  checkYourAnswersConnectionToProperty: AnswersYesNo,
+  confirmAnswersAreCorrect: Option[Boolean] = None
 )
 
-object CheckYourAnswersAboutYourLeaseOrTenure {
-  implicit val format: OFormat[CheckYourAnswersAboutYourLeaseOrTenure] = Json.format
-}
+object CheckYourAnswersConnectionToProperty:
+  given Format[CheckYourAnswersConnectionToProperty] = Json.format

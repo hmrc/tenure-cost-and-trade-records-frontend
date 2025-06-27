@@ -17,13 +17,13 @@
 package views.additionalInformation
 
 import actions.SessionRequest
+import models.submissions.common.AnswersYesNo
 import form.additionalinformation.CheckYourAnswersAdditionalInformationForm
-import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAdditionalInformationViewSpec
-    extends QuestionViewBehaviours[CheckYourAnswersAdditionalInformation] {
+    extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "checkYourAnswersAdditionalInformation"
 
@@ -36,7 +36,7 @@ class CheckYourAnswersAdditionalInformationViewSpec
   def createView = () =>
     checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[CheckYourAnswersAdditionalInformation]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(using sessionRequest, messages)
 
   "Check Your Answers Additional Information view" must {

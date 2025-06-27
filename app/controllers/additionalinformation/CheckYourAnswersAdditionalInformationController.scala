@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.additionalinformation.CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
-import models.submissions.additionalinformation.CheckYourAnswersAdditionalInformation
+import models.submissions.common.AnswersYesNo
 import navigation.AdditionalInformationNavigator
 import navigation.identifiers.CheckYourAnswersAdditionalInformationId
 import play.api.Logging
@@ -49,9 +49,8 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
       Ok(
         checkYourAnswersAdditionalInformationView(
           request.sessionData.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) match {
-            case Some(checkYourAnswersAdditionalInformation) =>
-              checkYourAnswersAdditionalInformationForm.fill(checkYourAnswersAdditionalInformation)
-            case _                                           => checkYourAnswersAdditionalInformationForm
+            case Some(answer) => checkYourAnswersAdditionalInformationForm.fill(answer)
+            case _            => checkYourAnswersAdditionalInformationForm
           },
           request.sessionData
         )
@@ -59,8 +58,8 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CheckYourAnswersAdditionalInformation](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersAdditionalInformationForm,
       formWithErrors =>
         BadRequest(
@@ -82,4 +81,5 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
       }
     )
   }
+
 }

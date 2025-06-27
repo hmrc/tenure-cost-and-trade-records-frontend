@@ -212,8 +212,7 @@ trait FakeObjects {
         addAnotherLettingToProperty = Some(AnswerYes)
       )
     ),
-    checkYourAnswersConnectionToProperty = None,
-    checkYourAnswersConnectionToVacantProperty = None
+    checkYourAnswersConnectionToProperty = None
   )
 
   val prefilledStillConnectedDetailsNoToAll: StillConnectedDetails = StillConnectedDetails(
@@ -1143,8 +1142,8 @@ trait FakeObjects {
 
   // Additional information sessions
   val prefilledAdditionalInformation: AdditionalInformation = AdditionalInformation(
-    Some(FurtherInformationOrRemarksDetails("Further information or remarks details")),
-    Some(CheckYourAnswersAdditionalInformation("CYA"))
+    Some("Further information or remarks details"),
+    Some(AnswerYes)
   )
 
   val additionalInformationSession: Session =
@@ -1284,7 +1283,7 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(AnswerYes),
     Some(AnswerNo),
-    checkYourAnswersConnectionToProperty = Some(CheckYourAnswersConnectionToProperty("No"))
+    checkYourAnswersConnectionToProperty = Some(CheckYourAnswersConnectionToProperty(AnswerNo))
   )
 
   val prefilledNotVacantPropertiesNoCYA = StillConnectedDetails(
@@ -1398,7 +1397,7 @@ trait FakeObjects {
     whatIsYourCurrentRentBasedOnDetails =
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnPercentageOpenMarket, Some("Open market"))),
     rentIncreasedAnnuallyWithRPIDetails = Some(RentIncreasedAnnuallyWithRPIDetails(AnswerYes)),
-    checkYourAnswersAboutYourLeaseOrTenure = Some(CheckYourAnswersAboutYourLeaseOrTenure("Yes")),
+    checkYourAnswersAboutYourLeaseOrTenure = Some(AnswerYes),
     rentIncludesVat = Some(RentIncludesVatDetails(AnswerYes))
   )
 
@@ -1419,7 +1418,7 @@ trait FakeObjects {
     rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo)),
     whatIsYourCurrentRentBasedOnDetails =
       Some(WhatIsYourCurrentRentBasedOnDetails(CurrentRentBasedOnOther, Some("Other"))),
-    checkYourAnswersAboutYourLeaseOrTenure = Some(CheckYourAnswersAboutYourLeaseOrTenure("Yes"))
+    checkYourAnswersAboutYourLeaseOrTenure = Some(AnswerYes)
   )
 
   val prefilledAboutLeaseOrAgreementPartOneNoStartDate: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(

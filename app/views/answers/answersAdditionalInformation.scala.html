@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,6 @@
 
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("label.furtherInformation",
-        _.furtherInformationOrRemarksDetails.map(_.furtherInformationOrRemarksDetails).filter(_.trim != "").orElse(Some(messages(s"label.no"))),
+        _.furtherInformationOrRemarksDetails.filter(_.trim != "").orElse(Some(messages(s"label.no"))),
         controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(), "furtherInformationOrRemarks")
 ))

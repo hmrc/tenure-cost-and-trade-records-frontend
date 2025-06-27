@@ -36,8 +36,7 @@ case class StillConnectedDetails(
   lettingPartOfPropertyDetailsIndex: Int = 0,
   maxOfLettings: Option[Boolean] = None,
   lettingPartOfPropertyDetails: IndexedSeq[LettingPartOfPropertyDetails] = IndexedSeq.empty,
-  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None,
-  checkYourAnswersConnectionToVacantProperty: Option[CheckYourAnswersConnectionToVacantProperty] = None
+  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
 )
 
 object StillConnectedDetails:

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +18,21 @@ package models.submissions.additionalinformation
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class AdditionalInformation(
-  furtherInformationOrRemarksDetails: Option[FurtherInformationOrRemarksDetails] = None,
-  checkYourAnswersAdditionalInformation: Option[CheckYourAnswersAdditionalInformation] = None
+  furtherInformationOrRemarksDetails: Option[String] = None,
+  checkYourAnswersAdditionalInformation: Option[AnswersYesNo] = None
 )
 
-object AdditionalInformation {
+object AdditionalInformation:
+
   implicit val format: OFormat[AdditionalInformation] = Json.format
 
   def updateAdditionalInformation(
     copy: AdditionalInformation => AdditionalInformation
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session =
 
     val currentAdditionalInformation = sessionRequest.sessionData.additionalInformation
 
@@ -40,6 +42,3 @@ object AdditionalInformation {
     }
 
     sessionRequest.sessionData.copy(additionalInformation = updateAdditionalInformation)
-
-  }
-}

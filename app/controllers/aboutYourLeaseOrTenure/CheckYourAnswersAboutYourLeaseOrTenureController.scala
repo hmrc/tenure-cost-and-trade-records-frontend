@@ -20,10 +20,10 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenure
 import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CheckYourAnswersAboutYourLeaseOrTenureId
 import play.api.Logging
@@ -52,9 +52,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
       Ok(
         checkYourAnswersAboutYourLeaseOrTenureView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match {
-            case Some(checkYourAnswersAboutYourLeaseOrTenureView) =>
-              checkYourAnswersAboutYourLeaseOrTenureForm.fill(checkYourAnswersAboutYourLeaseOrTenureView)
-            case _                                                => checkYourAnswersAboutYourLeaseOrTenureForm
+            case Some(answer) => checkYourAnswersAboutYourLeaseOrTenureForm.fill(answer)
+            case _            => checkYourAnswersAboutYourLeaseOrTenureForm
           },
           navigator.from match {
             case "CYA" =>
@@ -68,7 +67,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CheckYourAnswersAboutYourLeaseOrTenure](
+    continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersAboutYourLeaseOrTenureForm,
       formWithErrors =>
         BadRequest(

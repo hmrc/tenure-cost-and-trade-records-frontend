@@ -17,7 +17,7 @@
 package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
-import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.AddressLookupSupport
 import form.requestReferenceNumber.RequestReferenceNumberPropertyDetailsForm.theForm
 import models.ForType.*
@@ -121,7 +121,7 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
       )
     )
 
-  def addressLookupCallback(id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+  def addressLookupCallback(id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)

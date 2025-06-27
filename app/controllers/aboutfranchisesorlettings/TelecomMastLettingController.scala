@@ -18,7 +18,7 @@ package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.TelecomMastLettingForm.theForm
 import models.Session
@@ -74,7 +74,7 @@ class TelecomMastLettingController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     def updateOrAddTelecomMastLetting(
       lettingsOpt: Option[IndexedSeq[LettingPartOfProperty]],
       telecomMastLetting: TelecomMastLetting,
@@ -142,7 +142,7 @@ class TelecomMastLettingController @Inject() (
                                 selectPageHeadingKey = "telecomMastLetting.address.selectPageHeading",
                                 confirmPageLabelKey = "telecomMastLetting.address.confirmPageHeading",
                                 offRampCall =
-                                  routes.TelecomMastLettingController.addressLookupCallback(updatedIndex, "")
+                                  routes.TelecomMastLettingController.addressLookupCallback(updatedIndex)
                               )
                             )
         yield redirectResult
@@ -150,7 +150,7 @@ class TelecomMastLettingController @Inject() (
     )
   }
 
-  def addressLookupCallback(idx: Int, id: String) =
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] =
     (Action andThen withSessionRefiner).async { implicit request =>
       given Session = request.sessionData
       for

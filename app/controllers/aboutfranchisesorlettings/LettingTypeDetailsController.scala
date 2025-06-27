@@ -18,7 +18,7 @@ package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.theForm
 import models.Session

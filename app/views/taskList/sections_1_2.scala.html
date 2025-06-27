@@ -16,12 +16,14 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
+@import models.submissions.common.AnswersYesNo
+@import models.submissions.common.AnswersYesNo.*
 
 
-@(forType: ForType, isLeaseHolder: Boolean, section1Completed: Option[String], section2Completed: Option[String])(implicit request: SessionRequest[?], messages: Messages)
+@(forType: ForType, isLeaseHolder: Boolean, section1Completed: Option[AnswersYesNo], section2Completed: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
-@isReadOnly = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).flatMap(_.checkYourAnswersConnectionToProperty).contains("yes") }
+@isReadOnly = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).flatMap(_.checkYourAnswersConnectionToProperty).contains(AnswerYes) }
 
 <li>
  <h2 id="connectionToTheProperty" class="app-task-list__section">

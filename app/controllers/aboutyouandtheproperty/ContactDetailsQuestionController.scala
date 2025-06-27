@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import connectors.Audit
-import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddress, AddressLookupConnector}
+import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.theForm
 import models.Session
