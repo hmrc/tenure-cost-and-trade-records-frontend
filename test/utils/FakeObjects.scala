@@ -224,7 +224,13 @@ trait FakeObjects {
     Some(AnswerNo),
     Some(LocalDate.now()),
     Some(AnswerNo),
-    Some(prefilledProvideContactDetails)
+    Some(
+      YourContactDetails(
+        fullName = "Tobermory",
+        contactDetails = ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
+        additionalInformation = Some("Additional information")
+      )
+    )
   )
 
   val prefilledAboutLeaseOrAgreementPartThreeNoDevelopedLand: AboutLeaseOrAgreementPartThree =
@@ -442,13 +448,6 @@ trait FakeObjects {
     partsUnavailable = Some(AnswerYes),
     occupiersList = IndexedSeq.empty
   )
-
-  val prefilledProvideContactDetails: YourContactDetails =
-    YourContactDetails(
-      fullName = "Tobermory",
-      contactDetails = ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
-      additionalInformation = Some("Additional information")
-    )
 
   val aboutYouAndTheProperty6010YesSession: Session =
     stillConnectedDetailsYesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
