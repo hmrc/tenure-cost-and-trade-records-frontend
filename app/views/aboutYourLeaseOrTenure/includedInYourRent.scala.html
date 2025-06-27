@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  *@
 
 @import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentDetails
+@import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.ForType.*
@@ -69,7 +70,7 @@
                   CheckboxItem(
                       id = "vat",
                       content = Text(messages("label.includedInYourRent.vat")),
-                      value = "vat",
+                      value = IncludedInYourRentInformationVat.toString,
                       conditionalHtml = forType match {
                           case FOR6045 | FOR6046 =>
                               Some(
@@ -103,12 +104,12 @@
                   CheckboxItem(
                       id = "nondomesticRates",
                       content = Text(messages("label.includedInYourRent.nondomesticRates")),
-                      value = "nondomesticRates"
+                      value = IncludedInYourRentInformationNonDomesticRates.toString
                   ),
                   CheckboxItem(
                       id = "waterCharges",
                       content = Text(messages("label.includedInYourRent.waterCharges")),
-                      value = "waterCharges"
+                      value = IncludedInYourRentInformationWaterCharges.toString
                   ),
                   CheckboxItem(
                       divider = Some(messages("checkbox.divider"))
@@ -116,7 +117,7 @@
                   CheckboxItem(
                       id = "none",
                       content = Text(messages("label.includedInYourRent.noneOfThese")),
-                      value = "none",
+                      value = IncludedInYourRentInformationNone.toString,
                       behaviour = ExclusiveCheckbox
                   )
               )

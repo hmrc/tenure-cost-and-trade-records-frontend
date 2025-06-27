@@ -19,29 +19,30 @@ package utils
 import models.ForType.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
+import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
+import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutthetradinghistory.*
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
 import models.submissions.aboutyouandtheproperty.*
+import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
+import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
 import models.submissions.accommodation.*
 import models.submissions.additionalinformation.*
 import models.submissions.common.*
 import models.submissions.common.AnswersYesNo.*
+import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
-import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import models.submissions.connectiontoproperty.*
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.ConnectionToProperty.*
-import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
-import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
-import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
 import models.submissions.notconnected.*
 import models.submissions.requestReferenceNumber.*
 import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
-import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
-import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
-import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import models.{Session, SubmissionDraft}
 
 import java.time.temporal.ChronoUnit.MILLIS
@@ -1385,7 +1386,8 @@ trait FakeObjects {
     Some(prefilledAnnualRent),
     currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
     currentLeaseOrAgreementBegin = Some(CurrentLeaseOrAgreementBegin(MonthsYearDuration(4, 2024), "Granted for")),
-    includedInYourRentDetails = Some(IncludedInYourRentDetails(List("vat"), BigDecimal(100))),
+    includedInYourRentDetails =
+      Some(IncludedInYourRentDetails(List(IncludedInYourRentInformationVat), BigDecimal(100))),
     doesTheRentPayable = Some(DoesTheRentPayable(List.empty, "Does rent payable details")),
     rentIncludeTradeServicesDetails = Some(RentIncludeTradeServicesDetails(AnswerYes)),
     rentIncludeTradeServicesInformation =
