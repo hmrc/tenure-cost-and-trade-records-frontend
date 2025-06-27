@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
-@import models.submissions.connectiontoproperty.StartDateOfVacantProperty
+
+@import java.time.LocalDate
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -27,7 +28,7 @@
 )
 
 
-@(theForm: Form[StartDateOfVacantProperty], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[LocalDate], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("vacantPropertyStartDate.heading"),
@@ -51,6 +52,3 @@
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-
-

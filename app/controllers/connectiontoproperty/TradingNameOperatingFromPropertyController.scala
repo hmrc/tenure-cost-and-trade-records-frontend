@@ -24,7 +24,6 @@ import form.connectiontoproperty.TradingNameOperatingFromProperty6048Form.tradin
 import models.ForType
 import models.ForType.*
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.TradingNameOperatingFromPropertyPageId
@@ -83,7 +82,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     if (forType == FOR6048) {
-      continueOrSaveAsDraft[TradingNameOperatingFromProperty](
+      continueOrSaveAsDraft[String](
         tradingNameOperatingFromProperty6048Form,
         formWithErrors =>
           BadRequest(
@@ -105,7 +104,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
         }
       )
     } else {
-      continueOrSaveAsDraft[TradingNameOperatingFromProperty](
+      continueOrSaveAsDraft[String](
         tradingNameOperatingFromPropertyForm,
         formWithErrors =>
           BadRequest(

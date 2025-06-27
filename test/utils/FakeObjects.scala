@@ -101,9 +101,7 @@ trait FakeObjects {
 
   val hundred: BigDecimal = BigDecimal(100)
 
-  val prefilledTradingNameOperatingFromProperty: TradingNameOperatingFromProperty = TradingNameOperatingFromProperty(
-    "TRADING NAME"
-  )
+  val prefilledTradingNameOperatingFromProperty: String = "TRADING NAME"
 
   val baseFilled6010Session: Session      = Session(referenceNumber, FOR6010, prefilledAddress, token, isWelsh = false)
   val baseFilled6011Session: Session      = Session(referenceNumber, FOR6011, prefilledAddress, token, isWelsh = false)
@@ -150,26 +148,26 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsEdit: StillConnectedDetails                      = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     Some(AnswerNo)
   )
   val prefilledStillConnectedDetailsNoneOwnProperty: StillConnectedDetails           = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     None,
-    Some(TradingNameOperatingFromProperty("ABC LTD"))
+    Some("ABC LTD")
   )
   val prefilledStillConnectedDetailsYesRentReceivedNoLettings: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierAgent),
-    Some(EditTheAddress(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX")),
     Some(AnswerNo),
-    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some("ABC LTD"),
     Some(AnswerNo),
     Some(AnswerNo),
     Some(AnswerNo),
-    Some(StartDateOfVacantProperty(LocalDate.now())),
+    Some(LocalDate.now()),
     Some(AnswerYes)
   )
 
@@ -194,15 +192,15 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsYesToAll: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(EditTheAddress(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX")),
     Some(AnswerYes),
-    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some("ABC LTD"),
     Some(AnswerYes),
     Some(AnswerYes),
     Some(AnswerYes),
-    Some(StartDateOfVacantProperty(prefilledDateInput)),
+    Some(prefilledDateInput),
     Some(AnswerYes),
-    Some(ProvideContactDetails(YourContactDetails("fullname", prefilledContactDetails, Some("additional info")))),
+    Some(YourContactDetails("fullname", prefilledContactDetails, Some("additional info"))),
     lettingPartOfPropertyDetailsIndex = 0,
     lettingPartOfPropertyDetails = IndexedSeq(
       LettingPartOfPropertyDetails(
@@ -218,13 +216,13 @@ trait FakeObjects {
   val prefilledStillConnectedDetailsNoToAll: StillConnectedDetails = StillConnectedDetails(
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierAgent),
-    Some(EditTheAddress(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX"))),
+    Some(Address("Street 1", Some("Street 2"), "Town", Some("County"), "BN12 4AX")),
     Some(AnswerNo),
-    Some(TradingNameOperatingFromProperty("ABC LTD")),
+    Some("ABC LTD"),
     Some(AnswerNo),
     Some(AnswerNo),
     Some(AnswerNo),
-    Some(StartDateOfVacantProperty(LocalDate.now())),
+    Some(LocalDate.now()),
     Some(AnswerNo),
     Some(prefilledProvideContactDetails)
   )
@@ -445,13 +443,12 @@ trait FakeObjects {
     occupiersList = IndexedSeq.empty
   )
 
-  val prefilledProvideContactDetails: ProvideContactDetails = ProvideContactDetails(
+  val prefilledProvideContactDetails: YourContactDetails =
     YourContactDetails(
       fullName = "Tobermory",
       contactDetails = ContactDetails(prefilledFakePhoneNo, prefilledFakeEmail),
       additionalInformation = Some("Additional information")
     )
-  )
 
   val aboutYouAndTheProperty6010YesSession: Session =
     stillConnectedDetailsYesSession.copy(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes))
@@ -1166,11 +1163,6 @@ trait FakeObjects {
       Some(prefilledLandlordAddress)
     )
 
-  val prefilledEditTheAddress =
-    EditTheAddress(
-      prefilledEditAddress
-    )
-
   val prefilledNoRefAddress =
     RequestReferenceNumberPropertyDetails(
       "Business Name",
@@ -1271,13 +1263,13 @@ trait FakeObjects {
   val prefilledVacantProperties = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress)
+    Some(prefilledEditAddress)
   )
 
   val prefilledNotVacantPropertiesCYA = StillConnectedDetails(
     Some(AddressConnectionTypeYes),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     Some(AnswerYes),
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),
@@ -1289,7 +1281,7 @@ trait FakeObjects {
   val prefilledNotVacantPropertiesNoCYA = StillConnectedDetails(
     Some(AddressConnectionTypeNo),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     Some(AnswerYes),
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),
@@ -1300,7 +1292,7 @@ trait FakeObjects {
   val prefilledNotVacantPropertiesEditCYA = StillConnectedDetails(
     Some(AddressConnectionTypeYesChangeAddress),
     Some(ConnectionToThePropertyOccupierTrustee),
-    Some(prefilledEditTheAddress),
+    Some(prefilledEditAddress),
     Some(AnswerYes),
     Some(prefilledTradingNameOperatingFromProperty),
     Some(AnswerYes),

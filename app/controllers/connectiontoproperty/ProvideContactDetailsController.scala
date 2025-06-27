@@ -22,7 +22,7 @@ import controllers.FORDataCaptureController
 import form.connectiontoproperty.ProvideContactDetailsForm.provideContactDetailsForm
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.ProvideContactDetails
+import models.submissions.connectiontoproperty.YourContactDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ProvideYourContactDetailsPageId
 import play.api.Logging
@@ -65,7 +65,7 @@ class ProvideContactDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ProvideContactDetails](
+    continueOrSaveAsDraft[YourContactDetails](
       provideContactDetailsForm,
       formWithErrors =>
         BadRequest(

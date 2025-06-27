@@ -17,22 +17,24 @@
 package models.submissions.connectiontoproperty
 
 import crypto.MongoCrypto
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswersYesNo, SensitiveAddress}
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
+
+import java.time.LocalDate
 
 case class SensitiveStillConnectedDetails(
   addressConnectionType: Option[AddressConnectionType] = None,
   connectionToProperty: Option[ConnectionToProperty] = None,
-  editAddress: Option[SensitiveEditTheAddress] = None,
+  editAddress: Option[SensitiveAddress] = None,
   isPropertyVacant: Option[AnswersYesNo] = None,
-  tradingNameOperatingFromProperty: Option[TradingNameOperatingFromProperty] = None,
+  tradingNameOperatingFromProperty: Option[String] = None,
   tradingNameOwnTheProperty: Option[AnswersYesNo] = None,
   tradingNamePayingRent: Option[AnswersYesNo] = None,
   areYouThirdParty: Option[AnswersYesNo] = None,
-  vacantPropertyStartDate: Option[StartDateOfVacantProperty] = None,
+  vacantPropertyStartDate: Option[LocalDate] = None,
   isAnyRentReceived: Option[AnswersYesNo] = None,
-  provideContactDetails: Option[SensitiveProvideContactDetails] = None,
+  provideContactDetails: Option[SensitiveYourContactDetails] = None,
   lettingPartOfPropertyDetailsIndex: Int = 0,
   maxOfLettings: Option[Boolean] = None,
   lettingPartOfPropertyDetails: IndexedSeq[SensitiveLettingPartOfPropertyDetails] = IndexedSeq.empty,
@@ -65,7 +67,7 @@ object SensitiveStillConnectedDetails:
     SensitiveStillConnectedDetails(
       stillConnectedDetails.addressConnectionType,
       stillConnectedDetails.connectionToProperty,
-      stillConnectedDetails.editAddress.map(SensitiveEditTheAddress(_)),
+      stillConnectedDetails.editAddress.map(SensitiveAddress(_)),
       stillConnectedDetails.isPropertyVacant,
       stillConnectedDetails.tradingNameOperatingFromProperty,
       stillConnectedDetails.tradingNameOwnTheProperty,
@@ -73,7 +75,7 @@ object SensitiveStillConnectedDetails:
       stillConnectedDetails.areYouThirdParty,
       stillConnectedDetails.vacantPropertyStartDate,
       stillConnectedDetails.isAnyRentReceived,
-      stillConnectedDetails.provideContactDetails.map(SensitiveProvideContactDetails(_)),
+      stillConnectedDetails.provideContactDetails.map(SensitiveYourContactDetails(_)),
       stillConnectedDetails.lettingPartOfPropertyDetailsIndex,
       stillConnectedDetails.maxOfLettings,
       stillConnectedDetails.lettingPartOfPropertyDetails.map(SensitiveLettingPartOfPropertyDetails(_)),

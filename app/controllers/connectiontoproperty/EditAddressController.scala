@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
-import models.submissions.connectiontoproperty.EditTheAddress
+import models.submissions.common.Address
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
@@ -61,8 +61,8 @@ class EditAddressController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[EditTheAddress](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[Address](
       editAddressForm,
       formWithErrors => BadRequest(editAddressView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
       data => {

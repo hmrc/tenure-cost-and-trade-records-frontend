@@ -60,7 +60,7 @@ class TradingNamePayingRentController @Inject() (
       theView(
         filledForm.getOrElse(freshForm),
         getBackLink,
-        request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
+        request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get,
         request.sessionData.toSummary,
         isReadOnly
       )
@@ -75,7 +75,7 @@ class TradingNamePayingRentController @Inject() (
           theView(
             formWithErrors,
             getBackLink,
-            request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
+            request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get,
             request.sessionData.toSummary,
             isReadOnly
           )

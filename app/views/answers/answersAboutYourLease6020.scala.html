@@ -19,6 +19,7 @@
 @import util.DateUtilLocalised
 @import util.NumberUtil.*
 @import util.SectionAnswersRowBuilder
+@import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
 @import models.submissions.common.AnswersYesNo.*
 @import navigation.AboutYourLeaseOrTenureNavigator
 @import navigation.identifiers.TradeServicesDescriptionId
@@ -146,7 +147,7 @@
                 controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show(), "",
                 ("valueAsHtml", _ => None)) ++
             sectionAnswers3.conditionalOptionalRow(_ => {
-                request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails.map(_.includedInYourRent.contains("vat"))).getOrElse(false)},"checkYourAnswersAboutYourLeaseOrTenure.vatPayable",
+                request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails.map(_.includedInYourRent.contains(IncludedInYourRentInformationVat))).getOrElse(false)},"checkYourAnswersAboutYourLeaseOrTenure.vatPayable",
                 _.isVATPayableForWholeProperty.flatMap(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                 controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show(), "isVatPayable") ++
             sectionAnswers2.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.partyResponsibleForCostsOR",

@@ -57,7 +57,7 @@ class TradingNameOwnThePropertyController @Inject() (
         },
         getBackLink,
         request.sessionData.stillConnectedDetails
-          .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
+          .flatMap(_.tradingNameOperatingFromProperty)
           .getOrElse(""),
         request.sessionData.toSummary,
         isReadOnly
@@ -74,7 +74,7 @@ class TradingNameOwnThePropertyController @Inject() (
             formWithErrors,
             getBackLink,
             request.sessionData.stillConnectedDetails
-              .flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName))
+              .flatMap(_.tradingNameOperatingFromProperty)
               .getOrElse(""),
             request.sessionData.toSummary,
             isReadOnly

@@ -128,7 +128,7 @@
 }
 
 @operatorName = @{
-    request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty.map(_.tradingName)).getOrElse("")
+    request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty).getOrElse("")
 }
 
 @youMustIncludeHeading = {

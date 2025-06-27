@@ -37,7 +37,8 @@ import controllers.aboutYourLeaseOrTenure
 import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
-import navigation.identifiers._
+import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
+import navigation.identifiers.*
 import play.api.Logging
 import play.api.mvc.Call
 
@@ -145,7 +146,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         if (
           answers.aboutLeaseOrAgreementPartOne
             .flatMap(_.includedInYourRentDetails)
-            .exists(_.includedInYourRent contains "vat")
+            .exists(_.includedInYourRent contains IncludedInYourRentInformationVat)
         ) {
           aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show()
         } else {

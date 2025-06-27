@@ -61,7 +61,7 @@ class AreYouThirdPartyController @Inject() (
       theView(
         filledForm.getOrElse(freshForm),
         getBackLink,
-        request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
+        request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get,
         request.sessionData.toSummary,
         isReadOnly
       )
@@ -76,7 +76,7 @@ class AreYouThirdPartyController @Inject() (
           theView(
             formWithErrors,
             getBackLink,
-            request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get.tradingName,
+            request.sessionData.stillConnectedDetails.get.tradingNameOperatingFromProperty.get,
             request.sessionData.toSummary,
             isReadOnly
           )

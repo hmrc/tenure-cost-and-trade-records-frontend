@@ -18,12 +18,11 @@ package views.connectiontoproperty
 
 import actions.SessionRequest
 import form.connectiontoproperty.TradingNameOperatingFromPropertyForm
-import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[TradingNameOperatingFromProperty] {
+class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[String] {
 
   private val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
 
@@ -31,15 +30,13 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[Tr
 
   val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
-  override val form: Form[TradingNameOperatingFromProperty] =
-    TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
+  override val form: Form[String] = TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 
   def createView: () => Html = () =>
     tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[TradingNameOperatingFromProperty] => Html =
-    (form: Form[TradingNameOperatingFromProperty]) =>
-      tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
+  def createViewUsingForm: Form[String] => Html =
+    (form: Form[String]) => tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
 
   "Trading name operating from property view" must {
 

@@ -18,11 +18,11 @@ package views.connectiontoproperty
 
 import form.connectiontoproperty.EditAddressForm
 import models.pages.Summary
-import models.submissions.connectiontoproperty.EditTheAddress
+import models.submissions.common.Address
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class EditAddressViewSpec extends QuestionViewBehaviours[EditTheAddress] {
+class EditAddressViewSpec extends QuestionViewBehaviours[Address] {
 
   val messageKeyPrefix = "editAddress"
 
@@ -32,7 +32,7 @@ class EditAddressViewSpec extends QuestionViewBehaviours[EditTheAddress] {
 
   def createView = () => editAddressView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[EditTheAddress]) =>
+  def createViewUsingForm = (form: Form[Address]) =>
     editAddressView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   "Edit Address view" must {

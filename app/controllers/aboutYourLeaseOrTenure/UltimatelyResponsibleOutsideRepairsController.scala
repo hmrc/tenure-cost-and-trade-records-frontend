@@ -22,6 +22,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
+import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairs
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
@@ -84,7 +85,7 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
         if (
           request.sessionData.aboutLeaseOrAgreementPartOne
             .flatMap(_.includedInYourRentDetails)
-            .exists(_.includedInYourRent contains "vat")
+            .exists(_.includedInYourRent contains IncludedInYourRentInformationVat)
         ) {
           controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show().url
         } else {

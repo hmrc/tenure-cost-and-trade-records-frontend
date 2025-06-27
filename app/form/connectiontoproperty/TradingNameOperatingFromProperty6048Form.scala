@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
 
 package form.connectiontoproperty
 
-import models.submissions.connectiontoproperty.TradingNameOperatingFromProperty
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object TradingNameOperatingFromProperty6048Form {
+object TradingNameOperatingFromProperty6048Form:
 
-  val tradingNameOperatingFromProperty6048Form: Form[TradingNameOperatingFromProperty] = Form(
-    mapping(
-      "tradingNameFromProperty" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.tradingNameFromProperty6048.required"),
-        maxLength(50, "error.tradingNameFromProperty6048.maxLength")
+  val tradingNameOperatingFromProperty6048Form: Form[String] =
+    Form(
+      single(
+        "tradingNameFromProperty" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.tradingNameFromProperty6048.required"),
+          maxLength(50, "error.tradingNameFromProperty6048.maxLength")
+        )
       )
-    )(TradingNameOperatingFromProperty.apply)(o => Some(o.tradingName))
-  )
-
-}
+    )

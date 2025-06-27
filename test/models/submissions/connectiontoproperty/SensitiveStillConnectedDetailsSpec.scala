@@ -37,25 +37,21 @@ class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers w
       val clearData     = StillConnectedDetails(
         addressConnectionType = Some(AddressConnectionType.AddressConnectionTypeYesChangeAddress),
         connectionToProperty = Some(ConnectionToProperty.ConnectionToThePropertyOccupierAgent),
-        editAddress =
-          Some(EditTheAddress(Address("buildingNameNumber", Some("street1"), "town", Some("county"), "postcode"))),
+        editAddress = Some(Address("buildingNameNumber", Some("street1"), "town", Some("county"), "postcode")),
         isPropertyVacant = Some(AnswerNo),
-        tradingNameOperatingFromProperty = Some(TradingNameOperatingFromProperty("tradingName")),
+        tradingNameOperatingFromProperty = Some("tradingName"),
         tradingNameOwnTheProperty = Some(AnswerNo),
         tradingNamePayingRent = Some(AnswerYes),
         areYouThirdParty = Some(AnswerYes),
-        vacantPropertyStartDate = Some(StartDateOfVacantProperty(LocalDate.of(2023, 1, 1))),
+        vacantPropertyStartDate = Some(LocalDate.of(2023, 1, 1)),
         isAnyRentReceived = Some(AnswerYes),
         provideContactDetails = Some(
-          ProvideContactDetails(
-            YourContactDetails(
-              fullName = "John Doe",
-              contactDetails = ContactDetails("phoneNumber", "emailAddress"),
-              additionalInformation = None
-            )
+          YourContactDetails(
+            fullName = "John Doe",
+            contactDetails = ContactDetails("phoneNumber", "emailAddress"),
+            additionalInformation = None
           )
         ),
-        lettingPartOfPropertyDetailsIndex = 0,
         maxOfLettings = Some(false),
         lettingPartOfPropertyDetails = IndexedSeq(
           LettingPartOfPropertyDetails(
