@@ -148,17 +148,18 @@ class AtmLettingController @Inject() (
     (updatedLetting, updatedIndex)
   }
 
-  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    given Session = request.sessionData
-    for
-      confirmedAddress <- getConfirmedAddress(id)
-      lettingAddress   <- confirmedAddress.asAddress
-      newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
-      _                <- repository.saveOrUpdate(newSession)
-    yield
-      if navigator.from == "CYA"
-      then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
-      else Redirect(routes.RentDetailsController.show(idx))
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      given Session = request.sessionData
+      for
+        confirmedAddress <- getConfirmedAddress(id)
+        lettingAddress   <- confirmedAddress.asAddress
+        newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+        _                <- repository.saveOrUpdate(newSession)
+      yield
+        if navigator.from == "CYA"
+        then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+        else Redirect(routes.RentDetailsController.show(idx))
   }
 
   private def backLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =

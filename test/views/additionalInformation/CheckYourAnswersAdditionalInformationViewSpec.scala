@@ -22,8 +22,7 @@ import form.additionalinformation.CheckYourAnswersAdditionalInformationForm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAdditionalInformationViewSpec
-    extends QuestionViewBehaviours[AnswersYesNo] {
+class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "checkYourAnswersAdditionalInformation"
 

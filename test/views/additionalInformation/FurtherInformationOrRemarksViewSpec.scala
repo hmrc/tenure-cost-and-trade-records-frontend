@@ -33,8 +33,7 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[String]
     furtherInformationOrRemarksView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html =
-    (form: Form[String]) =>
-      furtherInformationOrRemarksView(form, Summary("99996010001"))(using fakeRequest, messages)
+    (form: Form[String]) => furtherInformationOrRemarksView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Further Information or Remarks view" must {
 

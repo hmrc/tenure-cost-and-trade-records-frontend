@@ -66,8 +66,7 @@ class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers w
             maxOfLettings = Some(true)
           )
         ),
-        checkYourAnswersConnectionToProperty =
-          Some(CheckYourAnswersConnectionToProperty(AnswerYes, Some(true)))
+        checkYourAnswersConnectionToProperty = Some(CheckYourAnswersConnectionToProperty(AnswerYes, Some(true)))
       )
       val encryptedData = SensitiveStillConnectedDetails(clearData)
       val d             = encryptedData.decryptedValue

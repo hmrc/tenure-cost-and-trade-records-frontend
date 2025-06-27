@@ -141,8 +141,7 @@ class TelecomMastLettingController @Inject() (
                                 lookupPageHeadingKey = "telecomMastLetting.address.lookupPageHeading",
                                 selectPageHeadingKey = "telecomMastLetting.address.selectPageHeading",
                                 confirmPageLabelKey = "telecomMastLetting.address.confirmPageHeading",
-                                offRampCall =
-                                  routes.TelecomMastLettingController.addressLookupCallback(updatedIndex)
+                                offRampCall = routes.TelecomMastLettingController.addressLookupCallback(updatedIndex)
                               )
                             )
         yield redirectResult

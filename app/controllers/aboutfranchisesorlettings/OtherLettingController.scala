@@ -155,17 +155,18 @@ class OtherLettingController @Inject() (
     then routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     else routes.TypeOfLettingController.show(idx).url
 
-  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    given Session = request.sessionData
-    for
-      confirmedAddress <- getConfirmedAddress(id)
-      lettingAddress   <- confirmedAddress.asAddress
-      newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
-      _                <- repository.saveOrUpdate(newSession)
-    yield
-      if navigator.from == "CYA"
-      then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
-      else Redirect(routes.RentDetailsController.show(idx))
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
+    implicit request =>
+      given Session = request.sessionData
+      for
+        confirmedAddress <- getConfirmedAddress(id)
+        lettingAddress   <- confirmedAddress.asAddress
+        newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+        _                <- repository.saveOrUpdate(newSession)
+      yield
+        if navigator.from == "CYA"
+        then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+        else Redirect(routes.RentDetailsController.show(idx))
   }
 
   private def newSessionWithLettingAddress(idx: Int, lettingAddress: Address)(using session: Session) =
