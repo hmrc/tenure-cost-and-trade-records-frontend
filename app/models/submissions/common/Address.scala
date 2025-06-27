@@ -17,7 +17,9 @@
 package models.submissions.common
 
 import models.submissions.PrintableAddress
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{JsPath, Json, Reads, Writes}
+import play.api.libs.json.{Reads, JsPath}
+import play.api.libs.functional.syntax._
 
 case class Address(
   buildingNameNumber: String,
@@ -28,4 +30,28 @@ case class Address(
 ) extends PrintableAddress
 
 object Address:
-  given Format[Address] = Json.format
+
+  // NOTE that the reason for having custom Reads/Writes is to ensure that the `town` property gets
+  // deserialized from `street2` in the JSON, as per the original structure of the Address model.
+
+  // NOTE that this workaround would not be needed if the **backend** Address model were properly updated
+  // to use `town` instead of `street2`
+  // (see https://github.com/hmrc/tenure-cost-and-trade-records/blob/main/app/uk/gov/hmrc/tctr/backend/schema/Address.scala#L21)
+
+  given Reads[Address] = (
+    (JsPath \ "buildingNameNumber").read[String] and
+      (JsPath \ "street1").readNullable[String] and
+      (JsPath \ "street2").read[String] and
+      (JsPath \ "county").readNullable[String] and
+      (JsPath \ "postcode").read[String]
+    )(Address.apply _)
+
+  given Writes[Address] = (
+    (JsPath \ "buildingNameNumber").write[String] and
+      (JsPath \ "street1").writeNullable[String] and
+      (JsPath \ "street2").write[String] and
+      (JsPath \ "county").writeNullable[String] and
+      (JsPath \ "postcode").write[String]
+  )(address =>
+    (address.buildingNameNumber, address.street1, address.town, address.county, address.postcode)
+  )

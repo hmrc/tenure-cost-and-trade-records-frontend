@@ -52,7 +52,7 @@ class RequestReferenceNumberSubmissionSpec extends AnyFlatSpec with should.Match
     )
 
     val jsonString =
-      """{"businessTradingName":"BusinessTradingName","fullName":"Full Name","id":"12345","createdAt":"1970-01-21T04:48:46.680Z","address":{"postcode":"AN12 3YZ","street1":"Main Street","county":"Bristol","buildingNameNumber":"123","town":"Bristol"},"contactDetails":{"phone":"07711122233345","email":"test@email.co.uk"},"lang":"en"}"""
+      """{"businessTradingName":"BusinessTradingName","fullName":"Full Name","id":"12345","createdAt":"1970-01-21T04:48:46.680Z","address":{"buildingNameNumber":"123","street1":"Main Street","street2":"Bristol","county":"Bristol","postcode":"AN12 3YZ"},"contactDetails":{"phone":"07711122233345","email":"test@email.co.uk"},"lang":"en"}"""
 
     val json = Json.toJson(requestReferenceNumberSubmissionModel)
     json.as[RequestReferenceNumberSubmission] shouldBe requestReferenceNumberSubmissionModel

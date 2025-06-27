@@ -22,21 +22,29 @@ import utils.TestBaseSpec
 
 class AddressMappingSpec extends TestBaseSpec {
 
-  val json2 =
-    """{"buildingNameNumber":"Some House","street1":"Some Street","town":"Some City","county":"Some County","postcode":"AA11 1AA"}"""
-  val data2 = Address("Some House", Some("Some Street"), "Some City", Some("Some County"), "AA11 1AA")
+  val toBeDeserialized = """{"buildingNameNumber":"Some House","street1":"Some Street","street2":"Some City","county":"Some County","postcode":"AA11 1AA"}"""
+  val expected = Address(
+    buildingNameNumber = "Some House",
+    street1 = Some("Some Street"),
+    town = "Some City",
+    county = Some("Some County"),
+    postcode = "AA11 1AA"
+  )
 
   def toJson(data: Address): String = {
     val json = Json.toJson(data).toString
     json
   }
 
-  def fromJson(json: String): JsResult[Address] =
-    Json.fromJson[Address](Json.parse(json))
+  def fromJson(json: String): JsResult[Address] = {
+    val parsed = Json.parse(json)
+    Json.fromJson[Address](parsed)
+  }
 
   "Address with a fully filled in address" should {
     "create a fully filled Address" in {
-      fromJson(json2) should be(JsSuccess(data2))
+      val actual = fromJson(toBeDeserialized)
+      actual should be(JsSuccess(expected))
     }
   }
 
