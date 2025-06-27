@@ -55,7 +55,7 @@ class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome] {
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheConcessionsFranchisesLettings"))
+      assert(sectionText == messages("label.section.aboutConcessionsFranchisesOrLettings"))
     }
 
     "contain radio buttons for the value typeConcession" in {

@@ -22,6 +22,7 @@ import connectors.addressLookup.*
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.connectiontoproperty.TenantDetailsForm.theForm
 import models.Session
+import models.submissions.common.Address
 import models.submissions.connectiontoproperty.*
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
@@ -132,7 +133,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
     given Session = request.sessionData
     for
       confirmedAddress     <- getConfirmedAddress(id)
-      correspondenceAddress = confirmedAddress.asCorrespondenceAddress
+      correspondenceAddress = confirmedAddress.asAddress
       newSession           <- successful(sessionWithCorrespondenceAddress(idx, correspondenceAddress))
       _                    <- repository.saveOrUpdate(newSession)
     yield {
@@ -155,7 +156,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
         }
     }
 
-  private def sessionWithCorrespondenceAddress(idx: Int, address: CorrespondenceAddress)(using session: Session) =
+  private def sessionWithCorrespondenceAddress(idx: Int, address: Address)(using session: Session) =
     assert(session.stillConnectedDetails.isDefined)
     assert(session.stillConnectedDetails.get.lettingPartOfPropertyDetails.lift(idx).isDefined)
     session.copy(
@@ -178,13 +179,4 @@ class LettingPartOfPropertyDetailsController @Inject() (
           )
         )
       }
-    )
-
-  extension (confirmed: AddressLookupConfirmedAddress)
-    def asCorrespondenceAddress = CorrespondenceAddress(
-      confirmed.buildingNameNumber,
-      confirmed.street1,
-      confirmed.town,
-      confirmed.county,
-      confirmed.postcode
     )

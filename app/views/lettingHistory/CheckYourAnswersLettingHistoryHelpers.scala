@@ -20,7 +20,7 @@ import actions.SessionRequest
 import controllers.lettingHistory.routes
 import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
 import play.api.i18n.Messages
-import play.api.mvc.{AnyContent, Call}
+import play.api.mvc.AnyContent
 import util.DateUtilLocalised
 import views.includes.cards.{CardData, CardEntry}
 import views.includes.summary.SummaryEntry
@@ -29,6 +29,7 @@ import java.time.{LocalDate, MonthDay}
 import scala.collection.mutable
 
 object CheckYourAnswersLettingHistoryHelpers:
+  import views.CheckYourAnswersHelpers.*
 
   def permanentResidentsCardsData(
     fragment: String
@@ -36,12 +37,13 @@ object CheckYourAnswersLettingHistoryHelpers:
     LettingHistory.permanentResidents(request.sessionData).zipWithIndex.map { (resident, index) =>
       CardData(
         index = index,
+        label = messages("lettingHistory.checkYourAnswers.permanentResidents.cardsType"),
         removeAction = routes.ResidentListController.performRemove(index).withFromCheckYourAnswer(fragment),
         entries = Seq(
           CardEntry(
-            key = messages("lettingHistory.checkYourAnswers.permanentResidents.cardKey1"),
+            label = messages("lettingHistory.checkYourAnswers.permanentResidents.cardKey1"),
             value = List(resident.name, resident.address.replace("\n", "<br>")).mkString("<br>"),
-            changeAction = routes.ResidentDetailController.show(Some(index)).withFromCheckYourAnswer(fragment)
+            changeAction = Some(routes.ResidentDetailController.show(Some(index)).withFromCheckYourAnswer(fragment))
           )
         )
       )
@@ -53,15 +55,16 @@ object CheckYourAnswersLettingHistoryHelpers:
     LettingHistory.completedLettings(request.sessionData).zipWithIndex.map { (occupier, index) =>
       CardData(
         index = index,
+        label = messages("lettingHistory.checkYourAnswers.completedLettings.cardsType"),
         removeAction = routes.OccupierListController.performRemove(index).withFromCheckYourAnswer(fragment),
         entries = Seq(
           CardEntry(
-            key = messages("lettingHistory.checkYourAnswers.completedLettings.cardKey1"),
+            label = messages("lettingHistory.checkYourAnswers.completedLettings.cardKey1"),
             value = List(
               Some(occupier.name),
               occupier.address.map(_.multiLine)
             ).filter(_.isDefined).map(_.get).mkString("<br>"),
-            changeAction = routes.OccupierDetailController.show(Some(index)).withFromCheckYourAnswer(fragment)
+            changeAction = Some(routes.OccupierDetailController.show(Some(index)).withFromCheckYourAnswer(fragment))
           )
         )
       )
@@ -73,12 +76,13 @@ object CheckYourAnswersLettingHistoryHelpers:
     LettingHistory.onlineAdvertising(request.sessionData).zipWithIndex.map { (advertising, index) =>
       CardData(
         index = index,
+        label = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardsType"),
         removeAction = routes.AdvertisingListController.performRemove(index).withFromCheckYourAnswer(fragment),
         entries = Seq(
           CardEntry(
-            key = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardKey1"),
+            label = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardKey1"),
             value = List(advertising.websiteAddress, advertising.propertyReferenceNumber).mkString("<br>"),
-            changeAction = routes.AdvertisingDetailController.show(Some(index)).withFromCheckYourAnswer(fragment)
+            changeAction = Some(routes.AdvertisingDetailController.show(Some(index)).withFromCheckYourAnswer(fragment))
           )
         )
       )
@@ -164,11 +168,3 @@ object CheckYourAnswersLettingHistoryHelpers:
     date
       .map(d => dateUtil.formatDate(d))
       .orElse(Some(""))
-
-  extension (call: Call)
-    def withFromCheckYourAnswer(fragment: String): Call =
-      // Append the "from" query string parameter with a "single" value
-      // Notice that the ";" semicolon character is just a "trick" intended to propagate the fragment
-      call.copy(
-        url = call.url + (if call.url.contains("?") then "&" else "?") + s"from=CYA;$fragment"
-      )

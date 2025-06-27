@@ -25,14 +25,16 @@ case class SensitiveLettingPartOfPropertyDetails(
   tenantDetails: SensitiveTenantDetails,
   lettingPartOfPropertyRentDetails: Option[LettingPartOfPropertyRentDetails] = None,
   itemsIncludedInRent: List[String] = List.empty,
-  addAnotherLettingToProperty: Option[AnswersYesNo] = None
+  addAnotherLettingToProperty: Option[AnswersYesNo] = None,
+  maxOfLettings: Option[Boolean] = None
 ) extends Sensitive[LettingPartOfPropertyDetails] {
 
   override def decryptedValue: LettingPartOfPropertyDetails = LettingPartOfPropertyDetails(
     tenantDetails.decryptedValue,
     lettingPartOfPropertyRentDetails,
     itemsIncludedInRent,
-    addAnotherLettingToProperty
+    addAnotherLettingToProperty,
+    maxOfLettings
   )
 }
 
@@ -45,6 +47,7 @@ object SensitiveLettingPartOfPropertyDetails {
       SensitiveTenantDetails(lettingDetails.tenantDetails),
       lettingDetails.lettingPartOfPropertyRentDetails,
       lettingDetails.itemsIncludedInRent,
-      lettingDetails.addAnotherLettingToProperty
+      lettingDetails.addAnotherLettingToProperty,
+      lettingDetails.maxOfLettings
     )
 }

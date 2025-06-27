@@ -17,18 +17,20 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import models.ForType.*
+@import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 @import models.submissions.common.AnswersYesNo
-@import views.html.answers.{answersLettings, answersConcessionAndLettings}
+@import views.html.answers.answersAboutConcessionsFranchisesOrLettings
+@import views.html.answers.answersAboutLettings
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
-        answersLetting: answersLettings,
-        answers: answersConcessionAndLettings,
+        answersAboutConcessionsFranchisesOrLettings: answersAboutConcessionsFranchisesOrLettings,
+        answersAboutLettings: answersAboutLettings,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @forType = @{
     request.sessionData.forType
@@ -36,25 +38,25 @@
 
 @sectionName = @{
     forType match {
-        case FOR6015 | FOR6016 => messages("label.section.aboutTheFranchiseConcessions")
-        case FOR6020 => messages("label.section.aboutTheLettings")
-        case FOR6045 | FOR6046 => messages("label.section.aboutTheConcessionsFranchisesLettings")
-        case _ => messages("label.section.aboutTheFranchiseLettings")
+        case FOR6015 | FOR6016 => messages("label.section.aboutConcessionsOrLettings")
+        case FOR6020           => messages("label.section.aboutLettings")
+        case FOR6045 | FOR6046 => messages("label.section.aboutConcessionsFranchisesOrLettings")
+        case _                 => messages("label.section.aboutFranchisesOrLettings")
     }
 }
 
 @pageHeading = @{
     forType match {
         case FOR6015 | FOR6016 => messages("checkYourAnswersAboutConcessionsOrLettings.heading")
-        case FOR6020 => messages("checkYourAnswersLettings.heading")
-        case FOR6045 | FOR6046 => messages("checkYourAnswersAboutConcessionsOrLettings6045.heading")
-        case _ => messages("checkYourAnswersAboutFranchiseOrLettings.heading")
+        case FOR6020           => messages("checkYourAnswersAboutLettings.heading")
+        case FOR6045 | FOR6046 => messages("checkYourAnswersAboutConcessionsFranchisesOrLettings.heading")
+        case _                 => messages("checkYourAnswersAboutFranchiseOrLettings.heading")
     }
 }
 
 @layout(
     pageHeading = pageHeading,
-    backLinkUrl = backLink,
+    backLinkUrl = backLinkUrl,
     fullWidth = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = sectionName,
@@ -62,8 +64,8 @@
 ) {
     @{
         forType match {
-            case FOR6020 => answersLetting()
-            case _       => answers()
+            case FOR6020 => answersAboutLettings()
+            case _       => answersAboutConcessionsFranchisesOrLettings()
         }
     }
 

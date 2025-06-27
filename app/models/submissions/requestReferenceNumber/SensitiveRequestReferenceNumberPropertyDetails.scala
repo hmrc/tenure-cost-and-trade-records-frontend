@@ -17,13 +17,14 @@
 package models.submissions.requestReferenceNumber
 
 import crypto.MongoCrypto
+import models.submissions.common.SensitiveAddress
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
 case class SensitiveRequestReferenceNumberPropertyDetails(
   noReferenceNumberBusinessTradingName: SensitiveString,
-  noReferenceNumberAddress: Option[SensitiveRequestReferenceNumberAddress]
+  noReferenceNumberAddress: Option[SensitiveAddress]
 ) extends Sensitive[RequestReferenceNumberPropertyDetails] {
 
   override def decryptedValue: RequestReferenceNumberPropertyDetails = RequestReferenceNumberPropertyDetails(
@@ -41,6 +42,6 @@ object SensitiveRequestReferenceNumberPropertyDetails {
   def apply(noReferenceNumber: RequestReferenceNumberPropertyDetails): SensitiveRequestReferenceNumberPropertyDetails =
     SensitiveRequestReferenceNumberPropertyDetails(
       SensitiveString(noReferenceNumber.businessTradingName),
-      noReferenceNumber.address.map(SensitiveRequestReferenceNumberAddress(_))
+      noReferenceNumber.address.map(SensitiveAddress(_))
     )
 }

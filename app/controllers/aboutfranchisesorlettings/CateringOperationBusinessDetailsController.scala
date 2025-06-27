@@ -61,7 +61,7 @@ class CateringOperationBusinessDetailsController @Inject() (
       cateringOperationDetailsView(
         existingDetails.fold(cateringOperationBusinessDetails6030Form)(cateringOperationBusinessDetails6030Form.fill),
         index,
-        "cateringOperationOrLettingAccommodationDetails",
+        "concessionTypeDetails",
         getBackLink(index),
         request.sessionData.toSummary
       )
@@ -76,7 +76,7 @@ class CateringOperationBusinessDetailsController @Inject() (
           cateringOperationDetailsView(
             formWithErrors,
             index,
-            "cateringOperationOrLettingAccommodationDetails",
+            "concessionDetails",
             getBackLink(index),
             request.sessionData.toSummary
           )

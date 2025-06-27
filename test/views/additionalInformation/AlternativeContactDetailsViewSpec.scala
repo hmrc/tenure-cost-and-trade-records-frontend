@@ -18,21 +18,21 @@ package views.additionalInformation
 
 import form.aboutyouandtheproperty.AlternativeContactDetailsForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty.AlternativeAddress
+import models.submissions.common.Address
 import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[AlternativeAddress] {
+class AlternativeContactDetailsViewSpec extends QuestionViewBehaviours[Address] {
 
   val messageKeyPrefix = "alternativeContactDetails"
 
-  override val form: Form[AlternativeAddress] = AlternativeContactDetailsForm.alternativeContactDetailsForm
+  override val form: Form[Address] = AlternativeContactDetailsForm.alternativeContactDetailsForm
 
   def createView: () => Html = () =>
     alternativeContactDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AlternativeAddress] => Html = (form: Form[AlternativeAddress]) =>
+  def createViewUsingForm: Form[Address] => Html = (form: Form[Address]) =>
     alternativeContactDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Alternative Contact Details view" must {

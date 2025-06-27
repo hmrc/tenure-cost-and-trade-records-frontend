@@ -119,45 +119,45 @@ object MappingSupport:
     "postcode"           -> postcode
   )(Address.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def landlordAddressMapping: Mapping[LandlordAddress] = mapping(
+  def landlordAddressMapping: Mapping[Address] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
     "street1"            -> optional(validateAddressLineTwo),
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(LandlordAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
+  )(Address.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def alternativeAddressMapping: Mapping[AlternativeAddress] = mapping(
+  def alternativeAddressMapping: Mapping[Address] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
     "street1"            -> optional(validateAddressLineTwo),
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcodeAlternativeContact
-  )(AlternativeAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
+  )(Address.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def cateringAddressMapping: Mapping[BusinessAddress] = mapping(
+  def cateringAddressMapping: Mapping[Address] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
     "street1"            -> optional(validateAddressLineTwo),
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(BusinessAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
+  )(Address.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def lettingPartOfPropertyAddressMapping: Mapping[LettingAddress] = mapping(
+  def lettingPartOfPropertyAddressMapping: Mapping[Address] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
     "street1"            -> optional(validateAddressLineTwo),
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> nonEmptyTextOr("correspondenceAddress.postcode", postcode, "error.postcode.required")
-  )(LettingAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
+  )(Address.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def editAddressMapping: Mapping[EditAddress] = mapping(
+  def editAddressMapping: Mapping[Address] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
     "street1"            -> optional(validateAddressLineTwo),
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(EditAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
+  )(Address.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def yourContactDetailsMapping: Mapping[YourContactDetails] = mapping(
     "fullName"                                   -> default(text, "").verifying(
@@ -170,13 +170,13 @@ object MappingSupport:
     )
   )(YourContactDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def correspondenceAddressMapping: Mapping[CorrespondenceAddress] = mapping(
+  def correspondenceAddressMapping: Mapping[Address] = mapping(
     "buildingNameNumber" -> validateBuildingNameNumber,
     "street1"            -> optional(validateAddressLineTwo),
     "town"               -> validateTown,
     "county"             -> optional(validateCounty),
     "postcode"           -> postcode
-  )(CorrespondenceAddress.apply)(o => Some(Tuple.fromProductTyped(o)))
+  )(Address.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def between[T](
     minValue: T,

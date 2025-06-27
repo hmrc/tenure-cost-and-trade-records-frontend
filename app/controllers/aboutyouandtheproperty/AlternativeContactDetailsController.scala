@@ -20,8 +20,8 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AlternativeContactDetailsForm.alternativeContactDetailsForm
-import models.submissions.aboutyouandtheproperty.AlternativeAddress
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import models.submissions.common.Address
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AlternativeContactDetailsId
 import play.api.i18n.I18nSupport
@@ -61,7 +61,7 @@ class AlternativeContactDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AlternativeAddress](
+    continueOrSaveAsDraft[Address](
       alternativeContactDetailsForm,
       formWithErrors => BadRequest(alternativeContactDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {

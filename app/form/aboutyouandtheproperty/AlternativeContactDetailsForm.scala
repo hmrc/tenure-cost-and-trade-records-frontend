@@ -17,12 +17,12 @@
 package form.aboutyouandtheproperty
 
 import form.MappingSupport.alternativeAddressMapping
-import models.submissions.aboutyouandtheproperty.AlternativeAddress
+import models.submissions.common.Address
 import play.api.data.Form
 
 object AlternativeContactDetailsForm:
 
-  val alternativeContactDetailsForm: Form[AlternativeAddress] =
+  val alternativeContactDetailsForm: Form[Address] =
     Form(
       alternativeAddressMapping
     )

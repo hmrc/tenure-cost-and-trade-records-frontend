@@ -23,7 +23,7 @@ import play.api.data.Forms.single
 
 object CheckYourAnswersAboutFranchiseOrLettingsForm:
 
-  val checkYourAnswersAboutFranchiseOrLettingsForm: Form[AnswersYesNo] =
+  val theForm: Form[AnswersYesNo] =
     Form(
       single(
         "checkYourAnswersAboutFranchiseOrLettings" -> createYesNoType("error.checkYourAnswersRadio.required")

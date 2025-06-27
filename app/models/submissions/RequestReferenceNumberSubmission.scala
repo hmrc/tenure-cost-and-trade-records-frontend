@@ -16,8 +16,7 @@
 
 package models.submissions
 
-import models.submissions.common.ContactDetails
-import models.submissions.requestReferenceNumber.RequestReferenceNumberAddress
+import models.submissions.common.{Address, ContactDetails}
 import play.api.libs.json.{Json, OFormat}
 
 import java.time.Instant
@@ -25,7 +24,7 @@ import java.time.Instant
 case class RequestReferenceNumberSubmission(
   id: String,
   businessTradingName: String,
-  address: RequestReferenceNumberAddress,
+  address: Address,
   fullName: String,
   contactDetails: ContactDetails,
   additionalInformation: Option[String],

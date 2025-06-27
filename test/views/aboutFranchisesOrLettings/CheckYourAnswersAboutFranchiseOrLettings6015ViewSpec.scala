@@ -28,7 +28,7 @@ class CheckYourAnswersAboutFranchiseOrLettings6015ViewSpec extends QuestionViewB
 
   val messageKeyPrefix = "checkYourAnswersAboutConcessionsOrLettings"
 
-  override val form = CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
+  override val form = CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 
   val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 

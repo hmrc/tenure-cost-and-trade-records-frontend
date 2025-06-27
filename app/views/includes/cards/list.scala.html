@@ -18,7 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.SectionAnswersRowBuilder
 
-@(govukSummaryList: GovukSummaryList, cardsType: String, cardsData: Seq[CardData])(implicit messages: Messages)
+@(govukSummaryList: GovukSummaryList, cardsData: Seq[CardData])(implicit messages: Messages)
 
 @sectionAnswers = @{
     SectionAnswersRowBuilder(None)
@@ -28,29 +28,30 @@
     @govukSummaryList(
         SummaryList(
             card = sectionAnswers.summaryListCard(
-                s"$cardsType ${data.index + 1}",
+                s"${data.label} ${data.index + 1}",
                 data.removeAction.toString
             ),
             rows = data.entries.map { entry =>
                 SummaryListRow(
                     key = Key(
-                        content = Text(entry.key),
-                        classes = "govuk-!-width-one-half"
+                        content = Text(entry.label),
+                        // classes = "govuk-!-width-one-half"
                     ),
                     value = Value(
                         content = HtmlContent(entry.value)
                     ),
-                    actions = Some(Actions(
+                    actions = entry.changeAction.map {call => Actions(
                         items = Seq(
                             ActionItem(
-                                href = entry.changeAction.toString,
+                                href = call.toString.getOrElse("#"),
                                 content = Text(messages("label.change")),
                                 attributes = Map(
-                                    "aria-label" -> (messages("label.change") + s" ${entry.key}")
+                                    "aria-label" -> (messages("label.change") + s" ${entry.label}")
                                 )
                             )
                         )
-                    ))
+                    )},
+                    classes = entry.classes
                 )
             }
         )

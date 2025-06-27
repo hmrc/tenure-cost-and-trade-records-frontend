@@ -125,22 +125,13 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)
-      convertedAddress  = confirmedAddress.asRequestReferenceNumberAddress
+      convertedAddress  = confirmedAddress.asAddress
       newSession       <- successful(sessionWithConfirmedAddress(convertedAddress))
       _                <- repository.saveOrUpdate(newSession)
     yield Redirect(navigator.nextPage(NoReferenceNumberPageId, newSession).apply(newSession))
   }
 
-  extension (confirmed: AddressLookupConfirmedAddress)
-    private def asRequestReferenceNumberAddress = RequestReferenceNumberAddress(
-      confirmed.buildingNameNumber,
-      confirmed.street1,
-      confirmed.town,
-      confirmed.county,
-      confirmed.postcode
-    )
-
-  private def sessionWithConfirmedAddress(addr: RequestReferenceNumberAddress)(using session: Session) =
+  private def sessionWithConfirmedAddress(addr: Address)(using session: Session) =
     assert(session.requestReferenceNumberDetails.isDefined)
     assert(session.requestReferenceNumberDetails.get.propertyDetails.isDefined)
     session.copy(

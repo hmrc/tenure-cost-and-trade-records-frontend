@@ -18,7 +18,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
-@import models.submissions.aboutyouandtheproperty.AlternativeAddress
+@import models.submissions.common.Address
 
 @this(layout: Layout,
   govukButton: GovukButton,
@@ -27,7 +27,7 @@
 )
 
 
-@(theForm: Form[AlternativeAddress], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[Address], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("alternativeContactDetails.heading"),

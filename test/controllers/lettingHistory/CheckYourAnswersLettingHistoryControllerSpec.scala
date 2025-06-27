@@ -16,7 +16,7 @@
 
 package controllers.lettingHistory
 
-import models.submissions.lettingHistory.LettingHistory
+import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
 import play.api.test.Helpers.*
@@ -30,11 +30,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
   "the CheckYourAnswersLettingHistory controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET by replying 200 with the empty form" in new ControllerFixture(
-        lettingHistory = Some(
-          LettingHistory(
-            hasOnlineAdvertising = Some(false)
-          )
-        )
+        hasOnlineAdvertising = Some(false)
       ) {
         val result = controller.show(fakeGetRequest)
         contentType(result).value shouldBe HTML
@@ -58,12 +54,8 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
     }
     "the user has already answered"            should {
       "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
-        lettingHistory = Some(
-          LettingHistory(
-            hasOnlineAdvertising = Some(true),
-            sectionCompleted = Some(true)
-          )
-        )
+        isYearlyAvailable = Some(false),
+        hasOnlineAdvertising = Some(true)
       ) {
         val result = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
@@ -91,8 +83,11 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
     }
   }
 
-  trait ControllerFixture(lettingHistory: Option[LettingHistory] = None)
-      extends MockRepositoryFixture
+  trait ControllerFixture(
+    hasOnlineAdvertising: Option[Boolean] = Some(false),
+    sectionCompleted: Option[Boolean] = Some(true),
+    isYearlyAvailable: Option[Boolean] = Some(true)
+  ) extends MockRepositoryFixture
       with SessionCapturingFixture:
 
     val controller = new CheckYourAnswersLettingHistoryController(
@@ -100,7 +95,26 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
       navigator = inject[LettingHistoryNavigator],
       theView = inject[CheckYourAnswerLettingHistoryView],
       sessionRefiner = preEnrichedActionRefiner(
-        lettingHistory = lettingHistory
+        lettingHistory = Some(
+          LettingHistory(
+            hasPermanentResidents = Some(true),
+            permanentResidents = twoResidents,
+            hasCompletedLettings = Some(true),
+            completedLettings = twoOccupiers,
+            hasOnlineAdvertising = hasOnlineAdvertising,
+            intendedLettings = Some(
+              IntendedDetail(
+                nights = Some(12),
+                hasStopped = Some(true),
+                whenWasLastLet = None,
+                isYearlyAvailable = isYearlyAvailable,
+                tradingSeason = None
+              )
+            ),
+            onlineAdvertising = if hasOnlineAdvertising.contains(true) then List.empty else twoAdvertisings,
+            sectionCompleted = sectionCompleted
+          )
+        )
       ),
       repository
     )

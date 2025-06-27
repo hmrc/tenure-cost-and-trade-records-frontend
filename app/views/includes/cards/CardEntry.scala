@@ -19,7 +19,8 @@ package views.includes.cards
 import play.api.mvc.Call
 
 case class CardEntry(
-  key: String,
+  label: String,
   value: String,
-  changeAction: Call
+  changeAction: Option[Call],
+  classes: String = ""
 )

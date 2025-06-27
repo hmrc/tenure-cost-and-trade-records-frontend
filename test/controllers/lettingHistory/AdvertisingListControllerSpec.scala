@@ -120,7 +120,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
       }
       "and the maximum number of web addresses has been reached" should {
         "be handling invalid POST /list by replying 400 with error messages" in new ControllerFixture(
-          fiveAdvertising
+          fiveAdvertisings
         ) {
           val result = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
@@ -132,7 +132,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           page.error("answer") shouldBe "lettingHistory.advertisingList.hasMoreWebsites.required"
         }
         "be handling POST /list?hasMoreAdvertisingDetails=yes by replying redirect to the 'Max Number of Advertising' page" in new ControllerFixture(
-          fiveAdvertising
+          fiveAdvertisings
         ) {
           val result = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(

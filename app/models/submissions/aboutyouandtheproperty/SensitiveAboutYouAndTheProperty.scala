@@ -17,14 +17,14 @@
 package models.submissions.aboutyouandtheproperty
 
 import crypto.MongoCrypto
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{AnswersYesNo, SensitiveAddress}
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 case class SensitiveAboutYouAndTheProperty(
   customerDetails: Option[SensitiveCustomerDetails] = None,
   altDetailsQuestion: Option[AnswersYesNo] = None,
-  alternativeContactAddress: Option[SensitiveAlternativeAddress] = None,
+  alternativeContactAddress: Option[SensitiveAddress] = None,
   propertyDetails: Option[PropertyDetails] = None,
   websiteForPropertyDetails: Option[WebsiteForPropertyDetails] = None,
   premisesLicenseGrantedDetail: Option[AnswersYesNo] = None,
@@ -80,7 +80,7 @@ object SensitiveAboutYouAndTheProperty {
     SensitiveAboutYouAndTheProperty(
       aboutYouAndTheProperty.customerDetails.map(SensitiveCustomerDetails(_)),
       aboutYouAndTheProperty.altDetailsQuestion,
-      aboutYouAndTheProperty.alternativeContactAddress.map(SensitiveAlternativeAddress(_)),
+      aboutYouAndTheProperty.alternativeContactAddress.map(SensitiveAddress(_)),
       aboutYouAndTheProperty.propertyDetails,
       aboutYouAndTheProperty.websiteForPropertyDetails,
       aboutYouAndTheProperty.premisesLicenseGrantedDetail,

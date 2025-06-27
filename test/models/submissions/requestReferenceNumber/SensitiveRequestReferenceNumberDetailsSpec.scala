@@ -17,7 +17,7 @@
 package models.submissions.requestReferenceNumber
 
 import models.submissions.MongoCryptoSupport
-import models.submissions.common.ContactDetails
+import models.submissions.common.{Address, ContactDetails}
 import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -49,7 +49,7 @@ class SensitiveRequestReferenceNumberDetailsSpec
       RequestReferenceNumberPropertyDetails(
         businessTradingName = "Business Name",
         address = Some(
-          RequestReferenceNumberAddress(
+          Address(
             buildingNameNumber = "1",
             street1 = Some("Street 1"),
             town = "Town",

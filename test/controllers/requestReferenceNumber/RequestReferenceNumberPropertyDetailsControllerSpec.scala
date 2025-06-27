@@ -19,7 +19,8 @@ package controllers.requestReferenceNumber
 import connectors.MockAddressLookup
 import connectors.addressLookup.*
 import models.Session
-import models.submissions.requestReferenceNumber.{RequestReferenceNumberAddress, RequestReferenceNumberDetails, RequestReferenceNumberPropertyDetails}
+import models.submissions.common.Address
+import models.submissions.requestReferenceNumber.{RequestReferenceNumberDetails, RequestReferenceNumberPropertyDetails}
 import navigation.RequestReferenceNumberNavigator
 import org.scalatest.RecoverMethods.recoverToExceptionIf
 import play.api.test.Helpers.*
@@ -160,7 +161,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
 
         val session = captor[Session]
         verify(repository, once).saveOrUpdate(session)(using any)
-        session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.address.value shouldBe RequestReferenceNumberAddress(
+        session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.address.value shouldBe Address(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
           street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
           town = addressLookupConfirmedAddress.address.lines.get.last,

@@ -122,10 +122,10 @@ label.section.lettingHistory = Letting history
 label.section.lettings = Lettings
 label.section.accommodation = Accommodation details
 label.section.aboutYourTradingHistory = Trading history
-label.section.aboutTheFranchiseLettings = Franchises or lettings
-label.section.aboutTheFranchiseConcessions = Concessions and lettings
-label.section.aboutTheConcessionsFranchisesLettings = Concessions, franchises or lettings
-label.section.aboutTheLettings = Lettings
+label.section.aboutFranchisesOrLettings = Franchises or lettings
+label.section.aboutConcessionsOrLettings = Concessions and lettings
+label.section.aboutConcessionsFranchisesOrLettings = Concessions, franchises or lettings
+label.section.aboutLettings = Lettings
 label.section.aboutYourLeaseOrTenure = Your lease or agreement
 label.section.additionalInformation = Additional information
 
@@ -973,8 +973,8 @@ lettingDetails.heading = Provide the tenant or operator’s details
 
 # RENTAL INCOME LIST
 ####################
-rentalIncomeList.heading = You have added 1 source of rental income
-rentalIncomeList.plural.heading = You have added {0} sources of rental income
+rentalIncomeList.heading.singular = You have added 1 source of rental income
+rentalIncomeList.heading.plural = You have added {0} sources of rental income
 label.rentalIncomeList = Do you need to add another source of rental income?
 rentalIncomeList.zeroLetting.heading = You have removed all your sources of rental income
 error.rentalIncomeList.required = Select yes if you would lke to add another source of income
@@ -1155,7 +1155,7 @@ lettings.typeOfLetting.other.label = Other
 aboutTheLettings.zeroLetting.heading = You have removed all your lettings
 #CHECK YOUR ANSWERS LETTING 6020 CYA
 ##############################
-checkYourAnswersLettings.heading = Check your answers - lettings
+checkYourAnswersAboutLettings.heading = Check your answers - lettings
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} letting
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPruel = You have added {0} lettings
 checkYourAnswersAboutFranchiseOrLettings.rentReceived = Rent received from lettings?
@@ -3844,9 +3844,10 @@ maxOf5Lettings.error = Please confirm that you understand the VOA will contact y
 checkYourAnswers.heading = This is a holding page for the check your answers page
 checkYourAnswersAboutFranchiseOrLettings.heading = Check your answers - franchises or lettings
 checkYourAnswersAboutConcessionsOrLettings.heading = Check your answers - concessions or lettings
-checkYourAnswersAboutConcessionsOrLettings6045.heading = Check your answers - concessions franchises or lettings
-checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading = Rental income
-checkYourAnswersAboutFranchiseOrLettings.franchiseLettings = Rental income?
+checkYourAnswersAboutConcessionsFranchisesOrLettings.heading = Check your answers - concessions franchises or lettings
+checkYourAnswersAboutConcessionsFranchiseOrLettings.rentalIncome.heading = Rental income
+checkYourAnswersAboutConcessionsOrLettings.rentalIncome = Income from concessions or lettings?
+checkYourAnswersAboutFranchiseOrLettings.rentalIncome = Income from franchises or lettings?
 checkYourAnswersAboutFranchiseOrLettings.franchisesOrLettings = Franchises or lettings?
 checkYourAnswersAboutFranchiseOrLettings.6045.lettings = Income from concessions, franchise or lettings?
 checkYourAnswersAboutFranchiseOrLettings.separateBusinesses.heading = Separate businesses
@@ -3855,9 +3856,10 @@ checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading =
 checkYourAnswersAboutFranchiseOrLettings.rentFromPartOfProperties = Letting other parts of the property?
 checkYourAnswersAboutFranchiseOrLettings.operatorCount = Business {0}
 checkYourAnswersAboutFranchiseOrLettings.operatorName = Name and address
-
+checkYourAnswersAboutFranchiseOrLettings.letting = Letting
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber = Letting {0}
 checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName = Tenant’s details
+checkYourAnswersAboutFranchiseOrLettings.business = Business
 checkYourAnswersAboutFranchiseOrLettings.businessOperatorName = Business details
 checkYourAnswersAboutFranchiseOrLettings.annualRent = Annual rent
 checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated = How rent was calculated
@@ -3872,15 +3874,16 @@ checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusiness = You have added 
 checkYourAnswersAboutFranchiseOrLettings.addedSeparateBusinessPlural = You have added {0} separate businesses
 checkYourAnswersAboutFranchiseOrLettings.addLetting = Add or remove a letting
 checkYourAnswersAboutFranchiseOrLettings.addRemove = Add or remove
+checkYourAnswersAboutFranchiseOrLettings.addIncome = Add a source of rental income
 checkYourAnswersAboutFranchiseOrLettings.addedLetting = You have added {0} tenant
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural = You have added {0} tenants
 checkYourAnswersAboutFranchiseOrLettings.addedLetting6015 = You have added {0} letting
 checkYourAnswersAboutFranchiseOrLettings.addedLettingPlural6015 = You have added {0} lettings
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading = Concession or franchise fee
 checkYourAnswersAboutFranchiseOrLettings.feeReceived.feeCalculationDetails = How the fee was calculated
-cya.rentalIncomeList.heading = You have added 1 source of rental income
-cya.rentalIncomeList.plural.heading = You have added {0} sources of rental income
-cya.concessionOrFranchise.operatorNumber = Concession or franchise {0}
+cya.rentalIncomeList.heading.singular = You have added 1 source of rental income
+cya.rentalIncomeList.heading.plural = You have added {0} sources of rental income
+cya.concessionOrFranchise.operatorNumber = Concession or franchise
 cya.concessionOrFranchise.operatorDetails = Operator’s details
 
 checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers - your lease or agreement

@@ -34,7 +34,7 @@ class SensitiveAddressSpec extends AnyWordSpecLike with Matchers with SensitiveT
       val originalAddress = Address(
         buildingNameNumber = "123",
         street1 = Some("Street 1"),
-        street2 = "Street 2",
+        town = "Street 2",
         county = Some("County"),
         postcode = "12345"
       )
@@ -43,7 +43,7 @@ class SensitiveAddressSpec extends AnyWordSpecLike with Matchers with SensitiveT
 
       // Ensure the sensitive fields are encrypted
       sensitiveAddress.buildingNameNumber.isInstanceOf[SensitiveString] shouldBe true
-      sensitiveAddress.street2.isInstanceOf[SensitiveString]            shouldBe true
+      sensitiveAddress.town.isInstanceOf[SensitiveString]               shouldBe true
       sensitiveAddress.postcode.isInstanceOf[SensitiveString]           shouldBe true
 
       // Ensure the sensitive fields are decrypted correctly

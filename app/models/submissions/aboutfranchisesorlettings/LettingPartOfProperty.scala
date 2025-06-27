@@ -17,7 +17,7 @@
 package models.submissions.aboutfranchisesorlettings
 
 import models.submissions.aboutfranchisesorlettings.TypeOfLetting.*
-import models.submissions.common.AnswersYesNo
+import models.submissions.common.{Address, AnswersYesNo}
 import play.api.libs.json.*
 
 import java.time.LocalDate
@@ -67,7 +67,7 @@ object RentDetails {
 
 case class ATMLetting(
   bankOrCompany: Option[String],
-  correspondenceAddress: Option[LettingAddress],
+  correspondenceAddress: Option[Address],
   rentalDetails: Option[RentDetails] = None,
   override val addAnotherLetting: Option[AnswersYesNo] = None
 ) extends LettingPartOfProperty {
@@ -81,7 +81,7 @@ object ATMLetting {
 case class TelecomMastLetting(
   operatingCompanyName: Option[String],
   siteOfMast: Option[String],
-  correspondenceAddress: Option[LettingAddress] = None,
+  correspondenceAddress: Option[Address] = None,
   rentalDetails: Option[RentDetails] = None,
   override val addAnotherLetting: Option[AnswersYesNo] = None
 ) extends LettingPartOfProperty {
@@ -95,7 +95,7 @@ object TelecomMastLetting {
 case class AdvertisingRightLetting(
   descriptionOfSpace: Option[String],
   advertisingCompanyName: Option[String],
-  correspondenceAddress: Option[LettingAddress],
+  correspondenceAddress: Option[Address],
   rentalDetails: Option[RentDetails] = None,
   override val addAnotherLetting: Option[AnswersYesNo] = None
 ) extends LettingPartOfProperty {
@@ -109,7 +109,7 @@ object AdvertisingRightLetting {
 case class OtherLetting(
   lettingType: Option[String],
   tenantName: Option[String],
-  correspondenceAddress: Option[LettingAddress],
+  correspondenceAddress: Option[Address],
   rentalDetails: Option[RentDetails] = None,
   override val addAnotherLetting: Option[AnswersYesNo] = None
 ) extends LettingPartOfProperty {
