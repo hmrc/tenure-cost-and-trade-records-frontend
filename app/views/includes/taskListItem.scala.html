@@ -19,9 +19,24 @@
 
 @(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[String], pageAnswer: Option[?], cannotStartYet: Boolean = false, readOnly: Boolean = false)(implicit messages: Messages)
 
+@sectionCompletedAnswerYes = @{
+    sectionCompleted.contains(AnswerYes.toString)
+}
+
+@completedOrDeclared = @{
+    if((sectionCompletedAnswerYes && messages(taskNameKey) == "Connection status") ||
+          (sectionCompletedAnswerYes && messages(taskNameKey) == "Vacancy status") ||
+          (sectionCompletedAnswerYes && messages(taskNameKey) == "Occupier details") ||
+          (sectionCompletedAnswerYes && messages(taskNameKey) == "Occupation and accounting information")) {
+      messages("taskList.status.declared")
+  } else {
+      messages("taskList.status.completed")
+  }
+  }
+
 @statusText = @{
     if (sectionCompleted.contains(AnswerYes.toString)) {
-        messages("taskList.status.completed")
+        completedOrDeclared
     } else if (pageAnswer.isDefined) {
         messages("taskList.status.inProgress")
     } else if (cannotStartYet) {
@@ -32,14 +47,17 @@
 }
 
 @itemTagClass = @{
-    if (sectionCompleted.contains(AnswerYes.toString)) {
-        ""
-    } else if (pageAnswer.isDefined) {
-        "govuk-tag--blue"
+    if (pageAnswer.isDefined) {
+        "govuk-tag govuk-tag--blue app-task-list__tag"
     } else {
-        "govuk-tag--grey"
+        "govuk-tag govuk-tag--grey app-task-list__tag"
     }
 }
+
+@itemTagClassClear = @{
+        "app-task-list__tag"
+}
+
 
 <li class="app-task-list__item">
     <span class="app-task-list__task-name">
@@ -49,5 +67,10 @@
             <a href="@{urlPlusParamPrefix(taskPage.url)}from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
         }
     </span>
-    <strong class="govuk-tag @itemTagClass app-task-list__tag" id="@taskId">@statusText</strong>
+    @if(sectionCompleted.contains(AnswerYes.toString)){
+        <p class="@itemTagClassClear" id="@taskId">@statusText</p>
+    } else {
+        <strong class="@itemTagClass" id="@taskId">@statusText</strong>
+    }
+
 </li>

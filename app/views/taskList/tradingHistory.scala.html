@@ -21,6 +21,8 @@
 @(forType: ForType, tradingHistoryNumber: Int, section2Completed: Option[String], section3Completed: Option[String], section3point1Completed: Option[String], section3point2Completed: Option[String], section3point3Completed: Option[String], section4AccommodationCompleted: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
+@isReadOnly = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).flatMap(_.checkYourAnswersAboutTheTradingHistory).contains("yes") }
+
 
 <li>
  <h2 id="tradingHistory" class="app-task-list__section">
@@ -40,7 +42,8 @@
     } else {
      section2Completed.isEmpty
     }
-   }
+   },
+   readOnly = isReadOnly
 
   )
 
