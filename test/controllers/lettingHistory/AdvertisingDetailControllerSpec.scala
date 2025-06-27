@@ -102,10 +102,10 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           page.error("duplicate") shouldBe "lettingHistory.advertisingDetail.duplicate"
         }
         "be handling POST /detail?overwrite by replying 303 redirect to 'Advertising Online List' page" in new ControllerFixture(
-          twoAdvertising
+          twoAdvertisings
         ) {
           val request = fakePostRequest.withFormUrlEncodedBody(
-            "websiteAddress"          -> twoAdvertising.last.websiteAddress,
+            "websiteAddress"          -> twoAdvertisings.last.websiteAddress,
             "propertyReferenceNumber" -> "otherReference123"
           )
           val result  = controller.submit(None)(request)
@@ -120,7 +120,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
       }
       "and the maximum number of advertising online details has been reached" should {
         "be handling GET /detail by replying 303 redirect to the 'Advertising Online List' page" in new ControllerFixture(
-          fiveAdvertising
+          fiveAdvertisings
         ) {
           val result = controller.show(maybeIndex = None)(fakeGetRequest)
           status(result)                 shouldBe SEE_OTHER

@@ -21,6 +21,7 @@ import org.scalatest.matchers.should.Matchers
 import play.api.Configuration
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import crypto.MongoCrypto
+import models.submissions.common.{Address, SensitiveAddress}
 import utils.SensitiveTestHelper
 
 class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
@@ -34,7 +35,7 @@ class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with S
       val originalAboutTheLandlord = AboutTheLandlord(
         landlordFullName = "John Doe",
         landlordAddress = Some(
-          LandlordAddress(
+          Address(
             buildingNameNumber = "123",
             street1 = Some("Street 1"),
             town = "Town",
@@ -47,8 +48,8 @@ class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with S
       val sensitiveAboutTheLandlord = SensitiveAboutTheLandlord(originalAboutTheLandlord)
 
       // Ensure the sensitive fields are encrypted
-      sensitiveAboutTheLandlord.landlordFullName.isInstanceOf[SensitiveString]                 shouldBe true
-      sensitiveAboutTheLandlord.landlordAddress.isInstanceOf[Option[SensitiveLandlordAddress]] shouldBe true
+      sensitiveAboutTheLandlord.landlordFullName.isInstanceOf[SensitiveString]         shouldBe true
+      sensitiveAboutTheLandlord.landlordAddress.isInstanceOf[Option[SensitiveAddress]] shouldBe true
 
       // Ensure the sensitive fields are decrypted correctly
       sensitiveAboutTheLandlord.decryptedValue shouldBe originalAboutTheLandlord

@@ -16,34 +16,16 @@
 
 package models.submissions.common
 
-import play.api.libs.json.{Json, OFormat}
+import models.submissions.PrintableAddress
+import play.api.libs.json.{Format, Json}
 
 case class Address(
   buildingNameNumber: String,
   street1: Option[String],
-  street2: String,
+  town: String,
   county: Option[String],
   postcode: String
-) {
-  def singleLine: String =
-    List(
-      Some(buildingNameNumber),
-      street1,
-      Some(street2),
-      county,
-      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
-    ).flatten.mkString(", ")
+) extends PrintableAddress
 
-  def multiLine: String =
-    List(
-      Some(buildingNameNumber),
-      street1,
-      Some(street2),
-      county,
-      Some(postcode.replaceAll("^(\\S+?)\\s*?(\\d\\w\\w)$", "$1 $2"))
-    ).flatten.mkString("<br/> ")
-}
-
-object Address {
-  implicit val format: OFormat[Address] = Json.format
-}
+object Address:
+  given Format[Address] = Json.format

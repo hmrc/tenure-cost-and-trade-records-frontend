@@ -19,6 +19,7 @@ package models.submissions.lettingHistory
 import models.submissions.PrintableAddress
 import play.api.libs.json.{Format, Json}
 
+@deprecated(message = "Avoid duplicated code by just using the common.Address type instead of this one")
 case class OccupierAddress(
   buildingNameNumber: String,
   street1: Option[String],

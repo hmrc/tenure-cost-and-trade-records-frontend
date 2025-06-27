@@ -83,7 +83,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           onlineAdvertising(data)          shouldBe oneAdvertising
         }
         "be handling POST answer='no' and reply 303 redirect to the 'CheckYourAnswers' page" in new ControllerFixture(
-          onlineAdvertising = fiveAdvertising,
+          onlineAdvertising = fiveAdvertisings,
           mayHaveMoreOnlineAdvertising = Some(true)
         ) {
           // Answering 'no' will clear out all online advertising
@@ -102,7 +102,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
       }
       "and the maximum number of residents has been reached" should {
         "be handling POST answer='yes' by replying 303 redirect to the 'OnlineAdvertisingList' page" in new ControllerFixture(
-          onlineAdvertising = fiveAdvertising
+          onlineAdvertising = fiveAdvertisings
         ) {
           val result = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(

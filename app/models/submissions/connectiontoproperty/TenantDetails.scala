@@ -16,12 +16,13 @@
 
 package models.submissions.connectiontoproperty
 
+import models.submissions.common.Address
 import play.api.libs.json.{Json, OFormat}
 
 case class TenantDetails(
   name: String,
   descriptionOfLetting: String,
-  correspondenceAddress: Option[CorrespondenceAddress]
+  correspondenceAddress: Option[Address]
 ) extends PrintableTenantDetails
 
 object TenantDetails {

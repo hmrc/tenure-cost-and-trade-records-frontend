@@ -17,13 +17,14 @@
 package models.submissions.aboutYourLeaseOrTenure
 
 import crypto.MongoCrypto
+import models.submissions.common.SensitiveAddress
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
 case class SensitiveAboutTheLandlord(
   landlordFullName: SensitiveString,
-  landlordAddress: Option[SensitiveLandlordAddress]
+  landlordAddress: Option[SensitiveAddress]
 ) extends Sensitive[AboutTheLandlord] {
   override def decryptedValue: AboutTheLandlord = AboutTheLandlord(
     landlordFullName.decryptedValue,
@@ -37,6 +38,6 @@ object SensitiveAboutTheLandlord {
 
   def apply(aboutTheLandlord: AboutTheLandlord): SensitiveAboutTheLandlord = SensitiveAboutTheLandlord(
     SensitiveString(aboutTheLandlord.landlordFullName),
-    aboutTheLandlord.landlordAddress.map(SensitiveLandlordAddress(_))
+    aboutTheLandlord.landlordAddress.map(SensitiveAddress(_))
   )
 }

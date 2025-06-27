@@ -20,6 +20,7 @@ import play.api.mvc.Call
 
 case class CardData(
   index: Int,
+  label: String,
   removeAction: Call,
   entries: Seq[CardEntry]
 )

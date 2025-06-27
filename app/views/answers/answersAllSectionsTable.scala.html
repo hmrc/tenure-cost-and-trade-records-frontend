@@ -20,14 +20,14 @@
 
 
 @this(
-        answersSectionConnectionToTheProperty: answersConnectionToTheProperty,
-        answersSectionAboutTheProperty: answersAboutTheProperty,
-        answersSectionAccommodationDetails: answersAccommodationDetails6048,
-        answersSectionAboutYourTradingHistory: answersAboutYourTradingHistory,
-        answersSectionAboutTheFranchiseLettings: answersConcessionAndLettings,
-        answersLettings: answersLettings,
-        answersSectionAboutYourLeaseOrTenure: answersAboutYourLeaseOrTenure,
-        answersSectionAdditionalInformation: answersAdditionalInformation
+        answersConnectionToTheProperty: answersConnectionToTheProperty,
+        answersAboutTheProperty: answersAboutTheProperty,
+        answersAccommodationDetails6048: answersAccommodationDetails6048,
+        answersAboutYourTradingHistory: answersAboutYourTradingHistory,
+        answersAboutConcessionsFranchisesOrLettings: answersAboutConcessionsFranchisesOrLettings,
+        answersAboutLettings: answersAboutLettings,
+        answersAboutYourLeaseOrTenure: answersAboutYourLeaseOrTenure,
+        answersAdditionalInformation: answersAdditionalInformation
 )
 
 
@@ -42,29 +42,29 @@
 }
 
 <span class="govuk-caption-m">@messages("label.section.connectionToTheProperty")</span>
-@answersSectionConnectionToTheProperty()
+@answersConnectionToTheProperty()
 
 <span class="govuk-caption-m">@messages("label.section.aboutTheProperty")</span>
-@answersSectionAboutTheProperty()
+@answersAboutTheProperty()
 
 @if(forType == FOR6048) {
     <span class="govuk-caption-m">@messages("label.section.accommodation")</span>
-    @answersSectionAccommodationDetails()
+    @answersAccommodationDetails6048()
 }
 
 <span class="govuk-caption-m">@messages("label.section.aboutYourTradingHistory")</span>
-@answersSectionAboutYourTradingHistory()
+@answersAboutYourTradingHistory()
 
-<span class="govuk-caption-m">@messages("label.section.aboutTheFranchiseLettings")</span>
+<span class="govuk-caption-m">@messages("label.section.aboutFranchisesOrLettings")</span>
     @forType match {
-    case FOR6020 => {@answersLettings()}
-    case _       => {@answersSectionAboutTheFranchiseLettings()}
+    case FOR6020 => {@answersAboutLettings()}
+    case _       => {@answersAboutConcessionsFranchisesOrLettings()}
     }
 
 @if(isLeaseHolder) {
     <span class="govuk-caption-m">@messages("label.section.aboutYourLeaseOrTenure")</span>
-    @answersSectionAboutYourLeaseOrTenure()
+    @answersAboutYourLeaseOrTenure()
 }
 
 <span class="govuk-caption-m">@messages("label.section.additionalInformation")</span>
-@answersSectionAdditionalInformation()
+@answersAdditionalInformation()

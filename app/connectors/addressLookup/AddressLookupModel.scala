@@ -16,6 +16,7 @@
 
 package connectors.addressLookup
 
+import models.submissions.common.Address
 import play.api.libs.json.{Format, Json}
 
 case class AddressLookupConfirmedAddress(
@@ -29,6 +30,14 @@ case class AddressLookupConfirmedAddress(
   val town               = address.lines.fold("")(_.lastOption.getOrElse(""))
   val county             = None
   val postcode           = address.postcode.getOrElse("")
+
+  def asAddress = Address(
+    this.buildingNameNumber,
+    this.street1,
+    this.town,
+    this.county,
+    this.postcode
+  )
 }
 
 object AddressLookupConfirmedAddress:

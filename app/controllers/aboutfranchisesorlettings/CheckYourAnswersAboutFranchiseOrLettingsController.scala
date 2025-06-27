@@ -16,9 +16,9 @@
 
 package controllers.aboutfranchisesorlettings
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.checkYourAnswersAboutFranchiseOrLettingsForm
+import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettings
 import models.submissions.common.AnswersYesNo.*
@@ -29,7 +29,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings
+import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings as CheckYourAnswersAboutFranchiseOrLettingsView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,37 +38,38 @@ import scala.concurrent.{ExecutionContext, Future}
 class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutFranchisesOrLettingsNavigator,
-  checkYourAnswersAboutFranchiseOrLettingsView: checkYourAnswersAboutFranchiseOrLettings,
+  theView: CheckYourAnswersAboutFranchiseOrLettingsView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
+  @Named("session") repo: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
-    with Logging {
+    with Logging:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersAboutFranchiseOrLettingsView(
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings) match {
-            case Some(checkYourAnswersAboutFranchiseOrLettings) =>
-              checkYourAnswersAboutFranchiseOrLettingsForm.fill(checkYourAnswersAboutFranchiseOrLettings)
-            case _                                              => checkYourAnswersAboutFranchiseOrLettingsForm
-          },
-          getBackLink(request.sessionData)
-        )
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    val freshForm  = theForm
+    val filledForm =
+      for
+        aboutFranchisesOrLettings                <- request.sessionData.aboutFranchisesOrLettings
+        checkYourAnswersAboutFranchiseOrLettings <- aboutFranchisesOrLettings.checkYourAnswersAboutFranchiseOrLettings
+      yield theForm.fill(checkYourAnswersAboutFranchiseOrLettings)
+
+    Ok(
+      theView(
+        filledForm.getOrElse(freshForm),
+        backLinkUrl
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CheckYourAnswersAboutFranchiseOrLettings](
-      checkYourAnswersAboutFranchiseOrLettingsForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          checkYourAnswersAboutFranchiseOrLettingsView(
+          theView(
             formWithErrors,
-            getBackLink(request.sessionData)
+            backLinkUrl
           )
         ),
       data => {
@@ -78,7 +79,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
               controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
             )
           )
-        session.saveOrUpdate(updatedData).flatMap { _ =>
+        repo.saveOrUpdate(updatedData).flatMap { _ =>
           Future.successful(
             Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
           )
@@ -87,18 +88,14 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
     )
   }
 
-  private def getBackLink(
-    answers: Session
-  ): String =
-    answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
+  private def backLinkUrl(using request: SessionRequest[AnyContent]): String =
+    request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
       case Some(AnswerNo) =>
         controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
       case _              =>
-        answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
           case Some(AnswerYes) =>
             controllers.aboutfranchisesorlettings.routes.RentalIncomeListController
-              .show(answers.aboutFranchisesOrLettings.fold(0)(_.rentalIncomeIndex))
+              .show(request.sessionData.aboutFranchisesOrLettings.fold(0)(_.rentalIncomeIndex))
               .url
           case _               => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
-
-}

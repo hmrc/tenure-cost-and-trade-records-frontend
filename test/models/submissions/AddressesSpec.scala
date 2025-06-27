@@ -16,8 +16,6 @@
 
 package models.submissions
 
-import models.submissions.aboutYourLeaseOrTenure.LandlordAddress
-import models.submissions.aboutfranchisesorlettings.{BusinessAddress, LettingAddress}
 import models.submissions.common.Address
 import utils.TestBaseSpec
 
@@ -35,50 +33,4 @@ class AddressesSpec extends TestBaseSpec {
       result shouldBe "001<br/> GORING ROAD<br/> GORING-BY-SEA, WORTHING<br/> WEST SUSSEX<br/> BN12 4AX"
     }
   }
-
-  // Test Catering Address
-  val cateringAddress =
-    BusinessAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("SUSSEX"), "BN12 4AX")
-
-  "BusinessAddress" should {
-    "return the address as a single line" in {
-      val result = cateringAddress.singleLine
-      result shouldBe "001, GORING ROAD, GORING-BY-SEA, WORTHING, SUSSEX, BN12 4AX"
-    }
-    "return the address as a multi line" in {
-      val result = cateringAddress.multiLine
-      result shouldBe "001<br/> GORING ROAD<br/> GORING-BY-SEA, WORTHING<br/> SUSSEX<br/> BN12 4AX"
-    }
-  }
-
-  // Test Land Address
-  val landAddress =
-    LandlordAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("SUSSEX"), "BN12 4AX")
-
-  "LandlordAddress" should {
-    "return the address as a single line" in {
-      val result = landAddress.singleLine
-      result shouldBe "001, GORING ROAD, GORING-BY-SEA, WORTHING, SUSSEX, BN12 4AX"
-    }
-    "return the address as a multi line" in {
-      val result = landAddress.multiLine
-      result shouldBe "001<br/> GORING ROAD<br/> GORING-BY-SEA, WORTHING<br/> SUSSEX<br/> BN12 4AX"
-    }
-  }
-
-  // Test Letting Address
-  val lettingAddress =
-    LettingAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("SUSSEX"), "BN12 4AX")
-
-  "LettingAddress" should {
-    "return the address as a single line" in {
-      val result = lettingAddress.singleLine
-      result shouldBe "001, GORING ROAD, GORING-BY-SEA, WORTHING, SUSSEX, BN12 4AX"
-    }
-    "return the address as a multi line" in {
-      val result = lettingAddress.multiLine
-      result shouldBe "001<br/> GORING ROAD<br/> GORING-BY-SEA, WORTHING<br/> SUSSEX<br/> BN12 4AX"
-    }
-  }
-
 }

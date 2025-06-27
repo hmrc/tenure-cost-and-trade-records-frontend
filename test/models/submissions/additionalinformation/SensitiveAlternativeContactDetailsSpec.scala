@@ -20,7 +20,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
 import play.api.Configuration
 import crypto.MongoCrypto
-import models.submissions.aboutyouandtheproperty.{AlternativeAddress, SensitiveAlternativeAddress}
+import models.submissions.common.{Address, SensitiveAddress}
 import utils.SensitiveTestHelper
 
 class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
@@ -31,19 +31,16 @@ class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matche
   "SensitiveAlternativeContactDetails" should {
 
     "encrypt and decrypt sensitive fields correctly" in {
-      val originalAlternativeContactDetails =
-        AlternativeAddress(
+      val clearData     =
+        Address(
           buildingNameNumber = "123",
           street1 = Some("Street 1"),
           town = "Town",
           county = Some("County"),
           postcode = "12345"
         )
-
-      val sensitiveAlternativeContactDetails = SensitiveAlternativeAddress(originalAlternativeContactDetails)
-
-      sensitiveAlternativeContactDetails.decryptedValue shouldBe originalAlternativeContactDetails
+      val encryptedData = SensitiveAddress(clearData)
+      encryptedData.decryptedValue shouldBe clearData
     }
-
   }
 }

@@ -23,7 +23,7 @@ import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.theForm
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.aboutfranchisesorlettings.{IncomeRecord, LettingAddress, LettingIncomeRecord, OperatorDetails}
+import models.submissions.aboutfranchisesorlettings.{IncomeRecord, LettingIncomeRecord, OperatorDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingTypeDetailsId
 import play.api.Logging
@@ -31,7 +31,8 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.lettingTypeDetails as LettingTypeDetailsView
-import models.ForType._
+import models.ForType.*
+import models.submissions.common.Address
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -145,7 +146,7 @@ class LettingTypeDetailsController @Inject() (
       given Session = request.sessionData
       for
         confirmedAddress <- getConfirmedAddress(id)
-        businessAddress   = confirmedAddress.asLettingAddress
+        businessAddress   = confirmedAddress.asAddress
         newSession       <- successful(newSessionWithLettingAddress(idx, businessAddress))
         _                <- repository.saveOrUpdate(newSession)
       yield Redirect(navigator.nextPage(LettingTypeDetailsId, newSession).apply(newSession))
@@ -158,16 +159,7 @@ class LettingTypeDetailsController @Inject() (
       case _           => controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(Some(idx)).url
     }
 
-  extension (confirmed: AddressLookupConfirmedAddress)
-    def asLettingAddress: LettingAddress = LettingAddress(
-      confirmed.buildingNameNumber,
-      confirmed.street1,
-      confirmed.town,
-      confirmed.county,
-      confirmed.postcode
-    )
-
-  private def newSessionWithLettingAddress(idx: Int, addr: LettingAddress)(using session: Session) =
+  private def newSessionWithLettingAddress(idx: Int, addr: Address)(using session: Session) =
     assert(session.aboutFranchisesOrLettings.isDefined)
     assert(session.aboutFranchisesOrLettings.get.rentalIncome.isDefined)
     assert(session.aboutFranchisesOrLettings.get.rentalIncome.get.lift(idx).isDefined)

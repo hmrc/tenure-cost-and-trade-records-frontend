@@ -16,11 +16,12 @@
 
 package models.submissions.requestReferenceNumber
 
+import models.submissions.common.Address
 import play.api.libs.json.{Format, Json}
 
 case class RequestReferenceNumberPropertyDetails(
   businessTradingName: String,
-  address: Option[RequestReferenceNumberAddress]
+  address: Option[Address]
 )
 
 object RequestReferenceNumberPropertyDetails:

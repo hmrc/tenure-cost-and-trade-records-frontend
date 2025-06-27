@@ -23,7 +23,7 @@ import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.TelecomMastLettingForm.theForm
 import models.Session
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingPartOfProperty, TelecomMastLetting}
-import models.submissions.aboutfranchisesorlettings.LettingAddress
+import models.submissions.common.Address
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -155,7 +155,7 @@ class TelecomMastLettingController @Inject() (
       given Session = request.sessionData
       for
         confirmedAddress <- getConfirmedAddress(id)
-        lettingAddress   <- confirmedAddress.asLettingAddress
+        lettingAddress   <- confirmedAddress.asAddress
         newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
         _                <- repository.saveOrUpdate(newSession)
       yield
@@ -169,16 +169,7 @@ class TelecomMastLettingController @Inject() (
     then controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     else controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(idx).url
 
-  extension (confirmed: AddressLookupConfirmedAddress)
-    def asLettingAddress = LettingAddress(
-      confirmed.buildingNameNumber,
-      confirmed.street1,
-      confirmed.town,
-      confirmed.county,
-      confirmed.postcode
-    )
-
-  private def newSessionWithLettingAddress(idx: Int, lettingAddress: LettingAddress)(using session: Session) =
+  private def newSessionWithLettingAddress(idx: Int, lettingAddress: Address)(using session: Session) =
     assert(session.aboutFranchisesOrLettings.isDefined)
     assert(session.aboutFranchisesOrLettings.get.lettings.isDefined)
     session.copy(

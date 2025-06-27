@@ -16,10 +16,11 @@
 
 package models.submissions.connectiontoproperty
 
+import models.submissions.common.Address
 import play.api.libs.json.{Json, OFormat}
 
 case class EditTheAddress(
-  editAddress: EditAddress
+  editAddress: Address
 )
 object EditTheAddress {
   implicit val format: OFormat[EditTheAddress] = Json.format

@@ -16,10 +16,10 @@
 
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 
-@(govukSummaryList: GovukSummaryList, messageKey: String, valueAsInt: Int, addActionMessage: String, addActionCall: Call)(implicit messages: Messages)
+@(govukSummaryList: GovukSummaryList, messageKey: String, count: Int, addActionMessage: String, addActionCall: Call)(implicit messages: Messages)
 
 @pluralizedMessageKey = @{
-    s"""$messageKey${if(valueAsInt > 1) "Plural" else "Singular"}"""
+    s"""$messageKey${if(count > 1) ".plural" else ".singular"}"""
 }
 
 @govukSummaryList(
@@ -27,8 +27,8 @@
         rows = Seq(
             SummaryListRow(
                 key = Key(
-                    content = Text(messages(pluralizedMessageKey, valueAsInt)),
-                    classes = "govuk-!-width-one-half"
+                    content = Text(messages(pluralizedMessageKey, count)),
+                    classes = "govuk-heading-m govuk-!-width-three-quarters"
                 ),
                 value = Value(
                     content = Text("")
@@ -39,7 +39,7 @@
                             href = addActionCall.toString,
                             content = Text(addActionMessage),
                             attributes = Map(
-                                "aria-label" -> messages(pluralizedMessageKey, valueAsInt)
+                                "aria-label" -> messages(pluralizedMessageKey, count)
                             )
                         )
                     ),

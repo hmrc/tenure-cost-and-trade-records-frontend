@@ -38,7 +38,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
-        html.getElementsByTag("h1").first().text()    shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
+        html.getElementsByTag("h1").first().text()    shouldBe "concessionTypeDetails.heading"
         html.getElementById("operatorName6030").value shouldBe ""
         html.getElementById("typeOfBusiness").value   shouldBe ""
         html.backLink                                   should endWith(routes.TypeOfIncomeController.show().url)
@@ -50,7 +50,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
         val html = contentAsJsoup(result)
-        html.getElementsByTag("h1").first().text()    shouldBe "cateringOperationOrLettingAccommodationDetails.heading"
+        html.getElementsByTag("h1").first().text()    shouldBe "concessionTypeDetails.heading"
         html.getElementById("operatorName6030").value shouldBe ""
         html.getElementById("typeOfBusiness").value   shouldBe ""
         html.backLink                                   should endWith(routes.TypeOfIncomeController.show(Some(2)).url)

@@ -16,17 +16,18 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
+import models.submissions.common.Address
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.{Format, JsPath}
 
 case class AboutTheLandlord(
   landlordFullName: String,
-  landlordAddress: Option[LandlordAddress]
+  landlordAddress: Option[Address]
 )
 
 object AboutTheLandlord {
   implicit val format: Format[AboutTheLandlord] = (
     (JsPath \ "landlordFullName").format[String] and
-      (JsPath \ "landlordAddress").formatNullable[LandlordAddress]
+      (JsPath \ "landlordAddress").formatNullable[Address]
   )(AboutTheLandlord.apply, o => Tuple.fromProductTyped(o))
 }

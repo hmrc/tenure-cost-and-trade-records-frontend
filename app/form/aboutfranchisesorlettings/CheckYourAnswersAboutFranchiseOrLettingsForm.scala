@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.nonEmpty
 
 object CheckYourAnswersAboutFranchiseOrLettingsForm {
 
-  val checkYourAnswersAboutFranchiseOrLettingsForm = Form(
+  val theForm = Form(
     mapping(
       "checkYourAnswersAboutFranchiseOrLettings" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.checkYourAnswersRadio.required")

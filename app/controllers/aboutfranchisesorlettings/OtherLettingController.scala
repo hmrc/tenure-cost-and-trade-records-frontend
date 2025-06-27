@@ -22,7 +22,8 @@ import connectors.addressLookup.{AddressLookupConfig, AddressLookupConfirmedAddr
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.OtherLettingForm.theForm
 import models.Session
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingAddress, LettingPartOfProperty, OtherLetting}
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingPartOfProperty, OtherLetting}
+import models.submissions.common.Address
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
@@ -158,7 +159,7 @@ class OtherLettingController @Inject() (
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)
-      lettingAddress   <- confirmedAddress.asLettingAddress
+      lettingAddress   <- confirmedAddress.asAddress
       newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
       _                <- repository.saveOrUpdate(newSession)
     yield
@@ -167,16 +168,7 @@ class OtherLettingController @Inject() (
       else Redirect(routes.RentDetailsController.show(idx))
   }
 
-  extension (confirmed: AddressLookupConfirmedAddress)
-    def asLettingAddress = LettingAddress(
-      confirmed.buildingNameNumber,
-      confirmed.street1,
-      confirmed.town,
-      confirmed.county,
-      confirmed.postcode
-    )
-
-  private def newSessionWithLettingAddress(idx: Int, lettingAddress: LettingAddress)(using session: Session) =
+  private def newSessionWithLettingAddress(idx: Int, lettingAddress: Address)(using session: Session) =
     assert(session.aboutFranchisesOrLettings.isDefined)
     assert(session.aboutFranchisesOrLettings.get.lettings.isDefined)
     session.copy(
