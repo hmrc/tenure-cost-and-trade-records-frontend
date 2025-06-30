@@ -51,8 +51,7 @@ object AnswersAboutRentalIncomeHelpers:
 
   private def rentReceivedCardEntry(
     maybeRentReceivedFrom: Option[RentReceivedFrom],
-    index: Int,
-    dateUtil: DateUtilLocalised
+    index: Int
   )(using messages: Messages) =
     CardEntry(
       label = messages("checkYourAnswersAboutFranchiseOrLettings.annualRent"),
@@ -253,10 +252,7 @@ object AnswersAboutRentalIncomeHelpers:
     businessCounter: Int,
     index: Int,
     dateUtil: DateUtilLocalised
-  )(using
-    request: SessionRequest[?],
-    messages: Messages
-  ) = {
+  )(using messages: Messages) = {
     val fragment = "franchiseOperatorName"
     CardData(
       index = businessCounter,
@@ -275,7 +271,7 @@ object AnswersAboutRentalIncomeHelpers:
           },
           changeAction = Some(routes.FranchiseTypeDetailsController.show(index).asChangeLink(fragment))
         ),
-        rentReceivedCardEntry(record.rent, index, dateUtil),
+        rentReceivedCardEntry(record.rent, index),
         howRentWasCalculatedCardEntry(record.calculatingTheRent, index, dateUtil),
         itemsIncludedCardEntry(record.itemsIncluded, index)
       )
@@ -302,6 +298,5 @@ object AnswersAboutRentalIncomeHelpers:
         case record: ConcessionIncomeRecord     =>
           businessCounter = businessCounter + 1
           concessionCardsData(record, businessCounter, index, dateUtil)
-        case _                                  => throw new IllegalArgumentException(s"Unsupported type: ${r.getClass.getName}")
       }
   }

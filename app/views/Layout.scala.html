@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,18 @@
  *@
 
 @import config.AppConfig
-@import uk.gov.hmrc.hmrcfrontend.views.html.helpers._
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.phasebanner.PhaseBanner
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.tag.Tag
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.notificationbanner.NotificationBanner
-@import play.api.Configuration
-@import views.html.govuk.head
-@import views.html.govuk.FullWidthMainContent
 @import models.pages.Summary
+@import play.api.Configuration
+@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukBackLink, GovukErrorSummary, GovukLayout, GovukNotificationBanner, GovukPhaseBanner, TwoThirdsMainContent}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{HtmlContent, Text}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.notificationbanner.NotificationBanner
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.phasebanner.PhaseBanner
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.tag.Tag
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcFooter
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.{HmrcHead, HmrcLanguageSelectHelper, HmrcScripts, HmrcStandardHeader}
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.footer.{Footer, FooterItem, Meta}
+@import views.html.govuk.{FullWidthMainContent, head}
 
 @this(
         appConfig: AppConfig,
@@ -65,12 +65,14 @@
         readOnly: Boolean = false
 )(contentBlock: Html)(implicit request: Request[?], messages: Messages)
 
-@headerBlock ={
+@headerBlock = {
     @hmrcStandardHeader(
         serviceName = Some(messages("site.service_name")),
-        serviceUrl= Some(routes.Application.index.url)
+        serviceUrl = Some(routes.Application.index.url),
+        displayHmrcBanner = !showFeedback
     )
-    }
+}
+
 @beforeBLock = {
     @if(showFeedback) {
         @govukPhaseBanner(
@@ -82,13 +84,13 @@
         )
     }
 
-    @if(showAccountInfo && summary.isDefined){
+    @if(showAccountInfo && summary.isDefined) {
         @views.html.includes.account_info_header(summary.get)
     }
 
     @hmrcLanguageSelectHelper()
 
-    @backLinkUrl.map{ url =>
+    @backLinkUrl.map { url =>
         <div>@govukBackLink(
             BackLink(
                 href = url
@@ -98,10 +100,10 @@
     }
 
     @beforeContentBlock
-    }
+}
 
 @contentWithHeading = {
-    @if(theForm!=null){
+    @if(theForm != null) {
         @includes.summaryErrors(theForm = theForm, govukErrorSummary = govukErrorSummary)
     }
 
@@ -112,18 +114,19 @@
         ))
     }
 
-    @if(showSection){
+    @if(showSection) {
         <span class="govuk-caption-m">@sectionName</span>
     }
 
-    @if(showH1){
+    @if(showH1) {
         <h1 class="govuk-heading-l">@pageHeading</h1>
     }
 
     @contentBlock
 
     <script type="text/javascript">
-        @readOnly && document.querySelectorAll('form fieldset').forEach(form => form.setAttribute('inert', 'true'));
+            @readOnly &&
+            document.querySelectorAll('form fieldset').forEach(form => form.setAttribute('inert', 'true'));
     </script>
 }
 
@@ -165,5 +168,5 @@
     footerBlock = customFooter,
     scriptsBlock = Some(hmrcScripts()),
     beforeContentBlock = Option(beforeBLock),
-    mainContentLayout = Some(if (fullWidth) fullWidthMainContent(_) else twoThirdsMainContent(_))
+    mainContentLayout = Some(if(fullWidth) fullWidthMainContent(_) else twoThirdsMainContent(_))
 )(contentWithHeading)
