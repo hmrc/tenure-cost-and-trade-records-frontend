@@ -1,5 +1,5 @@
 @*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 @(summary: Summary)(implicit messages: Messages)
 
-<ul id="header-account-info" style="margin: 0 0 10px 0; padding: 10px; border-bottom: 2px solid #1d70b8; background-color: #f4f4f4;">
+<ul id="header-account-info" style="margin: 0; padding: 10px; border-bottom: 2px solid #1d70b8; background-color: #f4f4f4;">
     <li style="display: inline-block; margin-right:30px; margin-left: 0px" >
         <span class="govuk-body-s govuk-!-font-weight-bold">@messages("label.account.ref"):</span>
         <span class="govuk-body-s">@{FormatRefNum(summary.referenceNumber)}</span></li>
