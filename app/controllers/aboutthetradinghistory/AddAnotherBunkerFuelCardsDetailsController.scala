@@ -174,7 +174,9 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
             )
           }
           .getOrElse(
-            Redirect(controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0))
+            navigator.redirectBackToCYAor(
+              controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0)
+            )
           ),
       {
         case AnswerYes =>
