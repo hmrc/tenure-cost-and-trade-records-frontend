@@ -152,7 +152,9 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
             )
           }
           .getOrElse(
-            Redirect(controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0))
+            navigator.redirectBackToCYAor(
+              controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0)
+            )
           ),
       {
         case AnswerYes =>
