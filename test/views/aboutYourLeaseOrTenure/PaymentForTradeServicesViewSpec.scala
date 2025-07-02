@@ -18,11 +18,11 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.PaymentForTradeServices
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PaymentForTradeServicesViewSpec extends QuestionViewBehaviours[PaymentForTradeServices] {
+class PaymentForTradeServicesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "paymentForTradeServices"
 
@@ -32,7 +32,7 @@ class PaymentForTradeServicesViewSpec extends QuestionViewBehaviours[PaymentForT
   def createView = () =>
     paymentForTradeServicesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PaymentForTradeServices]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     paymentForTradeServicesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Payment for trade services view" should {

@@ -305,9 +305,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def legalOrPlanningRestrictionRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions)
-    ) match {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show()
       case _               =>
@@ -315,9 +313,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def payCapitalSumRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.payACapitalSumDetails.map(_.capitalSumOrPremium)
-    ) match {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
       case Some(AnswerYes) =>
         answers.forType match {
           case FOR6020 | FOR6045 | FOR6046 =>
@@ -396,7 +392,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   }
 
   private def paymentForTradeServicesRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices.map(_.paymentForTradeService)) match {
+    answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match {
       case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
       case _               =>
         answers.forType match {

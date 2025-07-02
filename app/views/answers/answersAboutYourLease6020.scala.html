@@ -199,13 +199,13 @@
 
     @govukSummaryList(SummaryList(rows =
             sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.paymentForTradeServices",
-                _.paymentForTradeServices.map(_.paymentForTradeService).map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
+                _.paymentForTradeServices.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                 controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show(), "paymentForTradeServices")
-            .map(_.copy(classes = if (sectionAnswers3.answers.flatMap(_.paymentForTradeServices).exists(_.paymentForTradeService == AnswerYes)) "no-border-bottom" else "")),
+            .map(_.copy(classes = if (sectionAnswers3.answers.flatMap(_.paymentForTradeServices).contains(AnswerYes)) "no-border-bottom" else "")),
         classes = "govuk-!-margin-bottom-1"
     ))
 
-        @if(sectionAnswers3.answers.flatMap(_.paymentForTradeServices).exists(_.paymentForTradeService contains AnswerYes)) {
+        @if(sectionAnswers3.answers.flatMap(_.paymentForTradeServices).contains(AnswerYes)) {
             @for((servicePaid, idx) <- sectionAnswers3.answers.map(_.servicesPaid).getOrElse(IndexedSeq.empty).zipWithIndex) {
                 @govukSummaryList(SummaryList(
                     card = sectionAnswers.summaryListCard(
@@ -298,7 +298,7 @@
                             controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show(), "",
                             ("valueAsHtml", _ => None)) ++
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent",
-                            _.methodToFixCurrentRentDetails.map(_.methodToFixCurrentRent).map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
+                            _.methodToFixCurrentRentDetails.map(m => messages(s"label.methodUsedToFixCurrentRent.$m")),
                             controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show(), "methodUsedToFixCurrentRent") ++
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                             _.intervalsOfRentReview.map(r =>
@@ -328,7 +328,7 @@
                             _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
                             controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(), "tenantsAdditionsDisregardedDetails") ++
                         sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
-                            _.leaseSurrenderedEarly.map(_.leaseSurrenderedEarly).map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
+                            _.leaseSurrenderedEarly.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
                             controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show(), "formerLeaseSurrendered")
 
             ))
@@ -344,18 +344,18 @@
                             _.benefitsGivenDetails,
                             controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show(), "benefitsGivenDetails") ++
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.capitalSumOrPremium6020",
-                            _.payACapitalSumDetails.map(_.capitalSumOrPremium).map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
+                            _.payACapitalSumOrPremium.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
                             controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(), "capitalSumOrPremium") ++
-                        sectionAnswers2.conditionalOptionalRow(_.payACapitalSumDetails.exists(_.capitalSumOrPremium == AnswerYes),"checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
+                        sectionAnswers2.conditionalOptionalRow(_.payACapitalSumOrPremium.contains(AnswerYes),"checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
                             _.capitalSumDescription.map(_.escapedHtml),
                             controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(), "",
                             ("valueAsHtml", _ => None)) ++
                         sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRent",
-                            _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions).map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
+                            _.legalOrPlanningRestrictions.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
                             controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show(), "legalPlanningRestrictions") ++
                         sectionAnswers2.conditionRow(
-                            _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions).contains(AnswerYes),
+                            _.legalOrPlanningRestrictions.contains(AnswerYes),
                             "checkYourAnswersAboutYourLeaseOrTenure.otherFactorsAffectingRentDetails",
-                            _.legalOrPlanningRestrictionsDetails.map(_.legalPlanningRestrictions),
+                            _.legalOrPlanningRestrictionsDetails,
                             controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show(), "legalOrPlanningRestrictionsDetails")
             ))

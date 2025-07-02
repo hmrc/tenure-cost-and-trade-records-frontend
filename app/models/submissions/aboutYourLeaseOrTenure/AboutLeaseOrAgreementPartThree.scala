@@ -32,10 +32,10 @@ case class AboutLeaseOrAgreementPartThree(
   isRentUnderReview: Option[AnswersYesNo] = None,
   carParking: Option[CarParking] = None,
   rentedEquipmentDetails: Option[String] = None,
-  paymentForTradeServices: Option[PaymentForTradeServices] = None,
+  paymentForTradeServices: Option[AnswersYesNo] = None,
   typeOfTenure: Option[TypeOfTenure] = None, // Add March 2024 for 6020
   propertyUpdates: Option[PropertyUpdates] = None,
-  leaseSurrenderedEarly: Option[LeaseSurrenderedEarly] = None,
+  leaseSurrenderedEarly: Option[AnswersYesNo] = None,
   benefitsGiven: Option[AnswersYesNo] = None,
   benefitsGivenDetails: Option[String] = None,
   workCarriedOutDetails: Option[WorkCarriedOutDetails] = None,

@@ -67,7 +67,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RentIncludeFixturesAndFittingsDetails](
       rentIncludeFixturesAndFittingsForm,
       formWithErrors =>
@@ -100,7 +100,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
           case _               => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
         }
       case FOR6030 =>
-        answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices).map(_.paymentForTradeService) match {
+        answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
           case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url

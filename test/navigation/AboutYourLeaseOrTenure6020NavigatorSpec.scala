@@ -164,7 +164,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes)))
+            AboutLeaseOrAgreementPartTwo(payACapitalSumOrPremium = Some(AnswerYes))
           )
         )
       )
@@ -190,7 +190,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerNo)))
+            AboutLeaseOrAgreementPartTwo(payACapitalSumOrPremium = Some(AnswerNo))
           )
         )
       )
@@ -448,9 +448,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails =
-              Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentAgreement))
-            )
+            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails = Some(MethodToFixCurrentRentAgreement))
           )
         )
       )

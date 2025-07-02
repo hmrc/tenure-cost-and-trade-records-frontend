@@ -18,11 +18,10 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsForm.legalOrPlanningRestrictionsDetailsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[LegalOrPlanningRestrictionsDetails] {
+class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "legalOrPlanningRestrictionsDetails"
 
@@ -31,7 +30,7 @@ class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[
   def createView = () =>
     legalOrPlanningRestrictionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LegalOrPlanningRestrictionsDetails]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     legalOrPlanningRestrictionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Legal or planning restrictions view" must {

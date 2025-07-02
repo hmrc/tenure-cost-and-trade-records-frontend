@@ -99,9 +99,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.legalOrPlanningRestrictions.map(_.legalPlanningRestrictions)
-    ) match {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show().url
       case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url

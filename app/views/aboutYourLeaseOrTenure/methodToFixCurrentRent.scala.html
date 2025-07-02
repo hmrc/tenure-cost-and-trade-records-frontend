@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,11 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRentDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import models.pages.Summary
+@import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent
+@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -28,7 +26,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[MethodToFixCurrentRentDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[MethodToFixCurrentRent], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("methodUsedToFixCurrentRent.heading"),
@@ -65,6 +63,3 @@
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-
-

@@ -23,7 +23,7 @@ import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayCapitalSumId
@@ -55,7 +55,7 @@ class PayACapitalSumController @Inject() (
     Future.successful(
       Ok(
         payACapitalSumView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails) match {
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
             case Some(data) => payACapitalSumForm.fill(data)
             case _          => payACapitalSumForm
           },
@@ -68,7 +68,7 @@ class PayACapitalSumController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PayACapitalSumDetails](
+    continueOrSaveAsDraft[AnswersYesNo](
       payACapitalSumForm,
       formWithErrors =>
         BadRequest(
@@ -80,7 +80,7 @@ class PayACapitalSumController @Inject() (
           )
         ),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumDetails = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumOrPremium = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PayCapitalSumId, updatedData).apply(updatedData)))

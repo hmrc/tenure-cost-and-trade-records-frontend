@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeSe
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.PaymentForTradeServices
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PaymentForTradeServicesId
 import play.api.Logging
@@ -65,8 +65,8 @@ class PaymentForTradeServicesController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PaymentForTradeServices](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       paymentForTradeServicesForm,
       formWithErrors =>
         BadRequest(

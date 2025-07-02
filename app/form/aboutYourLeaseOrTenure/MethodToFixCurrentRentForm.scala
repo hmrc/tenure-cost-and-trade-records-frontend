@@ -17,14 +17,15 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.methodToFixCurrentRentType
-import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRentDetails
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
 object MethodToFixCurrentRentForm:
 
-  val methodToFixCurrentRentForm: Form[MethodToFixCurrentRentDetails] = Form(
-    mapping(
-      "methodUsedToFixCurrentRent" -> methodToFixCurrentRentType
-    )(MethodToFixCurrentRentDetails.apply)(o => Some(o.methodToFixCurrentRent))
-  )
+  val methodToFixCurrentRentForm: Form[MethodToFixCurrentRent] =
+    Form(
+      single(
+        "methodUsedToFixCurrentRent" -> methodToFixCurrentRentType
+      )
+    )

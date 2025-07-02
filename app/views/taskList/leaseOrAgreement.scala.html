@@ -120,7 +120,7 @@
       @includes.taskListItem("pay-a-capital-sum", "checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading",
        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(),
        section5Completed,
-       session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails),
+       session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium),
        session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
       )
      }
