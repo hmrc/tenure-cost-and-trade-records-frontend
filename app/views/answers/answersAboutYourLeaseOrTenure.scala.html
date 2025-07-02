@@ -88,7 +88,7 @@
     sectionAnswers.conditionRow(
                 _.connectedToLandlord.contains(AnswerYes),
                 "checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails",
-                _.connectedToLandlordDetails.map(_.connectedToLandlordInformationDetails),
+                _.connectedToLandlordDetails,
                 controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(), "connectedToLandlordDetails")
 ))
 
@@ -419,18 +419,18 @@
                     ) ++
                     sectionAnswers2.row(
                         "checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview",
-                        _.canRentBeReducedOnReviewDetails.map(_.rentReducedOnReview).map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
+                        _.canRentBeReducedOnReview.map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
                         controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(),
                         "rentReducedOnReview"
                     ) ++
                     sectionAnswers2.row(
                         "checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
-                        _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered).map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
+                        _.incentivesPaymentsConditionsDetails.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
                         controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(),
                         "formerLeaseSurrendered"
                     ) ++
                     sectionAnswers4.conditionRow(
-                        _.surrenderedLeaseAgreementDetails.isDefined && sectionAnswers2.answers.flatMap(_.incentivesPaymentsConditionsDetails).map(_.formerLeaseSurrendered).contains(AnswerYes) && !for6010,
+                        _.surrenderedLeaseAgreementDetails.isDefined && sectionAnswers2.answers.flatMap(_.incentivesPaymentsConditionsDetails).contains(AnswerYes) && !for6010,
                         if(for6048) "checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails6048"
                         else "checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails",
                         _.surrenderedLeaseAgreementDetails.map(details =>
@@ -512,7 +512,7 @@
            ) ++ sectionAnswers2.conditionRow(
                         _.payACapitalSumDetails.exists(_.capitalSumOrPremium == AnswerYes) && for6045Or6046,
                         "checkYourAnswersAboutYourLeaseOrTenure.capitalSumPaid",
-                        _.capitalSumDescription.map(_.capitalSumDescription.escapedHtml),
+                        _.capitalSumDescription.map(_.escapedHtml),
                         controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show(),
                         "capitalSumDescription",
                         ("valueAsHtml", _ => None)

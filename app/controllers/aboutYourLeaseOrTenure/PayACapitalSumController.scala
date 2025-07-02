@@ -67,7 +67,7 @@ class PayACapitalSumController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PayACapitalSumDetails](
       payACapitalSumForm,
       formWithErrors =>
@@ -95,7 +95,7 @@ class PayACapitalSumController @Inject() (
       case _    =>
         answers.forType match {
           case FOR6020           =>
-            answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven).map(_.benefitsGiven) match {
+            answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven) match {
               case Some(AnswerYes) =>
                 controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
               case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url

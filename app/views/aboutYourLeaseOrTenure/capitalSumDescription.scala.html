@@ -20,7 +20,6 @@
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits._
-@import models.submissions.aboutYourLeaseOrTenure.CapitalSumDescription
 
 @this(
         layout: Layout,
@@ -30,7 +29,7 @@
 )
 
 
-@(form: Form[CapitalSumDescription])(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[String])(implicit request: SessionRequest[?], messages: Messages)
 
 
 @heading = @{

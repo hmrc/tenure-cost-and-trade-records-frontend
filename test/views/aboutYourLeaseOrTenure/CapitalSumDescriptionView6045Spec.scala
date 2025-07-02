@@ -18,11 +18,10 @@ package views.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.CapitalSumDescriptionForm.capitalSumDescriptionForm
-import models.submissions.aboutYourLeaseOrTenure.CapitalSumDescription
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CapitalSumDescriptionView6045Spec extends QuestionViewBehaviours[CapitalSumDescription] {
+class CapitalSumDescriptionView6045Spec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "capitalSumDescription6045"
 
@@ -32,7 +31,7 @@ class CapitalSumDescriptionView6045Spec extends QuestionViewBehaviours[CapitalSu
 
   def createView = () => capitalSumDescriptionView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[CapitalSumDescription]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     capitalSumDescriptionView(form)(using sessionRequest, messages)
 
   "Capital sum description view" should {

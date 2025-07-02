@@ -30,7 +30,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.tenantsAdditionsDisregarded
-import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -62,7 +61,7 @@ class TenantsAdditionsDisregardedController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TenantAdditionsDisregardedDetails](
       tenantsAdditionsDisregardedForm,
       formWithErrors =>
@@ -81,9 +80,7 @@ class TenantsAdditionsDisregardedController @Inject() (
     request.sessionData.forType match {
       case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
       case FOR6045 | FOR6046 =>
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.incentivesPaymentsConditionsDetails.flatMap(_.formerLeaseSurrendered)
-        ) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url

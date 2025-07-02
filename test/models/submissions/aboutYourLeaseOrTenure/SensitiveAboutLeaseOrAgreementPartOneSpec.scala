@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,10 +51,9 @@ class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Mat
         SensitiveAboutLeaseOrAgreementPartOne(originalAboutLeaseOrAgreementPartOne)
 
       sensitiveAboutLeaseOrAgreementPartOne.aboutTheLandlord
-        .isInstanceOf[Option[SensitiveAboutTheLandlord]]                                           shouldBe true
-      sensitiveAboutLeaseOrAgreementPartOne.connectedToLandlord.isInstanceOf[Option[AnswersYesNo]] shouldBe true
-      sensitiveAboutLeaseOrAgreementPartOne.connectedToLandlordDetails
-        .isInstanceOf[Option[ConnectedToLandlordInformationDetails]]                               shouldBe true
+        .isInstanceOf[Option[SensitiveAboutTheLandlord]]                                            shouldBe true
+      sensitiveAboutLeaseOrAgreementPartOne.connectedToLandlord.isInstanceOf[Option[AnswersYesNo]]  shouldBe true
+      sensitiveAboutLeaseOrAgreementPartOne.connectedToLandlordDetails.isInstanceOf[Option[String]] shouldBe true
 
       sensitiveAboutLeaseOrAgreementPartOne.decryptedValue shouldBe originalAboutLeaseOrAgreementPartOne
     }

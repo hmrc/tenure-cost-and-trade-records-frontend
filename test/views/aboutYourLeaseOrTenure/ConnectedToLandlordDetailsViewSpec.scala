@@ -19,12 +19,11 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
-class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[ConnectedToLandlordInformationDetails] {
+class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "connectedToLandlordDetails"
 
@@ -35,7 +34,7 @@ class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[Connecte
 
   def createView = () => connectedToLandlordDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ConnectedToLandlordInformationDetails]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     connectedToLandlordDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Connected to landlord details view" must {
@@ -67,4 +66,5 @@ class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[Connecte
       assert(loginButton == messages("button.label.continue"))
     }
   }
+
 }

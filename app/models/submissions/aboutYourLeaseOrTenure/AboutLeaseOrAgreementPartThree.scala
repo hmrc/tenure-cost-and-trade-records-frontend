@@ -36,8 +36,8 @@ case class AboutLeaseOrAgreementPartThree(
   typeOfTenure: Option[TypeOfTenure] = None, // Add March 2024 for 6020
   propertyUpdates: Option[PropertyUpdates] = None,
   leaseSurrenderedEarly: Option[LeaseSurrenderedEarly] = None,
-  benefitsGiven: Option[BenefitsGiven] = None,
-  benefitsGivenDetails: Option[BenefitsGivenDetails] = None,
+  benefitsGiven: Option[AnswersYesNo] = None,
+  benefitsGivenDetails: Option[String] = None,
   workCarriedOutDetails: Option[WorkCarriedOutDetails] = None,
   workCarriedOutCondition: Option[WorkCarriedOutCondition] = None,
   provideDetailsOfYourLease: Option[String] = None, // Added June 2024
@@ -49,12 +49,13 @@ case class AboutLeaseOrAgreementPartThree(
   // 22 case class limit has been reached. Part Four has been created
 )
 
-object AboutLeaseOrAgreementPartThree {
+object AboutLeaseOrAgreementPartThree:
+
   implicit val format: OFormat[AboutLeaseOrAgreementPartThree] = Json.format
 
   def updateAboutLeaseOrAgreementPartThree(
     copy: AboutLeaseOrAgreementPartThree => AboutLeaseOrAgreementPartThree
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session =
     val currentAboutLeaseOrAgreementPartThree = sessionRequest.sessionData.aboutLeaseOrAgreementPartThree
 
     val updatedAboutLeaseOrAgreementPartThree = currentAboutLeaseOrAgreementPartThree match {
@@ -63,7 +64,6 @@ object AboutLeaseOrAgreementPartThree {
     }
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartThree = updatedAboutLeaseOrAgreementPartThree)
-  }
 
   def updateCarParking(
     update: CarParking => CarParking
@@ -82,5 +82,3 @@ object AboutLeaseOrAgreementPartThree {
       )
       aboutLeaseOrAgreementPartThree.copy(throughputAffectsRent = Some(throughputAffectsRent))
     }
-
-}

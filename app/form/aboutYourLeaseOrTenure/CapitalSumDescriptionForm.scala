@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,16 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.CapitalSumDescription
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.maxLength
 
-object CapitalSumDescriptionForm {
-  val capitalSumDescriptionForm = Form(
-    mapping(
-      "capitalSumDescription" -> default(text, "")
-        .verifying(maxLength(2000, "error.capitalSumDescription.maxLength"))
-    )(CapitalSumDescription.apply)(o => Some(o.capitalSumDescription))
-  )
-}
+object CapitalSumDescriptionForm:
+
+  val capitalSumDescriptionForm: Form[String] =
+    Form(
+      single(
+        "capitalSumDescription" -> default(text, "")
+          .verifying(maxLength(2000, "error.capitalSumDescription.maxLength"))
+      )
+    )

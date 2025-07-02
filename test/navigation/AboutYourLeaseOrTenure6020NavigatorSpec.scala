@@ -138,7 +138,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartThree = Some(
           session6020.aboutLeaseOrAgreementPartThree.getOrElse(
-            AboutLeaseOrAgreementPartThree(benefitsGiven = Some(BenefitsGiven(AnswerYes)))
+            AboutLeaseOrAgreementPartThree(benefitsGiven = Some(AnswerYes))
           )
         )
       )
@@ -151,7 +151,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartThree = Some(
           session6020.aboutLeaseOrAgreementPartThree.getOrElse(
-            AboutLeaseOrAgreementPartThree(benefitsGiven = Some(BenefitsGiven(AnswerNo)))
+            AboutLeaseOrAgreementPartThree(benefitsGiven = Some(AnswerNo))
           )
         )
       )

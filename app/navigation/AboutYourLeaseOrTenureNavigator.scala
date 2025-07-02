@@ -298,9 +298,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def benefitsGivenRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartThree.flatMap(
-      _.benefitsGiven.map(_.benefitsGiven)
-    ) match {
+    answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven) match {
       case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show()
       case _               =>
         controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
@@ -485,9 +483,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def incentivesPaymentsConditionsRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered)
-    ) match {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match {
       case Some(AnswerYes) =>
         answers.forType match {
           case FOR6045 | FOR6046 | FOR6048 =>

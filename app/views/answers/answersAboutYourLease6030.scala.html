@@ -69,7 +69,7 @@
     sectionAnswers.conditionRow(
                 _.connectedToLandlord.contains(AnswerYes),
                 "checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails",
-                _.connectedToLandlordDetails.map(_.connectedToLandlordInformationDetails),
+                _.connectedToLandlordDetails,
                 controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show(), "connectedToLandlordDetails")
 ))
 
@@ -382,13 +382,13 @@
                     ) ++
                     sectionAnswers2.row(
                         "checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview",
-                        _.canRentBeReducedOnReviewDetails.map(_.rentReducedOnReview).map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
+                        _.canRentBeReducedOnReview.map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
                         controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show(),
                         "rentReducedOnReview"
                     ) ++
                     sectionAnswers2.row(
                         "checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly",
-                        _.incentivesPaymentsConditionsDetails.map(_.formerLeaseSurrendered).map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
+                        _.incentivesPaymentsConditionsDetails.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
                         controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show(),
                         "formerLeaseSurrendered"
                     ) ++

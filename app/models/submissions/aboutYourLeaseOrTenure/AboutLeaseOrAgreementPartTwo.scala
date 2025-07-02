@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 //Currently 21 parameters in this case class, so only one more is allowed!
@@ -31,14 +32,14 @@ case class AboutLeaseOrAgreementPartTwo(
   howIsCurrentRentFixed: Option[HowIsCurrentRentFixed] = None,
   methodToFixCurrentRentDetails: Option[MethodToFixCurrentRentDetails] = None,
   intervalsOfRentReview: Option[IntervalsOfRentReview] = None,
-  canRentBeReducedOnReviewDetails: Option[CanRentBeReducedOnReviewDetails] = None,
-  incentivesPaymentsConditionsDetails: Option[IncentivesPaymentsConditionsDetails] = None,
+  canRentBeReducedOnReview: Option[AnswersYesNo] = None,
+  incentivesPaymentsConditionsDetails: Option[AnswersYesNo] = None,
   tenantAdditionsDisregardedDetails: Option[TenantAdditionsDisregardedDetails] = None,
   tenantsAdditionsDisregardedDetails: Option[TenantsAdditionsDisregardedDetails] = None,
   payACapitalSumDetails: Option[PayACapitalSumDetails] = None,
   payACapitalSumInformationDetails: Option[PayACapitalSumInformationDetails] = None, // Added Feb 2024 - 6030 Journey
   payACapitalSumAmountDetails: Option[PayACapitalSumAmountDetails] = None, // Added Nov 2024 - 6048 Journey
-  capitalSumDescription: Option[CapitalSumDescription] = None, // 6020
+  capitalSumDescription: Option[String] = None, // 6020
   paymentWhenLeaseIsGrantedDetails: Option[PaymentWhenLeaseIsGrantedDetails] = None,
   tenancyLeaseAgreementExpire: Option[TenancyLeaseAgreementExpire] = None,
   legalOrPlanningRestrictions: Option[LegalOrPlanningRestrictions] = None,
@@ -48,12 +49,13 @@ case class AboutLeaseOrAgreementPartTwo(
   ultimatelyResponsibleBuildingInsurance: Option[UltimatelyResponsibleBuildingInsurance] = None
 )
 
-object AboutLeaseOrAgreementPartTwo {
+object AboutLeaseOrAgreementPartTwo:
+
   implicit val format: OFormat[AboutLeaseOrAgreementPartTwo] = Json.format
 
   def updateAboutLeaseOrAgreementPartTwo(
     copy: AboutLeaseOrAgreementPartTwo => AboutLeaseOrAgreementPartTwo
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session =
     val currentAboutLeaseOrAgreementPartTwo = sessionRequest.sessionData.aboutLeaseOrAgreementPartTwo
 
     val updatedAboutLeaseOrAgreementPartTwo = currentAboutLeaseOrAgreementPartTwo match {
@@ -62,6 +64,3 @@ object AboutLeaseOrAgreementPartTwo {
     }
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartTwo = updatedAboutLeaseOrAgreementPartTwo)
-
-  }
-}

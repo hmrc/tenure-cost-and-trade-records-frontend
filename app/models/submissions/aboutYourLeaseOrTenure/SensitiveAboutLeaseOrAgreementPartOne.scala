@@ -24,7 +24,7 @@ import uk.gov.hmrc.crypto.Sensitive
 case class SensitiveAboutLeaseOrAgreementPartOne(
   aboutTheLandlord: Option[SensitiveAboutTheLandlord] = None,
   connectedToLandlord: Option[AnswersYesNo] = None,
-  connectedToLandlordDetails: Option[ConnectedToLandlordInformationDetails] = None,
+  connectedToLandlordDetails: Option[String] = None,
   leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
   currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
   propertyUseLeasebackAgreement: Option[PropertyUseLeasebackArrangement] = None,
@@ -43,7 +43,7 @@ case class SensitiveAboutLeaseOrAgreementPartOne(
   rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
   checkYourAnswersAboutYourLeaseOrTenure: Option[AnswersYesNo] = None,
   rentIncludesVat: Option[RentIncludesVatDetails] = None
-) extends Sensitive[AboutLeaseOrAgreementPartOne] {
+) extends Sensitive[AboutLeaseOrAgreementPartOne]:
   override def decryptedValue: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     aboutTheLandlord.map(_.decryptedValue),
     connectedToLandlord,
@@ -67,9 +67,9 @@ case class SensitiveAboutLeaseOrAgreementPartOne(
     checkYourAnswersAboutYourLeaseOrTenure,
     rentIncludesVat
   )
-}
 
-object SensitiveAboutLeaseOrAgreementPartOne {
+object SensitiveAboutLeaseOrAgreementPartOne:
+
   implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveAboutLeaseOrAgreementPartOne] = Json.format
 
   def apply(aboutLeaseOrAgreementPartOne: AboutLeaseOrAgreementPartOne): SensitiveAboutLeaseOrAgreementPartOne =
@@ -96,4 +96,3 @@ object SensitiveAboutLeaseOrAgreementPartOne {
       aboutLeaseOrAgreementPartOne.checkYourAnswersAboutYourLeaseOrTenure,
       aboutLeaseOrAgreementPartOne.rentIncludesVat
     )
-}

@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.BenefitsGivenForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.BenefitsGiven
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class BenefitsGivenViewSpec extends QuestionViewBehaviours[BenefitsGiven] {
+class BenefitsGivenViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "benefitsGiven"
 
@@ -31,7 +31,7 @@ class BenefitsGivenViewSpec extends QuestionViewBehaviours[BenefitsGiven] {
 
   def createView = () => benefitsGivenView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[BenefitsGiven]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     benefitsGivenView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Benefits given view" should {

@@ -1168,10 +1168,7 @@ trait FakeObjects {
       prefilledNoReferenceContactAddress
     )
 
-  val prefilledConnectedToLandlordDetails     =
-    ConnectedToLandlordInformationDetails(
-      "This is some test information"
-    )
+  val prefilledConnectedToLandlordDetails     = "This is some test information"
   val prefilledLeaseOrAgreementYearsDetails   =
     LeaseOrAgreementYearsDetails(
       AnswerYes,
@@ -1456,13 +1453,13 @@ trait FakeObjects {
     howIsCurrentRentFixed = Some(HowIsCurrentRentFixed(CurrentRentFixedInterimRent, prefilledDateInput)),
     methodToFixCurrentRentDetails = Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentAgreement)),
     intervalsOfRentReview = Some(IntervalsOfRentReview(Some("test"), Some(prefilledDateInput))),
-    canRentBeReducedOnReviewDetails = Some(CanRentBeReducedOnReviewDetails(AnswerYes)),
-    incentivesPaymentsConditionsDetails = Some(IncentivesPaymentsConditionsDetails(AnswerYes)),
+    canRentBeReducedOnReview = Some(AnswerYes),
+    incentivesPaymentsConditionsDetails = Some(AnswerYes),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
     tenantsAdditionsDisregardedDetails = Some(TenantsAdditionsDisregardedDetails("Test Content")),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
     legalOrPlanningRestrictionsDetails = Some(LegalOrPlanningRestrictionsDetails("Legal planning restrictions")),
-    capitalSumDescription = Some(CapitalSumDescription("capital Sum Description")),
+    capitalSumDescription = Some("capital Sum Description"),
     payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes)),
     payACapitalSumAmountDetails = Some(PayACapitalSumAmountDetails(123.12)),
     payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), Some(prefilledDateInput))),
@@ -1500,7 +1497,7 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPartTwo6045: AboutLeaseOrAgreementPartTwo = AboutLeaseOrAgreementPartTwo(
     rentPayableVaryAccordingToGrossOrNetDetails = Some(RentPayableVaryAccordingToGrossOrNetDetails(AnswerYes)),
     rentPayableVaryOnQuantityOfBeersDetails = Some(RentPayableVaryOnQuantityOfBeersDetails(AnswerYes)),
-    incentivesPaymentsConditionsDetails = Some(IncentivesPaymentsConditionsDetails(AnswerYes)),
+    incentivesPaymentsConditionsDetails = Some(AnswerYes),
     tenantAdditionsDisregardedDetails = Some(TenantAdditionsDisregardedDetails(AnswerYes)),
     legalOrPlanningRestrictions = Some(LegalOrPlanningRestrictions(AnswerYes)),
     payACapitalSumInformationDetails = Some(PayACapitalSumInformationDetails(Some(123.12), Some(prefilledDateInput)))
@@ -1538,8 +1535,8 @@ trait FakeObjects {
     typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
     propertyUpdates = Some(PropertyUpdates(AnswerYes)),
     leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes)),
-    benefitsGiven = Some(BenefitsGiven(AnswerYes)),
-    benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
+    benefitsGiven = Some(AnswerYes),
+    benefitsGivenDetails = Some("benefits Given Details"),
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes)),
     provideDetailsOfYourLease = Some("These are details of a lease"),
@@ -1573,8 +1570,8 @@ trait FakeObjects {
     typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
     propertyUpdates = Some(PropertyUpdates(AnswerYes)),
     leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerYes)),
-    benefitsGiven = Some(BenefitsGiven(AnswerYes)),
-    benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
+    benefitsGiven = Some(AnswerYes),
+    benefitsGivenDetails = Some("benefits Given Details"),
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerYes)),
     provideDetailsOfYourLease = Some("These are details of a lease"),
@@ -1601,8 +1598,8 @@ trait FakeObjects {
     typeOfTenure = Some(TypeOfTenure(List("license"), Some("Type of tenure details"))),
     propertyUpdates = Some(PropertyUpdates(AnswerNo)),
     leaseSurrenderedEarly = Some(LeaseSurrenderedEarly(AnswerNo)),
-    benefitsGiven = Some(BenefitsGiven(AnswerNo)),
-    benefitsGivenDetails = Some(BenefitsGivenDetails("benefits Given Details")),
+    benefitsGiven = Some(AnswerNo),
+    benefitsGivenDetails = Some("benefits Given Details"),
     workCarriedOutDetails = Some(WorkCarriedOutDetails("workCarriedOutDetails")),
     workCarriedOutCondition = Some(WorkCarriedOutCondition(AnswerNo)),
     provideDetailsOfYourLease = Some("These are details of a lease")
