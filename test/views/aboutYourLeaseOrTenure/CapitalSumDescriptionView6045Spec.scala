@@ -31,8 +31,7 @@ class CapitalSumDescriptionView6045Spec extends QuestionViewBehaviours[String] {
 
   def createView = () => capitalSumDescriptionView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
-    capitalSumDescriptionView(form)(using sessionRequest, messages)
+  def createViewUsingForm = (form: Form[String]) => capitalSumDescriptionView(form)(using sessionRequest, messages)
 
   "Capital sum description view" should {
 
