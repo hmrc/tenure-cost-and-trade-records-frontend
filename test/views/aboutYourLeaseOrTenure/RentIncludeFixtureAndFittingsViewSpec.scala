@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[RentIncludeFixturesAndFittingsDetails] {
+class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "rentIncludeFixturesAndFittings"
 
@@ -34,7 +34,7 @@ class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[RentI
   def createView = () =>
     rentIncludeFixtureAndFittingsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentIncludeFixturesAndFittingsDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeFixtureAndFittingsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent include fixture and fittings view" must {

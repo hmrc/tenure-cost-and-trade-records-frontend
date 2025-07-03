@@ -23,7 +23,7 @@ import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyU
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUseLeasebackAgreementId
@@ -71,7 +71,7 @@ class PropertyUseLeasebackArrangementController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PropertyUseLeasebackArrangement](
+    continueOrSaveAsDraft[AnswersYesNo](
       propertyUseLeasebackArrangementForm,
       formWithErrors =>
         BadRequest(

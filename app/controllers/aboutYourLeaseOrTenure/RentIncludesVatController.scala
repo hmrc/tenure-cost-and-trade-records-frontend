@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludesVatForm.rentIncludesVatForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.RentIncludesVatDetails
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentIncludesVatPageId
 import play.api.Logging
@@ -61,8 +61,8 @@ class RentIncludesVatController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[RentIncludesVatDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       rentIncludesVatForm,
       formWithErrors => BadRequest(rentIncludeVatView(formWithErrors, request.sessionData.toSummary)),
       data => {

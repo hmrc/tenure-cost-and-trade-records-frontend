@@ -156,9 +156,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def rentIncludeTradeServicesRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartOne.flatMap(
-      _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices)
-    ) match {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
       case Some(AnswerYes) =>
         answers.forType match {
           case FOR6020 | FOR6030 =>
@@ -174,12 +172,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def rentFixtureAndFittingsRouting: Session => Call = answers =>
-    if (
-      answers.aboutLeaseOrAgreementPartOne
-        .flatMap(_.rentIncludeFixturesAndFittingsDetails)
-        .map(_.rentIncludeFixturesAndFittingsDetails)
-        .contains(AnswerYes)
-    ) {
+    if (answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings).contains(AnswerYes)) {
       answers.forType match {
         case FOR6020 => controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show()
         case _       => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show()
@@ -192,7 +185,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def rentRentOpenMarketRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues)) match {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
       case Some(AnswerYes) =>
         answers.forType match {
           case FOR6020 | FOR6045 | FOR6046 =>
@@ -203,9 +196,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def payableGrossOrNetRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets)
-    ) match {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
       case _               =>
@@ -225,9 +216,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def rentVaryQuantityOfBeersRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails)
-    ) match {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show()
       case _               => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
@@ -267,9 +256,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def propertyUpdatesRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartThree.flatMap(
-      _.propertyUpdates.map(_.updates)
-    ) match {
+    answers.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match {
       case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show()
       case _               => aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show()
     }
@@ -451,9 +438,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def propertyUseLeasebackAgreementRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartOne.flatMap(
-      _.propertyUseLeasebackAgreement.map(_.propertyUseLeasebackArrangement)
-    ) match {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.propertyUseLeasebackAgreement) match {
       case Some(AnswerYes) =>
         answers.forType match {
           case FOR6076 => controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()

@@ -34,7 +34,7 @@ case class AboutLeaseOrAgreementPartThree(
   rentedEquipmentDetails: Option[String] = None,
   paymentForTradeServices: Option[AnswersYesNo] = None,
   typeOfTenure: Option[TypeOfTenure] = None, // Add March 2024 for 6020
-  propertyUpdates: Option[PropertyUpdates] = None,
+  propertyUpdates: Option[AnswersYesNo] = None,
   leaseSurrenderedEarly: Option[AnswersYesNo] = None,
   benefitsGiven: Option[AnswersYesNo] = None,
   benefitsGivenDetails: Option[String] = None,

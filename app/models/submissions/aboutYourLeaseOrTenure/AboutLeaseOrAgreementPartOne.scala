@@ -28,22 +28,22 @@ case class AboutLeaseOrAgreementPartOne(
   connectedToLandlordDetails: Option[String] = None,
   leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
   currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
-  propertyUseLeasebackAgreement: Option[PropertyUseLeasebackArrangement] = None,
+  propertyUseLeasebackAgreement: Option[AnswersYesNo] = None,
   annualRent: Option[BigDecimal] = None,
   currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
   currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
   includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,
   doesTheRentPayable: Option[DoesTheRentPayable] = None,
   sharedResponsibilitiesDetails: Option[SharedResponsibilitiesDetails] = None,
-  rentIncludeTradeServicesDetails: Option[RentIncludeTradeServicesDetails] = None,
+  rentIncludeTradeServicesDetails: Option[AnswersYesNo] = None,
   rentIncludeTradeServicesInformation: Option[RentIncludeTradeServicesInformationDetails] = None,
-  rentIncludeFixturesAndFittingsDetails: Option[RentIncludeFixturesAndFittingsDetails] = None,
-  rentIncludeFixtureAndFittingsDetails: Option[RentIncludeFixturesOrFittingsInformationDetails] = None,
-  rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
+  rentIncludeFixturesAndFittings: Option[AnswersYesNo] = None,
+  rentIncludeFixturesAndFittingsAmount: Option[BigDecimal] = None,
+  rentOpenMarketValue: Option[AnswersYesNo] = None,
   whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
-  rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
+  rentIncreasedAnnuallyWithRPIDetails: Option[AnswersYesNo] = None,
   checkYourAnswersAboutYourLeaseOrTenure: Option[AnswersYesNo] = None,
-  rentIncludesVat: Option[RentIncludesVatDetails] = None
+  rentIncludesVat: Option[AnswersYesNo] = None
 )
 
 object AboutLeaseOrAgreementPartOne:

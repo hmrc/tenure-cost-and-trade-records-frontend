@@ -60,7 +60,7 @@ class WorkCarriedOutConditionController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[WorkCarriedOutCondition](
       workCarriedOutConditionForm,
       formWithErrors =>
@@ -78,9 +78,7 @@ class WorkCarriedOutConditionController @Inject() (
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
-    request.sessionData.aboutLeaseOrAgreementPartThree
-      .flatMap(_.propertyUpdates)
-      .map(_.updates) match {
+    request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
       case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url

@@ -23,12 +23,10 @@ import play.api.libs.json.{Json, OFormat}
 
 //Currently 21 parameters in this case class, so only one more is allowed!
 case class AboutLeaseOrAgreementPartTwo(
-  rentPayableVaryAccordingToGrossOrNetDetails: Option[RentPayableVaryAccordingToGrossOrNetDetails] = None,
-  rentPayableVaryAccordingToGrossOrNetInformationDetails: Option[
-    RentPayableVaryAccordingToGrossOrNetInformationDetails
-  ] = None,
-  rentPayableVaryOnQuantityOfBeersDetails: Option[RentPayableVaryOnQuantityOfBeersDetails] = None,
-  rentPayableVaryOnQuantityOfBeersInformationDetails: Option[RentPayableVaryOnQuantityOfBeersInformationDetails] = None,
+  rentPayableVaryAccordingToGrossOrNet: Option[AnswersYesNo] = None,
+  rentPayableVaryAccordingToGrossOrNetDetails: Option[String] = None,
+  rentPayableVaryOnQuantityOfBeers: Option[AnswersYesNo] = None,
+  rentPayableVaryOnQuantityOfBeersDetails: Option[String] = None,
   howIsCurrentRentFixed: Option[HowIsCurrentRentFixed] = None,
   methodToFixCurrentRentDetails: Option[MethodToFixCurrentRent] = None,
   intervalsOfRentReview: Option[IntervalsOfRentReview] = None,

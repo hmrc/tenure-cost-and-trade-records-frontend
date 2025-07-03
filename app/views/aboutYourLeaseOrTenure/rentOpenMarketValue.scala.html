@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,10 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.RentOpenMarketValueDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDetails
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Details
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Details, HtmlContent, Text}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDetails, GovukRadios}
 
 
 @this(layout: Layout,
@@ -32,7 +27,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[RentOpenMarketValueDetails], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("rentOpenMarketValue.heading"),
@@ -65,6 +60,3 @@
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-
-

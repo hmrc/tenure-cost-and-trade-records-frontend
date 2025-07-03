@@ -66,7 +66,7 @@ class HowIsCurrentRentFixedController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[HowIsCurrentRentFixed](
       howIsCurrentRentFixedForm,
       formWithErrors =>
@@ -86,25 +86,21 @@ class HowIsCurrentRentFixedController @Inject() (
   private def getBackLink(answers: Session): String =
     answers.forType match {
       case FOR6010                     =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.rentPayableVaryOnQuantityOfBeersDetails.map(_.rentPayableVaryOnQuantityOfBeersDetails)
-        ) match {
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show().url
           case _               =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
         }
       case FOR6020 | FOR6045 | FOR6046 =>
-        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues)) match {
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
         }
       case FOR6048                     =>
         controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url
       case _                           =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.rentPayableVaryAccordingToGrossOrNetDetails.map(_.rentPayableVaryAccordingToGrossOrNets)
-        ) match {
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
           case _               =>

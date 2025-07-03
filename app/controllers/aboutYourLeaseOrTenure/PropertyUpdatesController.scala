@@ -18,21 +18,20 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import connectors.Audit
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, toOpt}
 import form.aboutYourLeaseOrTenure.PropertyUpdatesForm.propertyUpdatesForm
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.PropertyUpdates
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PropertyUpdatesId
+import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import play.api.Logging
 import views.html.aboutYourLeaseOrTenure.propertyUpdates
-import models.ForType.*
-import models.Session
-import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -67,8 +66,8 @@ class PropertyUpdatesController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PropertyUpdates](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       propertyUpdatesForm,
       formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, backLink(request.sessionData))),
       data => {

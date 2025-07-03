@@ -200,7 +200,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
       val sessionWithNoLeaseback = session6076Full.copy(
         aboutLeaseOrAgreementPartOne = Some(
           prefilledAboutLeaseOrAgreementPartOne.copy(
-            propertyUseLeasebackAgreement = Some(PropertyUseLeasebackArrangement(AnswerNo))
+            propertyUseLeasebackAgreement = Some(AnswerNo)
           )
         )
       )

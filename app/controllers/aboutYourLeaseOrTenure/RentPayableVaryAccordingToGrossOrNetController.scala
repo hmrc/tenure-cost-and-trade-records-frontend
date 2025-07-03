@@ -23,7 +23,7 @@ import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm.rent
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetails
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentPayableVaryAccordingToGrossOrNetId
 import play.api.Logging
@@ -31,7 +31,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryAccordingToGrossOrNet
-import controllers.toOpt
 import models.submissions.common.AnswersYesNo.*
 
 import javax.inject.{Inject, Named, Singleton}
@@ -57,7 +56,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
       Ok(
         rentPayableVaryAccordingToGrossOrNetView(
           request.sessionData.aboutLeaseOrAgreementPartTwo
-            .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
+            .flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
             case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
               rentPayableVaryAccordingToGrossOrNetForm.fill(rentPayableVaryAccordingToGrossOrNetDetails)
             case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
@@ -70,7 +69,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[RentPayableVaryAccordingToGrossOrNetDetails](
+    continueOrSaveAsDraft[AnswersYesNo](
       rentPayableVaryAccordingToGrossOrNetForm,
       formWithErrors =>
         BadRequest(
@@ -82,7 +81,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
         ),
       data => {
         val updatedData =
-          updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data)))
+          updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNet = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ =>
@@ -94,10 +93,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    val openMarket = answers.aboutLeaseOrAgreementPartOne.flatMap(
-      _.rentOpenMarketValueDetails.flatMap(_.rentOpenMarketValues)
-    )
-    openMarket match {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
       case Some(AnswerNo) =>
         answers.forType match {
           case FOR6010 | FOR6015 | FOR6016 | FOR6030 | FOR6076 =>
