@@ -18,11 +18,10 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparately
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[ServicePaidSeparately] {
+class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "servicePaidSeparately"
 
@@ -33,7 +32,7 @@ class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[ServicePaidSe
   def createView = () =>
     servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ServicePaidSeparately]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Service paid separately view" should {

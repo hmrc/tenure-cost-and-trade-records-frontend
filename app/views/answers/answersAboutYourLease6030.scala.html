@@ -255,7 +255,7 @@
                     s"${controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.remove(idx).url}&from=CYA"
                 ),
                 rows = sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfTradeService",
-                    _ => Option(tradingService.details.description).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
+                    _ => Option(tradingService.details).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
                     controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show(Option(idx)), "tradeServiceDescription", ("valueAsHtml", _ => None))
             ))
         }
@@ -285,10 +285,10 @@
                     s"${controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.remove(idx).url}&from=CYA"
                 ),
                 rows = sectionAnswers3.row("checkYourAnswersAboutYourLeaseOrTenure.descriptionOfPaidService",
-                    _ => Option(servicePaid.details.description).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
+                    _ => Option(servicePaid.details).map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>"),
                     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(Some(idx)), "paidServiceDescription", ("valueAsHtml", _ => None)) ++
                         sectionAnswers3.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.costOfPaidService",
-                            _ => servicePaid.annualCharge.map(_.annualCharge.asMoney),
+                            _ => servicePaid.annualCharge.map(_.asMoney),
                             controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyChargeController.show(idx), "costOfPaidService")
             ))
         }
@@ -394,14 +394,14 @@
                     ) ++
                     sectionAnswers2.row(
                         "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
-                        _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded).map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
+                        _.tenantAdditionsDisregarded.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
                         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(),
                         "tenantsAdditionsDisregarded"
                     ) ++
                     sectionAnswers2.conditionRow(
-                        _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded).contains(AnswerYes),
+                        _.tenantAdditionsDisregarded.contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
-                        _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
+                        _.tenantAdditionsDisregardedDetails,
                         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(),
                         "tenantsAdditionsDisregardedDetails"
                     )

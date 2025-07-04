@@ -18,11 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpireForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[TenancyLeaseAgreementExpire] {
+import java.time.LocalDate
+
+class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDate] {
 
   def tenancyLeaseAgreementExpireView = inject[views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire]
 
@@ -32,7 +33,7 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[Tenancy
 
   def createView = () => tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TenancyLeaseAgreementExpire]) =>
+  def createViewUsingForm = (form: Form[LocalDate]) =>
     tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Tenancy lease agreement expire view" must {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,20 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparately
 import play.api.data.Form
-import play.api.data.Forms.{mapping, text}
+import play.api.data.Forms.{single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object ServicePaidSeparatelyForm {
+object ServicePaidSeparatelyForm:
 
-  val servicePaidSeparatelyForm: Form[ServicePaidSeparately] =
+  val servicePaidSeparatelyForm: Form[String] =
     Form(
-      mapping(
+      single(
         "description" ->
           text
             .verifying(
               nonEmpty(errorMessage = "servicePaidSeparately.describe.error"),
               maxLength(2000, "error.tradeServiceDescription.maxLength")
             )
-      )(ServicePaidSeparately.apply)(o => Some(o.description))
+      )
     )
-}

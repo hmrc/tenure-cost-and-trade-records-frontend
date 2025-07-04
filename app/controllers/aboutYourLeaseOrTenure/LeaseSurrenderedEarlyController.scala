@@ -76,9 +76,7 @@ class LeaseSurrenderedEarlyController @Inject() (
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
-    request.sessionData.aboutLeaseOrAgreementPartTwo
-      .flatMap(_.tenantAdditionsDisregardedDetails)
-      .map(_.tenantAdditionalDisregarded) match {
+    request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
       case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url

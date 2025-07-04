@@ -21,6 +21,8 @@ import models.Session
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
+import java.time.LocalDate
+
 //Currently 21 parameters in this case class, so only one more is allowed!
 case class AboutLeaseOrAgreementPartTwo(
   rentPayableVaryAccordingToGrossOrNet: Option[AnswersYesNo] = None,
@@ -32,14 +34,14 @@ case class AboutLeaseOrAgreementPartTwo(
   intervalsOfRentReview: Option[IntervalsOfRentReview] = None,
   canRentBeReducedOnReview: Option[AnswersYesNo] = None,
   incentivesPaymentsConditionsDetails: Option[AnswersYesNo] = None,
-  tenantAdditionsDisregardedDetails: Option[TenantAdditionsDisregardedDetails] = None,
-  tenantsAdditionsDisregardedDetails: Option[TenantsAdditionsDisregardedDetails] = None,
+  tenantAdditionsDisregarded: Option[AnswersYesNo] = None,
+  tenantAdditionsDisregardedDetails: Option[String] = None,
   payACapitalSumOrPremium: Option[AnswersYesNo] = None,
   payACapitalSumInformationDetails: Option[PayACapitalSumInformationDetails] = None, // Added Feb 2024 - 6030 Journey
   payACapitalSumAmount: Option[BigDecimal] = None, // Added Nov 2024 - 6048 Journey
   capitalSumDescription: Option[String] = None, // 6020
   receivePaymentWhenLeaseGranted: Option[AnswersYesNo] = None,
-  tenancyLeaseAgreementExpire: Option[TenancyLeaseAgreementExpire] = None,
+  tenancyLeaseAgreementExpire: Option[LocalDate] = None,
   legalOrPlanningRestrictions: Option[AnswersYesNo] = None,
   legalOrPlanningRestrictionsDetails: Option[String] = None,
   ultimatelyResponsibleInsideRepairs: Option[UltimatelyResponsibleInsideRepairs] = None,

@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.WorkCarriedOutConditionForm.workCarriedOutConditionForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.WorkCarriedOutCondition
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.WorkCarriedOutConditionId
@@ -50,7 +50,7 @@ class WorkCarriedOutConditionController @Inject() (
 
     Ok(
       view(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.workCarriedOutCondition) match {
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.workCarriedOut) match {
           case Some(data) => workCarriedOutConditionForm.fill(data)
           case _          => workCarriedOutConditionForm
         },
@@ -61,14 +61,14 @@ class WorkCarriedOutConditionController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[WorkCarriedOutCondition](
+    continueOrSaveAsDraft[AnswersYesNo](
       workCarriedOutConditionForm,
       formWithErrors =>
         BadRequest(
           view(formWithErrors, calculateBackLink, request.sessionData.toSummary)
         ),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(workCarriedOutCondition = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(workCarriedOut = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(WorkCarriedOutConditionId, updatedData).apply(updatedData)))

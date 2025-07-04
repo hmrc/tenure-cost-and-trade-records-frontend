@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, CurrentRentFirstPaid, TenancyLeaseAgreementExpire}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo, CurrentRentFirstPaid}
 import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers._
 import play.api.libs.json.JsObject
@@ -114,9 +114,7 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
       val session = session6011.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6011.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(tenancyLeaseAgreementExpire =
-              Some(TenancyLeaseAgreementExpire(LocalDate.of(2000, 2, 1)))
-            )
+            AboutLeaseOrAgreementPartTwo(tenancyLeaseAgreementExpire = Some(LocalDate.of(2000, 2, 1)))
           )
         )
       )

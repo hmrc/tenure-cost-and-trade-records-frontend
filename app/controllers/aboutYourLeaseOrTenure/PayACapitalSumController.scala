@@ -108,9 +108,7 @@ class PayACapitalSumController @Inject() (
               controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show().url
             else controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show().url
           case _                 =>
-            answers.aboutLeaseOrAgreementPartTwo.flatMap(
-              _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded)
-            ) match {
+            answers.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
               case Some(AnswerYes) =>
                 controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
               case _               =>

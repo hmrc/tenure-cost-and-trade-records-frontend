@@ -181,7 +181,7 @@
                     controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.day"
                 ) ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",
-                    _.tenancyLeaseAgreementExpire.map(_.tenancyLeaseAgreementExpire).map(v => dateUtil.formatDayMonthAbbrYear(v)),
+                    _.tenancyLeaseAgreementExpire.map(v => dateUtil.formatDayMonthAbbrYear(v)),
                     controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController.show(), "tenancyLeaseAgreementExpire.day")
     ))
     }
@@ -444,14 +444,14 @@
                     ) ++
                     sectionAnswers2.row(
                         "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovements",
-                        _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded).map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
+                        _.tenantAdditionsDisregarded.map(v => if(v == AnswerYes) messages("label.yes.do") else messages("label.no.naddo")),
                         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show(),
                         "tenantsAdditionsDisregarded"
                     ) ++
                     sectionAnswers2.conditionRow(
-                        _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded).contains(AnswerYes),
+                        _.tenantAdditionsDisregarded.contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.disregardedAdditionsOrImprovementsDetails",
-                        _.tenantsAdditionsDisregardedDetails.map(_.tenantsAdditionsDisregarded),
+                        _.tenantAdditionsDisregardedDetails,
                         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show(),
                         "tenantsAdditionsDisregardedDetails"
                     ) ++
@@ -464,7 +464,7 @@
                     ) ++ sectionAnswers3.conditionRow(
                         _.propertyUpdates.contains(AnswerYes) && !for6010,
                         "checkYourAnswersAboutYourLeaseOrTenure.detailsOfWork",
-                        _.workCarriedOutDetails.map(_.workCarriedOutDetails),
+                        _.workCarriedOutDetails,
                         controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show(),
                         "workCarriedOutDetails"
                     )
@@ -476,9 +476,9 @@
 
         @govukSummaryList(SummaryList(rows =
                  sectionAnswers3.conditionRow(
-                          _.workCarriedOutCondition.isDefined,
+                          _.workCarriedOut.isDefined,
                           "checkYourAnswersAboutYourLeaseOrTenure.workCarriedOutCondition",
-                          _.workCarriedOutCondition.map(_.workCarriedOutCondition).map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
+                          _.workCarriedOut.map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
                           controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show(),
                           "workCarriedOutCondition"
             ) ++ sectionAnswers4.conditionRow(

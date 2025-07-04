@@ -18,7 +18,7 @@ package controllers.aboutYourLeaseOrTenure
 
 import actions.WithSessionRefiner
 import connectors.Audit
-import controllers.{FORDataCaptureController, toOpt}
+import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PropertyUpdatesForm.propertyUpdatesForm
 import models.ForType.*
 import models.Session
@@ -82,9 +82,7 @@ class PropertyUpdatesController @Inject() (
   private def backLink(answers: Session): String =
     answers.forType match {
       case FOR6045 | FOR6046 =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.tenantAdditionsDisregardedDetails.flatMap(_.tenantAdditionalDisregarded)
-        ) match {
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url

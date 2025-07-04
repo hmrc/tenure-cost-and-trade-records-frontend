@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,21 +16,19 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.WorkCarriedOutDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object WorkCarriedOutDetailsForm {
+object WorkCarriedOutDetailsForm:
 
-  val workCarriedOutDetailsForm = Form(
-    mapping(
-      "workCarriedOutDetails" ->
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.workCarriedOutDetails.required"),
-          maxLength(2000, "error.workCarriedOutDetails.maxLength")
-        )
-    )(WorkCarriedOutDetails.apply)(o => Some(o.workCarriedOutDetails))
-  )
-
-}
+  val workCarriedOutDetailsForm: Form[String] =
+    Form(
+      single(
+        "workCarriedOutDetails" ->
+          default(text, "").verifying(
+            nonEmpty(errorMessage = "error.workCarriedOutDetails.required"),
+            maxLength(2000, "error.workCarriedOutDetails.maxLength")
+          )
+      )
+    )

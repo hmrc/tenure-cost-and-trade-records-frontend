@@ -262,9 +262,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     }
 
   private def tenantsAdditionsDisregardedRouting: Session => Call = answers =>
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(
-      _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded)
-    ) match {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show()
       case _               =>
