@@ -28,12 +28,13 @@ import controllers.toOpt
 import java.time.LocalDate
 import uk.gov.hmrc.govukfrontend.views.html.components.*
 import util.NumberUtil.*
-
+import util.CyaTradingHistorySupport
 import javax.inject.Inject
 
 class CyaTradingHistorySupport @Inject() (
   val govukSummaryList: GovukSummaryList,
-  val dateUtil: DateUtilLocalised
+  val dateUtil: DateUtilLocalised,
+  val accessibilityUtil: AccessibilityUtil
 ) {
 
   def tradingPeriodWithWeeks(tradingPeriod: Int)(using messages: Messages): String =
@@ -54,13 +55,38 @@ class CyaTradingHistorySupport @Inject() (
 
   def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
-  def table(valuesGrid: Seq[Seq[String]]): Html = Html(
+  def table6045(valuesGrid: Seq[Seq[String]]): Html = Html(
     valuesGrid.map { values =>
       s"""<div class="hmrc-turnover-table-column">
-         ${values.map(value => s"<p class=\"govuk-body\">$value</p>").mkString}
-         </div>"""
+       ${values.map(value => s"<p class=\"govuk-body\">$value</p>").mkString}
+       </div>"""
     }.mkString
   )
+
+  def table(valuesGrid: Seq[Seq[String]], financialYearEnds: Seq[LocalDate], messageKeys: Option[Seq[String]] = None)(
+    using messages: Messages
+  ): Html =
+    Html(
+      valuesGrid
+        .zip(financialYearEnds)
+        .map { case (values, yearEnd) =>
+          s"""<div class="hmrc-turnover-table-column">
+           ${messageKeys.fold {
+              values.map { value =>
+                s"""<p class="govuk-body">$value</p>"""
+              }.mkString
+            } { keys =>
+              values
+                .zip(keys)
+                .map { case (value, key) =>
+                  s"""<p class="govuk-body" aria-label="${accessibilityUtil.ariaBuilder(key, yearEnd)}">$value</p>"""
+                }
+                .mkString
+            }}
+           </div>"""
+        }
+        .mkString
+    )
 
   def tableRow(values: Seq[String]): Html = Html(
     values.map { value =>
@@ -108,7 +134,8 @@ class CyaTradingHistorySupport @Inject() (
     dateUtil: DateUtilLocalised
   )(using messages: Messages): Html =
     table(
-      financialYearEndDates.map(financialYearEnd => Seq(dateUtil.formatDayMonthAbbrYear(financialYearEnd)))
+      financialYearEndDates.map(financialYearEnd => Seq(dateUtil.formatDayMonthAbbrYear(financialYearEnd))),
+      financialYearEndDates
     )
 
   def financialYearEndDates(
@@ -190,7 +217,7 @@ class CyaTradingHistorySupport @Inject() (
 
   def costOfSalesValuesTable(costOfSales: Seq[CostOfSales])(using messages: Messages): String =
     table(
-      costOfSales.map(s =>
+      valuesGrid = costOfSales.map(s =>
         Seq(
           dateUtil.formatDayMonthAbbrYear(s.financialYearEnd),
           s.accommodation.getOrElse(zeroBigDecimal).asMoney,
@@ -199,10 +226,12 @@ class CyaTradingHistorySupport @Inject() (
           s.other.getOrElse(zeroBigDecimal).asMoney,
           s.total.asMoney
         )
-      )
+      ),
+      financialYearEnds = costOfSales.map(_.financialYearEnd),
+      messageKeys = Option(costOfSalesMessageKeys)
     ).body
 
-  def costOfSalesKeys(using messages: Messages): String =
+  private def costOfSalesMessageKeys(using messages: Messages): Seq[String] =
     Seq(
       messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
       messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
@@ -210,13 +239,16 @@ class CyaTradingHistorySupport @Inject() (
       messages("checkYourAnswersAboutTheTradingHistory.drinks"),
       messages("checkYourAnswersAboutTheTradingHistory.other"),
       messages("costOfSales.total")
-    ).mkString(
+    )
+
+  def costOfSalesKeys(using messages: Messages): String =
+    costOfSalesMessageKeys.mkString(
       """<p class="govuk-body govuk-!-font-weight-bold">""",
       """</p> <p class="govuk-body govuk-!-font-weight-bold">""",
       "</p>"
     )
 
-  def turnoverKeys60156016(using messages: Messages): String =
+  private def turnoverMessageKeys60156016(using messages: Messages): Seq[String] =
     Seq(
       messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
       messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
@@ -226,7 +258,10 @@ class CyaTradingHistorySupport @Inject() (
       messages("checkYourAnswersAboutTheTradingHistory.drinks"),
       messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
       messages("checkYourAnswersAboutTheTradingHistory.totalSalesRevenue")
-    ).mkString(
+    )
+
+  def turnoverKeys60156016(using messages: Messages): String =
+    turnoverMessageKeys60156016.mkString(
       """<p class="govuk-body govuk-!-font-weight-bold">""",
       """</p> <p class="govuk-body govuk-!-font-weight-bold">""",
       "</p>"
@@ -234,7 +269,7 @@ class CyaTradingHistorySupport @Inject() (
 
   def turnoverValuesTable60156016(turnoverSections: Seq[TurnoverSection])(using messages: Messages): String =
     table(
-      turnoverSections.map(t =>
+      valuesGrid = turnoverSections.map(t =>
         Seq(
           dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
           s"${t.tradingPeriod} ${messages("turnover.weeks")}",
@@ -245,7 +280,9 @@ class CyaTradingHistorySupport @Inject() (
           t.otherReceipts.getOrElse(zeroBigDecimal).asMoney,
           t.total.asMoney
         )
-      )
+      ),
+      financialYearEnds = turnoverSections.map(_.financialYearEnd),
+      messageKeys = Some(turnoverMessageKeys60156016)
     ).body
 
   def accountingInformation(using

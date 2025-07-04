@@ -34,30 +34,7 @@
 
 @forType = @{request.sessionData.forType}
 
-@turnoverValuesTable(turnoverSections: Seq[TurnoverSection]) = @{
-    cyaSupport.table(
-        turnoverSections.map(t => Seq(
-            dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
-            cyaSupport.tradingPeriodWithWeeks(t.tradingPeriod),
-            t.alcoholicDrinks.getOrElse(zeroBigDecimal).asMoney,
-            t.food.getOrElse(zeroBigDecimal).asMoney,
-            t.otherReceipts.getOrElse(zeroBigDecimal).asMoney,
-            t.accommodation.getOrElse(zeroBigDecimal).asMoney,
-            t.averageOccupancyRate.getOrElse(zeroBigDecimal).withScale(2) + "%"
-        ))
-    ).body
-}
-@turnoverValuesTable6030(turnoverSections: Seq[TurnoverSection6030]) = @{
-    cyaSupport.table(
-        turnoverSections.map(t => Seq(
-            dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
-            cyaSupport.tradingPeriodWithWeeks(t.tradingPeriod),
-            t.grossIncome.getOrElse(zeroBigDecimal).asMoney,
-            s"${t.totalVisitorNumbers.getOrElse(0)}"
-        ))
-    ).body
-}
-@turnoverKeys = @{
+@turnoverMessageKeys = @{
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
         messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
@@ -66,16 +43,63 @@
         messages("checkYourAnswersAboutTheTradingHistory.otherReceipts"),
         messages("checkYourAnswersAboutTheTradingHistory.accommodation"),
         messages("checkYourAnswersAboutTheTradingHistory.averageOccupancyRate")
-    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+    )
 }
-@turnoverKeys6030 = @{
+
+@turnoverKeys = @{
+    turnoverMessageKeys.mkString(
+        """<p class="govuk-body govuk-!-font-weight-bold">""",
+        """</p> <p class="govuk-body govuk-!-font-weight-bold">""",
+        "</p>"
+    )
+}
+
+@turnoverValuesTable(turnoverSections: Seq[TurnoverSection]) = @{
+    cyaSupport.table(
+        valuesGrid = turnoverSections.map(t => Seq(
+            dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
+            cyaSupport.tradingPeriodWithWeeks(t.tradingPeriod),
+            t.alcoholicDrinks.getOrElse(zeroBigDecimal).asMoney,
+            t.food.getOrElse(zeroBigDecimal).asMoney,
+            t.otherReceipts.getOrElse(zeroBigDecimal).asMoney,
+            t.accommodation.getOrElse(zeroBigDecimal).asMoney,
+            t.averageOccupancyRate.getOrElse(zeroBigDecimal).withScale(2) + "%"
+        )),
+        financialYearEnds = turnoverSections.map(_.financialYearEnd),
+        messageKeys = Some(turnoverMessageKeys)
+    ).body
+}
+
+@turnoverMessageKeys6030 = @{
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
         messages("checkYourAnswersAboutTheTradingHistory.tradingPeriod"),
         messages("checkYourAnswersAboutTheTradingHistory.grossIncome"),
-        messages("checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers"),
-    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+        messages("checkYourAnswersAboutTheTradingHistory.totalVisitorNumbers")
+    )
 }
+
+@turnoverKeys6030 = @{
+    turnoverMessageKeys6030.mkString(
+        """<p class="govuk-body govuk-!-font-weight-bold">""",
+        """</p> <p class="govuk-body govuk-!-font-weight-bold">""",
+        "</p>"
+    )
+}
+
+@turnoverValuesTable6030(turnoverSections: Seq[TurnoverSection6030]) = @{
+    cyaSupport.table(
+        valuesGrid = turnoverSections.map(t => Seq(
+            dateUtil.formatDayMonthAbbrYear(t.financialYearEnd),
+            cyaSupport.tradingPeriodWithWeeks(t.tradingPeriod),
+            t.grossIncome.getOrElse(zeroBigDecimal).asMoney,
+            s"${t.totalVisitorNumbers.getOrElse(0)}"
+        )),
+        financialYearEnds = turnoverSections.map(_.financialYearEnd),
+        messageKeys = Some(turnoverMessageKeys6030)
+    ).body
+}
+
 
 @actions6030 = @{
     Some(

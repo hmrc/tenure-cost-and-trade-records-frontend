@@ -31,55 +31,77 @@
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
-@otherCostsTotalValuesRow(otherCosts: Option[OtherCosts]) = @{
-    cyaSupport.table(
-        otherCosts.map(_.otherCosts).getOrElse(Seq()).map(otherCost => Seq(
-            otherCost.total.asMoney
-        ))
-    ).body
-}
-
-@otherCostsKeys = @{
+@otherCostsMessageKeys = @{
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
         messages("otherCosts.contributionToHeadOffice"),
         messages("otherCosts.otherCosts")
-    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+    )
+}
+
+@otherCostsKeys = @{
+    otherCostsMessageKeys.mkString(
+        """<p class="govuk-body govuk-!-font-weight-bold">""",
+        """</p> <p class="govuk-body govuk-!-font-weight-bold">""",
+        "</p>"
+    )
 }
 
 @otherCostsValuesTable(otherCosts: Option[OtherCosts]) = @{
+    val data = otherCosts.map(_.otherCosts).getOrElse(Seq())
     cyaSupport.table(
-        otherCosts.map(_.otherCosts).getOrElse(Seq()).map(otherCost => Seq(
+        valuesGrid = data.map(otherCost => Seq(
             dateUtil.formatDayMonthAbbrYear(otherCost.financialYearEnd),
             otherCost.contributionsToHeadOffice.getOrElse(zeroBigDecimal).asMoney,
             otherCost.otherCosts.getOrElse(zeroBigDecimal).asMoney
-        ))
-    ).body + optionalParagraph(otherCosts.flatMap(_.otherCostDetails)).body
+        )),
+        financialYearEnds = data.map(_.financialYearEnd),
+        messageKeys = Some(otherCostsMessageKeys)
+    ).body + optionalParagraph(otherCosts.flatMap(_.otherCostDetails), messages("otherCosts.otherCosts")).body
 }
 
-@optionalParagraph(textOpt: Option[String]) = {
+@otherCostsTotalValuesRow(otherCosts: Option[OtherCosts]) = @{
+    val data = otherCosts.map(_.otherCosts).getOrElse(Seq())
+    cyaSupport.table(
+        valuesGrid = data.map(otherCost => Seq(otherCost.total.asMoney)),
+        financialYearEnds = data.map(_.financialYearEnd),
+        messageKeys = Some(Seq("otherCosts.total"))
+    ).body
+}
+
+@optionalParagraph(textOpt: Option[String], ariaLabel: Option[String]) = {
 @textOpt.filterNot(_.trim.isEmpty).map { text =>
-    <p class="govuk-body">@text</p>
+    <p class="govuk-body" @{ariaLabel.map(label => s"""aria-label="$label"""")}>@text</p>
 }
 }
 
-@payrollCostsKeys = @{
+@payrollCostsMessageKeys = @{
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
         messages("totalPayrollCosts.managersAndStaff"),
         messages("totalPayrollCosts.directorsRemuneration"),
         messages("totalPayrollCosts.total")
-    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+    )
+}
+
+@payrollCostsKeys = @{
+    payrollCostsMessageKeys.mkString(
+        """<p class="govuk-body govuk-!-font-weight-bold">""",
+        """</p> <p class="govuk-body govuk-!-font-weight-bold">""",
+        "</p>"
+    )
 }
 
 @payrollCostsValuesTable(totalPayrollCosts: Seq[TotalPayrollCost]) = @{
     cyaSupport.table(
-        totalPayrollCosts.map(payroll => Seq(
+        valuesGrid = totalPayrollCosts.map(payroll => Seq(
             dateUtil.formatDayMonthAbbrYear(payroll.financialYearEnd),
             payroll.managersAndStaff.getOrElse(zeroBigDecimal).asMoney,
             payroll.directorsRemuneration.getOrElse(zeroBigDecimal).asMoney,
             payroll.total.asMoney
-        ))
+        )),
+        financialYearEnds = totalPayrollCosts.map(_.financialYearEnd),
+        messageKeys = Some(payrollCostsMessageKeys)
     ).body
 }
 
@@ -99,11 +121,14 @@
                     voe.other.getOrElse(zeroBigDecimal).asMoney
                 )
             }
-        )
-    ).body + optionalParagraph(voeSections.flatMap(_.otherExpensesDetails)).body
+        ),
+        financialYearEnds = voeSections.map(_.variableOperatingExpenses).getOrElse(Seq.empty).map(_.financialYearEnd),
+        messageKeys = Some(variableOperatingExpensesMessageKeys)
+    ).body + optionalParagraph(voeSections.flatMap(_.otherExpensesDetails), messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other")).body
 }
 
 @variableOperatingExpensesTotalValuesRow(voeSections: Option[VariableOperatingExpensesSections]) = @{
+    val data = voeSections.map(_.variableOperatingExpenses).getOrElse(Seq.empty)
     cyaSupport.table(
         voeSections.fold(Seq.empty[Seq[String]])(
             _.variableOperatingExpenses.map { voe =>
@@ -111,11 +136,13 @@
                     voe.total.asMoney
                 )
             }
-        )
+        ),
+        financialYearEnds = voeSections.map(_.variableOperatingExpenses).getOrElse(Seq.empty).map(_.financialYearEnd),
+        messageKeys = Some(Seq(messages("variableOperatingExpenses.total")))
     ).body
 }
 
-@variableOperatingExpensesKeys = @{
+@variableOperatingExpensesMessageKeys = @{
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
         messages("variableOperatingExpenses.energyAndUtilities"),
@@ -126,24 +153,18 @@
         messages("variableOperatingExpenses.administrationAndSundries"),
         messages("variableOperatingExpenses.entertainment"),
         messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other")
-    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+    )
 }
 
-@fixedOperatingExpensesValuesTable(fixedOperatingExpenses: Seq[FixedOperatingExpenses]) = @{
-    cyaSupport.table(
-        fixedOperatingExpenses.map(foe => Seq(
-            dateUtil.formatDayMonthAbbrYear(foe.financialYearEnd),
-            foe.rent.getOrElse(zeroBigDecimal).asMoney,
-            foe.businessRates.getOrElse(zeroBigDecimal).asMoney,
-            foe.insurance.getOrElse(zeroBigDecimal).asMoney,
-            foe.loanInterest.getOrElse(zeroBigDecimal).asMoney,
-            foe.depreciation.getOrElse(zeroBigDecimal).asMoney,
-            foe.total.asMoney
-        ))
-    ).body
+@variableOperatingExpensesKeys = @{
+    variableOperatingExpensesMessageKeys.mkString(
+        """<p class="govuk-body govuk-!-font-weight-bold">""",
+        """</p> <p class="govuk-body govuk-!-font-weight-bold">""",
+        "</p>"
+    )
 }
 
-@fixedOperatingExpensesKeys = @{
+@fixedOperatingExpensesMessageKeys = @{
     Seq(
         messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
         messages("fixedOperatingExpenses.rent"),
@@ -152,12 +173,55 @@
         messages("fixedOperatingExpenses.loanInterest"),
         messages("fixedOperatingExpenses.depreciation"),
         messages("fixedOperatingExpenses.total")
-    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
+    )
+}
+
+@fixedOperatingExpensesKeys = @{
+    fixedOperatingExpensesMessageKeys.mkString(
+        """<p class="govuk-body govuk-!-font-weight-bold">""",
+        """</p> <p class="govuk-body govuk-!-font-weight-bold">""",
+        "</p>"
+    )
+}
+
+@fixedOperatingExpensesValuesTable(fixedOperatingExpenses: Seq[FixedOperatingExpenses]) = @{
+    cyaSupport.table(
+        valuesGrid = fixedOperatingExpenses.map(foe => Seq(
+            dateUtil.formatDayMonthAbbrYear(foe.financialYearEnd),
+            foe.rent.getOrElse(zeroBigDecimal).asMoney,
+            foe.businessRates.getOrElse(zeroBigDecimal).asMoney,
+            foe.insurance.getOrElse(zeroBigDecimal).asMoney,
+            foe.loanInterest.getOrElse(zeroBigDecimal).asMoney,
+            foe.depreciation.getOrElse(zeroBigDecimal).asMoney,
+            foe.total.asMoney
+        )),
+        financialYearEnds = fixedOperatingExpenses.map(_.financialYearEnd),
+        messageKeys = Some(fixedOperatingExpensesMessageKeys)
+    ).body
+}
+
+@profitSummaryMessageKeys = @{
+    Seq(
+        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
+        messages("checkYourAnswersAboutTheTradingHistory.totalGrossProfits"),
+        messages("checkYourAnswersAboutTheTradingHistory.totalNetProfits"),
+        messages("checkYourAnswersAboutTheTradingHistory.netProfitPercentage"),
+        messages("checkYourAnswersAboutTheTradingHistory.confirmProfitFigures")
+    )
+}
+
+@profitSummaryKeys = @{
+    profitSummaryMessageKeys.mkString(
+        """<p class="govuk-body govuk-!-font-weight-bold">""",
+        """</p> <p class="govuk-body govuk-!-font-weight-bold">""",
+        "</p>"
+    )
 }
 
 @profitSummaryValuesTable(trading: AboutTheTradingHistory) = @{
+    val data = trading.incomeExpenditureSummaryData zip trading.turnoverSections.map(_.financialYearEnd)
     cyaSupport.table(
-        (trading.incomeExpenditureSummaryData zip trading.turnoverSections.map(_.financialYearEnd)).zipWithIndex.map {
+        valuesGrid = data.zipWithIndex.map {
             case ((summary, finYearEnd), idx) => Seq(
                 dateUtil.formatDayMonthAbbrYear(finYearEnd),
                 summary.totalGrossProfits.asMoney,
@@ -167,18 +231,10 @@
                     trading.incomeExpenditureSummary.filter(_ == "confirmed").fold("No")(_ => "Yes")
                 ).getOrElse(" ")
             )
-        }
+        },
+        financialYearEnds = data.map(_._2),
+        messageKeys = Some(profitSummaryMessageKeys)
     ).body
-}
-
-@profitSummaryKeys = @{
-    Seq(
-        messages("checkYourAnswersAboutTheTradingHistory.financialYearEnd"),
-        messages("checkYourAnswersAboutTheTradingHistory.totalGrossProfits"),
-        messages("checkYourAnswersAboutTheTradingHistory.totalNetProfits"),
-        messages("checkYourAnswersAboutTheTradingHistory.netProfitPercentage"),
-        messages("checkYourAnswersAboutTheTradingHistory.confirmProfitFigures")
-    ).mkString("""<p class="govuk-body govuk-!-font-weight-bold">""", """</p> <p class="govuk-body govuk-!-font-weight-bold">""", "</p>")
 }
 @cyaSupport.accountingInformation
 
