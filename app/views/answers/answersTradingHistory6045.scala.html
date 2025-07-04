@@ -21,7 +21,6 @@
 @import util.CyaTradingHistorySupport
 @import models.submissions.common.AnswersYesNo.*
 @import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
-
 @import scala.language.implicitConversions
 
 @this(
@@ -57,7 +56,6 @@
         cyaSupport.sectionAnswers1.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer),
         additionalParagraph)
 }
-
 <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
 
 @cyaSupport.accountingInformation
@@ -168,14 +166,14 @@
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansPerService.heading")</h2>
     @govukSummaryList(SummaryList(rows =
         cyaSupport.sectionAnswers1.row("turnover.6045.caravansPerService.fleet",
-            _.caravans.flatMap(_.caravansPerService).fold("")(c => cyaSupport.table(Seq(
+            _.caravans.flatMap(_.caravansPerService).fold("")(c => cyaSupport.table6045(Seq(
                 Seq(messages("turnover.6045.caravansPerService.fleetWaterElectricityDrainage"), messages("turnover.6045.caravansPerService.fleetElectricityOnly")),
                 Seq(c.fleetWaterElectricityDrainage, c.fleetElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>")
             )).body),
             controllers.aboutthetradinghistory.routes.CaravansPerServiceController.show(), "fleetWaterElectricityDrainage", ("valueAsHtml", _ => None))
         .map(_.copy(classes = "no-border-bottom")) ++
                 cyaSupport.sectionAnswers1.rowWithoutActions("turnover.6045.caravansPerService.private",
-                    _.caravans.flatMap(_.caravansPerService).fold("")(c => cyaSupport.table(Seq(
+                    _.caravans.flatMap(_.caravansPerService).fold("")(c => cyaSupport.table6045(Seq(
                         Seq(messages("turnover.6045.caravansPerService.privateWaterElectricityDrainage"), messages("turnover.6045.caravansPerService.privateElectricityOnly")),
                         Seq(c.privateWaterElectricityDrainage, c.privateElectricityOnly).map(v => s"<div class=\"govuk-!-margin-left-5\">${caravansWithSuffix(v)}</div>")
                     )).body))
@@ -183,7 +181,7 @@
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheTradingHistory.6045.caravansAnnualPitchFee.heading")</h2>
     @govukSummaryList(SummaryList(rows =
         cyaSupport.sectionAnswers1.row("",
-            _.caravans.flatMap(_.annualPitchFee).fold("")(fee => cyaSupport.table(Seq(
+            _.caravans.flatMap(_.annualPitchFee).fold("")(fee => cyaSupport.table6045(Seq(
                 Seq(
                     Some(s"${fee.totalPitchFee.asMoney} ${messages("turnover.6045.perYear.suffix")}"),
                     Option.when(fee.servicesIncludedInPitchFee.contains(Rates))(messages("turnover.6045.caravans.fee.rates")),
