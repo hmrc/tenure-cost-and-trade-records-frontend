@@ -23,7 +23,7 @@ object CheckYourAnswersHelpers:
   extension (call: Call)
     def asChangeLink(fragment: String): Call =
       call.copy(
-        url = withFrom + s"&change=true;$fragment"
+        url = withFrom + s"&change=true#$fragment"
       )
 
     def withFromCheckYourAnswer(fragment: String): Call =

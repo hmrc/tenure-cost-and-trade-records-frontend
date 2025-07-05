@@ -18,6 +18,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.submissions.common.AnswersYesNo.*
 @import util.{DateUtilLocalised, SectionAnswersRowBuilder}
+@import views.CheckYourAnswersHelpers.*
+@import views.answers.AnswersAboutTheProperty6048Helper.*
 
 @this(
         govukSummaryList: GovukSummaryList,
@@ -35,7 +37,8 @@
 }
 
 @occupiersCountMessage = @{
-    if (occupiersListSize <= 1) messages("checkYourAnswersAboutTheProperty.occupierCount", occupiersListSize) else messages("checkYourAnswersAboutTheProperty.occupiersCount", occupiersListSize)
+    if (occupiersListSize <= 1) messages("checkYourAnswersAboutTheProperty.occupierCount", occupiersListSize)
+    else messages("checkYourAnswersAboutTheProperty.occupiersCount", occupiersListSize)
 }
 
 @sectionAnswersPartTwo = @{
@@ -131,42 +134,33 @@
 }
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.familyUse.heading")</h2>
 
-@govukSummaryList(SummaryList(rows =
-    sectionAnswersPartTwo.row(
-        "checkYourAnswersAboutTheProperty.mainResidence",
-        _.partsUnavailable.map(x => if(x.contains(AnswerYes)) messages(s"label.yes.oes") else messages(s"label.no.nac.oes")),
-        controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show(),
-        "partsUnavailable",
-        ("valueAsHtml", _ => None))
-))
+@partsUnavailable = @{
+    request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable)
+}
 
-@if(request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable).contains(AnswerYes)) {
+@occupiersList = @{
+    request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersList).getOrElse(IndexedSeq.empty)
+}
 
-    @for((occupier, idx) <- sectionAnswersPartTwo.answers.flatMap(_.occupiersList).getOrElse(IndexedSeq.empty).zipWithIndex) {
+@includes.cards.header(
+    govukSummaryList,
+    messageKey = "checkYourAnswersAboutTheProperty.mainResidence",
+    valueAsBoolean = partsUnavailable.contains(AnswerYes),
+    changeAction = controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().asChangeLink("partsUnavailable")
+)
 
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.occupiersLabel", idx + 1)</h2>
+@if(partsUnavailable.contains(AnswerYes)) {
 
-        @govukSummaryList(SummaryList(rows =
-            sectionAnswers.row("checkYourAnswersAboutTheProperty.occupiersDetails",
-                _ => occupier.name + s"<p class=\"govuk-body\"> ${occupier.address} </p>",
-                controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show(
-                    idx),
-                "",
-                ("valueAsHtml", _ => None))
-        ))
-    }
-    @govukSummaryList(SummaryList(rows =
-        List(
-            SummaryListRow(
-                key = Key(Text(messages(occupiersCountMessage)), classes = "govuk-heading-m govuk-!-width-one-half"),
-                actions = Option(Actions(
-                    items =
-                        List(
-                            ActionItem(
-                                s"${controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(occupiersListSize - 1).url}&from=CYA",
-                                Text(messages("checkYourAnswersAboutTheProperty.occupiersAdd")))),
-                    classes = "govuk-!-width-one-half govuk-!-padding-bottom-3"))
-            )
-        )
-    ))
+    @includes.cards.list(
+        govukSummaryList,
+        cardsData = cardsData(occupiersList)
+    )
+
+    @includes.cards.footer(
+        govukSummaryList,
+        messageKey = "checkYourAnswersAboutTheProperty.occupierCount",
+        count = occupiersListSize,
+        addActionMessage = messages("checkYourAnswersAboutTheProperty.occupiersAdd"),
+        addActionCall = controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show(occupiersListSize).withFromCheckYourAnswer("partsUnavailable")
+    )
 }

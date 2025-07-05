@@ -27,7 +27,7 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[An
 
   val messageKeyPrefix = "checkYourAnswersAboutTheProperty"
 
-  override val form = CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
+  override val form = CheckYourAnswersAboutThePropertyForm.theForm
 
   val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
