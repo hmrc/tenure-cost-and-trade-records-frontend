@@ -22,7 +22,6 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.PayACapitalSumAmountDetailsForm.payACapitalSumAmountDetailsForm
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumAmountDetails
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayCapitalSumAmountDetailsId
@@ -54,7 +53,7 @@ class PayACapitalSumAmountDetailsController @Inject() (
     Future.successful(
       Ok(
         payACapitalSumAmountDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumAmountDetails) match {
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumAmount) match {
             case Some(data) => payACapitalSumAmountDetailsForm.fill(data)
             case _          => payACapitalSumAmountDetailsForm
           },
@@ -65,8 +64,8 @@ class PayACapitalSumAmountDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PayACapitalSumAmountDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[BigDecimal](
       payACapitalSumAmountDetailsForm,
       formWithErrors =>
         BadRequest(
@@ -77,7 +76,7 @@ class PayACapitalSumAmountDetailsController @Inject() (
           )
         ),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumAmountDetails = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumAmount = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PayCapitalSumAmountDetailsId, updatedData).apply(updatedData)))
@@ -90,11 +89,10 @@ class PayACapitalSumAmountDetailsController @Inject() (
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-amount-details"
       case _    =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.payACapitalSumDetails.map(_.capitalSumOrPremium)
-        ) match {
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
         }
     }
+
 }

@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm
-import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeReducedOnReviewDetails] {
+class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix       = "canRentBeReducedOnReview"
   private val backLink       = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
@@ -33,7 +33,7 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[CanRentBeR
 
   def createView = () => canRentBeReducedOnReviewView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[CanRentBeReducedOnReviewDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     canRentBeReducedOnReviewView(form, backLink)(using sessionRequest, messages)
 
   "Can rent be reduced on review view" must {

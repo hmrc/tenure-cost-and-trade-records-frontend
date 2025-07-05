@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetails
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
@@ -25,7 +24,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TenantsAdditionsDisregardedDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
   pageHeading = messages("tenantsAdditionsDisregardedDetails.heading"),
@@ -55,5 +54,3 @@
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-

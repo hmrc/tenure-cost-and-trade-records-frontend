@@ -19,11 +19,10 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.PayACapitalSumAmountDetailsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumAmountDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[PayACapitalSumAmountDetails] {
+class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDecimal] {
 
   val messageKeyPrefix = "capitalSumPaidDetails6048"
 
@@ -36,7 +35,7 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[PayACap
   def createView = () =>
     payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[PayACapitalSumAmountDetails]) =>
+  def createViewUsingForm = (form: Form[BigDecimal]) =>
     payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(using sessionRequest, messages)
 
   "capital sum or premium view" must {

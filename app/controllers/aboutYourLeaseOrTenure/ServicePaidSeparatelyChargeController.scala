@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import connectors.Audit
 import controllers.{FORDataCaptureController, toOpt}
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyChargeForm.servicePaidSeparatelyChargeForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparatelyCharge
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.ServicePaidSeparatelyChargeId
 import play.api.i18n.I18nSupport
@@ -50,10 +49,10 @@ class ServicePaidSeparatelyChargeController @Inject() (
     val existingSection = request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid.lift(index))
     existingSection.fold(
       Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(None))
-    ) { details =>
+    ) { servicesPaid =>
       Ok(
         view(
-          details.annualCharge.fold(servicePaidSeparatelyChargeForm)(servicePaidSeparatelyChargeForm.fill),
+          servicesPaid.annualCharge.fold(servicePaidSeparatelyChargeForm)(servicePaidSeparatelyChargeForm.fill),
           index,
           request.sessionData.toSummary
         )
@@ -61,7 +60,7 @@ class ServicePaidSeparatelyChargeController @Inject() (
     }
   }
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ServicePaidSeparatelyCharge](
+    continueOrSaveAsDraft[BigDecimal](
       servicePaidSeparatelyChargeForm,
       formWithErrors =>
         Future.successful(

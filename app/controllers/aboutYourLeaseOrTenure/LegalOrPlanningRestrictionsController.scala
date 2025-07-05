@@ -22,7 +22,7 @@ import controllers.{FORDataCaptureController, aboutYourLeaseOrTenure}
 import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.LegalOrPlanningRestrictions
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.LegalOrPlanningRestrictionId
@@ -61,8 +61,8 @@ class LegalOrPlanningRestrictionsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[LegalOrPlanningRestrictions](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       legalPlanningRestrictionsForm,
       formWithErrors =>
         BadRequest(
@@ -85,23 +85,17 @@ class LegalOrPlanningRestrictionsController @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
       case FOR6020           =>
-        request.sessionData.aboutLeaseOrAgreementPartTwo
-          .flatMap(_.payACapitalSumDetails)
-          .map(_.capitalSumOrPremium) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
           case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
         }
       case FOR6045 | FOR6046 =>
-        request.sessionData.aboutLeaseOrAgreementPartTwo
-          .flatMap(_.payACapitalSumDetails)
-          .map(_.capitalSumOrPremium) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
           case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
         }
       case FOR6048           =>
-        request.sessionData.aboutLeaseOrAgreementPartTwo
-          .flatMap(_.payACapitalSumDetails)
-          .map(_.capitalSumOrPremium) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController.show().url
           case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
         }

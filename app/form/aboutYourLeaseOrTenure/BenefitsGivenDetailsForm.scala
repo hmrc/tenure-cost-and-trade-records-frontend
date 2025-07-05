@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,16 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.BenefitsGivenDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.maxLength
 
-object BenefitsGivenDetailsForm {
-  val benefitsGivenDetailsForm = Form(
-    mapping(
-      "benefitsGivenDetails" -> default(text, "")
-        .verifying(maxLength(2000, "error.benefitsGivenDetails.maxLength"))
-    )(BenefitsGivenDetails.apply)(o => Some(o.benefitsGivenDetails))
-  )
-}
+object BenefitsGivenDetailsForm:
+
+  val benefitsGivenDetailsForm: Form[String] =
+    Form(
+      single(
+        "benefitsGivenDetails" -> default(text, "")
+          .verifying(maxLength(2000, "error.benefitsGivenDetails.maxLength"))
+      )
+    )

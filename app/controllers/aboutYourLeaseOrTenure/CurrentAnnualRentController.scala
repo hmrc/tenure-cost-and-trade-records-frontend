@@ -68,7 +68,7 @@ class CurrentAnnualRentController @Inject() (
       .fold(zeroBigDecimal)(leaseOrAgreement1 =>
         Seq(
           leaseOrAgreement1.rentIncludeTradeServicesInformation.flatMap(_.sumIncludedInRent),
-          leaseOrAgreement1.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent)
+          leaseOrAgreement1.rentIncludeFixturesAndFittingsAmount
         ).flatten.sum
       )
 

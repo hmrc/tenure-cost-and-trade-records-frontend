@@ -23,7 +23,7 @@ import form.aboutYourLeaseOrTenure.RentIncludeFixtureAndFittingsForm.rentInclude
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesAndFittingsDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentFixtureAndFittingsPageId
@@ -55,10 +55,9 @@ class RentIncludeFixtureAndFittingsController @Inject() (
     Future.successful(
       Ok(
         rentIncludeFixtureAndFittingsView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittingsDetails) match {
-            case Some(rentIncludeFixturesAndFittingsDetails) =>
-              rentIncludeFixturesAndFittingsForm.fill(rentIncludeFixturesAndFittingsDetails)
-            case _                                           => rentIncludeFixturesAndFittingsForm
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match {
+            case Some(answer) => rentIncludeFixturesAndFittingsForm.fill(answer)
+            case _            => rentIncludeFixturesAndFittingsForm
           },
           getBackLink(request.sessionData),
           request.sessionData.toSummary
@@ -67,8 +66,8 @@ class RentIncludeFixtureAndFittingsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[RentIncludeFixturesAndFittingsDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       rentIncludeFixturesAndFittingsForm,
       formWithErrors =>
         BadRequest(
@@ -80,7 +79,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
         ),
       data => {
         val updatedData =
-          updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsDetails = Some(data)))
+          updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittings = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentFixtureAndFittingsPageId, updatedData).apply(updatedData)))
@@ -100,7 +99,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
           case _               => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
         }
       case FOR6030 =>
-        answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices).map(_.paymentForTradeService) match {
+        answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
           case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
@@ -109,9 +108,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
             controllers.routes.TaskListController.show().url
         }
       case _       =>
-        answers.aboutLeaseOrAgreementPartOne.flatMap(
-          _.rentIncludeTradeServicesDetails.map(_.rentIncludeTradeServices)
-        ) match {
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url

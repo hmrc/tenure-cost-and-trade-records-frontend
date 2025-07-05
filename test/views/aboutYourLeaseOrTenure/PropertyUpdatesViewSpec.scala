@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PropertyUpdatesForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.PropertyUpdates
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PropertyUpdatesViewSpec extends QuestionViewBehaviours[PropertyUpdates] {
+class PropertyUpdatesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "propertyUpdates"
 
@@ -33,7 +33,7 @@ class PropertyUpdatesViewSpec extends QuestionViewBehaviours[PropertyUpdates] {
 
   def createView = () => propertyUpdatesView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PropertyUpdates]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     propertyUpdatesView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   "Property update view" should {

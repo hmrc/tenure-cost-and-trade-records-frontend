@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,15 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.createYesNoType
-import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object TenantsAdditionsDisregardedForm {
+object TenantsAdditionsDisregardedForm:
 
-  val tenantsAdditionsDisregardedForm = Form(
-    mapping(
-      "tenantsAdditionsDisregarded" -> createYesNoType("error.tenantsAdditionsDisregarded.missing")
-    )(TenantAdditionsDisregardedDetails.apply)(o => Some(o.tenantAdditionalDisregarded))
-  )
-}
+  val tenantsAdditionsDisregardedForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "tenantsAdditionsDisregarded" -> createYesNoType("error.tenantsAdditionsDisregarded.missing")
+      )
+    )

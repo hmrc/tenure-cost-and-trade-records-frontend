@@ -113,7 +113,7 @@ class TradeServicesListController @Inject() (
     request.sessionData.aboutLeaseOrAgreementPartThree
       .flatMap(_.tradeServices.lift(index))
       .map { services =>
-        val service = services.details.description
+        val service = services.details
         Future.successful(
           Ok(
             theConfirmationView(
@@ -139,7 +139,7 @@ class TradeServicesListController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartThree
           .flatMap(_.tradeServices.lift(index))
           .map { services =>
-            val description = services.details.description
+            val description = services.details
             Future.successful(
               BadRequest(
                 theConfirmationView(

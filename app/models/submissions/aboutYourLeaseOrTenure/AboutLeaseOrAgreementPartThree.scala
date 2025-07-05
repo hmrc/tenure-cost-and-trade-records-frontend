@@ -32,29 +32,29 @@ case class AboutLeaseOrAgreementPartThree(
   isRentUnderReview: Option[AnswersYesNo] = None,
   carParking: Option[CarParking] = None,
   rentedEquipmentDetails: Option[String] = None,
-  paymentForTradeServices: Option[PaymentForTradeServices] = None,
+  paymentForTradeServices: Option[AnswersYesNo] = None,
   typeOfTenure: Option[TypeOfTenure] = None, // Add March 2024 for 6020
-  propertyUpdates: Option[PropertyUpdates] = None,
-  leaseSurrenderedEarly: Option[LeaseSurrenderedEarly] = None,
-  benefitsGiven: Option[BenefitsGiven] = None,
-  benefitsGivenDetails: Option[BenefitsGivenDetails] = None,
-  workCarriedOutDetails: Option[WorkCarriedOutDetails] = None,
-  workCarriedOutCondition: Option[WorkCarriedOutCondition] = None,
+  propertyUpdates: Option[AnswersYesNo] = None,
+  leaseSurrenderedEarly: Option[AnswersYesNo] = None,
+  benefitsGiven: Option[AnswersYesNo] = None,
+  benefitsGivenDetails: Option[String] = None,
+  workCarriedOut: Option[AnswersYesNo] = None,
+  workCarriedOutDetails: Option[String] = None,
   provideDetailsOfYourLease: Option[String] = None, // Added June 2024
   rentIncludeTradeServicesDetailsTextArea: Option[String] = None, // Added Aug 2024 for 6045/46
   rentIncludeFixtureAndFittingsDetailsTextArea: Option[String] = None, // Added Aug 2024 for 6045/46
   rentDevelopedLand: Option[AnswersYesNo] = None, // Added Aug 2024 for 6045/46
   rentDevelopedLandDetails: Option[String] = None // Added Aug 2024 for 6045/46
-
   // 22 case class limit has been reached. Part Four has been created
 )
 
-object AboutLeaseOrAgreementPartThree {
+object AboutLeaseOrAgreementPartThree:
+
   implicit val format: OFormat[AboutLeaseOrAgreementPartThree] = Json.format
 
   def updateAboutLeaseOrAgreementPartThree(
     copy: AboutLeaseOrAgreementPartThree => AboutLeaseOrAgreementPartThree
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session =
     val currentAboutLeaseOrAgreementPartThree = sessionRequest.sessionData.aboutLeaseOrAgreementPartThree
 
     val updatedAboutLeaseOrAgreementPartThree = currentAboutLeaseOrAgreementPartThree match {
@@ -63,7 +63,6 @@ object AboutLeaseOrAgreementPartThree {
     }
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartThree = updatedAboutLeaseOrAgreementPartThree)
-  }
 
   def updateCarParking(
     update: CarParking => CarParking
@@ -82,5 +81,3 @@ object AboutLeaseOrAgreementPartThree {
       )
       aboutLeaseOrAgreementPartThree.copy(throughputAffectsRent = Some(throughputAffectsRent))
     }
-
-}

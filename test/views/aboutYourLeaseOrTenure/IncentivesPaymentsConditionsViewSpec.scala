@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[IncentivesPaymentsConditionsDetails] {
+class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "formerLeaseSurrendered"
 
@@ -31,7 +31,7 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Incent
 
   def createView = () => incentivesPaymentsConditionsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[IncentivesPaymentsConditionsDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     incentivesPaymentsConditionsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Incentives payment conditions view" must {

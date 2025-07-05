@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetailsForm.tenantsAdditionsDisregardedDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.TenantsAdditionsDisregardedDetailsId
 import play.api.i18n.I18nSupport
@@ -49,7 +48,7 @@ class TenantsAdditionsDisregardedDetailsController @Inject() (
 
     Ok(
       tenantsAdditionsDisregardedDetailsView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantsAdditionsDisregardedDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregardedDetails) match {
           case Some(data) => tenantsAdditionsDisregardedDetailsForm.fill(data)
           case _          => tenantsAdditionsDisregardedDetailsForm
         },
@@ -58,13 +57,13 @@ class TenantsAdditionsDisregardedDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[TenantsAdditionsDisregardedDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[String](
       tenantsAdditionsDisregardedDetailsForm,
       formWithErrors =>
         BadRequest(tenantsAdditionsDisregardedDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantsAdditionsDisregardedDetails = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TenantsAdditionsDisregardedDetailsId, updatedData).apply(updatedData)))

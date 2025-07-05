@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.MethodToFixCurrentRentForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRentDetails
+import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent
 import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixCurrentRentDetails] {
+class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixCurrentRent] {
 
   val messageKeyPrefix = "methodUsedToFixCurrentRent"
 
@@ -31,7 +31,7 @@ class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixC
 
   def createView = () => methodToFixCurrentRentView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[MethodToFixCurrentRentDetails]) =>
+  def createViewUsingForm = (form: Form[MethodToFixCurrentRent]) =>
     methodToFixCurrentRentView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Method of fix current rent view" must {

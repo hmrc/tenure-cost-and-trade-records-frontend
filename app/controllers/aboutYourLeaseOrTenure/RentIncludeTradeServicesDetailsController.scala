@@ -90,7 +90,7 @@ class RentIncludeTradeServicesDetailsController @Inject() (
     val leaseOrAgreement1     = request.sessionData.aboutLeaseOrAgreementPartOne
     val annualRent            = leaseOrAgreement1.flatMap(_.annualRent)
     val otherIncludedPartsSum = leaseOrAgreement1
-      .flatMap(_.rentIncludeFixtureAndFittingsDetails.flatMap(_.sumIncludedInRent))
+      .flatMap(_.rentIncludeFixturesAndFittingsAmount)
       .getOrElse(zeroBigDecimal)
 
     if (forType == FOR6045 || forType == FOR6046) {

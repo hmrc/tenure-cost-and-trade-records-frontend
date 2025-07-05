@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CanRentBeReducedOnReviewId
 import play.api.i18n.I18nSupport
@@ -51,7 +51,7 @@ class CanRentBeReducedOnReviewController @Inject() (
     Future.successful(
       Ok(
         canRentBeReducedOnReviewView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReviewDetails) match {
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReview) match {
             case Some(data) => canRentBeReducedOnReviewForm.fill(data)
             case _          => canRentBeReducedOnReviewForm
           },
@@ -61,12 +61,12 @@ class CanRentBeReducedOnReviewController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CanRentBeReducedOnReviewDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       canRentBeReducedOnReviewForm,
       formWithErrors => BadRequest(canRentBeReducedOnReviewView(formWithErrors, getBackLink)),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReviewDetails = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReview = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CanRentBeReducedOnReviewId, updatedData).apply(updatedData)))

@@ -22,7 +22,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentIncreaseByRPIPageId
@@ -66,8 +66,8 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[RentIncreasedAnnuallyWithRPIDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       rentIncreasedAnnuallyWithRPIDetailsForm,
       formWithErrors =>
         BadRequest(
@@ -88,7 +88,7 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails.map(_.rentOpenMarketValues)) match {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
       case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
       case _               => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
     }

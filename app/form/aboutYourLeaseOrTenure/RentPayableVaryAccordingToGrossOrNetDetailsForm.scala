@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,18 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object RentPayableVaryAccordingToGrossOrNetDetailsForm {
+object RentPayableVaryAccordingToGrossOrNetDetailsForm:
 
-  val rentPayableVaryAccordingToGrossOrNetInformationForm = Form(
-    mapping(
+  val rentPayableVaryAccordingToGrossOrNetInformationForm: Form[String] = Form(
+    single(
       "rentPayableVaryAccordingToGrossOrNetDetails" ->
         default(text, "").verifying(
           nonEmpty(errorMessage = "error.rentPayableVaryAccordingToGrossOrNetDetails.required"),
           maxLength(2000, "error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength")
         )
-    )(RentPayableVaryAccordingToGrossOrNetInformationDetails.apply)(o => Some(o.rentPayableVaryAccordingToGrossOrNet))
+    )
   )
-}

@@ -23,7 +23,6 @@ import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm.currentRentFirstPaid
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentRentFirstPaidPageId
@@ -32,6 +31,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.currentRentFirstPaid
 
+import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
@@ -62,8 +62,8 @@ class CurrentRentFirstPaidController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CurrentRentFirstPaid](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[LocalDate](
       currentRentFirstPaidForm,
       formWithErrors =>
         BadRequest(

@@ -18,11 +18,10 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.TradeServiceDescriptionForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.TradeServicesDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TradeServicesDescriptionViewSpec extends QuestionViewBehaviours[TradeServicesDetails] {
+class TradeServicesDescriptionViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "tradeServiceDescription"
 
@@ -33,7 +32,7 @@ class TradeServicesDescriptionViewSpec extends QuestionViewBehaviours[TradeServi
   def createView = () =>
     tradeServicesDescriptionView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TradeServicesDetails]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     tradeServicesDescriptionView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Trade services description view" should {

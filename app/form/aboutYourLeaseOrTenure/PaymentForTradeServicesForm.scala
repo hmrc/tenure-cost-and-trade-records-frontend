@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,17 @@
  */
 
 package form.aboutYourLeaseOrTenure
+
 import form.MappingSupport.createYesNoType
-import models.submissions.aboutYourLeaseOrTenure.PaymentForTradeServices
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object PaymentForTradeServicesForm {
+object PaymentForTradeServicesForm:
 
-  val paymentForTradeServicesForm = Form(
-    mapping(
-      "paymentForTradeServices" -> createYesNoType("error.paymentForTradeServices.missing")
-    )(PaymentForTradeServices.apply)(o => Some(o.paymentForTradeService))
-  )
-}
+  val paymentForTradeServicesForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "paymentForTradeServices" -> createYesNoType("error.paymentForTradeServices.missing")
+      )
+    )

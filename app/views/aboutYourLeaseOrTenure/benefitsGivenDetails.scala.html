@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits._
-@import models.submissions.aboutYourLeaseOrTenure.BenefitsGivenDetails
 
 @this(
         layout: Layout,
@@ -29,7 +28,7 @@
 )
 
 
-@(form: Form[BenefitsGivenDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(form: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("benefitsGivenDetails.heading"),

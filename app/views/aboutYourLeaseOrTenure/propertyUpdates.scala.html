@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,8 @@
  *@
 
 @import models.pages.Summary
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import models.submissions.aboutYourLeaseOrTenure.PropertyUpdates
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 
 
 @this(layout: Layout,
@@ -27,7 +25,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[PropertyUpdates], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("propertyUpdates.heading"),

@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.RentIncreasedAnnuallyWithRPIDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentIncreasedAnnuallyWithRPIDetails] {
+class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "rentIncreasedAnnuallyWithRPIs"
 
@@ -34,7 +34,7 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[RentInc
   def createView = () =>
     rentIncreaseAnnuallyWithRPIView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentIncreasedAnnuallyWithRPIDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncreaseAnnuallyWithRPIView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent Increase annually with RPI view" must {

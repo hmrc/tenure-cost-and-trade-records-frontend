@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetInformationDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentPayableVaryAccordingToGrossOrNetDetailsId
 import play.api.i18n.I18nSupport
@@ -51,12 +50,9 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
       Ok(
         rentPayableVaryAccordingToGrossOrNetDetailsView(
           request.sessionData.aboutLeaseOrAgreementPartTwo
-            .flatMap(_.rentPayableVaryAccordingToGrossOrNetInformationDetails) match {
-            case Some(rentPayableVaryAccordingToGrossOrNetInformationDetails) =>
-              rentPayableVaryAccordingToGrossOrNetInformationForm.fill(
-                rentPayableVaryAccordingToGrossOrNetInformationDetails
-              )
-            case _                                                            => rentPayableVaryAccordingToGrossOrNetInformationForm
+            .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
+            case Some(details) => rentPayableVaryAccordingToGrossOrNetInformationForm.fill(details)
+            case _             => rentPayableVaryAccordingToGrossOrNetInformationForm
           },
           request.sessionData.toSummary
         )
@@ -64,14 +60,14 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[RentPayableVaryAccordingToGrossOrNetInformationDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[String](
       rentPayableVaryAccordingToGrossOrNetInformationForm,
       formWithErrors =>
         BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors, request.sessionData.toSummary)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(
-          _.copy(rentPayableVaryAccordingToGrossOrNetInformationDetails = Some(data))
+          _.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data))
         )
         session
           .saveOrUpdate(updatedData)

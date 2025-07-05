@@ -65,7 +65,7 @@ class PayACapitalSumDetailsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PayACapitalSumInformationDetails](
       payACapitalSumDetailsForm,
       formWithErrors =>
@@ -86,9 +86,7 @@ class PayACapitalSumDetailsController @Inject() (
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-details"
       case _    =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.payACapitalSumDetails.map(_.capitalSumOrPremium)
-        ) match {
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url

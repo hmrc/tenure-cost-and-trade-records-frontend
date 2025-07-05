@@ -17,21 +17,20 @@
 package form.aboutYourLeaseOrTenure
 
 import form.DateMappings.requiredDateMapping
-import models.submissions.aboutYourLeaseOrTenure.TenancyLeaseAgreementExpire
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 import play.api.i18n.Messages
 
-object TenancyLeaseAgreementExpireForm {
+import java.time.LocalDate
 
-  def tenancyLeaseAgreementExpireForm(using messages: Messages): Form[TenancyLeaseAgreementExpire] =
+object TenancyLeaseAgreementExpireForm:
+
+  def tenancyLeaseAgreementExpireForm(using messages: Messages): Form[LocalDate] =
     Form(
-      mapping(
+      single(
         "tenancyLeaseAgreementExpire" -> requiredDateMapping(
           "tenancyLeaseAgreementExpire",
           allowFutureDates = true
         )
-      )(TenancyLeaseAgreementExpire.apply)(o => Some(o.tenancyLeaseAgreementExpire))
+      )
     )
-
-}

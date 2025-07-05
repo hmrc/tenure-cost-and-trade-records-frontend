@@ -23,7 +23,7 @@ import form.aboutYourLeaseOrTenure.RentOpenMarketValueForm.rentOpenMarketValuesF
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.aboutYourLeaseOrTenure.RentOpenMarketValueDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentOpenMarketPageId
@@ -55,10 +55,9 @@ class RentOpenMarketValueController @Inject() (
     Future.successful(
       Ok(
         rentOpenMarketValueView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails) match {
-            case Some(rentOpenMarketValueDetails) =>
-              rentOpenMarketValuesForm.fill(rentOpenMarketValueDetails)
-            case _                                => rentOpenMarketValuesForm
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
+            case Some(answer) => rentOpenMarketValuesForm.fill(answer)
+            case _            => rentOpenMarketValuesForm
           },
           getBackLink(request.sessionData),
           request.sessionData.toSummary
@@ -67,15 +66,15 @@ class RentOpenMarketValueController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[RentOpenMarketValueDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       rentOpenMarketValuesForm,
       formWithErrors =>
         BadRequest(
           rentOpenMarketValueView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
         ),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValueDetails = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValue = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentOpenMarketPageId, updatedData).apply(updatedData)))
@@ -88,9 +87,7 @@ class RentOpenMarketValueController @Inject() (
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#rent-open-market-value"
       case _    =>
-        answers.aboutLeaseOrAgreementPartOne.flatMap(
-          _.rentIncludeFixturesAndFittingsDetails.map(_.rentIncludeFixturesAndFittingsDetails)
-        ) match {
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match {
           case Some(AnswerYes) =>
             answers.forType match {
               case FOR6020 =>

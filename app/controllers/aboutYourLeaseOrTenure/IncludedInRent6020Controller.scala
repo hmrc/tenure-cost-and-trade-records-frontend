@@ -83,10 +83,7 @@ class IncludedInRent6020Controller @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     if (
-      request.sessionData.aboutLeaseOrAgreementPartOne
-        .flatMap(_.rentIncludeFixturesAndFittingsDetails)
-        .map(_.rentIncludeFixturesAndFittingsDetails)
-        .contains(AnswerYes)
+      request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings).contains(AnswerYes)
     ) {
       controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show().url
     } else {

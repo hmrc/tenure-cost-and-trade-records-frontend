@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.IncentivesPaymentsConditionsDetails
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.IncentivesPaymentsConditionsId
 import play.api.i18n.I18nSupport
@@ -60,8 +60,8 @@ class IncentivesPaymentsConditionsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[IncentivesPaymentsConditionsDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       incentivesPaymentsConditionsForm,
       formWithErrors => BadRequest(incentivesPaymentsConditionsView(formWithErrors, request.sessionData.toSummary)),
       data => {

@@ -19,12 +19,12 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm
 import models.ForType.*
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure._
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentIncludeTradeServicesDetails] {
+class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "rentIncludeTradeServices"
 
@@ -38,7 +38,7 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[RentInclude
   def create6030View = () =>
     rentIncludeTradeServicesView(form, FOR6030, Summary("99996030001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentIncludeTradeServicesDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeTradeServicesView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent include trade services view" must {

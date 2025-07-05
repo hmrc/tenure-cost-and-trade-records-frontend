@@ -74,7 +74,7 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec {
       val session = session6048.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6048.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes)))
+            AboutLeaseOrAgreementPartTwo(payACapitalSumOrPremium = Some(AnswerYes))
           )
         )
       )

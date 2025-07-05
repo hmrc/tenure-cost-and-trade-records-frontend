@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.TenantsAdditionsDisregardedForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.TenantAdditionsDisregardedDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantAdditionsDisregardedDetails] {
+class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "tenantsAdditionsDisregarded"
 
@@ -34,7 +34,7 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[TenantA
   def createView = () =>
     tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TenantAdditionsDisregardedDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Tenants additions disregarded view" must {

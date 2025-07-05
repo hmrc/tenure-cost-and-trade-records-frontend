@@ -18,11 +18,10 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.WorkCarriedOutDetailsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.WorkCarriedOutDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class WorkCarriedOutDetailsViewSpec extends QuestionViewBehaviours[WorkCarriedOutDetails] {
+class WorkCarriedOutDetailsViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "workCarriedOutDetails"
 
@@ -30,7 +29,7 @@ class WorkCarriedOutDetailsViewSpec extends QuestionViewBehaviours[WorkCarriedOu
 
   def createView = () => workCarriedOutDetailsView(form, Summary("99996020001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[WorkCarriedOutDetails]) =>
+  def createViewUsingForm = (form: Form[String]) =>
     workCarriedOutDetailsView(form, Summary("99996020001"))(using fakeRequest, messages)
 
   "Work carried out details details" must {

@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.LeaseSurrenderedEarly
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LeaseSurrenderedEarlyViewSpec extends QuestionViewBehaviours[LeaseSurrenderedEarly] {
+class LeaseSurrenderedEarlyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "leaseSurrenderedEarly"
 
@@ -33,7 +33,7 @@ class LeaseSurrenderedEarlyViewSpec extends QuestionViewBehaviours[LeaseSurrende
 
   def createView = () => leaseSurrenderedEarlyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LeaseSurrenderedEarly]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     leaseSurrenderedEarlyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Lease surrendered early view" should {

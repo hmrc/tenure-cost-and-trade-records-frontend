@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.ServicePaidSeparatelyCharge
 import play.api.data.Form
-import play.api.data.Forms.{mapping, text}
+import play.api.data.Forms.{single, text}
 
-object ServicePaidSeparatelyChargeForm {
+object ServicePaidSeparatelyChargeForm:
 
-  val servicePaidSeparatelyChargeForm: Form[ServicePaidSeparatelyCharge] =
+  val servicePaidSeparatelyChargeForm: Form[BigDecimal] =
     Form(
-      mapping(
+      single(
         "annualCharge" ->
           text
             .verifying("error.servicePaidSeparatelyCharge.required", s => s.nonEmpty)
@@ -33,7 +32,5 @@ object ServicePaidSeparatelyChargeForm {
               s => s.isEmpty || (s.matches("^\\d*\\.?\\d+$") && BigDecimal(s) >= BigDecimal(0))
             )
             .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString)
-      )(ServicePaidSeparatelyCharge.apply)(o => Some(o.annualCharge))
+      )
     )
-
-}

@@ -46,7 +46,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
         val result = connector.submitNotConnected(refNumber, notConnectedSubmission).futureValue
 
         result.status shouldBe CREATED
-        result.body     should include(""""previouslyConnected":false,""")
+        result.body     should include(""""previouslyConnected":false""")
 
         verify(httpMock)
           .put(any[URL])(using any[HeaderCarrier])
@@ -60,7 +60,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
           connector.submitNotConnected(refNumber, notConnectedSubmission)
         }.futureValue
 
-        exception.getMessage should include(""""previouslyConnected":false,""")
+        exception.getMessage should include(""""previouslyConnected":false""")
 
         verify(httpMock)
           .put(any[URL])(using any[HeaderCarrier])
@@ -77,7 +77,7 @@ class SubmissionConnectorSpec extends TestBaseSpec {
 
         result.status shouldBe CREATED
         result.body     should include(
-          """"stillConnectedDetails":{"tradingNameOperatingFromProperty":"ABC LTD","""
+          """"stillConnectedDetails":{"addressConnectionType":"yes","connectionToProperty":"occupierTrustee","editAddress":{"buildingNameNumber":"Street 1","street1":"Street 2","town":"Town","county":"County","postcode":"BN12 4AX"},"isPropertyVacant":"yes","tradingNameOperatingFromProperty":"ABC LTD","""
         )
 
         verify(httpMock)

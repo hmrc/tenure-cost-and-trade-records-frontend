@@ -23,7 +23,7 @@ import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayCapitalSumId
@@ -55,7 +55,7 @@ class PayACapitalSumController @Inject() (
     Future.successful(
       Ok(
         payACapitalSumView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails) match {
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
             case Some(data) => payACapitalSumForm.fill(data)
             case _          => payACapitalSumForm
           },
@@ -67,8 +67,8 @@ class PayACapitalSumController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PayACapitalSumDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       payACapitalSumForm,
       formWithErrors =>
         BadRequest(
@@ -80,7 +80,7 @@ class PayACapitalSumController @Inject() (
           )
         ),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumDetails = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumOrPremium = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PayCapitalSumId, updatedData).apply(updatedData)))
@@ -95,7 +95,7 @@ class PayACapitalSumController @Inject() (
       case _    =>
         answers.forType match {
           case FOR6020           =>
-            answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven).map(_.benefitsGiven) match {
+            answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven) match {
               case Some(AnswerYes) =>
                 controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
               case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url
@@ -108,9 +108,7 @@ class PayACapitalSumController @Inject() (
               controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show().url
             else controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show().url
           case _                 =>
-            answers.aboutLeaseOrAgreementPartTwo.flatMap(
-              _.tenantAdditionsDisregardedDetails.map(_.tenantAdditionalDisregarded)
-            ) match {
+            answers.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
               case Some(AnswerYes) =>
                 controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
               case _               =>

@@ -184,9 +184,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
       val session = session6076Full.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6076Full.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails =
-              Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentAgreement))
-            )
+            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails = Some(MethodToFixCurrentRentAgreement))
           )
         )
       )
@@ -202,7 +200,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
       val sessionWithNoLeaseback = session6076Full.copy(
         aboutLeaseOrAgreementPartOne = Some(
           prefilledAboutLeaseOrAgreementPartOne.copy(
-            propertyUseLeasebackAgreement = Some(PropertyUseLeasebackArrangement(AnswerNo))
+            propertyUseLeasebackAgreement = Some(AnswerNo)
           )
         )
       )

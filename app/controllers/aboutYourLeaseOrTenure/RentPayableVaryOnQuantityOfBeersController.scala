@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetails
+import models.submissions.common.AnswersYesNo
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.rentVaryQuantityOfBeersId
 import play.api.i18n.I18nSupport
@@ -50,10 +50,9 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
     Future.successful(
       Ok(
         rentPayableVaryOnQuantityOfBeersView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeersDetails) match {
-            case Some(rentPayableVaryOnQuantityOfBeersDetails) =>
-              rentPayableVaryOnQuantityOfBeersForm.fill(rentPayableVaryOnQuantityOfBeersDetails)
-            case _                                             => rentPayableVaryOnQuantityOfBeersForm
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match {
+            case Some(answer) => rentPayableVaryOnQuantityOfBeersForm.fill(answer)
+            case _            => rentPayableVaryOnQuantityOfBeersForm
           },
           request.sessionData.toSummary
         )
@@ -61,13 +60,12 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[RentPayableVaryOnQuantityOfBeersDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       rentPayableVaryOnQuantityOfBeersForm,
       formWithErrors => BadRequest(rentPayableVaryOnQuantityOfBeersView(formWithErrors, request.sessionData.toSummary)),
       data => {
-        val updatedData =
-          updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeers = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(rentVaryQuantityOfBeersId, updatedData).apply(updatedData)))

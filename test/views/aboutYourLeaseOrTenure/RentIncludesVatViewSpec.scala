@@ -18,11 +18,11 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentIncludesVatForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.RentIncludesVatDetails
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludesVatViewSpec extends QuestionViewBehaviours[RentIncludesVatDetails] {
+class RentIncludesVatViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "rentIncludesVat"
 
@@ -30,7 +30,7 @@ class RentIncludesVatViewSpec extends QuestionViewBehaviours[RentIncludesVatDeta
 
   def createView = () => rentIncludesVatView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentIncludesVatDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludesVatView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent includes VAT view" must {

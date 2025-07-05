@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,9 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -26,7 +24,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[RentPayableVaryOnQuantityOfBeersDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("rentPayableVaryOnQuantityOfBeers.heading"),
@@ -53,6 +51,3 @@
   @includes.continueSaveAsDraftButtons(govukButton)
  }
 }
-
-
-

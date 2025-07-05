@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,15 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.createYesNoType
-import models.submissions.aboutYourLeaseOrTenure.RentOpenMarketValueDetails
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object RentOpenMarketValueForm {
+object RentOpenMarketValueForm:
 
-  val rentOpenMarketValuesForm = Form(
-    mapping(
-      "rentOpenMarketValue" -> createYesNoType("error.rentOpenMarketValue.missing")
-    )(RentOpenMarketValueDetails.apply)(o => Some(o.rentOpenMarketValues))
-  )
-}
+  val rentOpenMarketValuesForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "rentOpenMarketValue" -> createYesNoType("error.rentOpenMarketValue.missing")
+      )
+    )
