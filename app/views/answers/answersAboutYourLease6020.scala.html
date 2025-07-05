@@ -127,7 +127,7 @@
                         _.throughputAffectsRent.map(_.throughputAffectsRentDetails).flatMap(v => v.map(s => s)),
                         controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show(), "throughputAffectsRentDetails") ++
                     sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
-                        _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(v => dateUtil.formatDayMonthAbbrYear(v)),
+                        _.currentRentFirstPaid.map(v => dateUtil.formatDayMonthAbbrYear(v)),
                         controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month") ++
                     sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
                         _.currentLeaseOrAgreementBegin

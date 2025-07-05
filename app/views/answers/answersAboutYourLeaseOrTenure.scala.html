@@ -153,7 +153,7 @@
                     controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show(), "currentAnnualRent"
                 ) ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
-                    _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(v => dateUtil.formatDayMonthAbbrYear(v)),
+                    _.currentRentFirstPaid.map(v => dateUtil.formatDayMonthAbbrYear(v)),
                     controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.month"
                 ) ++
                 sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.leaseStartDateAndDuration",
@@ -177,7 +177,7 @@
                     Call("GET", "rent-includes-vat"), "rentIncludesVat"
                 ) ++
                 sectionAnswers.optionalRow("checkYourAnswersAboutYourLeaseOrTenure.currentRentFirstPaid",
-                    _.currentRentFirstPaid.map(_.currentRentFirstPaid).map(v => dateUtil.formatDayMonthAbbrYear(v)),
+                    _.currentRentFirstPaid.map(v => dateUtil.formatDayMonthAbbrYear(v)),
                     controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show(), "currentRentFirstPaid.day"
                 ) ++
                 sectionAnswers2.row("checkYourAnswersAboutYourLeaseOrTenure.tenancyLeaseAgreementExpire",

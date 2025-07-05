@@ -18,11 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.CurrentRentFirstPaidForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFirstPaid] {
+import java.time.LocalDate
+
+class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate] {
 
   val messageKeyPrefix = "currentRentFirstPaid"
 
@@ -32,7 +33,7 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[CurrentRentFir
 
   def createView = () => currentRentFirstPaidView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CurrentRentFirstPaid]) =>
+  def createViewUsingForm = (form: Form[LocalDate]) =>
     currentRentFirstPaidView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Current rent first paid view" must {

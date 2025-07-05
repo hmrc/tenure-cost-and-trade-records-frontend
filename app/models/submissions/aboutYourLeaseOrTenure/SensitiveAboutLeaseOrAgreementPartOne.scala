@@ -21,6 +21,8 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
+import java.time.LocalDate
+
 case class SensitiveAboutLeaseOrAgreementPartOne(
   aboutTheLandlord: Option[SensitiveAboutTheLandlord] = None,
   connectedToLandlord: Option[AnswersYesNo] = None,
@@ -29,7 +31,7 @@ case class SensitiveAboutLeaseOrAgreementPartOne(
   currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
   propertyUseLeasebackAgreement: Option[AnswersYesNo] = None,
   annualRent: Option[BigDecimal] = None,
-  currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
+  currentRentFirstPaid: Option[LocalDate] = None,
   currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
   includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,
   doesTheRentPayable: Option[DoesTheRentPayable] = None,

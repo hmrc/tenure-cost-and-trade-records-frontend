@@ -1369,7 +1369,7 @@ trait FakeObjects {
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
-    currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
+    currentRentFirstPaid = Some(prefilledDateInput),
     currentLeaseOrAgreementBegin = Some(CurrentLeaseOrAgreementBegin(MonthsYearDuration(4, 2024), "Granted for")),
     includedInYourRentDetails =
       Some(IncludedInYourRentDetails(List(IncludedInYourRentInformationVat), BigDecimal(100))),
@@ -1395,7 +1395,7 @@ trait FakeObjects {
     Some(prefilledCurrentRentPayableWithin12Months),
     Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
-    currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
+    currentRentFirstPaid = Some(prefilledDateInput),
     currentLeaseOrAgreementBegin = Some(CurrentLeaseOrAgreementBegin(MonthsYearDuration(4, 2024), "Granted for")),
     includedInYourRentDetails = Some(IncludedInYourRentDetails(List.empty)),
     doesTheRentPayable = Some(DoesTheRentPayable(List.empty, "Does rent payable details")),
@@ -1415,7 +1415,7 @@ trait FakeObjects {
     None,
     Some(prefilledPropertyUseLeasebackArrangement),
     Some(prefilledAnnualRent),
-    currentRentFirstPaid = Some(CurrentRentFirstPaid(prefilledDateInput)),
+    currentRentFirstPaid = Some(prefilledDateInput),
     rentIncludeTradeServicesDetails = Some(AnswerYes),
     rentIncludeFixturesAndFittings = Some(AnswerYes),
     rentOpenMarketValue = Some(AnswerYes)
