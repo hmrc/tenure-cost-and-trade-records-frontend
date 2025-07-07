@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyForm.servicePaidSeparatelyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, ServicePaidSeparately, ServicesPaid}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, ServicesPaid}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.ServicePaidSeparatelyId
 import play.api.i18n.I18nSupport
@@ -45,7 +45,7 @@ class ServicePaidSeparatelyController @Inject() (
     with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[ServicePaidSeparately] = for {
+    val existingDetails: Option[String] = for {
       idx                   <- index
       existingServicesPaid  <- request.sessionData.aboutLeaseOrAgreementPartThree.map(_.servicesPaid)
       requestedServicesPaid <- existingServicesPaid.lift(idx)
@@ -63,8 +63,8 @@ class ServicePaidSeparatelyController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[ServicePaidSeparately](
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[String](
       servicePaidSeparatelyForm,
       formWithErrors =>
         BadRequest(

@@ -14,18 +14,13 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumDetails
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.ForType.*
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend, RadioItem, Radios}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -34,7 +29,7 @@
 )
 
 
-@(theForm: Form[PayACapitalSumDetails], forType: ForType, backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], forType: ForType, backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @payACapitalSum = @{
   forType match {
@@ -91,6 +86,3 @@
     @includes.continueSaveAsDraftButtons(govukButton)
   }
 }
-
-
-

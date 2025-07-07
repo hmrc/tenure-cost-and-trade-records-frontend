@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.WorkCarriedOutDetailsForm.workCarriedOutDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.WorkCarriedOutDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.WorkCarriedOutDetailsId
 import play.api.Logging
@@ -60,7 +59,7 @@ class WorkCarriedOutDetailsController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[WorkCarriedOutDetails](
+    continueOrSaveAsDraft[String](
       workCarriedOutDetailsForm,
       formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary)),
       data => {

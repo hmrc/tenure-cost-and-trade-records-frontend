@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,15 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.createYesNoType
-import models.submissions.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewDetails
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object CanRentBeReducedOnReviewForm {
+object CanRentBeReducedOnReviewForm:
 
-  val canRentBeReducedOnReviewForm = Form(
-    mapping(
-      "canRentBeReducedOnReview" -> createYesNoType("error.canRentBeReducedOnReview.missing")
-    )(CanRentBeReducedOnReviewDetails.apply)(o => Some(o.rentReducedOnReview))
-  )
-}
+  val canRentBeReducedOnReviewForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "canRentBeReducedOnReview" -> createYesNoType("error.canRentBeReducedOnReview.missing")
+      )
+    )

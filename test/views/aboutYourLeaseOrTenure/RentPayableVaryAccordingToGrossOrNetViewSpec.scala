@@ -18,13 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentPayableVaryAccordingToGrossOrNetViewSpec
-    extends QuestionViewBehaviours[RentPayableVaryAccordingToGrossOrNetDetails] {
+class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "rentPayableVaryAccordingToGrossOrNet"
 
@@ -35,7 +34,7 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec
   def createView = () =>
     rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentPayableVaryAccordingToGrossOrNetDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent payable vary on gross or net turnover view" must {

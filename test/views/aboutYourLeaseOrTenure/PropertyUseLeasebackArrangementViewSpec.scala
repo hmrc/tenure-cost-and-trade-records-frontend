@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyUseLeasebackArrangementForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangement
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[PropertyUseLeasebackArrangement] {
+class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "propertyUseLeasebackArrangement"
 
@@ -34,7 +34,7 @@ class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[Pro
   def createView = () =>
     propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PropertyUseLeasebackArrangement]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(using fakeRequest, messages)
 
   "property use leaseback arrangement view" must {

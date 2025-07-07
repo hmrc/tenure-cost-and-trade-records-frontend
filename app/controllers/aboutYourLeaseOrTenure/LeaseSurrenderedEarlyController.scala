@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.LeaseSurrenderedEarlyForm.leaseSurrenderedEarlyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.LeaseSurrenderedEarly
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.LeaseSurrenderedEarlyId
@@ -60,8 +60,8 @@ class LeaseSurrenderedEarlyController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[LeaseSurrenderedEarly](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       leaseSurrenderedEarlyForm,
       formWithErrors =>
         BadRequest(view(formWithErrors, calculateBackLink(using request), request.sessionData.toSummary)),
@@ -76,9 +76,7 @@ class LeaseSurrenderedEarlyController @Inject() (
   }
 
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
-    request.sessionData.aboutLeaseOrAgreementPartTwo
-      .flatMap(_.tenantAdditionsDisregardedDetails)
-      .map(_.tenantAdditionalDisregarded) match {
+    request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
       case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url

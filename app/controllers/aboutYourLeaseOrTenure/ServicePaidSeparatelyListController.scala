@@ -113,7 +113,7 @@ class ServicePaidSeparatelyListController @Inject() (
     request.sessionData.aboutLeaseOrAgreementPartThree
       .flatMap(_.servicesPaid.lift(index))
       .map { servicesPaid =>
-        val service = servicesPaid.details.description
+        val service = servicesPaid.details
         Future.successful(
           Ok(
             theConfirmationView(
@@ -135,7 +135,7 @@ class ServicePaidSeparatelyListController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartThree
           .flatMap(_.tradeServices.lift(index))
           .map { services =>
-            val description = services.details.description
+            val description = services.details
             Future.successful(
               BadRequest(
                 theConfirmationView(

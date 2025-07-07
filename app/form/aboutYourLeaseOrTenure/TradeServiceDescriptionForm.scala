@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,20 @@
  */
 
 package form.aboutYourLeaseOrTenure
-import models.submissions.aboutYourLeaseOrTenure.TradeServicesDetails
+
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object TradeServiceDescriptionForm {
+object TradeServiceDescriptionForm:
 
-  val tradeServicesDescriptionForm: Form[TradeServicesDetails] =
+  val tradeServicesDescriptionForm: Form[String] =
     Form(
-      mapping(
+      single(
         "description" -> default(text, "")
           .verifying(
             nonEmpty(errorMessage = "tradeServiceDescription.describe.error"),
             maxLength(500, "error.tradeServiceDescription.maxLength")
           )
-      )(TradeServicesDetails.apply)(o => Some(o.description))
+      )
     )
-
-}

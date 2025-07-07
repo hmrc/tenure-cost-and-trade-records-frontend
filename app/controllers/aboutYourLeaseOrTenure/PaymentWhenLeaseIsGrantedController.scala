@@ -23,7 +23,7 @@ import form.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedForm.paymentWhenLeas
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
-import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.PayWhenLeaseGrantedId
@@ -55,7 +55,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
     Future.successful(
       Ok(
         paymentWhenLeaseIsGrantedView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.paymentWhenLeaseIsGrantedDetails) match {
+          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.receivePaymentWhenLeaseGranted) match {
             case Some(data) => paymentWhenLeaseIsGrantedForm.fill(data)
             case _          => paymentWhenLeaseIsGrantedForm
           },
@@ -66,15 +66,15 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[PaymentWhenLeaseIsGrantedDetails](
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[AnswersYesNo](
       paymentWhenLeaseIsGrantedForm,
       formWithErrors =>
         BadRequest(
           paymentWhenLeaseIsGrantedView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
         ),
       data => {
-        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(paymentWhenLeaseIsGrantedDetails = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(receivePaymentWhenLeaseGranted = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PayWhenLeaseGrantedId, updatedData).apply(updatedData)))
@@ -87,9 +87,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#payment-when-lease-is-granted"
       case _    =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(
-          _.payACapitalSumDetails.map(_.capitalSumOrPremium)
-        ) match {
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
           case Some(AnswerYes) =>
             answers.forType match {
               case FOR6030 =>

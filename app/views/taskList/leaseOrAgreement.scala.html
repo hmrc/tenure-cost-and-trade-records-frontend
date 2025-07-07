@@ -113,15 +113,15 @@
       @includes.taskListItem("rent-open-market-value", "checkYourAnswersAboutYourLeaseOrTenure.howRentWasCalculated.heading",
        if(forType == FOR6048){controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()} else {controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()},
        section5Completed,
-       if(forType == FOR6048){session.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed)} else {session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails)},
+       if(forType == FOR6048){session.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed)} else {session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue)},
        session.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails).isEmpty
       )
 
       @includes.taskListItem("pay-a-capital-sum", "checkYourAnswersAboutYourLeaseOrTenure.exclusionsRestrictionsIncentives.heading",
        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show(),
        section5Completed,
-       session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumDetails),
-       session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValueDetails).isEmpty
+       session.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium),
+       session.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue).isEmpty
       )
      }
 

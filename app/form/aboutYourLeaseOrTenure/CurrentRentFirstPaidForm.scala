@@ -17,17 +17,17 @@
 package form.aboutYourLeaseOrTenure
 
 import form.DateMappings.requiredDateMapping
-import models.submissions.aboutYourLeaseOrTenure.CurrentRentFirstPaid
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 import play.api.i18n.Messages
 
-object CurrentRentFirstPaidForm {
+import java.time.LocalDate
 
-  def currentRentFirstPaidForm(using messages: Messages): Form[CurrentRentFirstPaid] = Form(
-    mapping(
-      "currentRentFirstPaid" -> requiredDateMapping("currentRentFirstPaid", allowPastDates = true)
-    )(CurrentRentFirstPaid.apply)(o => Some(o.currentRentFirstPaid))
-  )
+object CurrentRentFirstPaidForm:
 
-}
+  def currentRentFirstPaidForm(using messages: Messages): Form[LocalDate] =
+    Form(
+      single(
+        "currentRentFirstPaid" -> requiredDateMapping("currentRentFirstPaid", allowPastDates = true)
+      )
+    )

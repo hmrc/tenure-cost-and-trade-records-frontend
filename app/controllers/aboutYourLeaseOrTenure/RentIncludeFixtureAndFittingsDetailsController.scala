@@ -25,7 +25,6 @@ import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.RentIncludeFixturesOrFittingsInformationDetails
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentFixtureAndFittingsDetailsPageId
 import play.api.i18n.I18nSupport
@@ -73,11 +72,9 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
       Future.successful(
         Ok(
           rentIncludeFixtureAndFittingsDetailsView(
-            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixtureAndFittingsDetails) match {
-              case Some(rentIncludeFixtureAndFittingsDetails) =>
-                rentIncludeFixtureAndFittingsDetailsForm().fill(rentIncludeFixtureAndFittingsDetails)
-              case _                                          => rentIncludeFixtureAndFittingsDetailsForm()
-            },
+            rentIncludeFixtureAndFittingsDetailsForm().fill(
+              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittingsAmount)
+            ),
             request.sessionData.toSummary
           )
         )
@@ -106,13 +103,13 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
         }
       )
     } else {
-      continueOrSaveAsDraft[RentIncludeFixturesOrFittingsInformationDetails](
+      continueOrSaveAsDraft[Option[BigDecimal]](
         rentIncludeFixtureAndFittingsDetailsForm(annualRent, otherIncludedPartsSum),
         formWithErrors =>
           BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors, request.sessionData.toSummary)),
         data => {
           val updatedData =
-            updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixtureAndFittingsDetails = Some(data)))
+            updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsAmount = data))
           session.saveOrUpdate(updatedData).map { _ =>
             Redirect(navigator.nextPage(RentFixtureAndFittingsDetailsPageId, updatedData).apply(updatedData))
           }

@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[RentPayableVaryOnQuantityOfBeersDetails] {
+class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "rentPayableVaryOnQuantityOfBeers"
 
@@ -31,7 +31,7 @@ class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[Re
 
   def createView = () => rentPayableVaryOnQuantityOfBeersView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentPayableVaryOnQuantityOfBeersDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentPayableVaryOnQuantityOfBeersView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent payable vary on quantity beers view" must {

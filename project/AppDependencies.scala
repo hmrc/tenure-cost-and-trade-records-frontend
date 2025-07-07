@@ -3,14 +3,14 @@ import sbt.*
 
 object AppDependencies {
 
-  val bootstrapVersion              = "9.13.0"
-  val playFrontendVersion           = "12.6.0"
+  val bootstrapVersion              = "9.14.0"
+  val playFrontendVersion           = "12.7.0"
   val playConditionalMappingVersion = "3.3.0"
   val mongoVersion                  = "2.6.0"
   val cryptoJsonVersion             = "8.2.0"
 
   // Test dependencies
-  val scalatestPlusPlayVersion       = "7.0.1"
+  val scalatestPlusPlayVersion       = "7.0.2"
   val scalatestVersion               = "3.2.19"
   val scalaTestPlusScalaCheckVersion = "3.2.19.0"
   val scalaTestPlusMockitoVersion    = "3.2.19.0"

@@ -14,7 +14,6 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.TradeServicesDetails
 @import models.pages.Summary
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components._
@@ -25,7 +24,7 @@
         hmrcCharacterCount: HmrcCharacterCount,
 )
 
-@(theForm: Form[TradeServicesDetails], index: Option[Int], backLink: String,  summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], index: Option[Int], backLink: String,  summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("tradeServiceDescription.heading"),

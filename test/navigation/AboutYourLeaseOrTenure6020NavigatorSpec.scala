@@ -60,9 +60,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(tenantAdditionsDisregardedDetails =
-              Some(TenantAdditionsDisregardedDetails(AnswerNo))
-            )
+            AboutLeaseOrAgreementPartTwo(tenantAdditionsDisregarded = Some(AnswerNo))
           )
         )
       )
@@ -105,9 +103,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           session6020.aboutLeaseOrAgreementPartOne.getOrElse(
-            AboutLeaseOrAgreementPartOne(rentIncludeTradeServicesDetails =
-              Some(RentIncludeTradeServicesDetails(AnswerYes))
-            )
+            AboutLeaseOrAgreementPartOne(rentIncludeTradeServicesDetails = Some(AnswerYes))
           )
         )
       )
@@ -122,9 +118,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           session6020.aboutLeaseOrAgreementPartOne.getOrElse(
-            AboutLeaseOrAgreementPartOne(rentIncludeTradeServicesDetails =
-              Some(RentIncludeTradeServicesDetails(AnswerNo))
-            )
+            AboutLeaseOrAgreementPartOne(rentIncludeTradeServicesDetails = Some(AnswerNo))
           )
         )
       )
@@ -138,7 +132,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartThree = Some(
           session6020.aboutLeaseOrAgreementPartThree.getOrElse(
-            AboutLeaseOrAgreementPartThree(benefitsGiven = Some(BenefitsGiven(AnswerYes)))
+            AboutLeaseOrAgreementPartThree(benefitsGiven = Some(AnswerYes))
           )
         )
       )
@@ -151,7 +145,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartThree = Some(
           session6020.aboutLeaseOrAgreementPartThree.getOrElse(
-            AboutLeaseOrAgreementPartThree(benefitsGiven = Some(BenefitsGiven(AnswerNo)))
+            AboutLeaseOrAgreementPartThree(benefitsGiven = Some(AnswerNo))
           )
         )
       )
@@ -164,7 +158,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerYes)))
+            AboutLeaseOrAgreementPartTwo(payACapitalSumOrPremium = Some(AnswerYes))
           )
         )
       )
@@ -190,7 +184,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(payACapitalSumDetails = Some(PayACapitalSumDetails(AnswerNo)))
+            AboutLeaseOrAgreementPartTwo(payACapitalSumOrPremium = Some(AnswerNo))
           )
         )
       )
@@ -225,7 +219,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           session6020.aboutLeaseOrAgreementPartOne.getOrElse(
-            AboutLeaseOrAgreementPartOne(rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerNo)))
+            AboutLeaseOrAgreementPartOne(rentOpenMarketValue = Some(AnswerNo))
           )
         )
       )
@@ -288,7 +282,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           session6020.aboutLeaseOrAgreementPartOne.getOrElse(
-            AboutLeaseOrAgreementPartOne(rentOpenMarketValueDetails = Some(RentOpenMarketValueDetails(AnswerYes)))
+            AboutLeaseOrAgreementPartOne(rentOpenMarketValue = Some(AnswerYes))
           )
         )
       )
@@ -340,9 +334,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           session6020.aboutLeaseOrAgreementPartOne.getOrElse(
-            AboutLeaseOrAgreementPartOne(rentIncludeFixturesAndFittingsDetails =
-              Some(RentIncludeFixturesAndFittingsDetails(AnswerYes))
-            )
+            AboutLeaseOrAgreementPartOne(rentIncludeFixturesAndFittings = Some(AnswerYes))
           )
         )
       )
@@ -359,7 +351,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartThree = Some(
           session6020.aboutLeaseOrAgreementPartThree.getOrElse(
-            AboutLeaseOrAgreementPartThree(propertyUpdates = Some(PropertyUpdates(AnswerNo)))
+            AboutLeaseOrAgreementPartThree(propertyUpdates = Some(AnswerNo))
           )
         )
       )
@@ -448,9 +440,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails =
-              Some(MethodToFixCurrentRentDetails(MethodToFixCurrentRentAgreement))
-            )
+            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails = Some(MethodToFixCurrentRentAgreement))
           )
         )
       )
@@ -495,7 +485,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     "return a function that goes to trade services description page when addAnotherService is yes" in {
 
       val tradeServicesEntry  = TradeServices(
-        details = TradeServicesDetails(description = "Some service"),
+        details = "Some service",
         addAnotherService = Some(AnswerYes)
       )
       val aboutLeasePartThree = AboutLeaseOrAgreementPartThree(tradeServices = IndexedSeq(tradeServicesEntry))
@@ -511,7 +501,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     "return a function that goes to payment for trade services page when addAnotherService is no" in {
 
       val tradeServicesEntry  = TradeServices(
-        details = TradeServicesDetails(description = "test"),
+        details = "test",
         addAnotherService = Some(AnswerNo)
       )
       val aboutLeasePartThree = AboutLeaseOrAgreementPartThree(tradeServices = IndexedSeq(tradeServicesEntry))
@@ -526,7 +516,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to ServicePaidSeparatelyController when addAnotherPaidService is Some(AnswerYes)" in {
       val paidServiceEntry    = ServicesPaid(
-        details = ServicePaidSeparately(description = "test"),
+        details = "test",
         addAnotherPaidService = Some(AnswerYes)
       )
       val aboutLeasePartThree = AboutLeaseOrAgreementPartThree(servicesPaid = IndexedSeq(paidServiceEntry))

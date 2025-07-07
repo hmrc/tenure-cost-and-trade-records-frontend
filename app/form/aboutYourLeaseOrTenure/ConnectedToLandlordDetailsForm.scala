@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,19 +16,18 @@
 
 package form.aboutYourLeaseOrTenure
 
-import models.submissions.aboutYourLeaseOrTenure.ConnectedToLandlordInformationDetails
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, text}
+import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object ConnectedToLandlordDetailsForm {
+object ConnectedToLandlordDetailsForm:
 
-  val connectedToLandlordDetailsForm = Form(
-    mapping(
-      "connectedToLandlordDetails" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.connectedToLandlordDetails.required"),
-        maxLength(2000, "error.connectedToLandlordDetails.maxLength")
+  val connectedToLandlordDetailsForm: Form[String] =
+    Form(
+      single(
+        "connectedToLandlordDetails" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.connectedToLandlordDetails.required"),
+          maxLength(2000, "error.connectedToLandlordDetails.maxLength")
+        )
       )
-    )(ConnectedToLandlordInformationDetails.apply)(o => Some(o.connectedToLandlordInformationDetails))
-  )
-}
+    )

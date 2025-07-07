@@ -17,16 +17,14 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.currencyMapping
-import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumAmountDetails
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object PayACapitalSumAmountDetailsForm {
+object PayACapitalSumAmountDetailsForm:
 
-  def payACapitalSumAmountDetailsForm: Form[PayACapitalSumAmountDetails] =
+  def payACapitalSumAmountDetailsForm: Form[BigDecimal] =
     Form(
-      mapping(
+      single(
         "capitalSumPaidDetails" -> currencyMapping(".capitalSumPaidDetails")
-      )(PayACapitalSumAmountDetails.apply)(o => Some(o.capitalSumPaidAmountDetails))
+      )
     )
-}

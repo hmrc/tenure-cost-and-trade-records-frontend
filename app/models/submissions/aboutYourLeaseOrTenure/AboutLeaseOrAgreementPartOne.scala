@@ -21,29 +21,29 @@ import models.Session
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
-//There are now 22 attributes in this case class, so no more can be added
+import java.time.LocalDate
+
 case class AboutLeaseOrAgreementPartOne(
   aboutTheLandlord: Option[AboutTheLandlord] = None,
   connectedToLandlord: Option[AnswersYesNo] = None,
-  connectedToLandlordDetails: Option[ConnectedToLandlordInformationDetails] = None,
+  connectedToLandlordDetails: Option[String] = None,
   leaseOrAgreementYearsDetails: Option[LeaseOrAgreementYearsDetails] = None,
   currentRentPayableWithin12Months: Option[CurrentRentPayableWithin12Months] = None,
-  propertyUseLeasebackAgreement: Option[PropertyUseLeasebackArrangement] = None,
+  propertyUseLeasebackAgreement: Option[AnswersYesNo] = None,
   annualRent: Option[BigDecimal] = None,
-  currentRentFirstPaid: Option[CurrentRentFirstPaid] = None,
+  currentRentFirstPaid: Option[LocalDate] = None,
   currentLeaseOrAgreementBegin: Option[CurrentLeaseOrAgreementBegin] = None,
   includedInYourRentDetails: Option[IncludedInYourRentDetails] = None,
   doesTheRentPayable: Option[DoesTheRentPayable] = None,
-  sharedResponsibilitiesDetails: Option[SharedResponsibilitiesDetails] = None,
-  rentIncludeTradeServicesDetails: Option[RentIncludeTradeServicesDetails] = None,
+  rentIncludeTradeServicesDetails: Option[AnswersYesNo] = None,
   rentIncludeTradeServicesInformation: Option[RentIncludeTradeServicesInformationDetails] = None,
-  rentIncludeFixturesAndFittingsDetails: Option[RentIncludeFixturesAndFittingsDetails] = None,
-  rentIncludeFixtureAndFittingsDetails: Option[RentIncludeFixturesOrFittingsInformationDetails] = None,
-  rentOpenMarketValueDetails: Option[RentOpenMarketValueDetails] = None,
+  rentIncludeFixturesAndFittings: Option[AnswersYesNo] = None,
+  rentIncludeFixturesAndFittingsAmount: Option[BigDecimal] = None,
+  rentOpenMarketValue: Option[AnswersYesNo] = None,
   whatIsYourCurrentRentBasedOnDetails: Option[WhatIsYourCurrentRentBasedOnDetails] = None,
-  rentIncreasedAnnuallyWithRPIDetails: Option[RentIncreasedAnnuallyWithRPIDetails] = None,
+  rentIncreasedAnnuallyWithRPIDetails: Option[AnswersYesNo] = None,
   checkYourAnswersAboutYourLeaseOrTenure: Option[AnswersYesNo] = None,
-  rentIncludesVat: Option[RentIncludesVatDetails] = None
+  rentIncludesVat: Option[AnswersYesNo] = None
 )
 
 object AboutLeaseOrAgreementPartOne:

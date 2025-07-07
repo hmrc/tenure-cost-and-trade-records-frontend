@@ -43,9 +43,7 @@
 @session = @{request.sessionData}
 
 @services = @{
- session.aboutLeaseOrAgreementPartThree.fold(Seq.empty[String]){
-  servicePaid => servicePaid.servicesPaid.map(_.details.description)
- }
+ session.aboutLeaseOrAgreementPartThree.fold(Seq.empty[String])(_.servicesPaid.map(_.details))
 }
 
 @headingService= @{if (services.isEmpty) messages("servicePaidSeparatelyListZero.heading") else if (services.size > 1) messages("servicePaidSeparatelyListPlural.heading", services.length, service) else messages("servicePaidSeparatelyList.heading", services.length, service) }

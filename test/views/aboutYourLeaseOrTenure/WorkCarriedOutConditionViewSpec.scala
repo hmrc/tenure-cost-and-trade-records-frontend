@@ -17,12 +17,12 @@
 package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.WorkCarriedOutConditionForm.workCarriedOutConditionForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.WorkCarriedOutCondition
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[WorkCarriedOutCondition] {
+class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "workCarriedOutCondition"
 
@@ -33,7 +33,7 @@ class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[WorkCarried
   def createView = () =>
     workCarriedOutConditionView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[WorkCarriedOutCondition]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     workCarriedOutConditionView(form, backLink, Summary("99996020001"))(using fakeRequest, messages)
 
   "work carried out condition view" should {

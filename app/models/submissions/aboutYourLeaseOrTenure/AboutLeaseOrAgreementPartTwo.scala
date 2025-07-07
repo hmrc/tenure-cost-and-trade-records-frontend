@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,42 +18,44 @@ package models.submissions.aboutYourLeaseOrTenure
 
 import actions.SessionRequest
 import models.Session
+import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
+
+import java.time.LocalDate
 
 //Currently 21 parameters in this case class, so only one more is allowed!
 case class AboutLeaseOrAgreementPartTwo(
-  rentPayableVaryAccordingToGrossOrNetDetails: Option[RentPayableVaryAccordingToGrossOrNetDetails] = None,
-  rentPayableVaryAccordingToGrossOrNetInformationDetails: Option[
-    RentPayableVaryAccordingToGrossOrNetInformationDetails
-  ] = None,
-  rentPayableVaryOnQuantityOfBeersDetails: Option[RentPayableVaryOnQuantityOfBeersDetails] = None,
-  rentPayableVaryOnQuantityOfBeersInformationDetails: Option[RentPayableVaryOnQuantityOfBeersInformationDetails] = None,
+  rentPayableVaryAccordingToGrossOrNet: Option[AnswersYesNo] = None,
+  rentPayableVaryAccordingToGrossOrNetDetails: Option[String] = None,
+  rentPayableVaryOnQuantityOfBeers: Option[AnswersYesNo] = None,
+  rentPayableVaryOnQuantityOfBeersDetails: Option[String] = None,
   howIsCurrentRentFixed: Option[HowIsCurrentRentFixed] = None,
-  methodToFixCurrentRentDetails: Option[MethodToFixCurrentRentDetails] = None,
+  methodToFixCurrentRentDetails: Option[MethodToFixCurrentRent] = None,
   intervalsOfRentReview: Option[IntervalsOfRentReview] = None,
-  canRentBeReducedOnReviewDetails: Option[CanRentBeReducedOnReviewDetails] = None,
-  incentivesPaymentsConditionsDetails: Option[IncentivesPaymentsConditionsDetails] = None,
-  tenantAdditionsDisregardedDetails: Option[TenantAdditionsDisregardedDetails] = None,
-  tenantsAdditionsDisregardedDetails: Option[TenantsAdditionsDisregardedDetails] = None,
-  payACapitalSumDetails: Option[PayACapitalSumDetails] = None,
+  canRentBeReducedOnReview: Option[AnswersYesNo] = None,
+  incentivesPaymentsConditionsDetails: Option[AnswersYesNo] = None,
+  tenantAdditionsDisregarded: Option[AnswersYesNo] = None,
+  tenantAdditionsDisregardedDetails: Option[String] = None,
+  payACapitalSumOrPremium: Option[AnswersYesNo] = None,
   payACapitalSumInformationDetails: Option[PayACapitalSumInformationDetails] = None, // Added Feb 2024 - 6030 Journey
-  payACapitalSumAmountDetails: Option[PayACapitalSumAmountDetails] = None, // Added Nov 2024 - 6048 Journey
-  capitalSumDescription: Option[CapitalSumDescription] = None, // 6020
-  paymentWhenLeaseIsGrantedDetails: Option[PaymentWhenLeaseIsGrantedDetails] = None,
-  tenancyLeaseAgreementExpire: Option[TenancyLeaseAgreementExpire] = None,
-  legalOrPlanningRestrictions: Option[LegalOrPlanningRestrictions] = None,
-  legalOrPlanningRestrictionsDetails: Option[LegalOrPlanningRestrictionsDetails] = None,
+  payACapitalSumAmount: Option[BigDecimal] = None, // Added Nov 2024 - 6048 Journey
+  capitalSumDescription: Option[String] = None, // 6020
+  receivePaymentWhenLeaseGranted: Option[AnswersYesNo] = None,
+  tenancyLeaseAgreementExpire: Option[LocalDate] = None,
+  legalOrPlanningRestrictions: Option[AnswersYesNo] = None,
+  legalOrPlanningRestrictionsDetails: Option[String] = None,
   ultimatelyResponsibleInsideRepairs: Option[UltimatelyResponsibleInsideRepairs] = None,
   ultimatelyResponsibleOutsideRepairs: Option[UltimatelyResponsibleOutsideRepairs] = None,
   ultimatelyResponsibleBuildingInsurance: Option[UltimatelyResponsibleBuildingInsurance] = None
 )
 
-object AboutLeaseOrAgreementPartTwo {
+object AboutLeaseOrAgreementPartTwo:
+
   implicit val format: OFormat[AboutLeaseOrAgreementPartTwo] = Json.format
 
   def updateAboutLeaseOrAgreementPartTwo(
     copy: AboutLeaseOrAgreementPartTwo => AboutLeaseOrAgreementPartTwo
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]): Session =
     val currentAboutLeaseOrAgreementPartTwo = sessionRequest.sessionData.aboutLeaseOrAgreementPartTwo
 
     val updatedAboutLeaseOrAgreementPartTwo = currentAboutLeaseOrAgreementPartTwo match {
@@ -62,6 +64,3 @@ object AboutLeaseOrAgreementPartTwo {
     }
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartTwo = updatedAboutLeaseOrAgreementPartTwo)
-
-  }
-}

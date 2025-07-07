@@ -18,12 +18,12 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedForm.paymentWhenLeaseIsGrantedForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.PaymentWhenLeaseIsGrantedDetails
+import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[PaymentWhenLeaseIsGrantedDetails] {
+class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "receivePaymentWhenLeaseGranted"
 
@@ -34,7 +34,7 @@ class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[PaymentWhen
   def createView = () =>
     paymentWhenLeaseIsGrantedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[PaymentWhenLeaseIsGrantedDetails]) =>
+  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     paymentWhenLeaseIsGrantedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Payment when lease is granted view" must {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,11 +20,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class ServicesPaid(
-  details: ServicePaidSeparately,
-  annualCharge: Option[ServicePaidSeparatelyCharge] = None,
+  details: String,
+  annualCharge: Option[BigDecimal] = None,
   addAnotherPaidService: Option[AnswersYesNo] = None
 )
 
-object ServicesPaid {
+object ServicesPaid:
   implicit val format: OFormat[ServicesPaid] = Json.format
-}

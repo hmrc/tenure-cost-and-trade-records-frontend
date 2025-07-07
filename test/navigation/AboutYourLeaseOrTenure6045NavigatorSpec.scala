@@ -19,7 +19,6 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutYourLeaseOrTenure.{IncentivesPaymentsConditionsDetails, TenantAdditionsDisregardedDetails}
 import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
@@ -183,11 +182,7 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
       val answers = session6045.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           prefilledAboutLeaseOrAgreementPartTwo6045.copy(
-            tenantAdditionsDisregardedDetails = Some(
-              TenantAdditionsDisregardedDetails(
-                tenantAdditionalDisregarded = AnswerNo
-              )
-            )
+            tenantAdditionsDisregarded = Some(AnswerNo)
           )
         )
       )
@@ -201,9 +196,7 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
       val answers = session6045.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           prefilledAboutLeaseOrAgreementPartTwo6045.copy(
-            incentivesPaymentsConditionsDetails = Some(
-              IncentivesPaymentsConditionsDetails(formerLeaseSurrendered = AnswerNo)
-            )
+            incentivesPaymentsConditionsDetails = Some(AnswerNo)
           )
         )
       )
@@ -218,9 +211,7 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
         forType = FOR6045,
         aboutLeaseOrAgreementPartTwo = Some(
           prefilledAboutLeaseOrAgreementPartTwo6045.copy(
-            incentivesPaymentsConditionsDetails = Some(
-              IncentivesPaymentsConditionsDetails(formerLeaseSurrendered = AnswerYes)
-            )
+            incentivesPaymentsConditionsDetails = Some(AnswerYes)
           )
         )
       )
@@ -236,9 +227,7 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
         forType = FOR6045,
         aboutLeaseOrAgreementPartTwo = Some(
           prefilledAboutLeaseOrAgreementPartTwo6045.copy(
-            tenantAdditionsDisregardedDetails = Some(
-              TenantAdditionsDisregardedDetails(tenantAdditionalDisregarded = AnswerNo)
-            )
+            tenantAdditionsDisregarded = Some(AnswerNo)
           )
         )
       )
