@@ -3928,11 +3928,11 @@ checkYourAnswersAboutTheProperty.availabilityCommercial = Argaeledd ar gyfer gos
 checkYourAnswersAboutTheProperty.completedCommercial = Gosodiau masnachol wedi’u cwblhau – hyd at 28 noson
 checkYourAnswersAboutTheProperty.familyUse.heading = Defnydd teuluol
 checkYourAnswersAboutTheProperty.mainResidence = Prif fan preswylio neu ail gartref nad yw ar gael i’w roi ar osod?
-checkYourAnswersAboutTheProperty.occupiersLabel= Meddiannydd {0}
+checkYourAnswersAboutTheProperty.occupiersLabel= Meddiannydd
 checkYourAnswersAboutTheProperty.occupiersDetails = Manylion y meddiannydd
-checkYourAnswersAboutTheProperty.occupierCount = Rydych wedi ychwanegu {0} meddiannydd
-checkYourAnswersAboutTheProperty.occupiersCount = Rydych wedi ychwanegu {0} feddiannydd
-checkYourAnswersAboutTheProperty.occupiersAdd = Ychwanegu neu ddileu meddiannydd
+checkYourAnswersAboutTheProperty.occupierCount.singular = Rydych wedi ychwanegu {0} meddiannydd
+checkYourAnswersAboutTheProperty.occupierCount.plural = Rydych wedi ychwanegu {0} feddiannydd
+checkYourAnswersAboutTheProperty.occupiersAdd = Add an occupier
 checkYourAnswersAboutTheProperty.yearEndingWelsh.label = Year ending
 
 checkYourAnswersAboutTheTradingHistory.heading = Gwiriwch eich atebion – hanes masnachu

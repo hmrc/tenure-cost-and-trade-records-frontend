@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm.checkYourAnswersAboutThePropertyForm
+import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.ForType.*
 import models.Session
@@ -30,7 +30,7 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty
+import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty as CheckYourAnswersAboutThePropertyView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -39,38 +39,39 @@ import scala.concurrent.{ExecutionContext, Future}
 class CheckYourAnswersAboutThePropertyController @Inject() (
   mcc: MessagesControllerComponents,
   navigator: AboutYouAndThePropertyNavigator,
-  checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty,
+  theView: CheckYourAnswersAboutThePropertyView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with I18nSupport
-    with Logging {
+    with Logging:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersAboutThePropertyView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty) match {
-            case Some(checkYourAnswersAboutTheProperty) =>
-              checkYourAnswersAboutThePropertyForm.fill(checkYourAnswersAboutTheProperty)
-            case _                                      => checkYourAnswersAboutThePropertyForm
-          },
-          getBackLink(request.sessionData),
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    val freshForm = theForm
+    val filledForm =
+      for
+        aboutYouAndTheProperty <- request.sessionData.aboutYouAndTheProperty
+        answersYesNo <- aboutYouAndTheProperty.checkYourAnswersAboutTheProperty
+      yield theForm.fill(answersYesNo)
+
+    Ok(
+        theView(
+          filledForm.getOrElse(freshForm),
+          backLinkUrl(request.sessionData),
           request.sessionData.toSummary
         )
       )
-    )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      checkYourAnswersAboutThePropertyForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          checkYourAnswersAboutThePropertyView(
+          theView(
             formWithErrors,
-            getBackLink(request.sessionData),
+            backLinkUrl(request.sessionData),
             request.sessionData.toSummary
           )
         ),
@@ -79,7 +80,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url)
           )
-        session
+        repo
           .saveOrUpdate(updatedData)
           .flatMap(_ =>
             Future.successful(
@@ -90,7 +91,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String =
+  private def backLinkUrl(answers: Session): String =
     answers.forType match {
       case FOR6010 | FOR6011 =>
         answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
@@ -121,4 +122,3 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
             controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
       case FOR6076           => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
     }
-}
