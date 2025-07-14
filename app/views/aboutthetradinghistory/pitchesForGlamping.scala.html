@@ -74,8 +74,7 @@
 ) {
 
     <p class="govuk-body">
-        @messages("tentingPitches.common.VAT")&nbsp<span>
-    @messages("tentingPitches.common.stateTheNumber")
+        @messages("tentingPitches.common.VAT")
     </span>
     </p>
 
@@ -95,15 +94,6 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            Seq(
-                                TableRow(
-                                    content = Text(messages("tentingPitches.common.tradingPeriod"))
-                                ),
-                                TableRow(
-                                    content = Text(s"${tradingPeriodSeq(idx)} ${messages("turnover.weeks")}"),
-                                    classes = "govuk-!-font-weight-bold"
-                                )
-                            ),
                             turnoverRow(
                                 s"tentingPitches[$idx].grossReceipts",
                                 "tentingPitches.common.grossReceipts",
