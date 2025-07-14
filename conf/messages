@@ -1101,9 +1101,9 @@ error.typeOfLetting.required = Please select the type of letting
 #LETTINGS ATM 6020
 ##############################
 label.atmLetting.heading = Provide the ATM operator’s details
-atmLetting.address.lookupPageHeading = What is the mast’s property address?
-atmLetting.address.selectPageHeading = Choose the mast’s property address
-atmLetting.address.confirmPageHeading = Check the mast’s property address
+atmLetting.address.lookupPageHeading = What is the ATM’s property address?
+atmLetting.address.selectPageHeading = Choose the ATM’s property address
+atmLetting.address.confirmPageHeading = Check the ATM’s property address
 label.bankOrCompany = Name of bank or company operating the machine
 error.bankOrCompany.required = Enter name of bank or company operating the machine
 error.bankOrCompany.maxLength = Name of bank or company operating the machine must be 500 characters or fewer
@@ -3891,7 +3891,8 @@ checkYourAnswersAboutYourLeaseOrTenure.heading = Check your answers - your lease
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Your landlord
 checkYourAnswersAboutYourLeaseOrTenure.landlordName = Landlord’s name
-checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord’s address
+checkYourAnswersAboutYourLeaseOrTenure.landlordAddress = Landlord’s address
+checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord’s details
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord = Connected to landlord?
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails = Relationship to the landlord
 checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading = Changes to your lease

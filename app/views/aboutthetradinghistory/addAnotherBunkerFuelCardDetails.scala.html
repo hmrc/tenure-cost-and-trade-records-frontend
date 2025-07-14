@@ -22,6 +22,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Value
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
@@ -30,6 +31,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import models.submissions.aboutthetradinghistory.BunkerFuelCardDetails
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -48,15 +50,15 @@
 
 @formLabel =@{messages(s"label.addAnotherBunkerFuelCardDetails")}
 
-@cardNames = @{
-  session.aboutTheTradingHistory.fold(Seq.empty[String]) {
-   fr =>fr.bunkerFuelCardsDetails.fold(IndexedSeq.empty[String])(_.map(_.bunkerFuelCardDetails.name))
+@cardDetails = @{
+  session.aboutTheTradingHistory.fold(Seq.empty[BunkerFuelCardDetails]) {
+   fr =>fr.bunkerFuelCardsDetails.fold(IndexedSeq.empty[BunkerFuelCardDetails])(_.map(_.bunkerFuelCardDetails))
   }
 }
 
-@pluralSuffix = @{ if (cardNames.size > 1) "s" else "" }
+@pluralSuffix = @{ if (cardDetails.size > 1) "s" else "" }
 
-@pageHeading = @{messages(if  (cardNames.size == 0)  s"addAnotherBunkerFuelCardDetails.zeroDetails.heading" else s"addAnotherBunkerFuelCardDetails.heading",cardNames.size)+ pluralSuffix}
+@pageHeading = @{messages(if  (cardDetails.size == 0)  s"addAnotherBunkerFuelCardDetails.zeroDetails.heading" else s"addAnotherBunkerFuelCardDetails.heading",cardDetails.size)+ pluralSuffix}
 
 @formAction = @{controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.submit(index)}
 
@@ -73,24 +75,22 @@
 
   @govukSummaryList(
     SummaryList(
-     rows = cardNames.zipWithIndex.map { case (cardName, idx) =>
+     rows = cardDetails.zipWithIndex.map { case (cardDetails, idx) =>
       SummaryListRow(
-       key = Key(Text(cardName), classes = "govuk-!-font-weight-regular"),
+       key = Key(Text(cardDetails.name), classes = "govuk-!-font-weight-regular"),
+       value = Value(Text(cardDetails.handlingFee.toString + " pence/litre")),
        actions = Actions(
         items = Seq(
          ActionItem(
-          href =
-             controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(idx).url,
+          href = controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(idx).url,
           content = Text("Change")),
          ActionItem(
           controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.remove(idx).url,
           content = Text("Remove"))
-        ),
-        classes = "hmrc-summary-list__actions"
+        )
        )
       )
-     },
-     classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+     }
     )
   )
 

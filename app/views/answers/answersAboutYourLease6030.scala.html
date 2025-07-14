@@ -57,7 +57,7 @@
         controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
         ("valueAsHtml", _ => None)
     ) ++
-    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.landlordDetails",
+    sectionAnswers.row("checkYourAnswersAboutYourLeaseOrTenure.landlordAddress",
         _.aboutTheLandlord.flatMap(l => l.landlordAddress.map(address => s"<p class=\"govuk-body\">${address.escapedHtml}</p>")),
         controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show(), "",
         ("valueAsHtml", _ => None)
