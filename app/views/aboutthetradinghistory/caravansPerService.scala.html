@@ -34,7 +34,7 @@
 @inputRow(formField: String, labelKey: String) = @{
     Seq(
         TableRow(
-            content = Text(messages(labelKey))
+            content = Text(messages(s"${labelKey}.fleet${formField}"))
         ),
         TableRow(
             content = HtmlContent(
@@ -43,9 +43,22 @@
                         classes = "govuk-input--width-4",
                         attributes = Map(
                             "maxlength" -> "6",
-                            "aria-label" -> messages(labelKey)
+                            "aria-label" -> messages(s"${labelKey}.fleet${formField}")
                         )
-                    ).withFormField(form(formField))
+                    ).withFormField(form("fleet" + formField))
+                )
+            )
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(
+                    Input(
+                        classes = "govuk-input--width-4",
+                        attributes = Map(
+                            "maxlength" -> "6",
+                            "aria-label" -> messages(s"${labelKey}.private${formField}")
+                        )
+                    ).withFormField(form("private" + formField))
                 )
             )
         )
@@ -56,10 +69,11 @@
     govukTable(Table(
         head = Seq(
             HeadCell(content = Text(messages("turnover.6045.caravansPerService.services"))),
-            HeadCell(content = Text(messages("turnover.6045.caravansPerService.numberOfCaravans")))
+            HeadCell(content = Text(messages("turnover.6045.caravansPerService.numberOfFleetCaravans"))),
+            HeadCell(content = Text(messages("turnover.6045.caravansPerService.numberOfPrivateCaravans")))
         ),
         firstCellIsHeader = false,
-        rows = formFields.map(formField => inputRow(formField, s"turnover.6045.caravansPerService.$formField"))
+        rows = formFields.map(formField => inputRow(formField, s"turnover.6045.caravansPerService"))
     ))
 }
 
@@ -84,8 +98,6 @@
             <li>@messages("turnover.6045.caravansPerService.fleet.item1")</li>
         </ul>
 
-        @table("fleetWaterElectricityDrainage", "fleetElectricityOnly")
-
         <h2 class="govuk-heading-m">@messages("turnover.6045.caravansPerService.private")</h2>
 
         <ul class="govuk-list govuk-list--bullet">
@@ -94,7 +106,7 @@
             <li>@messages("turnover.6045.caravansPerService.private.item3")</li>
         </ul>
 
-        @table("privateWaterElectricityDrainage", "privateElectricityOnly")
+        @table("WaterElectricityDrainage", "ElectricityOnly")
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

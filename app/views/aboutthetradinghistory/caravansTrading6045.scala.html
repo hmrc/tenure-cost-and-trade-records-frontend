@@ -153,15 +153,6 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            Seq(
-                                TableRow(
-                                    content = Text(messages("turnover.tradingPeriod"))
-                                ),
-                                TableRow(
-                                    content = Text(s"${tradingPeriodSeq(idx)} ${messages("turnover.weeks")}"),
-                                    classes = "govuk-!-font-weight-bold"
-                                )
-                            ),
                             turnoverRow(s"turnover[$idx].grossReceipts", "turnover.6045.caravans.grossReceipts", "turnover.6045.caravans.grossReceipts.hint", finYearEnd = finYearEnd),
                             numericRow(s"turnover[$idx].vans", "turnover.6045.caravans.vans", "turnover.6045.vans.suffix", 4, 6, finYearEnd = finYearEnd)
                         )

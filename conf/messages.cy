@@ -586,7 +586,7 @@ error.isRentReceivedFromLetting.missing = Dewiswch ‘oes’ os oes unrhyw rent 
 
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
-tenantDetails.heading = Rhowch fanylion y tenant
+tenantDetails.headings = Tenant’s details
 tenantDetails.address.lookupPageHeading = What is the tenant’s correspondence address?
 tenantDetails.address.selectPageHeading = Choose the tenant’s correspondence address
 tenantDetails.address.confirmPageHeading = Check the tenant’s correspondence address
@@ -961,7 +961,8 @@ franchiseLettings.subheading = Ydych chi’n cael incwm rhent o roi rhannau o’
 franchiseLettings.6020.heading = A oes unrhyw rent yn dod i law o osod rhannau eraill o’r eiddo?
 franchiseLettings.6020.p1 = Er enghraifft, hawliau hysbysebu, mastiau telathrebu, man gwefru, gweithdai a pheiriannau arian. Cewch gyfle i ychwanegu sawl gosodiad os oes angen.
 franchiseLettings.6030.heading = A ydych yn cael incwm rhent o unrhyw masnachfreintiau neu osodiadau?
-franchiseLettings.6045.heading =  A ydych yn cael incwm rhent o unrhyw gonsesiynau, masnachfreintiau neu osodiadau?
+franchiseLettings.6045.heading = Rental income
+franchiseLettings.6045.footer =  Do you receive rental income from letting out parts of your property?
 error.franchiseOrLettings.missing = Select yes if you receive income from letting out parts of your property
 
 # FRANCHISE OR LETTINGS TIED TO PROPERTY (6030)
@@ -2416,7 +2417,8 @@ error.caravans.seasonalStaff.nonNumeric = The amount of caravans used for season
 error.caravans.seasonalStaff.negative = The amount of caravans used for seasonal staff cannot be a negative number
 turnover.6045.caravansPerService.heading = Pa wasanaethau sy’n cael eu darparu i’r carafanau statig o dan y categorïau canlynol?
 turnover.6045.caravansPerService.services = Gwasanaethau
-turnover.6045.caravansPerService.numberOfCaravans = Nifer y carafannau
+turnover.6045.caravansPerService.numberOfFleetCaravans = Number of fleet caravans
+turnover.6045.caravansPerService.numberOfPrivateCaravans = Number of private caravans
 turnover.6045.caravansPerService.fleet = Fflyd
 turnover.6045.caravansPerService.fleet.item1 = o dan berchnogaeth y gweithredwr, a defnyddir i’w llogi fel fflyd
 turnover.6045.caravansPerService.fleetWaterElectricityDrainage = Dŵr, trydan a systemau draenio

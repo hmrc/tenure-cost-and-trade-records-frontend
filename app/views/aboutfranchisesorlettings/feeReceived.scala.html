@@ -68,10 +68,10 @@
     theForm = form
 ) {
 
-    @if(request.sessionData.forType == FOR6030) {
-
+    @if(request.sessionData.forType == FOR6030 || request.sessionData.forType == FOR6045 || request.sessionData.forType == FOR6046) {
         <p class="govuk-body govuk-!-width-two-thirds">@messages("feeReceived.p1")</p>
     }
+
     @formWithCSRF(action = controllerForType) {
 
         <table class="hmrc-responsive-table">

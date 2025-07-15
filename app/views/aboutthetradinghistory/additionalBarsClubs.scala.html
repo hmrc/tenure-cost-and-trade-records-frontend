@@ -98,15 +98,6 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            Seq(
-                                TableRow(
-                                    content = Text(messages("additionalActivities.common.tradingPeriod"))
-                                ),
-                                TableRow(
-                                    content = Text(s"${tradingPeriodSeq(idx)} ${messages("turnover.weeks")}"),
-                                    classes = "govuk-!-font-weight-bold"
-                                )
-                            ),
                             turnoverRow(
                                 s"additionalBarsClubs[$idx].grossBar",
                                 "additionalBarsClubs.grossBar.label", finYearEnd = finYearEnd),
