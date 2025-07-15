@@ -1069,9 +1069,9 @@ error.typeOfLetting.required = Please select the type of letting
 #LETTINGS ATM 6020
 ##############################
 label.atmLetting.heading = Rhowch fanylion gweithredwr yr ATM
-atmLetting.address.lookupPageHeading = What is the mast’s property address?
-atmLetting.address.selectPageHeading = Choose the mast’s property address
-atmLetting.address.confirmPageHeading = Check the mast’s property address
+atmLetting.address.lookupPageHeading = What is the ATM’s property address?
+atmLetting.address.selectPageHeading = Choose the ATM’s property address
+atmLetting.address.confirmPageHeading = Check the ATM’s property address
 label.bankOrCompany = Enw’r banc neu’r cwmni sy’n gweithredu’r peiriant
 error.bankOrCompany.required = Enter name of bank or company operating the machine
 error.bankOrCompany.maxLength = Name of bank or company operating the machine must be 500 characters or fewer
@@ -3812,7 +3812,8 @@ checkYourAnswersAboutYourLeaseOrTenure.heading = Gwiriwch eich atebion – eich 
 checkYourAnswersAboutYourLeaseOrTenure.tenure.heading = Tenure
 checkYourAnswersAboutYourLeaseOrTenure.yourLandlord.heading = Eich landlord
 checkYourAnswersAboutYourLeaseOrTenure.landlordName = Landlord’s name
-checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Manylion y landlord
+checkYourAnswersAboutYourLeaseOrTenure.landlordAddress = Manylion y landlord
+checkYourAnswersAboutYourLeaseOrTenure.landlordDetails = Landlord’s details
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlord = Yn gysylltiedig â’r landlord?
 checkYourAnswersAboutYourLeaseOrTenure.connectedToLandlordDetails = Perthynas â’r landlord
 checkYourAnswersAboutYourLeaseOrTenure.changesToYourLease.heading = Newidiadau i’ch prydles
