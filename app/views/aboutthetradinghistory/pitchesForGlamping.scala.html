@@ -37,11 +37,6 @@
 
 @(form: Form[Seq[TentingPitchesData]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-@tradingPeriodSeq = @{
-    request.sessionData.aboutTheTradingHistoryPartOne
-    .flatMap(_.turnoverSections6045).map(_.map(_.pitchesForCaravans.fold(0)(_.tradingPeriod))).getOrElse(Seq.empty)
-}
-
 @rowLabel(labelKey: String) = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages(labelKey) </span> </p>
 }
@@ -75,7 +70,6 @@
 
     <p class="govuk-body">
         @messages("tentingPitches.common.VAT")
-    </span>
     </p>
 
     @govukInsetText(InsetText(content = Text(messages("tentingPitches.common.inset"))))

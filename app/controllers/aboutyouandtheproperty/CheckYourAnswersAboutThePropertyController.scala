@@ -48,20 +48,20 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
     with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val freshForm = theForm
+    val freshForm  = theForm
     val filledForm =
       for
         aboutYouAndTheProperty <- request.sessionData.aboutYouAndTheProperty
-        answersYesNo <- aboutYouAndTheProperty.checkYourAnswersAboutTheProperty
+        answersYesNo           <- aboutYouAndTheProperty.checkYourAnswersAboutTheProperty
       yield theForm.fill(answersYesNo)
 
     Ok(
-        theView(
-          filledForm.getOrElse(freshForm),
-          backLinkUrl(request.sessionData),
-          request.sessionData.toSummary
-        )
+      theView(
+        filledForm.getOrElse(freshForm),
+        backLinkUrl(request.sessionData),
+        request.sessionData.toSummary
       )
+    )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

@@ -33,7 +33,7 @@ import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class CateringOperationBusinessDetailsController @Inject() (
+class CateringOperationBusinessDetailsController @Inject() ( // 6030 only
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutFranchisesOrLettingsNavigator,

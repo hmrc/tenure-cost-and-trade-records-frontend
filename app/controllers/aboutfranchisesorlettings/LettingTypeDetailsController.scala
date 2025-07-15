@@ -98,16 +98,16 @@ class LettingTypeDetailsController @Inject() (
           redirectResult             <- redirectToAddressLookupFrontend(
                                           config = AddressLookupConfig(
                                             lookupPageHeadingKey = forType match {
-                                              case FOR6010 => "lettingDetails.address.lookupPageHeadingTenant"
-                                              case _       => "lettingDetails.address.lookupPageHeading"
+                                              case FOR6010 | FOR6030 => "lettingDetails.address.lookupPageHeadingTenant"
+                                              case _                 => "lettingDetails.address.lookupPageHeading"
                                             },
                                             selectPageHeadingKey = forType match {
-                                              case FOR6010 => "lettingDetails.address.selectPageHeadingTenant"
-                                              case _       => "lettingDetails.address.selectPageHeading"
+                                              case FOR6010 | FOR6030 => "lettingDetails.address.selectPageHeadingTenant"
+                                              case _                 => "lettingDetails.address.selectPageHeading"
                                             },
                                             confirmPageLabelKey = forType match {
-                                              case FOR6010 => "lettingDetails.address.confirmPageHeadingTenant"
-                                              case _       => "lettingDetails.address.confirmPageHeading"
+                                              case FOR6010 | FOR6030 => "lettingDetails.address.confirmPageHeadingTenant"
+                                              case _                 => "lettingDetails.address.confirmPageHeading"
                                             },
                                             offRampCall = routes.LettingTypeDetailsController.addressLookupCallback(
                                               updatedIndex

@@ -40,7 +40,13 @@
 
 @(theForm: Form[DoesTheRentPayable], forType: ForType, summary: Summary)(implicit request: Request[?], messages: Messages)
 
-@pageHeader = @{if(forType == FOR6045 || forType == FOR6046 || forType == FOR6048 || forType == FOR6030) messages("rentPayable6045.heading") else messages("rentPayable.heading")}
+@pageHeader = @{
+    val headerMsg = forType match {
+        case FOR6045 | FOR6046 | FOR6048    => "rentPayable6045.heading"
+        case _                              => "rentPayable.heading"
+    }
+    messages(headerMsg)
+}
 
 @layout(
     pageHeading = pageHeader,
