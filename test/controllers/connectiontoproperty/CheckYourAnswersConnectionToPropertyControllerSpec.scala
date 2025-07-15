@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.theForm
+import form.CheckYourAnswersAndConfirmForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import utils.TestBaseSpec
 import play.api.test.Helpers._
@@ -73,8 +73,8 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
     "Redirect when form data submitted" in {
       val res = checkYourAnswersConnectionToPropertyController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody(
-          "checkYourAnswersConnectionToProperty" -> "yes",
-          "confirmAnswersAreCorrect"             -> "true"
+          "answersChecked"   -> "yes",
+          "answersConfirmed" -> "true"
         )
       )
       status(res) shouldBe SEE_OTHER
@@ -95,9 +95,9 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
 
     class ErrorKey {
       val checkYourAnswersConnectionToProperty: String =
-        "checkYourAnswersConnectionToProperty"
+        "answersChecked"
     }
 
-    val baseFormData: Map[String, String] = Map("checkYourAnswersConnectionToProperty" -> "yes")
+    val baseFormData: Map[String, String] = Map("answersChecked" -> "yes")
   }
 }

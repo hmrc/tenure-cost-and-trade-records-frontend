@@ -18,10 +18,10 @@ package controllers.connectiontoproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm.theForm
+import form.CheckYourAnswersAndConfirmForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
 import models.Session
+import models.submissions.common.CheckYourAnswersAndConfirm
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.CheckYourAnswersConnectionToPropertyId
 import play.api.Logging
@@ -45,24 +45,25 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
     with I18nSupport
     with Logging:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        theView(
-          request.sessionData.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty) match {
-            case Some(checkYourAnswersAboutTheProperty) =>
-              theForm.fill(checkYourAnswersAboutTheProperty)
-            case _                                      => theForm
-          },
-          getBackLink,
-          request.sessionData.toSummary
-        )
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
+    val freshForm  = theForm
+    val filledForm =
+      for
+        stillConnectedDetails      <- request.sessionData.stillConnectedDetails
+        checkYourAnswersAndConfirm <- stillConnectedDetails.checkYourAnswersConnectionToProperty
+      yield theForm.fill(checkYourAnswersAndConfirm)
+
+    Ok(
+      theView(
+        filledForm.getOrElse(freshForm),
+        getBackLink,
+        request.sessionData.toSummary
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[CheckYourAnswersConnectionToProperty](
+    continueOrSaveAsDraft[CheckYourAnswersAndConfirm](
       theForm,
       formWithErrors =>
         BadRequest(

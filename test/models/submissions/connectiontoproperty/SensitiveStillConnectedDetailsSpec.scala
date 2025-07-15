@@ -18,7 +18,7 @@ package models.submissions.connectiontoproperty
 
 import crypto.MongoCrypto
 import models.submissions.common.AnswersYesNo.*
-import models.submissions.common.{Address, ContactDetails}
+import models.submissions.common.{Address, CheckYourAnswersAndConfirm, ContactDetails}
 import play.api.Configuration
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
@@ -62,7 +62,7 @@ class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers w
             maxOfLettings = Some(true)
           )
         ),
-        checkYourAnswersConnectionToProperty = Some(CheckYourAnswersConnectionToProperty(AnswerYes, Some(true)))
+        checkYourAnswersConnectionToProperty = Some(CheckYourAnswersAndConfirm(AnswerYes, Some(true)))
       )
       val encryptedData = SensitiveStillConnectedDetails(clearData)
       val d             = encryptedData.decryptedValue

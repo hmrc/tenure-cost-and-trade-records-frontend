@@ -17,7 +17,7 @@
 package models.submissions.aboutyouandtheproperty
 
 import crypto.MongoCrypto
-import models.submissions.common.{AnswersYesNo, SensitiveAddress}
+import models.submissions.common.{AnswersYesNo, CheckYourAnswersAndConfirm, SensitiveAddress}
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
@@ -37,7 +37,7 @@ case class SensitiveAboutYouAndTheProperty(
   enforcementActionHasBeenTakenInformationDetails: Option[String] = None,
   tiedForGoods: Option[AnswersYesNo] = None,
   tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None,
-  checkYourAnswersAboutTheProperty: Option[AnswersYesNo] = None,
+  checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAndConfirm] = None,
   propertyDetailsString: Option[String] = None,
   charityQuestion: Option[AnswersYesNo] = None,
   tradingActivity: Option[TradingActivity] = None,

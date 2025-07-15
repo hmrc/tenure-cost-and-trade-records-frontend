@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package form.connectiontoproperty
+package form
 
 import form.MappingSupport.createYesNoType
-import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
+import models.submissions.common.CheckYourAnswersAndConfirm
 import play.api.data.Form
 import play.api.data.Forms.{boolean, mapping, optional}
 
-object CheckYourAnswersConnectionToPropertyForm:
+object CheckYourAnswersAndConfirmForm:
 
-  val theForm: Form[CheckYourAnswersConnectionToProperty] =
+  val theForm: Form[CheckYourAnswersAndConfirm] =
     Form(
       mapping(
-        "checkYourAnswersConnectionToProperty" -> createYesNoType("error.checkYourAnswersRadio.required"),
-        "confirmAnswersAreCorrect"             -> optional(boolean)
-          .verifying("checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.required", _.contains(true))
-      )(CheckYourAnswersConnectionToProperty.apply)(o =>
-        Some(o.checkYourAnswersConnectionToProperty, o.confirmAnswersAreCorrect)
-      )
+        "answersChecked"   -> createYesNoType("error.checkYourAnswersRadio.required"),
+        "answersConfirmed" -> optional(boolean)
+          .verifying("checkYourAnswers.confirmAnswersAreCorrect.required", _.contains(true))
+      )(CheckYourAnswersAndConfirm.apply)(o => Some(o.answersChecked, o.answersConfirmed))
     )

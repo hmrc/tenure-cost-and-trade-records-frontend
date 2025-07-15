@@ -16,18 +16,22 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
 @import models.pages.Summary
+@import models.submissions.common.CheckYourAnswersAndConfirm
 @import models.submissions.common.AnswersYesNo
 @import views.html.answers.answersAboutTheProperty
 
 @this(layout: Layout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
+        govukWarningText: GovukWarningText,
+        govukCheckboxes: GovukCheckboxes,
         answersSectionAboutTheProperty: answersAboutTheProperty,
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[CheckYourAnswersAndConfirm], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
     @layout(
         pageHeading = messages("checkYourAnswersAboutTheProperty.heading"),
@@ -40,12 +44,30 @@
 
         @answersSectionAboutTheProperty()
 
+        @govukWarningText(WarningText(
+            content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
+        ))
+
         @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.submit()) {
+
+            @govukCheckboxes(
+                Checkboxes(
+                    items = Seq(
+                        CheckboxItem(
+                            id = "answersConfirmed",
+                            name = "answersConfirmed",
+                            content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
+                            value = "true",
+                            checked = theForm("answersConfirmed").value.contains("true")
+                        )
+                    )
+                ).withFormField(theForm("answersConfirmed"))
+            )
 
             @includes.checkYourAnswersRadioButtons(
                 govukRadios,
                 theForm,
-                "checkYourAnswersAboutTheProperty"
+                "answersChecked"
             )
 
             @includes.continueSaveAsDraftButtons(govukButton)

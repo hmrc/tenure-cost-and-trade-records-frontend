@@ -16,7 +16,7 @@
 
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
-@import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
+@import models.submissions.common.CheckYourAnswersAndConfirm
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
 @import models.pages.Summary
 @import views.html.answers.answersConnectionToTheProperty
@@ -30,7 +30,7 @@
         govukCheckboxes: GovukCheckboxes
 )
 
-@(theForm: Form[CheckYourAnswersConnectionToProperty], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
+@(theForm: Form[CheckYourAnswersAndConfirm], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
     @layout(
         pageHeading = messages("checkYourAnswersConnectionToProperty.heading"),
@@ -44,7 +44,7 @@
         @answersSectionConnectionToTheProperty()
 
         @govukWarningText(WarningText(
-            content = Text(messages("checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.warning"))
+            content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
         ))
 
         @formWithCSRF(action = controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.submit()) {
@@ -53,20 +53,20 @@
                 Checkboxes(
                     items = Seq(
                         CheckboxItem(
-                            id = "confirmAnswersAreCorrect",
-                            name = "confirmAnswersAreCorrect",
-                            content = HtmlContent("<strong>" + messages("checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.label") + "</strong>"),
+                            id = "answersConfirmed",
+                            name = "answersConfirmed",
+                            content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
                             value = "true",
-                            checked = theForm("confirmAnswersAreCorrect").value.contains("true")
+                            checked = theForm("answersConfirmed").value.contains("true")
                         )
                     )
-                ).withFormField(theForm("confirmAnswersAreCorrect"))
+                ).withFormField(theForm("answersConfirmed"))
             )
 
             @includes.checkYourAnswersRadioButtons(
                 govukRadios,
                 theForm,
-                "checkYourAnswersConnectionToProperty"
+                "answersChecked"
             )
 
             @includes.continueSaveAsDraftButtons(govukButton)

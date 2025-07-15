@@ -34,8 +34,8 @@ trait ReadOnlySupport:
   def isReadOnly(using request: SessionRequest[AnyContent]): Boolean =
     val answerChecked =
       for
-        stillConnectedDetails                <- request.sessionData.stillConnectedDetails
-        checkYourAnswersConnectionToProperty <- stillConnectedDetails.checkYourAnswersConnectionToProperty
-      yield checkYourAnswersConnectionToProperty.checkYourAnswersConnectionToProperty
+        stillConnectedDetails      <- request.sessionData.stillConnectedDetails
+        checkYourAnswersAndConfirm <- stillConnectedDetails.checkYourAnswersConnectionToProperty
+      yield checkYourAnswersAndConfirm.answersChecked
 
     answerChecked.contains(AnswerYes)
