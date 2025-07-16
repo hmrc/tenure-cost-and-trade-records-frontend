@@ -938,7 +938,7 @@ error.tiedForGoodsDetails.required = Select which type of tie you have
 #################
 typeOfIncome.heading = Select a source of rental income
 typeOfIncome.p = You will have the option to add multiple sources of rental income if required.
-typeOfIncome.concession.label = Concession or franchise
+typeOfIncome.concession.label = Concession or franchise fees
 typeOfIncome.6010.concession.label = Separate businesses operating from the property
 typeOfIncome.6015.concession.label = Concession or franchise fees
 typeOfIncome.concession.hint = For example, accommodation or catering businesses.
@@ -1547,8 +1547,8 @@ concessionDetails.address.confirmPageHeading = Check the concession’s property
 lettingDetails.heading = Provide the tenant or operator’s details
 lettingDetails.address.lookupPageHeadingTenant = What is the tenant’s correspondence address?
 lettingDetails.address.lookupPageHeading = What is the tenant or operator address?
-lettingDetails.address.selectPageHeadingTenant = Choose the tenant or operator address
-lettingDetails.address.selectPageHeading = Choose the tenant’s correspondence address
+lettingDetails.address.selectPageHeadingTenant = Choose the tenant’s correspondence address
+lettingDetails.address.selectPageHeading = Choose the tenant or operator address
 lettingDetails.address.confirmPageHeadingTenant = Check the tenant’s correspondence address
 lettingDetails.address.confirmPageHeading = Check the tenant or operator address
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
@@ -1743,10 +1743,10 @@ capitalSumDescription6045.heading = Give details of any amount paid by or to the
 #############################
 legalOrPlanningRestrictions.heading = Other factors affecting the rent
 legalOrPlanningRestrictions.p1 = You must describe any other factors which may have affected the rent payable as these can also affect the property‘s valuation. We need to know about any factors such as:
-legalOrPlanningRestrictions.list1 = legal restrictions
-legalOrPlanningRestrictions.list2 = planning restrictions
-legalOrPlanningRestrictions.list3 = unusual terms or conditions in the lease or agreement
-legalOrPlanningRestrictions.p2 = Typical examples would be a break clause in the lease or agreement, or an agreement which contracts out of certain rights included in the Landlord and Tenant Act.
+legalOrPlanningRestrictions.list1 = businesses or organisations who own and occupy the property
+legalOrPlanningRestrictions.list2 = businesses or organisations who occupy the property under a lease or agreement
+legalOrPlanningRestrictions.list3 = landlords of a vacant property where no lease or agreement is in place
+legalOrPlanningRestrictions.p2 = The Valuation Office Agency (VOA) is responsible for valuing every non-domestic property in England and Wales. To do this, the VOA sends forms of return to non-domestic premises which must be completed by the business or organisation operating from the property.
 legalOrPlanningRestrictions.subheading = Are there any other factors that may have affected the rent payable?
 hint.legalOrPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act.
 error.legalOrPlanningRestrictions.missing = Select yes if any other factors may have affected the rent payable
@@ -3788,7 +3788,7 @@ whatYouWillNeed.6020.p4 = Percentage of total fuel sales sold on low-margin fuel
 whatYouWillNeed.6020.p5 = Turnover from any shop, car wash, jet wash, lottery sales, Paypoint or Payzone sales, and any other non-fuel turnover.
 whatYouWillNeed.6020.p6 = The number of EV charging point spaces or bays operated by the business at the property.
 
-whatYouWillNeed.6030.p1 = All your income, excluding any payments received from concessions or franchises such as tearooms or carwashes, or from lettings such as car parks or phone masts.
+whatYouWillNeed.6030.p1 = Any income from alcoholic and soft drinks, crisps and nuts.
 whatYouWillNeed.6030.p2 = Also include concessions and free entries. If your property is a car park, enter 0 in this section.
 
 whatYouWillNeed.6045.p1 = When you bought or took over the property, and your financial year end.
@@ -4016,7 +4016,7 @@ checkYourAnswersAboutTheProperty.currentOccupier = Current Occupier
 checkYourAnswersAboutTheProperty.propertyUsage = Property use
 checkYourAnswersAboutTheProperty.hasWebsite = Website?
 checkYourAnswersAboutTheProperty.charity = Charity?
-checkYourAnswersAboutTheProperty.trading = Trading activities by a separate company?
+checkYourAnswersAboutTheProperty.trading = Trading activities carried out on site?
 checkYourAnswersAboutTheProperty.websiteAddress = Website address
 checkYourAnswersAboutTheProperty.license.heading = Your licence
 checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail = Premises licence?
@@ -4380,4 +4380,3 @@ error.dateParts.year = year
 error.dateParts.date = date
 error.dateParts.dayMonth = day and month
 error.dateParts.monthYear = month and year
-

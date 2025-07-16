@@ -28,7 +28,6 @@ import controllers.toOpt
 import java.time.LocalDate
 import uk.gov.hmrc.govukfrontend.views.html.components.*
 import util.NumberUtil.*
-import util.CyaTradingHistorySupport
 import javax.inject.Inject
 
 class CyaTradingHistorySupport @Inject() (

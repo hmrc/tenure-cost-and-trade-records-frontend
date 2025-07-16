@@ -37,11 +37,6 @@
 
 @(form: Form[Seq[Option[BigDecimal]]], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-@tradingPeriodSeq = @{
-    request.sessionData.aboutTheTradingHistoryPartOne
-    .flatMap(_.turnoverSections6045).map(_.map(_.additionalShops.fold(0)(_.tradingPeriod))).getOrElse(Seq.empty)
-}
-
 @rowLabel(labelKey: String, explanationMsg: Option[String]) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold ">@messages(labelKey)</span>

@@ -29,16 +29,8 @@
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
-@sectionAnswers = @{
-    SectionAnswersRowBuilder(request.sessionData.aboutYouAndTheProperty)
-}
 @occupiersListSize = @{
     request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.occupiersList).fold(0)(_.length)
-}
-
-@occupiersCountMessage = @{
-    if (occupiersListSize <= 1) messages("checkYourAnswersAboutTheProperty.occupierCount", occupiersListSize)
-    else messages("checkYourAnswersAboutTheProperty.occupiersCount", occupiersListSize)
 }
 
 @sectionAnswersPartTwo = @{

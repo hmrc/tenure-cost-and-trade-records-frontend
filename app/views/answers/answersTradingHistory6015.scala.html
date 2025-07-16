@@ -128,7 +128,6 @@
 }
 
 @variableOperatingExpensesTotalValuesRow(voeSections: Option[VariableOperatingExpensesSections]) = @{
-    val data = voeSections.map(_.variableOperatingExpenses).getOrElse(Seq.empty)
     cyaSupport.table(
         voeSections.fold(Seq.empty[Seq[String]])(
             _.variableOperatingExpenses.map { voe =>

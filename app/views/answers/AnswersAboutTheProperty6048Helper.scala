@@ -16,7 +16,6 @@
 
 package views.answers
 
-import actions.SessionRequest
 import models.submissions.aboutyouandtheproperty.OccupiersDetails
 import play.api.i18n.Messages
 import views.CheckYourAnswersHelpers.*
@@ -25,24 +24,22 @@ import controllers.aboutyouandtheproperty.routes
 
 object AnswersAboutTheProperty6048Helper:
 
-  def cardsData(occupiersList: IndexedSeq[OccupiersDetails])(using request: SessionRequest[?], messages: Messages) =
+  def cardsData(occupiersList: IndexedSeq[OccupiersDetails])(using messages: Messages): Seq[CardData] =
     for ((occupier, index) <- occupiersList.zipWithIndex)
       yield CardData(
         index = index,
         label = messages("checkYourAnswersAboutTheProperty.occupiersLabel"),
         removeAction = routes.OccupiersDetailsListController.remove(index),
         entries = Seq(
-            CardEntry(
-                label = messages("checkYourAnswersAboutTheProperty.occupiersDetails"),
-                value = {
-                  s"""
+          CardEntry(
+            label = messages("checkYourAnswersAboutTheProperty.occupiersDetails"),
+            value = s"""
                      |<p class="govuk-body">
                      |${occupier.name}<br>
                      |${occupier.address}
                      |</p
-                     |""".stripMargin
-                },
-                changeAction = Some(routes.OccupiersDetailsController.show(Some(index)).asChangeLink("partsUnavailable"))
-            )
+                     |""".stripMargin,
+            changeAction = Some(routes.OccupiersDetailsController.show(Some(index)).asChangeLink("partsUnavailable"))
+          )
         )
       )
