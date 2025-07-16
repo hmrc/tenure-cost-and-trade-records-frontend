@@ -262,6 +262,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           AboutLeaseOrAgreementPartTwo(
+            isRentReviewPlanned = Some(AnswerYes),
             intervalsOfRentReview = Some(
               IntervalsOfRentReview(
                 currentRentWithin12Months = None,

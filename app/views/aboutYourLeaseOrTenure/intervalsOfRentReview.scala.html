@@ -17,7 +17,7 @@
 @import actions.SessionRequest
 @import models.ForType.*
 @import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 
@@ -36,6 +36,7 @@
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = request.sessionData.forType match {
+        case FOR6030 => controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show().url
         case FOR6045 | FOR6046 => controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
         case _ => controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
     },
@@ -44,21 +45,15 @@
 
   @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.submit()) {
 
-    <p class="govuk-body">@messages("intervalsOfRentReview.p1")</p>
-
-    <p class="govuk-body">@messages("intervalsOfRentReview.p2")</p>
-
-    <p class="govuk-body">@messages("intervalsOfRentReview.p3")</p>
-
-      @includes.textInputHMRCCharCount(
-          hmrcCharacterCount,
-          form,
-          "intervalsOfRentReview",
-          "intervalsOfRentReview.label",
-          classes = "govuk-label--m",
+    @includes.textInputHMRCCharCount(
+        hmrcCharacterCount,
+        form,
+        "intervalsOfRentReview",
+        "intervalsOfRentReview.label",
+        classes = "govuk-label--m",
         hint = "hint.intervalsOfRentReview",
-          charCount = 2000
-      )
+        charCount = 2000
+    )
 
     @includes.dateFields(
         form = form,
@@ -71,7 +66,5 @@
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }
+
 }
-
-
-

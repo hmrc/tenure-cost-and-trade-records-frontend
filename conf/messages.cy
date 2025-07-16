@@ -1767,12 +1767,17 @@ error.grantedFor.required = Nodwch hyd y brydles bresennol
 fieldName.leaseBegin = the date when the current lease began
 label.currentLeaseOrAgreementBegin.help = Er enghraifft, 9 2017.
 
+# IS RENT REVIEW PLANNED
+##########################
+isRentReviewPlanned.heading = Rent reviews
+isRentReviewPlanned.p1 = You must declare if your lease or agreement states your rent will be reviewed at any point.
+isRentReviewPlanned.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
+isRentReviewPlanned.label = Will the rent be reviewed at any point during the current lease or agreement?
+error.isRentReviewPlanned.required = Select ’Yes’ if a rent review is planned at any point during the current lease or agreement.
+
 # INTERVALS OF RENT REVIEW
 ##########################
-intervalsOfRentReview.heading = Adolygiadau rhent
-intervalsOfRentReview.p1 = Provide details if your lease or agreement states your rent will be reviewed at any point.
-intervalsOfRentReview.p2 = Changes to your rent linked to your turnover, or indices such as the RPI, are not classed as rent reviews.
-intervalsOfRentReview.p3 = If your lease or agreement does not include any rent reviews, leave this page blank and select ‘continue’.
+intervalsOfRentReview.heading = Rent review details
 intervalsOfRentReview.label = How often is the rent reviewed under the terms of the lease or agreement?
 hint.intervalsOfRentReview = Leave blank if the lease does not include any rent reviews.
 label.nextReview = When is the next rent review due?
@@ -3863,7 +3868,8 @@ checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinksDetails 
 checkYourAnswersAboutYourLeaseOrTenure.howAndWhenRentWasFixed = Sut a phryd y gosodwyd y rhent
 checkYourAnswersAboutYourLeaseOrTenure.methodUsedToFixCurrentRent = Sut y cytunwyd ar y rhent
 checkYourAnswersAboutYourLeaseOrTenure.isRentUnderReview = Rhent yn cael ei adolygu ar hyn o bryd?
-checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Adolygiadau rhent: amlder a dyddiad disgwyl
+checkYourAnswersAboutYourLeaseOrTenure.isRentReviewPlanned = Will the rent be reviewed?
+checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview = Rent review details
 checkYourAnswersAboutYourLeaseOrTenure.canRentBeReducedOnReview = A ellir gostwng y rhent?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarly = Prydles flaenorol wedi’i hildio’n gynnar?
 checkYourAnswersAboutYourLeaseOrTenure.formerLeaseSurrenderedEarlyDetails = Manylion y brydles flaenorol

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,22 +42,21 @@ class IntervalsOfRentReviewController @Inject() (
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("IntervalsOfRentReview")
 
     Ok(
       intervalsOfRentReviewView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.intervalsOfRentReview) match {
-          case Some(data) => intervalsOfRentReviewForm.fill(data)
-          case _          => intervalsOfRentReviewForm
-        }
+        request.sessionData.aboutLeaseOrAgreementPartTwo
+          .flatMap(_.intervalsOfRentReview)
+          .fold(intervalsOfRentReviewForm)(intervalsOfRentReviewForm.fill)
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[IntervalsOfRentReview](
       intervalsOfRentReviewForm,
       formWithErrors => BadRequest(intervalsOfRentReviewView(formWithErrors)),
@@ -70,5 +69,3 @@ class IntervalsOfRentReviewController @Inject() (
       }
     )
   }
-
-}

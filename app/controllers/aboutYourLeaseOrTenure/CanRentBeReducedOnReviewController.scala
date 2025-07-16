@@ -23,6 +23,7 @@ import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReduced
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CanRentBeReducedOnReviewId
 import play.api.i18n.I18nSupport
@@ -43,7 +44,7 @@ class CanRentBeReducedOnReviewController @Inject() (
   @Named("session") val session: SessionRepo
 )(implicit ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CanRentBeReducedOnReview")
@@ -87,7 +88,10 @@ class CanRentBeReducedOnReviewController @Inject() (
         } else {
           controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
         }
+      case FOR6030 =>
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.isRentReviewPlanned) match {
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show().url
+        }
       case _       => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
     }
-
-}
