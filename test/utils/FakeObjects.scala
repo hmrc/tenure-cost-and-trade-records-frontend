@@ -325,7 +325,7 @@ trait FakeObjects {
     Some("Enforcement action taken details"),
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
-    checkYourAnswersAboutTheProperty = Some(AnswerYes),
+    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAndConfirm(AnswerYes, Some(true))),
     charityQuestion = Some(AnswerYes),
     tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
     renewablesPlant = Some(Intermittent),
@@ -349,7 +349,7 @@ trait FakeObjects {
     Some("Enforcement action taken details"),
     Some(AnswerYes),
     Some(TiedForGoodsInformationDetails(TiedForGoodsInformationDetailsFullTie)),
-    checkYourAnswersAboutTheProperty = Some(AnswerYes),
+    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAndConfirm(AnswerYes, Some(true))),
     charityQuestion = Some(AnswerYes),
     tradingActivity = Some(TradingActivity(AnswerYes, Some("Trading activity details"))),
     renewablesPlant = Some(Baseload),
@@ -411,7 +411,7 @@ trait FakeObjects {
     None,
     Some(AnswerNo),
     None,
-    checkYourAnswersAboutTheProperty = Some(AnswerNo),
+    checkYourAnswersAboutTheProperty = Some(CheckYourAnswersAndConfirm(AnswerNo, Some(true))),
     charityQuestion = Some(AnswerNo)
   )
 
@@ -1269,7 +1269,7 @@ trait FakeObjects {
     Some(AnswerYes),
     Some(AnswerYes),
     Some(AnswerNo),
-    checkYourAnswersConnectionToProperty = Some(CheckYourAnswersConnectionToProperty(AnswerNo))
+    checkYourAnswersConnectionToProperty = Some(CheckYourAnswersAndConfirm(AnswerNo))
   )
 
   val prefilledNotVacantPropertiesNoCYA = StillConnectedDetails(

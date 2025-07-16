@@ -17,7 +17,7 @@
 package models.submissions.connectiontoproperty
 
 import crypto.MongoCrypto
-import models.submissions.common.{AnswersYesNo, SensitiveAddress}
+import models.submissions.common.{AnswersYesNo, CheckYourAnswersAndConfirm, SensitiveAddress}
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
@@ -38,7 +38,7 @@ case class SensitiveStillConnectedDetails(
   lettingPartOfPropertyDetailsIndex: Int = 0,
   maxOfLettings: Option[Boolean] = None,
   lettingPartOfPropertyDetails: IndexedSeq[SensitiveLettingPartOfPropertyDetails] = IndexedSeq.empty,
-  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
+  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersAndConfirm] = None
 ) extends Sensitive[StillConnectedDetails]:
 
   override def decryptedValue: StillConnectedDetails = StillConnectedDetails(

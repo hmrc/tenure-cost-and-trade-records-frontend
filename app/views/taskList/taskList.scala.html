@@ -58,8 +58,8 @@
  if(isLeaseHolder) leaseOrAgreementNumber + 1 else leaseOrAgreementNumber
 }
 
-@section1Completed       = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.checkYourAnswersConnectionToProperty)) }
-@section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty) }
+@section1Completed       = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.answersChecked)) }
+@section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.answersChecked)) }
 @section3Completed       = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory) }
 @section3point1Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation).flatMap(_.checkYourAnswersOtherHolidayAccommodation)}
 @section3point2Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches).flatMap(_.checkYourAnswersTentingPitches)}

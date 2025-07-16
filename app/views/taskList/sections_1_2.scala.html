@@ -23,7 +23,7 @@
 @(forType: ForType, isLeaseHolder: Boolean, section1Completed: Option[AnswersYesNo], section2Completed: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
-@isReadOnly = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).flatMap(_.checkYourAnswersConnectionToProperty).contains(AnswerYes) }
+@isReadOnly = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).flatMap(_.answersChecked).contains(AnswerYes) }
 
 <li>
  <h2 id="connectionToTheProperty" class="app-task-list__section">

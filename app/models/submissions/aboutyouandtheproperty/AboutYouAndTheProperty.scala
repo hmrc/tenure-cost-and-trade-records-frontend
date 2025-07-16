@@ -18,7 +18,7 @@ package models.submissions.aboutyouandtheproperty
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.common.{Address, AnswersYesNo}
+import models.submissions.common.{Address, AnswersYesNo, CheckYourAnswersAndConfirm}
 import play.api.libs.json.{Json, OFormat}
 
 //There are now 22 attributes in this case class, so no more can be added
@@ -39,7 +39,7 @@ case class AboutYouAndTheProperty(
   enforcementActionHasBeenTakenInformationDetails: Option[String] = None,
   tiedForGoods: Option[AnswersYesNo] = None,
   tiedForGoodsDetails: Option[TiedForGoodsInformationDetails] = None,
-  checkYourAnswersAboutTheProperty: Option[AnswersYesNo] = None,
+  checkYourAnswersAboutTheProperty: Option[CheckYourAnswersAndConfirm] = None,
   propertyDetailsString: Option[String] = None, // added for 6030 - February 2024
   charityQuestion: Option[AnswersYesNo] = None, // 6030
   tradingActivity: Option[TradingActivity] = None, // 6030

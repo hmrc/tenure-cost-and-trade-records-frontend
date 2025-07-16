@@ -18,7 +18,7 @@ package models.submissions.connectiontoproperty
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.common.{Address, AnswersYesNo}
+import models.submissions.common.{Address, AnswersYesNo, CheckYourAnswersAndConfirm}
 import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
@@ -38,7 +38,7 @@ case class StillConnectedDetails(
   lettingPartOfPropertyDetailsIndex: Int = 0,
   maxOfLettings: Option[Boolean] = None,
   lettingPartOfPropertyDetails: IndexedSeq[LettingPartOfPropertyDetails] = IndexedSeq.empty,
-  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersConnectionToProperty] = None
+  checkYourAnswersConnectionToProperty: Option[CheckYourAnswersAndConfirm] = None
 )
 
 object StillConnectedDetails:

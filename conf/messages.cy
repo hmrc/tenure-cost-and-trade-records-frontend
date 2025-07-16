@@ -566,9 +566,9 @@ checkYourAnswersConnectionToProperty.nameOfOccupier = Enw’r preswyliwr
 checkYourAnswersConnectionToProperty.ownsTheProperty = Yn berchen ar yr eiddo?
 checkYourAnswersConnectionToProperty.payRent = Yn talu rhent?
 checkYourAnswersConnectionToProperty.thirdParty = Trydydd parti?
-checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.warning = Your answers in this section determine which questions you will see later in the declaration. You will not be able to go back and change your answers in this section once you go beyond this page.
-checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.label = I confirm that my answers are correct, and I understand that I will not be able to change these answers after this page
-checkYourAnswersConnectionToProperty.confirmAnswersAreCorrect.required = Confirm that the answers you have provided are correct
+checkYourAnswers.confirmAnswersAreCorrect.warning = Your answers in this section determine which questions you will see later in the declaration. You will not be able to go back and change your answers in this section once you go beyond this page.
+checkYourAnswers.confirmAnswersAreCorrect.label = I confirm that my answers are correct, and I understand that I will not be able to change these answers after this page
+checkYourAnswers.confirmAnswersAreCorrect.required = Confirm that the answers you have provided are correct
 
 # VACANT PROPERTY START DATE
 ############################

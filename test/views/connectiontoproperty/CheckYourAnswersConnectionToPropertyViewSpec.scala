@@ -17,21 +17,20 @@
 package views.connectiontoproperty
 
 import actions.SessionRequest
-import form.connectiontoproperty.CheckYourAnswersConnectionToPropertyForm
+import form.CheckYourAnswersAndConfirmForm
 import models.pages.Summary
-import models.submissions.connectiontoproperty.CheckYourAnswersConnectionToProperty
+import models.submissions.common.CheckYourAnswersAndConfirm
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersConnectionToPropertyViewSpec
-    extends QuestionViewBehaviours[CheckYourAnswersConnectionToProperty] {
+class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm] {
 
   val messageKeyPrefix = "checkYourAnswersConnectionToProperty"
 
-  override val form: Form[CheckYourAnswersConnectionToProperty] =
-    CheckYourAnswersConnectionToPropertyForm.theForm
+  override val form: Form[CheckYourAnswersAndConfirm] =
+    CheckYourAnswersAndConfirmForm.theForm
 
   val backLink: String = controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
 
@@ -40,8 +39,8 @@ class CheckYourAnswersConnectionToPropertyViewSpec
   def createView: () => Html = () =>
     checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[CheckYourAnswersConnectionToProperty] => Html =
-    (form: Form[CheckYourAnswersConnectionToProperty]) =>
+  def createViewUsingForm: Form[CheckYourAnswersAndConfirm] => Html =
+    (form: Form[CheckYourAnswersAndConfirm]) =>
       checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   "Check Your Answers Connection To Property view" must {

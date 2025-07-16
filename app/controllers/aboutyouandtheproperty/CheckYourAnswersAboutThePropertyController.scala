@@ -18,12 +18,12 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyForm.theForm
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
+import form.CheckYourAnswersAndConfirmForm.theForm
 import models.ForType.*
 import models.Session
-import models.submissions.common.AnswersYesNo
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.common.AnswersYesNo.*
+import models.submissions.common.CheckYourAnswersAndConfirm
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CheckYourAnswersAboutThePropertyPageId
 import play.api.Logging
@@ -51,9 +51,9 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
     val freshForm  = theForm
     val filledForm =
       for
-        aboutYouAndTheProperty <- request.sessionData.aboutYouAndTheProperty
-        answersYesNo           <- aboutYouAndTheProperty.checkYourAnswersAboutTheProperty
-      yield theForm.fill(answersYesNo)
+        aboutYouAndTheProperty     <- request.sessionData.aboutYouAndTheProperty
+        checkYourAnswersAndConfirm <- aboutYouAndTheProperty.checkYourAnswersAboutTheProperty
+      yield theForm.fill(checkYourAnswersAndConfirm)
 
     Ok(
       theView(
@@ -65,7 +65,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AnswersYesNo](
+    continueOrSaveAsDraft[CheckYourAnswersAndConfirm](
       theForm,
       formWithErrors =>
         BadRequest(

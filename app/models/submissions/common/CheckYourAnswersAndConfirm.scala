@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+package models.submissions.common
 
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Format, Json}
 
-case class CheckYourAnswersConnectionToProperty(
-  checkYourAnswersConnectionToProperty: AnswersYesNo,
-  confirmAnswersAreCorrect: Option[Boolean] = None
+case class CheckYourAnswersAndConfirm(
+  answersChecked: AnswersYesNo,
+  answersConfirmed: Option[Boolean] = None
 )
 
-object CheckYourAnswersConnectionToProperty:
-  given Format[CheckYourAnswersConnectionToProperty] = Json.format
+object CheckYourAnswersAndConfirm:
+  given Format[CheckYourAnswersAndConfirm] = Json.format
