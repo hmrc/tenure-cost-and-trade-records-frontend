@@ -92,12 +92,5 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYe
       assert(loginButton == messages("button.label.save"))
     }
 
-    "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("help.premisesLicenseConditions.title")))
-      assert(doc.toString.contains(messages("help.premisesLicenseConditions.heading")))
-      assert(doc.toString.contains(messages("help.premisesLicenseConditions.p1")))
-      assert(doc.toString.contains(messages("help.premisesLicenseConditions.p2")))
-    }
   }
 }

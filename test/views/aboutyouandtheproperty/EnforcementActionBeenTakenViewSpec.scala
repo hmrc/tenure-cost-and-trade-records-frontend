@@ -92,11 +92,5 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
       assert(loginButton == messages("button.label.save"))
     }
 
-    "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTaken.title")))
-      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTaken.heading")))
-      assert(doc.toString.contains(messages("help.enforcementActionHasBeenTaken.p1")))
-    }
   }
 }

@@ -44,7 +44,7 @@ class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRe
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
+      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show().url
     }
 
     "Section heading is visible" in {

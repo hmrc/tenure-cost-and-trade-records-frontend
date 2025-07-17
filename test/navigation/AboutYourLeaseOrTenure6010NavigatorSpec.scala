@@ -362,7 +362,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to intervals rent review when method fix rent has been completed" in {
       navigator
         .nextPage(MethodToFixCurrentRentsId, session6010)
-        .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
+        .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController
         .show()
     }
 

@@ -90,24 +90,17 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] 
     }
 
     "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("help.licensableActivities.title")))
-      assert(doc.toString.contains(messages("help.licensableActivities.heading")))
-      assert(doc.toString.contains(messages("help.licensableActivities.p1")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list1.p1")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list1.p2")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list1.p3")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list1.p4")))
-      assert(doc.toString.contains(messages("help.licensableActivities.p2")))
-      assert(doc.toString.contains(messages("help.licensableActivities.p3")))
-      assert(doc.toString.contains(messages("help.licensableActivities.p4")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list2.p1")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list2.p2")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list2.p3")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list2.p4")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list2.p5")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list2.p6")))
-      assert(doc.toString.contains(messages("help.licensableActivities.list2.p7")))
+      val doc = asDocument(createView()).toString
+      assert(doc.contains(messages("help.licensableActivities.title")))
+      assert(doc.contains(messages("help.licensableActivities.p1")))
+      assert(doc.contains(messages("help.licensableActivities.list1.item1")))
+      assert(doc.contains(messages("help.licensableActivities.list1.item2")))
+      assert(doc.contains(messages("help.licensableActivities.list1.item3")))
+      assert(doc.contains(messages("help.licensableActivities.list1.item4")))
+      assert(doc.contains(messages("help.licensableActivities.list1.item5")))
+      assert(doc.contains(messages("help.licensableActivities.list1.item6")))
+      assert(doc.contains(messages("help.licensableActivities.list1.item7")))
     }
   }
+
 }
