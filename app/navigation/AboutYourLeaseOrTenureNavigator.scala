@@ -224,8 +224,15 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def methodToFixCurrentRentRouting: Session => Call =
     _.forType match {
+      case FOR6030           => aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show()
       case FOR6045 | FOR6046 => aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
       case _                 => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
+    }
+
+  private def isRentReviewPlannedRouting: Session => Call = answers =>
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.isRentReviewPlanned) match {
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
+      case _               => intervalsOfRentReviewRouting(answers)
     }
 
   private def isRentUnderReviewRouting: Session => Call =
@@ -528,6 +535,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     rentVaryQuantityOfBeersDetailsId              -> (_ => aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()),
     HowIsCurrentRentFixedId                       -> (_ => aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show()),
     MethodToFixCurrentRentsId                     -> methodToFixCurrentRentRouting,
+    IsRentReviewPlannedId                         -> isRentReviewPlannedRouting,
     IntervalsOfRentReviewId                       -> intervalsOfRentReviewRouting,
     CanRentBeReducedOnReviewId                    -> canRentBeReducedRouting,
     PropertyUpdatesId                             -> propertyUpdatesRouting,

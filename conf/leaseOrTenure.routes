@@ -203,6 +203,9 @@ POST        /legal-or-planning-restrictions                             controll
 GET         /legal-or-planning-restrictions-details                     controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsController.show()
 POST        /legal-or-planning-restrictions-details                     controllers.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsDetailsController.submit()
 
+GET         /is-rent-review-planned                                    controllers.aboutYourLeaseOrTenure.IsRentReviewPlannedController.show()
+POST        /is-rent-review-planned                                    controllers.aboutYourLeaseOrTenure.IsRentReviewPlannedController.submit()
+
 GET         /intervals-of-rent-review                                   controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.show()
 POST        /intervals-of-rent-review                                   controllers.aboutYourLeaseOrTenure.IntervalsOfRentReviewController.submit()
 

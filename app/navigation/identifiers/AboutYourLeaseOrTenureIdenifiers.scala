@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -106,6 +106,9 @@ case object rentVaryQuantityOfBeersDetailsId extends Identifier {
 case object HowIsCurrentRentFixedId extends Identifier { override def toString: String = "howIsCurrentRentFixedPage" }
 
 case object MethodToFixCurrentRentsId extends Identifier { override def toString: String = "methodFixCurrentRentPage" }
+
+case object IsRentReviewPlannedId extends Identifier:
+  override def toString: String = "isRentReviewPlannedPage"
 
 case object IntervalsOfRentReviewId extends Identifier { override def toString: String = "intervalRentReviewPage" }
 

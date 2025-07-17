@@ -23,7 +23,6 @@ import play.api.libs.json.{Json, OFormat}
 
 import java.time.LocalDate
 
-//Currently 21 parameters in this case class, so only one more is allowed!
 case class AboutLeaseOrAgreementPartTwo(
   rentPayableVaryAccordingToGrossOrNet: Option[AnswersYesNo] = None,
   rentPayableVaryAccordingToGrossOrNetDetails: Option[String] = None,
@@ -31,6 +30,7 @@ case class AboutLeaseOrAgreementPartTwo(
   rentPayableVaryOnQuantityOfBeersDetails: Option[String] = None,
   howIsCurrentRentFixed: Option[HowIsCurrentRentFixed] = None,
   methodToFixCurrentRentDetails: Option[MethodToFixCurrentRent] = None,
+  isRentReviewPlanned: Option[AnswersYesNo] = None,
   intervalsOfRentReview: Option[IntervalsOfRentReview] = None,
   canRentBeReducedOnReview: Option[AnswersYesNo] = None,
   incentivesPaymentsConditionsDetails: Option[AnswersYesNo] = None,
