@@ -231,7 +231,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
         .nextPage(MethodToFixCurrentRentsId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController
         .show()
     }
 
