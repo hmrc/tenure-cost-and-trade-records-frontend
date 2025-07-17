@@ -14,10 +14,12 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
+@import models.ForType.*
+@import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
 
 @this(layout: Layout,
         govukButton: GovukButton,
@@ -25,10 +27,28 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[String], summary: Summary, backlink: String)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], summary: Summary, backlink: String)(implicit request: SessionRequest[?], messages: Messages)
+
+@forType = @{
+ request.sessionData.forType
+}
+
+@pageHeaderMsg = @{
+ forType match {
+  case FOR6010 | FOR6011 => "aboutYourLandlord6010.heading"
+  case _                 => "aboutYourLandlord.heading"
+ }
+}
+
+@landlordFullNameLabel = @{
+ forType match {
+  case FOR6010 | FOR6011 => "landlordFullName6010"
+  case _                 => "landlordFullName"
+ }
+}
 
 @layout(
- pageHeading = messages("aboutYourLandlord.heading"),
+ pageHeading = messages(pageHeaderMsg),
  showSection = true,
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
@@ -38,10 +58,8 @@
 
  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.submit()) {
 
-  @includes.textInput(govukInput, theForm, "landlordFullName", "govuk-input--width-20", "landlordFullName", labelClasses = "govuk-!-font-weight-bold")
+  @includes.textInput(govukInput, theForm, "landlordFullName", "govuk-input--width-20", landlordFullNameLabel, labelClasses = "govuk-!-font-weight-bold")
 
   @includes.continueSaveAsDraftButtons(govukButton)
  }
 }
-
-

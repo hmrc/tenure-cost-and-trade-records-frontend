@@ -78,7 +78,7 @@ class CanRentBeReducedOnReviewController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
-      case FOR6020 =>
+      case FOR6020                     =>
         if (
           request.sessionData.aboutLeaseOrAgreementPartTwo
             .flatMap(_.intervalsOfRentReview)
@@ -88,10 +88,10 @@ class CanRentBeReducedOnReviewController @Inject() (
         } else {
           controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
         }
-      case FOR6030 =>
+      case FOR6010 | FOR6011 | FOR6030 =>
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.isRentReviewPlanned) match {
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show().url
         }
-      case _       => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+      case _                           => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
     }

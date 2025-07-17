@@ -409,6 +409,13 @@
                         "isRentUnderReview"
                     ) ++
                     sectionAnswers2.row(
+                        "checkYourAnswersAboutYourLeaseOrTenure.isRentReviewPlanned",
+                        _.isRentReviewPlanned.map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
+                        controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show(),
+                        "isRentReviewPlanned"
+                    ) ++
+                    sectionAnswers2.conditionRow(
+                        _.isRentReviewPlanned.contains(AnswerYes),
                         "checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                         _.intervalsOfRentReview.map(r =>
                             Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))

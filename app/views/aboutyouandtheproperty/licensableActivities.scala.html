@@ -30,9 +30,22 @@
 
 @(theForm: Form[AnswersYesNo], summary: Summary, fromLocation:String = "")(implicit request: Request[?], messages: Messages)
 
+@helpContent = {
+    <p class="govuk-body">@messages("help.licensableActivities.p1")</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("help.licensableActivities.list1.item1")</li>
+        <li>@messages("help.licensableActivities.list1.item2")</li>
+        <li>@messages("help.licensableActivities.list1.item3")</li>
+        <li>@messages("help.licensableActivities.list1.item4")</li>
+        <li>@messages("help.licensableActivities.list1.item5")</li>
+        <li>@messages("help.licensableActivities.list1.item6")</li>
+        <li>@messages("help.licensableActivities.list1.item7")</li>
+    </ul>
+}
+
 @layout(
   pageHeading = messages("licensableActivities.heading"),
-  showH1 = false,
   showSection = true,
     summary = Some(summary),
   sectionName = messages("label.section.aboutTheProperty"),
@@ -43,14 +56,21 @@
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.submit()) {
+    <p class="govuk-body">@messages("licensableActivities.p1")</p>
+    <p class="govuk-body">@messages("licensableActivities.p2")</p>
 
-      <h1 class="govuk-heading-l">@messages("licensableActivities.heading")</h1>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("licensableActivities.list1.item1")</li>
+        <li>@messages("licensableActivities.list1.item2")</li>
+        <li>@messages("licensableActivities.list1.item3")</li>
+    </ul>
+
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.submit()) {
 
       @govukRadios(Radios(
           fieldset = Some(Fieldset(
               legend = Some(Legend(
-                  isPageHeading = false,
+                  content = Text(messages("licensableActivities.label")),
                   classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
               ))
           )),
@@ -66,34 +86,13 @@
                   value = Some("no")
               )
           ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities"),
-          hint = Some(Hint(content = Text(messages("hint.licensableActivities"))))
+          errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities")
       ).withFormField(theForm("licensableActivities")))
 
 
     @govukDetails(Details(
       summary = Text(messages("help.licensableActivities.title")),
-      content = HtmlContent(
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.licensableActivities.heading")}</p>" +
-          s"<p>${messages("help.licensableActivities.p1")}</p>" +
-          s"<ul class='govuk-list--bullet'>" +
-            s"<li>${messages("help.licensableActivities.list1.p1")}</li>" +
-            s"<li>${messages("help.licensableActivities.list1.p2")}</li>" +
-            s"<li>${messages("help.licensableActivities.list1.p3")}</li>" +
-            s"<li>${messages("help.licensableActivities.list1.p4")}</li>" +
-          s"</ul>" +
-          s"<p>${messages("help.licensableActivities.p2")}</p>" +
-          s"<p>${messages("help.licensableActivities.p3")}</p>" +
-          s"<p>${messages("help.licensableActivities.p4")}</p>" +
-          s"<ul class='govuk-list--bullet'>" +
-            s"<li>${messages("help.licensableActivities.list2.p1")}</li>" +
-            s"<li>${messages("help.licensableActivities.list2.p2")}</li>" +
-            s"<li>${messages("help.licensableActivities.list2.p3")}</li>" +
-            s"<li>${messages("help.licensableActivities.list2.p4")}</li>" +
-            s"<li>${messages("help.licensableActivities.list2.p5")}</li>" +
-            s"<li>${messages("help.licensableActivities.list2.p6")}</li>" +
-            s"<li>${messages("help.licensableActivities.list2.p7")}</li>" +
-          s"</ul>")
+      content = HtmlContent(helpContent)
     ))
 
     @includes.continueSaveAsDraftButtons(govukButton)

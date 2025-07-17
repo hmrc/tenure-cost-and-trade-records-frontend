@@ -37,7 +37,7 @@ object AnswersAboutTheProperty6048Helper:
                      |<p class="govuk-body">
                      |${occupier.name}<br>
                      |${occupier.address}
-                     |</p
+                     |</p>
                      |""".stripMargin,
             changeAction = Some(routes.OccupiersDetailsController.show(Some(index)).asChangeLink("partsUnavailable"))
           )

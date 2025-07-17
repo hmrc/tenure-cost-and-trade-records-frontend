@@ -808,25 +808,22 @@ help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed af
 
 # LICENSABLE ACTIVITIES
 #######################
-licensableActivities.heading = Do licensable activities regularly occur before 10am or after 11.30pm on any day of the week?
-hint.licensableActivities= Licensable activities could include selling alcohol, selling food and refreshments, or providing live entertainment.
-help.licensableActivities.title = Help with licensable activities
-help.licensableActivities.heading = Licensable activities
-help.licensableActivities.p1 = The Licensing Act, 2003 defines licensable activities as:
-help.licensableActivities.list1.p1 = the retail sale of alcohol
-help.licensableActivities.list1.p2 = the supply of alcohol in clubs
-help.licensableActivities.list1.p3 = the provision of late-night refreshment
-help.licensableActivities.list1.p4 = the provision of regulated entertainment
-help.licensableActivities.p2 = In this instance, ‘clubs’ is a cover-all term covering establishment categories covered by this form.
-help.licensableActivities.p3 = ‘Late-night refreshment’ is defined as the supply of hot food and drink to the public for consumption between 23:00 and 05:00.
-help.licensableActivities.p4 = ‘Regulated entertainment’ is defined as:
-help.licensableActivities.list2.p1 = a performance of a play
-help.licensableActivities.list2.p2 = showing a film
-help.licensableActivities.list2.p3 = an indoor sporting event
-help.licensableActivities.list2.p4 = a boxing or wrestling match
-help.licensableActivities.list2.p5 = live music
-help.licensableActivities.list2.p6 = any playing of recorded music
-help.licensableActivities.list2.p7 = a dance performance
+licensableActivities.heading = Licensable activities
+licensableActivities.label = Do licensable activities regularly occur before 10am or after 11.30pm on any day of the week?
+licensableActivities.p1 = You must declare if any licensable activities regularly occur before 10am or after 11.30pm.
+licensableActivities.p2 = We define licensable activities as:
+licensableActivities.list1.item1 = selling alcohol
+licensableActivities.list1.item2 = selling food and refreshments
+licensableActivities.list1.item3 = providing regulated entertainment
+help.licensableActivities.title = What is meant by regulated entertainment
+help.licensableActivities.p1 = The Licensing Act, 2003 defines regulated entertainment as:
+help.licensableActivities.list1.item1 = live music
+help.licensableActivities.list1.item2 = any playing of recorded music
+help.licensableActivities.list1.item3 = an indoor sporting event
+help.licensableActivities.list1.item4 = a boxing or wrestling match
+help.licensableActivities.list1.item5 = showing a film
+help.licensableActivities.list1.item6 = a dance performance
+help.licensableActivities.list1.item7 = a performance of a play
 error.licensableActivities.missing = Select yes if licensable activities regularly happen before 10am or after 11:30pm
 
 # LICENSABLE ACTIVITIES DETAILS
@@ -843,12 +840,10 @@ error.licensableActivitiesDetails.maxLength = Your description of the licensable
 
 # PREMISES LICENCE CONDITIONS
 #############################
-premisesLicenseConditions.heading = Does your premises licence have conditions restricting the use of all or parts of the property?
-hint.premisesLicenseConditions = For example, no drinks outside after 10pm.
-help.premisesLicenseConditions.title = Help with conditions restricting the use of your property
-help.premisesLicenseConditions.heading = Conditions restricting the use of your property
-help.premisesLicenseConditions.p1 = Sometimes, a premises licence is only granted if the holder of the licence agrees to special conditions. These can include restrictions on the use of certain parts of the property.
-help.premisesLicenseConditions.p2 = Check your premises licence if you’re not sure. You'll find any special conditions stated clearly on there.
+premisesLicenseConditions.heading = Licence conditions
+premisesLicenseConditions.label = Does your premises licence have conditions restricting the use of all or parts of the property?
+premisesLicenseConditions.p1 = Sometimes, a premises licence is only granted if the licence holder agrees to special conditions. For example, ’no drinks are allowed outside after 10pm’.
+premisesLicenseConditions.p2 = You must declare any licence conditions restricting the use of certain parts of the property. Any special conditions will be stated clearly on your premises licence.
 error.premisesLicenseConditions.missing = Select yes if your premises licence has conditions restricting the use of your property
 
 # PREMISES LICENCE CONDITIONS DETAILS
@@ -865,11 +860,15 @@ error.premisesLicenseConditionsDetails.maxLength  = Your description of the cond
 
 # ENFORCEMENT ACTION BEEN TAKEN
 ##############################£
-enforcementActionHasBeenTaken.heading = Has any enforcement action been taken?
-hint.enforcementActionHasBeenTaken = This can be any suspensions, closure orders or temporary restrictions.
-help.enforcementActionHasBeenTaken.title = Help with enforcement action
-help.enforcementActionHasBeenTaken.heading = Enforcement action
-help.enforcementActionHasBeenTaken.p1 = You must tell us if any enforcement action has been taken against your premises by your local licensing authority under your tenure. If a lease or agreement was assigned to you from another tenant, you must let us know if any enforcement action was taken against them under the current agreement.
+enforcementActionHasBeenTaken.heading = Enforcement action
+enforcementActionHasBeenTaken.label = Has any enforcement action been taken?
+enforcementActionHasBeenTaken.p1 = You must declare if any enforcement action has been taken against your premises by your local licensing authority under your tenure.
+enforcementActionHasBeenTaken.p2 = Examples of enforcement action include, but are not limited to:
+enforcementActionHasBeenTaken.list1.item1 = suspensions
+enforcementActionHasBeenTaken.list1.item2 = closure orders
+enforcementActionHasBeenTaken.list1.item3 = temporary restrictions
+enforcementActionHasBeenTaken.heading1 = If your current lease or agreement was assigned to you from another tenant
+enforcementActionHasBeenTaken.p3 = You must also declare if any enforcement action was taken against the previous tenant, but only if it was applied under the current lease or agreement.
 error.enforcementActionBeenTaken.missing = Select yes if any enforcement action has been taken
 
 # ENFORCEMENT ACTION BEEN TAKEN DETAILS
@@ -977,7 +976,9 @@ error.franchiseOrLettings.missing = Select yes if you receive income from lettin
 # ABOUT YOUR LANDLORD
 #####################
 aboutYourLandlord.heading = Eich landlord
+aboutYourLandlord6010.heading = What is your landlord’s name?
 label.landlordFullName = Enw’r landlord
+label.landlordFullName6010 = Full name or company name
 aboutYourLandlord.address.lookupPageHeading = What is your landlord’s address?
 aboutYourLandlord.address.selectPageHeading = Choose your landlord’s address
 aboutYourLandlord.address.confirmPageHeading = Check your landlord’s address

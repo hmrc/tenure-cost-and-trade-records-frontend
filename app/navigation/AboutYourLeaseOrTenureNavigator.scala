@@ -224,9 +224,9 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def methodToFixCurrentRentRouting: Session => Call =
     _.forType match {
-      case FOR6030           => aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show()
-      case FOR6045 | FOR6046 => aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
-      case _                 => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
+      case FOR6010 | FOR6011 | FOR6030 => aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show()
+      case FOR6045 | FOR6046           => aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
+      case _                           => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
     }
 
   private def isRentReviewPlannedRouting: Session => Call = answers =>

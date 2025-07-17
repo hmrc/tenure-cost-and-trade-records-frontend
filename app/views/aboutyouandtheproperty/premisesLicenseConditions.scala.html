@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,12 @@
  *@
 
 @import models.submissions.common.AnswersYesNo
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
   govukRadios: GovukRadios,
-  govukDetails: GovukDetails,
   formWithCSRF: FormWithCSRF
 )
 
@@ -29,13 +28,15 @@
 
 @layout(
   pageHeading = messages("premisesLicenseConditions.heading"),
-  showH1 = false,
   showSection = true,
-    summary = Some(summary),
+  summary = Some(summary),
   sectionName = messages("label.section.aboutTheProperty"),
   backLinkUrl = backLink,
   theForm = theForm
 ) {
+
+    <p class="govuk-body">@messages("premisesLicenseConditions.p1")</p>
+    <p class="govuk-body">@messages("premisesLicenseConditions.p2")</p>
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.submit()) {
 
@@ -43,19 +44,9 @@
       govukRadios,
       theForm,
       "premisesLicenseConditions",
-      "premisesLicenseConditions.heading",
-      classes = "govuk-fieldset__legend--l",
-      isHeading = true,
-      hint = "hint.premisesLicenseConditions"
+      "premisesLicenseConditions.label",
+      classes = "govuk-fieldset__legend--m"
     )
-
-    @govukDetails(Details(
-      summary = Text(messages("help.premisesLicenseConditions.title")),
-      content = HtmlContent(
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.premisesLicenseConditions.heading")}</p>" +
-        s"<p>${messages("help.premisesLicenseConditions.p1")}</p>" +
-        s"<p>${messages("help.premisesLicenseConditions.p2")}</p>")
-    ))
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }
