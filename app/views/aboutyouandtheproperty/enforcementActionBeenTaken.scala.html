@@ -15,15 +15,14 @@
  *@
 
 @import models.submissions.common.AnswersYesNo
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import models.pages.Summary
 
 @this(layout: Layout,
   govukButton: GovukButton,
   govukRadios: GovukRadios,
-  govukDetails: GovukDetails,
   formWithCSRF: FormWithCSRF
 )
 
@@ -31,22 +30,32 @@
 
 @layout(
   pageHeading = messages("enforcementActionHasBeenTaken.heading"),
-  showH1 = false,
   showSection = true,
-    summary = Some(summary),
+  summary = Some(summary),
   sectionName = messages("label.section.aboutTheProperty"),
   backLinkUrl = backLink,
   theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.submit()) {
+    <p class="govuk-body">@messages("enforcementActionHasBeenTaken.p1")</p>
+    <p class="govuk-body">@messages("enforcementActionHasBeenTaken.p2")</p>
 
-      <h1 class="govuk-heading-l">@messages("enforcementActionHasBeenTaken.heading")</h1>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("enforcementActionHasBeenTaken.list1.item1")</li>
+        <li>@messages("enforcementActionHasBeenTaken.list1.item2")</li>
+        <li>@messages("enforcementActionHasBeenTaken.list1.item3")</li>
+    </ul>
+
+    <p class="govuk-body govuk-!-font-weight-bold">@messages("enforcementActionHasBeenTaken.heading1")</p>
+    <p class="govuk-body">@messages("enforcementActionHasBeenTaken.p3")</p>
+
+  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.submit()) {
 
       @govukRadios(Radios(
           fieldset = Some(Fieldset(
               legend = Some(Legend(
-                  classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
+                  content = Text(messages("enforcementActionHasBeenTaken.label")),
+                  classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
               ))
           )),
           classes = "govuk-radios--inline",
@@ -61,16 +70,8 @@
                   value = Some("no")
               )
           ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionBeenTaken"),
-          hint = Some(Hint(content = Text(messages("hint.enforcementActionHasBeenTaken"))))
+          errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionBeenTaken")
       ).withFormField(theForm("enforcementActionBeenTaken")))
-
-    @govukDetails(Details(
-      summary = Text(messages("help.enforcementActionHasBeenTaken.title")),
-      content = HtmlContent(
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.enforcementActionHasBeenTaken.heading")}</p>" +
-        s"<p>${messages("help.enforcementActionHasBeenTaken.p1")}</p>")
-    ))
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

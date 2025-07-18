@@ -16,6 +16,7 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm
 import models.pages.Summary
 import play.api.data.Form
@@ -25,15 +26,17 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String] {
 
   def aboutYourLandordView = inject[views.html.aboutYourLeaseOrTenure.aboutYourLandlord]
 
-  val messageKeyPrefix = "aboutYourLandlord"
+  val messageKeyPrefix = "aboutYourLandlord6010"
   val backLink         = controllers.routes.TaskListController.show().url
 
   override val form = AboutTheLandlordForm.theForm
 
-  def createView = () => aboutYourLandordView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  val sessionRequest = SessionRequest(stillConnectedDetailsYesToAllSession, fakeRequest)
+
+  def createView = () => aboutYourLandordView(form, Summary("99996010001"), backLink)(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[String]) =>
-    aboutYourLandordView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+    aboutYourLandordView(form, Summary("99996010001"), backLink)(using sessionRequest, messages)
 
   "About the landlord view" must {
 

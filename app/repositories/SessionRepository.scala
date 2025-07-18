@@ -19,7 +19,6 @@ package repositories
 import com.google.inject.Singleton
 import crypto.MongoCrypto
 import models.{SensitiveSession, Session}
-import org.mongodb.scala.SingleObservableFuture
 import org.mongodb.scala.model.Filters.*
 import org.mongodb.scala.model.*
 import play.api.libs.json.*
@@ -72,7 +71,7 @@ class SessionRepository @Inject() (mongo: MongoComponent)(implicit
       )
     }
 
-  def get(implicit hc: HeaderCarrier) =
+  def get(implicit hc: HeaderCarrier): Future[Option[Session]] =
     Mdc.preservingMdc {
       for {
         sessionId   <- getSessionId
