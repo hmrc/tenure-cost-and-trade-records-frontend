@@ -206,8 +206,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(MethodToFixCurrentRentsId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
-        .show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show()
     }
 
     "return a function that goes to CYA when legal or planning restrictions has been completed" in {

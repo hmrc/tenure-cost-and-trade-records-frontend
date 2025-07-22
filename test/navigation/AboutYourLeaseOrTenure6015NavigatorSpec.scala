@@ -168,8 +168,7 @@ class AboutYourLeaseOrTenure6015NavigatorSpec extends TestBaseSpec {
         .nextPage(MethodToFixCurrentRentsId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
-        .show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show()
     }
 
     "return a function that goes to connected to landlord details page when connected to landlord and answer is 'no'" in {
