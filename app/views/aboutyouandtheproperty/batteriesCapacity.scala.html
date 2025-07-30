@@ -30,7 +30,7 @@
 )
 
 
-@(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("batteriesCapacity.heading"),
@@ -39,19 +39,21 @@
     summary = Some(summary),
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show().url,
-    theForm = theForm
+    theForm = theForm,
+    readOnly = readOnly
 ) {
 
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.submit()) {
-
-        @govukInput(Input(
-            id = "batteriesCapacity",
-            name = "batteriesCapacity",
-            value = theForm("batteriesCapacity").value,
-            errorMessage = theForm.errors.asTextErrorMessageForField("batteriesCapacity"),
-            hint = Some(Hint(content = Text(messages("batteriesCapacity.hint")))),
-            classes = "govuk-!-width-one-third"
-        ))
+        <fieldset class="govuk-fieldset">
+            @govukInput(Input(
+                id = "batteriesCapacity",
+                name = "batteriesCapacity",
+                value = theForm("batteriesCapacity").value,
+                errorMessage = theForm.errors.asTextErrorMessageForField("batteriesCapacity"),
+                hint = Some(Hint(content = Text(messages("batteriesCapacity.hint")))),
+                classes = "govuk-!-width-one-third"
+            ))
+        </fieldset>
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

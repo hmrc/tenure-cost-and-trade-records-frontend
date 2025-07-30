@@ -19,14 +19,14 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.GeneratorCapacityForm.generatorCapacityForm
+import form.aboutyouandtheproperty.GeneratorCapacityForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.GeneratorCapacityId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.generatorCapacity
+import views.html.aboutyouandtheproperty.generatorCapacity as GeneratorCapacityView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -36,45 +36,44 @@ class GeneratorCapacityController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
-  view: generatorCapacity,
+  theView: GeneratorCapacityView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with ReadOnlySupport
+    with I18nSupport:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("GeneratorCapacity")
-
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.generatorCapacity) match {
-            case Some(data) => generatorCapacityForm.fill(data)
-            case _          => generatorCapacityForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      theView(
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.generatorCapacity) match {
+          case Some(data) => theForm.fill(data)
+          case _          => theForm
+        },
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
-      generatorCapacityForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          view(
+          theView(
             formWithErrors,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            isReadOnly
           )
         ),
       data => {
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(generatorCapacity = Some(data)))
-        session
+        repo
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(GeneratorCapacityId, updatedData).apply(updatedData)))
       }
     )
   }
-}

@@ -28,19 +28,19 @@ class ThreeYearsConstructedViewSpec extends QuestionViewBehaviours[AnswersYesNo]
 
   val messageKeyPrefix = "threeYearsConstructed"
 
-  override val form: Form[AnswersYesNo] = ThreeYearsConstructedForm.threeYearsConstructedForm
+  override val form: Form[AnswersYesNo] = ThreeYearsConstructedForm.theForm
 
   def createView: () => Html = () =>
-    threeYearsConstructedView(form, "", Summary("99996010001"))(using fakeRequest, messages)
+    threeYearsConstructedView(form, "", Summary("99996010001"), false)(using fakeRequest, messages)
 
   def createViewFromTL: () => Html = () =>
-    threeYearsConstructedView(form, "TL", Summary("99996010001"))(using fakeRequest, messages)
+    threeYearsConstructedView(form, "TL", Summary("99996010001"), false)(using fakeRequest, messages)
 
   def createViewFromCYA: () => Html = () =>
-    threeYearsConstructedView(form, "CYA", Summary("99996010001"))(using fakeRequest, messages)
+    threeYearsConstructedView(form, "CYA", Summary("99996010001"), false)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    threeYearsConstructedView(form, "", Summary("99996010001"))(using fakeRequest, messages)
+    threeYearsConstructedView(form, "", Summary("99996010001"), false)(using fakeRequest, messages)
 
   "Three years constructed view" should {
 

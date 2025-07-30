@@ -29,7 +29,7 @@ import scala.language.reflectiveCalls
 class AboutYouControllerSpec extends TestBaseSpec {
 
   import TestData.{baseFormData, errorKey}
-  import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
+  import form.aboutyouandtheproperty.AboutYouForm.theForm
   import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
@@ -84,41 +84,41 @@ class AboutYouControllerSpec extends TestBaseSpec {
   "About you form" should {
     "error if fullName is missing " in {
       val formData = baseFormData - errorKey.fullName
-      val form     = aboutYouForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.fullName, "error.fullNameContactDetails.required", form)
     }
 
     "error if phone is missing" in {
       val formData = baseFormData + (errorKey.phone -> "")
-      val form     = aboutYouForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.phone, Errors.contactPhoneAboutYouRequired, form)
     }
     "error if phone number is too short" in {
       val formData = baseFormData + (errorKey.phone -> "12345")
-      val form     = aboutYouForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.phone, Errors.contactPhoneLength, form)
     }
 
     "error if phone number is invalid format" in {
       val formData = baseFormData + (errorKey.phone -> "invalid_phone_number")
-      val form     = aboutYouForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.phone, Errors.invalidPhone, form)
     }
 
     "error if email is missing" in {
       val formData = baseFormData + (errorKey.email -> "")
-      val form     = aboutYouForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.email, Errors.contactEmailAboutYouRequired, form)
     }
 
     "error if email is invalid format" in {
       val formData = baseFormData + (errorKey.email -> "invalid_email_address")
-      val form     = aboutYouForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.email, Errors.emailFormat, form)
     }

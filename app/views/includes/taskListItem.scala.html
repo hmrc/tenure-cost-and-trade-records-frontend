@@ -18,17 +18,14 @@
 @import models.submissions.common.AnswersYesNo.*
 @import navigation.UrlHelpers.urlPlusParamPrefix
 
-@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[AnswersYesNo], pageAnswer: Option[?], cannotStartYet: Boolean = false, readOnly: Boolean = false)(implicit messages: Messages)
+@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[AnswersYesNo], pageAnswer: Option[?], cannotStartYet: Boolean = false, declared: Boolean = false)(implicit messages: Messages)
 
 @sectionCompletedAnswerYes = @{
     sectionCompleted.contains(AnswerYes)
 }
 
 @completedOrDeclared = @{
-    if((sectionCompletedAnswerYes && messages(taskNameKey) == "Connection status") ||
-          (sectionCompletedAnswerYes && messages(taskNameKey) == "Vacancy status") ||
-          (sectionCompletedAnswerYes && messages(taskNameKey) == "Occupier details") ||
-          (sectionCompletedAnswerYes && messages(taskNameKey) == "Occupation and accounting information")) {
+    if(sectionCompletedAnswerYes && declared) {
       messages("taskList.status.declared")
   } else {
       messages("taskList.status.completed")
@@ -62,7 +59,7 @@
 
 <li class="app-task-list__item">
     <span class="app-task-list__task-name">
-        @if(readOnly || (cannotStartYet && pageAnswer.isEmpty)) {
+        @if(declared || (cannotStartYet && pageAnswer.isEmpty)) {
             @messages(taskNameKey)
         } else {
             <a href="@{urlPlusParamPrefix(taskPage.url)}from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>

@@ -23,7 +23,7 @@ import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
-import form.aboutyouandtheproperty.RenewablesPlantForm.renewablesPlantForm
+import form.aboutyouandtheproperty.RenewablesPlantForm.theForm
 import models.submissions.common.AnswersYesNo.*
 import utils.TestBaseSpec
 
@@ -135,7 +135,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
   "Form"                       should {
     "error if tiedForGoods is missing" in {
       val formData = baseFormData - errorKey.renewablesPlant
-      val form     = renewablesPlantForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.renewablesPlant, Errors.renewablesPlant, form)
     }

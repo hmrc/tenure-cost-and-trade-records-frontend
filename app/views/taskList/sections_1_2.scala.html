@@ -23,7 +23,8 @@
 @(forType: ForType, isLeaseHolder: Boolean, section1Completed: Option[AnswersYesNo], section2Completed: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
-@isReadOnly = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).flatMap(_.answersChecked).contains(AnswerYes) }
+@readOnlySection1 = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).flatMap(_.answersChecked).contains(AnswerYes) }
+@readOnlySection2 = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty).flatMap(_.answersChecked).contains(AnswerYes) }
 
 <li>
  <h2 id="connectionToTheProperty" class="app-task-list__section">
@@ -36,7 +37,7 @@
    section1Completed,
    pageAnswer = session.stillConnectedDetails.flatMap(_.addressConnectionType),
    cannotStartYet = false,
-   readOnly = isReadOnly,
+   declared = readOnlySection1,
   )
 
   @if(forType != FOR6076) {
@@ -46,7 +47,7 @@
     section1Completed,
     pageAnswer = session.stillConnectedDetails.flatMap(_.isPropertyVacant),
     cannotStartYet = session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty,
-    readOnly = isReadOnly,
+    declared = readOnlySection1,
    )
   }
 
@@ -55,7 +56,7 @@
    section1Completed,
    pageAnswer = session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
    cannotStartYet = session.stillConnectedDetails.flatMap(_.isPropertyVacant).isEmpty,
-   readOnly = isReadOnly
+   declared = readOnlySection1
   )
  </ul>
 </li>
@@ -70,7 +71,8 @@
    controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
    section2Completed,
    pageAnswer = session.aboutYouAndTheProperty.flatMap(_.customerDetails),
-   cannotStartYet = section1Completed.isEmpty
+   cannotStartYet = section1Completed.isEmpty,
+   declared = forType == FOR6076 && readOnlySection2
   )
 
   @if(forType == FOR6048) {
@@ -93,19 +95,22 @@
     controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
     section2Completed,
     pageAnswer = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
-    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty,
+    declared = readOnlySection2
    )
    @includes.taskListItem("site-construction-details", "taskList.siteConstructionDetails",
     controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
     section2Completed,
     pageAnswer = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
-    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty
+    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty,
+    declared = readOnlySection2
    )
    @includes.taskListItem("how-is-used", "taskList.howIsUsed",
     controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
     section2Completed,
     pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
-    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty
+    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty,
+    declared = readOnlySection2
    )
   } else {
 

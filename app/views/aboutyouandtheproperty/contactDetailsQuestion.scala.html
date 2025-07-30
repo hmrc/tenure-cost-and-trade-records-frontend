@@ -25,7 +25,7 @@
 )
 
 
-@(theForm: Form[AnswersYesNo], summary: Summary, fromLocation:String = "")(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], summary: Summary, readOnly: Boolean, fromLocation: String = "")(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("contactDetailsQuestion.heading"),
@@ -38,7 +38,8 @@
             case _ => controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
         }
     },
-    theForm = theForm
+    theForm = theForm,
+    readOnly = readOnly
 ) {
 
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.submit()) {

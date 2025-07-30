@@ -31,10 +31,10 @@ class PlantAndTechnologyViewSpec extends QuestionViewBehaviours[String] {
   val backLink: String = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
 
   def createView: () => Html = () =>
-    plantAndTechnologyView(form, backLink, Summary("99996076001"))(using fakeRequest, messages)
+    plantAndTechnologyView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    plantAndTechnologyView(form, backLink, Summary("99996076001"))(using fakeRequest, messages)
+    plantAndTechnologyView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
 
   "Plant and technology view" should {
 

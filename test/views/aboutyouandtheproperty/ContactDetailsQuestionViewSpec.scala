@@ -33,10 +33,10 @@ class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo
   val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
 
   def createView: () => Html = () =>
-    contactDetailsQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
+    contactDetailsQuestionView(form, Summary("99996010001"), false)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    contactDetailsQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
+    contactDetailsQuestionView(form, Summary("99996010001"), false)(using fakeRequest, messages)
 
   "Contact details question view" should {
 

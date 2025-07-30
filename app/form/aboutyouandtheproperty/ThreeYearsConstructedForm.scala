@@ -22,7 +22,7 @@ import play.api.data.Forms.mapping
 
 object ThreeYearsConstructedForm {
 
-  val threeYearsConstructedForm = Form(
+  val theForm = Form(
     mapping(
       "threeYearsConstructed" -> createYesNoType("error.threeYearsConstructed.required")
     )(x => x)(b => Some(b))
