@@ -30,7 +30,6 @@
         govukInput: GovukInput,
         govukTable: GovukTable,
         govukInsetText: GovukInsetText,
-        govukDetails: GovukDetails,
         dateUtil: DateUtilLocalised,
         accessibilityUtil: AccessibilityUtil
 )
@@ -38,12 +37,6 @@
 
 @(form: Form[Seq[CostOfSales]],fromLocation:String = "")(implicit request: SessionRequest[?], messages: Messages)
 
-
-@detailsContent = {
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("costOfSales.details.h1")</p>
-    <p class="govuk-body">@messages("costOfSales.details.p1")</p>
-    <p class="govuk-body">@messages("costOfSales.details.p2")</p>
-}
 
 @accommodationHeading = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("costOfSales.accommodation")</span> @messages("costOfSales.excludingVAT")</p>
@@ -91,6 +84,7 @@
         case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
         case _ => controllers.aboutthetradinghistory.routes.TurnoverController.show().url
     },
+    fullWidth = true,
     theForm = form
 ) {
 
@@ -101,14 +95,11 @@
         <li>@messages("costOfSales.excluding.item3")</li>
         <li>@messages("costOfSales.excluding.item4")</li>
     </ul>
+    <p class="govuk-body">@messages("costOfSales.details.p1")</p>
+    <p class="govuk-body">@messages("costOfSales.details.p2")</p>
 
     @govukInsetText(InsetText(
         content = Text(messages("turnover.inset"))
-    ))
-
-    @govukDetails(Details(
-        summary = Text(messages("costOfSales.details.link")),
-        content = HtmlContent(detailsContent)
     ))
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSalesController.submit()) {
