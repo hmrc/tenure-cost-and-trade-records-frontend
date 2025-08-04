@@ -40,24 +40,10 @@
     }
 }
 
-@labelOperatorName = @{
-    forType match {
-        case FOR6030 => "operatorName"
-        case _       => "lettingOperatorName"
-    }
-}
-
-@labelTypeOfBusiness = @{
-    forType match {
-        case FOR6030 => "typeOfBusiness"
-        case _       => "lettingTypeOfBusiness"
-    }
-}
-
 @hintTypeOfBusiness = @{
     forType match {
         case FOR6010 | FOR6011  => "descriptionOfLetting"
-        case FOR6015 | FOR6016  => "lettingTypeDetails6015"
+        case FOR6015 | FOR6016  => "lettingTypeOfBusiness6015"
         case _                  => "lettingTypeDetails"
     }
 }
@@ -84,8 +70,8 @@
 
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.submit(index)) {
 
-            @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", labelOperatorName, labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", labelTypeOfBusiness, labelClasses = "govuk-!-font-weight-bold", hintMsg = hintTypeOfBusiness)
+            @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "operatorName", labelClasses = "govuk-!-font-weight-bold")
+            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = hintTypeOfBusiness)
 
             @includes.continueSaveAsDraftButtons(govukButton)
         }

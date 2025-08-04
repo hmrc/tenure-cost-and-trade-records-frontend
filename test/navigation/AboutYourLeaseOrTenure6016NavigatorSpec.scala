@@ -147,7 +147,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId, session6016)
         .apply(
           session6016
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
     }
 
     "return a function that goes to can rent be reduced on view when intervals of rent review has been completed" in {

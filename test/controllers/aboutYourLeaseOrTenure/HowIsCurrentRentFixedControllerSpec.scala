@@ -135,7 +135,7 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
       )
     }
 
@@ -149,7 +149,7 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
       )
     }
 
@@ -160,7 +160,7 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
       )
     }
 

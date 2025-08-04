@@ -31,8 +31,6 @@
 
 @forType = @{ request.sessionData.forType }
 
-@T6015 = @{forType == FOR6015 || forType == FOR6016}
-
 @sectionName = @{
     forType match {
         case FOR6010 | FOR6011  => messages("label.section.aboutFranchisesOrLettings")
@@ -42,9 +40,8 @@
 @pageHeading = @{
     forType match {
         case FOR6010    => messages("cateringOperationOrLettingAccommodationOperator.heading")
-        case FOR6011     => messages("cateringOperationOrLettingAccommodationDetails.heading")
-        case _                     => messages("concessionDetails.heading")
-
+        case FOR6011    => messages("cateringOperationOrLettingAccommodationDetails.heading")
+        case _          => messages("concessionDetails.heading")
     }
 }
 
@@ -61,8 +58,8 @@
   <div class="input-- "></div>
     @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.submit(index)) {
 
-        @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", if(T6015) "tradingName"  else "operatorName", labelClasses = "govuk-!-font-weight-bold")
-        @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = if(T6015) "concessionTypeOfBusiness" else "typeOfBusiness")
+        @includes.textInput(govukInput, theForm, "operatorName", "govuk-input--width-20", "operatorName", labelClasses = "govuk-!-font-weight-bold")
+        @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "typeOfBusiness")
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 }

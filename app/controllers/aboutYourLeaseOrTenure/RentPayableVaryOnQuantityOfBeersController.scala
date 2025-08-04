@@ -16,14 +16,15 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.rentVaryQuantityOfBeersId
+import navigation.identifiers.RentVaryQuantityOfBeersId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -54,7 +55,7 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
             case Some(answer) => rentPayableVaryOnQuantityOfBeersForm.fill(answer)
             case _            => rentPayableVaryOnQuantityOfBeersForm
           },
-          request.sessionData.toSummary
+          getBackLink
         )
       )
     )
@@ -63,15 +64,23 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       rentPayableVaryOnQuantityOfBeersForm,
-      formWithErrors => BadRequest(rentPayableVaryOnQuantityOfBeersView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(rentPayableVaryOnQuantityOfBeersView(formWithErrors, getBackLink)),
       data => {
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeers = Some(data)))
         session
           .saveOrUpdate(updatedData)
-          .map(_ => Redirect(navigator.nextPage(rentVaryQuantityOfBeersId, updatedData).apply(updatedData)))
+          .map(_ => Redirect(navigator.nextPage(RentVaryQuantityOfBeersId, updatedData).apply(updatedData)))
 
       }
     )
   }
+
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
+    request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
+      case Some(AnswerYes) =>
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
+      case _               =>
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+    }
 
 }

@@ -1512,21 +1512,19 @@ error.howIsCurrentRentFixed.required = Dewiswch sut cafodd y rhent presennol ei 
 # CATERING OPERATION OR LETTING DETAILS
 #######################################
 cateringOperationOrLettingAccommodationDetails.heading = Rhowch fanylion y busnes
-concessionDetails.heading = Rhowch fanylion y consesiwn
-lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
+concessionDetails.heading = Concession’s details
+lettingDetails.heading = Tenant or operator’s details
 lettingOtherPartOfPropertyDetails.heading = Rhowch fanylion y tenant
 cateringOperationOrLettingAccommodationDetails.heading = Rhowch fanylion y busnes
-concessionDetails.heading = Rhowch fanylion y consesiwn
 concessionDetails.address.lookupPageHeadingOperator = What is the operator’s correspondence address?
-concessionDetails.address.lookupPageHeading = What is the concession’s property address?
-concessionDetails.address.selectPageHeadingOperator = Choose the concession’s property address
-concessionDetails.address.selectPageHeading = Choose the concession’s property address
+concessionDetails.address.lookupPageHeading = What is the concession’s correspondence address?
+concessionDetails.address.selectPageHeadingOperator = Choose the concession’s correspondence address
+concessionDetails.address.selectPageHeading = Choose the concession’s correspondence address
 concessionDetails.address.confirmPageHeadingOperator = Check the operator’s correspondence address
-concessionDetails.address.confirmPageHeading = Check the concession’s property address
-lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
-lettingDetails.address.lookupPageHeading = What is the tenant or operator address?
-lettingDetails.address.selectPageHeading = Choose the tenant or operator address
-lettingDetails.address.confirmPageHeading = Check the tenant or operator address
+concessionDetails.address.confirmPageHeading = Check the concession’s correspondence address
+lettingDetails.address.lookupPageHeading = What is the tenant or operator’s correspondence address?
+lettingDetails.address.selectPageHeading = Choose the tenant or operator’s correspondence address
+lettingDetails.address.confirmPageHeading = Check the tenant or operator’s correspondence address
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
 lettingDetails.address.lookupPageHeadingTenant = What is the tenant’s correspondence address?
 lettingDetails.address.selectPageHeadingTenant = Choose the tenant’s correspondence address
@@ -1534,7 +1532,7 @@ lettingDetails.address.confirmPageHeadingTenant = Check the tenant’s correspon
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Enw’r gweithredwr
 label.operatorDetails = Operator’s details
-label.lettingOperatorName = Enw’r tenant
+label.lettingOperatorName = Enw’r gweithredwr
 label.tradingName = Enw masnachu
 label.typeOfBusiness = Disgrifiwch y math o fusnes
 label.lettingTypeOfBusiness = Disgrifiad o’r hyn sydd ar osod
@@ -2783,7 +2781,7 @@ grossProfit.totalGrossProfits = Total gross profits
 
 # TOTAL PAYROLL COSTS (FORM 6015)
 #########
-totalPayrollCosts.heading = Costau y gyflogres
+totalPayrollCosts.heading = Payroll costs
 totalPayrollCosts.p1 = Rhowch fanylion eich cyflogau, Yswiriant Gwladol, a chyfraniadau pensiwn, gan eithrio costau staff y brif swyddfa.
 totalPayrollCosts.p2 = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 totalPayrollCosts.financialYearEnd = Diwedd y flwyddyn ariannol

@@ -95,11 +95,11 @@ case object RentPayableVaryAccordingToGrossOrNetDetailsId extends Identifier {
   override def toString: String = "rentPayableByGrossOrNetDetailsPage"
 }
 
-case object rentVaryQuantityOfBeersId extends Identifier {
+case object RentVaryQuantityOfBeersId extends Identifier {
   override def toString: String = "rentVaryQuantityOfBeersPage"
 }
 
-case object rentVaryQuantityOfBeersDetailsId extends Identifier {
+case object RentVaryQuantityOfBeersDetailsId extends Identifier {
   override def toString: String = "rentVaryQuantityOfBeersDetailsPage"
 }
 

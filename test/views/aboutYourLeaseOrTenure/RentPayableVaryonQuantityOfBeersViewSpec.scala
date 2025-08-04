@@ -16,8 +16,8 @@
 
 package views.aboutYourLeaseOrTenure
 
+import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersForm
-import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
@@ -27,12 +27,14 @@ class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[An
 
   val messageKeyPrefix = "rentPayableVaryOnQuantityOfBeers"
 
+  private val sessionRequest = SessionRequest(stillConnectedDetails6015YesSession, fakeRequest)
+
   override val form = RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 
-  def createView = () => rentPayableVaryOnQuantityOfBeersView(form, Summary("99996010001"))(using fakeRequest, messages)
+  def createView = () => rentPayableVaryOnQuantityOfBeersView(form, "BACK_LINK")(using sessionRequest, messages)
 
   def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    rentPayableVaryOnQuantityOfBeersView(form, Summary("99996010001"))(using fakeRequest, messages)
+    rentPayableVaryOnQuantityOfBeersView(form, "BACK_LINK")(using sessionRequest, messages)
 
   "Rent payable vary on quantity beers view" must {
 
@@ -43,9 +45,7 @@ class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[An
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController
-        .show()
-        .url
+      backlinkUrl shouldBe "BACK_LINK"
     }
 
     "Section heading is visible" in {
