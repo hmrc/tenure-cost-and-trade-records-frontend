@@ -22,7 +22,7 @@ import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import navigation.AboutYourLeaseOrTenureNavigator
-import navigation.identifiers.rentVaryQuantityOfBeersDetailsId
+import navigation.identifiers.RentVaryQuantityOfBeersDetailsId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
@@ -73,7 +73,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
           updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
-          .map(_ => Redirect(navigator.nextPage(rentVaryQuantityOfBeersDetailsId, updatedData).apply(updatedData)))
+          .map(_ => Redirect(navigator.nextPage(RentVaryQuantityOfBeersDetailsId, updatedData).apply(updatedData)))
       }
     )
   }

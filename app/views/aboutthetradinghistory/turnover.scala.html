@@ -41,15 +41,17 @@
 @detailsContent = {
 
 @if(forType == FOR6015 || forType == FOR6016) {
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h1")</p>
-    <p class="govuk-body">@messages("turnover.details.6015.p1")</p>
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h3")</p>
-    <p class="govuk-body">@messages("turnover.details.6015.p4")</p>
-    <p class="govuk-body govuk-!-font-weight-bold">@messages("turnover.details.6015.h4")</p>
-    <p class="govuk-body">@messages("turnover.details.6015.p5")</p>
+
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages("turnover.details.6015.h3")</span> <br>
+        @messages("turnover.details.6015.p4")
+    </p>
+    <p class="govuk-body">
+        <span class="govuk-!-font-weight-bold">@messages("turnover.details.6015.h4")</span> <br>
+        @messages("turnover.details.6015.p5")
+    </p>
     <p class="govuk-body">@messages("turnover.details.6015.p6")</p>
 }
-
 
 }
 

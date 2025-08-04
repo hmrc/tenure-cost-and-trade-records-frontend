@@ -20,8 +20,7 @@
 
 @this(layout: Layout,
   govukButton: GovukButton,
-        hmrcCharacterCount: HmrcCharacterCount,
-  govukDetails: GovukDetails,
+  hmrcCharacterCount: HmrcCharacterCount,
   formWithCSRF: FormWithCSRF
 )
 
@@ -29,13 +28,21 @@
 
 @layout(
   pageHeading = messages("premisesLicenseGrantedInformation.heading"),
-  showH1 = false,
   showSection = true,
-    summary = Some(summary),
+  summary = Some(summary),
   sectionName = messages("label.section.aboutTheProperty"),
   backLinkUrl = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url,
   theForm = theForm
 ) {
+
+    <p class="govuk-body">@messages("premisesLicenseGrantedInformation.p1")</p>
+    <p class="govuk-body">@messages("premisesLicenseGrantedInformation.p2")</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("premisesLicenseGrantedInformation.list1.item1")</li>
+        <li>@messages("premisesLicenseGrantedInformation.list1.item2")</li>
+        <li>@messages("premisesLicenseGrantedInformation.list1.item3")</li>
+    </ul>
+    <p class="govuk-body">@messages("premisesLicenseGrantedInformation.p3")</p>
 
   @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.submit()) {
 
@@ -43,26 +50,10 @@
           hmrcCharacterCount,
           theForm,
           "premisesLicenseGrantedInformation",
-          "premisesLicenseGrantedInformation.heading",
-          classes = "govuk-label--l",
-          isPageHeading = true,
-          charCount = 2000,
-          hint = "premisesLicenseGrantedInformation.hint"
+          "premisesLicenseGrantedInformation.label",
+          classes = "govuk-label--m",
+          charCount = 2000
       )
-
-    @govukDetails(Details(
-      summary = Text(messages("help.premisesLicenseGrantedInformation.title")),
-      content = HtmlContent(
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.premisesLicenseGrantedInformation.heading1")}</p>" +
-        s"<p>${messages("help.premisesLicenseGrantedInformation.p1")}</p>" +
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.premisesLicenseGrantedInformation.heading2")}</p>" +
-        s"<p>${messages("help.premisesLicenseGrantedInformation.p2")}</p>" +
-        s"<ul class='govuk-list govuk-list--bullet'>" +
-        s"<li>${messages("help.premisesLicenseGrantedInformation.list.p1")}</li>" +
-        s"<li>${messages("help.premisesLicenseGrantedInformation.list.p2")}</li>" +
-        s"<li>${messages("help.premisesLicenseGrantedInformation.list.p3")}</li>" +
-        s"</ul>")
-    ))
 
     @includes.continueSaveAsDraftButtons(govukButton)
   }

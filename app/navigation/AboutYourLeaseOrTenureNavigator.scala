@@ -201,17 +201,17 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show()
       case _               =>
         answers.forType match {
-          case FOR6010 =>
+          case FOR6010 | FOR6015 | FOR6016 =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
-          case _       => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
+          case _                           => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
         }
     }
 
   private def payableGrossOrNetDetailsRouting: Session => Call = answers =>
     answers.forType match {
-      case FOR6015 | FOR6016 | FOR6030 =>
+      case FOR6030 =>
         controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
-      case _                           =>
+      case _       =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show()
     }
 
@@ -224,9 +224,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
 
   private def methodToFixCurrentRentRouting: Session => Call =
     _.forType match {
-      case FOR6010 | FOR6011 | FOR6030 => aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show()
-      case FOR6045 | FOR6046           => aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
-      case _                           => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
+      case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 =>
+        aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show()
+      case FOR6045 | FOR6046                               => aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show()
+      case _                                               => aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show()
     }
 
   private def isRentReviewPlannedRouting: Session => Call = answers =>
@@ -531,8 +532,8 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ),
     RentPayableVaryAccordingToGrossOrNetId        -> payableGrossOrNetRouting,
     RentPayableVaryAccordingToGrossOrNetDetailsId -> payableGrossOrNetDetailsRouting,
-    rentVaryQuantityOfBeersId                     -> rentVaryQuantityOfBeersRouting,
-    rentVaryQuantityOfBeersDetailsId              -> (_ => aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()),
+    RentVaryQuantityOfBeersId                     -> rentVaryQuantityOfBeersRouting,
+    RentVaryQuantityOfBeersDetailsId              -> (_ => aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()),
     HowIsCurrentRentFixedId                       -> (_ => aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show()),
     MethodToFixCurrentRentsId                     -> methodToFixCurrentRentRouting,
     IsRentReviewPlannedId                         -> isRentReviewPlannedRouting,

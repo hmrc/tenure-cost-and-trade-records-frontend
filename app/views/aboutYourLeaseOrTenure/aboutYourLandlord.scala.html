@@ -35,15 +35,15 @@
 
 @pageHeaderMsg = @{
  forType match {
-  case FOR6010 | FOR6011 => "aboutYourLandlord6010.heading"
-  case _                 => "aboutYourLandlord.heading"
+  case FOR6010 | FOR6011 | FOR6015 | FOR6016 => "aboutYourLandlord6010.heading"
+  case _                                     => "aboutYourLandlord.heading"
  }
 }
 
 @landlordFullNameLabel = @{
  forType match {
-  case FOR6010 | FOR6011 => "landlordFullName6010"
-  case _                 => "landlordFullName"
+  case FOR6010 | FOR6011 | FOR6015 | FOR6016 => "landlordFullName6010"
+  case _                                     => "landlordFullName"
  }
 }
 

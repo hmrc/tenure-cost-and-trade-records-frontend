@@ -331,7 +331,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to rent vary quantity of beer details when rent vary quantity of beer with yes has been completed" in {
       navigator
-        .nextPage(rentVaryQuantityOfBeersId, session6010)
+        .nextPage(RentVaryQuantityOfBeersId, session6010)
         .apply(
           session6010
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController
@@ -340,14 +340,14 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to how is rent fixed page page when rent vary quantity of beer with no has been completed" in {
       navigator
-        .nextPage(rentVaryQuantityOfBeersId, session6010No)
+        .nextPage(RentVaryQuantityOfBeersId, session6010No)
         .apply(session6010No) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
         .show()
     }
 
     "return a function that goes to how is rent fixed page when rent vary quantity of beer has been completed" in {
       navigator
-        .nextPage(rentVaryQuantityOfBeersDetailsId, session6010)
+        .nextPage(RentVaryQuantityOfBeersDetailsId, session6010)
         .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
         .show()
     }

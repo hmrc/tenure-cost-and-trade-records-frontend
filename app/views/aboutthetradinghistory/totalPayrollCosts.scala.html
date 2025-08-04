@@ -36,7 +36,7 @@
 @(form: Form[Seq[TotalPayrollCost]], fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
 
 @totalHeading = {
-    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("totalPayrollCosts.total")</span></p>
+    <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("totalPayrollCosts.total")</span> @messages("costOfSales.excludingVAT")</p>
 }
 
 @directorsRenumeration = {

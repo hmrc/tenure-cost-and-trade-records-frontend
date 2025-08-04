@@ -36,7 +36,7 @@
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = request.sessionData.forType match {
-        case FOR6010 | FOR6011 | FOR6030 => controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show().url
+        case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 => controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show().url
         case FOR6045 | FOR6046 => controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
         case _ => controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
     },

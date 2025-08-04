@@ -795,16 +795,14 @@ error.premisesLicenseGranted.missing = Select yes if a premises licence has been
 
 # PREMISES LICENSE GRANTED DETAILS (6015,6016)
 ##############################################
-premisesLicenseGrantedInformation.heading = Give details of your premises licence
-premisesLicenseGrantedInformation.hint = Include any unusual conditions restricting the use of all or part of the property.
-help.premisesLicenseGrantedInformation.title = Help with your description
-help.premisesLicenseGrantedInformation.heading1 = Describing your premises licence
-help.premisesLicenseGrantedInformation.p1 = Let us know if you have a premises licence, a personal licence, or a club premises certificate.
-help.premisesLicenseGrantedInformation.heading2 = Describing restrictions on the use of the property
-help.premisesLicenseGrantedInformation.p2 = You’re only required to write a short description of the conditions we’re concerned with. Examples of acceptable descriptions include:
-help.premisesLicenseGrantedInformation.list.p1 = No drinks allowed on the terrace after 10pm
-help.premisesLicenseGrantedInformation.list.p2 = A maximum 200 people allowed in the function room at any time
-help.premisesLicenseGrantedInformation.list.p3 = No entry or re-entry allowed after 11.30pm on Fridays or Saturdays
+premisesLicenseGrantedInformation.heading = Details of your premises licence
+premisesLicenseGrantedInformation.label = Give details of your licence and any conditions restricting the use of the property.
+premisesLicenseGrantedInformation.p1 = You must declare whether you have a premises licence, a personal licence, or a club premises certificate.
+premisesLicenseGrantedInformation.p2 = You must also declare if there are any restrictions on the use of all, or part of the property. Examples of restrictions of use include, but are not limited to:
+premisesLicenseGrantedInformation.p3 = If you are not sure if there are any conditions restricting the use of the property, these will be listed on your premises licence.
+premisesLicenseGrantedInformation.list1.item1 = no drinks allowed on the terrace after 10pm
+premisesLicenseGrantedInformation.list1.item2 = only 200 people allowed in the function room at any time
+premisesLicenseGrantedInformation.list1.item3 = no entry or re-entry allowed after 11.30pm on Fridays and Saturdays
 
 # LICENSABLE ACTIVITIES
 #######################
@@ -1514,21 +1512,19 @@ error.howIsCurrentRentFixed.required = Dewiswch sut cafodd y rhent presennol ei 
 # CATERING OPERATION OR LETTING DETAILS
 #######################################
 cateringOperationOrLettingAccommodationDetails.heading = Rhowch fanylion y busnes
-concessionDetails.heading = Rhowch fanylion y consesiwn
-lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
+concessionDetails.heading = Concession’s details
+lettingDetails.heading = Tenant or operator’s details
 lettingOtherPartOfPropertyDetails.heading = Rhowch fanylion y tenant
 cateringOperationOrLettingAccommodationDetails.heading = Rhowch fanylion y busnes
-concessionDetails.heading = Rhowch fanylion y consesiwn
 concessionDetails.address.lookupPageHeadingOperator = What is the operator’s correspondence address?
-concessionDetails.address.lookupPageHeading = What is the concession’s property address?
-concessionDetails.address.selectPageHeadingOperator = Choose the concession’s property address
-concessionDetails.address.selectPageHeading = Choose the concession’s property address
+concessionDetails.address.lookupPageHeading = What is the concession’s correspondence address?
+concessionDetails.address.selectPageHeadingOperator = Choose the concession’s correspondence address
+concessionDetails.address.selectPageHeading = Choose the concession’s correspondence address
 concessionDetails.address.confirmPageHeadingOperator = Check the operator’s correspondence address
-concessionDetails.address.confirmPageHeading = Check the concession’s property address
-lettingDetails.heading = Rhowch fanylion y tenant neu’r gweithredwr
-lettingDetails.address.lookupPageHeading = What is the tenant or operator address?
-lettingDetails.address.selectPageHeading = Choose the tenant or operator address
-lettingDetails.address.confirmPageHeading = Check the tenant or operator address
+concessionDetails.address.confirmPageHeading = Check the concession’s correspondence address
+lettingDetails.address.lookupPageHeading = What is the tenant or operator’s correspondence address?
+lettingDetails.address.selectPageHeading = Choose the tenant or operator’s correspondence address
+lettingDetails.address.confirmPageHeading = Check the tenant or operator’s correspondence address
 lettingOtherPartOfPropertyDetails.heading = Provide the tenant’s details
 lettingDetails.address.lookupPageHeadingTenant = What is the tenant’s correspondence address?
 lettingDetails.address.selectPageHeadingTenant = Choose the tenant’s correspondence address
@@ -1536,7 +1532,7 @@ lettingDetails.address.confirmPageHeadingTenant = Check the tenant’s correspon
 fieldName.lettingOtherPartOfPropertyFixedRentDate = the date when the annual rent was fixed
 label.operatorName = Enw’r gweithredwr
 label.operatorDetails = Operator’s details
-label.lettingOperatorName = Enw’r tenant
+label.lettingOperatorName = Enw’r gweithredwr
 label.tradingName = Enw masnachu
 label.typeOfBusiness = Disgrifiwch y math o fusnes
 label.lettingTypeOfBusiness = Disgrifiad o’r hyn sydd ar osod
@@ -2154,16 +2150,14 @@ turnover.averageOccupancyRateCaption = Tai llety a gwestai yn unig.
 turnover.mustInclude.p1 = Mae’n rhaid i chi gynnwys unrhyw incwm rhent a gafwyd o gonsesiynau neu osodiadau, neu incwm a gynhyrchir gan unrhyw fasnachfreintiau a weithredwyd gan {0}.
 turnover.week = week
 turnover.weeks = wythnos
-turnover.details = Help gyda chwblhau trosiant
+turnover.details = Help with completing this page
 turnover.details.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon.
 turnover.details.p2 = Os nad ydych wedi rhannu eich trosiant mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
-turnover.details.6015.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon. Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
 turnover.details.6015.p2 = Os nad ydych wedi rhannu eich trosiant mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
-turnover.details.6015.h1 = Arweiniad cyffredinol
 turnover.details.6015.h3 = Gweithgareddau hamdden
 turnover.details.6015.p4 = Mae’n rhaid i chi ddatgan unrhyw incwm sy’n deillio o weithgareddau hamdden, fel gweithgareddau golff, ffitrwydd neu sba. Rhaid i chi ddatgan y rhain yn y categori ‘arall’.
 turnover.details.6015.h4 = Incwm o fasnachfreintiau, consesiynau a gosodiadau
-turnover.details.6015.p5 = Mae’n rhaid i chi ddatgan unrhyw incwm sy’n deillio o unrhyw fasnachfreintiau, consesiynau neu osodiadau sydd ynghlwm wrth yr eiddo. Dylid cofnodi hyn yn y categori incwm priodol.
+turnover.details.6015.p5 = You must declare any income received from any franchise, concessions, or lettings attached to the property. This should be recorded in the appropriate income category.
 turnover.details.6015.p6 = Er enghraifft, dylid datgan incwm rhent o gonsesiwn bwyty o dan ‘bwyd’.
 turnover.grossIncome = Incwm gros
 turnover.grossIncomeCaption.p1 = (heb gynnwys TAW)
@@ -2694,8 +2688,6 @@ costOfSales.excluding.item1 = costau y gyflogres
 costOfSales.excluding.item2 = treuliau gweithredu newidiol
 costOfSales.excluding.item3 = treuliau gweithredu penodol
 costOfSales.excluding.item4 = costau eraill
-costOfSales.details.link = Help gyda llenwi’r dudalen hon
-costOfSales.details.h1 = Arweiniad cyffredinol
 costOfSales.details.p1 = Peidiwch â chynnwys TAW yn unrhyw ffigur a ddatganir gennych ar y dudalen hon.
 costOfSales.details.p2 = Os nad ydych wedi rhannu cost eich gwerthiannau mewn i gategorïau ar wahân, neu os ydych wedi cofnodi categorïau penodol gyda’i gilydd – megis bwyd a diod – gallwch eu datgan gyda’i gilydd mewn un maes.
 costOfSales.financialYearEnd = Diwedd y flwyddyn ariannol
@@ -2789,7 +2781,7 @@ grossProfit.totalGrossProfits = Total gross profits
 
 # TOTAL PAYROLL COSTS (FORM 6015)
 #########
-totalPayrollCosts.heading = Costau y gyflogres
+totalPayrollCosts.heading = Payroll costs
 totalPayrollCosts.p1 = Rhowch fanylion eich cyflogau, Yswiriant Gwladol, a chyfraniadau pensiwn, gan eithrio costau staff y brif swyddfa.
 totalPayrollCosts.p2 = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 totalPayrollCosts.financialYearEnd = Diwedd y flwyddyn ariannol

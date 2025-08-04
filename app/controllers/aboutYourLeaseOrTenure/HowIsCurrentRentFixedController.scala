@@ -85,7 +85,7 @@ class HowIsCurrentRentFixedController @Inject() (
 
   private def getBackLink(answers: Session): String =
     answers.forType match {
-      case FOR6010                     =>
+      case FOR6010 | FOR6015 | FOR6016 =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match {
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show().url
