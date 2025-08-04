@@ -40,16 +40,19 @@
 @(form: Form[(Seq[Option[BigDecimal]], Option[String])], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@rowLabel(labelKey: String) = {
+@rowLabel(labelKey: String, labelKey2: Option[String] = None) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
+        @labelKey2.map { key =>
+            <span class="govuk-!-font-weight-regular">@messages(key)</span>
+        }
     </p>
 }
 
 @turnoverRow(formField: String, labelKey: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey))
+            content = HtmlContent(rowLabel(labelKey, Some("common.if.applicable"))),
         ),
         TableRow(
             content = HtmlContent(
