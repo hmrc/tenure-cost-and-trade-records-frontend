@@ -42,6 +42,7 @@ class PlantAndTechnologyController @Inject() (
   @Named("session") val session: SessionRepo
 )(implicit val ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with ReadOnlySupport
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -55,7 +56,8 @@ class PlantAndTechnologyController @Inject() (
             case _          => plantAndTechnologyForm
           },
           calculateBackLink,
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          isReadOnly
         )
       )
     )
@@ -69,7 +71,8 @@ class PlantAndTechnologyController @Inject() (
           view(
             formWithErrors,
             calculateBackLink,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            isReadOnly
           )
         ),
       data => {

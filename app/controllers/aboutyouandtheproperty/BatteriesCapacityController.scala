@@ -40,6 +40,7 @@ class BatteriesCapacityController @Inject() (
   @Named("session") val session: SessionRepo
 )(implicit val ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with ReadOnlySupport
     with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -52,7 +53,8 @@ class BatteriesCapacityController @Inject() (
             case Some(data) => batteriesCapacityForm.fill(data)
             case _          => batteriesCapacityForm
           },
-          request.sessionData.toSummary
+          request.sessionData.toSummary,
+          isReadOnly
         )
       )
     )
@@ -65,7 +67,8 @@ class BatteriesCapacityController @Inject() (
         BadRequest(
           view(
             formWithErrors,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            isReadOnly
           )
         ),
       data => {

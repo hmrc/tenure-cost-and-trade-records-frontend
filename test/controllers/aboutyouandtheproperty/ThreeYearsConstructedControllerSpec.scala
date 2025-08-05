@@ -17,7 +17,7 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
-import form.aboutyouandtheproperty.ThreeYearsConstructedForm.threeYearsConstructedForm
+import form.aboutyouandtheproperty.ThreeYearsConstructedForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status._
 import play.api.test.{FakeRequest, Helpers}
@@ -109,7 +109,7 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
   "Form" should {
     "error if data is missing" in {
       val formData = baseFormData - errorKey.threeYearsConstructed
-      val form     = threeYearsConstructedForm.bind(formData)
+      val form     = theForm.bind(formData)
 
       mustContainError(errorKey.threeYearsConstructed, "error.threeYearsConstructed.required", form)
     }

@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.AboutYouForm.aboutYouForm
+import form.aboutyouandtheproperty.AboutYouForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.CustomerDetails
 import navigation.AboutYouAndThePropertyNavigator
@@ -27,52 +27,54 @@ import navigation.identifiers.AboutYouPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.aboutYou
+import views.html.aboutyouandtheproperty.aboutYou as AboutYouView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class AboutYouController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
-  aboutYouView: aboutYou,
+  theView: AboutYouView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
-    with I18nSupport {
+    with ReadOnlySupport
+    with I18nSupport:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("AboutYou")
+    val freshForm  = theForm
+    val filledForm =
+      for
+        aboutYouAndTheProperty <- request.sessionData.aboutYouAndTheProperty
+        customerDetails        <- aboutYouAndTheProperty.customerDetails
+      yield theForm.fill(customerDetails)
 
-    Future.successful(
-      Ok(
-        aboutYouView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.customerDetails) match {
-            case Some(customerDetails) => aboutYouForm.fill(customerDetails)
-            case _                     => aboutYouForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      theView(
+        filledForm.getOrElse(freshForm),
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CustomerDetails](
-      aboutYouForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          aboutYouView(formWithErrors, request.sessionData.toSummary)
+          theView(formWithErrors, request.sessionData.toSummary, isReadOnly)
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
-        session
+        repo
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(AboutYouPageId, updatedData).apply(updatedData)))
       }
     )
   }
-}

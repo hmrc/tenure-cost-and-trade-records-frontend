@@ -24,7 +24,7 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo],from: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo],from: String, summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
  pageHeading = messages("threeYearsConstructed.heading"),
@@ -37,7 +37,8 @@
   case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
   case _     => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show().url
  },
- theForm = theForm
+ theForm = theForm,
+ readOnly = readOnly
 ) {
 
  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.submit()) {

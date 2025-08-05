@@ -30,7 +30,7 @@
 )
 
 
-@(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("generatorCapacity.heading"),
@@ -39,20 +39,22 @@
     summary = Some(summary),
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show().url,
-    theForm = theForm
+    theForm = theForm,
+    readOnly = readOnly
 ) {
 
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.submit()) {
+        <fieldset class="govuk-fieldset">
+            @govukInput(Input(
+                id = "generatorCapacity",
+                name = "generatorCapacity",
+                value = theForm("generatorCapacity").value,
+                errorMessage = theForm.errors.asTextErrorMessageForField("generatorCapacity"),
+                hint = Some(Hint(content = Text(messages("generatorCapacity.hint")))),
+                classes = "govuk-!-width-one-third"
 
-        @govukInput(Input(
-            id = "generatorCapacity",
-            name = "generatorCapacity",
-            value = theForm("generatorCapacity").value,
-            errorMessage = theForm.errors.asTextErrorMessageForField("generatorCapacity"),
-            hint = Some(Hint(content = Text(messages("generatorCapacity.hint")))),
-            classes = "govuk-!-width-one-third"
-
-        ))
+            ))
+        </fieldset>
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

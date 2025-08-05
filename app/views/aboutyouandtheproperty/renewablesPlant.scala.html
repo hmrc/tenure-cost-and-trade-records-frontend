@@ -30,7 +30,7 @@
 )
 
 
-@(theForm: Form[RenewablesPlantType], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[RenewablesPlantType], backLink: String, summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("renewablesPlant.heading"),
@@ -39,7 +39,8 @@
     summary = Some(summary),
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = backLink,
-    theForm = theForm
+    theForm = theForm,
+    readOnly = readOnly
 ) {
 
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.RenewablesPlantController.submit()) {

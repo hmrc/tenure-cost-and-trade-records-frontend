@@ -46,19 +46,16 @@ class AreYouStillConnectedController @Inject() (
     with ReadOnlySupport
     with I18nSupport:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("AreYouStillConnected")
     val freshForm  = theForm
     val filledForm = addressConnectionType.map(theForm.fill)
-
-    Future.successful(
-      Ok(
-        theView(
-          filledForm.getOrElse(freshForm),
-          request.sessionData.toSummary,
-          calculateBackLink,
-          isReadOnly
-        )
+    Ok(
+      theView(
+        filledForm.getOrElse(freshForm),
+        request.sessionData.toSummary,
+        calculateBackLink,
+        isReadOnly
       )
     )
   }
@@ -67,7 +64,9 @@ class AreYouStillConnectedController @Inject() (
     continueOrSaveAsDraft[AddressConnectionType](
       theForm,
       formWithErrors =>
-        BadRequest(theView(formWithErrors, request.sessionData.toSummary, calculateBackLink, isReadOnly)),
+        BadRequest(
+          theView(formWithErrors, request.sessionData.toSummary, calculateBackLink, isReadOnly)
+        ),
       data => {
         val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
         repo

@@ -17,6 +17,7 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
+@import models.ForType.FOR6076
 @import models.pages.Summary
 @import models.submissions.common.CheckYourAnswersAndConfirm
 @import views.html.answers.answersAboutTheProperty
@@ -43,25 +44,28 @@
 
         @answersSectionAboutTheProperty()
 
-        @govukWarningText(WarningText(
-            content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
-        ))
-
         @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.submit()) {
 
-            @govukCheckboxes(
-                Checkboxes(
-                    items = Seq(
-                        CheckboxItem(
-                            id = "answersConfirmed",
-                            name = "answersConfirmed",
-                            content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
-                            value = "true",
-                            checked = theForm("answersConfirmed").value.contains("true")
+            @if(request.sessionData.forType == FOR6076) {
+                @govukWarningText(WarningText(
+                    content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
+                ))
+                @govukCheckboxes(
+                    Checkboxes(
+                        items = Seq(
+                            CheckboxItem(
+                                id = "answersConfirmed",
+                                name = "answersConfirmed",
+                                content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
+                                value = "true",
+                                checked = theForm("answersConfirmed").value.contains("true")
+                            )
                         )
-                    )
-                ).withFormField(theForm("answersConfirmed"))
-            )
+                    ).withFormField(theForm("answersConfirmed"))
+                )
+            } else {
+                <input type="hidden" name="answersConfirmed" value="true" />
+            }
 
             @includes.checkYourAnswersRadioButtons(
                 govukRadios,

@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.RenewablesPlantForm.renewablesPlantForm
+import form.aboutyouandtheproperty.RenewablesPlantForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.RenewablesPlantType
 import models.submissions.common.AnswersYesNo.*
@@ -28,7 +28,7 @@ import navigation.identifiers.RenewablesPlantPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.renewablesPlant
+import views.html.aboutyouandtheproperty.renewablesPlant as RenewablesPlantView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,39 +38,39 @@ class RenewablesPlantController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
-  view: renewablesPlant,
+  theView: RenewablesPlantView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with ReadOnlySupport
     with I18nSupport {
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("RenewablesPlant")
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant) match {
-            case Some(data) => renewablesPlantForm.fill(data)
-            case _          => renewablesPlantForm
-          },
-          calculateBackLink(using request),
-          request.sessionData.toSummary
-        )
+    Ok(
+      theView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant) match {
+          case Some(data) => theForm.fill(data)
+          case _          => theForm
+        },
+        calculateBackLink(using request),
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }
 
   def submit = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RenewablesPlantType](
-      renewablesPlantForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          view(formWithErrors, calculateBackLink(using request), request.sessionData.toSummary)
+          theView(formWithErrors, calculateBackLink(using request), request.sessionData.toSummary, isReadOnly)
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(renewablesPlant = Some(data)))
-        session
+        repo
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RenewablesPlantPageId, updatedData).apply(updatedData)))
       }

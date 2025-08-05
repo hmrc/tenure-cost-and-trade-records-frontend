@@ -23,7 +23,7 @@ import play.api.data.Forms.single
 
 object RenewablesPlantForm:
 
-  val renewablesPlantForm: Form[RenewablesPlantType] =
+  val theForm: Form[RenewablesPlantType] =
     Form(
       single(
         "renewablesPlant" -> renewablesPlantMapping

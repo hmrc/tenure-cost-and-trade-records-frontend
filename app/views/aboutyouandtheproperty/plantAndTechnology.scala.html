@@ -24,7 +24,7 @@
         hmrcCharacterCount: HmrcCharacterCount,
 )
 
-@(theForm: Form[String], backLink: String,   summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], backLink: String,   summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("plantAndTechnology.heading"),
@@ -33,20 +33,21 @@
     summary = Some(summary),
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = backLink,
-    theForm = theForm
+    theForm = theForm,
+    readOnly = readOnly
 ) {
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.submit()) {
-
-        @includes.textInputHMRCCharCount(
-            hmrcCharacterCount,
-            theForm,
-            "plantAndTechnology",
-            "label.detailsToQuestions",
-            classes = "govuk-!-font-weight-bold",
-            hint = "plantAndTechnology.hint",
-            charCount = 2000
-        )
-
+        <fieldset class="govuk-fieldset">
+            @includes.textInputHMRCCharCount(
+                hmrcCharacterCount,
+                theForm,
+                "plantAndTechnology",
+                "label.detailsToQuestions",
+                classes = "govuk-!-font-weight-bold",
+                hint = "plantAndTechnology.hint",
+                charCount = 2000
+            )
+        </fieldset>
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 }

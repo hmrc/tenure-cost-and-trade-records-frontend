@@ -17,7 +17,7 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
-import form.aboutyouandtheproperty.GeneratorCapacityForm.generatorCapacityForm
+import form.aboutyouandtheproperty.GeneratorCapacityForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
@@ -95,7 +95,7 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
   "generator capacity form" should {
     "error if  value is missing" in {
       val empty = baseFormData.updated(TestData.errorKey.generatorCapacity, "")
-      val form  = generatorCapacityForm.bind(empty)
+      val form  = theForm.bind(empty)
 
       mustContainError(errorKey.generatorCapacity, "error.generatorCapacity.required", form)
     }

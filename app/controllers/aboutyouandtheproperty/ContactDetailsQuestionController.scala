@@ -49,9 +49,10 @@ class ContactDetailsQuestionController @Inject() (
 )(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
     with AddressLookupSupport(addressLookupConnector)
+    with ReadOnlySupport
     with I18nSupport:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("ContactDetailsQuestion")
     val freshForm  = theForm
     val filledForm =
@@ -60,10 +61,8 @@ class ContactDetailsQuestionController @Inject() (
         altDetailsQuestion     <- aboutYouAndTheProperty.altDetailsQuestion
       yield theForm.fill(altDetailsQuestion)
 
-    successful(
-      Ok(
-        theView(filledForm.getOrElse(freshForm), request.sessionData.toSummary, navigator.from)
-      )
+    Ok(
+      theView(filledForm.getOrElse(freshForm), request.sessionData.toSummary, isReadOnly, navigator.from)
     )
   }
 
@@ -73,7 +72,7 @@ class ContactDetailsQuestionController @Inject() (
       formWithErrors =>
         successful(
           BadRequest(
-            theView(formWithErrors, request.sessionData.toSummary)
+            theView(formWithErrors, request.sessionData.toSummary, isReadOnly)
           )
         ),
       formData =>

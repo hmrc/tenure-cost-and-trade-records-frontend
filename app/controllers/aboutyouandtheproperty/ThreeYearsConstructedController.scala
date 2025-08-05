@@ -19,7 +19,7 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutyouandtheproperty.ThreeYearsConstructedForm.threeYearsConstructedForm
+import form.aboutyouandtheproperty.ThreeYearsConstructedForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.common.AnswersYesNo
 import navigation.AboutYouAndThePropertyNavigator
@@ -28,59 +28,57 @@ import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutyouandtheproperty.threeYearsConstructed
+import views.html.aboutyouandtheproperty.threeYearsConstructed as ThreeYearsConstructedView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ThreeYearsConstructedController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   navigator: AboutYouAndThePropertyNavigator,
-  view: threeYearsConstructed,
+  theView: ThreeYearsConstructedView,
   withSessionRefiner: WithSessionRefiner,
-  @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
+  @Named("session") repo: SessionRepo
+)(using ec: ExecutionContext)
     extends FORDataCaptureController(mcc)
+    with ReadOnlySupport
     with I18nSupport
-    with Logging {
+    with Logging:
 
-  def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+  def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("ThreeYearsConstructed")
-
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
-            case Some(tiedForGoods) => threeYearsConstructedForm.fill(tiedForGoods)
-            case _                  => threeYearsConstructedForm
-          },
-          navigator.from,
-          request.sessionData.toSummary
-        )
+    Ok(
+      theView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
+          case Some(tiedForGoods) => theForm.fill(tiedForGoods)
+          case _                  => theForm
+        },
+        navigator.from,
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
-      threeYearsConstructedForm,
+      theForm,
       formWithErrors =>
         BadRequest(
-          view(
+          theView(
             formWithErrors,
             navigator.from,
-            request.sessionData.toSummary
+            request.sessionData.toSummary,
+            isReadOnly
           )
         ),
       data => {
         val updatedData = updateAboutYouAndTheProperty(_.copy(threeYearsConstructed = Some(data)))
-        session
+        repo
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(ThreeYearsConstructedPageId, updatedData).apply(updatedData)))
       }
     )
   }
-
-}

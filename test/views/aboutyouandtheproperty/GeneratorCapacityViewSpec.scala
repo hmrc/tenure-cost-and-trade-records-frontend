@@ -26,12 +26,13 @@ class GeneratorCapacityViewSpec extends QuestionViewBehaviours[String] {
 
   val messageKeyPrefix = "generatorCapacity"
 
-  override val form: Form[String] = GeneratorCapacityForm.generatorCapacityForm
+  override val form: Form[String] = GeneratorCapacityForm.theForm
 
-  def createView: () => Html = () => generatorCapacityView(form, Summary("99996076001"))(using fakeRequest, messages)
+  def createView: () => Html = () =>
+    generatorCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    generatorCapacityView(form, Summary("99996076001"))(using fakeRequest, messages)
+    generatorCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
 
   "generator capacity view" should {
 

@@ -28,10 +28,11 @@ class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String] {
 
   override val form: Form[String] = BatteriesCapacityForm.batteriesCapacityForm
 
-  def createView: () => Html = () => batteriesCapacityView(form, Summary("99996076001"))(using fakeRequest, messages)
+  def createView: () => Html = () =>
+    batteriesCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    batteriesCapacityView(form, Summary("99996076001"))(using fakeRequest, messages)
+    batteriesCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
 
   "Batteries capacity view" should {
 

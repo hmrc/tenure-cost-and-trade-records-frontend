@@ -22,7 +22,7 @@ import play.api.data.validation.Constraints.nonEmpty
 
 object GeneratorCapacityForm {
 
-  val generatorCapacityForm = Form(
+  val theForm = Form(
     single(
       "generatorCapacity" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.generatorCapacity.required")
