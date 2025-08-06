@@ -40,7 +40,7 @@
 @(form: Form[(Seq[Option[BigDecimal]], Option[String])], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@rowLabel(labelKey: String, labelKey2: Option[String] = None) = {
+@rowLabel(labelKey: String, labelKey2: Option[String]) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
         @labelKey2.map { key =>

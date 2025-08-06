@@ -31,7 +31,7 @@ import models.submissions.connectiontoproperty.AddressConnectionType
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class AreYouStillConnectedController @Inject() (
