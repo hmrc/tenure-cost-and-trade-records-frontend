@@ -2030,11 +2030,6 @@ accommodation.unitList.heading.removedAll = You have removed all accommodation u
 accommodation.unitList.heading.singular = You have added 1 accommodation unit
 accommodation.unitList.heading.plural = You have added {0} accommodation units
 accommodation.addMoreAccommodationUnits.label = Do you have another accommodation unit to declare?
-accommodation.addedMaximumAccommodationUnits.heading = You have added the maximum of {0} accommodation units
-accommodation.addedMaximumAccommodationUnits.p1 = If advertise on {0} or more accommodation units, the VOA will contact you to collect the details you were unable to declare.
-accommodation.addedMaximumAccommodationUnits.link1 = Check or update the {0} accommodation units
-accommodation.exceededMaxUnits.label = I confirm that the VOA will contact me about the details I was unable to declare.
-error.accommodation.exceededMaxUnits.required = You are required to confirm that the VOA will contact you regarding the remaining accommodation units
 error.accommodation.addMoreAccommodationUnits.required = Select yes if you would like to add another accommodation unit
 accommodation.removeLastUnit.heading = A ydych yn siŵr eich bod am dynnu ‘{0}’?
 accommodation.removeLastUnit.p1 = You must include details of at least one self-catering holiday accommodation unit. By removing ‘{0}’ you will be returned to the start of this section.
@@ -2058,6 +2053,17 @@ accommodation.CYA.includedItems = Included items
 accommodation.CYA.includedItems.none = None
 accommodation.CYA.unit.add = Add a unit
 error.accommodationUnits.isEmpty = You must include details of at least one self-catering holiday accommodation unit.
+
+# MAX LIST ITEMS #
+##################
+maxListItems.addedMaximumListItems.heading = You have added the maximum of {0} {1}
+maxListItems.exceededMaxListItems.label = I confirm that the VOA will contact me about the details I was unable to declare.
+maxListItems.addedMaximumListItems.link1 = Check or update the {0} {1}
+error.maxListItems.exceededListItems.required = You are required to confirm that the VOA will contact you regarding the remaining {0}
+### LIST SPECIFIC MESSAGES ###
+maxListItems.addedMaximumAccommodationUnits.p1 = If advertise on {0} or more accommodation units, the VOA will contact you to collect the details you were unable to declare.
+maxListItems.addedMaximumTradeServices.p1 = If the number of trade services provided by the landlord and included in your rent is {0} or more, the VOA will contact you to collect the details you were unable to declare.
+
 
 # 6010 TYPES
 ##############################

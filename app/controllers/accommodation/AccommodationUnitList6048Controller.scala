@@ -20,6 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.accommodation.AccommodationUnitList6048Form.accommodationUnitList6048Form
 import form.accommodation.RemoveLastUnit6048Form.removeLastUnit6048Form
+import models.pages.MaxListItemsPage.*
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
 import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit}
 import models.submissions.common.AnswersYesNo
@@ -68,7 +69,7 @@ class AccommodationUnitList6048Controller @Inject() (
       data =>
         (data == AnswerYes, accommodationUnits.size) match {
           case (true, size) if size >= AccommodationDetails.maxAccommodationUnits =>
-            Redirect(controllers.accommodation.routes.AddedMaximumAccommodationUnits6048Controller.show)
+            Redirect(controllers.routes.AddedMaximumListItemsController.show(AccommodationUnits))
           case (true, size)                                                       =>
             Redirect(s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$size")
           case (false, 0)                                                         =>
