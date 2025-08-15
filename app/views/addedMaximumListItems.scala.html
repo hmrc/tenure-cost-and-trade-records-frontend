@@ -29,29 +29,29 @@
 )
 
 
-@(form: Form[Option[Boolean]], maxListItemsPage: MaxListItemsPage)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Option[Boolean]], list: MaxListItemsPage)(implicit request: SessionRequest[?], messages: Messages)
 
 @listLink = @{
-    maxListItemsPage match {
+    list match {
         case AccommodationUnits => controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url
         case TradeServices => controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0).url
     }
 }
 
 @layout(
-    pageHeading = messages("maxListItems.addedMaximumListItems.heading", maxListItems, maxListItemsPage.itemsInPlural),
+    pageHeading = messages("maxListItems.addedMaximumListItems.heading", maxListItems, list.itemsInPlural),
     showSection = true,
     summary = request.sessionData.toSummary,
-    sectionName = messages(maxListItemsPage.sectionLabel),
+    sectionName = messages(list.section.messageKey),
     backLinkUrl = listLink,
     theForm = form
 ) {
 
     <p class="govuk-body">
-    @messages(maxListItemsPage.paragraphMsg, maxListItems + 1)
+    @messages(list.paragraphMsg, maxListItems + 1)
     </p>
 
-    @formWithCSRF(action = controllers.routes.AddedMaximumListItemsController.submit(maxListItemsPage)) {
+    @formWithCSRF(action = controllers.routes.AddedMaximumListItemsController.submit(list)) {
 
         @govukCheckboxes(
             Checkboxes(
@@ -69,7 +69,7 @@
 
         <p class="govuk-body govuk-!-margin-bottom-8">
             <a href="@listLink">
-            @messages("maxListItems.addedMaximumListItems.link1", maxListItems, maxListItemsPage.itemsInPlural)
+            @messages("maxListItems.addedMaximumListItems.link1", maxListItems, list.itemsInPlural)
             </a>
         </p>
 

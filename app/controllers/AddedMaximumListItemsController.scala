@@ -16,15 +16,17 @@
 
 package controllers
 
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.AddedMaximumListItemsForm.addedMaximumListItemsForm
+import models.Session
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
 import models.pages.MaxListItemsPage
 import models.pages.MaxListItemsPage.*
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.addedMaximumListItems
 
@@ -46,15 +48,9 @@ class AddedMaximumListItemsController @Inject() (
     with Logging {
 
   def show(list: MaxListItemsPage): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val answer =
-      list match {
-        case AccommodationUnits => request.sessionData.accommodationDetails.flatMap(_.exceededMaxUnits)
-        case TradeServices      => Some(false) // TODO: get answer from session
-      }
-
     Ok(
       addedMaximumListItemsView(
-        addedMaximumListItemsForm(list.itemsInPlural).fill(answer),
+        addedMaximumListItemsForm(list.itemsInPlural).fill(readAnswer(list)),
         list
       )
     )
@@ -66,27 +62,39 @@ class AddedMaximumListItemsController @Inject() (
         addedMaximumListItemsForm(list.itemsInPlural),
         formWithErrors => BadRequest(addedMaximumListItemsView(formWithErrors, list)),
         data => {
-          val updatedData =
-            list match {
-              case AccommodationUnits =>
-                updateAccommodationDetails(
-                  _.copy(
-                    exceededMaxUnits = data
-                  )
-                )
-              case TradeServices      => request.sessionData // TODO: update answer in session
-            }
-
-          val nextPage = list match {
-            case AccommodationUnits => controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show
-            case TradeServices      => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
-          }
+          val updatedData = saveAnswer(list, data)
 
           session
             .saveOrUpdate(updatedData)
-            .map(_ => Redirect(nextPage))
+            .map(_ => Redirect(nextPage(list)))
         }
       )
+    }
+
+  private def readAnswer(list: MaxListItemsPage)(using request: SessionRequest[AnyContent]): Option[Boolean] =
+    list match {
+      case AccommodationUnits => request.sessionData.accommodationDetails.flatMap(_.exceededMaxUnits)
+      case TradeServices      => request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.exceededMaxTradeServices)
+    }
+
+  private def saveAnswer(list: MaxListItemsPage, data: Option[Boolean])(using
+    request: SessionRequest[AnyContent]
+  ): Session =
+    list match {
+      case AccommodationUnits =>
+        updateAccommodationDetails(
+          _.copy(exceededMaxUnits = data)
+        )
+      case TradeServices      =>
+        updateAboutLeaseOrAgreementPartThree(
+          _.copy(exceededMaxTradeServices = data)
+        )
+    }
+
+  private def nextPage(list: MaxListItemsPage): Call =
+    list match {
+      case AccommodationUnits => controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show
+      case TradeServices      => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
     }
 
 }

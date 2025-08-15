@@ -17,22 +17,23 @@
 package models.pages
 
 import play.api.mvc.QueryStringBindable
+import models.pages.Section.*
 
 import scala.util.Try
 
 /**
   * @author Yuriy Tumakha
   */
-enum MaxListItemsPage(val sectionLabel: String, val itemsInPlural: String, val paragraphMsg: String):
+enum MaxListItemsPage(val section: Section, val itemsInPlural: String, val paragraphMsg: String):
   case AccommodationUnits
       extends MaxListItemsPage(
-        "label.section.accommodation",
+        accommodation,
         "accommodation units",
         "maxListItems.addedMaximumAccommodationUnits.p1"
       )
   case TradeServices
       extends MaxListItemsPage(
-        "label.section.aboutYourLeaseOrTenure",
+        aboutYourLeaseOrTenure,
         "trade services",
         "maxListItems.addedMaximumTradeServices.p1"
       )
