@@ -24,19 +24,13 @@ import scala.util.Try
 /**
   * @author Yuriy Tumakha
   */
-enum MaxListItemsPage(val section: Section, val itemsInPlural: String, val paragraphMsg: String):
-  case AccommodationUnits
-      extends MaxListItemsPage(
-        accommodation,
-        "accommodation units",
-        "maxListItems.addedMaximumAccommodationUnits.p1"
-      )
-  case TradeServices
-      extends MaxListItemsPage(
-        aboutYourLeaseOrTenure,
-        "trade services",
-        "maxListItems.addedMaximumTradeServices.p1"
-      )
+enum MaxListItemsPage(val section: Section):
+
+  def itemsInPluralKey: String = s"maxListItems.$this"
+  def paragraphMsgKey: String  = s"maxListItems.addedMaximum$this.p1"
+
+  case AccommodationUnits extends MaxListItemsPage(accommodation)
+  case TradeServices extends MaxListItemsPage(aboutYourLeaseOrTenure)
 end MaxListItemsPage
 
 object MaxListItemsPage:

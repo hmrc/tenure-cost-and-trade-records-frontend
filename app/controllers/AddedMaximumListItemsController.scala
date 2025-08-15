@@ -50,7 +50,7 @@ class AddedMaximumListItemsController @Inject() (
   def show(list: MaxListItemsPage): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       addedMaximumListItemsView(
-        addedMaximumListItemsForm(list.itemsInPlural).fill(readAnswer(list)),
+        addedMaximumListItemsForm(list.itemsInPluralKey).fill(readAnswer(list)),
         list
       )
     )
@@ -59,7 +59,7 @@ class AddedMaximumListItemsController @Inject() (
   def submit(list: MaxListItemsPage): Action[AnyContent] =
     (Action andThen withSessionRefiner).async { implicit request =>
       continueOrSaveAsDraft[Option[Boolean]](
-        addedMaximumListItemsForm(list.itemsInPlural),
+        addedMaximumListItemsForm(list.itemsInPluralKey),
         formWithErrors => BadRequest(addedMaximumListItemsView(formWithErrors, list)),
         data => {
           val updatedData = saveAnswer(list, data)

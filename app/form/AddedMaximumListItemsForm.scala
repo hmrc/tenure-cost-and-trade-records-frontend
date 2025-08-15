@@ -27,10 +27,13 @@ object AddedMaximumListItemsForm:
 
   val maxListItems: Int = 5
 
-  def addedMaximumListItemsForm(itemsInPlural: String)(using messages: Messages): Form[Option[Boolean]] =
+  def addedMaximumListItemsForm(itemsInPluralKey: String)(using messages: Messages): Form[Option[Boolean]] =
     Form {
       single(
         "exceededMaxListItems" -> optional(boolean)
-          .verifying(messages("error.maxListItems.exceededListItems.required", itemsInPlural), _.contains(true))
+          .verifying(
+            messages("error.maxListItems.exceededListItems.required", messages(itemsInPluralKey)),
+            _.contains(true)
+          )
       )
     }
