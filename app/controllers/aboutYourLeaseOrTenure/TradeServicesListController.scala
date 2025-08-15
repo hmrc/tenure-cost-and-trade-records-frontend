@@ -19,8 +19,10 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
+import form.AddedMaximumListItemsForm.maxListItems
 import form.aboutYourLeaseOrTenure.TradeServicesListForm.theForm
 import form.confirmableActionForm.confirmableActionForm
+import models.pages.MaxListItemsPage.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
@@ -92,19 +94,20 @@ class TradeServicesListController @Inject() (
               )
             )
           ) { existingSections =>
-            val updatedSections = existingSections.updated(
-              index,
-              existingSections(index).copy(addAnotherService = Some(formData))
-            )
-            val updatedData     = updateAboutLeaseOrAgreementPartThree(
-              _.copy(
-                tradeServices = updatedSections
+            if formData == AnswerNo || existingSections.size < maxListItems then
+              val updatedSections = existingSections.updated(
+                index,
+                existingSections(index).copy(addAnotherService = Some(formData))
               )
-            )
-            repository
-              .saveOrUpdate(updatedData)
-              .map(_ => Redirect(navigator.nextPage(TradeServicesListId, updatedData).apply(updatedData)))
-
+              val updatedData     = updateAboutLeaseOrAgreementPartThree(
+                _.copy(
+                  tradeServices = updatedSections
+                )
+              )
+              repository
+                .saveOrUpdate(updatedData)
+                .map(_ => Redirect(navigator.nextPage(TradeServicesListId, updatedData).apply(updatedData)))
+            else Redirect(controllers.routes.AddedMaximumListItemsController.show(TradeServices))
           }
     )
   }

@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 
-package form.accommodation
+package form
 
 import play.api.data.Form
 import play.api.data.Forms.{boolean, optional, single}
+import play.api.i18n.Messages
 
 /**
   * @author Yuriy Tumakha
   */
-object AddedMaximumAccommodationUnits6048Form:
+object AddedMaximumListItemsForm:
 
-  val addedMaximumAccommodationUnits6048Form: Form[Option[Boolean]] =
+  val maxListItems: Int = 5
+
+  def addedMaximumListItemsForm(itemsInPlural: String)(using messages: Messages): Form[Option[Boolean]] =
     Form {
       single(
-        "exceededMaxUnits" -> optional(boolean)
-          .verifying("error.accommodation.exceededMaxUnits.required", _.contains(true))
+        "exceededMaxListItems" -> optional(boolean)
+          .verifying(messages("error.maxListItems.exceededListItems.required", itemsInPlural), _.contains(true))
       )
     }

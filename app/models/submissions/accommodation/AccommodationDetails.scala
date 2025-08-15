@@ -33,8 +33,6 @@ case class AccommodationDetails(
 object AccommodationDetails:
   implicit val format: OFormat[AccommodationDetails] = Json.format
 
-  val maxAccommodationUnits: Int = 5
-
   private val initialAccommodationUnit    = AccommodationUnit("", "")
   private val initialAccommodationDetails = AccommodationDetails(List(initialAccommodationUnit))
 
