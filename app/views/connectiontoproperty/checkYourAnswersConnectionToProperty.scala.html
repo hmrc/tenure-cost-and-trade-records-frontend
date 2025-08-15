@@ -46,26 +46,22 @@
 
         @formWithCSRF(action = controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.submit()) {
 
-            @if(request.sessionData.forType == FOR6010) {
-                @govukWarningText(WarningText(
-                    content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
-                ))
-                @govukCheckboxes(
-                    Checkboxes(
-                        items = Seq(
-                            CheckboxItem(
-                                id = "answersConfirmed",
-                                name = "answersConfirmed",
-                                content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
-                                value = "true",
-                                checked = theForm("answersConfirmed").value.contains("true")
-                            )
+            @govukWarningText(WarningText(
+                content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
+            ))
+            @govukCheckboxes(
+                Checkboxes(
+                    items = Seq(
+                        CheckboxItem(
+                            id = "answersConfirmed",
+                            name = "answersConfirmed",
+                            content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
+                            value = "true",
+                            checked = theForm("answersConfirmed").value.contains("true")
                         )
-                    ).withFormField(theForm("answersConfirmed"))
-                )
-            } else {
-                <input type="hidden" name="answersConfirmed" value="true" />
-            }
+                    )
+                ).withFormField(theForm("answersConfirmed"))
+            )
 
             @includes.checkYourAnswersRadioButtons(
                 govukRadios,
