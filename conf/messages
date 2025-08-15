@@ -119,7 +119,6 @@ hint.all.apply = Select all that apply.
 label.section.connectionToTheProperty = Connection to the property
 label.section.aboutTheProperty = About you and the property
 label.section.lettingHistory = Letting history
-label.section.lettings = Lettings
 label.section.accommodation = Accommodation details
 label.section.aboutYourTradingHistory = Trading history
 label.section.aboutFranchisesOrLettings = Franchises or lettings
@@ -2018,7 +2017,6 @@ lettingHistory.checkYourAnswers.onlineAdvertising.cardKey1 = Website details
 
 # ACCOMMODATION DETAILS 6048
 # ############################
-label.section.accommodation = Accommodation details
 accommodation.unit.heading = Accommodation units
 accommodation.unit.p1 = Provide details of all accommodation units available for commercial letting. You will have the opportunity to add multiple units.
 label.accommodation.unitName = Unit name

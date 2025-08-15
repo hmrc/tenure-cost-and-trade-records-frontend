@@ -23,7 +23,16 @@ enum Section:
 
   def messageKey: String = "label.section." + this
 
-  case accommodation, // Public Houses
-    aboutYourLeaseOrTenure
+  case connectionToTheProperty, // Connection to the property
+    aboutTheProperty, // About you and the property
+    lettingHistory, // Letting history
+    accommodation, // Accommodation details
+    aboutYourTradingHistory, // Trading history
+    aboutFranchisesOrLettings, // Franchises or lettings
+    aboutConcessionsOrLettings, // Concessions or lettings
+    aboutConcessionsFranchisesOrLettings, // Concessions, franchises or lettings
+    aboutLettings, // Lettings
+    aboutYourLeaseOrTenure, // Your lease or agreement
+    additionalInformation // Additional information
 
 end Section

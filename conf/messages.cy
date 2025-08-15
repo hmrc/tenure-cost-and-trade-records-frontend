@@ -1960,7 +1960,6 @@ lettingHistory.checkYourAnswers.onlineAdvertising.cardKey1 = Website details
 
 # ACCOMMODATION DETAILS 6048
 # ############################
-label.section.accommodation = Accommodation details
 accommodation.unit.heading = Accommodation units
 accommodation.unit.p1 = Provide details of all accommodation units available for commercial letting. You will have the opportunity to add multiple units.
 label.accommodation.unitName = Unit name
