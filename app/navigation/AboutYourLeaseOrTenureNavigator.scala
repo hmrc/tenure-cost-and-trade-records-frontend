@@ -34,9 +34,11 @@ package navigation
 
 import connectors.Audit
 import controllers.aboutYourLeaseOrTenure
+import form.AddedMaximumListItemsForm.maxListItems
 import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
+import models.pages.MaxListItemsPage.ServicesPaidSeparately
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
 import navigation.identifiers.*
 import play.api.Logging
@@ -345,13 +347,18 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   private def servicePaidSeparatelyChargeRouting: Session => Call = answers =>
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(getIndexOfPaidServices(answers))
 
+  private def getServicesPaidSize(session: Session): Option[Int] =
+    session.aboutLeaseOrAgreementPartThree.map(_.servicesPaid.size)
+
   private def servicePaidSeparatelyListRouting: Session => Call = answers => {
     val existingSection =
       answers.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid.lift(getIndexOfPaidServices(answers)))
     existingSection.flatMap(_.addAnotherPaidService) match {
       case Some(AnswerYes) =>
-        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController
-          .show(Some(getIndexOfPaidServices(answers) + 1))
+        val sizeOpt = getServicesPaidSize(answers)
+        if sizeOpt.exists(_ >= maxListItems) then
+          controllers.routes.AddedMaximumListItemsController.show(ServicesPaidSeparately)
+        else controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(sizeOpt)
       case _               =>
         answers.forType match {
           case FOR6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()

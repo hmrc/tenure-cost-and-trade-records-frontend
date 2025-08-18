@@ -25,9 +25,10 @@ import play.api.libs.json.{Json, OFormat}
 case class AboutLeaseOrAgreementPartThree(
   tradeServicesIndex: Int = 0,
   servicesPaidIndex: Int = 0,
-  tradeServices: IndexedSeq[TradeServices] = IndexedSeq.empty,
+  tradeServices: IndexedSeq[TradeService] = IndexedSeq.empty,
   exceededMaxTradeServices: Option[Boolean] = None,
   servicesPaid: IndexedSeq[ServicesPaid] = IndexedSeq.empty,
+  exceededMaxServicesPaid: Option[Boolean] = None,
   throughputAffectsRent: Option[ThroughputAffectsRent] = None,
   isVATPayableForWholeProperty: Option[AnswersYesNo] = None,
   isRentUnderReview: Option[AnswersYesNo] = None,

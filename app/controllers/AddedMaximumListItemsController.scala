@@ -19,11 +19,12 @@ package controllers
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.AddedMaximumListItemsForm.addedMaximumListItemsForm
-import models.Session
-import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
+import models.ForType.*
 import models.pages.MaxListItemsPage
 import models.pages.MaxListItemsPage.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
+import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
+import models.{ForType, Session}
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
@@ -71,30 +72,44 @@ class AddedMaximumListItemsController @Inject() (
       )
     }
 
+  private def sessionData(using request: SessionRequest[AnyContent]): Session = request.sessionData
+
+  private def forType(using request: SessionRequest[AnyContent]): ForType = sessionData.forType
+
   private def readAnswer(list: MaxListItemsPage)(using request: SessionRequest[AnyContent]): Option[Boolean] =
     list match {
-      case AccommodationUnits => request.sessionData.accommodationDetails.flatMap(_.exceededMaxUnits)
-      case TradeServices      => request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.exceededMaxTradeServices)
+      case AccommodationUnits     => sessionData.accommodationDetails.flatMap(_.exceededMaxUnits)
+      case TradeServices          => sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.exceededMaxTradeServices)
+      case ServicesPaidSeparately => sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.exceededMaxServicesPaid)
     }
 
   private def saveAnswer(list: MaxListItemsPage, data: Option[Boolean])(using
     request: SessionRequest[AnyContent]
   ): Session =
     list match {
-      case AccommodationUnits =>
+      case AccommodationUnits     =>
         updateAccommodationDetails(
           _.copy(exceededMaxUnits = data)
         )
-      case TradeServices      =>
+      case TradeServices          =>
         updateAboutLeaseOrAgreementPartThree(
           _.copy(exceededMaxTradeServices = data)
         )
+      case ServicesPaidSeparately =>
+        updateAboutLeaseOrAgreementPartThree(
+          _.copy(exceededMaxServicesPaid = data)
+        )
     }
 
-  private def nextPage(list: MaxListItemsPage): Call =
+  private def nextPage(list: MaxListItemsPage)(using request: SessionRequest[AnyContent]): Call =
     list match {
-      case AccommodationUnits => controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show
-      case TradeServices      => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
+      case AccommodationUnits     => controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show
+      case TradeServices          => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
+      case ServicesPaidSeparately =>
+        forType match {
+          case FOR6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()
+          case _       => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+        }
     }
 
 }

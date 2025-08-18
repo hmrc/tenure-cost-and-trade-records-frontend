@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TradeServiceDescriptionForm.tradeServicesDescriptionForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
-import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, TradeServices}
+import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, TradeService}
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.TradeServicesDescriptionId
 import play.api.i18n.I18nSupport
@@ -77,12 +77,12 @@ class TradeServicesDescriptionController @Inject() (
       data => {
         val updatedDetails =
           request.sessionData.aboutLeaseOrAgreementPartThree.fold(
-            AboutLeaseOrAgreementPartThree(tradeServices = IndexedSeq(TradeServices(details = data)))
+            AboutLeaseOrAgreementPartThree(tradeServices = IndexedSeq(TradeService(details = data)))
           ) { aboutLeaseOrAgreementPartThree =>
-            val existingSections                                  = aboutLeaseOrAgreementPartThree.tradeServices
-            val requestedSection                                  = index.flatMap(existingSections.lift)
-            val updatedSections: (Int, IndexedSeq[TradeServices]) = requestedSection.fold {
-              val defaultSection   = TradeServices(data)
+            val existingSections                                 = aboutLeaseOrAgreementPartThree.tradeServices
+            val requestedSection                                 = index.flatMap(existingSections.lift)
+            val updatedSections: (Int, IndexedSeq[TradeService]) = requestedSection.fold {
+              val defaultSection   = TradeService(data)
               val appendedSections = existingSections.appended(defaultSection)
               appendedSections.indexOf(defaultSection) -> appendedSections
             } { sectionToUpdate =>
