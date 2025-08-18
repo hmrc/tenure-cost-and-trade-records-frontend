@@ -35,11 +35,12 @@
     list match {
         case AccommodationUnits => controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url
         case TradeServices => controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0).url
+        case ServicesPaidSeparately => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0).url
     }
 }
 
 @layout(
-    pageHeading = messages("maxListItems.addedMaximumListItems.heading", maxListItems, list.itemsInPlural),
+    pageHeading = messages("maxListItems.addedMaximumListItems.heading", maxListItems, messages(list.itemsInPluralKey)),
     showSection = true,
     summary = request.sessionData.toSummary,
     sectionName = messages(list.section.messageKey),
@@ -48,7 +49,7 @@
 ) {
 
     <p class="govuk-body">
-    @messages(list.paragraphMsg, maxListItems + 1)
+    @messages(list.paragraphMsgKey, maxListItems + 1)
     </p>
 
     @formWithCSRF(action = controllers.routes.AddedMaximumListItemsController.submit(list)) {
@@ -69,7 +70,7 @@
 
         <p class="govuk-body govuk-!-margin-bottom-8">
             <a href="@listLink">
-            @messages("maxListItems.addedMaximumListItems.link1", maxListItems, list.itemsInPlural)
+            @messages("maxListItems.addedMaximumListItems.link1", maxListItems, messages(list.itemsInPluralKey))
             </a>
         </p>
 

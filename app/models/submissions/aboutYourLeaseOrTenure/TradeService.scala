@@ -19,10 +19,10 @@ package models.submissions.aboutYourLeaseOrTenure
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
-case class TradeServices(
+case class TradeService(
   details: String,
   addAnotherService: Option[AnswersYesNo] = None
 )
 
-object TradeServices:
-  implicit val format: OFormat[TradeServices] = Json.format
+object TradeService:
+  implicit val format: OFormat[TradeService] = Json.format

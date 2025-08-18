@@ -2060,8 +2060,12 @@ maxListItems.exceededMaxListItems.label = I confirm that the VOA will contact me
 maxListItems.addedMaximumListItems.link1 = Check or update the {0} {1}
 error.maxListItems.exceededListItems.required = You are required to confirm that the VOA will contact you regarding the remaining {0}
 ### LIST SPECIFIC MESSAGES ###
+maxListItems.AccommodationUnits = accommodation units
 maxListItems.addedMaximumAccommodationUnits.p1 = If advertise on {0} or more accommodation units, the VOA will contact you to collect the details you were unable to declare.
+maxListItems.TradeServices = trade services
 maxListItems.addedMaximumTradeServices.p1 = If the number of trade services provided by the landlord and included in your rent is {0} or more, the VOA will contact you to collect the details you were unable to declare.
+maxListItems.ServicesPaidSeparately = services that are paid for separately
+maxListItems.addedMaximumServicesPaidSeparately.p1 = If you pay separately for {0} or more services, the Valuation Office Agency (VOA) will contact you to obtain the information you were unable to provide.
 
 
 # 6010 TYPES

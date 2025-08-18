@@ -1520,7 +1520,7 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPartThree: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
-    tradeServices = IndexedSeq(TradeServices("service-1", Some(AnswerYes))),
+    tradeServices = IndexedSeq(TradeService("service-1", Some(AnswerYes))),
     servicesPaid = IndexedSeq(
       ServicesPaid("service-paid-1", BigDecimal(1000), AnswerYes)
     ),
@@ -1555,7 +1555,7 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPartThree6045: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
-    tradeServices = IndexedSeq(TradeServices("service-1", Some(AnswerYes))),
+    tradeServices = IndexedSeq(TradeService("service-1", Some(AnswerYes))),
     servicesPaid = IndexedSeq(
       ServicesPaid("service-paid-1", BigDecimal(1000), AnswerYes)
     ),
@@ -1585,7 +1585,7 @@ trait FakeObjects {
   val prefilledAboutLeaseOrAgreementPartThreeNo: AboutLeaseOrAgreementPartThree = AboutLeaseOrAgreementPartThree(
     tradeServicesIndex = 1,
     servicesPaidIndex = 1,
-    tradeServices = IndexedSeq(TradeServices("service-1", Some(AnswerYes))),
+    tradeServices = IndexedSeq(TradeService("service-1", Some(AnswerYes))),
     servicesPaid = IndexedSeq(ServicesPaid("service-paid-1")),
     throughputAffectsRent = ThroughputAffectsRent(AnswerNo, "Throughput affects rent details"),
     isVATPayableForWholeProperty = AnswerNo,

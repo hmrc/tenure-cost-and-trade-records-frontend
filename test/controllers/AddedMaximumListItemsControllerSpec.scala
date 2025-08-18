@@ -28,8 +28,12 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
 
   private val nextPageAccommodationUnits =
     controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show.url
-  private val nextPageTradeServices      =
+
+  private val nextPageTradeServices =
     controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+
+  private val nextPageServicesPaidSeparately =
+    controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
 
   def addedMaximumListItemsController =
     new AddedMaximumListItemsController(
@@ -82,5 +86,22 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageTradeServices)
+    }
+  }
+
+  "ServicesPaidSeparately - GET /" should {
+    "return 200" in {
+      val result = addedMaximumListItemsController.show(ServicesPaidSeparately)(fakeRequest)
+      status(result) shouldBe OK
+    }
+  }
+
+  "ServicesPaidSeparately - SUBMIT /" should {
+    "save the form data and redirect to the next page" in {
+      val res = addedMaximumListItemsController.submit(ServicesPaidSeparately)(
+        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+      )
+      status(res)           shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(nextPageServicesPaidSeparately)
     }
   }

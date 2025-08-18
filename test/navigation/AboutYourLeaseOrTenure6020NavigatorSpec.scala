@@ -485,7 +485,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to trade services description page when addAnotherService is yes" in {
 
-      val tradeServicesEntry  = TradeServices(
+      val tradeServicesEntry  = TradeService(
         details = "Some service",
         addAnotherService = Some(AnswerYes)
       )
@@ -501,7 +501,7 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
 
     "return a function that goes to payment for trade services page when addAnotherService is no" in {
 
-      val tradeServicesEntry  = TradeServices(
+      val tradeServicesEntry  = TradeService(
         details = "test",
         addAnotherService = Some(AnswerNo)
       )
