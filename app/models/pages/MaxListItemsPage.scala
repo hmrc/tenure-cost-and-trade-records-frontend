@@ -32,6 +32,7 @@ enum MaxListItemsPage(val section: Section):
   case AccommodationUnits extends MaxListItemsPage(accommodation)
   case TradeServices extends MaxListItemsPage(aboutYourLeaseOrTenure)
   case ServicesPaidSeparately extends MaxListItemsPage(aboutYourLeaseOrTenure)
+  case BunkerFuelCards extends MaxListItemsPage(aboutYourTradingHistory)
 end MaxListItemsPage
 
 object MaxListItemsPage:

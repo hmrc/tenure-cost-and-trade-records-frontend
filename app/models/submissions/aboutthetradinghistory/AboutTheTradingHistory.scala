@@ -19,7 +19,6 @@ package models.submissions.aboutthetradinghistory
 import actions.SessionRequest
 import models.Session
 import models.submissions.common.AnswersYesNo
-import play.api.libs.functional.syntax.*
 import play.api.libs.json.*
 
 import java.time.LocalDate
@@ -44,6 +43,7 @@ case class AboutTheTradingHistory(
   bunkeredFuelQuestion: Option[AnswersYesNo] = None,
   bunkeredFuelSold: Option[Seq[BunkeredFuelSold]] = None,
   bunkerFuelCardsDetails: Option[IndexedSeq[BunkerFuelCardsDetails]] = None,
+  exceededMaxBunkerFuelCards: Option[Boolean] = None,
   customerCreditAccounts: Option[Seq[CustomerCreditAccounts]] = None,
   doYouAcceptLowMarginFuelCard: Option[AnswersYesNo] = None,
   percentageFromFuelCards: Option[Seq[PercentageFromFuelCards]] = None,
@@ -53,33 +53,7 @@ case class AboutTheTradingHistory(
 
 object AboutTheTradingHistory {
 
-  implicit val aboutTheTradingHistoryReads: Reads[AboutTheTradingHistory] = (
-    (__ \ "occupationAndAccountingInformation").readNullable[OccupationalAndAccountingInformation] and
-      (__ \ "turnoverSections").read[Seq[TurnoverSection]] and
-      (__ \ "turnoverSections6020").readNullable[Seq[TurnoverSection6020]] and
-      (__ \ "turnoverSections6030").readNullable[Seq[TurnoverSection6030]].map(_.getOrElse(Seq.empty)) and
-      (__ \ "costOfSales").read[Seq[CostOfSales]] and
-      (__ \ "fixedOperatingExpensesSections").read[Seq[FixedOperatingExpenses]] and
-      (__ \ "otherCosts").readNullable[OtherCosts] and
-      (__ \ "totalPayrollCostSections").read[Seq[TotalPayrollCost]] and
-      (__ \ "variableOperatingExpenses").readNullable[VariableOperatingExpensesSections] and
-      (__ \ "incomeExpenditureSummary").readNullable[String] and
-      (__ \ "incomeExpenditureSummaryData").read[Seq[IncomeExpenditureSummaryData]] and
-      (__ \ "unusualCircumstances").readNullable[UnusualCircumstances] and
-      (__ \ "electricVehicleChargingPoints").readNullable[ElectricVehicleChargingPoints] and
-      (__ \ "totalFuelSold").readNullable[Seq[TotalFuelSold]] and
-      (__ \ "bunkeredFuelQuestion").readNullable[AnswersYesNo] and
-      (__ \ "bunkeredFuelSold").readNullable[Seq[BunkeredFuelSold]] and
-      (__ \ "bunkerFuelCardsDetails").readNullable[IndexedSeq[BunkerFuelCardsDetails]] and
-      (__ \ "customerCreditAccounts").readNullable[Seq[CustomerCreditAccounts]] and
-      (__ \ "doYouAcceptLowMarginFuelCard").readNullable[AnswersYesNo] and
-      (__ \ "percentageFromFuelCards").readNullable[Seq[PercentageFromFuelCards]] and
-      (__ \ "lowMarginFuelCardsDetails").readNullable[IndexedSeq[LowMarginFuelCardsDetails]] and
-      (__ \ "checkYourAnswersAboutTheTradingHistory").readNullable[AnswersYesNo]
-  )(AboutTheTradingHistory.apply)
-
-  implicit val format: Format[AboutTheTradingHistory] =
-    Format(aboutTheTradingHistoryReads, Json.writes[AboutTheTradingHistory])
+  implicit val format: OFormat[AboutTheTradingHistory] = Json.format
 
   def updateAboutTheTradingHistory(
     copy: AboutTheTradingHistory => AboutTheTradingHistory

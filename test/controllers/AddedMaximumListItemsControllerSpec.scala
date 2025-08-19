@@ -35,6 +35,9 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
   private val nextPageServicesPaidSeparately =
     controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
 
+  private val nextPageBunkerFuelCards =
+    controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
+
   def addedMaximumListItemsController =
     new AddedMaximumListItemsController(
       addedMaximumListItemsView,
@@ -103,5 +106,22 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageServicesPaidSeparately)
+    }
+  }
+
+  "BunkerFuelCards - GET /" should {
+    "return 200" in {
+      val result = addedMaximumListItemsController.show(BunkerFuelCards)(fakeRequest)
+      status(result) shouldBe OK
+    }
+  }
+
+  "BunkerFuelCards - SUBMIT /" should {
+    "save the form data and redirect to the next page" in {
+      val res = addedMaximumListItemsController.submit(BunkerFuelCards)(
+        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+      )
+      status(res)           shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(nextPageBunkerFuelCards)
     }
   }
