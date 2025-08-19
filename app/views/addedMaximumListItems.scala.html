@@ -32,11 +32,12 @@
 @(form: Form[Option[Boolean]], list: MaxListItemsPage)(implicit request: SessionRequest[?], messages: Messages)
 
 @listLink = @{
-    list match {
-        case AccommodationUnits => controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url
-        case TradeServices => controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0).url
-        case ServicesPaidSeparately => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0).url
-    }
+    (list match {
+        case AccommodationUnits => controllers.accommodation.routes.AccommodationUnitList6048Controller.show
+        case TradeServices => controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0)
+        case ServicesPaidSeparately => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0)
+        case BunkerFuelCards => controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0)
+    }).url
 }
 
 @layout(

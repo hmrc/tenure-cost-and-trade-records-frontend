@@ -23,6 +23,7 @@ import models.ForType.*
 import models.pages.MaxListItemsPage
 import models.pages.MaxListItemsPage.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
 import models.{ForType, Session}
 import play.api.Logging
@@ -81,6 +82,7 @@ class AddedMaximumListItemsController @Inject() (
       case AccommodationUnits     => sessionData.accommodationDetails.flatMap(_.exceededMaxUnits)
       case TradeServices          => sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.exceededMaxTradeServices)
       case ServicesPaidSeparately => sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.exceededMaxServicesPaid)
+      case BunkerFuelCards        => sessionData.aboutTheTradingHistory.flatMap(_.exceededMaxBunkerFuelCards)
     }
 
   private def saveAnswer(list: MaxListItemsPage, data: Option[Boolean])(using
@@ -99,6 +101,10 @@ class AddedMaximumListItemsController @Inject() (
         updateAboutLeaseOrAgreementPartThree(
           _.copy(exceededMaxServicesPaid = data)
         )
+      case BunkerFuelCards        =>
+        updateAboutTheTradingHistory(
+          _.copy(exceededMaxBunkerFuelCards = data)
+        )
     }
 
   private def nextPage(list: MaxListItemsPage)(using request: SessionRequest[AnyContent]): Call =
@@ -110,6 +116,7 @@ class AddedMaximumListItemsController @Inject() (
           case FOR6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()
           case _       => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
         }
+      case BunkerFuelCards        => controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show()
     }
 
 }
