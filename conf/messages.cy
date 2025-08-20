@@ -586,6 +586,7 @@ error.isRentReceivedFromLetting.missing = Dewiswch ‘oes’ os oes unrhyw rent 
 
 # CONNECTION TO PROPERTY TENANT DETAILS
 #######################################
+tenantDetails.heading = Rhowch fanylion y tenant
 tenantDetails.headings = Tenant’s details
 tenantDetails.address.lookupPageHeading = What is the tenant’s correspondence address?
 tenantDetails.address.selectPageHeading = Choose the tenant’s correspondence address
