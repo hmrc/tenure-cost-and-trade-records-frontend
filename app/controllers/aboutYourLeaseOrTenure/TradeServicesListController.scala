@@ -19,10 +19,9 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.AddedMaximumListItemsForm.maxListItems
 import form.aboutYourLeaseOrTenure.TradeServicesListForm.theForm
 import form.confirmableActionForm.confirmableActionForm
-import models.pages.MaxListItemsPage.*
+import models.pages.ListPageConfig.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
@@ -94,7 +93,7 @@ class TradeServicesListController @Inject() (
               )
             )
           ) { existingSections =>
-            if formData == AnswerNo || existingSections.size < maxListItems then
+            if formData == AnswerNo || existingSections.size < TradeServices.maxListItems then
               val updatedSections = existingSections.updated(
                 index,
                 existingSections(index).copy(addAnotherService = Some(formData))

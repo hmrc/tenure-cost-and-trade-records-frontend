@@ -48,6 +48,7 @@ case class AboutTheTradingHistory(
   doYouAcceptLowMarginFuelCard: Option[AnswersYesNo] = None,
   percentageFromFuelCards: Option[Seq[PercentageFromFuelCards]] = None,
   lowMarginFuelCardsDetails: Option[IndexedSeq[LowMarginFuelCardsDetails]] = None,
+  exceededMaxLowMarginFuelCards: Option[Boolean] = None,
   checkYourAnswersAboutTheTradingHistory: Option[AnswersYesNo] = None
 )
 

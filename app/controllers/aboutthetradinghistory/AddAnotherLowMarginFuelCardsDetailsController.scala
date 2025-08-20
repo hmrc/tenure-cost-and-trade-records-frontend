@@ -21,6 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.theForm
 import form.confirmableActionForm.confirmableActionForm
+import models.pages.ListPageConfig.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.common.AnswersYesNo
@@ -102,7 +103,14 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
             repository.saveOrUpdate(updatedData)
           }
           .map(_ =>
-            if (formData == AnswerYes) Redirect(routes.LowMarginFuelCardDetailsController.show())
+            if (formData == AnswerYes)
+              Redirect(
+                if aboutTheTradingHistoryData
+                    .flatMap(_.lowMarginFuelCardsDetails)
+                    .exists(_.size >= LowMarginFuelCards.maxListItems)
+                then controllers.routes.AddedMaximumListItemsController.show(LowMarginFuelCards)
+                else routes.LowMarginFuelCardDetailsController.show()
+              )
             else
               Redirect(
                 navigator

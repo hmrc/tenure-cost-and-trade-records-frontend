@@ -20,7 +20,7 @@ lazy val microservice = Project(appName, file("."))
     scalacOptions += "-feature",
     javaOptions += "-XX:+EnableDynamicAgentLoading",
     libraryDependencies ++= AppDependencies.appDependencies,
-    routesImport ++= Seq("models.pages.MaxListItemsPage"),
+    routesImport ++= Seq("models.pages.ListPageConfig"),
     PlayKeys.playDefaultPort := defaultPort
   )
   .settings(

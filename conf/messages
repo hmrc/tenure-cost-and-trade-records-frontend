@@ -2125,6 +2125,8 @@ maxListItems.ServicesPaidSeparately = services that are paid for separately
 maxListItems.addedMaximumServicesPaidSeparately.p1 = If you pay separately for {0} or more services, the Valuation Office Agency (VOA) will contact you to obtain the information you were unable to provide.
 maxListItems.BunkerFuelCards = bunker fuel cards
 maxListItems.addedMaximumBunkerFuelCards.p1 = If you accept {0} or more bunker fuel cards, the Valuation Office Agency (VOA) will contact you to obtain the information you were unable to provide.
+maxListItems.LowMarginFuelCards = low-margin fuel cards
+maxListItems.addedMaximumLowMarginFuelCards.p1 = If you accept {0} or more low-margin fuel cards, the Valuation Office Agency (VOA) will contact you to obtain the information you were unable to provide.
 
 
 # 6010 TYPES

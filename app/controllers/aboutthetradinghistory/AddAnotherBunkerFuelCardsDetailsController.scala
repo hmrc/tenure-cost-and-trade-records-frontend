@@ -19,10 +19,9 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.AddedMaximumListItemsForm.maxListItems
 import form.confirmableActionForm.confirmableActionForm
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.theForm
-import models.pages.MaxListItemsPage.*
+import models.pages.ListPageConfig.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
@@ -128,8 +127,10 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
               )
             } else if (formData == AnswerYes) {
               Redirect(
-                if aboutTheTradingHistoryData.flatMap(_.bunkerFuelCardsDetails).exists(_.size >= maxListItems) then
-                  controllers.routes.AddedMaximumListItemsController.show(BunkerFuelCards)
+                if aboutTheTradingHistoryData
+                    .flatMap(_.bunkerFuelCardsDetails)
+                    .exists(_.size >= BunkerFuelCards.maxListItems)
+                then controllers.routes.AddedMaximumListItemsController.show(BunkerFuelCards)
                 else routes.BunkerFuelCardDetailsController.show()
               )
             } else

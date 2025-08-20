@@ -25,8 +25,6 @@ import play.api.i18n.Messages
   */
 object AddedMaximumListItemsForm:
 
-  val maxListItems: Int = 5
-
   def addedMaximumListItemsForm(itemsInPluralKey: String)(using messages: Messages): Form[Option[Boolean]] =
     Form {
       single(
