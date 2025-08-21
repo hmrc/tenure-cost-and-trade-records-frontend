@@ -34,11 +34,10 @@ package navigation
 
 import connectors.Audit
 import controllers.aboutYourLeaseOrTenure
-import form.AddedMaximumListItemsForm.maxListItems
 import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
-import models.pages.MaxListItemsPage.ServicesPaidSeparately
+import models.pages.ListPageConfig.ServicesPaidSeparately
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
 import navigation.identifiers.*
 import play.api.Logging
@@ -356,7 +355,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     existingSection.flatMap(_.addAnotherPaidService) match {
       case Some(AnswerYes) =>
         val sizeOpt = getServicesPaidSize(answers)
-        if sizeOpt.exists(_ >= maxListItems) then
+        if sizeOpt.exists(_ >= ServicesPaidSeparately.maxListItems) then
           controllers.routes.AddedMaximumListItemsController.show(ServicesPaidSeparately)
         else controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(sizeOpt)
       case _               =>

@@ -15,9 +15,8 @@
  *@
 
 @import actions.SessionRequest
-@import form.AddedMaximumListItemsForm.maxListItems
-@import models.pages.MaxListItemsPage
-@import models.pages.MaxListItemsPage.*
+@import models.pages.ListPageConfig
+@import models.pages.ListPageConfig.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 
@@ -29,7 +28,7 @@
 )
 
 
-@(form: Form[Option[Boolean]], list: MaxListItemsPage)(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Option[Boolean]], list: ListPageConfig)(implicit request: SessionRequest[?], messages: Messages)
 
 @listLink = @{
     (list match {
@@ -37,11 +36,12 @@
         case TradeServices => controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0)
         case ServicesPaidSeparately => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(0)
         case BunkerFuelCards => controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0)
+        case LowMarginFuelCards => controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0)
     }).url
 }
 
 @layout(
-    pageHeading = messages("maxListItems.addedMaximumListItems.heading", maxListItems, messages(list.itemsInPluralKey)),
+    pageHeading = messages("maxListItems.addedMaximumListItems.heading", list.maxListItems, messages(list.itemsInPluralKey)),
     showSection = true,
     summary = request.sessionData.toSummary,
     sectionName = messages(list.section.messageKey),
@@ -50,7 +50,7 @@
 ) {
 
     <p class="govuk-body">
-    @messages(list.paragraphMsgKey, maxListItems + 1)
+    @messages(list.paragraphMsgKey, list.maxListItems + 1)
     </p>
 
     @formWithCSRF(action = controllers.routes.AddedMaximumListItemsController.submit(list)) {
@@ -71,7 +71,7 @@
 
         <p class="govuk-body govuk-!-margin-bottom-8">
             <a href="@listLink">
-            @messages("maxListItems.addedMaximumListItems.link1", maxListItems, messages(list.itemsInPluralKey))
+            @messages("maxListItems.addedMaximumListItems.link1", list.maxListItems, messages(list.itemsInPluralKey))
             </a>
         </p>
 

@@ -18,10 +18,9 @@ package controllers.accommodation
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.AddedMaximumListItemsForm.maxListItems
 import form.accommodation.AccommodationUnitList6048Form.accommodationUnitList6048Form
 import form.accommodation.RemoveLastUnit6048Form.removeLastUnit6048Form
-import models.pages.MaxListItemsPage.*
+import models.pages.ListPageConfig.*
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
 import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit}
 import models.submissions.common.AnswersYesNo
@@ -68,11 +67,11 @@ class AccommodationUnitList6048Controller @Inject() (
       formWithErrors => BadRequest(accommodationUnitListView(formWithErrors, accommodationUnits)),
       data =>
         (data == AnswerYes, accommodationUnits.size) match {
-          case (true, size) if size >= maxListItems =>
+          case (true, size) if size >= AccommodationUnits.maxListItems =>
             Redirect(controllers.routes.AddedMaximumListItemsController.show(AccommodationUnits))
-          case (true, size)                         =>
+          case (true, size)                                            =>
             Redirect(s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$size")
-          case (false, 0)                           =>
+          case (false, 0)                                              =>
             BadRequest(
               accommodationUnitListView(
                 accommodationUnitList6048Form
@@ -80,7 +79,7 @@ class AccommodationUnitList6048Controller @Inject() (
                 accommodationUnits
               )
             )
-          case (false, _)                           =>
+          case (false, _)                                              =>
             Redirect(navigator.nextPage(AccommodationUnitListPageId, request.sessionData).apply(request.sessionData))
         }
     )

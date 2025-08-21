@@ -15,7 +15,7 @@
  *@
 
 @import actions.SessionRequest
-@import form.AddedMaximumListItemsForm.maxListItems
+@import models.pages.ListPageConfig.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.NumberUtil.*
 @import util.{DateUtilLocalised, SectionAnswersRowBuilder}
@@ -119,7 +119,7 @@
                 classes = "govuk-!-width-full"
             ),
             actions = Actions(items =
-                if(unitsSize < maxListItems) {
+                if(unitsSize < AccommodationUnits.maxListItems) {
                     Seq(
                         ActionItem(
                             href = s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$unitsSize",

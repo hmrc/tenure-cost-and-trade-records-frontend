@@ -16,7 +16,7 @@
 
 package controllers
 
-import models.pages.MaxListItemsPage.*
+import models.pages.ListPageConfig.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
@@ -37,6 +37,9 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
 
   private val nextPageBunkerFuelCards =
     controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
+
+  private val nextPageLowMarginFuelCards =
+    controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show().url
 
   def addedMaximumListItemsController =
     new AddedMaximumListItemsController(
@@ -123,5 +126,22 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageBunkerFuelCards)
+    }
+  }
+
+  "LowMarginFuelCards - GET /" should {
+    "return 200" in {
+      val result = addedMaximumListItemsController.show(LowMarginFuelCards)(fakeRequest)
+      status(result) shouldBe OK
+    }
+  }
+
+  "LowMarginFuelCards - SUBMIT /" should {
+    "save the form data and redirect to the next page" in {
+      val res = addedMaximumListItemsController.submit(LowMarginFuelCards)(
+        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+      )
+      status(res)           shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(nextPageLowMarginFuelCards)
     }
   }

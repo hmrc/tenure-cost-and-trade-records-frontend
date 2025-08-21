@@ -94,5 +94,5 @@ GET         /thankyou-for-your-feedback                         controllers.Feed
 POST        /feedback                                           controllers.FeedbackController.feedbackSharedSubmit
 POST        /feedback-request-reference-number                  controllers.FeedbackController.feedbackRequestReferenceNumber
 
-GET         /added-maximum-list-items                           controllers.AddedMaximumListItemsController.show(list: MaxListItemsPage)
-POST        /added-maximum-list-items                           controllers.AddedMaximumListItemsController.submit(list: MaxListItemsPage)
+GET         /added-maximum-list-items                           controllers.AddedMaximumListItemsController.show(list: ListPageConfig)
+POST        /added-maximum-list-items                           controllers.AddedMaximumListItemsController.submit(list: ListPageConfig)

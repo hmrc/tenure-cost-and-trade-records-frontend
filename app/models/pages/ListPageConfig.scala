@@ -24,33 +24,36 @@ import scala.util.Try
 /**
   * @author Yuriy Tumakha
   */
-enum MaxListItemsPage(val section: Section):
+enum ListPageConfig(val section: Section):
+
+  val maxListItems: Int = 5
 
   def itemsInPluralKey: String = s"maxListItems.$this"
   def paragraphMsgKey: String  = s"maxListItems.addedMaximum$this.p1"
 
-  case AccommodationUnits extends MaxListItemsPage(accommodation)
-  case TradeServices extends MaxListItemsPage(aboutYourLeaseOrTenure)
-  case ServicesPaidSeparately extends MaxListItemsPage(aboutYourLeaseOrTenure)
-  case BunkerFuelCards extends MaxListItemsPage(aboutYourTradingHistory)
-end MaxListItemsPage
+  case AccommodationUnits extends ListPageConfig(accommodation)
+  case TradeServices extends ListPageConfig(aboutYourLeaseOrTenure)
+  case ServicesPaidSeparately extends ListPageConfig(aboutYourLeaseOrTenure)
+  case BunkerFuelCards extends ListPageConfig(aboutYourTradingHistory)
+  case LowMarginFuelCards extends ListPageConfig(aboutYourTradingHistory)
+end ListPageConfig
 
-object MaxListItemsPage:
+object ListPageConfig:
 
   given queryStringBinder(using
     stringBinder: QueryStringBindable[String]
-  ): QueryStringBindable[MaxListItemsPage] =
-    new QueryStringBindable[MaxListItemsPage]:
-      override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, MaxListItemsPage]] =
+  ): QueryStringBindable[ListPageConfig] =
+    new QueryStringBindable[ListPageConfig]:
+      override def bind(key: String, params: Map[String, Seq[String]]): Option[Either[String, ListPageConfig]] =
         stringBinder
           .bind(key, params)
           .map {
-            _.flatMap(page => Try(MaxListItemsPage.valueOf(page)).toEither)
+            _.flatMap(page => Try(ListPageConfig.valueOf(page)).toEither)
           }
           .map {
             case Right(page) => Right(page)
-            case _           => Left("Unable to bind a MaxListItemsPage")
+            case _           => Left("Unable to bind a ListPageConfig")
           }
 
-      override def unbind(key: String, page: MaxListItemsPage): String =
+      override def unbind(key: String, page: ListPageConfig): String =
         s"$key=$page"
