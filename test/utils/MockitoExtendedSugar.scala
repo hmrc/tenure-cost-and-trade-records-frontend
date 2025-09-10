@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import org.scalatestplus.mockito.MockitoSugar
 /**
   * @author Yuriy Tumakha
   */
-trait MockitoExtendedSugar extends MockitoSugar {
+trait MockitoExtendedSugar extends MockitoSugar:
 
   // ArgumentMatchers
 
@@ -52,7 +52,7 @@ trait MockitoExtendedSugar extends MockitoSugar {
 
   def when[T](methodCall: T): OngoingStubbing[T] = Mockito.when(methodCall)
 
-  def doNothing: Stubber = Mockito.doNothing()
+  def doNothing(): Stubber = Mockito.doNothing()
 
   def reset(mocks: AnyRef*): Unit = Mockito.reset(mocks*)
 
@@ -80,5 +80,4 @@ trait MockitoExtendedSugar extends MockitoSugar {
 
   def calls(wantedNumberOfInvocations: Int): VerificationMode = Mockito.calls(wantedNumberOfInvocations)
 
-  def captor[T] = ArgumentCaptor.captor[T]()
-}
+  def captor[T]: ArgumentCaptor[T] = ArgumentCaptor.captor[T]()

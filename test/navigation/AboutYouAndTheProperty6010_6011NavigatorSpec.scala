@@ -29,7 +29,7 @@ class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
   // This suite tests all generic paths based on form type 6010
 
   val audit = mock[Audit]
-  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
+  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AboutYouAndThePropertyNavigator(audit)
 
