@@ -56,20 +56,6 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
       }
     }
     "handling POST / requests" should {
-      "reply with 400 with form errors" in new ControllerFixture {
-        val result = controller.submit()(
-          fakePostRequest.withFormUrlEncodedBody(
-            "correct"   -> "", // missing
-            "completed" -> "" // missing
-          )
-        )
-        status(result) shouldBe BAD_REQUEST
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
-        page.errorMessage("correct")   shouldBe "error.checkYourAnswers.givenInformation.isCorrect"
-        page.errorMessage("completed") shouldBe "error.checkYourAnswersRadio.required"
-      }
       "reply with 303 redirect to the next page" in new ControllerFixture {
         val result = controller.submit()(
           fakePostRequest.withFormUrlEncodedBody(

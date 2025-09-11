@@ -160,11 +160,7 @@
     }
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.submit()) {
 
-        @includes.checkYourAnswersRadioButtons(
-            govukRadios,
-            theForm,
-            "checkYourAnswersAdditionalActivities"
-        )
+        <input type="hidden" name="checkYourAnswersAdditionalActivities" value="yes" />
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

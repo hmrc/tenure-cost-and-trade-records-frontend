@@ -38,8 +38,6 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.checkYourAnswers.heading"
         page.backLink          shouldBe routes.HasOnlineAdvertisingController.show.url
-        page.radios("answer") shouldNot be(empty)
-        page.radios("answer")    should haveNoneChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(
@@ -61,10 +59,6 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
-        page.radios("answer") shouldNot be(empty)
-        page.radios("answer")    should haveChecked("yes")
-        page.radios("answer") shouldNot haveChecked("no")
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'TaskList' page" in new ControllerFixture {
         val result = controller.submit(
@@ -85,7 +79,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
 
   trait ControllerFixture(
     hasOnlineAdvertising: Option[Boolean] = Some(false),
-    sectionCompleted: Option[Boolean] = Some(true),
+    sectionCompleted: Option[Boolean] = None,
     isYearlyAvailable: Option[Boolean] = Some(true)
   ) extends MockRepositoryFixture
       with SessionCapturingFixture:

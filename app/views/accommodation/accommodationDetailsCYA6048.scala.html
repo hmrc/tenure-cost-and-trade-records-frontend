@@ -44,11 +44,7 @@
 
     @formWithCSRF(action = controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.submit) {
 
-        @includes.checkYourAnswersRadioButtons(
-            govukRadios,
-            form,
-            "sectionCompleted"
-        )
+        <input type="hidden" name="sectionCompleted" value="yes" />
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

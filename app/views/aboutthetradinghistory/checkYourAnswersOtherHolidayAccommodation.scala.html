@@ -43,13 +43,7 @@
     @answersSectionOtherHolidayAccommodation()
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.submit()) {
-
-        @includes.checkYourAnswersRadioButtons(
-            govukRadios,
-            theForm,
-            "checkYourAnswersOtherHolidayAccommodation"
-        )
-
+        <input type="hidden" name="checkYourAnswersOtherHolidayAccommodation" value="yes" />
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 

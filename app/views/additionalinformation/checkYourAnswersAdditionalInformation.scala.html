@@ -40,13 +40,7 @@
         @answersSectionAdditionalInformation()
 
         @formWithCSRF(action = controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit()) {
-
-            @includes.checkYourAnswersRadioButtons(
-                govukRadios,
-                theForm,
-                "checkYourAnswersAdditionalInformation"
-            )
-
+            <input type="hidden" name="checkYourAnswersAdditionalInformation" value="yes" />
             @includes.continueSaveAsDraftButtons(govukButton)
 
         }

@@ -128,11 +128,7 @@
     <div class="govuk-heading-m govuk-!-static-margin-bottom-9"></div>
 
     @formWithCSRF(action = routes.CheckYourAnswersLettingHistoryController.submit) {
-        @includes.checkYourAnswersRadioButtons(
-            govukRadios,
-            theForm,
-            name = "answer"
-        )
+        <input type="hidden" name="answer" value="yes" />
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 }
