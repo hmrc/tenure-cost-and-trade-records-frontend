@@ -16,18 +16,14 @@
 
 package controllers.additionalinformation
 
-import form.additionalinformation.CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
 class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
-
-  import TestData._
 
   def checkYourAdditionalInformationController(
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
@@ -72,27 +68,11 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
   }
 
   "SUBMIT /" should {
-    "throw a BAD_REQUEST if an empty form is submitted" in {
-      val result = checkYourAdditionalInformationController().submit(
-        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-      )
-      status(result) shouldBe BAD_REQUEST
-    }
-
     "Redirect when form data submitted" in {
       val res = checkYourAdditionalInformationController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody("checkYourAnswersAdditionalInformation" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
-    }
-  }
-
-  "Check Your Answers additional information form" should {
-    "error if checkYourAnswersAdditionalInformation is missing" in {
-      val formData = baseFormData - errorKey.checkYourAnswersAdditionalInformation
-      val form     = checkYourAnswersAdditionalInformationForm.bind(formData)
-
-      mustContainError(errorKey.checkYourAnswersAdditionalInformation, "error.checkYourAnswersRadio.required", form)
     }
   }
 

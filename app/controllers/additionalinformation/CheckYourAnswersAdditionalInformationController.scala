@@ -18,9 +18,7 @@ package controllers.additionalinformation
 
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
-import form.additionalinformation.CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 import models.submissions.additionalinformation.AdditionalInformation.updateAdditionalInformation
-import models.submissions.common.AnswersYesNo
 import navigation.AdditionalInformationNavigator
 import navigation.identifiers.CheckYourAnswersAdditionalInformationId
 import play.api.Logging
@@ -48,10 +46,6 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
     Future.successful(
       Ok(
         checkYourAnswersAdditionalInformationView(
-          request.sessionData.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) match {
-            case Some(answer) => checkYourAnswersAdditionalInformationForm.fill(answer)
-            case _            => checkYourAnswersAdditionalInformationForm
-          },
           request.sessionData
         )
       )
@@ -59,17 +53,9 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    continueOrSaveAsDraft[AnswersYesNo](
-      checkYourAnswersAdditionalInformationForm,
-      formWithErrors =>
-        BadRequest(
-          checkYourAnswersAdditionalInformationView(
-            formWithErrors,
-            request.sessionData
-          )
-        ),
-      data => {
-        val updatedData = updateAdditionalInformation(_.copy(checkYourAnswersAdditionalInformation = Some(data)))
+    continueOrSaveAsDraft(
+      {
+        val updatedData = updateAdditionalInformation(identity)
           .copy(lastCYAPageUrl =
             Some(controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show().url)
           )
