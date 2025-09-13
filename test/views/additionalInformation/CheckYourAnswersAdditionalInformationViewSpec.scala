@@ -18,25 +18,22 @@ package views.additionalInformation
 
 import actions.SessionRequest
 import models.submissions.common.AnswersYesNo
-import form.additionalinformation.CheckYourAnswersAdditionalInformationForm
-import play.api.data.Form
+import play.api.data.Forms.{single, boolean}
+import play.api.data.{Form, Mapping}
 import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "checkYourAnswersAdditionalInformation"
 
-  override val form = CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
+  override val form = null
 
   val backLink = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
 
   val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
   def createView = () =>
-    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(using sessionRequest, messages)
-
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(using sessionRequest, messages)
+    checkYourAnswersAdditionalInformationView(notConnected6010NoSession)(using sessionRequest, messages)
 
   "Check Your Answers Additional Information view" must {
 
@@ -51,7 +48,7 @@ class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviou
     }
 
     "contain continue button with the value Continue" in {
-      val doc         = asDocument(createViewUsingForm(form))
+      val doc         = asDocument(createView())
       val loginButton = doc.getElementById("continue").text()
       assert(loginButton == messages("button.label.continue"))
     }

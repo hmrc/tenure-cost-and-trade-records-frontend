@@ -66,7 +66,7 @@
 @section3point3Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities).flatMap(_.checkYourAnswersAdditionalActivities)}
 @section4Completed       = @{ session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings) }
 @section5Completed       = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) }
-@section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) }
+@section6Completed       = @{ session.additionalInformation.map(_ => AnswerYes).getOrElse(AnswerNo) }
 
 @section4AccommodationCompleted = @{session.accommodationDetails.flatMap(_.sectionCompleted)}
 @sectionLettingHistoryCompleted = @{LettingHistory.sectionCompleted(request.sessionData).map(_.toAnswer)}
