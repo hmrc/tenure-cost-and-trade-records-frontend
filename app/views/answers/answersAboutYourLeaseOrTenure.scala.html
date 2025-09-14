@@ -408,14 +408,15 @@
                         controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show(),
                         "isRentUnderReview"
                     ) ++
-                    sectionAnswers2.row(
+                    sectionAnswers2.conditionRow(
+                        _.isRentReviewPlanned.isDefined,
                         "checkYourAnswersAboutYourLeaseOrTenure.isRentReviewPlanned",
                         _.isRentReviewPlanned.map(v => if(v == AnswerYes) messages("label.yes.oes") else messages("label.no.nac.oes")),
                         controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show(),
                         "isRentReviewPlanned"
                     ) ++
                     sectionAnswers2.conditionRow(
-                        _.isRentReviewPlanned.contains(AnswerYes),
+                        _.isRentReviewPlanned.contains(AnswerYes) || for6045Or6046 || for6048,
                         "checkYourAnswersAboutYourLeaseOrTenure.intervalsOfRentReview",
                         _.intervalsOfRentReview.map(r =>
                             Seq(r.currentRentWithin12Months, r.intervalsOfRentReview.map(dateUtil.formatDayMonthAbbrYear))
