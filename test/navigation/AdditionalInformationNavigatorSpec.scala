@@ -27,7 +27,7 @@ import scala.concurrent.ExecutionContext
 class AdditionalInformationNavigatorSpec extends TestBaseSpec {
 
   val audit = mock[Audit]
-  doNothing.when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
+  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AdditionalInformationNavigator(audit)
 

@@ -157,7 +157,7 @@ class LoginControllerSpec extends TestBaseSpec {
     "Audit successful login" in {
 
       val audit = mock[Audit]
-      doNothing
+      doNothing()
         .when(audit)
         .sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
@@ -205,7 +205,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
     "Audit logout event" in {
       val audit = mock[Audit]
-      doNothing
+      doNothing()
         .when(audit)
         .sendExplicitAudit(any[String], any[UserData])(using
           any[HeaderCarrier],
