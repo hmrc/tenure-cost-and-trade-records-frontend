@@ -20,6 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersNoFinancialYearsForm.theForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, TurnoverSection6045}
 import models.submissions.common.AnswersYesNo
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
@@ -52,14 +53,46 @@ class CheckYourAnswersNoFinancialYearsController @Inject (
       theForm,
       formWithErrors => successful(BadRequest(theView(formWithErrors, backLinkUrl))),
       formData =>
-        val newSession = updateAboutTheTradingHistory(_.copy(checkYourAnswersAboutTheTradingHistory = Some(formData)))
-          .copy(lastCYAPageUrl =
-            Some(
-              controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
-                .show()
-                .url
+        val currentSession = request.sessionData
+
+        // Eventually empty all turnover sections across the entire trading history declaration
+        val eventuallyEmptiedSession =
+          if (currentSession.financialYearEndDates.isEmpty) {
+            // It happens when the users have first occupied the property within their last financial year
+            currentSession.copy(
+              aboutTheTradingHistory = Some(
+                AboutTheTradingHistory(
+                  occupationAndAccountingInformation =
+                    currentSession.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation)
+                )
+              ),
+              aboutTheTradingHistoryPartOne = Some(
+                AboutTheTradingHistoryPartOne(
+                  isFinancialYearsCorrect = Some(true),
+                  whatYouWillNeed = Some(""),
+                  turnoverSections6045 = Some(Seq.empty)
+                )
+              )
             )
-          )
+          } else {
+            currentSession
+          }
+
+        val newSession =
+          eventuallyEmptiedSession
+            .copy(
+              aboutTheTradingHistory =
+                Some(eventuallyEmptiedSession.aboutTheTradingHistory.fold(AboutTheTradingHistory()) {
+                  _.copy(checkYourAnswersAboutTheTradingHistory = Some(formData))
+                })
+            )
+            .copy(lastCYAPageUrl =
+              Some(
+                controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
+                  .show()
+                  .url
+              )
+            )
 
         repository.saveOrUpdate(newSession).map { _ =>
           Redirect(
