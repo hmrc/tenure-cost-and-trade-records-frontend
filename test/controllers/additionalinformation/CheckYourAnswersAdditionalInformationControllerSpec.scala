@@ -85,6 +85,13 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe SEE_OTHER
     }
+
+    "Redirect when form data submitted even when starting with no information at all" in {
+      val res = checkYourAdditionalInformationControllerEmpty().submit()(
+        FakeRequest(POST, "").withFormUrlEncodedBody("checkYourAnswersAdditionalInformation" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
   }
 
   "Check Your Answers additional information form" should {

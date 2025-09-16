@@ -137,7 +137,13 @@ class RentalIncomeListControllerSpec extends TestBaseSpec {
   }
 
   "performRemove" should {
+    "display error messages " in {
+      val indexToRemove   = 1
+      val fakePostRequest = FakeRequest(POST, "/remove-letting-confirm") // missing genericRemoveConfirmation param
 
+      val result = controller().performRemove(indexToRemove)(fakePostRequest)
+      status(result) shouldBe BAD_REQUEST
+    }
     "redirect to the updated rental income  list on confirmation " in {
       val indexToRemove   = 1
       val fakePostRequest = FakeRequest(POST, "/remove-letting-confirm")
