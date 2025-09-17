@@ -63,11 +63,7 @@
 
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.submit()) {
 
-        @includes.checkYourAnswersRadioButtons(
-            govukRadios,
-            theForm,
-            "checkYourAnswersLeaseOrTenure"
-        )
+        <input type="hidden" name="checkYourAnswersLeaseOrTenure" value="yes" />
 
         @includes.continueSaveAsDraftButtons(govukButton)
 

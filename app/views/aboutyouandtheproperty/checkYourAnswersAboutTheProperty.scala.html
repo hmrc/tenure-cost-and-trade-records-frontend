@@ -63,15 +63,15 @@
                         )
                     ).withFormField(theForm("answersConfirmed"))
                 )
+                @includes.checkYourAnswersRadioButtons(
+                    govukRadios,
+                    theForm,
+                    "answersChecked"
+                )
             } else {
                 <input type="hidden" name="answersConfirmed" value="true" />
+                <input type="hidden" name="answersChecked" value="yes" />
             }
-
-            @includes.checkYourAnswersRadioButtons(
-                govukRadios,
-                theForm,
-                "answersChecked"
-            )
 
             @includes.continueSaveAsDraftButtons(govukButton)
         }

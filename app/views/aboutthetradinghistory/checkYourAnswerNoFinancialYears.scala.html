@@ -81,11 +81,7 @@
             name = "correct",
             label = messages("checkYourAnswers.occupationAndAccountingInfo.isCorrect")
         )
-        @includes.checkYourAnswersRadioButtons(
-            govukRadios,
-            theForm,
-            name = "completed"
-        )
+        <input type="hidden" name="completed" value="yes" />
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 }

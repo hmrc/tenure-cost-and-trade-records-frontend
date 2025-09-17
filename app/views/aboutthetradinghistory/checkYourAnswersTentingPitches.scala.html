@@ -156,13 +156,7 @@
     }
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.submit()) {
-
-        @includes.checkYourAnswersRadioButtons(
-            govukRadios,
-            theForm,
-            "checkYourAnswersTentingPitches"
-        )
-
+        <input type="hidden" name="checkYourAnswersTentingPitches" value="yes" />
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 
