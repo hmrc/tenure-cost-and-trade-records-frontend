@@ -16,6 +16,7 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
+@import models.submissions.common.AnswersYesNo
 @import models.submissions.common.AnswersYesNo.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
@@ -60,10 +61,15 @@
 
 @section1Completed       = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.answersChecked)) }
 @section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.answersChecked)) }
-@section3Completed       = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory) }
-@section3point1Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation).flatMap(_.checkYourAnswersOtherHolidayAccommodation)}
-@section3point2Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches).flatMap(_.checkYourAnswersTentingPitches)}
-@section3point3Completed = @{session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities).flatMap(_.checkYourAnswersAdditionalActivities)}
+@section3Completed       = @{ section3CompletedInFull.toAnswer }
+@hasZeroTurnoverSections = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).map(_ == AnswerYes).getOrElse(false) && session.financialYearEndDates.isEmpty }
+@section3CompletedInFull = @{
+    val checkYourAnswersOtherHolidayAccommodation = session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation).flatMap(_.checkYourAnswersOtherHolidayAccommodation).map(_.toBoolean).getOrElse(false)
+    val checkYourAnswersTentingPitches = session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches).flatMap(_.checkYourAnswersTentingPitches).map(_.toBoolean).getOrElse(false)
+    val checkYourAnswersAdditionalActivities = session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities).flatMap(_.checkYourAnswersAdditionalActivities).map(_.toBoolean).getOrElse(false)
+
+    hasZeroTurnoverSections || (checkYourAnswersOtherHolidayAccommodation && checkYourAnswersTentingPitches && checkYourAnswersAdditionalActivities)
+}
 @section4Completed       = @{ session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings) }
 @section5Completed       = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) }
 @section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) }
@@ -131,9 +137,9 @@
 
   @sections_3_4_6048(forType, section2Completed, section4AccommodationCompleted, sectionLettingHistoryCompleted)
 
-  @tradingHistory(forType, tradingHistoryNumber, section2Completed, section3Completed, section3point1Completed, section3point2Completed, section3point3Completed, section4AccommodationCompleted)
+  @tradingHistory(forType, tradingHistoryNumber, section2Completed, section3Completed, section4AccommodationCompleted)
 
-  @franchiseAndLettings(forType, section3point3Completed, section3Completed, section4Completed)
+  @franchiseAndLettings(forType, section3Completed, section4Completed)
 
   @leaseOrAgreement(forType, isLeaseHolder, leaseOrAgreementNumber, section3Completed, section4Completed, section5Completed)
 

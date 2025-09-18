@@ -14,18 +14,19 @@
  * limitations under the License.
  *@
 
+@import actions.SessionRequest
 @import models.submissions.common.AnswersYesNo
 @import models.submissions.common.AnswersYesNo.*
 @import navigation.UrlHelpers.urlPlusParamPrefix
 
-@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[AnswersYesNo], pageAnswer: Option[?], cannotStartYet: Boolean = false, declared: Boolean = false)(implicit messages: Messages)
+@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[AnswersYesNo], pageAnswer: Option[?], cannotStartYet: Boolean = false, readOnly: Boolean = false)(implicit request: SessionRequest[?], messages: Messages)
 
 @sectionCompletedAnswerYes = @{
     sectionCompleted.contains(AnswerYes)
 }
 
 @completedOrDeclared = @{
-    if(sectionCompletedAnswerYes && declared) {
+    if(sectionCompletedAnswerYes && readOnly) {
       messages("taskList.status.declared")
   } else {
       messages("taskList.status.completed")
@@ -58,8 +59,13 @@
 
 
 <li class="app-task-list__item">
+    <div>
+        <span style="color: lightgray">sectionCompletedAnswerYes = </span><span style="color: darkorange">@sectionCompletedAnswerYes</span>, <span style="color: lightgray">readOnly = </span><span style="color: orange">@readOnly</span><br/>
+        <span style="color: lightgray">pageAnswer = </span><span style="color: limegreen">@pageAnswer</span><br/>
+        <span style="color: lightgray">cannotStartYet = </span><span style="color: darkorange">@cannotStartYet</span><br/>
+    </div>
     <span class="app-task-list__task-name">
-        @if(declared || (cannotStartYet && pageAnswer.isEmpty)) {
+        @if(readOnly || (cannotStartYet && pageAnswer.isEmpty)) {
             @messages(taskNameKey)
         } else {
             <a href="@{urlPlusParamPrefix(taskPage.url)}from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
@@ -70,5 +76,7 @@
     } else {
         <strong class="@itemTagClass" id="@taskId">@statusText</strong>
     }
-
+    <div>
+        <br/><span style="color: lightgray">hasZeroTurnoverSections = </span><span style="color: darkorange">@request.sessionData.financialYearEndDates.isEmpty</span>
+    </div>
 </li>

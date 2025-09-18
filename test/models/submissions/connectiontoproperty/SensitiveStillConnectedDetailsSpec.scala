@@ -55,7 +55,12 @@ class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers w
         maxOfLettings = Some(false),
         lettingPartOfPropertyDetails = IndexedSeq(
           LettingPartOfPropertyDetails(
-            tenantDetails = TenantDetails("name", "descriptionOfLettings", correspondenceAddress = None),
+            tenantDetails = TenantDetails(
+              "name",
+              "descriptionOfLettings",
+              correspondenceAddress =
+                Some(Address("buildingNameNumber", Some("street1"), "town", Some("county"), "postcode"))
+            ),
             lettingPartOfPropertyRentDetails = None,
             itemsIncludedInRent = List("item1", "item2"),
             addAnotherLettingToProperty = Some(AnswerNo),

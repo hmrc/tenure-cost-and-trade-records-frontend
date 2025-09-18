@@ -18,12 +18,15 @@ package controllers.aboutthetradinghistory
 
 import models.ForType.FOR6010
 import models.Session
+import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
+import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
 import models.submissions.common.AnswersYesNo.*
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
 import views.html.aboutthetradinghistory.checkYourAnswerNoFinancialYears as CheckYourAnswerNoFinancialYearsView
 
+import java.time.LocalDate
 import scala.concurrent.Future.successful
 
 class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with JsoupHelpers:
@@ -32,21 +35,29 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
     val repository = mock[SessionRepo]
     when(repository.saveOrUpdate(any)(using any)).thenReturn(successful(()))
 
-    val controller = new CheckYourAnswersNoFinancialYearsController(
-      mcc = stubMessagesControllerComponents(),
-      navigator = aboutYourTradingHistoryNavigator,
-      theView = inject[CheckYourAnswerNoFinancialYearsView],
-      sessionRefiner = preEnrichedActionRefiner(
-        aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory),
-        forType = FOR6010
-      ),
-      repository = repository
-    )
+    def controller(emptyTurnoverSections: Boolean = false) =
+      new CheckYourAnswersNoFinancialYearsController(
+        mcc = stubMessagesControllerComponents(),
+        navigator = aboutYourTradingHistoryNavigator,
+        theView = inject[CheckYourAnswerNoFinancialYearsView],
+        sessionRefiner = preEnrichedActionRefiner(
+          aboutTheTradingHistory = Some(
+            prefilledAboutYourTradingHistory.copy(
+              turnoverSections =
+                if emptyTurnoverSections
+                then Seq.empty
+                else prefilledAboutYourTradingHistory.turnoverSections
+            )
+          ),
+          forType = FOR6010
+        ),
+        repository = repository
+      )
 
   "the CheckYourAnswersNoFinancialYears controller" when {
     "handling GET / requests"  should {
       "reply 200 with unchecked form" in new ControllerFixture {
-        val result = controller.show()(fakeGetRequest)
+        val result = controller().show()(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
@@ -57,7 +68,24 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
     }
     "handling POST / requests" should {
       "reply with 303 redirect to the next page" in new ControllerFixture {
-        val result = controller.submit()(
+
+        val result = controller().submit()(
+          fakePostRequest.withFormUrlEncodedBody(
+            "correct"   -> "true",
+            "completed" -> "yes"
+          )
+        )
+        status(result) shouldBe SEE_OTHER
+        redirectLocation(result).value shouldBe controllers.routes.TaskListController
+          .show()
+          .withFragment("tradingHistory")
+          .toString
+        val newSession = captor[Session]
+        verify(repository).saveOrUpdate(newSession.capture())(using any)
+        newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
+      }
+      "eventually reset turnover section" in new ControllerFixture {
+        val result = controller(emptyTurnoverSections = true).submit()(
           fakePostRequest.withFormUrlEncodedBody(
             "correct"   -> "true",
             "completed" -> "yes"

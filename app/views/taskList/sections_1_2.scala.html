@@ -37,7 +37,7 @@
    section1Completed,
    pageAnswer = session.stillConnectedDetails.flatMap(_.addressConnectionType),
    cannotStartYet = false,
-   declared = readOnlySection1,
+   readOnlySection1,
   )
 
   @if(forType != FOR6076) {
@@ -47,7 +47,7 @@
     section1Completed,
     pageAnswer = session.stillConnectedDetails.flatMap(_.isPropertyVacant),
     cannotStartYet = session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty,
-    declared = readOnlySection1,
+    readOnlySection1,
    )
   }
 
@@ -56,7 +56,7 @@
    section1Completed,
    pageAnswer = session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
    cannotStartYet = session.stillConnectedDetails.flatMap(_.isPropertyVacant).isEmpty,
-   declared = readOnlySection1
+   readOnlySection1
   )
  </ul>
 </li>
@@ -72,7 +72,7 @@
    section2Completed,
    pageAnswer = session.aboutYouAndTheProperty.flatMap(_.customerDetails),
    cannotStartYet = section1Completed.isEmpty,
-   declared = forType == FOR6076 && readOnlySection2
+   readOnly = forType == FOR6076 && readOnlySection2
   )
 
   @if(forType == FOR6048) {
@@ -96,21 +96,21 @@
     section2Completed,
     pageAnswer = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
     cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty,
-    declared = readOnlySection2
+    readOnlySection2
    )
    @includes.taskListItem("site-construction-details", "taskList.siteConstructionDetails",
     controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
     section2Completed,
     pageAnswer = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
     cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty,
-    declared = readOnlySection2
+    readOnlySection2
    )
    @includes.taskListItem("how-is-used", "taskList.howIsUsed",
     controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
     section2Completed,
     pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
     cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty,
-    declared = readOnlySection2
+    readOnlySection2
    )
   } else {
 
@@ -118,10 +118,13 @@
     @if(forType != FOR6048) {
      @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
       if(forType == FOR6045 || forType == FOR6046) {
-       controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()}
-      else {controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()},
+       controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
+      }
+      else {
+       controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+      },
       section2Completed,
-      pageAnswer = session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+      pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed),
       cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
      )
     }

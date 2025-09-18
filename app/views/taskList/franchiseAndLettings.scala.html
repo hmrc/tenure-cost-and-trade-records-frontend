@@ -19,7 +19,7 @@
 @import models.submissions.common.AnswersYesNo
 
 
-@(forType: ForType, section3point3Completed: Option[AnswersYesNo], section3Completed: Option[AnswersYesNo], section4Completed: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
+@(forType: ForType, section3Completed: Option[AnswersYesNo], section4Completed: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
 @session = @{ request.sessionData }
 
@@ -47,27 +47,24 @@
     "taskList.rentalIncomeStatus",
     controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
     section4Completed,
-    session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-    section3point3Completed.isEmpty
+    pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+    cannotStartYet = !section3Completed.map(_.toBoolean).getOrElse(false)
    )
   } else {
    @if(!(Seq(FOR6020) contains forType)) {
     @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
      section4Completed,
-     session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-     forType match {
-      case FOR6045 => section3point3Completed.isEmpty
-      case _ => section3Completed.isEmpty
-     }
+     pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+     cannotStartYet = !section3Completed.map(_.toBoolean).getOrElse(false)
     )
    }
    @if(forType == FOR6020) {
      @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
       section4Completed,
-      session.aboutFranchisesOrLettings.flatMap(_.lettings),
-      section3Completed.isEmpty
+      pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.lettings),
+      cannotStartYet = !section3Completed.map(_.toBoolean).getOrElse(false)
      )
     }
    }
