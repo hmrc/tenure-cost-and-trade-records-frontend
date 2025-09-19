@@ -59,24 +59,16 @@
 
 
 <li class="app-task-list__item">
-    <div>
-        <span style="color: lightgray">sectionCompletedAnswerYes = </span><span style="color: darkorange">@sectionCompletedAnswerYes</span>, <span style="color: lightgray">readOnly = </span><span style="color: orange">@readOnly</span><br/>
-        <span style="color: lightgray">pageAnswer = </span><span style="color: limegreen">@pageAnswer</span><br/>
-        <span style="color: lightgray">cannotStartYet = </span><span style="color: darkorange">@cannotStartYet</span><br/>
-    </div>
     <span class="app-task-list__task-name">
-        @if(readOnly || (cannotStartYet && pageAnswer.isEmpty)) {
-            @messages(taskNameKey)
-        } else {
-            <a href="@{urlPlusParamPrefix(taskPage.url)}from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
-        }
+    @if(readOnly || (cannotStartYet && pageAnswer.isEmpty)) {
+        @messages(taskNameKey)
+    } else {
+        <a href="@{urlPlusParamPrefix(taskPage.url)}from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
+    }
     </span>
     @if(sectionCompleted.contains(AnswerYes)){
         <p class="@itemTagClassClear" id="@taskId">@statusText</p>
     } else {
         <strong class="@itemTagClass" id="@taskId">@statusText</strong>
     }
-    <div>
-        <br/><span style="color: lightgray">hasZeroTurnoverSections = </span><span style="color: darkorange">@request.sessionData.financialYearEndDates.isEmpty</span>
-    </div>
 </li>

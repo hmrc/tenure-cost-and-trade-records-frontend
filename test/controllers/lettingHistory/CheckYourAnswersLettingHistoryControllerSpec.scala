@@ -36,8 +36,8 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
-        page.heading           shouldBe "lettingHistory.checkYourAnswers.heading"
-        page.backLink          shouldBe routes.HasOnlineAdvertisingController.show.url
+        page.heading  shouldBe "lettingHistory.checkYourAnswers.heading"
+        page.backLink shouldBe routes.HasOnlineAdvertisingController.show.url
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result = controller.submit(

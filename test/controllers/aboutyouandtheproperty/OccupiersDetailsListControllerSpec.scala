@@ -76,6 +76,24 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec {
         )
         status(res) shouldBe SEE_OTHER
       }
+      "Redirect when form data submitted even it starts with empty occupiers" in {
+        val res = controller(
+          aboutYouAndThePropertyPartTwo = Some(
+            prefilledAboutYouAndThePropertyPartTwo6048.copy(
+              occupiersList = IndexedSeq(OccupiersDetails("Mike", "Bristol"))
+            )
+          )
+        ).submit(0)(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("occupiersDetailsList" -> "yes")
+        )
+        status(res) shouldBe SEE_OTHER
+      }
+      "Redirect when form data submitted even if it starts with no data at all" in {
+        val res = controller(aboutYouAndThePropertyPartTwo = None).submit(0)(
+          FakeRequest(POST, "/").withFormUrlEncodedBody("occupiersDetailsList" -> "yes")
+        )
+        status(res) shouldBe SEE_OTHER
+      }
     }
 
     "REMOVE /" should {

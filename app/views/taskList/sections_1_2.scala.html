@@ -116,7 +116,7 @@
 
    @if(forType != FOR6030) {
     @if(forType != FOR6048) {
-     @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
+     @includes.taskListItem("about-the-property", "taskList.howIsUsed",
       if(forType == FOR6045 || forType == FOR6046) {
        controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
       }
@@ -124,12 +124,12 @@
        controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
       },
       section2Completed,
-      pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed),
+      pageAnswer = session.aboutYouAndTheProperty.flatMap(_.propertyDetails).flatMap(_.propertyCurrentlyUsed),
       cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
      )
     }
    } else {
-    @includes.taskListItem("about-the-property", "checkYourAnswersAboutTheProperty.aboutProperty.heading",
+    @includes.taskListItem("about-the-property", "taskList.howIsUsed",
      controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
      section2Completed,
      pageAnswer = session.aboutYouAndTheProperty.flatMap(_.propertyDetails),

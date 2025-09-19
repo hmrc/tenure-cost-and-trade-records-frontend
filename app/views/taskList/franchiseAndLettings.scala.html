@@ -63,7 +63,7 @@
      @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
       section4Completed,
-      pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.lettings),
+      pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
       cannotStartYet = !section3Completed.map(_.toBoolean).getOrElse(false)
      )
     }
