@@ -113,7 +113,7 @@
     controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
     section3Completed,
     pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.electricityGenerated),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.isEmpty)
+    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).flatMap(_.currentFinancialYearEnd).isEmpty
    )
    @includes.taskListItem("gross-receipts", "taskList.6076.grossReceipts",
     controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
@@ -171,7 +171,7 @@
     controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show(),
     section3Completed,
     pageAnswer = session.aboutTheTradingHistory.flatMap(_.totalFuelSold),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).isEmpty
+    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).flatMap(_.currentFinancialYearEnd).isEmpty
    )
    @includes.taskListItem("bunkered-fuel", "taskList.bunkerdFuel",
     controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
@@ -188,20 +188,20 @@
    @includes.taskListItem("low-margin-fuel-cards", "taskList.lowMarginCards",
     controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
     section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.percentageFromFuelCards),
+    pageAnswer = session.aboutTheTradingHistory.flatMap(_.doYouAcceptLowMarginFuelCard),
     cannotStartYet = hasZeroTurnoverSections ||  session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts).isEmpty
    )
    @includes.taskListItem("non-fuel-turnover", "turnover.6020.heading",
     controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
     section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.turnoverSections6020),
+    pageAnswer = session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).flatMap(seq => if (seq.isEmpty) None else Some(seq)).flatMap(seq => if (seq.exists(_.shop.isEmpty)) None else Some(seq)),
     cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).isEmpty
    )
    @includes.taskListItem("ev-charging-point", "taskList.EVChargingPoints",
     controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(),
     section3Completed,
     pageAnswer = session.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).isEmpty
+    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).flatMap(seq => seq.isEmpty || !seq.exists(_.shop.isDefined)).getOrElse(true),
    )
 
   }
@@ -209,21 +209,21 @@
    @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
     controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show(),
     section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.turnoverSections).isEmpty
+    pageAnswer = session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).flatMap(seq => if (seq.isEmpty) None else Some(seq)),
+    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.turnoverSections).flatMap(_.isEmpty)
    )
 
    @includes.taskListItem("variable-operating-expenses", "taskList.variableOperatingExpense",
     controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show(),
     section3Completed,
     pageAnswer = session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).isEmpty
+    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).flatMap(_.isEmpty)
    )
 
    @includes.taskListItem("fixed-operating-expenses", "taskList.fixedOperatingExpenses",
     controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show(),
     section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections),
+    pageAnswer = session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).flatMap(seq => if (seq.isEmpty) None else Some(seq)),
     cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses).isEmpty
    )
 
@@ -231,7 +231,7 @@
     controllers.aboutthetradinghistory.routes.OtherCostsController.show(),
     section3Completed,
     pageAnswer = session.aboutTheTradingHistory.flatMap(_.otherCosts),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).isEmpty
+    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).flatMap(_.isEmpty)
    )
 
    @includes.taskListItem("income-expenditure-summary", "taskList.profitSummary",
