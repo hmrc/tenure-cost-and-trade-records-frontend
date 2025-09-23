@@ -38,17 +38,28 @@
 
 @classes = @{"govuk-!-padding-bottom-3 govuk-!-padding-top-3"}
 
-@rowWithLink(msgkey: String, entryValue: IncomeExpenditureEntry => BigDecimal, url: IncomeExpenditureEntry => String) = @{
-    val headerRow = TableRow(content = Text(messages(s"incomeExpenditureSummary.$msgkey")), classes = classes)
+@changeLink(url: String, itemKey: String) = {
+    <a href="@url" class="govuk-link" aria-label="@messages("label.change") @messages(s"incomeExpenditureSummary.$itemKey")">
+        @messages("label.change")
+        <span class="govuk-visually-hidden">@messages(s"incomeExpenditureSummary.$itemKey")</span>
+    </a>
+}
+
+@ariaLabelMap(itemKey: String, entry: IncomeExpenditureEntry) = @{
+    Map("aria-label" -> accessibilityUtil.ariaBuilder(s"incomeExpenditureSummary.$itemKey", LocalDate.parse(entry.financialYearEnd)))
+}
+
+@rowWithLink(itemMsgKey: String, entryValue: IncomeExpenditureEntry => BigDecimal, url: IncomeExpenditureEntry => String) = @{
+    val headerRow = TableRow(content = Text(messages(s"incomeExpenditureSummary.$itemMsgKey")), classes = classes)
     val valueRows = entries.map { entry =>
-        TableRow(content = Text(entryValue(entry).asMoney),
-                attributes = Map(
-            "aria-label" -> accessibilityUtil.ariaBuilder(s"incomeExpenditureSummary.$msgkey", LocalDate.parse(entry.financialYearEnd))
-        ))
+        TableRow(
+            content = Text(entryValue(entry).asMoney),
+            attributes = ariaLabelMap(itemMsgKey, entry)
+        )
     }
     val changeLinkRow = url(entries.head) match {
         case urlValue if urlValue.nonEmpty =>
-            Seq(TableRow(content = HtmlContent(s"<a href='$urlValue' class='govuk-link'>${messages("label.change")}</a>")))
+            Seq(TableRow(content = HtmlContent(changeLink(urlValue, itemMsgKey))))
         case _ =>
             Seq(TableRow(content = HtmlContent("")))
     }
@@ -75,17 +86,17 @@
                        rowWithLink("totalTurnoverLabel", _.totalTurnover, _.turnoverUrl),
                        rowWithLink("totalCostOfSalesLabel", _.totalCostOfSales, _.costOfSalesUrl),
                        Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalGrossProfitsLabel")))) ++
-                               entries.map(entry => TableRow(content = Text(entry.totalGrossProfits.asMoney)))++
+                               entries.map(entry => TableRow(content = Text(entry.totalGrossProfits.asMoney), attributes = ariaLabelMap("totalGrossProfitsLabel", entry)))++
                                Seq(TableRow(content = Empty)),
                        rowWithLink("totalPayrollCostLabel", _.totalPayrollCost, _.totalPayrollCostURL),
                        rowWithLink("variableExpenses", _.variableExpenses, _.variableExpensesURL),
                        rowWithLink("fixedExpensesLabel", _.fixedExpenses, _.fixedExpensesUrl),
                        rowWithLink("otherCostsLabel", _.otherCost, _.otherCostsUrl),
                        Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalNetProfitLabel")))) ++
-                               entries.map(entry => TableRow(content = Text(entry.totalNetProfit.asMoney)))++
+                               entries.map(entry => TableRow(content = Text(entry.totalNetProfit.asMoney), attributes = ariaLabelMap("totalNetProfitLabel", entry)))++
                                Seq(TableRow(content = Empty)),
                        Seq(TableRow(content = Text(messages("incomeExpenditureSummary.profitMargin")))) ++
-                               entries.map(entry => TableRow(content = Text(entry.profitMargin.withScale(2) + "%")))++
+                               entries.map(entry => TableRow(content = Text(entry.profitMargin.withScale(2) + "%"), attributes = ariaLabelMap("profitMargin", entry)))++
                                Seq(TableRow(content = Empty))
                     ),
             firstCellIsHeader = true,
