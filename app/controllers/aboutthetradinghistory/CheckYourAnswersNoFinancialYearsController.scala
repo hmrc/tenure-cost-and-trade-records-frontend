@@ -19,8 +19,7 @@ package controllers.aboutthetradinghistory
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersNoFinancialYearsForm.theForm
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, TurnoverSection6045}
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.common.AnswersYesNo
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId

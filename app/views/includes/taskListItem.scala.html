@@ -14,12 +14,11 @@
  * limitations under the License.
  *@
 
-@import actions.SessionRequest
 @import models.submissions.common.AnswersYesNo
 @import models.submissions.common.AnswersYesNo.*
 @import navigation.UrlHelpers.urlPlusParamPrefix
 
-@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[AnswersYesNo], pageAnswer: Option[?], cannotStartYet: Boolean = false, readOnly: Boolean = false)(implicit request: SessionRequest[?], messages: Messages)
+@(taskId: String, taskNameKey: String, taskPage: Call, sectionCompleted: Option[AnswersYesNo], pageAnswer: Option[?], cannotStartYet: Boolean = false, readOnly: Boolean = false)(implicit messages: Messages)
 
 @sectionCompletedAnswerYes = @{
     sectionCompleted.contains(AnswerYes)

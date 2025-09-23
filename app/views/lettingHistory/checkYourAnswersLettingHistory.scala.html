@@ -23,7 +23,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import util.DateUtilLocalised
 
-@this(layout: Layout, govukButton: GovukButton, govukRadios: GovukRadios, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, dateUtil: DateUtilLocalised)
+@this(layout: Layout, govukButton: GovukButton, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, dateUtil: DateUtilLocalised)
 
 @(theForm: Form[AnswersYesNo], backLink: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
 
@@ -94,7 +94,7 @@
     <h2 id="online-advertising" class="govuk-heading-m govuk-!-static-margin-top-9">
     @messages("lettingHistory.checkYourAnswers.onlineAdvertising.heading")
     </h2>
-    @if(LettingHistory.countEntitiesOf(kind = "onlineAdvertising", request.sessionData) == Some(0)) {
+    @if(LettingHistory.countEntitiesOf(kind = "onlineAdvertising", request.sessionData).contains(0)) {
         @includes.cards.header(
             govukSummaryList,
             messageKey = "lettingHistory.checkYourAnswers.onlineAdvertising.question",
