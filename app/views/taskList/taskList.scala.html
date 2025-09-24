@@ -16,7 +16,6 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
-@import models.submissions.common.AnswersYesNo
 @import models.submissions.common.AnswersYesNo.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
@@ -61,7 +60,7 @@
 
 @section1Completed       = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.answersChecked)) }
 @section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.answersChecked)) }
-@hasZeroTurnoverSections = @{ session.financialYearEndDates.isEmpty && session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).map(_ == AnswerYes).getOrElse(false) }
+@hasZeroTurnoverSections = @{ session.financialYearEndDates.isEmpty && session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).exists(_ == AnswerYes)}
 @section3CompletedInFull = @{
     val section3AllAnswersGiven =
         (forType match {

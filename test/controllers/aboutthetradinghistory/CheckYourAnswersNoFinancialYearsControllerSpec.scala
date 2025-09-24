@@ -18,15 +18,12 @@ package controllers.aboutthetradinghistory
 
 import models.ForType.FOR6010
 import models.Session
-import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
 import models.submissions.common.AnswersYesNo.*
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
 import views.html.aboutthetradinghistory.checkYourAnswerNoFinancialYears as CheckYourAnswerNoFinancialYearsView
 
-import java.time.LocalDate
 import scala.concurrent.Future.successful
 
 class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with JsoupHelpers:
