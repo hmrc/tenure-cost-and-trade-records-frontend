@@ -20,7 +20,7 @@ import models.ForType
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.accommodation.AccommodationDetails
 import models.submissions.additionalinformation.AdditionalInformation
@@ -42,6 +42,7 @@ case class ConnectedSubmission(
   aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = None,
   additionalInformation: Option[AdditionalInformation] = None,
   aboutTheTradingHistory: Option[AboutTheTradingHistory] = None,
+  aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = None,
   aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = None,
   aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = None,
   aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = None,
@@ -67,6 +68,7 @@ object ConnectedSubmission:
     session.aboutYouAndTheProperty,
     session.additionalInformation,
     session.aboutTheTradingHistory,
+    session.aboutTheTradingHistoryPartOne,
     session.aboutFranchisesOrLettings,
     session.aboutLeaseOrAgreementPartOne,
     session.aboutLeaseOrAgreementPartTwo,
