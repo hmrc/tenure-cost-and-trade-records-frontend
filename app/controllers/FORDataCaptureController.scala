@@ -40,7 +40,7 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
       .bindFromRequest()
       .fold(
         hasErrors.andThen(continueOrSaveAsDraft),
-        success.andThen(continueOrSaveAsDraft)
+        success.andThen(res => continueOrSaveAsDraft(res))
       )
 
   def continueOrSaveAsDraft(successResult: Future[Result])(implicit

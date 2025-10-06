@@ -18,12 +18,10 @@ package models.submissions.additionalinformation
 
 import actions.SessionRequest
 import models.Session
-import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 
 case class AdditionalInformation(
-  furtherInformationOrRemarksDetails: Option[String] = None,
-  checkYourAnswersAdditionalInformation: Option[AnswersYesNo] = None
+  furtherInformationOrRemarksDetails: Option[String] = None
 )
 
 object AdditionalInformation:

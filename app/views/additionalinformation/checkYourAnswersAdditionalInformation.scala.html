@@ -15,7 +15,6 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components._
 @import views.html.answers.answersAdditionalInformation
 
@@ -25,23 +24,20 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], session: models.Session)(implicit request: SessionRequest[?], messages: Messages)
+@(session: models.Session)(implicit request: SessionRequest[?], messages: Messages)
 
     @layout(
         pageHeading = messages("checkYourAnswersAdditionalInformation.heading"),
         fullWidth = true,
         summary = Some(session.toSummary),
         sectionName = messages("label.section.additionalInformation"),
-        backLinkUrl = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url,
-        theForm = theForm
+        backLinkUrl = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
     ) {
 
         @answersSectionAdditionalInformation()
 
         @formWithCSRF(action = controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.submit()) {
-            <input type="hidden" name="checkYourAnswersAdditionalInformation" value="yes" />
             @includes.continueSaveAsDraftButtons(govukButton)
-
         }
 
     }
