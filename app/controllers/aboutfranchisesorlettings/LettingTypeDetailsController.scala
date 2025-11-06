@@ -54,7 +54,6 @@ class LettingTypeDetailsController @Inject() (
     with Logging:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-
     audit.sendChangeLink("LettingTypeDetails")
 
     val freshForm  = theForm

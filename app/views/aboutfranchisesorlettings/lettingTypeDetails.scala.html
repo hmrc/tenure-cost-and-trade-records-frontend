@@ -40,6 +40,13 @@
     }
 }
 
+@labelTypeOfBusiness = @{
+    forType match {
+        case FOR6010 | FOR6011  => "lettingTypeOfBusiness"
+        case _                  => "typeOfBusiness"
+    }
+}
+
 @hintTypeOfBusiness = @{
     forType match {
         case FOR6010 | FOR6011  => "descriptionOfLetting"
@@ -71,7 +78,7 @@
         @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.submit(index)) {
 
             @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "operatorName", labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = hintTypeOfBusiness)
+            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", labelTypeOfBusiness, labelClasses = "govuk-!-font-weight-bold", hintMsg = hintTypeOfBusiness)
 
             @includes.continueSaveAsDraftButtons(govukButton)
         }
