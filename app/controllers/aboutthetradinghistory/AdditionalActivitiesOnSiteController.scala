@@ -85,7 +85,6 @@ class AdditionalActivitiesOnSiteController @Inject() (
         session
           .saveOrUpdate(updatedSession)
           .map { _ =>
-
             val nextPage = (previousAnswer, data, navigator.from) match {
               case (Some(AnswerYes), AnswerYes, "CYA") =>
                 controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()

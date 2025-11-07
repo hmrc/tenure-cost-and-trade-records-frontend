@@ -71,7 +71,6 @@ class TypeOfIncomeController @Inject() (
   }
 
   def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-
     val existingIncomeRecords =
       request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
 
