@@ -66,6 +66,7 @@
  source match {
   case "rentalIncome" if forType == FOR6030 => messages("maxOf5Lettings.rentalIncome.6030.confirm")
   case "rentalIncome" => messages("maxOf5Lettings.rentalIncome.confirm", sectionContent)
+  case "lettings" => messages("maxOf5Lettings.lettings.confirm")
   case _ => messages("maxOf5Lettings.confirm")
 
  }
@@ -75,6 +76,7 @@
  source match {
   case "rentalIncome" if forType == FOR6030 => messages("maxOf5Lettings.rentalIncome.6030.link")
   case "rentalIncome" => messages("maxOf5Lettings.rentalIncome.link")
+  case "lettings" => messages("maxOf5Lettings.lettings.link")
   case _ => messages("maxOf5Lettings.link")
 
  }
