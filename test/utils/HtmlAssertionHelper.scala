@@ -36,7 +36,7 @@ trait HtmlAssertionHelper { this: Matchers =>
 
   protected def assetPageContainsSummaryErrors(html: Document, expectedSummaryErrors: List[String]): Assertion = {
     val unorderedListElement = html.body().getElementsByClass("govuk-error-summary__list").first()
-    withClue(s"Unexpected number of errors in the Errors Summary") {
+    withClue("Unexpected number of errors in the Errors Summary") {
       unorderedListElement.select("li").size() shouldEqual expectedSummaryErrors.length
     }
 

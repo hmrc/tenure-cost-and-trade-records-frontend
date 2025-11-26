@@ -120,7 +120,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       }
     }
     "retrieving the confirmed address" should {
-      s"save record and reply 303 redirect to the next page" in new ControllerFixture {
+      "save record and reply 303 redirect to the next page" in new ControllerFixture {
         val result = controller.addressLookupCallback(idx = 0, "confirmedAddress")(fakeRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentDetailsController.show(0).url

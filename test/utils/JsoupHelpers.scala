@@ -41,7 +41,7 @@ trait JsoupHelpers:
     def textarea(n: String)      = d.select(s"""textarea.govuk-textarea[name="$n"]""").first()
     def submitAction             = d.select("form").first().attr("action")
     def summaryList              =
-      d.select(s"""dl.govuk-summary-list""")
+      d.select("""dl.govuk-summary-list""")
         .first()
         .children()
         .asScala
@@ -81,11 +81,11 @@ trait JsoupHelpers:
         ,
         rawFailureMessage =
           if expectedValue.isEmpty
-          then s"""Radio group elements did not have none checked"""
+          then """Radio group elements did not have none checked"""
           else s"""Radio group elements did not have "${expectedValue.get}" checked""",
         rawNegatedFailureMessage =
           if expectedValue.isEmpty
-          then s"""Radio group elements had some checked"""
+          then """Radio group elements had some checked"""
           else s"""Radio group elements had checked values different than "${expectedValue.get}""""
       )
 

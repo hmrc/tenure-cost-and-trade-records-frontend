@@ -56,7 +56,7 @@ class MonthYearFormatter(
 
     val fieldCapitalized = fieldName.capitalize
     val prefix           = messages("error.dateParts.prefix")
-    val monthText        = messages(s"error.dateParts.month")
+    val monthText        = messages("error.dateParts.month")
     val yearText         = messages("error.dateParts.year")
     val monthKey         = s"$key.month"
     val yearKey          = s"$key.year"

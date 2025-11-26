@@ -33,4 +33,4 @@ object CheckYourAnswersHelpers:
 
     private def withFrom: String =
       // Append the "from" query string parameter with a "CYA" value
-      call.url + (if call.url.contains("?") then "&" else "?") + s"from=CYA"
+      call.url + (if call.url.contains("?") then "&" else "?") + "from=CYA"

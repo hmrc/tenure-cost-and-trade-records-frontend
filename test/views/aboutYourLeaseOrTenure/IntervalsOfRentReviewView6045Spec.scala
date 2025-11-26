@@ -53,12 +53,12 @@ class IntervalsOfRentReviewView6045Spec extends QuestionViewBehaviours[Intervals
       assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
     }
 
-    s"contain an input for text char count hint" in {
+    "contain an input for text char count hint" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "intervalsOfRentReview-hint")
     }
 
-    s"contain an input for text char count box" in {
+    "contain an input for text char count box" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "intervalsOfRentReview")
     }

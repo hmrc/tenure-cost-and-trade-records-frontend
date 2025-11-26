@@ -100,7 +100,7 @@ class PayACapitalSumController @Inject() (
                 controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
               case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url
               case _               =>
-                logger.warn(s"Back link for pay capital sum page reached with unknown benefits given value")
+                logger.warn("Back link for pay capital sum page reached with unknown benefits given value")
                 controllers.routes.TaskListController.show().url
             }
           case FOR6045 | FOR6046 =>

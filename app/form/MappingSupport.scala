@@ -247,13 +247,13 @@ object MappingSupport:
 
   def rallyAreasMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = optional(
     text
-      .verifying(messages(s"error.rallyAreas.areaInHectares.range", year), s => Try(BigDecimal(s)).isSuccess)
+      .verifying(messages("error.rallyAreas.areaInHectares.range", year), s => Try(BigDecimal(s)).isSuccess)
       .transform[BigDecimal](
         s => BigDecimal(s),
         _.toString
       )
-      .verifying(messages(s"error.rallyAreas.areaInHectares.range", year), _ >= 0)
-  ).verifying(messages(s"error.rallyAreas.areaInHectares.required", year), _.isDefined)
+      .verifying(messages("error.rallyAreas.areaInHectares.range", year), _ >= 0)
+  ).verifying(messages("error.rallyAreas.areaInHectares.required", year), _.isDefined)
 
   private val salesMax = BigDecimal(1000000000000L)
 

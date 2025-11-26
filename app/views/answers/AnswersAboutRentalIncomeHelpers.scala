@@ -40,7 +40,7 @@ object AnswersAboutRentalIncomeHelpers:
              |<p class='govuk-body'>
              |${propertyRentDetails.annualRent.asMoney}<br>
              |${messages(
-            s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
+            "checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
             dateUtil.formatDayMonthAbbrYear(propertyRentDetails.dateInput)
           )}
              |</p>
@@ -76,7 +76,7 @@ object AnswersAboutRentalIncomeHelpers:
            |<p class='govuk-body'>
            |${calculatingTheRent.description.escapedHtml}<br>
            |${messages(
-            s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
+            "checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
             dateUtil.formatDayMonthAbbrYear(calculatingTheRent.dateInput)
           )}
            |</p>
@@ -281,7 +281,7 @@ object AnswersAboutRentalIncomeHelpers:
   def cardsData(rentalIncome: Seq[IncomeRecord], dateUtil: DateUtilLocalised)(using
     request: SessionRequest[?],
     messages: Messages
-  ) = {
+  ): Seq[CardData] = {
     var businessCounter = -1
     var lettingCounter  = -1
     for ((r, index) <- rentalIncome.zipWithIndex)
