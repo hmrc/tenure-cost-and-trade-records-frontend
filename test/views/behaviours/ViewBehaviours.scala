@@ -25,14 +25,14 @@ import java.util.Locale
 
 trait ViewBehaviours extends ViewSpecBase {
 
-  def labelDefinedAndUsedOnce(option: String, prefix: String, view: () => HtmlFormat.Appendable) = {
+  def labelDefinedAndUsedOnce(option: String, prefix: String, view: () => HtmlFormat.Appendable): Assertion = {
     val doc   = asDocument(view())
     assert(messages.isDefinedAt(s"$prefix.$option"))
     val label = doc.select(s"label[for=$prefix.$option]")
     assert(label.size() == 1)
   }
 
-  def normalPage(view: () => HtmlFormat.Appendable, messageKeyPrefix: String, expectedGuidanceKeys: String*) =
+  def normalPage(view: () => HtmlFormat.Appendable, messageKeyPrefix: String, expectedGuidanceKeys: String*): Unit =
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in
@@ -67,7 +67,7 @@ trait ViewBehaviours extends ViewSpecBase {
     messageKeyPrefix: String,
     messageExtra: String,
     expectedGuidanceKeys: String*
-  ) =
+  ): Unit =
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in
@@ -106,7 +106,7 @@ trait ViewBehaviours extends ViewSpecBase {
     messageKeyPrefix: String,
     messageExtra: String,
     expectedGuidanceKeys: String*
-  ) =
+  ): Unit =
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in
@@ -146,7 +146,7 @@ trait ViewBehaviours extends ViewSpecBase {
     messageSuffix: String,
     messageExtra: String,
     expectedGuidanceKeys: String*
-  ) =
+  ): Unit =
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in
@@ -184,7 +184,7 @@ trait ViewBehaviours extends ViewSpecBase {
     view: () => HtmlFormat.Appendable,
     messageKeyPrefix: String,
     expectedGuidanceKeys: String*
-  ) =
+  ): Unit =
     "behave like a normal page" when {
       "rendered" must {
         "have the correct banner title" in
@@ -220,7 +220,7 @@ trait ViewBehaviours extends ViewSpecBase {
 
   protected def checkServiceNameInHeaderBanner(html: Html): Assertion = {
     val doc    = asDocument(html)
-    val header = doc.getElementsByAttributeValue("class", "govuk-header__content").first()
+    val header = doc.getElementsByAttributeValue("class", "govuk-service-navigation__service-name").first()
     val link   = header.children.first
     link.text shouldBe messagesApi("site.service_name")(using Lang(Locale.UK))
   }
