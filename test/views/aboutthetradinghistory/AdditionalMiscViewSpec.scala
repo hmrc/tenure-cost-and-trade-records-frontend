@@ -62,54 +62,54 @@ class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc]
       assert(doc.toString.contains(messages("additionalMisc.p")))
     }
 
-    s"contain an input for gross leisure Receipts" in {
+    "contain an input for gross leisure Receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalMisc.[0].leisureReceipts")
       assertRenderedById(doc, "additionalMisc.[1].leisureReceipts")
       assertRenderedById(doc, "additionalMisc.[2].leisureReceipts")
     }
 
-    s"contain an input for gross leisure winter storage receipts" in {
+    "contain an input for gross leisure winter storage receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalMisc.[0].winterStorageReceipts")
       assertRenderedById(doc, "additionalMisc.[1].winterStorageReceipts")
       assertRenderedById(doc, "additionalMisc.[2].winterStorageReceipts")
     }
 
-    s"contain an input for gross other activities receipts" in {
+    "contain an input for gross other activities receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalMisc.[0].otherActivitiesReceipts")
       assertRenderedById(doc, "additionalMisc.[1].otherActivitiesReceipts")
       assertRenderedById(doc, "additionalMisc.[2].otherActivitiesReceipts")
     }
 
-    s"contain an input for number of vans" in {
+    "contain an input for number of vans" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalMisc.[0].numberOfVans")
       assertRenderedById(doc, "additionalMisc.[1].numberOfVans")
       assertRenderedById(doc, "additionalMisc.[2].numberOfVans")
     }
 
-    s"contain an input for other services receipts" in {
+    "contain an input for other services receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalMisc.[0].otherServicesReceipts")
       assertRenderedById(doc, "additionalMisc.[1].otherServicesReceipts")
       assertRenderedById(doc, "additionalMisc.[2].otherServicesReceipts")
     }
 
-    s"contain an input for bottled gas receipts" in {
+    "contain an input for bottled gas receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalMisc.[0].bottledGasReceipts")
       assertRenderedById(doc, "additionalMisc.[1].bottledGasReceipts")
       assertRenderedById(doc, "additionalMisc.[2].bottledGasReceipts")
     }
 
-    s"contain an other activities receipts details" in {
+    "contain an other activities receipts details" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "details.otherActivitiesReceiptsDetails")
     }
 
-    s"contain an input for leisure receipts details" in {
+    "contain an input for leisure receipts details" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "details.leisureReceiptsDetails")
     }

@@ -27,8 +27,8 @@ object FormBindingTestAssertions extends should.Matchers {
       fail(s"Form incorrectly has errors: ${f.errors}. ${boundObject(f)}")
     }
 
-    if (!f.value.isDefined) {
-      fail(s"Form did not bind")
+    if (f.value.isEmpty) {
+      fail("Form did not bind")
     }
 
   }

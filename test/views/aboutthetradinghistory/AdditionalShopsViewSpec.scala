@@ -62,21 +62,21 @@ class AdditionalShopsViewSpec extends QuestionViewBehaviours[Seq[AdditionalShops
       assert(doc.toString.contains(messages("shops.additionalActivitiesOnSite.p")))
     }
 
-    s"contain an input for weeks" in {
+    "contain an input for weeks" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalShops[0].weeks")
       assertRenderedById(doc, "additionalShops[1].weeks")
       assertRenderedById(doc, "additionalShops[2].weeks")
     }
 
-    s"contain an input for gross receipts" in {
+    "contain an input for gross receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalShops[0].grossReceipts")
       assertRenderedById(doc, "additionalShops[1].grossReceipts")
       assertRenderedById(doc, "additionalShops[2].grossReceipts")
     }
 
-    s"contain an input for cost of purchase" in {
+    "contain an input for cost of purchase" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalShops[0].costOfPurchase")
       assertRenderedById(doc, "additionalShops[1].costOfPurchase")

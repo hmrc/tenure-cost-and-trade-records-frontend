@@ -94,16 +94,15 @@ class ProvideContactDetailsController @Inject() (
       case _     =>
         request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
           case Some(AnswerYes) =>
-            request.sessionData.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty match {
-              case true  =>
-                controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url
-              case false =>
-                controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController
-                  .show(request.sessionData.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex)
-                  .url
+            if (request.sessionData.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty) {
+              controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url
+            } else {
+              controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController
+                .show(request.sessionData.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex)
+                .url
             }
           case Some(AnswerNo)  => controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
-          case _               => s"Unknown connection to property back link"
+          case _               => "Unknown connection to property back link"
         }
     }
 }

@@ -84,42 +84,42 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
       assert(doc.toString.contains(messages("turnover.details.6015.p6")))
     }
 
-    s"contain an input for weeks" in {
+    "contain an input for weeks" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.weeks")
       assertRenderedById(doc, "1.weeks")
       assertRenderedById(doc, "2.weeks")
     }
 
-    s"contain an input for alcoholic-drinks" in {
+    "contain an input for alcoholic-drinks" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.alcoholic-drinks")
       assertRenderedById(doc, "1.alcoholic-drinks")
       assertRenderedById(doc, "2.alcoholic-drinks")
     }
 
-    s"contain an input for food" in {
+    "contain an input for food" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.food")
       assertRenderedById(doc, "1.food")
       assertRenderedById(doc, "2.food")
     }
 
-    s"contain an input for other-receipts" in {
+    "contain an input for other-receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.other-receipts")
       assertRenderedById(doc, "1.other-receipts")
       assertRenderedById(doc, "2.other-receipts")
     }
 
-    s"contain an input for accommodation" in {
+    "contain an input for accommodation" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.accommodation")
       assertRenderedById(doc, "1.accommodation")
       assertRenderedById(doc, "2.accommodation")
     }
 
-    s"contain an input for average-occupancy-rate" in {
+    "contain an input for average-occupancy-rate" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.average-occupancy-rate")
       assertRenderedById(doc, "1.average-occupancy-rate")

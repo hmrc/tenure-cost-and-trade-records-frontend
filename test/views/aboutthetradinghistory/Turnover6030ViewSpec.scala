@@ -67,21 +67,21 @@ class Turnover6030ViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection603
 //      assert(doc.toString.contains(messages("turnover.p2")))
     }
 
-    s"contain an input for weeks" in {
+    "contain an input for weeks" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.weeks")
       assertRenderedById(doc, "1.weeks")
       assertRenderedById(doc, "2.weeks")
     }
 
-    s"contain an input for grossIncome" in {
+    "contain an input for grossIncome" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.grossIncome")
       assertRenderedById(doc, "1.grossIncome")
       assertRenderedById(doc, "2.grossIncome")
     }
 
-    s"contain an input for totalVisitorNumber" in {
+    "contain an input for totalVisitorNumber" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "0.totalVisitorNumber")
       assertRenderedById(doc, "1.totalVisitorNumber")

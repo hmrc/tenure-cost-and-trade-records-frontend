@@ -62,32 +62,32 @@ class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalB
       assert(doc.toString.contains(messages("additionalBarsClubs.p")))
     }
 
-    s"contain an input for gross bar receipts" in {
+    "contain an input for gross bar receipts" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalBarsClubs[0].grossBar")
       assertRenderedById(doc, "additionalBarsClubs[1].grossBar")
       assertRenderedById(doc, "additionalBarsClubs[2].grossBar")
     }
 
-    s"contain an input for cost of bar purchases" in {
+    "contain an input for cost of bar purchases" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalBarsClubs[0].costBar")
       assertRenderedById(doc, "additionalBarsClubs[1].costBar")
       assertRenderedById(doc, "additionalBarsClubs[2].costBar")
     }
-    s"contain an input for gross receipts from club membership" in {
+    "contain an input for gross receipts from club membership" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalBarsClubs[0].grossClubMembership")
       assertRenderedById(doc, "additionalBarsClubs[1].grossClubMembership")
       assertRenderedById(doc, "additionalBarsClubs[2].grossClubMembership")
     }
-    s"contain an input for gross receipts from separate" in {
+    "contain an input for gross receipts from separate" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalBarsClubs[0].grossFromSeparate")
       assertRenderedById(doc, "additionalBarsClubs[1].grossFromSeparate")
       assertRenderedById(doc, "additionalBarsClubs[2].grossFromSeparate")
     }
-    s"contain an input for cost of entertainment" in {
+    "contain an input for cost of entertainment" in {
       val doc = asDocument(createView())
       assertRenderedById(doc, "additionalBarsClubs[0].costOfEntertainment")
       assertRenderedById(doc, "additionalBarsClubs[1].costOfEntertainment")

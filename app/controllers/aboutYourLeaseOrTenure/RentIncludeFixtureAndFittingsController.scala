@@ -104,7 +104,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
             controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
           case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
           case _               =>
-            logger.warn(s"Back link for fixture and fittings page reached with unknown payment trade services value")
+            logger.warn("Back link for fixture and fittings page reached with unknown payment trade services value")
             controllers.routes.TaskListController.show().url
         }
       case _       =>

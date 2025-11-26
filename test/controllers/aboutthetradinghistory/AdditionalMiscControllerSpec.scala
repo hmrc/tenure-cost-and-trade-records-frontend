@@ -38,8 +38,8 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
       s"additionalMisc.[$idx].otherActivitiesReceipts" -> "10000",
       s"additionalMisc.[$idx].otherServicesReceipts"   -> "10000",
       s"additionalMisc.[$idx].bottledGasReceipts"      -> "10000",
-      s"details.otherActivitiesReceiptsDetails"        -> "some details",
-      s"details.leisureReceiptsDetails"                -> "some details"
+      "details.otherActivitiesReceiptsDetails"        -> "some details",
+      "details.leisureReceiptsDetails"                -> "some details"
     )
 
   private def validFormData: Seq[(String, String)] =

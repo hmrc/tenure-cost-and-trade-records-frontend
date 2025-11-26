@@ -97,6 +97,6 @@ class ConnectionToThePropertyController @Inject() (
         Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
       case Some(AddressConnectionTypeYes)              =>
         Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
-      case _                                           => Left(s"Unknown connection to property back link")
+      case _                                           => Left("Unknown connection to property back link")
     }
 }
