@@ -1069,7 +1069,7 @@ error.typeOfLetting.required = Please select the type of letting
 
 #LETTINGS ATM 6020
 ##############################
-label.atmLetting.heading = Rhowch fanylion gweithredwr yr ATM
+label.atmLetting.heading = ATM details
 atmLetting.address.lookupPageHeading = What is the ATM’s property address?
 atmLetting.address.selectPageHeading = Choose the ATM’s property address
 atmLetting.address.confirmPageHeading = Check the ATM’s property address
@@ -1080,7 +1080,7 @@ error.correspondenceAddress.required = Enter correspondence address
 
 #TELECOM MAST LETTING 6020
 ##############################
-label.telecomMastLetting.heading = Rhowch fanylion y mast telathrebu
+label.telecomMastLetting.heading = Telecom mast details
 telecomMastLetting.address.lookupPageHeading = What is the ATM operator’s correspondence address?
 telecomMastLetting.address.selectPageHeading = Choose the ATM operator’s correspondence address
 telecomMastLetting.address.confirmPageHeading = Check the ATM operator’s correspondence address
@@ -1093,7 +1093,7 @@ error.siteOfMast.maxLength = The site where the mast situated must be 500 charac
 
 #LETTINGS ADVERTISING RIGHT 6020
 ##############################
-label.advertisingRightLetting.heading = Rhowch fanylion yr hawl i hysbysebu
+label.advertisingRightLetting.heading = Advertising right details
 advertisingRightLetting.address.lookupPageHeading = What is the advertising right’s address?
 advertisingRightLetting.address.selectPageHeading = Choose the advertising right’s address
 advertisingRightLetting.address.confirmPageHeading = Check the advertising right’s address
@@ -1107,7 +1107,7 @@ error.advertisingCompanyName.maxLength = Advertising company’s name must be 50
 
 #LETTINGS OTHER LETTING 6020
 ##############################
-label.otherLetting.heading = Rhowch fanylion y math arall o osodiad
+label.otherLetting.heading = Other letting type details
 label.lettingType = Math y gosodiad
 otherLetting.address.lookupPageHeading = What is the other letting property address?
 otherLetting.address.selectPageHeading = Choose the other letting property address
