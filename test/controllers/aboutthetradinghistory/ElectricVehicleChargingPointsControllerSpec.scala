@@ -28,7 +28,7 @@ class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def electricVehicleChargingPointsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ) = new ElectricVehicleChargingPointsController(
+  )                    = new ElectricVehicleChargingPointsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

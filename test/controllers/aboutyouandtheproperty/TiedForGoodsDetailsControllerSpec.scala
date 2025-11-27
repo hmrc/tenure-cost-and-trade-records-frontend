@@ -35,7 +35,7 @@ class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def tiedForGoodsDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new TiedForGoodsDetailsController(
+  )                    = new TiedForGoodsDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

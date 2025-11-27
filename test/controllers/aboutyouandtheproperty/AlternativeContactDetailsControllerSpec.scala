@@ -34,7 +34,7 @@ class AlternativeContactDetailsControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def alternativeContactDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new AlternativeContactDetailsController(
+  )                    = new AlternativeContactDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

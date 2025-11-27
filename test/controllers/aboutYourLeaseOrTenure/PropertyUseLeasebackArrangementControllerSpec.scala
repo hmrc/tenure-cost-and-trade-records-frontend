@@ -36,7 +36,7 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
   def propertyUseLeasebackAgreementController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
+  )                    =
     new PropertyUseLeasebackArrangementController(
       stubMessagesControllerComponents(),
       mockAudit,

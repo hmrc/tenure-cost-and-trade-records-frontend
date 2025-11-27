@@ -29,7 +29,7 @@ class TurnoverControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def turnoverController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new TurnoverController(
+  )                    = new TurnoverController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

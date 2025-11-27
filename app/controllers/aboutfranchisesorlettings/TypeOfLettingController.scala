@@ -68,7 +68,7 @@ class TypeOfLettingController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]): Action[AnyContent]                                 = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TypeOfLetting](
       typeOfLettingForm,
       formWithErrors =>

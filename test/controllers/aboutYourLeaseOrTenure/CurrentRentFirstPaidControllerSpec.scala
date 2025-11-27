@@ -35,7 +35,7 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = new CurrentRentFirstPaidController(
+  )                    = new CurrentRentFirstPaidController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

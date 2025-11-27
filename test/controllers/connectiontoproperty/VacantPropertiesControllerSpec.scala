@@ -29,7 +29,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def vacantPropertiesController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledVacantProperties)
-  ) =
+  )                    =
     new VacantPropertiesController(
       stubMessagesControllerComponents(),
       mockAudit,
