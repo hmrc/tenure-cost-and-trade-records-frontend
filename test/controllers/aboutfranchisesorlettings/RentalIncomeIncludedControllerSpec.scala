@@ -30,14 +30,15 @@ import utils.TestBaseSpec
 
 class RentalIncomeIncludedControllerSpec extends TestBaseSpec {
 
-  val mockAboutFranchisesOrLettingsNavigator             = mock[AboutFranchisesOrLettingsNavigator]
-  val controllerComponents: MessagesControllerComponents = stubMessagesControllerComponents()
-  override val messagesApi: MessagesApi                  = controllerComponents.messagesApi
-  override val messages: Messages                        = messagesApi.preferred(fakeRequest)
-  val mockAudit: Audit                                   = mock[Audit]
+  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
+    mock[AboutFranchisesOrLettingsNavigator]
+  val controllerComponents: MessagesControllerComponents                         = stubMessagesControllerComponents()
+  override val messagesApi: MessagesApi                                          = controllerComponents.messagesApi
+  override val messages: Messages                                                = messagesApi.preferred(fakeRequest)
+  val mockAudit: Audit                                                           = mock[Audit]
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
-  ) =
+  )                                                                              =
     new RentalIncomeIncludedController(
       controllerComponents,
       mockAudit,

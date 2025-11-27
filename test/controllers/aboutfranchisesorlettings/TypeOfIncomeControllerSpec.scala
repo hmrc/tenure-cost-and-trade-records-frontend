@@ -35,7 +35,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettings6045
     )
-  ) =
+  )                    =
     new TypeOfIncomeController(
       stubMessagesControllerComponents(),
       mockAudit,

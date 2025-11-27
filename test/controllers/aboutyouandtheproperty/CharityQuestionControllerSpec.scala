@@ -33,7 +33,7 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def charityQuestionController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) =
+  )                    =
     new CharityQuestionController(
       stubMessagesControllerComponents(),
       mockAudit,

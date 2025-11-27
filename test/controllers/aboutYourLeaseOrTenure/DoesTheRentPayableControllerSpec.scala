@@ -28,7 +28,7 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def doesTheRentPayableController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = new DoesTheRentPayableController(
+  )                    = new DoesTheRentPayableController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

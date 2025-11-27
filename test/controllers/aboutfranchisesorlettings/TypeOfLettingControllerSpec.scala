@@ -31,7 +31,7 @@ class TypeOfLettingControllerSpec extends TestBaseSpec {
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
-  ) =
+  )                    =
     new TypeOfLettingController(
       stubMessagesControllerComponents(),
       mockAudit,

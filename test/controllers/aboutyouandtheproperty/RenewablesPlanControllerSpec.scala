@@ -36,7 +36,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def renewablesPlantController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new RenewablesPlantController(
+  )                    = new RenewablesPlantController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

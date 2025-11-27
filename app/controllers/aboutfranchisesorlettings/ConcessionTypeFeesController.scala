@@ -63,7 +63,7 @@ class ConcessionTypeFeesController @Inject() (
     }
   }
 
-  def submit(idx: Int): Action[AnyContent]                                                  = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck(idx) { concession =>
       val yearEndDates = financialYearEndDates
       val years        = yearEndDates.map(_.getYear.toString)
@@ -106,7 +106,7 @@ class ConcessionTypeFeesController @Inject() (
 
   private def runWithSessionCheck(idx: Int)(
     action: ConcessionIncomeRecord => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]): Future[Result]                           =
     if (request.sessionData.aboutTheTradingHistoryPartOne.map(_.turnoverSections6045).exists(_.nonEmpty)) {
       request.sessionData.aboutFranchisesOrLettings
         .flatMap(_.rentalIncome.flatMap(_.lift(idx)))

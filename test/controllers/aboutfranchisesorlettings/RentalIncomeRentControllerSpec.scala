@@ -28,11 +28,12 @@ import utils.TestBaseSpec
 
 class RentalIncomeRentControllerSpec extends TestBaseSpec {
 
-  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
-  val mockAudit: Audit                       = mock[Audit]
+  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
+    mock[AboutFranchisesOrLettingsNavigator]
+  val mockAudit: Audit                                                           = mock[Audit]
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
-  ) =
+  )                                                                              =
     new RentalIncomeRentController(
       stubMessagesControllerComponents(),
       mockAudit,
