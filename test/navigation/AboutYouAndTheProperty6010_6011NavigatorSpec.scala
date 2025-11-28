@@ -56,7 +56,7 @@ class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
         navigator
           .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6010YesSession)
           .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()
+          controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
       }
 
       "navigate to WebsiteForPropertyController after completing AboutTheProperty" in {

@@ -31,7 +31,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6020YesSession)
         .apply(aboutYouAndTheProperty6020YesSession) shouldBe
-        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
     }
 
     "navigate to TradingActivityController after completing CharityQuestion with yes" in {
