@@ -33,7 +33,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def tradingNamePayingRentController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
+  )                    =
     new TradingNamePayingRentController(
       stubMessagesControllerComponents(),
       mockAudit,

@@ -36,7 +36,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
-  ) = new AddOrRemoveLettingController(
+  )                    = new AddOrRemoveLettingController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutFranchisesOrLettingsNavigator,

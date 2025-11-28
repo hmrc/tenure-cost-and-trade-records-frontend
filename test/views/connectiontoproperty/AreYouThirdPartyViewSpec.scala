@@ -23,6 +23,8 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
+import scala.jdk.CollectionConverters.*
+
 class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "areYouThirdParty"
@@ -94,12 +96,14 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
         }
 
         "display language toggles" in {
-          val doc = asDocument(createView())
+          val doc        = asDocument(createView())
+          val langToggle = doc.select(".hmrc-service-navigation-language-select")
+          langToggle.toString should include("""href="/send-trade-and-cost-information/hmrc-frontend/language/cy"""")
 
-          val LangToggle = doc.getElementsByClass("hmrc-language-select")
-          assert(LangToggle.text().contains("English"))
-          assert(LangToggle.text().contains("Cymraeg"))
-          assert(LangToggle.toString.contains("/send-trade-and-cost-information/hmrc-frontend/language/cy"))
+          val langItems = langToggle.select(".hmrc-service-navigation-language-select__list-item").eachText().asScala
+          langItems.size shouldBe 2
+          langItems.head   should include("ENG")
+          langItems(1)     should include("CYM")
         }
       }
     }

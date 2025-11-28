@@ -29,7 +29,7 @@ class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ) = new IncomeExpenditureSummary6076Controller(
+  )                    = new IncomeExpenditureSummary6076Controller(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

@@ -33,7 +33,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
   def tradingNameOwnThePropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
+  )                    =
     new TradingNameOwnThePropertyController(
       stubMessagesControllerComponents(),
       mockAudit,
