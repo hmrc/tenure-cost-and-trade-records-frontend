@@ -106,8 +106,5 @@ GET         /contact-details-question                     controllers.aboutyouan
 POST        /contact-details-question                     controllers.aboutyouandtheproperty.ContactDetailsQuestionController.submit()
 GET         /contact-details-question-callback            controllers.aboutyouandtheproperty.ContactDetailsQuestionController.addressLookupCallback(id: String ?= "")
 
-GET         /alternate-contact-details                    controllers.aboutyouandtheproperty.AlternativeContactDetailsController.show()
-POST        /alternate-contact-details                    controllers.aboutyouandtheproperty.AlternativeContactDetailsController.submit()
-
 GET         /check-your-answers-about-the-property        controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.show()
 POST        /check-your-answers-about-the-property        controllers.aboutyouandtheproperty.CheckYourAnswersAboutThePropertyController.submit()

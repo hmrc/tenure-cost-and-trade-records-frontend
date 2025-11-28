@@ -22,7 +22,6 @@ import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.RenewablesPlantForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.RenewablesPlantType
-import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.RenewablesPlantPageId
 import play.api.i18n.I18nSupport
@@ -81,13 +80,6 @@ class RenewablesPlantController @Inject() (
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => controllers.routes.TaskListController.show().url + "#technology-type"
-      case _     =>
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
-          case Some(AnswerYes) =>
-            controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
-          case _               =>
-            controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-        }
-
+      case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 }

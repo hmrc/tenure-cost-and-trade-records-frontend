@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6030NavigatorSpec extends TestBaseSpec {
 
-  val navigator = aboutYouAndThePropertyNavigator
+  val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
 
   "About you and the property navigator for 6030" when {
 
@@ -51,13 +51,6 @@ class AboutYouAndTheProperty6030NavigatorSpec extends TestBaseSpec {
     "navigate to AlternativeContactDetailsController after completing ContactDetailsQuestion with yes" in {
       navigator
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6030YesSession)
-        .apply(aboutYouAndTheProperty6030YesSession) shouldBe
-        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
-    }
-
-    "navigate to AboutThePropertyStringController after completing AlternativeContactDetails with yes" in {
-      navigator
-        .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6030YesSession)
         .apply(aboutYouAndTheProperty6030YesSession) shouldBe
         controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
     }

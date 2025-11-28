@@ -20,10 +20,8 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm
-import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.aboutyouandtheproperty.PropertyCurrentlyUsed
-import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.PropertyCurrentlyUsedPageId
 import play.api.Logging
@@ -58,7 +56,7 @@ class PropertyCurrentlyUsedController @Inject() (
             case _                     => propertyCurrentlyUsedForm
           },
           request.sessionData.toSummary,
-          backLink(request.sessionData)
+          backLink
         )
       )
     )
@@ -72,7 +70,7 @@ class PropertyCurrentlyUsedController @Inject() (
           view(
             formWithErrors,
             request.sessionData.toSummary,
-            backLink(request.sessionData)
+            backLink
           )
         ),
       data => {
@@ -84,16 +82,11 @@ class PropertyCurrentlyUsedController @Inject() (
     )
   }
 
-  private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def backLink(implicit request: Request[AnyContent]): String =
     navigator.from match {
       case "TL"  => controllers.routes.TaskListController.show().url
       case "CYA" => routes.CheckYourAnswersAboutThePropertyController.show().url
-      case _     =>
-        answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
-          case Some(AnswerYes) =>
-            controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
-          case _               => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-        }
+      case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 
 }

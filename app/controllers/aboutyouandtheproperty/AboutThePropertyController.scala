@@ -20,10 +20,8 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
-import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.PropertyDetails
-import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
 import play.api.Logging
@@ -60,7 +58,7 @@ class AboutThePropertyController @Inject() (
           },
           request.sessionData.forType,
           request.sessionData.toSummary,
-          backLink(request.sessionData)
+          backLink
         )
       )
     )
@@ -75,7 +73,7 @@ class AboutThePropertyController @Inject() (
             formWithErrors,
             request.sessionData.forType,
             request.sessionData.toSummary,
-            backLink(request.sessionData)
+            backLink
           )
         ),
       data => {
@@ -87,15 +85,10 @@ class AboutThePropertyController @Inject() (
     )
   }
 
-  private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def backLink(implicit request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
-      case _    =>
-        answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
-          case Some(AnswerYes) =>
-            controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
-          case _               => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-        }
+      case _    => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 
 }

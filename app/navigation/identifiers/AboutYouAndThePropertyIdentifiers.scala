@@ -30,10 +30,6 @@ case object TradingActivityPageId extends Identifier {
   override def toString: String = "tradingActivityPage"
 }
 
-case object AlternativeContactDetailsId extends Identifier {
-  override def toString: String = "alternativeContactDetailsPage"
-}
-
 case object AboutThePropertyPageId extends Identifier { override def toString: String = "aboutThePropertyPage" }
 
 //6045/46 page only

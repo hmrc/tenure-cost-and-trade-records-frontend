@@ -29,7 +29,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
   val messageKeyPrefix = "aboutProperty"
 
-  val backLink = controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+  val backLink: String = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
 
   override val form: Form[PropertyDetails] = AboutThePropertyForm.aboutThePropertyForm
 
@@ -54,7 +54,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 
     "Section heading is visible" in {
@@ -181,7 +181,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 
     "Section heading is visible" in {

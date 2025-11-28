@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
 
-  val navigator = aboutYouAndThePropertyNavigator
+  val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
 
   "About you and the property navigator for 6020" should {
 
@@ -31,7 +31,7 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6020YesSession)
         .apply(aboutYouAndTheProperty6020YesSession) shouldBe
-        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
     }
 
     "navigate to TradingActivityController after completing CharityQuestion with yes" in {
@@ -49,13 +49,6 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
         .nextPage(AboutYouPageId, aboutYouAndTheProperty6020YesSession)
         .apply(aboutYouAndTheProperty6020YesSession) shouldBe
         controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()
-    }
-
-    "navigate to AboutThePropertyStringController after completing AlternativeContactDetails" in {
-      navigator
-        .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6020YesSession)
-        .apply(aboutYouAndTheProperty6020YesSession) shouldBe
-        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
     }
 
     "navigate to CheckYourAnswersAboutThePropertyController after completing CharityQuestion with no" in {
