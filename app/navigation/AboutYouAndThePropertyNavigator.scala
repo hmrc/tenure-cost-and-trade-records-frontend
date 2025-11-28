@@ -32,7 +32,6 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show())
 
   override val postponeCYARedirectPages: Set[String] = Set(
-    controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show(),
     controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show(),
     controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(),
     controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(),
@@ -40,17 +39,6 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show(),
     controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
   ).map(_.url)
-
-  private def alternativeContactDetailsRouting: Session => Call = answers =>
-    answers.forType match {
-      case FOR6020 | FOR6030 =>
-        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
-      case FOR6076           => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
-      case FOR6045 | FOR6046 =>
-        controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
-      case FOR6048           => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
-      case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-    }
 
   private def commercialLettingQuestionRouting: Session => Call = answers =>
     if answers.isWelsh then
@@ -125,22 +113,13 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
 
-  private def contactDetailsQuestionRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
-      case Some(AnswerYes) =>
-        if answers.forType == FOR6030
-        then controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
-        else controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
-      case _               =>
-        answers.forType match {
-          case FOR6020 | FOR6030 =>
-            controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
-          case FOR6076           => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
-          case FOR6045 | FOR6046 =>
-            controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
-          case FOR6048           => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
-          case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-        }
+  private def contactDetailsQuestionRouting: Session => Call =
+    _.forType match {
+      case FOR6020 | FOR6030 => controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
+      case FOR6076           => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
+      case FOR6045 | FOR6046 => controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
+      case FOR6048           => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
+      case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
     }
 
   private def completedCommercialLettingsRouting: Session => Call = _ =>
@@ -172,7 +151,6 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
-    AlternativeContactDetailsId             -> alternativeContactDetailsRouting,
     CommercialLettingQuestionId             -> commercialLettingQuestionRouting,
     CommercialLettingAvailabilityId         -> (_ =>
       controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show()

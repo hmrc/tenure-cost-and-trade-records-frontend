@@ -25,7 +25,6 @@ import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
-import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CommercialLettingQuestionId
 import play.api.Logging
@@ -60,7 +59,7 @@ class CommercialLettingQuestionController @Inject() (
           case Some(data) => commercialLettingQuestionForm.fill(data)
           case _          => commercialLettingQuestionForm
         },
-        calculateBackLink(request.sessionData)
+        calculateBackLink
       )
     )
   }
@@ -68,7 +67,7 @@ class CommercialLettingQuestionController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[MonthsYearDuration](
       commercialLettingQuestionForm,
-      formWithErrors => BadRequest(view(formWithErrors, calculateBackLink(request.sessionData))),
+      formWithErrors => BadRequest(view(formWithErrors, calculateBackLink)),
       data => {
         val updatedSessionWithTradingHistory = updateAboutTheTradingHistory { theTradingHistory =>
           theTradingHistory.copy(
@@ -114,15 +113,11 @@ class CommercialLettingQuestionController @Inject() (
     }
   }
 
-  private def calculateBackLink(answers: Session)(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => s"${controllers.routes.TaskListController.show().url}#about-the-property"
-      case _     =>
-        answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
-          case Some(AnswerYes) =>
-            controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
-          case _               => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-        }
+      case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
+
 }

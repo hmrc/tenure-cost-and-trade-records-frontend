@@ -75,7 +75,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
       )
     }
 

@@ -95,7 +95,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
       val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
       val html                                 = contentAsString(result)
 
-      html should include(controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url)
+      html should include(controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url)
     }
 
     "return correct backLink when altDetailsQuestion is AnswerNo" in {

@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, CompletedLettings, LettingAvailability}
 import models.submissions.common.AnswersYesNo.*
-import navigation.identifiers.{AlternativeContactDetailsId, CommercialLettingAvailabilityId, CommercialLettingAvailabilityWelshId, CommercialLettingQuestionId, CompletedCommercialLettingsId, CompletedCommercialLettingsWelshId, ContactDetailsQuestionId, OccupiersDetailsId, PartsUnavailableId}
+import navigation.identifiers.{CommercialLettingAvailabilityId, CommercialLettingAvailabilityWelshId, CommercialLettingQuestionId, CompletedCommercialLettingsId, CompletedCommercialLettingsWelshId, ContactDetailsQuestionId, OccupiersDetailsId, PartsUnavailableId}
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -29,7 +29,8 @@ import scala.concurrent.ExecutionContext
 
 class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  val audit: Audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AboutYouAndThePropertyNavigator(audit)
@@ -60,14 +61,6 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
     }
 
     "handling yes answers" should {
-
-      "navigate to CommercialLettingQuestionController after completing AlternativeContactDetails" in {
-        navigator
-          .nextPage(AlternativeContactDetailsId, baseFilled6048Session)
-          .apply(baseFilled6048Session) shouldBe
-          controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
-      }
-
       "navigate to CommercialLettingAvailabilityController after completing CommercialLettingQuestion for English property" in {
         navigator
           .nextPage(CommercialLettingQuestionId, baseFilled6048Session)

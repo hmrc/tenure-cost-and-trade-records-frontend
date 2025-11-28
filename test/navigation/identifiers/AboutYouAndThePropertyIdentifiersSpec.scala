@@ -34,9 +34,6 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
     "Identifier for trading activity page" in
       assert(TradingActivityPageId.toString.equals("tradingActivityPage"))
 
-    "Identifier for alt contact page" in
-      assert(AlternativeContactDetailsId.toString.equals("alternativeContactDetailsPage"))
-
     "Identifier for about the property page" in
       assert(AboutThePropertyPageId.toString.equals("aboutThePropertyPage"))
 

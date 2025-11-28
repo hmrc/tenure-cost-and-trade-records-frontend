@@ -346,7 +346,6 @@ trait FakeViews { this: Injecting =>
 
   // Additional information
   lazy val furtherInformationOrRemarksView: furtherInformationOrRemarks                     = inject[furtherInformationOrRemarks]
-  lazy val alternativeContactDetailsView: alternativeContactDetails                         = inject[alternativeContactDetails]
   lazy val contactDetailsQuestionView: contactDetailsQuestion                               = inject[contactDetailsQuestion]
   lazy val checkYourAnswersAdditionalInformationView: checkYourAnswersAdditionalInformation =
     inject[checkYourAnswersAdditionalInformation]

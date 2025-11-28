@@ -28,7 +28,8 @@ import scala.concurrent.ExecutionContext
 
 class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  val audit: Audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AboutYouAndThePropertyNavigator(audit)
@@ -53,12 +54,6 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
         .nextPage(ThreeYearsConstructedPageId, answers)
         .apply(answers) shouldBe
         controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
-    }
-    "navigate to RenewablesPlantController after completing AlternativeContactDetails" in {
-      navigator
-        .nextPage(AlternativeContactDetailsId, baseFilled6076Session)
-        .apply(baseFilled6076Session) shouldBe
-        controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
     }
 
     "navigate to ThreeYearsConstructedController after completing RenewablesPlant" in {

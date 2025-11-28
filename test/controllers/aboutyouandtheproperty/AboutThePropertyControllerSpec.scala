@@ -70,7 +70,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
       val result = aboutThePropertyController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentAsString(result) should include(
-        controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
       )
     }
 

@@ -20,10 +20,8 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.AboutThePropertyStringForm.aboutThePropertyStringForm
-import models.ForType.FOR6030
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty.updateAboutYouAndTheProperty
-import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.AboutThePropertyPageId
 import play.api.Logging
@@ -60,7 +58,7 @@ class AboutThePropertyStringController @Inject() (
           },
           request.sessionData.forType,
           request.sessionData.toSummary,
-          backLink(request.sessionData)
+          backLink
         )
       )
     )
@@ -75,7 +73,7 @@ class AboutThePropertyStringController @Inject() (
             formWithErrors,
             request.sessionData.forType,
             request.sessionData.toSummary,
-            backLink(request.sessionData)
+            backLink
           )
         ),
       data => {
@@ -87,17 +85,10 @@ class AboutThePropertyStringController @Inject() (
     )
   }
 
-  private def backLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def backLink(implicit request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
-      case _    =>
-        answers.aboutYouAndTheProperty.flatMap(_.altDetailsQuestion) match {
-          case Some(AnswerYes) =>
-            if answers.forType == FOR6030
-            then controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-            else controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show().url
-          case _               => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-        }
+      case _    => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 
 }

@@ -28,7 +28,8 @@ class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
 
   // This suite tests all generic paths based on form type 6010
 
-  val audit = mock[Audit]
+  val audit: Audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   val navigator = new AboutYouAndThePropertyNavigator(audit)
@@ -55,14 +56,7 @@ class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
         navigator
           .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6010YesSession)
           .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.AlternativeContactDetailsController.show()
-      }
-
-      "navigate to AboutThePropertyController after completing AlternativeContactDetails" in {
-        navigator
-          .nextPage(AlternativeContactDetailsId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+          controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()
       }
 
       "navigate to WebsiteForPropertyController after completing AboutTheProperty" in {

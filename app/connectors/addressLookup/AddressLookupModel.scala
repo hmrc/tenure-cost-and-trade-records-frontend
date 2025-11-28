@@ -25,11 +25,11 @@ case class AddressLookupConfirmedAddress(
   id: Option[String]
 ) {
 
-  val buildingNameNumber = address.lines.fold("")(_.headOption.getOrElse(""))
-  val street1            = address.lines.flatMap(lines => if lines.size > 2 then Some(lines(1)) else None)
-  val town               = address.lines.fold("")(_.lastOption.getOrElse(""))
-  val county             = None
-  val postcode           = address.postcode.getOrElse("")
+  val buildingNameNumber: String = address.lines.flatMap(_.headOption).getOrElse("")
+  val street1: Option[String]    = address.lines.flatMap(lines => Option.when(lines.size > 2)(lines(1)))
+  val town: String               = address.lines.flatMap(_.lastOption).getOrElse("")
+  val county: Option[String]     = address.lines.flatMap(lines => Option.when(lines.size > 3)(lines(2)))
+  val postcode: String           = address.postcode.getOrElse("")
 
   def asAddress = Address(
     this.buildingNameNumber,
