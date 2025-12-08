@@ -81,7 +81,7 @@
 @section3Completed       = @{ Some(section3CompletedInFull.toAnswer) }
 @section4Completed       = @{ session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings) }
 @section5Completed       = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) }
-@section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) }
+@section6Completed       = @{ session.additionalInformation.map(_ => AnswerYes).getOrElse(AnswerNo) }
 
 @section4AccommodationCompleted = @{session.accommodationDetails.flatMap(_.sectionCompleted)}
 @sectionLettingHistoryCompleted = @{LettingHistory.sectionCompleted(request.sessionData).map(_.toAnswer)}

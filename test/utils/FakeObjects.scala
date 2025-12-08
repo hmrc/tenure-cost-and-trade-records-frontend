@@ -1138,8 +1138,7 @@ trait FakeObjects {
 
   // Additional information sessions
   val prefilledAdditionalInformation: AdditionalInformation = AdditionalInformation(
-    Some("Further information or remarks details"),
-    Some(AnswerYes)
+    Some("Further information or remarks details")
   )
 
   val additionalInformationSession: Session =
