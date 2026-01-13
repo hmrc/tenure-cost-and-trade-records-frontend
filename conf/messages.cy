@@ -23,6 +23,8 @@ label.no = No
 label.or = or
 label.pound = £
 label.weeks = wythnos
+label.units = units
+label.hectares = hectarau
 fieldsAreMandatory.label = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 
 # OTHER FOOTER LINKS:
@@ -3227,7 +3229,6 @@ error.tentingPitchesCertificated.missing = Select yes, if the site is a certific
 
 tentingPitches.common.inset = Mae’n orfodol i lenwi pob maes ar y dudalen hon. Os nad yw unrhyw un o’r categorïau yn berthnasol, nodwch y rhif 0.
 tentingPitches.common.VAT = Nodwch eich derbyniadau o’r lleiniau hyn, heb gynnwys TAW na chostau trydan.
-tentingPitches.common.stateTheNumber = Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
 tentingPitches.common.financialYearEnd = Diwedd y flwyddyn ariannol
 tentingPitches.common.tradingPeriod = Cyfnod masnachu
 tentingPitches.common.grossReceipts = Derbyniadau gros
@@ -3269,7 +3270,7 @@ error.additionalShops.costOfPurchase.negative = Cost of purchase in the year end
 #CATERING ADDITIONAL ACTIVITIES 6045
 #################################
 catering.additionalActivitiesOnSite.heading = Arlwyo
-catering.additionalActivitiesOnSite.p1 = Os ydych yn rhedeg unrhyw gyfleusterau arlwyo ar y safle, nodwch y derbyniadau a chostau’r pryniannau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+catering.additionalActivitiesOnSite.p1 = Os ydych yn rhedeg unrhyw gyfleusterau arlwyo ar y safle, nodwch y derbyniadau a chostau’r pryniannau, heb gynnwys TAW.
 catering.additionalActivitiesOnSite.p2 = Peidiwch â chynnwys unrhyw dderbyniadau o fasnachfreintiau neu gonsesiynau arlwyo. Gofynnir i chi ynglŷn â’r rhain ar dudalen yn nes ymlaen.
 
 error.additionalCatering.grossReceipts.required = Enter 0 if you did not have any gross receipts from catering in the year ending {0}
@@ -3282,7 +3283,7 @@ error.additionalCatering.costOfPurchase.negative = Cost of purchase in the year 
 #BARS AND CLUBS ADDITIONAL ACTIVITIES 6045
 
 additionalBarsClubs.heading = Bariau a chlybiau
-additionalBarsClubs.p = Os ydych yn rhedeg unrhyw far neu glwb ar y safle, nodwch y derbyniadau a’r costau, heb gynnwys TAW. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+additionalBarsClubs.p = Os ydych yn rhedeg unrhyw far neu glwb ar y safle, nodwch y derbyniadau a’r costau, heb gynnwys TAW.
 additionalBarsClubs.grossBar.label = Derbyniadau gros o werthiannau’r bar
 additionalBarsClubs.costBar.label = Costau pryniannau’r bar
 additionalBarsClubs.grossClubMembership.label = Derbyniadau gros o ffioedd aelodaeth clwb
@@ -3317,7 +3318,7 @@ additionalActivities.common.costOfPurchase = Cost of purchase
 #ADDITIONAL AMUSEMENTS
 
 additionalAmusements.heading = Difyrion
-additionalAmusements.p = Os ydych yn rhedeg unrhyw ddifyrion ar y safle, megis peiriannau hapchwarae, jiwcbocsys neu fyrddau pŵl, nodwch y derbyniadau ar ôl didynnu ffi’r drwydded ac unrhyw wobrwyon. Lle nad yw’r cyfrifon yn berthnasol i’ch holl dymor, nodwch y nifer berthnasol o wythnosau.
+additionalAmusements.p = Os ydych yn rhedeg unrhyw ddifyrion ar y safle, megis peiriannau hapchwarae, jiwcbocsys neu fyrddau pŵl, nodwch y derbyniadau ar ôl didynnu ffi’r drwydded ac unrhyw wobrwyon.
 additionalAmusements.receipts.label = Derbyniadau (Ar ôl didynnu ffi’r drwydded a gwobrwyon)
 
 error.additionalAmusements.receipts.required = Enter 0 if you did not have any receipts from on-site amusements in the year ending {0}

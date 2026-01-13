@@ -86,10 +86,6 @@
     theForm = form
 ) {
 
-    @govukInsetText(InsetText(
-        content = Text(messages("fieldsAreMandatory.label"))
-    ))
-
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CaravansPerServiceController.submit()) {
 
         <h2 class="govuk-heading-m">@messages("turnover.6045.caravansPerService.fleet")</h2>
@@ -105,6 +101,10 @@
             <li>@messages("turnover.6045.caravansPerService.private.item2")</li>
             <li>@messages("turnover.6045.caravansPerService.private.item3")</li>
         </ul>
+
+        @govukInsetText(InsetText(
+            content = Text(messages("fieldsAreMandatory.label"))
+        ))
 
         @table("WaterElectricityDrainage", "ElectricityOnly")
 
