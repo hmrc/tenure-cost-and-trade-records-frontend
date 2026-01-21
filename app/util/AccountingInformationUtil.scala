@@ -75,13 +75,18 @@ object AccountingInformationUtil {
 
     if (firstOccupy.years >= lastCompleteFinancialYear) Seq.empty
     else {
+      val firstFinancialYearEnd =
+        if (firstOccupy.months > financialYear.months || (firstOccupy.months == financialYear.months && 1 > financialYear.days))
+          firstOccupy.years + 1
+        else
+          firstOccupy.years
 
-      val yearsSinceFirstOccupy = (lastCompleteFinancialYear - firstOccupy.years) max 0
+      val yearsSinceFirstOccupy = (lastCompleteFinancialYear - firstFinancialYearEnd + 1) max 0
       val maxYears              = yearsSinceFirstOccupy min 3
 
       (0 until maxYears).map { i =>
         LocalDate.of(lastCompleteFinancialYear - i, financialYear.months, financialYear.days)
-      }
+      }.filterNot(_.isBefore(LocalDate.of(firstOccupy.years, firstOccupy.months, 1)))
     }
   }
 
