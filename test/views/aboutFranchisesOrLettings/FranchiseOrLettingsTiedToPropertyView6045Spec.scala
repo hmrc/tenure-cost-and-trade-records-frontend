@@ -59,7 +59,7 @@ class FranchiseOrLettingsTiedToPropertyView6045Spec extends QuestionViewBehaviou
     "Hint text is visible" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsText(doc, messages("franchiseLettingsIncome.p1"))
-      assertContainsText(doc, messages("franchiseLettingsIncome6045.list1"))
+      assertContainsText(doc, messages("franchiseLettings.list1"))
       assertContainsText(doc, messages("franchiseLettingsIncome.list2"))
     }
 

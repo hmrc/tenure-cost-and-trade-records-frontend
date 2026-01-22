@@ -73,9 +73,7 @@
 ) {
 
     <p class="govuk-body">
-        @messages("tentingPitches.common.VAT")&nbsp<span>
-    @messages("tentingPitches.common.stateTheNumber")
-    </span>
+        @messages("tentingPitches.common.VAT")
     </p>
 
     @govukInsetText(InsetText(content = Text(messages("tentingPitches.common.inset"))))
@@ -106,7 +104,7 @@
                             turnoverRow(
                                 s"rallyAreas[$idx].areasInHectares",
                                 "tentingPitches.common.areaInHectares",
-                                None,
+                                PrefixOrSuffix(content = Text(messages("label.hectares"))),
                                 finYearEnd = finYearEnd))))
                 </td>
                 }
