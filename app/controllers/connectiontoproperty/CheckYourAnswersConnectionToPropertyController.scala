@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.CheckYourAnswersAndConfirmForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.Session
 import models.submissions.common.CheckYourAnswersAndConfirm
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.CheckYourAnswersConnectionToPropertyId

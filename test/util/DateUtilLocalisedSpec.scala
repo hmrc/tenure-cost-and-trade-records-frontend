@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,12 +27,10 @@ import java.util.Locale
   */
 class DateUtilLocalisedSpec extends TestBaseSpec:
 
-  def localeOf(lang: String) = new Locale(lang) // TODO: use Locale.of when JDK21 become available in sm2 on Jenkins
-
   val en: Locale                  = Locale.UK
-  val cy: Locale                  = localeOf("cy")
-  val uk: Locale                  = localeOf("uk")
-  val unavailableLocale: Locale   = localeOf("xy")
+  val cy: Locale                  = Locale.of("cy")
+  val uk: Locale                  = Locale.of("uk")
+  val unavailableLocale: Locale   = Locale.of("xy")
   private val testDate: LocalDate = LocalDate.of(2025, 4, 17)
   private val dateEN              = "17 April 2025"
   private val dateCY              = "17 Ebrill 2025"
