@@ -1,5 +1,5 @@
 @*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@
 
 @section1Completed       = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.answersChecked)) }
 @section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.answersChecked)) }
-@hasZeroTurnoverSections = @{ session.financialYearEndDates.isEmpty && session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).exists(_ == AnswerYes)}
+@hasZeroTurnoverSections = @{ session.financialYearEndDates.isEmpty && session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).contains(AnswerYes)}
 @section3CompletedInFull = @{
     val section3AllAnswersGiven =
         (forType match {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,14 @@
 package form
 
 import play.api.data.Forms.{default, text}
+import play.api.data.Mapping
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 import scala.util.Try
 
 object ElectricVehicleChargingPointsMapping {
 
-  def validateSpacesOrBays =
+  def validateSpacesOrBays: Mapping[Int] =
     default(text, "")
       .verifying(nonNegativeNumberConstraint())
       .transform[Int](

@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,6 @@
 
 @layout(
     pageHeading = messages("otherHolidayAccommodation.heading"),
-    showH1 = true,
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -46,8 +45,7 @@
             "otherHolidayAccommodation.question",
             "label.yes.oes",
             "label.no.nac.oes",
-            "govuk-fieldset__legend--m",
-            isHeading = false
+            "govuk-fieldset__legend--m"
         )
 
         @govukDetails(Details(

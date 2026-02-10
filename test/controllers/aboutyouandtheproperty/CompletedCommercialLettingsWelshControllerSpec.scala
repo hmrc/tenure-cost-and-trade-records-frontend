@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,9 +32,9 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
 
   import utils.FormBindingTestAssertions._
 
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  val years = Seq("2024", "2023", "2022")
+  private val years = Seq("2024", "2023", "2022")
 
   private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
@@ -46,7 +46,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
       validFormDataPerYear(1) ++
       validFormDataPerYear(2)
 
-  def controller(
+  private def controller(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
@@ -59,7 +59,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  val sessionRequest: SessionRequest[AnyContent] =
+  private val sessionRequest: SessionRequest[AnyContent] =
     SessionRequest[AnyContent](stillConnectedDetails6048YesSession, fakeRequest)
 
   "Completed commercial lettings welsh controller GET" should {

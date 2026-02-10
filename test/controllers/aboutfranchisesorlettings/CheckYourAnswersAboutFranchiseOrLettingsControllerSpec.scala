@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -164,117 +164,118 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
   }
 
   trait ControllerFixture(forType: ForType) extends TestBaseSpec:
-    val repository = mock[SessionRepo]
+    val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier])).thenReturn(successful(()))
 
-    val controller = new CheckYourAnswersAboutFranchiseOrLettingsController(
-      stubMessagesControllerComponents(),
-      aboutFranchisesOrLettingsNavigator,
-      checkYourAnswersAboutFranchiseOrLettings,
-      preEnrichedActionRefiner(
-        aboutFranchisesOrLettings = Some(
-          AboutFranchisesOrLettings(
-            franchisesOrLettingsTiedToProperty = Some(AnswerYes),
-            currentMaxOfLetting = None,
-            checkYourAnswersAboutFranchiseOrLettings = None,
-            fromCYA = None,
-            lettings = None,
-            rentalIncome = forType match {
-              case FOR6010 =>
-                Some(
-                  IndexedSeq( // Franchise or Lettings
-                    FranchiseIncomeRecord(
-                      sourceType = TypeFranchise,
-                      businessDetails = Some(
-                        BusinessDetails(
-                          operatorName = "Mr. Pizza",
-                          typeOfBusiness = "Restaurant",
-                          cateringAddress = None
+    val controller: CheckYourAnswersAboutFranchiseOrLettingsController =
+      new CheckYourAnswersAboutFranchiseOrLettingsController(
+        stubMessagesControllerComponents(),
+        aboutFranchisesOrLettingsNavigator,
+        checkYourAnswersAboutFranchiseOrLettings,
+        preEnrichedActionRefiner(
+          aboutFranchisesOrLettings = Some(
+            AboutFranchisesOrLettings(
+              franchisesOrLettingsTiedToProperty = Some(AnswerYes),
+              currentMaxOfLetting = None,
+              checkYourAnswersAboutFranchiseOrLettings = None,
+              fromCYA = None,
+              lettings = None,
+              rentalIncome = forType match {
+                case FOR6010 =>
+                  Some(
+                    IndexedSeq( // Franchise or Lettings
+                      FranchiseIncomeRecord(
+                        sourceType = TypeFranchise,
+                        businessDetails = Some(
+                          BusinessDetails(
+                            operatorName = "Mr. Pizza",
+                            typeOfBusiness = "Restaurant",
+                            cateringAddress = None
+                          )
                         )
+                      ),
+                      LettingIncomeRecord(
+                        sourceType = TypeLetting,
+                        operatorDetails = Some(
+                          OperatorDetails(
+                            operatorName = "Mr. Lettings",
+                            typeOfBusiness = "Letting Agency",
+                            lettingAddress = None
+                          )
+                        ),
+                        rent = Some(
+                          PropertyRentDetails(
+                            annualRent = 1200L,
+                            dateInput = LocalDate.of(2023, 4, 1)
+                          )
+                        ),
+                        itemsIncluded = Some(List("Furnishings", "Utilities"))
                       )
-                    ),
-                    LettingIncomeRecord(
-                      sourceType = TypeLetting,
-                      operatorDetails = Some(
-                        OperatorDetails(
-                          operatorName = "Mr. Lettings",
-                          typeOfBusiness = "Letting Agency",
-                          lettingAddress = None
-                        )
-                      ),
-                      rent = Some(
-                        PropertyRentDetails(
-                          annualRent = 1200L,
-                          dateInput = LocalDate.of(2023, 4, 1)
-                        )
-                      ),
-                      itemsIncluded = Some(List("Furnishings", "Utilities"))
                     )
                   )
-                )
-              case FOR6015 =>
-                Some(
-                  IndexedSeq( // Concession or Lettings
-                    Concession6015IncomeRecord(
-                      sourceType = TypeFranchise,
-                      businessDetails = Some(
-                        BusinessDetails(
-                          operatorName = "Mr. Pizza",
-                          typeOfBusiness = "Restaurant",
-                          cateringAddress = None
-                        )
-                      ),
-                      rent = Some(
-                        RentReceivedFrom(
-                          annualRent = 1200L,
-                          declaration = true
-                        )
-                      ),
-                      calculatingTheRent = Some(
-                        CalculatingTheRent(
-                          description = "Rent calculated based on annual income",
-                          dateInput = LocalDate.of(2023, 4, 1)
-                        )
-                      ),
-                      itemsIncluded = Some(List("Furnishings", "Utilities"))
+                case FOR6015 =>
+                  Some(
+                    IndexedSeq( // Concession or Lettings
+                      Concession6015IncomeRecord(
+                        sourceType = TypeFranchise,
+                        businessDetails = Some(
+                          BusinessDetails(
+                            operatorName = "Mr. Pizza",
+                            typeOfBusiness = "Restaurant",
+                            cateringAddress = None
+                          )
+                        ),
+                        rent = Some(
+                          RentReceivedFrom(
+                            annualRent = 1200L,
+                            declaration = true
+                          )
+                        ),
+                        calculatingTheRent = Some(
+                          CalculatingTheRent(
+                            description = "Rent calculated based on annual income",
+                            dateInput = LocalDate.of(2023, 4, 1)
+                          )
+                        ),
+                        itemsIncluded = Some(List("Furnishings", "Utilities"))
+                      )
                     )
                   )
-                )
-              case FOR6045 =>
-                Some(
-                  IndexedSeq( // Concessions, Franchises or Lettings))
-                    ConcessionIncomeRecord(
-                      sourceType = TypeConcession,
-                      businessDetails = Some(
-                        ConcessionBusinessDetails(
-                          operatorName = "Mr. Concession",
-                          typeOfBusiness = "Concession Stand",
-                          howBusinessPropertyIsUsed = "Food and Beverages"
-                        )
-                      ),
-                      feeReceived = Some(
-                        FeeReceived(
-                          feeReceivedPerYear = Seq(
-                            FeeReceivedPerYear(
-                              financialYearEnd = LocalDate.of(2023, 3, 31),
-                              tradingPeriod = 5
-                            )
-                          ),
-                          feeCalculationDetails = Some("Annual fee based on sales")
-                        )
-                      ),
-                      addAnotherRecord = Some(AnswerYes)
+                case FOR6045 =>
+                  Some(
+                    IndexedSeq( // Concessions, Franchises or Lettings))
+                      ConcessionIncomeRecord(
+                        sourceType = TypeConcession,
+                        businessDetails = Some(
+                          ConcessionBusinessDetails(
+                            operatorName = "Mr. Concession",
+                            typeOfBusiness = "Concession Stand",
+                            howBusinessPropertyIsUsed = "Food and Beverages"
+                          )
+                        ),
+                        feeReceived = Some(
+                          FeeReceived(
+                            feeReceivedPerYear = Seq(
+                              FeeReceivedPerYear(
+                                financialYearEnd = LocalDate.of(2023, 3, 31),
+                                tradingPeriod = 5
+                              )
+                            ),
+                            feeCalculationDetails = Some("Annual fee based on sales")
+                          )
+                        ),
+                        addAnotherRecord = Some(AnswerYes)
+                      )
                     )
                   )
-                )
-              case _       => None
-            },
-            rentalIncomeIndex = 0,
-            lettingCurrentIndex = 0,
-            rentalIncomeMax = None
-          )
+                case _       => None
+              },
+              rentalIncomeIndex = 0,
+              lettingCurrentIndex = 0,
+              rentalIncomeMax = None
+            )
+          ),
+          forType = forType
         ),
-        forType = forType
-      ),
-      repository
-    )
+        repository
+      )

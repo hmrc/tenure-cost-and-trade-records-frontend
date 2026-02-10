@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package form
 import play.api.data.Forms.{default, seq, text}
 import play.api.data.Mapping
 
+import scala.language.reflectiveCalls
 import scala.reflect.Selectable.reflectiveSelectable
 
 /**

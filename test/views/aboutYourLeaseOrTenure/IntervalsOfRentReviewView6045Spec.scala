@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class IntervalsOfRentReviewView6045Spec extends QuestionViewBehaviours[IntervalsOfRentReview] {
 
-  val messageKeyPrefix = "intervalsOfRentReview"
+  private val messageKeyPrefix = "intervalsOfRentReview"
 
-  override val form = IntervalsOfRentReviewForm.intervalsOfRentReviewForm(using messages)
+  override val form: Form[IntervalsOfRentReview] = IntervalsOfRentReviewForm.intervalsOfRentReviewForm(using messages)
 
-  val sessionRequest = SessionRequest(stillConnectedDetails6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(stillConnectedDetails6045YesSession, fakeRequest)
 
-  def createView = () => intervalsOfRentReviewView(form)(using sessionRequest, messages)
+  private def createView = () => intervalsOfRentReviewView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[IntervalsOfRentReview]) =>
+  private def createViewUsingForm = (form: Form[IntervalsOfRentReview]) =>
     intervalsOfRentReviewView(form)(using sessionRequest, messages)
 
   "Intervals of rent reviews view" must {

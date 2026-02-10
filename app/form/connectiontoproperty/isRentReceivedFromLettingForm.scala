@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object isRentReceivedFromLettingForm {
-  lazy val isRentReceivedFromLettingForm: Form[AnswersYesNo] = Form(isRentReceivedFromLettingMapping)
+object isRentReceivedFromLettingForm:
 
-  val isRentReceivedFromLettingMapping = mapping(
+  private val isRentReceivedFromLettingMapping = mapping(
     "isRentReceivedFromLetting" -> createYesNoType("error.isRentReceivedFromLetting.missing")
   )(x => x)(b => Some(b))
-}
+
+  val isRentReceivedFromLettingForm: Form[AnswersYesNo] = Form(isRentReceivedFromLettingMapping)

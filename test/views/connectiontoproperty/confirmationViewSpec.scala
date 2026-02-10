@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import views.behaviours.ViewBehaviours
 
 class confirmationViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "confirmation"
-  val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val messageKeyPrefix = "confirmation"
+  private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  val form       = FeedbackFormMapper.feedbackForm
-  def createView = () => confirmation(form)(using sessionRequest, messages)
+  private val form       = FeedbackFormMapper.feedbackForm
+  private def createView = () => confirmation(form)(using sessionRequest, messages)
 
   "confirmation view" must {
 

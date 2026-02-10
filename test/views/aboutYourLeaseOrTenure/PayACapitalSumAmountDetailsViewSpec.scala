@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,18 +24,18 @@ import views.behaviours.QuestionViewBehaviours
 
 class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDecimal] {
 
-  val messageKeyPrefix = "capitalSumPaidDetails6048"
+  private val messageKeyPrefix = "capitalSumPaidDetails6048"
 
-  val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
 
-  override val form = PayACapitalSumAmountDetailsForm.payACapitalSumAmountDetailsForm
+  override val form: Form[BigDecimal] = PayACapitalSumAmountDetailsForm.payACapitalSumAmountDetailsForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[BigDecimal]) =>
+  private def createViewUsingForm = (form: Form[BigDecimal]) =>
     payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(using sessionRequest, messages)
 
   "capital sum or premium view" must {

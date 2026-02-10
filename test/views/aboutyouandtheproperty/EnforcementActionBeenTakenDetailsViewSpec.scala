@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,11 +29,11 @@ class EnforcementActionBeenTakenDetailsViewSpec extends QuestionViewBehaviours[S
   override val form: Form[String] = EnforcementActionDetailsForm.enforcementActionDetailsForm
 
   def createView: () => Html = () =>
-    enforcemenntActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+    enforcementActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html =
     (form: Form[String]) =>
-      enforcemenntActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+      enforcementActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Enforcement action taken details view" must {
 

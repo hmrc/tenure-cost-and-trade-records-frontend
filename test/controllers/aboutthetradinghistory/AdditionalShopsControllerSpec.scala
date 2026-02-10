@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,9 +26,10 @@ import utils.TestBaseSpec
 import utils.FormBindingTestAssertions._
 
 class AdditionalShopsControllerSpec extends TestBaseSpec {
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  val years                                                                     = Seq("2023", "2022", "2021")
+  private val years = Seq("2023", "2022", "2021")
+
   private def validFormDataPerYear(idx: Int, weeks: Int): Seq[(String, String)] =
     Seq(
       s"additionalShops[$idx].weeks"          -> weeks.toString,
@@ -41,7 +42,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
       validFormDataPerYear(1, weeks) ++
       validFormDataPerYear(2, weeks)
 
-  def controller =
+  private def controller =
     new AdditionalShopsController(
       stubMessagesControllerComponents(),
       mockAudit,

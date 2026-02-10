@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,21 +29,6 @@ class SensitiveRequestReferenceNumberDetailsSpec
     with OptionValues
     with MongoCryptoSupport:
 
-  it should "encrypt and decrypt sensitive fields correctly" in {
-    val encryptedDetails = SensitiveRequestReferenceNumberDetails(clearDetails)
-    encryptedDetails.decryptedValue shouldBe clearDetails
-  }
-
-  it should "serialize to encrypted JSON" in
-    pending
-
-  it should "deserialize from encrypted JSON" in {
-    val encryptedDetails = SensitiveRequestReferenceNumberDetails(clearDetails)
-    val jsValue          = Json.toJson(encryptedDetails)
-    val deserialized     = Json.fromJson[SensitiveRequestReferenceNumberDetails](jsValue)
-    deserialized shouldBe JsSuccess(encryptedDetails)
-  }
-
   val clearDetails = RequestReferenceNumberDetails(
     propertyDetails = Some(
       RequestReferenceNumberPropertyDetails(
@@ -70,3 +55,18 @@ class SensitiveRequestReferenceNumberDetailsSpec
       )
     )
   )
+
+  it should "encrypt and decrypt sensitive fields correctly" in {
+    val encryptedDetails = SensitiveRequestReferenceNumberDetails(clearDetails)
+    encryptedDetails.decryptedValue shouldBe clearDetails
+  }
+
+  it should "serialize to encrypted JSON" in
+    pending
+
+  it should "deserialize from encrypted JSON" in {
+    val encryptedDetails = SensitiveRequestReferenceNumberDetails(clearDetails)
+    val jsValue          = Json.toJson(encryptedDetails)
+    val deserialized     = Json.fromJson[SensitiveRequestReferenceNumberDetails](jsValue)
+    deserialized shouldBe JsSuccess(encryptedDetails)
+  }

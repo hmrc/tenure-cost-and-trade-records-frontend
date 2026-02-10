@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,16 +27,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome] {
 
-  val messageKeyPrefix = "typeOfIncome"
+  private val messageKeyPrefix = "typeOfIncome"
 
-  val backLink = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+  private val backLink =
+    controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
 
   override val form: Form[TypeOfIncome] = TypeOfIncomeForm.typeOfIncomeForm
 
-  def createView: () => Html = () =>
+  private def createView: () => Html = () =>
     typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[TypeOfIncome] => Html =
+  private def createViewUsingForm: Form[TypeOfIncome] => Html =
     (form: Form[TypeOfIncome]) =>
       typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(using fakeRequest, messages)
 

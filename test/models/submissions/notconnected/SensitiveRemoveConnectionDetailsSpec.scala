@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,20 @@ import play.api.libs.json.{JsSuccess, Json}
 
 class SensitiveRemoveConnectionDetailsSpec extends AnyFlatSpec with Matchers with OptionValues with MongoCryptoSupport:
 
+  val clearEnvelope = RemoveConnectionDetails(
+    removeConnectionDetails = Some(
+      RemoveConnectionsDetails(
+        removeConnectionFullName = "fullName",
+        removeConnectionDetails = ContactDetails(
+          phone = "01234567890",
+          email = "info@foobar.com"
+        ),
+        removeConnectionAdditionalInfo = Some("additional information")
+      )
+    ),
+    pastConnectionType = Some(AnswerYes)
+  )
+
   it should "encrypt and decrypt sensitive fields correctly" in {
     val encryptedDetails = SensitiveRemoveConnectionDetails(clearEnvelope)
     encryptedDetails.decryptedValue shouldBe clearEnvelope
@@ -52,17 +66,3 @@ class SensitiveRemoveConnectionDetailsSpec extends AnyFlatSpec with Matchers wit
     val deserialized     = Json.fromJson[SensitiveRemoveConnectionDetails](jsValue)
     deserialized shouldBe JsSuccess(encryptedDetails)
   }
-
-  val clearEnvelope = RemoveConnectionDetails(
-    removeConnectionDetails = Some(
-      RemoveConnectionsDetails(
-        removeConnectionFullName = "fullName",
-        removeConnectionDetails = ContactDetails(
-          phone = "01234567890",
-          email = "info@foobar.com"
-        ),
-        removeConnectionAdditionalInfo = Some("additional information")
-      )
-    ),
-    pastConnectionType = Some(AnswerYes)
-  )

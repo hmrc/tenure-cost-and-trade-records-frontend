@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +23,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class ServicePaidSeparatelyChargeViewSpec extends QuestionViewBehaviours[BigDecimal] {
 
-  val messageKeyPrefix = "servicePaidSeparatelyCharge"
+  private val messageKeyPrefix = "servicePaidSeparatelyCharge"
 
-  override val form = ServicePaidSeparatelyChargeForm.servicePaidSeparatelyChargeForm
+  override val form: Form[BigDecimal] = ServicePaidSeparatelyChargeForm.servicePaidSeparatelyChargeForm
 
-  def createView = () => servicePaidSeparatelyChargeView(form, 1, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    servicePaidSeparatelyChargeView(form, 1, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[BigDecimal]) =>
+  private def createViewUsingForm = (form: Form[BigDecimal]) =>
     servicePaidSeparatelyChargeView(form, 1, Summary("99996010001"))(using fakeRequest, messages)
 
   "Service paid separately charge view" should {

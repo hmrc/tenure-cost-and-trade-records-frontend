@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,16 +26,14 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[St
 
   private val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
 
-  val messageKeyPrefix = "tradingNameFromProperty"
-
-  val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+  private val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
   override val form: Form[String] = TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 
-  def createView: () => Html = () =>
+  private def createView: () => Html = () =>
     tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[String] => Html =
+  private def createViewUsingForm: Form[String] => Html =
     (form: Form[String]) => tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
 
   "Trading name operating from property view" must {

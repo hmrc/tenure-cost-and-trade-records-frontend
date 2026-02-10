@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,15 +23,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "describeFittingsTextArea"
+  private val messageKeyPrefix = "describeFittingsTextArea"
 
-  override val form =
+  override val form: Form[String] =
     RentIncludeFixtureAndFittingDetailsTextAreaForm.rentIncludeFixtureAndFittingsDetailsTextAreaForm
 
-  def createView = () =>
+  private def createView = () =>
     rentIncludeFixtureAndFittingsDetailsTextAreaView(form, Summary("99996076001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     rentIncludeFixtureAndFittingsDetailsTextAreaView(form, Summary("99996076001"))(using fakeRequest, messages)
 
   "Fixture and fittings details" must {

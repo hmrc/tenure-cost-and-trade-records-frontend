@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -176,16 +176,17 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None
   ) extends MockAddressLookup:
 
-    val repository = mock[SessionRepo]
+    val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller = new RequestReferenceNumberPropertyDetailsController(
-      mcc = stubMessagesControllerComponents(),
-      navigator = inject[RequestReferenceNumberNavigator],
-      theView = inject[RequestReferenceNumberPropertyDetailsView],
-      preEnrichedActionRefiner(
-        requestReferenceNumberDetails = requestReferenceNumberDetails
-      ),
-      addressLookupConnector,
-      repository
-    )
+    val controller: RequestReferenceNumberPropertyDetailsController =
+      new RequestReferenceNumberPropertyDetailsController(
+        mcc = stubMessagesControllerComponents(),
+        navigator = inject[RequestReferenceNumberNavigator],
+        theView = inject[RequestReferenceNumberPropertyDetailsView],
+        preEnrichedActionRefiner(
+          requestReferenceNumberDetails = requestReferenceNumberDetails
+        ),
+        addressLookupConnector,
+        repository
+      )

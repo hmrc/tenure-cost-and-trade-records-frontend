@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,22 +21,22 @@ import views.behaviours.QuestionViewBehaviours
 
 class DownloadPDFViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix    = "downloadPdf"
-  val testReferenceNumber = "12345678"
+  private val messageKeyPrefix    = "downloadPdf"
+  private val testReferenceNumber = "12345678"
 
   override val form: Form[String] = defaultForm
 
-  def createView6010      = () => downloadPDFView("FOR6010", testReferenceNumber)(using fakeRequest, messages)
-  def createView6011      = () => downloadPDFView("FOR6011", testReferenceNumber)(using fakeRequest, messages)
-  def createView6015      = () => downloadPDFView("FOR6015", testReferenceNumber)(using fakeRequest, messages)
-  def createView6016      = () => downloadPDFView("FOR6016", testReferenceNumber)(using fakeRequest, messages)
-  def createView6020      = () => downloadPDFView("FOR6020", testReferenceNumber)(using fakeRequest, messages)
-  def createView6030      = () => downloadPDFView("FOR6030", testReferenceNumber)(using fakeRequest, messages)
-  def createView6045      = () => downloadPDFView("FOR6045", testReferenceNumber)(using fakeRequest, messages)
-  def createView6046      = () => downloadPDFView("FOR6046", testReferenceNumber)(using fakeRequest, messages)
-  def createView6048      = () => downloadPDFView("FOR6048", testReferenceNumber)(using fakeRequest, messages)
-  def createView6076      = () => downloadPDFView("FOR6076", testReferenceNumber)(using fakeRequest, messages)
-  def createViewNoForType = () => downloadPDFView("", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6010      = () => downloadPDFView("FOR6010", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6011      = () => downloadPDFView("FOR6011", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6015      = () => downloadPDFView("FOR6015", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6016      = () => downloadPDFView("FOR6016", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6020      = () => downloadPDFView("FOR6020", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6030      = () => downloadPDFView("FOR6030", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6045      = () => downloadPDFView("FOR6045", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6046      = () => downloadPDFView("FOR6046", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6048      = () => downloadPDFView("FOR6048", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6076      = () => downloadPDFView("FOR6076", testReferenceNumber)(using fakeRequest, messages)
+  private def createViewNoForType = () => downloadPDFView("", testReferenceNumber)(using fakeRequest, messages)
 
   "download pdf view" must {
 

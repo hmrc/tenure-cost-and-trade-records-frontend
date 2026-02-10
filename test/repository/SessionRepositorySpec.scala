@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 
 class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach {
 
-  lazy val repository = inject[SessionRepo]
+  val repository: SessionRepo = inject[SessionRepo]
 
   "session repository" should {
 
@@ -35,7 +35,7 @@ class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach {
       val returnedSessionData: SessionData = repository.findSession.futureValue // shouldBe session
 
       inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
-        (data.referenceNumber) shouldBe baseFilled6010Session.referenceNumber
+        data.referenceNumber shouldBe baseFilled6010Session.referenceNumber
       }
     }
 

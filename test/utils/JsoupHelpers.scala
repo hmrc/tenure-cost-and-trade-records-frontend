@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,19 +28,19 @@ import scala.concurrent.Future
 import scala.jdk.CollectionConverters.*
 
 trait JsoupHelpers:
-  extension (el: Element) def value = Option(el.`val`()).get
+  extension (el: Element) def value: String = Option(el.`val`()).get
   extension (d: Document)
-    def heading                  = d.select("h1").first().text().trim
-    def backLink                 = d.select("a.govuk-back-link").first().attribute("href").getValue
-    def errorMessage(id: String) =
+    def heading: String                  = d.select("h1").first().text().trim
+    def backLink: String                 = d.select("a.govuk-back-link").first().attribute("href").getValue
+    def errorMessage(id: String): String =
       d.select(s"""p.govuk-error-message[id="$id-error"]""").textNodes().asScala.last.text().trim
-    def error(id: String)        = d.select(s"""a[href="#$id"]""").textNodes().asScala.last.text().trim
-    def checkbox(n: String)      = d.select(s"""input.govuk-checkboxes__input[name="$n"]""").first()
-    def radios(n: String)        = d.select(s"""input.govuk-radios__input[name="$n"]""").asScala.toList
-    def input(n: String)         = d.select(s"""input.govuk-input[name="$n"]""").first()
-    def textarea(n: String)      = d.select(s"""textarea.govuk-textarea[name="$n"]""").first()
-    def submitAction             = d.select("form").first().attr("action")
-    def summaryList              =
+    def error(id: String): String        = d.select(s"""a[href="#$id"]""").textNodes().asScala.last.text().trim
+    def checkbox(n: String): Element     = d.select(s"""input.govuk-checkboxes__input[name="$n"]""").first()
+    def radios(n: String): List[Element] = d.select(s"""input.govuk-radios__input[name="$n"]""").asScala.toList
+    def input(n: String): Element        = d.select(s"""input.govuk-input[name="$n"]""").first()
+    def textarea(n: String): Element     = d.select(s"""textarea.govuk-textarea[name="$n"]""").first()
+    def submitAction: String             = d.select("form").first().attr("action")
+    def summaryList: List[String]        =
       d.select("""dl.govuk-summary-list""")
         .first()
         .children()
@@ -73,12 +73,8 @@ trait JsoupHelpers:
       MatchResult(
         matches =
           if expectedValue.isEmpty
-          then actualElements.find(_.hasAttr("check")).isEmpty
-          else
-            actualElements
-              .find(el => el.hasAttr("checked") && el.attr("value") == expectedValue.get)
-              .nonEmpty
-        ,
+          then !actualElements.exists(_.hasAttr("check"))
+          else actualElements.exists(el => el.hasAttr("checked") && el.attr("value") == expectedValue.get),
         rawFailureMessage =
           if expectedValue.isEmpty
           then """Radio group elements did not have none checked"""

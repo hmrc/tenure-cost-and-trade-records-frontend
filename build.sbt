@@ -1,19 +1,24 @@
 import org.irundaia.sass.Minified
-import uk.gov.hmrc.DefaultBuildSettings.itSettings
+import uk.gov.hmrc.DefaultBuildSettings.{itSettings, targetJvm}
 
 val defaultPort = 9526
 val appName     = "tenure-cost-and-trade-records-frontend"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "3.7.4"
+ThisBuild / scalaVersion := "3.8.1"
+
+val commonSettings = Seq(
+  targetJvm := "jvm-21",
+  scalacOptions += "-Wconf:msg=Flag .* set repeatedly:s"
+)
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
   .disablePlugins(JUnitXmlReportPlugin)
+  .settings(commonSettings)
   .settings(
     maintainer := "voa.service.optimisation@digital.hmrc.gov.uk",
     scalacOptions += "-Wconf:src=routes/:s",
-    scalacOptions += "-Wconf:msg=Flag .* set repeatedly:s",
     scalacOptions += "-Wconf:msg=unused import&src=views/&origin=^(views\\.html\\.\\W|controllers|models\\.\\W|play|_root_):s",
     scalacOptions += "-Wconf:msg=Implicit parameters should be provided with a \\`using\\` clause&src=views/:s",
     scalacOptions += "-Wconf:cat=deprecation&src=/lettingHistory/:s",
@@ -34,6 +39,7 @@ lazy val it =
   (project in file("it"))
     .enablePlugins(PlayScala)
     .dependsOn(microservice % "test->test")
+    .settings(commonSettings)
     .settings(itSettings())
 
 addCommandAlias("precommit", "scalafmtSbt;scalafmtAll;it/Test/scalafmt;coverage;test;it/test;coverageReport")

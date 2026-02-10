@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
+class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
 
   private val sessionRequest     = SessionRequest(baseFilled6076Session, fakeRequest)
   private val sessionRequest6010 = SessionRequest(baseFilled6010Session, fakeRequest)
@@ -34,23 +34,31 @@ class aboutWhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
   private val sessionRequest6048 = SessionRequest(baseFilled6048Session, fakeRequest)
   private val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)
 
-  val messageKeyPrefix = "whatYouWillNeed"
-  override val form    = WhatYouWillNeedForm.whatYouWillNeedForm
+  val messageKeyPrefix            = "whatYouWillNeed"
+  override val form: Form[String] = WhatYouWillNeedForm.whatYouWillNeedForm
 
-  def createView = () => whatYouWillNeedView(form, Summary("99996076001"))(using sessionRequest, messages)
+  private def createView = () => whatYouWillNeedView(form, Summary("99996076001"))(using sessionRequest, messages)
 
-  def createView6010 = () => whatYouWillNeedView(form, Summary("99996010001"))(using sessionRequest6010, messages)
+  private def createView6010 = () =>
+    whatYouWillNeedView(form, Summary("99996010001"))(using sessionRequest6010, messages)
 
-  def createView6015 = () => whatYouWillNeedView(form, Summary("99996015001"))(using sessionRequest6015, messages)
+  private def createView6015 = () =>
+    whatYouWillNeedView(form, Summary("99996015001"))(using sessionRequest6015, messages)
 
-  def createView6016 = () => whatYouWillNeedView(form, Summary("99996016001"))(using sessionRequest6016, messages)
-  def createView6020 = () => whatYouWillNeedView(form, Summary("99996020001"))(using sessionRequest6020, messages)
-  def createView6030 = () => whatYouWillNeedView(form, Summary("99996030001"))(using sessionRequest6030, messages)
-  def createView6045 = () => whatYouWillNeedView(form, Summary("99996045001"))(using sessionRequest6045, messages)
-  def createView6048 = () => whatYouWillNeedView(form, Summary("99996048001"))(using sessionRequest6048, messages)
-  def createView6076 = () => whatYouWillNeedView(form, Summary("99996076001"))(using sessionRequest6076, messages)
+  private def createView6016 = () =>
+    whatYouWillNeedView(form, Summary("99996016001"))(using sessionRequest6016, messages)
+  private def createView6020 = () =>
+    whatYouWillNeedView(form, Summary("99996020001"))(using sessionRequest6020, messages)
+  private def createView6030 = () =>
+    whatYouWillNeedView(form, Summary("99996030001"))(using sessionRequest6030, messages)
+  private def createView6045 = () =>
+    whatYouWillNeedView(form, Summary("99996045001"))(using sessionRequest6045, messages)
+  private def createView6048 = () =>
+    whatYouWillNeedView(form, Summary("99996048001"))(using sessionRequest6048, messages)
+  private def createView6076 = () =>
+    whatYouWillNeedView(form, Summary("99996076001"))(using sessionRequest6076, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     whatYouWillNeedView(form, Summary("99996076001"))(using sessionRequest, messages)
 
   "What you will need view" must {

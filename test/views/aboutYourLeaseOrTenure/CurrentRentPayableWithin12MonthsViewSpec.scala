@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[CurrentRentPayableWithin12Months] {
 
-  val messageKeyPrefix = "currentRentPayableWithin12Months"
+  private val messageKeyPrefix = "currentRentPayableWithin12Months"
 
-  override val form = CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm(using messages)
+  override val form: Form[CurrentRentPayableWithin12Months] =
+    CurrentRentPayableWithin12MonthsForm.currentRentPayableWithin12MonthsForm(using messages)
 
-  def createView = () => currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CurrentRentPayableWithin12Months]) =>
+  private def createViewUsingForm = (form: Form[CurrentRentPayableWithin12Months]) =>
     currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Lease or agreement years view" must {

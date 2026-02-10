@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,22 +24,23 @@ import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAboutFranchiseOrLettingsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  def cyaFranchiseOrLettingsView = inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
+  private def cyaFranchiseOrLettingsView =
+    inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
 
-  val messageKeyPrefix = "checkYourAnswersAboutFranchiseOrLettings"
+  private val messageKeyPrefix = "checkYourAnswersAboutFranchiseOrLettings"
 
-  override val form = CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
+  override val form: Form[AnswersYesNo] = CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 
-  val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
+  private val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  def createView = () => cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
 
-  def createView6045 = () => cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
+  private def createView6045 = () => cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
 
   "Check Your Answers About Franchise Or Lettings view" must {
 

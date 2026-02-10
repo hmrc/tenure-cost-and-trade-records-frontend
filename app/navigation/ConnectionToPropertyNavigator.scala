@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,18 +95,17 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   private def isAnyRentReceived: Session => Call                          = answers =>
     answers.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
       case Some(AnswerYes) =>
-        answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty match {
-          case true  => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
-          case false =>
-            val maybeLastDetail = answers.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lastOption)
-            val idx             = getLettingPartOfPropertyDetailsIndex(answers)
-            maybeLastDetail match {
-              case Some(lastDetail) if isIncomplete(lastDetail) =>
-                getIncompleteSectionCall(lastDetail, idx)
-              case _                                            =>
-                controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx)
-            }
-        }
+        if answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty then
+          controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
+        else
+          val maybeLastDetail = answers.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lastOption)
+          val idx             = getLettingPartOfPropertyDetailsIndex(answers)
+          maybeLastDetail match {
+            case Some(lastDetail) if isIncomplete(lastDetail) =>
+              getIncompleteSectionCall(lastDetail, idx)
+            case _                                            =>
+              controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx)
+          }
       case _               => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
     }
   private def tradingNameOwnTheProperty: Session => Call                  = answers =>

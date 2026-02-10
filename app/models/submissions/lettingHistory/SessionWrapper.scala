@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package models.submissions.lettingHistory
 import models.Session
 
 case class SessionWrapper(data: Session, changed: Boolean):
-  def notChanged = !changed
+  def notChanged: Boolean = !changed
 
 object SessionWrapper:
   def unchanged(using session: Session) =

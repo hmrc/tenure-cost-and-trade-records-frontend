@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,17 +24,18 @@ import views.behaviours.QuestionViewBehaviours
 
 class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[PercentageFromFuelCards]] {
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
 
-  val messageKeyPrefix = "percentageFromFuelCards"
+  private val messageKeyPrefix = "percentageFromFuelCards"
 
-  val backLink = controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
 
-  override val form =
+  override val form: Form[Seq[PercentageFromFuelCards]] =
     PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
-  def createView    = () => percentageFromFuelCardsView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[PercentageFromFuelCards]]) =>
+  private def createView = () => percentageFromFuelCardsView(form, backLink)(using sessionRequest, messages)
+
+  private def createViewUsingForm = (form: Form[Seq[PercentageFromFuelCards]]) =>
     percentageFromFuelCardsView(form, backLink)(using sessionRequest, messages)
 
   "Percentage from fuel cards view" should {

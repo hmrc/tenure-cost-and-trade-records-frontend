@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,12 +35,12 @@ import scala.concurrent.ExecutionContext
 
 class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  private val audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+  private val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6010 = Session(
+  private val session6010 = Session(
     "99996010004",
     FOR6010,
     prefilledAddress,
@@ -50,17 +50,17 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
   )
 
-  val session6010No: Session = session6010.copy(
+  private val session6010No: Session = session6010.copy(
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   )
 
-  val session6010NoLeaseback: Session = session6010.copy(
+  private val session6010NoLeaseback: Session = session6010.copy(
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   )
 
-  val session6010PayNavigation: Session = session6010.copy(
+  private val session6010PayNavigation: Session = session6010.copy(
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPayPartTwo)
   )

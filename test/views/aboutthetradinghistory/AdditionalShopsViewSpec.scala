@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,19 +24,19 @@ import views.behaviours.QuestionViewBehaviours
 
 class AdditionalShopsViewSpec extends QuestionViewBehaviours[Seq[AdditionalShops]] {
 
-  val years = Seq("2023", "2022", "2021")
+  private val years = Seq("2023", "2022", "2021")
 
-  val messageKeyPrefix = "shops.additionalActivitiesOnSite"
+  private val messageKeyPrefix = "shops.additionalActivitiesOnSite"
 
-  override val form = AdditionalShopsForm.additionalShopsForm(years)(using messages)
+  override val form: Form[Seq[AdditionalShops]] = AdditionalShopsForm.additionalShopsForm(years)(using messages)
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  val backLink = controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
 
-  def createView = () => additionalShopsView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => additionalShopsView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[AdditionalShops]]) =>
+  private def createViewUsingForm = (form: Form[Seq[AdditionalShops]]) =>
     additionalShopsView(form, backLink)(using sessionRequest, messages)
 
   "Additional bars and clubs 6045 view" must {

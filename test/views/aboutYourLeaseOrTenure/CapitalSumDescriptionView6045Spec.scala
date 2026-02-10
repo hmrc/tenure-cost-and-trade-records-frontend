@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,15 +23,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class CapitalSumDescriptionView6045Spec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "capitalSumDescription6045"
+  private val messageKeyPrefix = "capitalSumDescription6045"
 
-  override val form = capitalSumDescriptionForm
+  override val form: Form[String] = capitalSumDescriptionForm
 
-  val sessionRequest = SessionRequest(stillConnectedDetails6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(stillConnectedDetails6045YesSession, fakeRequest)
 
-  def createView = () => capitalSumDescriptionView(form)(using sessionRequest, messages)
+  private def createView = () => capitalSumDescriptionView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => capitalSumDescriptionView(form)(using sessionRequest, messages)
+  private def createViewUsingForm = (form: Form[String]) =>
+    capitalSumDescriptionView(form)(using sessionRequest, messages)
 
   "Capital sum description view" should {
 

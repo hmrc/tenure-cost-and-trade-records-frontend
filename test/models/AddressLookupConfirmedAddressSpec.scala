@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ package models
 
 import connectors.addressLookup.*
 import utils.TestBaseSpec
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 
 class AddressLookupConfirmedAddressSpec extends TestBaseSpec {
 
-  val testAddress =
+  val testAddress: JsValue =
     Json.parse(input = """{
         |"auditRef": "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2",
         |"address": {

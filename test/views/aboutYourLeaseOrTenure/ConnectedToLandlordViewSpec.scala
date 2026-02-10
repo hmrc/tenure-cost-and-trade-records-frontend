@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,15 +25,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "connectedToLandlord"
+  private val messageKeyPrefix = "connectedToLandlord"
 
-  override val form = ConnectedToLandlordForm.connectedToLandlordForm
-  def createView    = () => connectedToLandlordView(form, Summary("99996010001"), FOR6010)(using fakeRequest, messages)
+  override val form: Form[AnswersYesNo] = ConnectedToLandlordForm.connectedToLandlordForm
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createView = () =>
     connectedToLandlordView(form, Summary("99996010001"), FOR6010)(using fakeRequest, messages)
 
-  def createViewUsingForm6020 = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+    connectedToLandlordView(form, Summary("99996010001"), FOR6010)(using fakeRequest, messages)
+
+  private def createViewUsingForm6020 = (form: Form[AnswersYesNo]) =>
     connectedToLandlordView(form, Summary("99996020001"), FOR6020)(using fakeRequest, messages)
 
   "Connected to landlord view" must {

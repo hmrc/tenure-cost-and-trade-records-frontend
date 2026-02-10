@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,14 +23,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviours[Option[BigDecimal]] {
 
-  val messageKeyPrefix = "rentIncludeFixturesAndFittingsDetails"
+  private val messageKeyPrefix = "rentIncludeFixturesAndFittingsDetails"
 
-  override val form = RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm()(using messages)
+  override val form: Form[Option[BigDecimal]] =
+    RentIncludeFixtureAndFittingDetailsForm.rentIncludeFixtureAndFittingsDetailsForm()(using messages)
 
-  def createView = () =>
+  private def createView = () =>
     rentIncludeFixtureAndFittingsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[Option[BigDecimal]]) =>
+  private def createViewUsingForm = (form: Form[Option[BigDecimal]]) =>
     rentIncludeFixtureAndFittingsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent include fixture and fittings details view" must {

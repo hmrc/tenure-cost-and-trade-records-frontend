@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,12 @@ import views.behaviours.QuestionViewBehaviours
 
 class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnectionType] {
 
-  val messageKeyPrefix = "areYouConnected"
+  override val form: Form[AddressConnectionType] = AreYouStillConnectedForm.theForm
 
-  override val form = AreYouStillConnectedForm.theForm
+  private def createView = () =>
+    areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
 
-  def createView = () => areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[AddressConnectionType]) =>
+  private def createViewUsingForm = (form: Form[AddressConnectionType]) =>
     areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
 
   "Are you still connected view" must {

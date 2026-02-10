@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,13 @@ import views.behaviours.QuestionViewBehaviours
 import form.aboutthetradinghistory.BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm
 import models.pages.Summary
 
-class bunkerFuelCardsDetailsViewSpec extends QuestionViewBehaviours[BunkerFuelCardDetails] {
+class bunkerFuelCardsDetailsViewSpec extends QuestionViewBehaviours[BunkerFuelCardDetails]:
+
   override val form: Form[BunkerFuelCardDetails] = bunkerFuelCardDetailsForm
-  val messageKeyPrefix                           = "bunkerFuelCardDetails"
-  def createView                                 = () =>
+
+  private val messageKeyPrefix = "bunkerFuelCardDetails"
+
+  private def createView = () =>
     bunkerFuelCardDetailsView(
       form,
       None,
@@ -35,4 +38,3 @@ class bunkerFuelCardsDetailsViewSpec extends QuestionViewBehaviours[BunkerFuelCa
   "Catering bunker fuel cards details view" must {
     behave like normalPage(createView, messageKeyPrefix)
   }
-}

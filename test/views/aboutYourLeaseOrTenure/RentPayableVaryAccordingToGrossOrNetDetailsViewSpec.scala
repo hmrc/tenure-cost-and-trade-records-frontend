@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,15 +23,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "rentPayableVaryAccordingToGrossOrNetDetails"
+  private val messageKeyPrefix = "rentPayableVaryAccordingToGrossOrNetDetails"
 
-  override val form =
+  override val form: Form[String] =
     RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
 
-  def createView = () =>
+  private def createView = () =>
     rentPayableVaryAccordingToGrossOrNetDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     rentPayableVaryAccordingToGrossOrNetDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent payable vary on gross or net turnover details view" must {

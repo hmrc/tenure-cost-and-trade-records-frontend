@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,19 +24,20 @@ import views.behaviours.QuestionViewBehaviours
 
 class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc], AdditionalMiscDetails)] {
 
-  val years = Seq("2023", "2022", "2021")
+  private val years = Seq("2023", "2022", "2021")
 
-  val messageKeyPrefix = "additionalMisc"
+  private val messageKeyPrefix = "additionalMisc"
 
-  override val form = AdditionalMiscForm.additionalMiscForm(years)(using messages)
+  override val form: Form[(Seq[AdditionalMisc], AdditionalMiscDetails)] =
+    AdditionalMiscForm.additionalMiscForm(years)(using messages)
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  val backLink = controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.AdditionalAmusementsController.show().url
 
-  def createView = () => additionalMiscView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => additionalMiscView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[(Seq[AdditionalMisc], AdditionalMiscDetails)]) =>
+  private def createViewUsingForm = (form: Form[(Seq[AdditionalMisc], AdditionalMiscDetails)]) =>
     additionalMiscView(form, backLink)(using sessionRequest, messages)
 
   "Additional misc view" must {

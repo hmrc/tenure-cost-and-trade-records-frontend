@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,17 +24,12 @@ import views.behaviours.QuestionViewBehaviours
 
 class TradeServicesListViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "addTradeService"
+  override val form: Form[AnswersYesNo] = TradeServicesListForm.theForm
 
-  override val form = TradeServicesListForm.theForm
+  private val sessionRequest = SessionRequest(stillConnectedDetails6030YesSession, fakeRequest)
 
-  val sessionRequest = SessionRequest(stillConnectedDetails6030YesSession, fakeRequest)
-
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show().url
-
-  def createView = () => tradeServicesListView(form, 0)(using sessionRequest, messages)
-
-  def createViewUsingForm = (form: Form[AnswersYesNo]) => tradeServicesListView(form, 0)(using sessionRequest, messages)
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+    tradeServicesListView(form, 0)(using sessionRequest, messages)
 
   "Trade services list view" should {
 

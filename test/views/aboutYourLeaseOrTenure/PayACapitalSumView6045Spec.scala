@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,16 +26,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class PayACapitalSumView6045Spec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "capitalPaidSum6045"
+  private val messageKeyPrefix = "capitalPaidSum6045"
 
-  override val form = PayACapitalSumForm.payACapitalSumForm
+  override val form: Form[AnswersYesNo] = PayACapitalSumForm.payACapitalSumForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     payACapitalSumView(form, FOR6045, backLink, Summary("99996045001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     payACapitalSumView(form, FOR6045, backLink, Summary("99996045001"))(using fakeRequest, messages)
 
   "capital sum or premium view" must {

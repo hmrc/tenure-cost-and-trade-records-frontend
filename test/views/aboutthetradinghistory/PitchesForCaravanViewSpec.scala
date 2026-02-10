@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class PitchesForCaravanViewSpec extends QuestionViewBehaviours[Seq[TentingPitchesTradingData]] {
 
-  val messageKeyPrefix = "pitchesForCaravans"
-  val sessionRequest   = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
   val form: Form[Seq[TentingPitchesTradingData]] =
     tentingPitchesTradingDataForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => pitchesForCaravansView(form, "")(using sessionRequest, messages)
+  private def createView = () => pitchesForCaravansView(form, "")(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[TentingPitchesTradingData]]) =>
+  private def createViewUsingForm = (form: Form[Seq[TentingPitchesTradingData]]) =>
     pitchesForCaravansView(form, "")(using sessionRequest, messages)
 
   "pitches for caravans view" should {

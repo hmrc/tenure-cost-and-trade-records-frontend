@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@
 
  <p class="govuk-body govuk-!-font-weight-bold">
   @messages(s"costOfSales6076.$key") <br>
-  @if(hint == true) { <span class="govuk-caption-m">@messages(s"costOfSales6076.$key.hint")</span> }
+  @if(hint) { <span class="govuk-caption-m">@messages(s"costOfSales6076.$key.hint")</span> }
  </p>
 }
 
@@ -125,7 +125,7 @@
          costRow("importedPower", idx),
          costRow("TNuoS", idx),
          costRow("BSuoS", idx),
-         costRow("otherSales", idx, "no-border-bottom", true),
+         costRow("otherSales", idx, "no-border-bottom", hint = true),
          Seq(
           TableRow(),
           TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))),

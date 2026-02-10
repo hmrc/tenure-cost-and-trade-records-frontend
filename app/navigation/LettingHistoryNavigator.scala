@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,5 +29,5 @@ class LettingHistoryNavigator @Inject() (audit: Audit)
     with ForwardNavigation
     with RentalPeriodSupport:
 
-  val checkYourAnswerCall = routes.CheckYourAnswersLettingHistoryController.show
-  val taskListCall        = controllers.routes.TaskListController.show().withFragment("letting-history")
+  val checkYourAnswerCall: Call = routes.CheckYourAnswersLettingHistoryController.show
+  val taskListCall: Call        = controllers.routes.TaskListController.show().withFragment("letting-history")

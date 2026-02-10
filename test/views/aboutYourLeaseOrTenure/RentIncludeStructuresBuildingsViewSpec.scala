@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentIncludeStructuresBuildingsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "rentIncludeStructuresBuildings"
+  private val messageKeyPrefix = "rentIncludeStructuresBuildings"
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  override val form = RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
-  def createView    = () => rentIncludeStructuresBuildingsView(form, "")(using sessionRequest, messages)
+  override val form: Form[AnswersYesNo] = RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createView = () => rentIncludeStructuresBuildingsView(form, "")(using sessionRequest, messages)
+
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeStructuresBuildingsView(form, "")(using sessionRequest, messages)
 
   "rent Include Structures BuildingsView view" must {

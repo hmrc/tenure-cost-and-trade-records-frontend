@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,26 +24,27 @@ import views.behaviours.ViewBehaviours
 
 class maxOfLettingsReachedViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix     = "maxOf5Lettings"
-  val messageKeyPrefix6015 = "maxOf5Lettings.businessOrConcession"
-  val messageKeyPrefix6010 = "maxOf5Lettings.businessOrFranchise"
-  val messageKeyPrefix6030 = "maxOf5Lettings.concessionOrFranchise"
+  private val messageKeyPrefix     = "maxOf5Lettings"
+  private val messageKeyPrefix6015 = "maxOf5Lettings.businessOrConcession"
+  private val messageKeyPrefix6010 = "maxOf5Lettings.businessOrFranchise"
+  private val messageKeyPrefix6030 = "maxOf5Lettings.concessionOrFranchise"
 
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  val sessionRequest6015 = SessionRequest(baseFilled6015Session, fakeRequest)
+  private val sessionRequest6015 = SessionRequest(baseFilled6015Session, fakeRequest)
 
-  val sessionRequest6030 = SessionRequest(baseFilled6030Session, fakeRequest)
+  private val sessionRequest6030 = SessionRequest(baseFilled6030Session, fakeRequest)
 
-  val form       = MaxOfLettingsForm.maxOfLettingsForm(using messages)
-  def createView = () =>
+  val form: Form[Boolean] = MaxOfLettingsForm.maxOfLettingsForm(using messages)
+
+  private def createView = () =>
     maxOfLettingsReachedView(
       form,
       "backLink",
       "connection"
     )(using sessionRequest, messages)
 
-  def prepareViewFranchise(sessionRequest: SessionRequest[?]): () => Html = { () =>
+  private def prepareViewFranchise(sessionRequest: SessionRequest[?]): () => Html = { () =>
     maxOfLettingsReachedView(
       form,
       "backLink",
@@ -51,7 +52,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
     )(using sessionRequest, messages)
   }
 
-  def createViewUsingForm = (form: Form[Boolean]) =>
+  private def createViewUsingForm = (form: Form[Boolean]) =>
     maxOfLettingsReachedView(
       form,
       "backLink",

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +23,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[RequestReferenceNumberContactDetails] {
 
-  val messageKeyPrefix = "requestReferenceNumberContactDetails"
+  private val messageKeyPrefix = "requestReferenceNumberContactDetails"
 
-  override val form = RequestReferenceNumberContactDetailsForm.theForm
+  override val form: Form[RequestReferenceNumberContactDetails] = RequestReferenceNumberContactDetailsForm.theForm
 
-  def createView = () => requestReferenceNumberContactDetailsView(form)(using fakeRequest, messages)
+  private def createView = () => requestReferenceNumberContactDetailsView(form)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RequestReferenceNumberContactDetails]) =>
+  private def createViewUsingForm = (form: Form[RequestReferenceNumberContactDetails]) =>
     requestReferenceNumberContactDetailsView(form)(using fakeRequest, messages)
 
   "No reference number view" must {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,15 @@ import views.behaviours.QuestionViewBehaviours
 class UltimatelyResponsibleBuildingInsuranceViewSpec
     extends QuestionViewBehaviours[UltimatelyResponsibleBuildingInsurance] {
 
-  val messageKeyPrefix = "ultimatelyResponsibleBI"
+  private val messageKeyPrefix = "ultimatelyResponsibleBI"
 
-  override val form = UltimatelyResponsibleIBuildingInsuranceForm.ultimatelyResponsibleBuildingInsuranceForm
+  override val form: Form[UltimatelyResponsibleBuildingInsurance] =
+    UltimatelyResponsibleIBuildingInsuranceForm.ultimatelyResponsibleBuildingInsuranceForm
 
-  def createView = () =>
+  private def createView = () =>
     ultimatelyResponsibleBuildingInsuranceView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[UltimatelyResponsibleBuildingInsurance]) =>
+  private def createViewUsingForm = (form: Form[UltimatelyResponsibleBuildingInsurance]) =>
     ultimatelyResponsibleBuildingInsuranceView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Ultimately responsible view" must {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package form
 
 import play.api.data.Forms.text
+import play.api.data.Mapping
 
 object AboutYouEmailMapping {
 
@@ -24,7 +25,7 @@ object AboutYouEmailMapping {
 
   val invalidEmailRegex = """^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"""
 
-  def validateAboutYouEmail =
+  def validateAboutYouEmail: Mapping[String] =
     text
       .verifying(Errors.contactEmailAboutYouRequired, eA => eA.nonEmpty)
       .verifying(

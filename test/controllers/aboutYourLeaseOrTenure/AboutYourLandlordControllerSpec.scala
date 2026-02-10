@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,10 +36,11 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  val audit           = mock[Audit]
+  private val audit = mock[Audit]
+
   given HeaderCarrier = any[HeaderCarrier]
 
-  def aboutYourLandlordController(
+  private def aboutYourLandlordController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new AboutYourLandlordController(

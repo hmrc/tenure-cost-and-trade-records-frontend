@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,14 +23,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "legalOrPlanningRestrictionsDetails"
+  private val messageKeyPrefix = "legalOrPlanningRestrictionsDetails"
 
-  override val form = legalOrPlanningRestrictionsDetailsForm
+  override val form: Form[String] = legalOrPlanningRestrictionsDetailsForm
 
-  def createView = () =>
+  private def createView = () =>
     legalOrPlanningRestrictionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     legalOrPlanningRestrictionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Legal or planning restrictions view" must {

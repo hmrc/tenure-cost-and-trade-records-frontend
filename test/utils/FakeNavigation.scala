@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,15 @@ trait FakeNavigation { this: Injecting =>
 
   implicit def implicitRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
-  lazy val requestReferenceNumberNavigator    = inject[RequestReferenceNumberNavigator]
-  lazy val connectedToPropertyNavigator       = inject[ConnectionToPropertyNavigator]
-  lazy val removeConnectionNavigator          = inject[RemoveConnectionNavigator]
-  lazy val aboutYouAndThePropertyNavigator    = inject[AboutYouAndThePropertyNavigator]
-  lazy val aboutYourTradingHistoryNavigator   = inject[AboutTheTradingHistoryNavigator]
-  lazy val aboutFranchisesOrLettingsNavigator = inject[AboutFranchisesOrLettingsNavigator]
-  lazy val aboutYourLeaseOrTenureNavigator    = inject[AboutYourLeaseOrTenureNavigator]
-  lazy val additionalInformationNavigator     = inject[AdditionalInformationNavigator]
-  lazy val accommodationNavigator             = inject[AccommodationNavigator]
+  val requestReferenceNumberNavigator: RequestReferenceNumberNavigator       = inject[RequestReferenceNumberNavigator]
+  val connectedToPropertyNavigator: ConnectionToPropertyNavigator            = inject[ConnectionToPropertyNavigator]
+  val removeConnectionNavigator: RemoveConnectionNavigator                   = inject[RemoveConnectionNavigator]
+  val aboutYouAndThePropertyNavigator: AboutYouAndThePropertyNavigator       = inject[AboutYouAndThePropertyNavigator]
+  val aboutYourTradingHistoryNavigator: AboutTheTradingHistoryNavigator      = inject[AboutTheTradingHistoryNavigator]
+  val aboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
+    inject[AboutFranchisesOrLettingsNavigator]
+  val aboutYourLeaseOrTenureNavigator: AboutYourLeaseOrTenureNavigator       = inject[AboutYourLeaseOrTenureNavigator]
+  val additionalInformationNavigator: AdditionalInformationNavigator         = inject[AdditionalInformationNavigator]
+  val accommodationNavigator: AccommodationNavigator                         = inject[AccommodationNavigator]
 
 }

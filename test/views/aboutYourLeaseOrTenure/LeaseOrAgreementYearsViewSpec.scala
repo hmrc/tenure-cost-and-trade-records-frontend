@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,15 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreementYearsDetails] {
 
-  val messageKeyPrefix = "leaseOrAgreement"
+  private val messageKeyPrefix = "leaseOrAgreement"
 
-  override val form = LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
+  override val form: Form[LeaseOrAgreementYearsDetails] = LeaseOrAgreementYearsForm.leaseOrAgreementYearsForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
 
-  def createView = () => leaseOrAgreementYearsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    leaseOrAgreementYearsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LeaseOrAgreementYearsDetails]) =>
+  private def createViewUsingForm = (form: Form[LeaseOrAgreementYearsDetails]) =>
     leaseOrAgreementYearsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Lease or agreement years view" must {

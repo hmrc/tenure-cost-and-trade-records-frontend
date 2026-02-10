@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
 
-  val messageKeyPrefix = "otherCosts"
+  private val messageKeyPrefix = "otherCosts"
 
-  override val form  = OtherCostsForm.form
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  override val form: Form[OtherCosts] = OtherCostsForm.form
 
-  def createView = () => otherCostsView(form)(using sessionRequest, messages)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
-  def createViewUsingForm = (form: Form[OtherCosts]) => otherCostsView(form)(using sessionRequest, messages)
+  private def createView = () => otherCostsView(form)(using sessionRequest, messages)
+
+  private def createViewUsingForm = (form: Form[OtherCosts]) => otherCostsView(form)(using sessionRequest, messages)
 
   "Other Costs view" must {
 

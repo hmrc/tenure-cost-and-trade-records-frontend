@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,16 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "rentIncreasedAnnuallyWithRPIs"
+  private val messageKeyPrefix = "rentIncreasedAnnuallyWithRPIs"
 
-  override val form = RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
+  override val form: Form[AnswersYesNo] = RentIncreasedAnnuallyWithRPIForm.rentIncreasedAnnuallyWithRPIDetailsForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     rentIncreaseAnnuallyWithRPIView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncreaseAnnuallyWithRPIView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent Increase annually with RPI view" must {

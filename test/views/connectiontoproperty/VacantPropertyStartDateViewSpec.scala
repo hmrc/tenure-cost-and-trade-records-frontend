@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,16 +26,16 @@ import java.time.LocalDate
 
 class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate] {
 
-  val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+  private val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
-  val messageKeyPrefix = "vacantPropertyStartDate"
+  private val messageKeyPrefix = "vacantPropertyStartDate"
 
   override val form: Form[LocalDate] = VacantPropertyStartDateForm.vacantPropertyStartDateForm(using messages)
 
-  def createView: () => Html = () =>
+  private def createView: () => Html = () =>
     vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[LocalDate] => Html = (form: Form[LocalDate]) =>
+  private def createViewUsingForm: Form[LocalDate] => Html = (form: Form[LocalDate]) =>
     vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   "Vacant property start date view" must {

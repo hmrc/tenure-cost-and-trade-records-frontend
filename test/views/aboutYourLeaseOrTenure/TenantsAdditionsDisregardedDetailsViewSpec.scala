@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,14 +23,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class TenantsAdditionsDisregardedDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "tenantsAdditionsDisregardedDetails"
+  private val messageKeyPrefix = "tenantsAdditionsDisregardedDetails"
 
-  override val form = tenantsAdditionsDisregardedDetailsForm
+  override val form: Form[String] = tenantsAdditionsDisregardedDetailsForm
 
-  def createView = () =>
+  private def createView = () =>
     tenantsAdditionsDisregardedDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     tenantsAdditionsDisregardedDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Tenants additions disregarded details view" must {

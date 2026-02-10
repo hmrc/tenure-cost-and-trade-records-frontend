@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class BunkeredFuelQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "bunkeredFuelQuestion"
+  private val messageKeyPrefix = "bunkeredFuelQuestion"
 
-  override val form = BunkeredFuelQuestionForm.bunkeredFuelQuestionForm
+  override val form: Form[AnswersYesNo] = BunkeredFuelQuestionForm.bunkeredFuelQuestionForm
 
-  val backLink = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
 
-  def createView = () => bunkeredFuelQuestionView(form, backLink, Summary("99996020001"))(using fakeRequest, messages)
+  private def createView = () =>
+    bunkeredFuelQuestionView(form, backLink, Summary("99996020001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     bunkeredFuelQuestionView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Bunkered fuel question view" should {

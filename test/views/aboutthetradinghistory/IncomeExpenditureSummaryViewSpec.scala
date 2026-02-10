@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,14 +23,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[String] {
   // NOTE: this is a holding view test until page is implemented
-  val messageKeyPrefix = "incomeExpenditureSummary"
+  private val messageKeyPrefix = "incomeExpenditureSummary"
 
-  override val form = IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
+  override val form: Form[String] = IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
 
-  def createView = () =>
+  private def createView = () =>
     incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(using fakeRequest, messages)
 
   "income and expenditure summary view" must {

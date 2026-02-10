@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views
+package views.additionalInformation
 
 import actions.SessionRequest
 import controllers.FeedbackFormMapper
@@ -25,8 +25,8 @@ class ConfirmationRequestReferenceNumberViewSpec extends ViewBehaviours {
   val messageKeyPrefix = "label.connectionToProperty.confirm"
   val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  val form       = FeedbackFormMapper.feedbackForm
-  def createView = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
+  private val form       = FeedbackFormMapper.feedbackForm
+  private def createView = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
 
   "confirmation request reference number view" must {
 

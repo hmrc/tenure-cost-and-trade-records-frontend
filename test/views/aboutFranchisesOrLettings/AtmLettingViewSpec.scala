@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,16 +24,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class AtmLettingViewSpec extends QuestionViewBehaviours[ATMLetting] {
 
-  def AtmLettingView = inject[views.html.aboutfranchisesorlettings.atmLetting]
+  private def AtmLettingView = inject[views.html.aboutfranchisesorlettings.atmLetting]
 
-  val messageKeyPrefix = "label.atmLetting"
-  val backLink         = controllers.routes.TaskListController.show().url
+  private val messageKeyPrefix = "label.atmLetting"
+  private val backLink         = controllers.routes.TaskListController.show().url
 
-  override val form = ATMLettingForm.theForm
+  override val form: Form[ATMLetting] = ATMLettingForm.theForm
 
-  def createView = () => AtmLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    AtmLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ATMLetting]) =>
+  private def createViewUsingForm = (form: Form[ATMLetting]) =>
     AtmLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "ATM Letting view" must {

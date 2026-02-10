@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,16 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "tenantsAdditionsDisregarded"
+  private val messageKeyPrefix = "tenantsAdditionsDisregarded"
 
-  override val form = TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
+  override val form: Form[AnswersYesNo] = TenantsAdditionsDisregardedForm.tenantsAdditionsDisregardedForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Tenants additions disregarded view" must {

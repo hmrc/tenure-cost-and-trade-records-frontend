@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,11 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object TradingNamePayingRentForm {
-  lazy val theForm: Form[AnswersYesNo] = Form(tradingNamePayingRentMapping)
 
-  val tradingNamePayingRentMapping = mapping(
+  private val tradingNamePayingRentMapping = mapping(
     "tradingNamePayingRent" -> createYesNoType("error.tradingNamePayingRent.missing")
   )(x => x)(b => Some(b))
+
+  val theForm: Form[AnswersYesNo] = Form(tradingNamePayingRentMapping)
 
 }

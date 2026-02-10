@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,13 +21,9 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 
-object AddAnotherLettingForm {
+object AddAnotherLettingForm:
 
-  lazy val baseAddAnotherLettingForm: Form[AnswersYesNo] = Form(
-    baseAddAnotherLettingMapping
-  )
-
-  val baseAddAnotherLettingMapping = mapping(
+  private val baseAddAnotherLettingMapping = mapping(
     "addAnotherLetting" -> optional(
       createYesNoType("error.addAnotherLetting.required")
     )
@@ -36,5 +32,3 @@ object AddAnotherLettingForm {
   )(x => x)(b => Some(b))
 
   val addAnotherLettingForm = Form(baseAddAnotherLettingMapping)
-
-}

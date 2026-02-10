@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,15 +25,16 @@ import java.time.LocalDate
 
 class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDate] {
 
-  def tenancyLeaseAgreementExpireView = inject[views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire]
+  private def tenancyLeaseAgreementExpireView = inject[views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire]
 
-  val messageKeyPrefix = "tenancyLeaseAgreementExpire"
+  private val messageKeyPrefix = "tenancyLeaseAgreementExpire"
 
-  override val form = TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm(using messages)
+  override val form: Form[LocalDate] = TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm(using messages)
 
-  def createView = () => tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LocalDate]) =>
+  private def createViewUsingForm = (form: Form[LocalDate]) =>
     tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Tenancy lease agreement expire view" must {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package form
 
 import play.api.data.Forms.text
+import play.api.data.Mapping
 
 object AboutYouPhoneNumberMapping {
 
@@ -24,7 +25,7 @@ object AboutYouPhoneNumberMapping {
 
   val phoneNumberRegex = """^^[0-9\s\+()-]+$"""
 
-  def validateAboutYouPhoneNumber = {
+  def validateAboutYouPhoneNumber: Mapping[String] = {
 
     def validPNLength(pN: String) = pN.length >= 10 && pN.length <= 20
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,16 +25,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "propertyUseLeasebackArrangement"
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
+  override val form: Form[AnswersYesNo] = propertyUseLeasebackArrangementForm
 
-  override val form = propertyUseLeasebackArrangementForm
-
-  def createView = () =>
+  private def createView = () =>
     propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(using fakeRequest, messages)
 
   "property use leaseback arrangement view" must {

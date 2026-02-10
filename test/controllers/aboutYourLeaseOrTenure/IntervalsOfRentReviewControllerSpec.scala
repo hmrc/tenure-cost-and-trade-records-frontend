@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,11 +28,11 @@ import utils.TestBaseSpec
 
 class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
 
-  val test2001character = "x" * 2001
+  private val test2001character = "x" * 2001
 
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  def intervalsOfRentReviewController(
+  private def intervalsOfRentReviewController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new IntervalsOfRentReviewController(

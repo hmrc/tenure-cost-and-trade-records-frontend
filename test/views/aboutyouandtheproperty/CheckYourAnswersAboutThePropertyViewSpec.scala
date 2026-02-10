@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,48 +25,48 @@ import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm] {
 
-  val messageKeyPrefix = "checkYourAnswersAboutTheProperty"
+  private val messageKeyPrefix = "checkYourAnswersAboutTheProperty"
 
-  override val form = CheckYourAnswersAndConfirmForm.theForm
+  override val form: Form[CheckYourAnswersAndConfirm] = CheckYourAnswersAndConfirmForm.theForm
 
-  val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
+  private val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  def createView = () =>
+  private def createView = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  def createView6020 = () =>
+  private def createView6020 = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996020001"))(using
       SessionRequest(baseFilled6020Session, fakeRequest),
       messages
     )
 
-  def createView6030 = () =>
+  private def createView6030 = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996030001"))(using
       SessionRequest(baseFilled6030Session, fakeRequest),
       messages
     )
 
-  def createView6048 = () =>
+  private def createView6048 = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048002"))(using
       SessionRequest(baseFilled6048Session, fakeRequest),
       messages
     )
 
-  def createView6048Welsh = () =>
+  private def createView6048Welsh = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048001"))(using
       SessionRequest(baseFilled6048Session, fakeRequest),
       messages
     )
 
-  def createView6076 = () =>
+  private def createView6076 = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996076001"))(using
       SessionRequest(baseFilled6076Session, fakeRequest),
       messages
     )
 
-  def createViewUsingForm = (form: Form[CheckYourAnswersAndConfirm]) =>
+  private def createViewUsingForm = (form: Form[CheckYourAnswersAndConfirm]) =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {

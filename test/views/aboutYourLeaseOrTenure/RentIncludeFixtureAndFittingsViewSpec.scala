@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,16 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "rentIncludeFixturesAndFittings"
+  private val messageKeyPrefix = "rentIncludeFixturesAndFittings"
 
-  override val form = RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
+  override val form: Form[AnswersYesNo] = RentIncludeFixtureAndFittingsForm.rentIncludeFixturesAndFittingsForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     rentIncludeFixtureAndFittingsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeFixtureAndFittingsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent include fixture and fittings view" must {

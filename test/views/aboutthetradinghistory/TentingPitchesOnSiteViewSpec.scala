@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,15 +26,15 @@ class TentingPitchesOnSiteViewSpec extends QuestionViewBehaviours[AnswersYesNo] 
 
   private val sessionRequest = SessionRequest(baseFilled6045Session, fakeRequest)
 
-  val messageKeyPrefix = "touringAndTentingPitches"
+  private val messageKeyPrefix = "touringAndTentingPitches"
 
-  override val form = TentingPitchesOnSiteForm.tentingPitchesOnSiteForm
+  override val form: Form[AnswersYesNo] = TentingPitchesOnSiteForm.tentingPitchesOnSiteForm
 
-  val backLink = controllers.routes.TaskListController.show().url
+  private val backLink = controllers.routes.TaskListController.show().url
 
-  def createView = () => tentingPitchesOnSiteView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => tentingPitchesOnSiteView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     tentingPitchesOnSiteView(form, backLink)(using sessionRequest, messages)
 
   "Tenting Pitches On Site view" should {

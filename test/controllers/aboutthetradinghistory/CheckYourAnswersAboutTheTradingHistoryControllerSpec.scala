@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,12 @@ import views.html.taskList.taskList
 
 class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec {
 
-  val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
+  private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
 
-  val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
-
-  val mockTaskListView = mock[taskList]
+  private val mockTaskListView = mock[taskList]
   when(mockTaskListView()(using any, any)).thenReturn(HtmlFormat.empty)
 
-  val checkYourAnswersAboutTradingHistoryController = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -41,7 +39,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  val checkYourAnswersAboutTradingHistoryController6015 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6015 = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -49,7 +47,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  val checkYourAnswersAboutTradingHistoryController6020 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6020 = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -57,7 +55,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  val checkYourAnswersAboutTradingHistoryController6045 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6045 = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -65,7 +63,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  val checkYourAnswersAboutTradingHistoryController6048 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6048 = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -73,7 +71,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  val checkYourAnswersAboutTradingHistoryController6076 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6076 = new CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,

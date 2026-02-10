@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,15 +26,15 @@ class AdditionalActivitiesOnSiteSpec extends QuestionViewBehaviours[AnswersYesNo
 
   private val sessionRequest = SessionRequest(baseFilled6045Session, fakeRequest)
 
-  val messageKeyPrefix = "additionalActivitiesOnSite"
+  private val messageKeyPrefix = "additionalActivitiesOnSite"
 
-  override val form = AdditionalActivitiesOnSiteForm.additionalActivitiesOnSiteForm
+  override val form: Form[AnswersYesNo] = AdditionalActivitiesOnSiteForm.additionalActivitiesOnSiteForm
 
-  val backLink = controllers.routes.TaskListController.show().url
+  private val backLink = controllers.routes.TaskListController.show().url
 
-  def createView = () => additionalActivitiesOnSiteView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => additionalActivitiesOnSiteView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     additionalActivitiesOnSiteView(form, backLink)(using sessionRequest, messages)
 
   "Additional activities On Site view" should {

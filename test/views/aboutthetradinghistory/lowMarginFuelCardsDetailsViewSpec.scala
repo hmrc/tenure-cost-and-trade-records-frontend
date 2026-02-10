@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,11 @@ class lowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMargin
 
   override val form: Form[LowMarginFuelCardDetail] = lowMarginFuelCardDetailsForm
 
-  val messageKeyPrefix = "lowMarginFuelCardDetails"
+  private val messageKeyPrefix = "lowMarginFuelCardDetails"
 
-  val backLink = controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     lowMarginFuelCardsDetailsView(
       form,
       None,
@@ -38,7 +38,7 @@ class lowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMargin
       Summary("99996010001")
     )(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LowMarginFuelCardDetail]) =>
+  private def createViewUsingForm = (form: Form[LowMarginFuelCardDetail]) =>
     lowMarginFuelCardsDetailsView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Catering bunker fuel cards details view" should {

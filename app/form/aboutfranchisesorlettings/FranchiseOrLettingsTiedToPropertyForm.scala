@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,16 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object FranchiseOrLettingsTiedToPropertyForm {
+object FranchiseOrLettingsTiedToPropertyForm:
 
-  lazy val baseFranchiseOrLettingsTiedToPropertyForm: Form[AnswersYesNo] = Form(
-    baseFranchiseOrLettingsTiedToPropertyMapping
-  )
-
-  val baseFranchiseOrLettingsTiedToPropertyMapping = mapping(
+  private val baseFranchiseOrLettingsTiedToPropertyMapping = mapping(
     "franchiseOrLettingsTiedToProperty" -> createYesNoType("error.franchiseOrLettings.missing")
   )(x => x)(b => Some(b))
 
-  val franchiseOrLettingsTiedToPropertyForm = Form(baseFranchiseOrLettingsTiedToPropertyMapping)
-
-}
+  val franchiseOrLettingsTiedToPropertyForm: Form[AnswersYesNo] = Form(baseFranchiseOrLettingsTiedToPropertyMapping)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,12 @@ import utils.TestBaseSpec
 
 class OtherCostsControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
-  val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
 
-  val otherCostsController = new OtherCostsController(
+  private val otherCostsController = new OtherCostsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

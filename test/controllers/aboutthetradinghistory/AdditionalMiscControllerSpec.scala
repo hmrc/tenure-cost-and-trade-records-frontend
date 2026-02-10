@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,8 +27,8 @@ import utils.TestBaseSpec
 
 class AdditionalMiscControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit = mock[Audit]
-  val years            = Seq("2023", "2022", "2021")
+  private val mockAudit: Audit = mock[Audit]
+  private val years            = Seq("2023", "2022", "2021")
 
   private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
@@ -51,7 +51,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
     validFormDataPerYear(0) ++
       validFormDataPerYear(1)
 
-  def controller =
+  private def controller =
     new AdditionalMiscController(
       stubMessagesControllerComponents(),
       mockAudit,

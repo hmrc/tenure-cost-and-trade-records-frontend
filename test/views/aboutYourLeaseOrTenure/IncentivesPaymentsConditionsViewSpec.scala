@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "formerLeaseSurrendered"
+  private val messageKeyPrefix = "formerLeaseSurrendered"
 
-  override val form = IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
+  override val form: Form[AnswersYesNo] = IncentivesPaymentsConditionsForm.incentivesPaymentsConditionsForm
 
-  def createView = () => incentivesPaymentsConditionsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    incentivesPaymentsConditionsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     incentivesPaymentsConditionsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Incentives payment conditions view" must {

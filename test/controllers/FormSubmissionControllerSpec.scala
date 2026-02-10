@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,10 +36,10 @@ import scala.concurrent.{ExecutionContext, Future}
   */
 class FormSubmissionControllerSpec extends TestBaseSpec {
 
-  private val sessionRepo = StubSessionRepo()
-  val submissionConnector = mock[SubmissionConnector]
-  val errorHandler        = mock[ErrorHandler]
-  val audit               = spy(inject[Audit])
+  private val sessionRepo         = StubSessionRepo()
+  private val submissionConnector = mock[SubmissionConnector]
+  private val errorHandler        = mock[ErrorHandler]
+  private val audit               = spy(inject[Audit])
 
   private def formSubmissionController = new FormSubmissionController(
     stubMessagesControllerComponents(),

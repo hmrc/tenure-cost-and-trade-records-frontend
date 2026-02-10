@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCurrentRentBasedOnDetails] {
 
-  val messageKeyPrefix = "currentRentBasedOn"
+  private val messageKeyPrefix = "currentRentBasedOn"
 
-  override val form = WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
+  override val form: Form[WhatIsYourCurrentRentBasedOnDetails] =
+    WhatIsYourCurrentRentBasedOnForm.whatIsYourCurrentRentBasedOnForm
 
-  def createView = () => whatIsYourRentBasedOnView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () => whatIsYourRentBasedOnView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[WhatIsYourCurrentRentBasedOnDetails]) =>
+  private def createViewUsingForm = (form: Form[WhatIsYourCurrentRentBasedOnDetails]) =>
     whatIsYourRentBasedOnView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Current rent based on details view" must {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,16 +26,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlantType] {
 
-  val messageKeyPrefix = "renewablesPlant"
+  private val messageKeyPrefix = "renewablesPlant"
 
-  val backLink = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
+  private val backLink = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
 
   override val form: Form[RenewablesPlantType] = RenewablesPlantForm.theForm
 
-  def createView: () => Html = () =>
+  private def createView: () => Html = () =>
     renewablesPlantView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[RenewablesPlantType] => Html =
+  private def createViewUsingForm: Form[RenewablesPlantType] => Html =
     (form: Form[RenewablesPlantType]) =>
       renewablesPlantView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
 

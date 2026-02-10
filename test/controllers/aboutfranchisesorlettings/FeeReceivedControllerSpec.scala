@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package controllers.aboutfranchisesorlettings
 import connectors.Audit
 import models.Session
 import models.submissions.aboutfranchisesorlettings.ConcessionIncomeRecord
+import org.mockito.ArgumentCaptor
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -27,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.Future.successful
 
-class FeeReceivedControllerSpec extends TestBaseSpec {
+class FeeReceivedControllerSpec extends TestBaseSpec:
 
   "the FeeReceived controller" when {
     "handling GET / requests"  should {
@@ -84,8 +85,8 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
 
   trait ControllerFixture:
-    val repository = mock[SessionRepo]
-    val data       = captor[Session]
+    val repository: SessionRepo       = mock[SessionRepo]
+    val data: ArgumentCaptor[Session] = captor[Session]
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
       .thenReturn(successful(()))
 
@@ -100,5 +101,3 @@ class FeeReceivedControllerSpec extends TestBaseSpec {
         ),
         repository
       )
-
-}

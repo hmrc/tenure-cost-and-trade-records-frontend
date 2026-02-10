@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,15 +22,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
 
-  def login = inject[views.html.login]
+  private def login = inject[views.html.login]
 
   val messageKeyPrefix = "login"
 
-  override val form = LoginController.loginForm
+  override val form: Form[LoginDetails] = LoginController.loginForm
 
-  def createView = () => login(form)(using fakeRequest, messages)
+  private def createView = () => login(form)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(using fakeRequest, messages)
+  private def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(using fakeRequest, messages)
 
   "Login view" must {
 

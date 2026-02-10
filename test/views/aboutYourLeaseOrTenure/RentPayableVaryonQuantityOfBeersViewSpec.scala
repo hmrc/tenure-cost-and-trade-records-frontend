@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,15 +25,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "rentPayableVaryOnQuantityOfBeers"
+  private val messageKeyPrefix = "rentPayableVaryOnQuantityOfBeers"
 
   private val sessionRequest = SessionRequest(stillConnectedDetails6015YesSession, fakeRequest)
 
-  override val form = RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
+  override val form: Form[AnswersYesNo] = RentPayableVaryOnQuantityOfBeersForm.rentPayableVaryOnQuantityOfBeersForm
 
-  def createView = () => rentPayableVaryOnQuantityOfBeersView(form, "BACK_LINK")(using sessionRequest, messages)
+  private def createView = () => rentPayableVaryOnQuantityOfBeersView(form, "BACK_LINK")(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentPayableVaryOnQuantityOfBeersView(form, "BACK_LINK")(using sessionRequest, messages)
 
   "Rent payable vary on quantity beers view" must {

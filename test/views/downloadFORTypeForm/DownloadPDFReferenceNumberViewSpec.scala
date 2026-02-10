@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[ReferenceNumber] {
 
-  val messageKeyPrefix = "referenceNumber"
+  private val messageKeyPrefix = "referenceNumber"
 
-  override val form = ReferenceNumberForm.theForm
+  override val form: Form[ReferenceNumber] = ReferenceNumberForm.theForm
 
-  def createView = () =>
+  private def createView = () =>
     referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ReferenceNumber]) =>
+  private def createViewUsingForm = (form: Form[ReferenceNumber]) =>
     referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using fakeRequest, messages)
 
   "Download PDF reference number view" must {

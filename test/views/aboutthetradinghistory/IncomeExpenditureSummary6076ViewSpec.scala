@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,11 @@ import actions.SessionRequest
 
 class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "incomeExpenditureSummary6076"
+  private val messageKeyPrefix = "incomeExpenditureSummary6076"
 
-  override val form = IncomeExpenditureSummary6076Form.incomeExpenditureSummary6076Form
+  override val form: Form[String] = IncomeExpenditureSummary6076Form.incomeExpenditureSummary6076Form
 
-  val entry: Seq[IncomeExpenditure6076Entry] = Seq(
+  private val entry: Seq[IncomeExpenditure6076Entry] = Seq(
     IncomeExpenditure6076Entry(
       "2023-03-01",
       1,
@@ -54,12 +54,12 @@ class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String
     )
   )
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
-  def createView = () =>
+  private def createView = () =>
     incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     incomeExpenditureSummary6076View(form, Summary("99996010001"), entry)(using sessionRequest, messages)
 
   "income and expenditure summary view" should {

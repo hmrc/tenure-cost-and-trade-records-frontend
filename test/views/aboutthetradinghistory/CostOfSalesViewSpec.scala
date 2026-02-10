@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,16 +24,18 @@ import views.behaviours.QuestionViewBehaviours
 
 class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
   // NOTE: this is a holding view test until the cost of sales page is implemented
-  def costOfSalesView = inject[views.html.aboutthetradinghistory.costOfSales]
+  private def costOfSalesView = inject[views.html.aboutthetradinghistory.costOfSales]
 
-  val messageKeyPrefix = "costOfSales"
-  val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val messageKeyPrefix = "costOfSales"
+  private val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
-  override val form = CostOfSalesForm.costOfSalesForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
+  override val form: Form[Seq[CostOfSales]] =
+    CostOfSalesForm.costOfSalesForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
 
-  def createView = () => costOfSalesView(form)(using sessionRequest, messages)
+  private def createView = () => costOfSalesView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[CostOfSales]]) => costOfSalesView(form)(using sessionRequest, messages)
+  private def createViewUsingForm = (form: Form[Seq[CostOfSales]]) =>
+    costOfSalesView(form)(using sessionRequest, messages)
 
   "costOfSales view" must {
 

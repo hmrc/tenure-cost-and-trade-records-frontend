@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,15 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object PremisesLicenseConditionsForm {
-  lazy val basePremisesLicensConditionseForm: Form[AnswersYesNo] = Form(
-    basePremisesLicenseConditionsMapping
-  )
+object PremisesLicenseConditionsForm:
 
-  val basePremisesLicenseConditionsMapping = mapping(
+  private val basePremisesLicenseConditionsMapping = mapping(
     "premisesLicenseConditions" -> createYesNoType("error.premisesLicenseConditions.missing")
   )(x => x)(b => Some(b))
 
-  val premisesLicenseConditionsForm = Form(basePremisesLicenseConditionsMapping)
-
-}
+  val premisesLicenseConditionsForm: Form[AnswersYesNo] = Form(basePremisesLicenseConditionsMapping)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,14 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object RentDevelopedLandForm {
-  lazy val baseRentDevelopedLandForm: Form[AnswersYesNo] = Form(
-    baseRentDevelopedLandMapping
-  )
+object RentDevelopedLandForm:
 
-  val baseRentDevelopedLandMapping = mapping(
+  private val baseRentDevelopedLandMapping = mapping(
     "rentDevelopedLand" -> createYesNoType("error.rentDevelopedLand.missing")
   )(x => x)(b => Some(b))
 
-  val rentDevelopedLandForm = Form(baseRentDevelopedLandMapping)
-}
+  val rentDevelopedLandForm: Form[AnswersYesNo] = Form(baseRentDevelopedLandMapping)

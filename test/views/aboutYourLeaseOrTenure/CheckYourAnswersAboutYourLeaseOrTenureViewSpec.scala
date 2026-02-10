@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,35 +26,34 @@ import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "checkYourAnswersAboutYourLeaseOrTenure"
+  private val messageKeyPrefix = "checkYourAnswersAboutYourLeaseOrTenure"
 
-  override val form = CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
+  override val form: Form[AnswersYesNo] =
+    CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
 
-  val sessionRequest     = SessionRequest(baseFilled6010Session, fakeRequest)
-  val sessionRequest6011 = SessionRequest(baseFilled6011Session, fakeRequest)
+  private val sessionRequest         = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest6011     = SessionRequest(baseFilled6011Session, fakeRequest)
+  private val sessionRequest6030     = SessionRequest(prefilledFull6030Session, fakeRequest)
+  private val sessionRequest6020full = SessionRequest(prefilledFull6020Session, fakeRequest)
 
-  val sessionRequest6030 = SessionRequest(prefilledFull6030Session, fakeRequest)
-
-  val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
-    SessionRequest(prefilledFull6020Session, fakeRequest)
-
-  def createView = () =>
+  private def createView = () =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  def createView6011 = () =>
+  private def createView6011 = () =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(using sessionRequest6011, messages)
 
-  def createView6020 = () =>
+  private def createView6020 = () =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(using
       sessionRequest6020full,
       messages
     )
 
-  def createView6030      = () =>
+  private def createView6030 = () =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996030001"))(using sessionRequest6030, messages)
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   "Check Your Answers About The Property view" must {

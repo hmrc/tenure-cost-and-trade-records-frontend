@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,10 +34,10 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
   trait ControllerFixture(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) extends MockAddressLookup:
-    val repository = mock[SessionRepo]
+    val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller =
+    val controller: ContactDetailsQuestionController =
       new ContactDetailsQuestionController(
         stubMessagesControllerComponents(),
         mock[Audit],

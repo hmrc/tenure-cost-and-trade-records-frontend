@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "requestReferenceNumber.checkYourAnswers"
+  private val messageKeyPrefix = "requestReferenceNumber.checkYourAnswers"
 
   override val form: Form[String] = defaultForm
 
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  def createView = () =>
+  private def createView = () =>
     requestReferenceNumberCheckYourAnswersView(notConnected6010NoSession)(using sessionRequest, messages)
 
   "Check Your Answers Additional Information view" must {

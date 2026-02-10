@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,10 +42,10 @@ object PostcodeMapping {
     cleanedPostcode.matches(postcodeRegex)
   }
 
-  def postcodeFormatter(
-    requiredError: String = "",
-    maxLengthError: String = "",
-    formatError: String = ""
+  private def postcodeFormatter(
+    requiredError: String,
+    maxLengthError: String,
+    formatError: String
   ): Formatter[String] = new Formatter[String] {
 
     override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] =
@@ -61,7 +61,7 @@ object PostcodeMapping {
     override def unbind(key: String, value: String): Map[String, String] = Map(key -> value)
   }
 
-  val customPostcodeMapping = PostcodeMapping.postcode(
+  val customPostcodeMapping: Mapping[String] = PostcodeMapping.postcode(
     formatError = Errors.invalidPostcodeOnLetter
   )
 }
