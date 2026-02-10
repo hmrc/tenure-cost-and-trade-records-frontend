@@ -23,7 +23,7 @@ import play.api.data.Forms.{mapping, optional}
 
 object confirmableActionForm {
 
-  val confirmableActionMapping = mapping(
+  private val confirmableActionMapping = mapping(
     "genericRemoveConfirmation" -> optional(
       createYesNoType("error.confirmableAction.required")
     )

@@ -23,14 +23,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentIncludeStructuresBuildingsDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "rentIncludeStructuresBuildingsDetails"
+  private val messageKeyPrefix = "rentIncludeStructuresBuildingsDetails"
 
-  override val form = RentIncludeStructuresBuildingsDetailsForm.rentIncludeStructuresBuildingsDetailsForm
+  override val form: Form[String] = RentIncludeStructuresBuildingsDetailsForm.rentIncludeStructuresBuildingsDetailsForm
 
-  def createView = () =>
+  private def createView = () =>
     rentIncludeStructuresBuildingsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     rentIncludeStructuresBuildingsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "rentIncludeStructuresBuildingsDetailsView view" must {

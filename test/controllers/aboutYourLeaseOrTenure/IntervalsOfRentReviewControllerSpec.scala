@@ -28,11 +28,11 @@ import utils.TestBaseSpec
 
 class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
 
-  val test2001character = "x" * 2001
+  private val test2001character = "x" * 2001
 
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  def intervalsOfRentReviewController(
+  private def intervalsOfRentReviewController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
     new IntervalsOfRentReviewController(

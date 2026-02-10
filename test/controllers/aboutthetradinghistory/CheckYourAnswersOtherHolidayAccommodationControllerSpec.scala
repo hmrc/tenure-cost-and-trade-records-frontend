@@ -29,13 +29,13 @@ import views.html.taskList.taskList
 
 class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSpec {
 
-  val backLink                            = controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
-  val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
-  val mockTaskListView                    = mock[taskList]
-  val sessionRequest                      = SessionRequest(aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes, fakeRequest)
+  private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
+  private val mockTaskListView                    = mock[taskList]
+  private val sessionRequest                      =
+    SessionRequest(aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes, fakeRequest)
   when(mockTaskListView()(using any, any)).thenReturn(HtmlFormat.empty)
 
-  def checkYourAnswersOtherHolidayAccommodationController(
+  private def checkYourAnswersOtherHolidayAccommodationController(
     aboutTheTradingHistoryPartOne: AboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6045
   ) = new CheckYourAnswersOtherHolidayAccommodationController(
     stubMessagesControllerComponents(),

@@ -25,18 +25,18 @@ import views.behaviours.QuestionViewBehaviours
 
 class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDuration] {
 
-  val messageKeyPrefix = "firstOccupy"
+  private val messageKeyPrefix = "firstOccupy"
 
-  val backLink = controllers.routes.TaskListController.show().url
+  private val backLink = controllers.routes.TaskListController.show().url
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
   override val form: Form[MonthsYearDuration] =
     OccupationalInformationForm.occupationalInformationForm(using messages)
 
-  def createView: () => Html = () => whenDidYouFistOccupyView(form, backLink)(using sessionRequest, messages)
+  private def createView: () => Html = () => whenDidYouFistOccupyView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[MonthsYearDuration] => Html =
+  private def createViewUsingForm: Form[MonthsYearDuration] => Html =
     (form: Form[MonthsYearDuration]) => whenDidYouFistOccupyView(form, backLink)(using sessionRequest, messages)
 
   "About the trading history view" must {

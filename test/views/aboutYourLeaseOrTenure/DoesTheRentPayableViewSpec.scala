@@ -25,23 +25,26 @@ import views.behaviours.QuestionViewBehaviours
 
 class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayable] {
 
-  val messageKeyPrefix = "rentPayable"
+  private val messageKeyPrefix = "rentPayable"
 
-  override val form = DoesTheRentPayableForm.doesTheRentPayableForm
+  override val form: Form[DoesTheRentPayable] = DoesTheRentPayableForm.doesTheRentPayableForm
 
-  def createView = () => doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[DoesTheRentPayable]) =>
+  private def createView = () =>
     doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createView6045 = () => doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(using fakeRequest, messages)
+  private def createViewUsingForm = (form: Form[DoesTheRentPayable]) =>
+    doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm6045 = (form: Form[DoesTheRentPayable]) =>
+  private def createView6045 = () =>
     doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(using fakeRequest, messages)
 
-  def createView6048 = () => doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using fakeRequest, messages)
+  private def createViewUsingForm6045 = (form: Form[DoesTheRentPayable]) =>
+    doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(using fakeRequest, messages)
 
-  def createViewUsingForm6048 = (form: Form[DoesTheRentPayable]) =>
+  private def createView6048 = () =>
+    doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using fakeRequest, messages)
+
+  private def createViewUsingForm6048 = (form: Form[DoesTheRentPayable]) =>
     doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using fakeRequest, messages)
 
   "Rent payable view" must {

@@ -30,12 +30,14 @@
 
 @(theForm: Form[AnswersYesNo], fiscalPeriod: LocalPeriod, completedLettings: List[OccupierDetail], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
-@fromPage = @{ request.session.get("from").map(_.asPageIdentifier).flatten }
+@fromPage = @{
+    request.session.get("from").flatMap(_.asPageIdentifier)
+}
 
 @occupiersCount = @{ completedLettings.length }
 
 @pageHeadingMessageKey = @{
-    if (occupiersCount == 0 && fromPage == Some(OccupierRemovePageId)) "lettingHistory.occupierList.heading.removedAll"
+    if (occupiersCount == 0 && fromPage.contains(OccupierRemovePageId)) "lettingHistory.occupierList.heading.removedAll"
     else if (occupiersCount == 1) "lettingHistory.occupierList.heading.singular"
     else "lettingHistory.occupierList.heading.plural"
 }

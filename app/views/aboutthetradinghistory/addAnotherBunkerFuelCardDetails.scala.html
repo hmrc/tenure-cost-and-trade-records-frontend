@@ -58,7 +58,7 @@
 
 @pluralSuffix = @{ if (cardDetails.size > 1) "s" else "" }
 
-@pageHeading = @{messages(if  (cardDetails.size == 0)  s"addAnotherBunkerFuelCardDetails.zeroDetails.heading" else s"addAnotherBunkerFuelCardDetails.heading",cardDetails.size)+ pluralSuffix}
+@pageHeading = @{messages(if (cardDetails.isEmpty) s"addAnotherBunkerFuelCardDetails.zeroDetails.heading" else s"addAnotherBunkerFuelCardDetails.heading",cardDetails.size)+ pluralSuffix}
 
 @formAction = @{controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.submit(index)}
 

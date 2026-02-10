@@ -22,13 +22,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "requestReferenceNumber"
+  private val messageKeyPrefix = "requestReferenceNumber"
 
   override val form: Form[String] = RequestReferenceNumberPropertyDetailsForm.theForm
 
-  def createView = () => requestReferenceNumberPropertyDetailsView(form)(using fakeRequest, messages)
+  private def createView = () => requestReferenceNumberPropertyDetailsView(form)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     requestReferenceNumberPropertyDetailsView(form)(using fakeRequest, messages)
 
   "No reference number view" must {

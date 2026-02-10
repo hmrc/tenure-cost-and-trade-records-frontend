@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 
 class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach {
 
-  lazy val repository = inject[SessionRepo]
+  val repository: SessionRepo = inject[SessionRepo]
 
   "session repository" should {
 
@@ -35,7 +35,7 @@ class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach {
       val returnedSessionData: SessionData = repository.findSession.futureValue // shouldBe session
 
       inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
-        (data.referenceNumber) shouldBe baseFilled6010Session.referenceNumber
+        data.referenceNumber shouldBe baseFilled6010Session.referenceNumber
       }
     }
 

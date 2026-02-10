@@ -19,7 +19,7 @@ import views.behaviours.ViewBehaviours
 
 class testSignViewSpec extends ViewBehaviours {
 
-  def createView = () => testSignView()(using fakeRequest, messages)
+  private def createView = () => testSignView()(using fakeRequest, messages)
 
   "testSign view" must {
     "contain text " in {

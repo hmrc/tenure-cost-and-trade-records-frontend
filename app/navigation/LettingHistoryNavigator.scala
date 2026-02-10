@@ -19,6 +19,7 @@ package navigation
 import connectors.Audit
 import controllers.lettingHistory.{RentalPeriodSupport, routes}
 import navigation.lettingHistory.{BackwardNavigation, ForwardNavigation, Navigator}
+import play.api.mvc.Call
 
 import javax.inject.Inject
 
@@ -28,5 +29,5 @@ class LettingHistoryNavigator @Inject() (audit: Audit)
     with ForwardNavigation
     with RentalPeriodSupport:
 
-  val checkYourAnswerCall = routes.CheckYourAnswersLettingHistoryController.show
-  val taskListCall        = controllers.routes.TaskListController.show().withFragment("letting-history")
+  val checkYourAnswerCall: Call = routes.CheckYourAnswersLettingHistoryController.show
+  val taskListCall: Call        = controllers.routes.TaskListController.show().withFragment("letting-history")

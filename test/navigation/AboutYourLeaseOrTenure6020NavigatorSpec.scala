@@ -36,12 +36,12 @@ import scala.concurrent.ExecutionContext
 
 class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  private val audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+  private val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6020 =
+  private val session6020 =
     Session("99996020004", FOR6020, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()

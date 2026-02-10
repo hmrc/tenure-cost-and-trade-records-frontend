@@ -24,17 +24,11 @@ import views.behaviours.QuestionViewBehaviours
 
 class ServicePaidSeparatelyListViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "servicePaidSeparatelyList"
+  override val form: Form[AnswersYesNo] = ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 
-  override val form = ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
+  private val sessionRequest = SessionRequest(stillConnectedDetails6030YesSession, fakeRequest)
 
-  val sessionRequest = SessionRequest(stillConnectedDetails6030YesSession, fakeRequest)
-
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show().url
-
-  def createView = () => servicePaidSeparatelyListView(form, 0)(using sessionRequest, messages)
-
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     servicePaidSeparatelyListView(form, 0)(using sessionRequest, messages)
 
   "Services paid separately list view" should {

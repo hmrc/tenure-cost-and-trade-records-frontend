@@ -21,14 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object RentDevelopedLandForm {
-  lazy val baseRentDevelopedLandForm: Form[AnswersYesNo] = Form(
-    baseRentDevelopedLandMapping
-  )
+object RentDevelopedLandForm:
 
-  val baseRentDevelopedLandMapping = mapping(
+  private val baseRentDevelopedLandMapping = mapping(
     "rentDevelopedLand" -> createYesNoType("error.rentDevelopedLand.missing")
   )(x => x)(b => Some(b))
 
-  val rentDevelopedLandForm = Form(baseRentDevelopedLandMapping)
-}
+  val rentDevelopedLandForm: Form[AnswersYesNo] = Form(baseRentDevelopedLandMapping)

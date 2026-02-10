@@ -25,12 +25,12 @@ import utils.TestBaseSpec
 
 class OtherCostsControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
-  val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
 
-  val otherCostsController = new OtherCostsController(
+  private val otherCostsController = new OtherCostsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

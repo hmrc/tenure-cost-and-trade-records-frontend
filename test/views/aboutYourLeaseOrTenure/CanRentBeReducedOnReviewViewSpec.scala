@@ -25,15 +25,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix       = "canRentBeReducedOnReview"
-  private val backLink       = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
-  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val messageKeyPrefix = "canRentBeReducedOnReview"
+  private val backLink         = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+  private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  override val form = CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
+  override val form: Form[AnswersYesNo] = CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 
-  def createView = () => canRentBeReducedOnReviewView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => canRentBeReducedOnReviewView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     canRentBeReducedOnReviewView(form, backLink)(using sessionRequest, messages)
 
   "Can rent be reduced on review view" must {

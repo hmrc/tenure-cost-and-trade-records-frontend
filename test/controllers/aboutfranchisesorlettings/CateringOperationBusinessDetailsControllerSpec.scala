@@ -20,6 +20,7 @@ import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.ConcessionIncomeRecord
+import org.mockito.ArgumentCaptor
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
@@ -106,12 +107,12 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   trait ControllerFixture:
-    val repository = mock[SessionRepo]
-    val data       = captor[Session]
+    val repository: SessionRepo       = mock[SessionRepo]
+    val data: ArgumentCaptor[Session] = captor[Session]
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
       .thenReturn(successful(()))
 
-    val controller =
+    val controller: CateringOperationBusinessDetailsController =
       new CateringOperationBusinessDetailsController(
         stubMessagesControllerComponents(),
         mockAudit,

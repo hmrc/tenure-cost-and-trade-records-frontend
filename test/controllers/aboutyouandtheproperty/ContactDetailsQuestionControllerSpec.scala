@@ -34,10 +34,10 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
   trait ControllerFixture(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) extends MockAddressLookup:
-    val repository = mock[SessionRepo]
+    val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller =
+    val controller: ContactDetailsQuestionController =
       new ContactDetailsQuestionController(
         stubMessagesControllerComponents(),
         mock[Audit],

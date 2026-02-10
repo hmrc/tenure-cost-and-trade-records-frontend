@@ -26,20 +26,18 @@ import java.time.LocalDate
 
 class Turnover6030ViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection6030]] {
 
-  val messageKeyPrefix = "turnover"
+  private val messageKeyPrefix = "turnover"
 
-  override val form = TurnoverForm6030.turnoverForm6030(
+  override val form: Form[Seq[TurnoverSection6030]] = TurnoverForm6030.turnoverForm6030(
     3,
     Seq(LocalDate.of(2021, 12, 31), LocalDate.of(2022, 12, 31), LocalDate.of(2023, 12, 31))
   )(using messages)
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6030YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6030YesSession, fakeRequest)
 
-  val sessionRequest6030 = SessionRequest(aboutYourTradingHistory6030YesSession, fakeRequest)
+  private def createView = () => turnover6030View(form)(using sessionRequest, messages)
 
-  def createView = () => turnover6030View(form)(using sessionRequest, messages)
-
-  def createViewUsingForm = (form: Form[Seq[TurnoverSection6030]]) =>
+  private def createViewUsingForm = (form: Form[Seq[TurnoverSection6030]]) =>
     turnover6030View(form)(using sessionRequest, messages)
 
   "Turnover 6030 view" must {

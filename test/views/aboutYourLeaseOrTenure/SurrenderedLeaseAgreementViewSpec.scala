@@ -24,13 +24,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class SurrenderedLeaseAgreementViewSpec extends QuestionViewBehaviours[SurrenderedLeaseAgreementDetails] {
 
-  val messageKeyPrefix = "surrenderedLeaseAgreement"
+  private val messageKeyPrefix = "surrenderedLeaseAgreement"
 
-  override val form = SurrenderedLeaseAgreementDetailsForm.surrenderedLeaseAgreementDetailsForm
+  override val form: Form[SurrenderedLeaseAgreementDetails] =
+    SurrenderedLeaseAgreementDetailsForm.surrenderedLeaseAgreementDetailsForm
 
-  def createView = () => surrenderedLeaseAgreementView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    surrenderedLeaseAgreementView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[SurrenderedLeaseAgreementDetails]) =>
+  private def createViewUsingForm = (form: Form[SurrenderedLeaseAgreementDetails]) =>
     surrenderedLeaseAgreementView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "SurrenderedLeaseAgreementDetails" should {

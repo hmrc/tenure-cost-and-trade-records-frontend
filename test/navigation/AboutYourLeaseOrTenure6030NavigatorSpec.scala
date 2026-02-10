@@ -35,12 +35,12 @@ import scala.concurrent.ExecutionContext
 
 class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  private val audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+  private val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6030 = Session(
+  private val session6030 = Session(
     "99996030004",
     FOR6030,
     prefilledAddress,
@@ -50,7 +50,7 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo6030)
   )
 
-  val session6030Full = Session(
+  private val session6030Full = Session(
     "99996030004",
     FOR6030,
     prefilledAddress,
@@ -59,16 +59,6 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030Route),
     aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo),
     aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
-  )
-
-  val session6030No = Session(
-    "99996030004",
-    FOR6030,
-    prefilledAddress,
-    "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-    isWelsh = false,
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
-    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
   )
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()

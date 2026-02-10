@@ -24,16 +24,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "workCarriedOutCondition"
+  private val messageKeyPrefix = "workCarriedOutCondition"
 
-  override val form = workCarriedOutConditionForm
+  override val form: Form[AnswersYesNo] = workCarriedOutConditionForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     workCarriedOutConditionView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     workCarriedOutConditionView(form, backLink, Summary("99996020001"))(using fakeRequest, messages)
 
   "work carried out condition view" should {

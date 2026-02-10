@@ -24,15 +24,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class GrossReceiptsForBaseLoadViewSpec extends QuestionViewBehaviours[Seq[GrossReceiptsForBaseLoad]] {
 
-  val messageKeyPrefix = "grossReceiptsForBaseLoadView"
-  val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
   val form: Form[Seq[GrossReceiptsForBaseLoad]] =
     GrossReceiptsForBaseLoadForm.grossReceiptsForBaseLoadForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => grossReceiptsForBaseLoadView(form, "")(using sessionRequest, messages)
+  private def createView = () => grossReceiptsForBaseLoadView(form, "")(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[GrossReceiptsForBaseLoad]]) =>
+  private def createViewUsingForm = (form: Form[Seq[GrossReceiptsForBaseLoad]]) =>
     grossReceiptsForBaseLoadView(form, "")(using sessionRequest, messages)
 
   "GrossReceiptsForBaseLoad 6076 view" should {

@@ -23,15 +23,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "capitalSumDescription"
+  private val messageKeyPrefix = "capitalSumDescription"
 
-  override val form = capitalSumDescriptionForm
+  override val form: Form[String] = capitalSumDescriptionForm
 
-  val sessionRequest = SessionRequest(stillConnectedDetails6020YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(stillConnectedDetails6020YesSession, fakeRequest)
 
-  def createView = () => capitalSumDescriptionView(form)(using sessionRequest, messages)
+  private def createView = () => capitalSumDescriptionView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) => capitalSumDescriptionView(form)(using sessionRequest, messages)
+  private def createViewUsingForm = (form: Form[String]) =>
+    capitalSumDescriptionView(form)(using sessionRequest, messages)
 
   "Capital sum description view" should {
 

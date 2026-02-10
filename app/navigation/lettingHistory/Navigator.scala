@@ -73,7 +73,7 @@ abstract class Navigator(audit: Audit):
 
   // This helper method makes sure that the call is properly prefixed
   // and completed with the right fragment
-  protected def toDecorated(call: Call)(using request: SessionRequest[AnyContent]) =
+  private def toDecorated(call: Call)(using request: SessionRequest[AnyContent]): Call =
     val prefixedCall =
       if !call.url.startsWith(RoutesPrefix.prefix)
       then Call(call.method, RoutesPrefix.prefix + call.url, call.fragment)

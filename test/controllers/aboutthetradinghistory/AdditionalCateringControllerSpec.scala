@@ -26,9 +26,10 @@ import utils.TestBaseSpec
 
 class AdditionalCateringControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  val years                                                         = Seq("2023", "2022", "2021")
+  private val years = Seq("2023", "2022", "2021")
+
   private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
       s"additionalCatering[$idx].grossReceipts"  -> "10000",
@@ -44,7 +45,7 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
     validFormDataPerYear(0) ++
       validFormDataPerYear(1)
 
-  def controller =
+  private def controller =
     new AdditionalCateringController(
       stubMessagesControllerComponents(),
       mockAudit,

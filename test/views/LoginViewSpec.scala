@@ -22,15 +22,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
 
-  def login = inject[views.html.login]
+  private def login = inject[views.html.login]
 
   val messageKeyPrefix = "login"
 
-  override val form = LoginController.loginForm
+  override val form: Form[LoginDetails] = LoginController.loginForm
 
-  def createView = () => login(form)(using fakeRequest, messages)
+  private def createView = () => login(form)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(using fakeRequest, messages)
+  private def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(using fakeRequest, messages)
 
   "Login view" must {
 

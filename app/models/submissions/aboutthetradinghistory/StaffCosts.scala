@@ -24,7 +24,7 @@ case class StaffCosts(
   pensionContributions: Option[BigDecimal],
   remunerations: Option[BigDecimal]
 ) {
-  def total = Seq(wagesAndSalaries, nationalInsurance, pensionContributions, remunerations).flatten.sum
+  def total: BigDecimal = Seq(wagesAndSalaries, nationalInsurance, pensionContributions, remunerations).flatten.sum
 }
 
 object StaffCosts {

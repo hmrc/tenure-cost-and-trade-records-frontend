@@ -46,7 +46,7 @@ class MaxNumberReachedController @Inject() (
   def show(kind: String): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     val freshForm      = theForm
     val filledForm     = hasEvenMoreEntries(kind).map(bool => freshForm.fill(bool))
-    val alreadyChecked = filledForm.map(_.data("understood").toBoolean).getOrElse(false)
+    val alreadyChecked = filledForm.exists(_.data("understood").toBoolean)
     successful(Ok(theView(filledForm.getOrElse(freshForm), alreadyChecked, kind, backLinkUrl(kind))))
   }
 

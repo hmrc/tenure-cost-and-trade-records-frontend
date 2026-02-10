@@ -25,13 +25,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixCurrentRent] {
 
-  val messageKeyPrefix = "methodUsedToFixCurrentRent"
+  private val messageKeyPrefix = "methodUsedToFixCurrentRent"
 
-  override val form = MethodToFixCurrentRentForm.methodToFixCurrentRentForm
+  override val form: Form[MethodToFixCurrentRent] = MethodToFixCurrentRentForm.methodToFixCurrentRentForm
 
-  def createView = () => methodToFixCurrentRentView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () => methodToFixCurrentRentView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[MethodToFixCurrentRent]) =>
+  private def createViewUsingForm = (form: Form[MethodToFixCurrentRent]) =>
     methodToFixCurrentRentView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Method of fix current rent view" must {

@@ -19,7 +19,7 @@ package models.submissions.lettingHistory
 import models.Session
 
 case class SessionWrapper(data: Session, changed: Boolean):
-  def notChanged = !changed
+  def notChanged: Boolean = !changed
 
 object SessionWrapper:
   def unchanged(using session: Session) =

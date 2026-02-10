@@ -24,15 +24,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class PaymentForTradeServicesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "paymentForTradeServices"
+  private val messageKeyPrefix = "paymentForTradeServices"
 
-  override val form = PaymentForTradeServicesForm.paymentForTradeServicesForm
+  override val form: Form[AnswersYesNo] = PaymentForTradeServicesForm.paymentForTradeServicesForm
 
-  val backLink   = controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0).url
-  def createView = () =>
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(0).url
+
+  private def createView = () =>
     paymentForTradeServicesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     paymentForTradeServicesView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Payment for trade services view" should {

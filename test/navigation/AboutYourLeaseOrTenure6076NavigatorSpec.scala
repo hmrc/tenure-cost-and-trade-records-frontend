@@ -34,12 +34,12 @@ import scala.concurrent.ExecutionContext
 
 class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  private val audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+  private val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6076Full = Session(
+  private val session6076Full = Session(
     "99996076004",
     FOR6076,
     prefilledAddress,
@@ -50,7 +50,7 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
   )
 
-  val session6076NoLeaseback = Session(
+  private val session6076NoLeaseback = Session(
     "99996076004",
     FOR6076,
     prefilledAddress,

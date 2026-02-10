@@ -24,20 +24,20 @@ import views.behaviours.QuestionViewBehaviours
 
 class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[CustomerCreditAccounts]] {
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
 
-  val messageKeyPrefix = "customerCreditAcc"
+  private val messageKeyPrefix = "customerCreditAcc"
 
-  override val form =
+  override val form: Form[Seq[CustomerCreditAccounts]] =
     CustomerCreditAccountsForm.customerCreditAccountsForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
 
-  val backLink = controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController
+  private val backLink = controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController
     .show(0)
     .url
 
-  def createView = () => customerCreditAccountsView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => customerCreditAccountsView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[CustomerCreditAccounts]]) =>
+  private def createViewUsingForm = (form: Form[Seq[CustomerCreditAccounts]]) =>
     customerCreditAccountsView(form, "")(using sessionRequest, messages)
 
   "Customer credit accounts view" should {

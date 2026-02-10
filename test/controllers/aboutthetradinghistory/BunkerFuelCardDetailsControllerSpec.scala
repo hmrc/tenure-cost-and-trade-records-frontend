@@ -27,9 +27,9 @@ import utils.TestBaseSpec
 
 class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec {
 
-  val mockNavigator = mock[AboutTheTradingHistoryNavigator]
+  private val mockNavigator = mock[AboutTheTradingHistoryNavigator]
 
-  def createBunkerFuelCardDetailsController(
+  private def createBunkerFuelCardDetailsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory)
   ) =
     new BunkerFuelCardDetailsController(

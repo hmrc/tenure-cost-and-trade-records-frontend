@@ -23,15 +23,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "rentPayableVaryAccordingToGrossOrNetDetails"
+  private val messageKeyPrefix = "rentPayableVaryAccordingToGrossOrNetDetails"
 
-  override val form =
+  override val form: Form[String] =
     RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
 
-  def createView = () =>
+  private def createView = () =>
     rentPayableVaryAccordingToGrossOrNetDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     rentPayableVaryAccordingToGrossOrNetDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent payable vary on gross or net turnover details view" must {

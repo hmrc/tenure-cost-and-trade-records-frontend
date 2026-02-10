@@ -24,16 +24,18 @@ import views.behaviours.QuestionViewBehaviours
 
 class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSold]] {
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
 
-  val backLink = controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url
 
-  val messageKeyPrefix = "bunkeredFuelSold"
+  private val messageKeyPrefix = "bunkeredFuelSold"
 
-  override val form = BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq(2023, 2022, 2021).map(_.toString))(using messages)
-  def createView    = () => bunkeredFuelSoldView(form, backLink)(using sessionRequest, messages)
+  override val form: Form[Seq[BunkeredFuelSold]] =
+    BunkeredFuelSoldForm.bunkeredFuelSoldForm(Seq(2023, 2022, 2021).map(_.toString))(using messages)
 
-  def createViewUsingForm = (form: Form[Seq[BunkeredFuelSold]]) =>
+  private def createView = () => bunkeredFuelSoldView(form, backLink)(using sessionRequest, messages)
+
+  private def createViewUsingForm = (form: Form[Seq[BunkeredFuelSold]]) =>
     bunkeredFuelSoldView(form, backLink)(using sessionRequest, messages)
 
   "Bunkered Fuel Costs view" should {

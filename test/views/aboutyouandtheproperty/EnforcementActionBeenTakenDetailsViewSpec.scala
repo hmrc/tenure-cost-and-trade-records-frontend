@@ -29,11 +29,11 @@ class EnforcementActionBeenTakenDetailsViewSpec extends QuestionViewBehaviours[S
   override val form: Form[String] = EnforcementActionDetailsForm.enforcementActionDetailsForm
 
   def createView: () => Html = () =>
-    enforcemenntActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+    enforcementActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html =
     (form: Form[String]) =>
-      enforcemenntActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+      enforcementActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Enforcement action taken details view" must {
 

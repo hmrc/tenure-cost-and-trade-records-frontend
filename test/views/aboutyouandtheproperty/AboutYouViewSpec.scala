@@ -24,13 +24,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
 
-  val messageKeyPrefix = "aboutYou"
+  private val messageKeyPrefix = "aboutYou"
 
-  override val form = AboutYouForm.theForm
+  override val form: Form[CustomerDetails] = AboutYouForm.theForm
 
-  def createView = () => aboutYouView(form, Summary("99996010001"), false)(using fakeRequest, messages)
+  private def createView = () => aboutYouView(form, Summary("99996010001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CustomerDetails]) =>
+  private def createViewUsingForm = (form: Form[CustomerDetails]) =>
     aboutYouView(form, Summary("99996010001"), false)(using fakeRequest, messages)
 
   "About you view" must {

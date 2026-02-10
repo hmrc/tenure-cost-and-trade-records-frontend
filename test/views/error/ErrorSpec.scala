@@ -20,8 +20,9 @@ import actions.SessionRequest
 import views.behaviours.ViewBehaviours
 
 class ErrorSpec extends ViewBehaviours {
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
-  def createView     = () => errorView(409)(using sessionRequest, messages)
+
+  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private def createView     = () => errorView(409)(using sessionRequest, messages)
 
   "errorView" must {
     "contain text " in {

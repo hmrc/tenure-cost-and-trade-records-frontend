@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-package test
-
 /*
  * Copyright 2026 HM Revenue & Customs
  *

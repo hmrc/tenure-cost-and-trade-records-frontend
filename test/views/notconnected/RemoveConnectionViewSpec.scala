@@ -25,16 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsDetails] {
 
-  val messageKeyPrefix = "removeConnection"
+  private val messageKeyPrefix = "removeConnection"
 
-  val backLink = controllers.notconnected.routes.PastConnectionController.show().url
+  private val backLink = controllers.notconnected.routes.PastConnectionController.show().url
 
   override val form: Form[RemoveConnectionsDetails] = RemoveConnectionForm.removeConnectionForm
 
-  def createView: () => Html = () =>
+  private def createView: () => Html = () =>
     removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[RemoveConnectionsDetails] => Html = (form: Form[RemoveConnectionsDetails]) =>
+  private def createViewUsingForm: Form[RemoveConnectionsDetails] => Html = (form: Form[RemoveConnectionsDetails]) =>
     removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
   "Past connection view" must {

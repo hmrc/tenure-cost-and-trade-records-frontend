@@ -37,7 +37,6 @@
 @layout(
  pageHeading = messages("commercialLettingAvailability.heading"),
  showSection = true,
- showH1 = true,
  summary = request.sessionData.toSummary,
  sectionName = messages("label.section.aboutTheProperty"),
  backLinkUrl = backLink,
@@ -60,9 +59,9 @@
 
  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.submit()) {
 
+  <h2 class=" govuk-body govuk-label--m">@messages("commercialLettingAvailability.label.welsh")</h2>
 
   <table class="hmrc-responsive-table govuk-!-font-weight-regular govuk-!-width-full">
-   <h2 class=" govuk-body govuk-label--m">@messages("commercialLettingAvailability.label.welsh")</h2>
         <tbody>
                <tr>
                @request.sessionData.financialYearEndDatesCommercialLetting.map { case (finYearEnd, idx) =>

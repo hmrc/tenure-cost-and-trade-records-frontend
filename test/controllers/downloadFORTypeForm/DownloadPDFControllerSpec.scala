@@ -23,7 +23,8 @@ import utils.TestBaseSpec
 
 class DownloadPDFControllerSpec extends TestBaseSpec {
 
-  val audit                           = mock[Audit]
+  val audit: Audit = mock[Audit]
+
   private def downloadPDFController() =
     new DownloadPDFController(
       stubMessagesControllerComponents(),

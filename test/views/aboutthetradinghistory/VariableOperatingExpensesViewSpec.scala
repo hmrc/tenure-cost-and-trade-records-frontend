@@ -22,21 +22,17 @@ import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSectio
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-import java.time.LocalDate
-
 class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableOperatingExpensesSections] {
 
-  val fakeDates = Seq(LocalDate.of(2021, 4, 1), LocalDate.of(2022, 4, 1), LocalDate.of(2023, 4, 1))
+  private val messageKeyPrefix = "variableOperatingExpenses"
+  private val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
-  val messageKeyPrefix = "variableOperatingExpenses"
-  val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
-
-  override val form =
+  override val form: Form[VariableOperatingExpensesSections] =
     VariableOperatingExpensesForm.variableOperatingExpensesForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => variableOperatingExpensesView(form)(using sessionRequest, messages)
+  private def createView = () => variableOperatingExpensesView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[VariableOperatingExpensesSections]) =>
+  private def createViewUsingForm = (form: Form[VariableOperatingExpensesSections]) =>
     variableOperatingExpensesView(form)(using sessionRequest, messages)
 
   "Variable Operating Expenses view" must {

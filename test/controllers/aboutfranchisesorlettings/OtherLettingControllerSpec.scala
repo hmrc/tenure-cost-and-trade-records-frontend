@@ -33,9 +33,10 @@ import scala.concurrent.Future.successful
 class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
-    val repository = mock[SessionRepo]
+    val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
-    val controller = new OtherLettingController(
+
+    val controller: OtherLettingController = new OtherLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,

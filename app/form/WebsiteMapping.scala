@@ -17,6 +17,7 @@
 package form
 
 import play.api.data.Forms.text
+import play.api.data.Mapping
 
 object WebsiteMapping {
 
@@ -24,10 +25,10 @@ object WebsiteMapping {
   //                 https://www.test@test.com | http://www.test@test.com | www.test@test.com
   //                 https://www.test@test.com/
 
-  val validWebAddressRegex =
+  private val validWebAddressRegex =
     """(https?://)?(www\.)?([a-zA-Z0-9]+([a-zA-Z0-9-]+)?(\.[a-zA-Z]{2,})+|([a-zA-Z0-9]+\.)?[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,})(/|$)""".stripMargin
 
-  def validateWebaddress =
+  def validateWebaddress: Mapping[String] =
     text
       .verifying(Errors.webAddressBlank, wA => wA.nonEmpty)
       .verifying(

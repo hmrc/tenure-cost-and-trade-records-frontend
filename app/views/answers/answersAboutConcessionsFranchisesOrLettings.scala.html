@@ -40,11 +40,11 @@
       if(forType == FOR6015 || forType == FOR6016) "checkYourAnswersAboutConcessionsOrLettings.rentalIncome"
       else "checkYourAnswersAboutFranchiseOrLettings.rentalIncome"
     },
-    valueAsBoolean = franchisesOrLettingsTiedToProperty.map(_.toBoolean).getOrElse(false),
+    valueAsBoolean = franchisesOrLettingsTiedToProperty.exists(_.toBoolean),
     changeAction = routes.FranchiseOrLettingsTiedToPropertyController.show().asChangeLink("rentReceived")
 )
 
-@if(franchisesOrLettingsTiedToProperty.map(_.toBoolean).getOrElse(false) && rentalIncome.nonEmpty) {
+@if(franchisesOrLettingsTiedToProperty.exists(_.toBoolean) && rentalIncome.nonEmpty) {
 
     @includes.cards.list(
         govukSummaryList,

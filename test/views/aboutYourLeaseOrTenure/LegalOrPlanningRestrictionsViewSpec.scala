@@ -25,16 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "legalOrPlanningRestrictions"
+  private val messageKeyPrefix = "legalOrPlanningRestrictions"
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
 
-  override val form = LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
+  override val form: Form[AnswersYesNo] = LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 
-  def createView = () =>
+  private def createView = () =>
     legalOrPlanningRestrictionsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     legalOrPlanningRestrictionsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Legal or planning restrictions view" must {

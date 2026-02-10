@@ -22,7 +22,7 @@ import play.api.data.Forms.mapping
 
 object ConnectionToThePropertyForm {
 
-  val baseConnectionToThePropertyMapping = mapping(
+  private val baseConnectionToThePropertyMapping = mapping(
     "connectionToTheProperty" -> connectionToThePropertyType
   )(x => x)(b => Some(b))
 

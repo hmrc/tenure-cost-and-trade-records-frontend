@@ -24,19 +24,20 @@ import views.behaviours.QuestionViewBehaviours
 
 class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCatering]] {
 
-  val years = Seq("2023", "2022", "2021")
+  private val years = Seq("2023", "2022", "2021")
 
-  val messageKeyPrefix = "catering.additionalActivitiesOnSite"
+  private val messageKeyPrefix = "catering.additionalActivitiesOnSite"
 
-  override val form = AdditionalCateringForm.additionalCateringForm(years)(using messages)
+  override val form: Form[Seq[AdditionalCatering]] =
+    AdditionalCateringForm.additionalCateringForm(years)(using messages)
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  val backLink = controllers.aboutthetradinghistory.routes.AdditionalShopsController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.AdditionalShopsController.show().url
 
-  def createView = () => additionalCateringView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => additionalCateringView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[AdditionalCatering]]) =>
+  private def createViewUsingForm = (form: Form[Seq[AdditionalCatering]]) =>
     additionalCateringView(form, backLink)(using sessionRequest, messages)
 
   "Additional bars and clubs 6045 view" must {

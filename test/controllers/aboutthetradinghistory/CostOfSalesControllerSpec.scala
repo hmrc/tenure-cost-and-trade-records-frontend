@@ -30,14 +30,14 @@ import scala.concurrent.ExecutionContext
 
 class CostOfSalesControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  val sessionRequest           = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
-  val mockCostOfSalesNavigator = mock[AboutTheTradingHistoryNavigator]
-  val mockCostOfSalesView      = mock[costOfSales]
+  private val sessionRequest           = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val mockCostOfSalesNavigator = mock[AboutTheTradingHistoryNavigator]
+  private val mockCostOfSalesView      = mock[costOfSales]
   when(mockCostOfSalesView.apply(any, any)(using any, any)).thenReturn(HtmlFormat.empty)
 
-  val costOfSalesController = new CostOfSalesController(
+  private val costOfSalesController = new CostOfSalesController(
     stubMessagesControllerComponents(),
     mockAudit,
     mockCostOfSalesNavigator,

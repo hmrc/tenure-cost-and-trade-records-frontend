@@ -22,11 +22,11 @@ import views.behaviours.ViewBehaviours
 
 class confirmationViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "confirmation"
-  val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val messageKeyPrefix = "confirmation"
+  private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  val form       = FeedbackFormMapper.feedbackForm
-  def createView = () => confirmation(form)(using sessionRequest, messages)
+  private val form       = FeedbackFormMapper.feedbackForm
+  private def createView = () => confirmation(form)(using sessionRequest, messages)
 
   "confirmation view" must {
 

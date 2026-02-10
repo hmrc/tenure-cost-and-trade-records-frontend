@@ -24,13 +24,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentIncludesVatViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "rentIncludesVat"
+  private val messageKeyPrefix = "rentIncludesVat"
 
-  override val form = RentIncludesVatForm.rentIncludesVatForm
+  override val form: Form[AnswersYesNo] = RentIncludesVatForm.rentIncludesVatForm
 
-  def createView = () => rentIncludesVatView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () => rentIncludesVatView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludesVatView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent includes VAT view" must {

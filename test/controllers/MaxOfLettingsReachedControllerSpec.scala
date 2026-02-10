@@ -70,7 +70,7 @@ trait MaxOfLettingsReachedControllerBehaviours:
 
 class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettingsReachedControllerBehaviours {
 
-  val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
+  private val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
   private def maxOfLettingsReachedController = new MaxOfLettingsReachedController(
     stubMessagesControllerComponents(),

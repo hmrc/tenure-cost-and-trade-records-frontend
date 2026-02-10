@@ -16,15 +16,18 @@
 
 package controllers.form
 
+import controllers.LoginDetails
 import form.Errors
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
-import utils.FormBindingTestAssertions._
+import play.api.data.Form
+import utils.FormBindingTestAssertions.*
 
 import java.time.{ZoneOffset, ZonedDateTime}
 
 class LoginMappingSpec extends AnyFlatSpec with should.Matchers {
-  val loginForm = controllers.LoginController.loginForm
+
+  val loginForm: Form[LoginDetails] = controllers.LoginController.loginForm
 
   behavior of "Login Mapping"
 

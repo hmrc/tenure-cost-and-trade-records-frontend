@@ -25,15 +25,16 @@ import java.time.LocalDate
 
 class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate] {
 
-  val messageKeyPrefix = "currentRentFirstPaid"
+  private val messageKeyPrefix = "currentRentFirstPaid"
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
 
-  override val form = CurrentRentFirstPaidForm.currentRentFirstPaidForm(using messages)
+  override val form: Form[LocalDate] = CurrentRentFirstPaidForm.currentRentFirstPaidForm(using messages)
 
-  def createView = () => currentRentFirstPaidView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    currentRentFirstPaidView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[LocalDate]) =>
+  private def createViewUsingForm = (form: Form[LocalDate]) =>
     currentRentFirstPaidView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Current rent first paid view" must {

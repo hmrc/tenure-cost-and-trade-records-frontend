@@ -19,6 +19,8 @@ package models.submissions.lettingHistory
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
+import scala.language.implicitConversions
+
 case class SensitiveOccupierDetail(
   name: SensitiveString,
   address: Option[SensitiveAddress],

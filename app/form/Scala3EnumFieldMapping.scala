@@ -19,6 +19,7 @@ package form
 import play.api.data.Forms.{default, seq, text}
 import play.api.data.Mapping
 
+import scala.language.reflectiveCalls
 import scala.reflect.Selectable.reflectiveSelectable
 
 /**

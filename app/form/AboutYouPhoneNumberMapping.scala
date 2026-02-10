@@ -17,6 +17,7 @@
 package form
 
 import play.api.data.Forms.text
+import play.api.data.Mapping
 
 object AboutYouPhoneNumberMapping {
 
@@ -24,7 +25,7 @@ object AboutYouPhoneNumberMapping {
 
   val phoneNumberRegex = """^^[0-9\s\+()-]+$"""
 
-  def validateAboutYouPhoneNumber = {
+  def validateAboutYouPhoneNumber: Mapping[String] = {
 
     def validPNLength(pN: String) = pN.length >= 10 && pN.length <= 20
 

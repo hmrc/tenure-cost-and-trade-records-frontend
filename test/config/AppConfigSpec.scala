@@ -16,77 +16,59 @@
 
 package config
 
-import org.scalatestplus.mockito.MockitoSugar
+import com.typesafe.config.ConfigFactory
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import org.mockito.Mockito._
 import play.api.Configuration
 
-class AppConfigSpec extends AnyWordSpec with Matchers with MockitoSugar {
+class AppConfigSpec extends AnyWordSpec with Matchers:
+
+  private val defaultConfig = Configuration(ConfigFactory.load())
 
   "AppConfig" should {
 
-    "return the correct boolean value for useDummyIp" in {
-      val mockConfig = mock[Configuration]
-      when(mockConfig.getOptional[Boolean]("useDummyTrueIP")).thenReturn(Some(true))
-
-      val appConfig = new AppConfig(mockConfig)
+    "return the correct boolean value for useDummyIp = true" in {
+      val configuration = Configuration("useDummyTrueIP" -> true).withFallback(defaultConfig)
+      val appConfig     = new AppConfig(configuration)
       appConfig.useDummyIp shouldBe true
     }
 
-    "return the correct boolean value for startPageRedirect" in {
-      val mockConfig = mock[Configuration]
-      when(mockConfig.getOptional[Boolean]("startPageRedirect")).thenReturn(Some(false))
+    "return the correct boolean value for useDummyIp = false" in {
+      val configuration = Configuration("useDummyTrueIP" -> false).withFallback(defaultConfig)
+      val appConfig     = new AppConfig(configuration)
+      appConfig.useDummyIp shouldBe false
+    }
 
-      val appConfig = new AppConfig(mockConfig)
+    "return the correct boolean value for startPageRedirect" in {
+      val configuration = Configuration("startPageRedirect" -> false).withFallback(defaultConfig)
+      val appConfig     = new AppConfig(configuration)
       appConfig.startPageRedirect shouldBe false
     }
 
     "return the correct string value for govukStartPage" in {
-      val mockConfig = mock[Configuration]
-      when(mockConfig.getOptional[String]("govukStartPage")).thenReturn(Some("http://example.com"))
-
-      val appConfig = new AppConfig(mockConfig)
-      appConfig.govukStartPage shouldBe "http://example.com"
+      val configuration = Configuration("govukStartPage" -> "https://example.com").withFallback(defaultConfig)
+      val appConfig     = new AppConfig(configuration)
+      appConfig.govukStartPage shouldBe "https://example.com"
     }
 
     "return the correct value for internalAuthToken" in {
-      val mockConfig = mock[Configuration]
-      when(mockConfig.getOptional[String]("internalAuthToken")).thenReturn(Some("token"))
-
-      val appConfig = new AppConfig(mockConfig)
+      val configuration = Configuration("internalAuthToken" -> "token").withFallback(defaultConfig)
+      val appConfig     = new AppConfig(configuration)
       appConfig.internalAuthToken shouldBe "token"
     }
 
     "return the correct value for tctrFrontendUrl" in {
-      val mockConfig = mock[Configuration]
-      when(mockConfig.getOptional[String]("urls.tctrFrontend")).thenReturn(Some("http://frontend.com"))
-
-      val appConfig = new AppConfig(mockConfig)
-      appConfig.tctrFrontendUrl shouldBe "http://frontend.com"
+      val configuration = Configuration("urls.tctrFrontend" -> "https://frontend.com").withFallback(defaultConfig)
+      val appConfig     = new AppConfig(configuration)
+      appConfig.tctrFrontendUrl shouldBe "https://frontend.com"
     }
 
-    "throw ConfigSettingMissing exception if boolean config is missing" in {
-      val mockConfig = mock[Configuration]
-      when(mockConfig.getOptional[Boolean]("useDummyTrueIP")).thenReturn(None)
-
-      val appConfig = new AppConfig(mockConfig)
-      a[ConfigSettingMissing] should be thrownBy
-        appConfig.useDummyIp
-    }
-
-    "throw ConfigSettingMissing exception if string config is missing" in {
-      val mockConfig = mock[Configuration]
-      when(mockConfig.getOptional[String]("govukStartPage")).thenReturn(None)
-
-      val appConfig = new AppConfig(mockConfig)
-      a[ConfigSettingMissing] should be thrownBy
-        appConfig.govukStartPage
+    "throw ConfigSettingMissing exception if config is empty" in {
+      a[ConfigSettingMissing] should be thrownBy new AppConfig(Configuration.empty)
     }
 
     "return the correct default URLs" in {
-      val mockConfig = mock[Configuration]
-      val appConfig  = new AppConfig(mockConfig)
+      val appConfig = new AppConfig(defaultConfig)
 
       appConfig.cookiesUrl            shouldBe "https://www.tax.service.gov.uk/help/cookies"
       appConfig.privacyNoticeUrl      shouldBe "https://www.tax.service.gov.uk/help/privacy"
@@ -95,5 +77,5 @@ class AppConfigSpec extends AnyWordSpec with Matchers with MockitoSugar {
       appConfig.contactGovUkUrl       shouldBe "https://www.gov.uk/government/organisations/hm-revenue-customs/contact"
       appConfig.welshHelpUrl          shouldBe "https://www.gov.uk/cymraeg"
     }
+
   }
-}

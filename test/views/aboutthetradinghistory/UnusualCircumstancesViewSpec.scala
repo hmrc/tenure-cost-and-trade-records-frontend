@@ -26,23 +26,23 @@ import views.behaviours.QuestionViewBehaviours
 
 class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircumstances] {
   // NOTE: this is a holding view test until the other costs page is implemented
-  val messageKeyPrefix       = "unusualCircumstances"
-  val messageKeyPrefix6030   = "unusualCircumstancesReceipts"
-  val backLink               = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
-  private val sessionRequest = SessionRequest(baseFilled6030Session, fakeRequest)
+  private val messageKeyPrefix     = "unusualCircumstances"
+  private val messageKeyPrefix6030 = "unusualCircumstancesReceipts"
+  private val backLink             = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+  private val sessionRequest       = SessionRequest(baseFilled6030Session, fakeRequest)
 
-  override val form = UnusualCircumstancesForm.unusualCircumstancesForm
+  override val form: Form[UnusualCircumstances] = UnusualCircumstancesForm.unusualCircumstancesForm
 
-  def createView = () =>
+  private def createView = () =>
     unusualCircumstancesView(form, FOR6010, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[UnusualCircumstances]) =>
+  private def createViewUsingForm = (form: Form[UnusualCircumstances]) =>
     unusualCircumstancesView(form, FOR6010, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  def createView6030 = () =>
+  private def createView6030 = () =>
     unusualCircumstancesView(form, FOR6030, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  def createViewUsingForm6030 = (form: Form[UnusualCircumstances]) =>
+  private def createViewUsingForm6030 = (form: Form[UnusualCircumstances]) =>
     unusualCircumstancesView(form, FOR6030, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   "Unusual Circumstances view" must {

@@ -23,13 +23,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "premisesLicenseGrantedInformation"
+  private val messageKeyPrefix = "premisesLicenseGrantedInformation"
 
-  override val form = PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
+  override val form: Form[String] = PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
 
-  def createView = () => premisesLicenceGrantedDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    premisesLicenceGrantedDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     premisesLicenceGrantedDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Property licence granted view" must {

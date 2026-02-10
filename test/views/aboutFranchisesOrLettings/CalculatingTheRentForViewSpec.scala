@@ -24,10 +24,10 @@ import views.behaviours.QuestionViewBehaviours
 
 class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTheRent] {
 
-  override val form =
+  override val form: Form[CalculatingTheRent] =
     CalculatingTheRentForm.calculatingTheRentForm(using messages)
 
-  def createView = () =>
+  private def createView = () =>
     calculatingTheRentView(
       form,
       0,
@@ -35,7 +35,7 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
       Summary("99996010001")
     )(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CalculatingTheRent]) =>
+  private def createViewUsingForm = (form: Form[CalculatingTheRent]) =>
     calculatingTheRentView(
       form,
       0,

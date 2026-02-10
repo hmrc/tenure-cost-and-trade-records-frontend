@@ -23,19 +23,20 @@ import views.behaviours.QuestionViewBehaviours
 
 class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[BigDecimal]]] {
 
-  val years = Seq("2023", "2022", "2021")
+  private val years = Seq("2023", "2022", "2021")
 
   val messageKeyPrefix = "additionalAmusements"
 
-  override val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages)
+  override val form: Form[Seq[Option[BigDecimal]]] =
+    AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages)
 
   val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  val backLink = controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show().url
 
-  def createView = () => additionalAmusementsView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => additionalAmusementsView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[Option[BigDecimal]]]) =>
+  private def createViewUsingForm = (form: Form[Seq[Option[BigDecimal]]]) =>
     additionalAmusementsView(form, backLink)(using sessionRequest, messages)
 
   "Additional amusements 6045 view" must {

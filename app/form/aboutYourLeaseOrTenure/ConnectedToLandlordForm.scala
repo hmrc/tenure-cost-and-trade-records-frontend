@@ -21,14 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object ConnectedToLandlordForm {
-  lazy val baseConnectedToLandlordForm: Form[AnswersYesNo] = Form(
-    baseConnectedToLandlordMapping
-  )
+object ConnectedToLandlordForm:
 
-  val baseConnectedToLandlordMapping = mapping(
+  private val baseConnectedToLandlordMapping = mapping(
     "connectedToLandlord" -> createYesNoType("error.connectedToLandlord.missing")
   )(x => x)(b => Some(b))
 
-  val connectedToLandlordForm = Form(baseConnectedToLandlordMapping)
-}
+  val connectedToLandlordForm: Form[AnswersYesNo] = Form(baseConnectedToLandlordMapping)

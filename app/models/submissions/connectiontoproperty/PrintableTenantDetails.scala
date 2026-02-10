@@ -32,9 +32,9 @@ trait PrintableTenantDetails {
       Some(name),
       Some(descriptionOfLetting),
       correspondenceAddress.map(_.buildingNameNumber),
-      correspondenceAddress.map(_.street1).flatten,
+      correspondenceAddress.flatMap(_.street1),
       correspondenceAddress.map(_.town),
-      correspondenceAddress.map(_.county).flatten,
+      correspondenceAddress.flatMap(_.county),
       correspondenceAddress.map(_.postcode)
     ).flatten
 }

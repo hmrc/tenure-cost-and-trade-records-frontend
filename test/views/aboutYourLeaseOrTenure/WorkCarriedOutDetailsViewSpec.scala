@@ -23,13 +23,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class WorkCarriedOutDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "workCarriedOutDetails"
+  private val messageKeyPrefix = "workCarriedOutDetails"
 
-  override val form = WorkCarriedOutDetailsForm.workCarriedOutDetailsForm
+  override val form: Form[String] = WorkCarriedOutDetailsForm.workCarriedOutDetailsForm
 
-  def createView = () => workCarriedOutDetailsView(form, Summary("99996020001"))(using fakeRequest, messages)
+  private def createView = () => workCarriedOutDetailsView(form, Summary("99996020001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     workCarriedOutDetailsView(form, Summary("99996020001"))(using fakeRequest, messages)
 
   "Work carried out details details" must {

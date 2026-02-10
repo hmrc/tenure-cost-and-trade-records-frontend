@@ -39,7 +39,7 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
-    enforcemenntActionBeenTakenDetailsView,
+    enforcementActionBeenTakenDetailsView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
     mockSessionRepo
   )
@@ -48,7 +48,7 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
-    enforcemenntActionBeenTakenDetailsView,
+    enforcementActionBeenTakenDetailsView,
     preEnrichedActionRefiner(aboutYouAndTheProperty = None),
     mockSessionRepo
   )

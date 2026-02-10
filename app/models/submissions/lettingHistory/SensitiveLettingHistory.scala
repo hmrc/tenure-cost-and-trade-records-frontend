@@ -18,6 +18,8 @@ package models.submissions.lettingHistory
 
 import uk.gov.hmrc.crypto.Sensitive
 
+import scala.language.implicitConversions
+
 case class SensitiveLettingHistory(
   hasPermanentResidents: Option[Boolean],
   permanentResidents: Option[List[SensitiveResidentDetail]],

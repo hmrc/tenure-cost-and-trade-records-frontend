@@ -24,15 +24,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class StaffCostsViewSpec extends QuestionViewBehaviours[Seq[StaffCosts]] {
 
-  val messageKeyPrefix = "staffCost"
-  val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
   val form: Form[Seq[StaffCosts]] =
     StaffCostsForm.staffCostsForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => staffCostsView(form, "")(using sessionRequest, messages)
+  private def createView = () => staffCostsView(form, "")(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[StaffCosts]]) => staffCostsView(form, "")(using sessionRequest, messages)
+  private def createViewUsingForm = (form: Form[Seq[StaffCosts]]) =>
+    staffCostsView(form, "")(using sessionRequest, messages)
 
   "Cost of sales 6076 view" should {
 

@@ -23,16 +23,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class TradeServicesDescriptionViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "tradeServiceDescription"
+  private val messageKeyPrefix = "tradeServiceDescription"
 
-  override val form = TradeServiceDescriptionForm.tradeServicesDescriptionForm
+  override val form: Form[String] = TradeServiceDescriptionForm.tradeServicesDescriptionForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     tradeServicesDescriptionView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     tradeServicesDescriptionView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Trade services description view" should {

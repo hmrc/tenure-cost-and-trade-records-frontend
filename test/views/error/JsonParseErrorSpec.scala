@@ -20,8 +20,9 @@ import actions.SessionRequest
 import views.behaviours.ViewBehaviours
 
 class JsonParseErrorSpec extends ViewBehaviours {
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
-  def createView     = () => jsonErrorView(Some("backlinktologinpage"))(using sessionRequest, messages)
+
+  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private def createView     = () => jsonErrorView(Some("backlinktologinpage"))(using sessionRequest, messages)
 
   "JsonErrorView" must {
     "contain text " in {
@@ -31,4 +32,5 @@ class JsonParseErrorSpec extends ViewBehaviours {
       assert(doc.toString.contains(messages("error.json.page.start")))
     }
   }
+
 }

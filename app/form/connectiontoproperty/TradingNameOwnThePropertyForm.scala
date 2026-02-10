@@ -22,10 +22,11 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 
 object TradingNameOwnThePropertyForm {
-  lazy val theForm: Form[AnswersYesNo] = Form(tradingNameOwnThePropertyMapping)
 
-  val tradingNameOwnThePropertyMapping = mapping(
+  private val tradingNameOwnThePropertyMapping = mapping(
     "tradingNameOwnTheProperty" -> createYesNoType("error.tradingNameOwnTheProperty.missing")
   )(x => x)(b => Some(b))
+
+  val theForm: Form[AnswersYesNo] = Form(tradingNameOwnThePropertyMapping)
 
 }

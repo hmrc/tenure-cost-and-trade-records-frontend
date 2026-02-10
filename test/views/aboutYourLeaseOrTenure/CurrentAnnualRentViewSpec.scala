@@ -23,15 +23,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[BigDecimal] {
 
-  val messageKeyPrefix = "currentAnnualRent"
+  private val messageKeyPrefix = "currentAnnualRent"
 
-  override val form = CurrentAnnualRentForm.currentAnnualRentForm()
+  override val form: Form[BigDecimal] = CurrentAnnualRentForm.currentAnnualRentForm()
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
 
-  def createView = () => currentAnnualRentView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    currentAnnualRentView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[BigDecimal]) =>
+  private def createViewUsingForm = (form: Form[BigDecimal]) =>
     currentAnnualRentView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
   "Current annual rent view" must {
 

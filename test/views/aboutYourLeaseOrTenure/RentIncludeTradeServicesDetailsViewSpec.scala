@@ -25,13 +25,15 @@ import views.behaviours.QuestionViewBehaviours
 class RentIncludeTradeServicesDetailsViewSpec
     extends QuestionViewBehaviours[RentIncludeTradeServicesInformationDetails] {
 
-  val messageKeyPrefix = "rentIncludeTradeServicesDetails"
+  private val messageKeyPrefix = "rentIncludeTradeServicesDetails"
 
-  override val form = RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm()(using messages)
+  override val form: Form[RentIncludeTradeServicesInformationDetails] =
+    RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm()(using messages)
 
-  def createView = () => rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RentIncludeTradeServicesInformationDetails]) =>
+  private def createViewUsingForm = (form: Form[RentIncludeTradeServicesInformationDetails]) =>
     rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent include trade services details" must {

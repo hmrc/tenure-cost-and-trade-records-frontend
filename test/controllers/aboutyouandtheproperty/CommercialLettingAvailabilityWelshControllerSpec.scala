@@ -33,9 +33,9 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
   import utils.FormBindingTestAssertions._
 
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  val years = Seq("2024", "2023", "2022")
+  private val years = Seq("2024", "2023", "2022")
 
   private def validFormDataPerYear(idx: Int): Seq[(String, String)] =
     Seq(
@@ -47,7 +47,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
       validFormDataPerYear(1) ++
       validFormDataPerYear(2)
 
-  def controller(
+  private def controller(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
@@ -60,7 +60,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  val sessionRequest: SessionRequest[AnyContent] =
+  private val sessionRequest: SessionRequest[AnyContent] =
     SessionRequest[AnyContent](stillConnectedDetails6048YesSession, fakeRequest)
 
   "Commercial letting availability welsh controller GET" should {

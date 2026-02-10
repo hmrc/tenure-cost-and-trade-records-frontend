@@ -26,7 +26,7 @@ case class PremisesCosts(
   businessRates: Option[BigDecimal],
   buildingInsurance: Option[BigDecimal]
 ) {
-  def total = Seq(
+  def total: BigDecimal = Seq(
     energyAndUtilities,
     buildingRepairAndMaintenance,
     rent,

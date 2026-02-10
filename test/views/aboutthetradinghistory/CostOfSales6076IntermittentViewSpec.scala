@@ -25,15 +25,15 @@ import views.behaviours.ViewBehaviours
 
 class CostOfSales6076IntermittentViewSpec extends TestBaseSpec with ViewBehaviours {
 
-  val messageKeyPrefix = "costOfSales6076"
-  val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
+  private val messageKeyPrefix = "costOfSales6076"
+  private val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
   val form: Form[(Seq[CostOfSales6076Sum], String)] =
     CostOfSales6076Form.costOfSales6076Form(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => costOfSales6076View(form, "")(using sessionRequest, messages)
+  private def createView = () => costOfSales6076View(form, "")(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[(Seq[CostOfSales6076Sum], String)]) =>
+  private def createViewUsingForm = (form: Form[(Seq[CostOfSales6076Sum], String)]) =>
     costOfSales6076View(form, "")(using sessionRequest, messages)
 
   "Cost of sales 6076 view" should {

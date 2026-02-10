@@ -36,10 +36,11 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
 
-  val audit           = mock[Audit]
+  private val audit = mock[Audit]
+
   given HeaderCarrier = any[HeaderCarrier]
 
-  def aboutYourLandlordController(
+  private def aboutYourLandlordController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) = new AboutYourLandlordController(

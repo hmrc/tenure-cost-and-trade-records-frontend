@@ -24,13 +24,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[CurrentLeaseOrAgreementBegin] {
 
-  val messageKeyPrefix = "currentLeaseOrAgreementBegin"
+  private val messageKeyPrefix = "currentLeaseOrAgreementBegin"
 
-  override val form = CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm(using messages)
+  override val form: Form[CurrentLeaseOrAgreementBegin] =
+    CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm(using messages)
 
-  def createView = () => currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[CurrentLeaseOrAgreementBegin]) =>
+  private def createViewUsingForm = (form: Form[CurrentLeaseOrAgreementBegin]) =>
     currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Current rent first paid view" must {

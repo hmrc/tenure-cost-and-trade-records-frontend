@@ -23,13 +23,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class ProvideDetailsOfYourLeaseViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "provideDetailsOfYourLease"
+  private val messageKeyPrefix = "provideDetailsOfYourLease"
 
-  override val form = ProvideDetailsOfYourLeaseForm.provideDetailsOfYourLeaseForm
+  override val form: Form[String] = ProvideDetailsOfYourLeaseForm.provideDetailsOfYourLeaseForm
 
-  def createView = () => provideDetailsOfYourLeaseView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    provideDetailsOfYourLeaseView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     provideDetailsOfYourLeaseView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Provide details of your lease view" must {

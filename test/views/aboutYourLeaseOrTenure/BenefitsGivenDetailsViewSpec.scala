@@ -23,13 +23,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class BenefitsGivenDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "benefitsGivenDetails"
+  private val messageKeyPrefix = "benefitsGivenDetails"
 
-  override val form = benefitsGivenDetailsForm
+  override val form: Form[String] = benefitsGivenDetailsForm
 
-  def createView = () => benefitsGivenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () => benefitsGivenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     benefitsGivenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Benefits given details view" should {

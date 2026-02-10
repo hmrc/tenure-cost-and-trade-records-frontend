@@ -25,16 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "receivePaymentWhenLeaseGranted"
+  private val messageKeyPrefix = "receivePaymentWhenLeaseGranted"
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
 
-  override val form = paymentWhenLeaseIsGrantedForm
+  override val form: Form[AnswersYesNo] = paymentWhenLeaseIsGrantedForm
 
-  def createView = () =>
+  private def createView = () =>
     paymentWhenLeaseIsGrantedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     paymentWhenLeaseIsGrantedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Payment when lease is granted view" must {

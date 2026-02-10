@@ -30,12 +30,13 @@ import scala.concurrent.ExecutionContext
 
 class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  private val audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+  private val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6048 = Session(
+  private val session6048 = Session(
     "99996048004",
     FOR6048,
     prefilledAddress,

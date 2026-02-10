@@ -25,7 +25,7 @@ import play.api.data.{Form, FormError}
 
 class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherValues with TableDrivenPropertyChecks {
 
-  val positiveTestData = Table(
+  private val positiveTestData = Table(
     ("raw postcode", "formated postcode"),
     ("   ML7 +++\n  8LQ   ++", "ML7 8LQ"),
     ("ML7 8LQ", "ML7 8LQ"),
@@ -36,7 +36,8 @@ class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherVa
     ("M L 7    8 L Q ", "ML7 8LQ"),
     ("m l 7 +\n  8 l q ", "ML7 8LQ")
   )
-  val negativeTestData = Table(
+
+  private val negativeTestData = Table(
     ("raw postcode", "error type", "error message"),
     ("", "requiredError", Errors.postcodeRequired),
     ("123456789", "maxLengthError", Errors.postcodeMaxLength),
@@ -44,7 +45,7 @@ class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherVa
     ("XYZ1234", "formatError", Errors.postcodeInvalid)
   )
 
-  val postcode = PostcodeMapping.postcode()
+  private val postcode = PostcodeMapping.postcode()
 
   "PostcodeMapper" should "Map correct postcode" in {
     val formData = Map("" -> "BN12 4AX")

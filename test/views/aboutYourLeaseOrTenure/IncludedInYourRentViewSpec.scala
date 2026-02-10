@@ -25,19 +25,20 @@ import views.behaviours.QuestionViewBehaviours
 
 class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRentDetails] {
 
-  val messageKeyPrefix = "includedInYourRent"
+  private val messageKeyPrefix = "includedInYourRent"
 
   private val forType     = FOR6011
   private val forType6045 = FOR6045
 
   override val form: Form[IncludedInYourRentDetails] = IncludedInYourRentForm.includedInYourRentForm(forType)
 
-  def createView = () => includedInYourRentView(form, Summary("99996010001"), forType)(using fakeRequest, messages)
-
-  def createViewUsingForm = (form: Form[IncludedInYourRentDetails]) =>
+  private def createView = () =>
     includedInYourRentView(form, Summary("99996010001"), forType)(using fakeRequest, messages)
 
-  def createViewUsingForm6045 = (form: Form[IncludedInYourRentDetails]) =>
+  private def createViewUsingForm = (form: Form[IncludedInYourRentDetails]) =>
+    includedInYourRentView(form, Summary("99996010001"), forType)(using fakeRequest, messages)
+
+  private def createViewUsingForm6045 = (form: Form[IncludedInYourRentDetails]) =>
     includedInYourRentView(form, Summary("99996045001"), forType6045)(using fakeRequest, messages)
 
   "Included in rent view" must {

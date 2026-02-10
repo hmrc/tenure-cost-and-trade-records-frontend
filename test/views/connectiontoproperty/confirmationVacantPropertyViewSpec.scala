@@ -18,15 +18,17 @@ package views.connectiontoproperty
 
 import actions.SessionRequest
 import controllers.FeedbackFormMapper
+import form.Feedback
+import play.api.data.Form
 import views.behaviours.ViewBehaviours
 
 class confirmationVacantPropertyViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "label.connectionToProperty.confirm"
-  val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val messageKeyPrefix = "label.connectionToProperty.confirm"
+  private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  val form       = FeedbackFormMapper.feedbackForm
-  def createView = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
+  val form: Form[Feedback] = FeedbackFormMapper.feedbackForm
+  private def createView   = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
 
   "confirmation request reference number view" must {
 

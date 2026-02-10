@@ -23,14 +23,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "legalOrPlanningRestrictionsDetails"
+  private val messageKeyPrefix = "legalOrPlanningRestrictionsDetails"
 
-  override val form = legalOrPlanningRestrictionsDetailsForm
+  override val form: Form[String] = legalOrPlanningRestrictionsDetailsForm
 
-  def createView = () =>
+  private def createView = () =>
     legalOrPlanningRestrictionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     legalOrPlanningRestrictionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Legal or planning restrictions view" must {

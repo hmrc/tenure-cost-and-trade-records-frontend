@@ -25,16 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionToProperty] {
 
-  val messageKeyPrefix = "connectionToTheProperty"
+  private val messageKeyPrefix = "connectionToTheProperty"
 
-  override val form = ConnectionToThePropertyForm.connectionToThePropertyForm
+  override val form: Form[ConnectionToProperty] = ConnectionToThePropertyForm.connectionToThePropertyForm
 
-  val backLink = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
+  private val backLink = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     connectionToThePropertyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[ConnectionToProperty]) =>
+  private def createViewUsingForm = (form: Form[ConnectionToProperty]) =>
     connectionToThePropertyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Connection to property view" must {

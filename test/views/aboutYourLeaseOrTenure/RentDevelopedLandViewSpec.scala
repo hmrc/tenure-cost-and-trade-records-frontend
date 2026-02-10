@@ -24,12 +24,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentDevelopedLandViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "rentDevelopedLand"
+  private val messageKeyPrefix = "rentDevelopedLand"
 
-  override val form = RentDevelopedLandForm.rentDevelopedLandForm
-  def createView    = () => rentDevelopedLandView(form, Summary("99996010001"))(using fakeRequest, messages)
+  override val form: Form[AnswersYesNo] = RentDevelopedLandForm.rentDevelopedLandForm
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createView = () => rentDevelopedLandView(form, Summary("99996010001"))(using fakeRequest, messages)
+
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentDevelopedLandView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Connected to landlord view" must {

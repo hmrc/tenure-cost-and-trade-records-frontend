@@ -24,19 +24,20 @@ import views.behaviours.QuestionViewBehaviours
 
 class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalBarsClubs]] {
 
-  val years = Seq("2023", "2022", "2021")
+  private val years = Seq("2023", "2022", "2021")
 
-  val messageKeyPrefix = "additionalBarsClubs"
+  private val messageKeyPrefix = "additionalBarsClubs"
 
-  override val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages)
+  override val form: Form[Seq[AdditionalBarsClubs]] =
+    AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages)
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  val backLink = controllers.aboutthetradinghistory.routes.AdditionalCateringController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.AdditionalCateringController.show().url
 
-  def createView = () => additionalBarsClubsView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => additionalBarsClubsView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[Seq[AdditionalBarsClubs]]) =>
+  private def createViewUsingForm = (form: Form[Seq[AdditionalBarsClubs]]) =>
     additionalBarsClubsView(form, backLink)(using sessionRequest, messages)
 
   "Additional bars and clubs 6045 view" must {

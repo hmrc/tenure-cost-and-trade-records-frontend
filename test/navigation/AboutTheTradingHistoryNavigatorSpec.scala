@@ -36,15 +36,16 @@ import scala.concurrent.ExecutionContext
 
 class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
 
-  val audit: Audit = mock[Audit]
+  private val audit: Audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutTheTradingHistoryNavigator(audit)
+  private val navigator = new AboutTheTradingHistoryNavigator(audit)
 
-  val stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(
+  private val stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(
     StillConnectedDetails(Some(AddressConnectionTypeYes))
   )
-  val removeConnection: Option[RemoveConnectionDetails]       = Some(
+
+  private val removeConnection: Option[RemoveConnectionDetails] = Some(
     RemoveConnectionDetails(
       Some(
         RemoveConnectionsDetails(
@@ -56,7 +57,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     )
   )
 
-  val sessionAboutYou: Session =
+  private val sessionAboutYou: Session =
     Session(
       "99996010004",
       FOR6010,
@@ -67,7 +68,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       removeConnection
     )
 
-  val sessionAboutYouIntermittent: Session =
+  private val sessionAboutYouIntermittent: Session =
     Session(
       "99996076004",
       FOR6010,
@@ -81,7 +82,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       )
     )
 
-  val sessionAboutYouBaseload: Session =
+  private val sessionAboutYouBaseload: Session =
     Session(
       "99996076004",
       FOR6010,
@@ -95,14 +96,14 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       )
     )
 
-  val sessionAboutYou6010             = sessionAboutYou.copy(referenceNumber = "99996010004", forType = FOR6010)
-  val sessionAboutYou6015             = sessionAboutYou.copy(referenceNumber = "99996015004", forType = FOR6015)
-  val sessionAboutYou6020             = sessionAboutYou.copy(referenceNumber = "99996020004", forType = FOR6020)
-  val sessionAboutYou6030             = sessionAboutYou.copy(referenceNumber = "99996030004", forType = FOR6030)
-  val sessionAboutYou6045             = sessionAboutYou.copy(referenceNumber = "99996045004", forType = FOR6045)
-  val sessionAboutYou6048             = sessionAboutYou.copy(referenceNumber = "99996048004", forType = FOR6048)
-  val sessionAboutYou6076             = sessionAboutYou.copy(referenceNumber = "99996076004", forType = FOR6076)
-  val sessionAboutYouIntermittent6076 =
+  private val sessionAboutYou6010             = sessionAboutYou.copy(referenceNumber = "99996010004", forType = FOR6010)
+  private val sessionAboutYou6015             = sessionAboutYou.copy(referenceNumber = "99996015004", forType = FOR6015)
+  private val sessionAboutYou6020             = sessionAboutYou.copy(referenceNumber = "99996020004", forType = FOR6020)
+  private val sessionAboutYou6030             = sessionAboutYou.copy(referenceNumber = "99996030004", forType = FOR6030)
+  private val sessionAboutYou6045             = sessionAboutYou.copy(referenceNumber = "99996045004", forType = FOR6045)
+  private val sessionAboutYou6048             = sessionAboutYou.copy(referenceNumber = "99996048004", forType = FOR6048)
+  private val sessionAboutYou6076             = sessionAboutYou.copy(referenceNumber = "99996076004", forType = FOR6076)
+  private val sessionAboutYouIntermittent6076 =
     sessionAboutYouIntermittent.copy(referenceNumber = "99996076004", forType = FOR6076)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()

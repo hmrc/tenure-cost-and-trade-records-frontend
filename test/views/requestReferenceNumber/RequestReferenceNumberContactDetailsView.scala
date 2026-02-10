@@ -23,13 +23,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[RequestReferenceNumberContactDetails] {
 
-  val messageKeyPrefix = "requestReferenceNumberContactDetails"
+  private val messageKeyPrefix = "requestReferenceNumberContactDetails"
 
-  override val form = RequestReferenceNumberContactDetailsForm.theForm
+  override val form: Form[RequestReferenceNumberContactDetails] = RequestReferenceNumberContactDetailsForm.theForm
 
-  def createView = () => requestReferenceNumberContactDetailsView(form)(using fakeRequest, messages)
+  private def createView = () => requestReferenceNumberContactDetailsView(form)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[RequestReferenceNumberContactDetails]) =>
+  private def createViewUsingForm = (form: Form[RequestReferenceNumberContactDetails]) =>
     requestReferenceNumberContactDetailsView(form)(using fakeRequest, messages)
 
   "No reference number view" must {

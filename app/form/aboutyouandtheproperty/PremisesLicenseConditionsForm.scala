@@ -21,15 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object PremisesLicenseConditionsForm {
-  lazy val basePremisesLicensConditionseForm: Form[AnswersYesNo] = Form(
-    basePremisesLicenseConditionsMapping
-  )
+object PremisesLicenseConditionsForm:
 
-  val basePremisesLicenseConditionsMapping = mapping(
+  private val basePremisesLicenseConditionsMapping = mapping(
     "premisesLicenseConditions" -> createYesNoType("error.premisesLicenseConditions.missing")
   )(x => x)(b => Some(b))
 
-  val premisesLicenseConditionsForm = Form(basePremisesLicenseConditionsMapping)
-
-}
+  val premisesLicenseConditionsForm: Form[AnswersYesNo] = Form(basePremisesLicenseConditionsMapping)

@@ -35,7 +35,7 @@ import scala.collection.immutable
 
 class AddressLookupConnectorSpec extends TestSuite with GuiceOneAppPerSuite with Injecting:
 
-  val tctrFrontendBaseUrl = "https://frontend.gov.net:9999/tctr"
+  private val tctrFrontendBaseUrl = "https://frontend.gov.net:9999/tctr"
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
@@ -53,7 +53,10 @@ class AddressLookupConnectorSpec extends TestSuite with GuiceOneAppPerSuite with
   // The following nestedSuite is just a workaround for an open issue:
   // https://github.com/playframework/scalatestplus-play/issues/112
   //
-  val nestedSuite = new AsyncWordSpec with Matchers with OptionValues with AddressLookupMockServer(port = 11111) {
+  private val nestedSuite = new AsyncWordSpec
+    with Matchers
+    with OptionValues
+    with AddressLookupMockServer(port = 11111) {
 
     given SessionRequest[AnyContent] = SessionRequest(
       Session(

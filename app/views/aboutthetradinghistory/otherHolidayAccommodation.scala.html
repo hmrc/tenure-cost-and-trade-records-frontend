@@ -29,7 +29,6 @@
 
 @layout(
     pageHeading = messages("otherHolidayAccommodation.heading"),
-    showH1 = true,
     showSection = true,
     summary = Some(request.sessionData.toSummary),
     sectionName = messages("label.section.aboutYourTradingHistory"),
@@ -46,8 +45,7 @@
             "otherHolidayAccommodation.question",
             "label.yes.oes",
             "label.no.nac.oes",
-            "govuk-fieldset__legend--m",
-            isHeading = false
+            "govuk-fieldset__legend--m"
         )
 
         @govukDetails(Details(

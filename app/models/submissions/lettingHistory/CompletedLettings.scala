@@ -40,8 +40,7 @@ trait CompletedLettings:
               unchangedSession
             else
               changeSession {
-                if newValue == true
-                then
+                if newValue then
                   lettingHistory.copy(
                     hasCompletedLettings = Some(true)
                   )

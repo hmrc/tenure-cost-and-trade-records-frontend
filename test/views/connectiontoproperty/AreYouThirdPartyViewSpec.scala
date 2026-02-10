@@ -27,49 +27,28 @@ import scala.jdk.CollectionConverters.*
 
 class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "areYouThirdParty"
+  override val form: Form[AnswersYesNo] = AreYouThirdPartyForm.theForm
 
-  override val form = AreYouThirdPartyForm.theForm
+  private val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)
+  private val sessionRequest     = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  val sessionRequest6048 = SessionRequest(baseFilled6048Session, fakeRequest)
-  val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)
-  val sessionRequest     = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val backLink = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
 
-  val backLink = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
-
-  def createView = () =>
+  private def createView = () =>
     areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary, false)(using
       sessionRequest,
       messages
     )
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary, false)(using
       sessionRequest,
       messages
     )
 
-  def createView6076 = () =>
+  private def createViewUsingForm6076 = (form: Form[AnswersYesNo]) =>
     areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary, false)(using
       sessionRequest6076,
-      messages
-    )
-
-  def createViewUsingForm6076 = (form: Form[AnswersYesNo]) =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary, false)(using
-      sessionRequest6076,
-      messages
-    )
-
-  def createView6048 = () =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6048YesSession.toSummary, false)(using
-      sessionRequest6048,
-      messages
-    )
-
-  def createViewUsingForm6048 = (form: Form[AnswersYesNo]) =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6048YesSession.toSummary, false)(using
-      sessionRequest6048,
       messages
     )
 

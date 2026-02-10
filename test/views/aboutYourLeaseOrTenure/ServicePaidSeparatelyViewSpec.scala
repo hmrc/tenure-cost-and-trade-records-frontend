@@ -23,16 +23,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class ServicePaidSeparatelyViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "servicePaidSeparately"
+  private val messageKeyPrefix = "servicePaidSeparately"
 
-  override val form = ServicePaidSeparatelyForm.servicePaidSeparatelyForm
+  override val form: Form[String] = ServicePaidSeparatelyForm.servicePaidSeparatelyForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
 
-  def createView = () =>
+  private def createView = () =>
     servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[String]) =>
+  private def createViewUsingForm = (form: Form[String]) =>
     servicePaidSeparatelyView(form, None, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Service paid separately view" should {

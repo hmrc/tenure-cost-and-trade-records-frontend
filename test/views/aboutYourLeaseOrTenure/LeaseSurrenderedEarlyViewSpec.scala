@@ -25,15 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class LeaseSurrenderedEarlyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "leaseSurrenderedEarly"
+  private val messageKeyPrefix = "leaseSurrenderedEarly"
 
-  override val form = LeaseSurrenderedEarlyForm.leaseSurrenderedEarlyForm
+  override val form: Form[AnswersYesNo] = LeaseSurrenderedEarlyForm.leaseSurrenderedEarlyForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
 
-  def createView = () => leaseSurrenderedEarlyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView = () =>
+    leaseSurrenderedEarlyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     leaseSurrenderedEarlyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Lease surrendered early view" should {

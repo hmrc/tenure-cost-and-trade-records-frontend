@@ -24,17 +24,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetting] {
 
-  def TelecomMastLettingView = inject[views.html.aboutfranchisesorlettings.telecomMastLetting]
+  private def TelecomMastLettingView = inject[views.html.aboutfranchisesorlettings.telecomMastLetting]
 
-  val messageKeyPrefix = "label.telecomMastLetting"
-  val backLink         = controllers.routes.TaskListController.show().url
+  private val messageKeyPrefix = "label.telecomMastLetting"
+  private val backLink         = controllers.routes.TaskListController.show().url
 
-  override val form = TelecomMastLettingForm.theForm
+  override val form: Form[TelecomMastLetting] = TelecomMastLettingForm.theForm
 
-  def createView = () =>
+  private def createView = () =>
     TelecomMastLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[TelecomMastLetting]) =>
+  private def createViewUsingForm = (form: Form[TelecomMastLetting]) =>
     TelecomMastLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Telecom Mast letting view" must {

@@ -17,6 +17,7 @@
 package form
 
 import play.api.data.Forms.text
+import play.api.data.Mapping
 
 object AboutYouEmailMapping {
 
@@ -24,7 +25,7 @@ object AboutYouEmailMapping {
 
   val invalidEmailRegex = """^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"""
 
-  def validateAboutYouEmail =
+  def validateAboutYouEmail: Mapping[String] =
     text
       .verifying(Errors.contactEmailAboutYouRequired, eA => eA.nonEmpty)
       .verifying(

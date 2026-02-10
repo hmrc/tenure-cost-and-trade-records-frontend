@@ -17,13 +17,14 @@
 package form
 
 import play.api.data.Forms.{default, text}
+import play.api.data.Mapping
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 import scala.util.Try
 
 object ElectricVehicleChargingPointsMapping {
 
-  def validateSpacesOrBays =
+  def validateSpacesOrBays: Mapping[Int] =
     default(text, "")
       .verifying(nonNegativeNumberConstraint())
       .transform[Int](

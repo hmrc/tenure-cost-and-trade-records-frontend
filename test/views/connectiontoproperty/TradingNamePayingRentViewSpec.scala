@@ -26,17 +26,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "tradingNamePayingRent"
+  private val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
-  val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
+  override val form: Form[AnswersYesNo] = TradingNamePayingRentForm.theForm
 
-  override val form: Form[AnswersYesNo] =
-    TradingNamePayingRentForm.theForm
-
-  def createView: () => Html = () =>
+  private def createView: () => Html = () =>
     tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html =
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
     (form: Form[AnswersYesNo]) =>
       tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
 

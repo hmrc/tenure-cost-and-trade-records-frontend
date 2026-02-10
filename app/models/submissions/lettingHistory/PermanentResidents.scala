@@ -41,8 +41,7 @@ trait PermanentResidents:
             else
               // the given value is changing the old one
               changeSession {
-                if newValue == true
-                then
+                if newValue then
                   lettingHistory.copy(
                     hasPermanentResidents = Some(true)
                   )

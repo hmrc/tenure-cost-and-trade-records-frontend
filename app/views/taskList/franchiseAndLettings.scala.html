@@ -48,7 +48,7 @@
     controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
     section4Completed,
     pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-    cannotStartYet = !section3Completed.map(_.toBoolean).getOrElse(false)
+    cannotStartYet = !section3Completed.exists(_.toBoolean)
    )
   } else {
    @if(!(Seq(FOR6020) contains forType)) {
@@ -56,7 +56,7 @@
      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
      section4Completed,
      pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-     cannotStartYet = !section3Completed.map(_.toBoolean).getOrElse(false)
+     cannotStartYet = !section3Completed.exists(_.toBoolean)
     )
    }
    @if(forType == FOR6020) {
@@ -64,7 +64,7 @@
       controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
       section4Completed,
       pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-      cannotStartYet = !section3Completed.map(_.toBoolean).getOrElse(false)
+      cannotStartYet = !section3Completed.exists(_.toBoolean)
      )
     }
    }

@@ -28,11 +28,12 @@ import views.html.taskList.taskList
 
 class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
 
-  val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
-  val mockTaskListView                    = mock[taskList]
+  private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
+  private val mockTaskListView                    = mock[taskList]
+
   when(mockTaskListView()(using any, any)).thenReturn(HtmlFormat.empty)
 
-  val checkYourAnswersTentingPitchesController = new CheckYourAnswersTentingPitchesController(
+  private val checkYourAnswersTentingPitchesController = new CheckYourAnswersTentingPitchesController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersTentingPitchesView,
@@ -44,7 +45,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  val checkYourAnswersTentingPitchesControllerYesTent = new CheckYourAnswersTentingPitchesController(
+  private val checkYourAnswersTentingPitchesControllerYesTent = new CheckYourAnswersTentingPitchesController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersTentingPitchesView,
@@ -56,7 +57,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  val checkYourAnswersTentingPitchesControllerNoTent = new CheckYourAnswersTentingPitchesController(
+  private val checkYourAnswersTentingPitchesControllerNoTent = new CheckYourAnswersTentingPitchesController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersTentingPitchesView,

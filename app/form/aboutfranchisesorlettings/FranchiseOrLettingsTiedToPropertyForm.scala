@@ -21,16 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object FranchiseOrLettingsTiedToPropertyForm {
+object FranchiseOrLettingsTiedToPropertyForm:
 
-  lazy val baseFranchiseOrLettingsTiedToPropertyForm: Form[AnswersYesNo] = Form(
-    baseFranchiseOrLettingsTiedToPropertyMapping
-  )
-
-  val baseFranchiseOrLettingsTiedToPropertyMapping = mapping(
+  private val baseFranchiseOrLettingsTiedToPropertyMapping = mapping(
     "franchiseOrLettingsTiedToProperty" -> createYesNoType("error.franchiseOrLettings.missing")
   )(x => x)(b => Some(b))
 
-  val franchiseOrLettingsTiedToPropertyForm = Form(baseFranchiseOrLettingsTiedToPropertyMapping)
-
-}
+  val franchiseOrLettingsTiedToPropertyForm: Form[AnswersYesNo] = Form(baseFranchiseOrLettingsTiedToPropertyMapping)

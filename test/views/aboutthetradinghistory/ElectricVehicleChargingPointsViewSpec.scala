@@ -26,18 +26,19 @@ import views.behaviours.QuestionViewBehaviours
 
 class ElectricVehicleChargingPointsViewSpec extends QuestionViewBehaviours[ElectricVehicleChargingPoints] {
 
-  val messageKeyPrefix = "electricVehicleChargingPoints"
+  private val messageKeyPrefix = "electricVehicleChargingPoints"
 
-  val backLink = controllers.routes.LoginController.show.url
+  private val backLink = controllers.routes.LoginController.show.url
 
   override val form: Form[ElectricVehicleChargingPoints] =
     ElectricVehicleChargingPointsForm.electricVehicleChargingPointsForm
 
-  def createView: () => Html = () =>
+  private def createView: () => Html = () =>
     electricVehicleChargingPointsView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[ElectricVehicleChargingPoints] => Html = (form: Form[ElectricVehicleChargingPoints]) =>
-    electricVehicleChargingPointsView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[ElectricVehicleChargingPoints] => Html =
+    (form: Form[ElectricVehicleChargingPoints]) =>
+      electricVehicleChargingPointsView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   "Electric Vehicle Charging Points view" must {
 

@@ -27,20 +27,22 @@ import views.behaviours.QuestionViewBehaviours
 
 class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentRentFixed] {
 
-  val messageKeyPrefix = "howIsCurrentRentFixed"
+  private val messageKeyPrefix = "howIsCurrentRentFixed"
 
-  val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
-    SessionRequest(prefilledFull6020Session, fakeRequest)
+  private val sessionRequest6020full = SessionRequest(prefilledFull6020Session, fakeRequest)
 
-  override val form = HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm(using messages)
+  override val form: Form[HowIsCurrentRentFixed] = HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm(using messages)
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+  private val backLink =
+    controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
 
-  def createView     = () => howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
-  def createView6020 = () =>
+  private def createView = () =>
+    howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+
+  private def createView6020 = () =>
     howIsCurrentRentFixedView(form, backLink, Summary("99996020001"))(using sessionRequest6020full, messages)
 
-  def createViewUsingForm = (form: Form[HowIsCurrentRentFixed]) =>
+  private def createViewUsingForm = (form: Form[HowIsCurrentRentFixed]) =>
     howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "How is current rennt fixed view" must {

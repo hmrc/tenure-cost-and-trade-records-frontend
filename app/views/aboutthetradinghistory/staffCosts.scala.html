@@ -44,7 +44,7 @@
 
     <p class="govuk-body govuk-!-font-weight-bold">
         @messages(s"staffCosts.$key") <br>
-        @if(hint == true) { <span class="govuk-caption-m">@messages(s"staffCosts.$key.hint")</span> }
+        @if(hint) { <span class="govuk-caption-m">@messages(s"staffCosts.$key.hint")</span> }
     </p>
 }
 

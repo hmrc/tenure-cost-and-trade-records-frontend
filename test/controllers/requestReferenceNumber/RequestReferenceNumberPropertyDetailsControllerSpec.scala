@@ -176,16 +176,17 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = None
   ) extends MockAddressLookup:
 
-    val repository = mock[SessionRepo]
+    val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller = new RequestReferenceNumberPropertyDetailsController(
-      mcc = stubMessagesControllerComponents(),
-      navigator = inject[RequestReferenceNumberNavigator],
-      theView = inject[RequestReferenceNumberPropertyDetailsView],
-      preEnrichedActionRefiner(
-        requestReferenceNumberDetails = requestReferenceNumberDetails
-      ),
-      addressLookupConnector,
-      repository
-    )
+    val controller: RequestReferenceNumberPropertyDetailsController =
+      new RequestReferenceNumberPropertyDetailsController(
+        mcc = stubMessagesControllerComponents(),
+        navigator = inject[RequestReferenceNumberNavigator],
+        theView = inject[RequestReferenceNumberPropertyDetailsView],
+        preEnrichedActionRefiner(
+          requestReferenceNumberDetails = requestReferenceNumberDetails
+        ),
+        addressLookupConnector,
+        repository
+      )

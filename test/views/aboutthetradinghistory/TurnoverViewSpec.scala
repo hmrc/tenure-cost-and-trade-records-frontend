@@ -28,20 +28,21 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
 
   val messageKeyPrefix = "turnover"
 
-  override val form = TurnoverForm.turnoverForm(
+  override val form: Form[Seq[TurnoverSection]] = TurnoverForm.turnoverForm(
     3,
     Seq(LocalDate.of(2021, 12, 31), LocalDate.of(2022, 12, 31), LocalDate.of(2023, 12, 31))
   )(using messages)
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
-  val sessionRequest6015 = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val sessionRequest6015 = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
 
-  def createView = () => turnoverView(form)(using sessionRequest, messages)
+  private def createView = () => turnoverView(form)(using sessionRequest, messages)
 
-  def createView6015 = () => turnoverView(form)(using sessionRequest6015, messages)
+  private def createView6015 = () => turnoverView(form)(using sessionRequest6015, messages)
 
-  def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) => turnoverView(form)(using sessionRequest, messages)
+  private def createViewUsingForm = (form: Form[Seq[TurnoverSection]]) =>
+    turnoverView(form)(using sessionRequest, messages)
 
   "Turnover view" must {
 

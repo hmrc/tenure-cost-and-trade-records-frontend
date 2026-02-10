@@ -24,17 +24,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[AdvertisingRightLetting] {
 
-  def advertisingRightLettingView = inject[views.html.aboutfranchisesorlettings.advertisingRightLetting]
+  private def advertisingRightLettingView = inject[views.html.aboutfranchisesorlettings.advertisingRightLetting]
 
-  val messageKeyPrefix = "label.advertisingRightLetting"
-  val backLink         = controllers.routes.TaskListController.show().url
+  private val messageKeyPrefix = "label.advertisingRightLetting"
+  private val backLink         = controllers.routes.TaskListController.show().url
 
-  override val form = AdvertisingRightLettingForm.theForm
+  override val form: Form[AdvertisingRightLetting] = AdvertisingRightLettingForm.theForm
 
-  def createView = () =>
+  private def createView = () =>
     advertisingRightLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AdvertisingRightLetting]) =>
+  private def createViewUsingForm = (form: Form[AdvertisingRightLetting]) =>
     advertisingRightLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Advertising right letting view" must {

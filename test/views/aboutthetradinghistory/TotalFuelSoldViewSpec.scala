@@ -24,16 +24,18 @@ import views.behaviours.QuestionViewBehaviours
 
 class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
 
-  val backLink = controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
+  private val backLink = controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
 
-  val messageKeyPrefix = "totalFuelSold"
+  private val messageKeyPrefix = "totalFuelSold"
 
-  override val form = TotalFuelSoldForm.totalFuelSoldForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
-  def createView    = () => totalFuelSoldView(form, backLink)(using sessionRequest, messages)
+  override val form: Form[Seq[TotalFuelSold]] =
+    TotalFuelSoldForm.totalFuelSoldForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
 
-  def createViewUsingForm = (form: Form[Seq[TotalFuelSold]]) =>
+  private def createView = () => totalFuelSoldView(form, backLink)(using sessionRequest, messages)
+
+  private def createViewUsingForm = (form: Form[Seq[TotalFuelSold]]) =>
     totalFuelSoldView(form, backLink)(using sessionRequest, messages)
 
   "Total Fuel Costs view" should {

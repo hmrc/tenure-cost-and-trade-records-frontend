@@ -33,9 +33,10 @@ import scala.concurrent.Future.successful
 class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
-    val repository = mock[SessionRepo]
+    val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
-    val controller = new AdvertisingRightLettingController(
+
+    val controller: AdvertisingRightLettingController = new AdvertisingRightLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,

@@ -26,7 +26,7 @@ import javax.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
 case class WithSessionRefiner @Inject() (
-  @Named("session") val sessionRepository: SessionRepo
+  @Named("session") sessionRepository: SessionRepo
 )(implicit override val executionContext: ExecutionContext)
     extends ActionRefiner[Request, SessionRequest] {
 

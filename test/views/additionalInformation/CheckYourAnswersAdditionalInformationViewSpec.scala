@@ -24,18 +24,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "checkYourAnswersAdditionalInformation"
+  private val messageKeyPrefix = "checkYourAnswersAdditionalInformation"
 
-  override val form = CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
+  override val form: Form[AnswersYesNo] =
+    CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 
-  val backLink = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show().url
+  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
-
-  def createView = () =>
+  private def createView = () =>
     checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(using sessionRequest, messages)
 
   "Check Your Answers Additional Information view" must {

@@ -25,17 +25,18 @@ import views.behaviours.QuestionViewBehaviours
 
 class UltimatelyResponsibleOutsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleOutsideRepairs] {
 
-  val messageKeyPrefix = "ultimatelyResponsibleOR"
+  private val messageKeyPrefix = "ultimatelyResponsibleOR"
 
-  override val form = UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
+  override val form: Form[UltimatelyResponsibleOutsideRepairs] =
+    UltimatelyResponsibleOutsideRepairsForm.ultimatelyResponsibleOutsideRepairsForm
 
   private val backLink       =
     controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show().url
   private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  def createView = () => ultimatelyResponsibleOutsideRepairsView(form, backLink)(using sessionRequest, messages)
+  private def createView = () => ultimatelyResponsibleOutsideRepairsView(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm = (form: Form[UltimatelyResponsibleOutsideRepairs]) =>
+  private def createViewUsingForm = (form: Form[UltimatelyResponsibleOutsideRepairs]) =>
     ultimatelyResponsibleOutsideRepairsView(form, backLink)(using sessionRequest, messages)
 
   "Ultimately responsible view" must {

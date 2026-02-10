@@ -107,7 +107,7 @@ trait TestBaseSpec
   )
 
   extension (request: FakeRequest[AnyContentAsEmpty.type])
-    def withQueryString(elems: (String, Seq[String])*) =
+    def withQueryString(elems: (String, Seq[String])*): FakeRequest[AnyContentAsEmpty.type] =
       request.withTarget(RequestTarget("", "", Map(elems*)))
 
   def messages: Messages = messagesApi.preferred(fakeRequest)

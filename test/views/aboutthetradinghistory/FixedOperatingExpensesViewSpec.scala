@@ -41,14 +41,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOperatingExpenses]] {
 
-  val messageKeyPrefix       = "fixedOperatingExpenses"
-  private val sessionRequest = SessionRequest(baseFilled6015Session, fakeRequest)
+  private val messageKeyPrefix = "fixedOperatingExpenses"
+  private val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
 
-  override val form = FixedOperatingExpensesForm.fixedOperatingExpensesForm(Seq("2026", "2025", "2024"))(using messages)
+  override val form: Form[Seq[FixedOperatingExpenses]] =
+    FixedOperatingExpensesForm.fixedOperatingExpensesForm(Seq("2026", "2025", "2024"))(using messages)
 
-  def createView = () => fixedOperatingExpensesView(form)(using sessionRequest, messages)
+  private def createView = () => fixedOperatingExpensesView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[Seq[FixedOperatingExpenses]] => Html =
+  private def createViewUsingForm: Form[Seq[FixedOperatingExpenses]] => Html =
     (form: Form[Seq[FixedOperatingExpenses]]) => fixedOperatingExpensesView(form)(using sessionRequest, messages)
 
   "Fixed Operating Expenses view" must {

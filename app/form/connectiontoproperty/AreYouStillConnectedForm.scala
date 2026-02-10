@@ -22,7 +22,7 @@ import play.api.data.Forms.mapping
 
 object AreYouStillConnectedForm {
 
-  val baseAreYouStillConnectedMapping = mapping(
+  private val baseAreYouStillConnectedMapping = mapping(
     "isRelated" -> addressConnectionType
   )(x => x)(b => Some(b))
 

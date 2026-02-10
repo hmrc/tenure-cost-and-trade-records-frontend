@@ -26,19 +26,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "rentIncludeTradeServices"
+  private val messageKeyPrefix = "rentIncludeTradeServices"
 
-  override val form = RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
+  override val form: Form[AnswersYesNo] = RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url
-
-  def createView = () =>
+  private def createView = () =>
     rentIncludeTradeServicesView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
-  def create6030View = () =>
+  private def create6030View = () =>
     rentIncludeTradeServicesView(form, FOR6030, Summary("99996030001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeTradeServicesView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent include trade services view" must {

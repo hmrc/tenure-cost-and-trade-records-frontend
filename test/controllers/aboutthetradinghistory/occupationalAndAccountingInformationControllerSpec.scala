@@ -27,13 +27,13 @@ import views.html.aboutthetradinghistory.whenDidYouFirstOccupy as WhenDidYouFirs
 
 class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit = mock[Audit]
+  private val mockAudit: Audit = mock[Audit]
 
-  val mockAboutYouNavigator: AboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
-  val mockWhenDidYouFirstOccupyView                          = mock[WhenDidYouFirstOccupyView]
+  private val mockAboutYouNavigator: AboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
+  private val mockWhenDidYouFirstOccupyView                          = mock[WhenDidYouFirstOccupyView]
   when(mockWhenDidYouFirstOccupyView.apply(any, any)(using any, any)).thenReturn(HtmlFormat.empty)
 
-  val aboutYourTradingHistoryController = new WhenDidYouFirstOccupyController(
+  private val aboutYourTradingHistoryController = new WhenDidYouFirstOccupyController(
     stubMessagesControllerComponents(),
     mockAudit,
     mockAboutYouNavigator,

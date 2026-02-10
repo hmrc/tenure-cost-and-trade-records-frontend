@@ -29,10 +29,11 @@ import scala.concurrent.ExecutionContext
 
 class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
 
-  val audit = mock[Audit]
+  private val audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new ConnectionToPropertyNavigator(audit)
+  private val navigator = new ConnectionToPropertyNavigator(audit)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

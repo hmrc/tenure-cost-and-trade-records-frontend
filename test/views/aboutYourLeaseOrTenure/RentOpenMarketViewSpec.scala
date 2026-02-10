@@ -27,20 +27,22 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "rentOpenMarketValue"
+  private val messageKeyPrefix = "rentOpenMarketValue"
 
-  override val form = RentOpenMarketValueForm.rentOpenMarketValuesForm
+  override val form: Form[AnswersYesNo] = RentOpenMarketValueForm.rentOpenMarketValuesForm
 
-  val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
+  private val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
     SessionRequest(prefilledFull6020Session, fakeRequest)
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
 
-  def createView     = () => rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
-  def createView6020 = () =>
+  private def createView = () =>
+    rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+
+  private def createView6020 = () =>
     rentOpenMarketValueView(form, backLink, Summary("99996020001"))(using sessionRequest6020full, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   "Rent open market view" must {

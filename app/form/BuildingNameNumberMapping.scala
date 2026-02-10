@@ -17,10 +17,11 @@
 package form
 
 import play.api.data.Forms.text
+import play.api.data.Mapping
 
 object BuildingNameNumberMapping {
 
-  def validateBuildingNameNumber = {
+  def validateBuildingNameNumber: Mapping[String] = {
 
     val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
 

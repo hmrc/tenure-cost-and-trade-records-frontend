@@ -26,14 +26,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleInsideRepairs] {
 
-  val messageKeyPrefix = "ultimatelyResponsibleIR"
+  private val messageKeyPrefix = "ultimatelyResponsibleIR"
 
-  override val form = UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
+  override val form: Form[UltimatelyResponsibleInsideRepairs] =
+    UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 
-  def createView = () =>
+  private def createView = () =>
     ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[UltimatelyResponsibleInsideRepairs]) =>
+  private def createViewUsingForm = (form: Form[UltimatelyResponsibleInsideRepairs]) =>
     ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Ultimately responsible view" must {

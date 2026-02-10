@@ -17,10 +17,11 @@
 package form
 
 import play.api.data.Forms.text
+import play.api.data.Mapping
 
 object CountyMapping {
 
-  def validateCounty = {
+  def validateCounty: Mapping[String] = {
 
     val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
 

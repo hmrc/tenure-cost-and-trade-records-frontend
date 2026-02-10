@@ -25,15 +25,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class PropertyUpdatesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
-  val messageKeyPrefix = "propertyUpdates"
+  private val messageKeyPrefix = "propertyUpdates"
 
-  override val form = PropertyUpdatesForm.propertyUpdatesForm
+  override val form: Form[AnswersYesNo] = PropertyUpdatesForm.propertyUpdatesForm
 
-  val backLink = controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
 
-  def createView = () => propertyUpdatesView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createView = () =>
+    propertyUpdatesView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     propertyUpdatesView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
   "Property update view" should {
