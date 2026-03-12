@@ -1,9 +1,9 @@
 
 # tenure-cost-and-trade-records-frontend
 
-This is service provides the frontend service for sending trade and cost data to the VOA for business rateable value.
+This is service provides the frontend service for sending trade and cost data to the VO for business rateable value.
 
-This service is still under development but hoping to move to a limited private beta in November 2023. This is a limited private beta as we are not able to integrate with the new VOA systems until late 2024.
+This service is still under development but hoping to move to a limited private beta in November 2023. This is a limited private beta as we are not able to integrate with the new VO systems until late 2024.
 
 ## Nomenclature
 
@@ -32,8 +32,6 @@ You can run the unit test and produce the test coverage report as follows:
 ```shell
 sbt ";clean;coverage;test;it:test;coverageReport"
 ```
-
-Then point your browser to the [`./target/scala-3.5.1/scoverage-report/index.html`](./target/scala-3.5.1/scoverage-report/index.html) file and read the report.
 
 You can configure the test coverage settings by editing the [`CodeCoverageSettings.scala`](./project/CodeCoverageSettings.scala) file, for example by increasing (or decreasing) the `coverageMinimumStmtTotal` percentage. Read the official [scalac-scoverage-plugin](https://github.com/scoverage/scalac-scoverage-plugin?tab=readme-ov-file#scalac-scoverage-plugin) and [sbt-scoverage](https://github.com/scoverage/sbt-scoverage?tab=readme-ov-file#minimum-coverage) user guides to understand more.  
 
