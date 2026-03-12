@@ -1,20 +1,16 @@
-import play.core.PlayVersion
 import sbt.*
 
 object AppDependencies {
 
-  val bootstrapVersion              = "10.5.0"
-  val playFrontendVersion           = "12.31.0"
-  val playConditionalMappingVersion = "3.4.0"
+  val bootstrapVersion              = "10.7.0"
+  val playFrontendVersion           = "12.32.0"
+  val playConditionalMappingVersion = "3.5.0"
   val mongoVersion                  = "2.12.0"
   val cryptoJsonVersion             = "8.4.0"
 
   // Test dependencies
-  val scalatestPlusPlayVersion       = "7.0.2"
-  val scalatestVersion               = "3.2.19"
   val scalaTestPlusScalaCheckVersion = "3.2.19.0"
   val scalaTestPlusMockitoVersion    = "3.2.19.0"
-  val flexMarkVersion                = "0.64.8"
   val jsoupVersion                   = "1.22.1"
 
   private val compile = Seq(
@@ -28,12 +24,8 @@ object AppDependencies {
   private val test = Seq(
     "uk.gov.hmrc"            %% "bootstrap-test-play-30"  % bootstrapVersion               % Test,
     "uk.gov.hmrc.mongo"      %% "hmrc-mongo-test-play-30" % mongoVersion                   % Test,
-    "org.playframework"      %% "play-test"               % PlayVersion.current            % Test,
-    "org.scalatest"          %% "scalatest"               % scalatestVersion               % Test,
-    "org.scalatestplus.play" %% "scalatestplus-play"      % scalatestPlusPlayVersion       % Test,
     "org.scalatestplus"      %% "scalacheck-1-18"         % scalaTestPlusScalaCheckVersion % Test,
     "org.scalatestplus"      %% "mockito-5-12"            % scalaTestPlusMockitoVersion    % Test,
-    "com.vladsch.flexmark"    % "flexmark-all"            % flexMarkVersion                % Test, // for scalatest 3.2.x
     "org.jsoup"               % "jsoup"                   % jsoupVersion                   % Test
   )
 

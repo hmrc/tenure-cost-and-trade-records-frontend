@@ -23,7 +23,7 @@ import scala.language.reflectiveCalls
 import scala.reflect.Selectable.reflectiveSelectable
 
 /**
-  * Handles form field binding and unbinding.
+  * Provides functionality for binding and unbinding enumeration fields to and from forms.
   *
   * @author Yuriy Tumakha
   */
