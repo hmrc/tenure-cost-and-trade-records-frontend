@@ -130,10 +130,10 @@ label.section.additionalInformation = Gwybodaeth ychwanegol
 
 # DUMMY START PAGE FULL INFORMATION
 ##############################
-start.page.heading = Send your business trade and cost information to the Valuation Office Agency
-start.inset = If you do not send the information within 56 days of getting the letter the VOA sent to you, you may have to pay a penalty.
+start.page.heading = Send your business trade and cost information to the Valuation Office
+start.inset = If you do not send the information within 56 days of getting the letter the VO sent to you, you may have to pay a penalty.
 start.subheading = What you’ll need to begin
-start.item1 = the reference number and postcode from the letter you were sent by the Valuation Office Agency (VOA)
+start.item1 = the reference number and postcode from the letter you were sent by the Valuation Office (VO)
 start.item2 = the postcode of the property as printed on the letter - if the postcode shown is incorrect, you can let us know during your declaration
 start.subheading2 = What you’ll be asked
 start.item3 = whether your business owns the property, or occupies it under a lease or agreement
@@ -148,9 +148,9 @@ start.desc3 = If you need to stop for any reason, select save as draft. You'll b
 start.subheading4 = If you need help
 start.telephone = Telephone: 03000 501 262
 start.openingDays = Open weekdays, 9:00am to 4:30pm
-start.email = Email: <a href="mailto:formhelp@voa.gov.uk?subject=Ex-owners/occupiers%20form&body=Please%20email%20us%20your%20reference%20number,%20email%20address%20and/or%20telephone%20number%20only.%20If%20we%20require%20any%20further%20information%20we%20will%20contact%20you%20in%20due%20course." target="_blank" id="mailto" onclick="gasend()">formhelp@voa.gov.uk</a>
+start.email = Email: <a href="mailto:formhelpvo@hmrc.gov.uk?subject=Ex-owners/occupiers%20form&body=Please%20email%20us%20your%20reference%20number,%20email%20address%20and/or%20telephone%20number%20only.%20If%20we%20require%20any%20further%20information%20we%20will%20contact%20you%20in%20due%20course." target="_blank" id="mailto" onclick="gasend()">formhelpvo@hmrc.gov.uk</a>
 start.subheading5 = Alternative formats
-start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href="{0}" class="govuk-link">download a PDF version</a> of this declaration which you can complete and return to the VOA.
+start.desc5 = If you would like information in an alternative format such as large print, braille, or something else, let us know by contacting us at 03000 501 501 (text relay prefix 18001). You can also <a href="{0}" class="govuk-link">download a PDF version</a> of this declaration which you can complete and return to the VO.
 start.subheading6 = Explore the topic
 start.desc6 = <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">Find a business rates valuation</a> for any business property in England and Wales.
 start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
@@ -166,7 +166,7 @@ error.410.heading=The page you requested is no longer available
 error.500.heading=There is a problem with the page and it cannot be displayed. Please try again later.
 error.403.heading=The reference number you entered does not match our records. Please check and try again.
 error.409.heading=You cannot edit this information because it has already been submitted.
-error.409.body=You can email us at <a href="mailto:formhelp@voa.gov.uk">formhelp@voa.gov.uk</a> if you need further help.
+error.409.body=You can email us at <a href="mailto:formhelpvo@hmrc.gov.uk">formhelpvo@hmrc.gov.uk</a> if you need further help.
 error.json.page.heading = Sorry, there is a problem with this service
 error.json.page.title = Sorry, there is a problem with this service
 error.json.page.p1 = We were unable to retrieve the answers you saved due to a problem with this service. Unfortunately, this means you must start your declaration again.
@@ -175,7 +175,7 @@ error.json.page.start = Start again
 #LOGIN
 ##############################
 login.heading = Beth yw’ch cyfeirnod a’ch cod post?
-label.letter = Gallwch ddod o hyd i’ch cyfeirnod a’ch cod post yn y llythyr a gawsoch gan y VOA.
+label.letter = Gallwch ddod o hyd i’ch cyfeirnod a’ch cod post yn y llythyr a gawsoch gan y VO.
 label.referenceNumber = Cyfeirnod
 hint.referenceNumber = Er enghraifft, 10000001/101.
 label.postcode = Cod post
@@ -193,10 +193,10 @@ test.text = Welcome
 #LOGIN- Invalid Credentials
 ##############################
 heading.login.loginFailed=The details you have entered do not match our records
-error.login.failed=Enter the reference number and postcode as they appear in the letter you received from the VOA.
+error.login.failed=Enter the reference number and postcode as they appear in the letter you received from the VO.
 error.login.warning=<b>Warning:</b> You only have 1 remaining attempt to enter the correct details. For security, access to this service is withdrawn after 2 hours when you exceed the maximum number of incorrect login attempts.
 error.login.attemptsleft= You have {0} remaining attempts to enter the correct details before your account is locked for 2 hours.
-error.login.attemptsleftSubheading = If the system does not recognise you reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
+error.login.attemptsleftSubheading = If the system does not recognise you reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VO</a>
 error.login.1.attempt.left=You have one remaining attempt to enter the correct details before your account is locked for 2 hours.
 heading.login.lockedOut=Access withdrawn for 2 hours
 error.login.lockedOut=You are now locked out. You can try again after 2 hours.
@@ -211,11 +211,11 @@ logout.loginAgain=Log in again
 # NO REFERENCE NUMBER
 ##############################
 requestReferenceNumber.heading = Os nad oes gennych rif cyfeirnod
-requestReferenceNumber.subheading = Os nad ydych wedi cael llythyr gan y VOA
-requestReferenceNumber.p1 = Dim ond pan fydd y VOA wedi gofyn i chi wneud hynny y bydd angen i chi ddatgan eich masnach busnes a gwybodaeth am gostau. Os credwch y dylech fod wedi cael llythyr, gallwch ofyn am un arall gan y VOA.
+requestReferenceNumber.subheading = Os nad ydych wedi cael llythyr gan y VO
+requestReferenceNumber.p1 = Dim ond pan fydd y VO wedi gofyn i chi wneud hynny y bydd angen i chi ddatgan eich masnach busnes a gwybodaeth am gostau. Os credwch y dylech fod wedi cael llythyr, gallwch ofyn am un arall gan y VO.
 requestReferenceNumber.subheading2 = Os oes angen llythyr arall arnoch
-requestReferenceNumber.p2 = Os nad oes gennych chi fynediad at eich llythyr gan y VOA, neu os nad ydych wedi cael un ond yn meddwl y dylech fod wedi, gall y VOA anfon un arall. Cwblhewch y ffurflen ganlynol a bydd y VOA yn ailanfon un arall.
-requestReferenceNumber.p3 = Dim ond i’r cyfeiriad lle cawsant eu hanfon yn wreiddiol y gallwn ailanfon llythyrau. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Cysylltwch â’r VOA (opens in new tab)</a> os yw eich busnes wedi newid cyfeiriad yn ddiweddar.
+requestReferenceNumber.p2 = Os nad oes gennych chi fynediad at eich llythyr gan y VO, neu os nad ydych wedi cael un ond yn meddwl y dylech fod wedi, gall y VO anfon un arall. Cwblhewch y ffurflen ganlynol a bydd y VO yn ailanfon un arall.
+requestReferenceNumber.p3 = Dim ond i’r cyfeiriad lle cawsant eu hanfon yn wreiddiol y gallwn ailanfon llythyrau. <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">Cysylltwch â’r VO (opens in new tab)</a> os yw eich busnes wedi newid cyfeiriad yn ddiweddar.
 requestReferenceNumber.subheading3 = Beth yw manylion yr eiddo sy’n gysylltiedig â’r cyfeirnod coll?
 requestReferenceNumber.address.lookupPageHeading = Beth yw cyfeiriad yr eiddo?
 requestReferenceNumber.address.selectPageHeading = Dewiswch gyfeiriad yr eiddo
@@ -237,7 +237,7 @@ error.requestReferenceNumberContactDetailsFullName.required = Enter your name
 # REFERENCE NUMBER
 ###############################
 referenceNumber.heading = Beth yw’ch cyfeirnod?
-referenceNumber.paragraph = Bydd angen y rhif cyfeirnod arnoch o’r llythyr a gawsoch gan y VOA.
+referenceNumber.paragraph = Bydd angen y rhif cyfeirnod arnoch o’r llythyr a gawsoch gan y VO.
 label.referenceNumber = Cyfeirnod
 error.referenceNumber.required = Enter your reference number
 hint.referenceNumber = Er enghraifft, 10000001/101.
@@ -275,7 +275,7 @@ guidance.sentence.when = When:
 guidance.sentence.whenRental = When the rental amount was fixed.
 
 guidance.sections.shared.startingDeclaration.a2.shared.overview.h1 = Overview
-guidance.sections.shared.overview.p1 = The Valuation Office Agency (VOA) is responsible for valuing every non-domestic property in England and Wales. To do this, the VOA sends forms of return to non-domestic premises which must be completed by the business or organisation operating from the property.
+guidance.sections.shared.overview.p1 = The Valuation Office (VO) is responsible for valuing every non-domestic property in England and Wales. To do this, the VO sends forms of return to non-domestic premises which must be completed by the business or organisation operating from the property.
 guidance.sections.shared.overview.p2 = People who should complete these declarations include:
 guidance.sections.shared.overview.li1 = businesses or organisations who own and occupy the property
 guidance.sections.shared.overview.li2 = businesses or organisations who occupy the property under a lease or agreement
@@ -469,8 +469,8 @@ downloadPdf.6048.label = VO6048 request for rental information: self-catering ho
 downloadPdf.6076.url = https://www.gov.uk/government/publications/vo-6076-request-for-rental-information-renewable-energy
 downloadPdf.6076.label = VO6076 request for rental information: Renewable Energy (opens in a new tab)
 downloadPdf.subheading = The reference number you entered does not match our records
-downloadPdf.no.download = Enter the reference number as it appears on the letter you received from the VOA.
-downloadPdf.retry = If the system does not recognise your reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VOA</a>
+downloadPdf.no.download = Enter the reference number as it appears on the letter you received from the VO.
+downloadPdf.retry = If the system does not recognise your reference number, <a href="https://www.gov.uk/contact-voa" class="govuk-link" target="_blank">contact the VO</a>
 downloadPdf.englishWelsh = Mae’r datganiad hwn ar gael ar ffurf PDF yn Gymraeg ac yn Saesneg
 downloadPdf.continueJourneyButton = Parhau â’r datganiad ar-lein
 
@@ -680,10 +680,10 @@ checkYourAnswersConnectionToVacantProperty.addLetting = Add or remove a letting
 # Confirmation Page Connection to Property
 ##########################################
 label.connectionToProperty.confirm.heading = Cais wedi’i anfon yn llwyddiannus
-label.connectionToProperty.requestRefNum = Mae eich cais i gael cyfeirnod wedi’i anfon at y VOA.
+label.connectionToProperty.requestRefNum = Mae eich cais i gael cyfeirnod wedi’i anfon at y VO.
 label.connectionToProperty.whatNext = Yr hyn sy’n digwydd nesaf
-label.connectionToProperty.reissued = Bydd llythyr cais am ddatganiad yn cael ei ailanfon os yw’r VOA wedi anfon un atoch yn ddiweddar.
-label.connectionToProperty.contact = Efallai y bydd angen i’r VOA gysylltu â chi os yw’r canlynol yn gywir:
+label.connectionToProperty.reissued = Bydd llythyr cais am ddatganiad yn cael ei ailanfon os yw’r VO wedi anfon un atoch yn ddiweddar.
+label.connectionToProperty.contact = Efallai y bydd angen i’r VO gysylltu â chi os yw’r canlynol yn gywir:
 list.connectionToProperty.p1 = nid yw’r cyfeiriad a roddwyd gennych yn cyfateb i’w cofnodion
 list.connectionToProperty.p2 = nid oes ganddynt gofnod o anfon llythyr atoch
 list.connectionToProperty.p3 = mae angen rhagor o wybodaeth arnynt
@@ -694,10 +694,10 @@ label.vacantProperty.emailConfirm = We have sent you a confirmation email.
 label.vacantProperty.saveCopyOfAnswers.1 = Save a copy of your answers (print or PDF download)
 label.vacantProperty.unableToRetrieveAnswers = You will be unable to retrieve your answers beyond this point
 label.vacantProperty.whatNext = What happens next
-vacantProperty.confirm.copy.list.1 = We have sent your declaration to the Valuation Office Agency.
+vacantProperty.confirm.copy.list.1 = We have sent your declaration to the Valuation Office.
 vacantProperty.confirm.copy.list.2 = They may need to contact you for further information.
-label.vacantProperty.reissued = You will be reissued with a declaration request letter if the VOA has sent you one recently.
-label.vacantProperty.contact = The VOA may need to contact you if:
+label.vacantProperty.reissued = You will be reissued with a declaration request letter if the VO has sent you one recently.
+label.vacantProperty.contact = The VO may need to contact you if:
 list.vacantProperty.p1 = the address you supplied does not match their records
 list.vacantProperty.p2 = they have no record of sending you a letter
 list.vacantProperty.p3 = they require further information
@@ -1691,7 +1691,7 @@ legalOrPlanningRestrictions.p1 = Rhaid i chi ddisgrifio unrhyw ffactorau eraill 
 legalOrPlanningRestrictions.list1 = businesses or organisations who own and occupy the property
 legalOrPlanningRestrictions.list2 = businesses or organisations who occupy the property under a lease or agreement
 legalOrPlanningRestrictions.list3 = landlords of a vacant property where no lease or agreement is in place
-legalOrPlanningRestrictions.p2 = The Valuation Office Agency (VOA) is responsible for valuing every non-domestic property in England and Wales. To do this, the VOA sends forms of return to non-domestic premises which must be completed by the business or organisation operating from the property.
+legalOrPlanningRestrictions.p2 = The Valuation Office (VO) is responsible for valuing every non-domestic property in England and Wales. To do this, the VO sends forms of return to non-domestic premises which must be completed by the business or organisation operating from the property.
 legalOrPlanningRestrictions.subheading = A oes unrhyw ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy?
 hint.legalOrPlanningRestrictions = For example, a break clause, contracting out of the Landlord and Tenant Act.
 error.legalOrPlanningRestrictions.missing = Dewiswch ‘do’ os oes unrhyw ffactorau eraill a allai fod wedi effeithio ar y rhent sy’n daladwy
@@ -1895,17 +1895,17 @@ lettingHistory.advertisingList.hasMoreWebsites.label = Would you like to add ano
 lettingHistory.advertisingList.hasMoreWebsites.required = Select yes if you would like to add another holiday lettings website
 
 lettingHistory.maxNumberReached.permanentResidents.heading = You have added the maximum of {0} permanent residents
-lettingHistory.maxNumberReached.permanentResidents.paragraph.1 = If you had {0} or more permanent residents during the specified time range, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.permanentResidents.paragraph.1 = If you had {0} or more permanent residents during the specified time range, the VO will contact you to collect the details you were unable to declare.
 lettingHistory.maxNumberReached.permanentResidents.link.1 = Check or update the {0} permanent residents
 lettingHistory.maxNumberReached.completedLettings.heading = You have added the maximum of {0} temporary occupiers
-lettingHistory.maxNumberReached.completedLettings.paragraph.1 = If you had {0} or more temporary occupiers during the specified time range, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.completedLettings.paragraph.1 = If you had {0} or more temporary occupiers during the specified time range, the VO will contact you to collect the details you were unable to declare.
 lettingHistory.maxNumberReached.completedLettings.link.1 = Check or update the {0} temporary occupiers
 lettingHistory.maxNumberReached.onlineAdvertising.heading = You have added the maximum of {0} holiday lettings websites
-lettingHistory.maxNumberReached.onlineAdvertising.paragraph.1 = If you advertise on {0} or more holiday lettings websites, the VOA will contact you to collect the details you were unable to declare.
+lettingHistory.maxNumberReached.onlineAdvertising.paragraph.1 = If you advertise on {0} or more holiday lettings websites, the VO will contact you to collect the details you were unable to declare.
 lettingHistory.maxNumberReached.onlineAdvertising.link.1 = Check or update the {0} holiday lettings websites
-lettingHistory.maxNumberReached.onlineAdvertising.understanding = I understand that the VOA will contact me about the details of the undeclared websites.
-lettingHistory.maxNumberReached.understanding = I understand that the VOA will contact me about the details I was unable to declare.
-lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VOA will contact you
+lettingHistory.maxNumberReached.onlineAdvertising.understanding = I understand that the VO will contact me about the details of the undeclared websites.
+lettingHistory.maxNumberReached.understanding = I understand that the VO will contact me about the details I was unable to declare.
+lettingHistory.maxNumberReached.understanding.required = You are required to confirm that the VO will contact you
 
 lettingHistory.intendedLettings.nights.heading = How many nights do you intend to let the property commercially between {0} and {1}?
 lettingHistory.intendedLettings.nights.hint = Enter the number 0 if you do not intend to let the property.
@@ -2059,20 +2059,20 @@ error.accommodationUnits.isEmpty = You must include details of at least one self
 # MAX LIST ITEMS #
 ##################
 maxListItems.addedMaximumListItems.heading = You have added the maximum of {0} {1}
-maxListItems.exceededMaxListItems.label = I confirm that the VOA will contact me about the details I was unable to declare.
+maxListItems.exceededMaxListItems.label = I confirm that the VO will contact me about the details I was unable to declare.
 maxListItems.addedMaximumListItems.link1 = Check or update the {0} {1}
-error.maxListItems.exceededListItems.required = You are required to confirm that the VOA will contact you regarding the remaining {0}
+error.maxListItems.exceededListItems.required = You are required to confirm that the VO will contact you regarding the remaining {0}
 ### LIST SPECIFIC MESSAGES ###
 maxListItems.AccommodationUnits = accommodation units
-maxListItems.addedMaximumAccommodationUnits.p1 = If advertise on {0} or more accommodation units, the VOA will contact you to collect the details you were unable to declare.
+maxListItems.addedMaximumAccommodationUnits.p1 = If advertise on {0} or more accommodation units, the VO will contact you to collect the details you were unable to declare.
 maxListItems.TradeServices = trade services
-maxListItems.addedMaximumTradeServices.p1 = If the number of trade services provided by the landlord and included in your rent is {0} or more, the VOA will contact you to collect the details you were unable to declare.
+maxListItems.addedMaximumTradeServices.p1 = If the number of trade services provided by the landlord and included in your rent is {0} or more, the VO will contact you to collect the details you were unable to declare.
 maxListItems.ServicesPaidSeparately = services that are paid for separately
-maxListItems.addedMaximumServicesPaidSeparately.p1 = If you pay separately for {0} or more services, the Valuation Office Agency (VOA) will contact you to obtain the information you were unable to provide.
+maxListItems.addedMaximumServicesPaidSeparately.p1 = If you pay separately for {0} or more services, the Valuation Office (VO) will contact you to obtain the information you were unable to provide.
 maxListItems.BunkerFuelCards = bunker fuel cards
-maxListItems.addedMaximumBunkerFuelCards.p1 = If you accept {0} or more bunker fuel cards, the Valuation Office Agency (VOA) will contact you to obtain the information you were unable to provide.
+maxListItems.addedMaximumBunkerFuelCards.p1 = If you accept {0} or more bunker fuel cards, the Valuation Office (VO) will contact you to obtain the information you were unable to provide.
 maxListItems.LowMarginFuelCards = low-margin fuel cards
-maxListItems.addedMaximumLowMarginFuelCards.p1 = If you accept {0} or more low-margin fuel cards, the Valuation Office Agency (VOA) will contact you to obtain the information you were unable to provide.
+maxListItems.addedMaximumLowMarginFuelCards.p1 = If you accept {0} or more low-margin fuel cards, the Valuation Office (VO) will contact you to obtain the information you were unable to provide.
 
 
 # 6010 TYPES
@@ -2105,7 +2105,7 @@ taskList.profitSummary = Profit summary
 declaration.heading = Nawr anfonwch eich datganiad
 declaration.information = Drwy gyflwyno’r datganiad hwn, rydych yn cadarnhau, hyd eithaf eich gwybodaeth, fod y manylion rydych chi’n eu darparu yn gywir.
 request.heading = Anfonwch eich cais nawr
-request.information = Gwiriwch fod y manylion a roddwyd gennych yn gywir, oherwydd efallai y bydd angen i’r VOA gysylltu â chi ynglŷn â’ch cais.
+request.information = Gwiriwch fod y manylion a roddwyd gennych yn gywir, oherwydd efallai y bydd angen i’r VO gysylltu â chi ynglŷn â’ch cais.
 hint.declaration = Gellid mynd â chi i’r llys os ydych yn cyflwyno gwybodaeth anwir
 taskList.fuelSales = Fuel sales
 taskList.bunkerdFuel = Bunkered fuel
@@ -3765,17 +3765,17 @@ maxOf5Lettings.concessionOrFranchise.heading = Sorry, this service can only reco
 maxOf5Lettings.concessionOrFranchise.content = concessions or franchises
 maxOf5Lettings.rentalIncome.heading = You have added the maximum of 5 sources of rental income
 maxOf5Lettings.rentalIncome.content = sources of rental income
-maxOf5Lettings.contact = If you have 6 or more {0}, the VOA will contact you to collect their information.
-maxOf5Lettings.contact.6030 = This service has some storage restrictions during testing and development. If you have 6 or more sources of rental income at the property, the VOA will contact you for the details you were unable to declare.
-maxOf5Lettings.rentalIncome.confirm = I confirm that I understand the VOA will contact me regarding the remaining {0}
-maxOf5Lettings.rentalIncome.6030.confirm = I understand that the VOA will contact me for the details of the undeclared sources of rental income.
-maxOf5Lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining businesses.
-maxOf5Lettings.lettings.confirm = I confirm that I understand the VOA will contact me regarding the remaining lettings.
+maxOf5Lettings.contact = If you have 6 or more {0}, the VO will contact you to collect their information.
+maxOf5Lettings.contact.6030 = This service has some storage restrictions during testing and development. If you have 6 or more sources of rental income at the property, the VO will contact you for the details you were unable to declare.
+maxOf5Lettings.rentalIncome.confirm = I confirm that I understand the VO will contact me regarding the remaining {0}
+maxOf5Lettings.rentalIncome.6030.confirm = I understand that the VO will contact me for the details of the undeclared sources of rental income.
+maxOf5Lettings.confirm = I confirm that I understand the VO will contact me regarding the remaining businesses.
+maxOf5Lettings.lettings.confirm = I confirm that I understand the VO will contact me regarding the remaining lettings.
 maxOf5Lettings.link = Check or update the 5 added businesses
 maxOf5Lettings.lettings.link = Check or update the 5 added lettings
 maxOf5Lettings.rentalIncome.link = Check or update the 5 added sources of rental income
 maxOf5Lettings.rentalIncome.6030.link = Check or update the sources of rental income
-maxOf5Lettings.error = Please confirm that you understand the VOA will contact you regarding the remaining letters
+maxOf5Lettings.error = Please confirm that you understand the VO will contact you regarding the remaining letters
 
 # About franchise or lettings CYA
 checkYourAnswers.heading = This is a holding page for the check your answers page
@@ -4081,13 +4081,13 @@ confirmation.unableToRetrieveAnswers = You will be unable to retrieve your answe
 confirmation.youWillNotBeAble = You will not be able to:
 confirmation.unableToRetrieveAnswers.list.1 = retrieve your answers once you leave this page
 confirmation.unableToRetrieveAnswers.list.2 = access your answers from the confirmation email
-confirmation.unableToRetrieveAnswers.list.3 = request your answers from the Valuation Office Agency (VOA)
+confirmation.unableToRetrieveAnswers.list.3 = request your answers from the Valuation Office (VO)
 confirmation.businessRatesBill = Your business rates bill
 confirmation.businessRatesBill.list.1 = You can see <a href="https://www.gov.uk/introduction-to-business-rates/how-your-rates-are-calculated" class="govuk-link" target="_blank">how your business rates are calculated (opens in new tab)</a> and go on to challenge your property’s rateable value if you think it’s wrong.
 confirmation.businessRatesBill.list.2 = Our <a href="https://www.gov.uk/apply-for-business-rate-relief" class="govuk-link" target="_blank">guide to business rates relief (opens in new tab)</a> explains how some properties are eligible for discounts from their local council.
 confirmation.whatNext = What happens next
-confirmation.list.1 = We have sent your declaration to the VOA. They may need to contact you to check some of the details.
-confirmation.list.2 = The VOA use the information provide to set rateable values for businesses in England and Wales. Your local council uses these rateable values to calculate your business rates bill.
+confirmation.list.1 = We have sent your declaration to the VO. They may need to contact you to check some of the details.
+confirmation.list.2 = The VO use the information provide to set rateable values for businesses in England and Wales. Your local council uses these rateable values to calculate your business rates bill.
 print.link.cantPrintLater=This is your only chance to
 print.link= save a copy of your answers
 print.printOrPdf = (print or PDF download)
@@ -4098,7 +4098,7 @@ print.printOrPdf = (print or PDF download)
 #########################
 helpWithService.title = Get help with this service
 common.helpWithServiceHeader = If you need more help
-common.helpWithService = Call the VOA team on 03000 501 262 for help using this service.
+common.helpWithService = Call the VO team on 03000 501 262 for help using this service.
 
 # HELP WITH SERVICE CURRENT RENT FIRST PAID
 ##############################
@@ -4206,8 +4206,8 @@ error.invalidCharAddress1 = Mae’n rhaid i linell 1 y cyfeiriad gynnwys llythre
 error.invalidCharAddress2 = Mae’n rhaid i linell 2 y cyfeiriad gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
 error.invalidCharTownCity = Mae’n rhaid i enw’r dref neu’r ddinas gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
 error.invalidCharCounty = Mae’n rhaid i enw’r sir gynnwys llythrennau, rhifau, cysylltnodau a bylchau yn unig
-error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VOA
-error.maxCurrencyAmountExceeded.annualRent = Maximum amount exceeded - please contact the VOA
+error.maxCurrencyAmountExceeded = Maximum amount exceeded - please contact the VO
+error.maxCurrencyAmountExceeded.annualRent = Maximum amount exceeded - please contact the VO
 error.invalid_phone=Nodwch rif ffôn, megis 01632 960000
 error.email=Nodwch gyfeiriad e-bost yn y fformat cywir, megis enw@enghraifft.com
 error.isRelated=Dewiswch a ydych yn dal i fod yn gysylltiedig â’r eiddo neu beidio, neu a oes angen diweddaru’r cyfeiriad

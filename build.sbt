@@ -5,7 +5,7 @@ val defaultPort = 9526
 val appName     = "tenure-cost-and-trade-records-frontend"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "3.8.1"
+ThisBuild / scalaVersion := "3.8.2"
 
 val commonSettings = Seq(
   targetJvm := "jvm-21",
