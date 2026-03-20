@@ -21,8 +21,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{HtmlContent, Text}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.notificationbanner.NotificationBanner
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.phasebanner.PhaseBanner
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.tag.Tag
+@import uk.gov.hmrc.hmrcfrontend.views.config.StandardBetaBanner
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcFooter
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.{HmrcHead, HmrcLanguageSelectHelper, HmrcScripts, HmrcStandardHeader}
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.footer.{Footer, FooterItem, Meta}
@@ -37,6 +36,7 @@
         headTemplate: head,
         hmrcScripts: HmrcScripts,
         govukPhaseBanner: GovukPhaseBanner,
+        standardBetaBanner: StandardBetaBanner,
         hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
         govukBackLink: GovukBackLink,
         govukErrorSummary: GovukErrorSummary,
@@ -76,13 +76,7 @@
 
 @beforeBLock = {
     @if(showFeedback) {
-        @govukPhaseBanner(
-            PhaseBanner(
-                classes = "no-print",
-                tag = Option(Tag(Text(messages("phase.beta")))),
-                content = HtmlContent(messages("phase.text", s"${routes.FeedbackController.feedback.url}"))
-            )
-        )
+        @govukPhaseBanner(standardBetaBanner(routes.FeedbackController.feedback.url))
     }
 
     @if(showAccountInfo && summary.isDefined) {
