@@ -59,7 +59,10 @@ trait CompletedLettings:
       hasCompletedLettings <- lettingHistory.hasCompletedLettings
     yield hasCompletedLettings
 
-  def byAddingOrUpdatingOccupier(newOccupier: OccupierDetail, maybeIndex: Option[Int] = None)(using
+  def byAddingOrUpdatingOccupier(
+    newOccupier: OccupierDetail,
+    maybeIndex: Option[Int] = None
+  )(using
     session: Session
   ): (Int, SessionWrapper) =
     session.lettingHistory match

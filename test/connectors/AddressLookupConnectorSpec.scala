@@ -53,10 +53,7 @@ class AddressLookupConnectorSpec extends TestSuite with GuiceOneAppPerSuite with
   // The following nestedSuite is just a workaround for an open issue:
   // https://github.com/playframework/scalatestplus-play/issues/112
   //
-  private val nestedSuite = new AsyncWordSpec
-    with Matchers
-    with OptionValues
-    with AddressLookupMockServer(port = 11111) {
+  private val nestedSuite = new AsyncWordSpec with Matchers with OptionValues with AddressLookupMockServer(port = 11111) {
 
     given SessionRequest[AnyContent] = SessionRequest(
       Session(
@@ -125,19 +122,19 @@ class AddressLookupConnectorSpec extends TestSuite with GuiceOneAppPerSuite with
                 aResponse()
                   .withStatus(200)
                   .withBody("""
-                      |{
-                      |    "auditRef" : "bed4bd24-72da-42a7-9338-f43431b7ed72",
-                      |    "id" : "GB990091234524",
-                      |    "address" : {
-                      |        "lines" : [ "10 Other Place", "Some District", "Anytown" ],
-                      |        "postcode" : "ZZ1 1ZZ",
-                      |        "country" : {
-                      |            "code" : "GB",
-                      |            "name" : "United Kingdom"
-                      |        }
-                      |    }
-                      |}
-                      |""".stripMargin)
+                              |{
+                              |    "auditRef" : "bed4bd24-72da-42a7-9338-f43431b7ed72",
+                              |    "id" : "GB990091234524",
+                              |    "address" : {
+                              |        "lines" : [ "10 Other Place", "Some District", "Anytown" ],
+                              |        "postcode" : "ZZ1 1ZZ",
+                              |        "country" : {
+                              |            "code" : "GB",
+                              |            "name" : "United Kingdom"
+                              |        }
+                              |    }
+                              |}
+                              |""".stripMargin)
               )
           )
 

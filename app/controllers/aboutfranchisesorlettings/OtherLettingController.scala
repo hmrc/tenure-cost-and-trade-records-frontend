@@ -43,11 +43,11 @@ class OtherLettingController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with AddressLookupSupport(addressLookupConnector)
-    with I18nSupport
-    with Logging:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with AddressLookupSupport(addressLookupConnector)
+  with I18nSupport
+  with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("OtherLetting")

@@ -43,10 +43,10 @@ class EnforcementActionBeenTakenController @Inject() (
   enforcementActionBeenTakenView: enforcementActionBeenTaken,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("EnforcementActionBeenTaken")

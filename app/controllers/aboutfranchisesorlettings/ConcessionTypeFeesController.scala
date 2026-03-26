@@ -41,9 +41,9 @@ class ConcessionTypeFeesController @Inject() (
   view: feeReceived,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck(idx) { concession =>
@@ -104,9 +104,12 @@ class ConcessionTypeFeesController @Inject() (
     }
   }
 
-  private def runWithSessionCheck(idx: Int)(
+  private def runWithSessionCheck(
+    idx: Int
+  )(
     action: ConcessionIncomeRecord => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result]                           =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     if (request.sessionData.aboutTheTradingHistoryPartOne.map(_.turnoverSections6045).exists(_.nonEmpty)) {
       request.sessionData.aboutFranchisesOrLettings
         .flatMap(_.rentalIncome.flatMap(_.lift(idx)))
@@ -116,6 +119,7 @@ class ConcessionTypeFeesController @Inject() (
     } else {
       Redirect(controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show())
     }
+
   private def initialFeeReceived(implicit request: SessionRequest[AnyContent]): FeeReceived =
     FeeReceived(
       request.sessionData.aboutTheTradingHistoryPartOne

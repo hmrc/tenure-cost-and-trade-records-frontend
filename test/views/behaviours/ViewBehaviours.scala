@@ -55,7 +55,8 @@ trait ViewBehaviours extends ViewSpecBase {
 
         "display language toggles" in {
           val doc = asDocument(view())
-          doc.getElementById("cymraeg-switch") != null || !doc
+          doc.getElementById("cymraeg-switch") != null ||
+          !doc
             .getElementsByAttributeValue("href", "/valuation-office-agency-contact-frontend/language/cymraeg")
             .isEmpty
         }
@@ -94,7 +95,8 @@ trait ViewBehaviours extends ViewSpecBase {
 
         "display language toggles" in {
           val doc = asDocument(view())
-          doc.getElementById("cymraeg-switch") != null || !doc
+          doc.getElementById("cymraeg-switch") != null ||
+          !doc
             .getElementsByAttributeValue("href", "/valuation-office-agency-contact-frontend/language/cymraeg")
             .isEmpty
         }
@@ -133,7 +135,8 @@ trait ViewBehaviours extends ViewSpecBase {
 
         "display language toggles" in {
           val doc = asDocument(view())
-          doc.getElementById("cymraeg-switch") != null || !doc
+          doc.getElementById("cymraeg-switch") != null ||
+          !doc
             .getElementsByAttributeValue("href", "/valuation-office-agency-contact-frontend/language/cymraeg")
             .isEmpty
         }
@@ -173,7 +176,8 @@ trait ViewBehaviours extends ViewSpecBase {
 
         "display language toggles" in {
           val doc = asDocument(view())
-          doc.getElementById("cymraeg-switch") != null || !doc
+          doc.getElementById("cymraeg-switch") != null ||
+          !doc
             .getElementsByAttributeValue("href", "/valuation-office-agency-contact-frontend/language/cymraeg")
             .isEmpty
         }
@@ -211,7 +215,8 @@ trait ViewBehaviours extends ViewSpecBase {
 
         "display language toggles" in {
           val doc = asDocument(view())
-          doc.getElementById("cymraeg-switch") != null || !doc
+          doc.getElementById("cymraeg-switch") != null ||
+          !doc
             .getElementsByAttributeValue("href", "/valuation-office-agency-contact-frontend/language/cymraeg")
             .isEmpty
         }

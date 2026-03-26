@@ -28,7 +28,8 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
 
   private val nextPage = aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show().url
 
-  val mockAudit: Audit                          = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
+
   def twinUnitCaravansOwnedByOperatorController =
     new TwinUnitCaravansOwnedByOperatorController(
       caravansTrading6045View,

@@ -28,7 +28,10 @@ import scala.util.Try
 
 object TurnoverForm6030 {
 
-  def turnoverForm6030(expectedNumberOfFinancialYears: Int, financialYearEndDates: Seq[LocalDate])(using
+  def turnoverForm6030(
+    expectedNumberOfFinancialYears: Int,
+    financialYearEndDates: Seq[LocalDate]
+  )(using
     messages: Messages
   ): Form[Seq[TurnoverSection6030]] = {
 

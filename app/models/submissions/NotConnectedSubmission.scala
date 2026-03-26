@@ -34,6 +34,7 @@ case class NotConnectedSubmission(
   previouslyConnected: Boolean,
   lang: Option[String] = None
 )
+
 object NotConnectedSubmission {
 
   implicit val format: OFormat[NotConnectedSubmission] = Json.format

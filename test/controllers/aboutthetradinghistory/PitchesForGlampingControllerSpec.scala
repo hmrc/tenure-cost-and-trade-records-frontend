@@ -25,7 +25,8 @@ import utils.TestBaseSpec
 
 class PitchesForGlampingControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit             = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
+
   def pitchesForGlampingController =
     new PitchesForGlampingController(
       stubMessagesControllerComponents(),

@@ -166,6 +166,7 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
     given Session = session // having lettingHistory = None
 
   trait SessionWithSomeLettingHistory(permanentResidents: List[ResidentDetail] = Nil):
+
     given Session = session.copy(
       lettingHistory = Some(
         LettingHistory(

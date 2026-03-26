@@ -53,31 +53,32 @@ class CheckYourAnswersAboutTheTradingHistorySpec extends QuestionViewBehaviours[
     checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(using sessionRequest, messages)
 
   def createView6016: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996016001"))(using
-      sessionRequestFor6016,
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996016001"))(
+      using sessionRequestFor6016,
       messages
     )
 
   def createView6020: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink6020, Summary("99996020001"))(using
-      sessionRequestFor6020,
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink6020, Summary("99996020001"))(
+      using sessionRequestFor6020,
       messages
     )
+
   def createView6030: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996030001"))(using
-      sessionRequestFor6030,
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996030001"))(
+      using sessionRequestFor6030,
       messages
     )
 
   def createView6045: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996045001"))(using
-      SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest),
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996045001"))(
+      using SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest),
       messages
     )
 
   def createView6076: () => Html = () =>
-    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996076001"))(using
-      SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest),
+    checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996076001"))(
+      using SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest),
       messages
     )
 

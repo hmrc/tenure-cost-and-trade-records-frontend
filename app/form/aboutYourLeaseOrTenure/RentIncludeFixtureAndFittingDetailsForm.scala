@@ -26,7 +26,8 @@ object RentIncludeFixtureAndFittingDetailsForm:
   def rentIncludeFixtureAndFittingsDetailsForm(
     annualRent: Option[BigDecimal] = None,
     otherIncludedPartsSum: BigDecimal = 0
-  )(using messages: Messages): Form[Option[BigDecimal]] =
+  )(using messages: Messages
+  ): Form[Option[BigDecimal]] =
     Form(
       single(
         "rentIncludeFixturesAndFittingsDetails" ->

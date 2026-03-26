@@ -24,7 +24,8 @@ import utils.TestBaseSpec
 
 class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit             = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
+
   def headOfficeExpensesController =
     new HeadOfficeExpensesController(
       stubMessagesControllerComponents(),

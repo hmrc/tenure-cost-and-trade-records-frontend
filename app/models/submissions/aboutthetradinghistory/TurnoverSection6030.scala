@@ -26,6 +26,7 @@ case class TurnoverSection6030(
   grossIncome: Option[BigDecimal],
   totalVisitorNumbers: Option[Int]
 )
+
 object TurnoverSection6030 {
   implicit val format: OFormat[TurnoverSection6030] = Json.format
 }

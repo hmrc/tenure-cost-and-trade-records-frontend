@@ -43,9 +43,9 @@ class Income6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("Income6048")
@@ -72,13 +72,12 @@ class Income6048Controller @Inject() (
         income6048Form(years),
         formWithErrors => BadRequest(income6048View(formWithErrors, getBackLink)),
         success => {
-          val updatedSections =
-            (success zip turnoverSections6048).map { case (data, previousSection) =>
-              previousSection.copy(
-                tradingPeriod = data._1,
-                income = Some(data._2)
-              )
-            }
+          val updatedSections = (success zip turnoverSections6048).map { case (data, previousSection) =>
+            previousSection.copy(
+              tradingPeriod = data._1,
+              income = Some(data._2)
+            )
+          }
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
@@ -97,7 +96,8 @@ class Income6048Controller @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6048] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6048)
       .filter(_.nonEmpty)

@@ -41,7 +41,8 @@ object AdditionalMiscForm {
 
   def additionalMiscForm(
     years: Seq[String]
-  )(using messages: Messages): Form[(Seq[AdditionalMisc], AdditionalMiscDetails)] =
+  )(using messages: Messages
+  ): Form[(Seq[AdditionalMisc], AdditionalMiscDetails)] =
     Form {
       tuple(
         "additionalMisc" -> additionalMiscMapping(years),

@@ -42,11 +42,11 @@ class VacantPropertiesController @Inject() (
   theView: VacantPropertiesView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with ReadOnlySupport
-    with Logging:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with ReadOnlySupport
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("VacantProperties")

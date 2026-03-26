@@ -26,9 +26,10 @@ import utils.TestBaseSpec
 class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def lettingPartOfPropertyItemsIncludedInRentController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  )                    =
+  ) =
     new LettingPartOfPropertyItemsIncludedInRentController(
       stubMessagesControllerComponents(),
       mockAudit,

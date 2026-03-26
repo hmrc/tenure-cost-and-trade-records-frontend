@@ -25,8 +25,10 @@ import play.api.i18n.Messages
 
 object RentIncludeTradeServicesDetailsForm {
 
-  def rentIncludeTradeServicesDetailsForm(annualRent: Option[BigDecimal] = None, otherIncludedPartsSum: BigDecimal = 0)(
-    using messages: Messages
+  def rentIncludeTradeServicesDetailsForm(
+    annualRent: Option[BigDecimal] = None,
+    otherIncludedPartsSum: BigDecimal = 0
+  )(using messages: Messages
   ): Form[RentIncludeTradeServicesInformationDetails] = Form(
     mapping(
       "sumIncludedInRent" ->

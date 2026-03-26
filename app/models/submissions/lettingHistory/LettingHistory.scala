@@ -36,19 +36,17 @@ case class LettingHistory(
 
 type Entry = ResidentDetail | OccupierDetail | AdvertisingDetail
 
-object LettingHistory
-    extends Object
-    with PermanentResidents
-    with CompletedLettings
-    with IntendedLettings
-    with OnlineAdvertising:
+object LettingHistory extends Object with PermanentResidents with CompletedLettings with IntendedLettings with OnlineAdvertising:
 
   val MaxNumberOfPermanentResidents = 5
   val MaxNumberOfCompletedLettings  = 5
   val MaxNumberOfOnlineAdvertising  = 5
 
   @deprecated
-  def withoutTheAbilityToDetectChanges(ifEmpty: LettingHistory, copyFunc: LettingHistory => LettingHistory)(using
+  def withoutTheAbilityToDetectChanges(
+    ifEmpty: LettingHistory,
+    copyFunc: LettingHistory => LettingHistory
+  )(using
     session: Session
   ): SessionWrapper =
     SessionWrapper(

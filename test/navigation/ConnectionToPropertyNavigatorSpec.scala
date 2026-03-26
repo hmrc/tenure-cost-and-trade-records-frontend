@@ -63,8 +63,9 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
     "return a function that goes to the type of connection to the property page when still connected has been selected and the selection is yes" in {
       navigator
         .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsYesSession)
-        .apply(stillConnectedDetailsYesSession) shouldBe routes.VacantPropertiesController
-        .show()
+        .apply(stillConnectedDetailsYesSession) shouldBe
+        routes.VacantPropertiesController
+          .show()
     }
 
     "return a function that goes to the edit address page when still connected has been selected and the selection is edit address" in {
@@ -76,8 +77,9 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
     "return a function that goes to the not connected page when still connected has been selected and the selection is no" in {
       navigator
         .nextPage(AreYouStillConnectedPageId, stillConnectedDetailsNoSession)
-        .apply(stillConnectedDetailsNoSession) shouldBe controllers.notconnected.routes.PastConnectionController
-        .show()
+        .apply(stillConnectedDetailsNoSession) shouldBe
+        controllers.notconnected.routes.PastConnectionController
+          .show()
     }
 
     "return a function that goes to the vacancy status page when edit address has been completed" in {
@@ -124,8 +126,9 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
     "return a function that goes to the task list page when connection to the property has been selected" in {
       navigator
         .nextPage(ConnectionToPropertyPageId, stillConnectedDetailsYesSession)
-        .apply(stillConnectedDetailsYesSession) shouldBe controllers.routes.TaskListController
-        .show()
+        .apply(stillConnectedDetailsYesSession) shouldBe
+        controllers.routes.TaskListController
+          .show()
     }
 
   }
@@ -276,15 +279,17 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
   "return a function that goes to the trading name page when still connected has been selected and the selection is yes" in {
     navigator
       .nextPage(AreYouStillConnectedPageId, stillConnectedDetails6076YesSession)
-      .apply(stillConnectedDetails6076YesSession) shouldBe routes.TradingNameOperatingFromPropertyController
-      .show()
+      .apply(stillConnectedDetails6076YesSession) shouldBe
+      routes.TradingNameOperatingFromPropertyController
+        .show()
   }
 
   "return a function that goes from edit the address to the trading name page " in {
     navigator
       .nextPage(EditAddressPageId, stillConnectedDetails6076YesSession)
-      .apply(stillConnectedDetails6076YesSession) shouldBe routes.TradingNameOperatingFromPropertyController
-      .show()
+      .apply(stillConnectedDetails6076YesSession) shouldBe
+      routes.TradingNameOperatingFromPropertyController
+        .show()
   }
 
   "redirect to LettingPartOfPropertyDetails when details are incomplete" in {

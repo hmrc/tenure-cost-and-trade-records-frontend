@@ -44,11 +44,11 @@ class TradingNameOperatingFromPropertyController @Inject() (
   theView: TradingNameOperatingFromPropertyVie,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with ReadOnlySupport
-    with I18nSupport
-    with Logging:
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with ReadOnlySupport
+  with I18nSupport
+  with Logging:
 
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 

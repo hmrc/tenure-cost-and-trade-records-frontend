@@ -141,7 +141,8 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
     completedLettings: List[OccupierDetail] = Nil,
     mayHaveMoreCompletedLettings: Option[Boolean] = None
   ) extends MockRepositoryFixture
-      with SessionCapturingFixture:
+    with SessionCapturingFixture:
+
     val controller = new HasCompletedLettingsController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],

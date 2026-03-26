@@ -41,10 +41,10 @@ class PropertyCurrentlyUsedController @Inject() (
   view: propertyCurrentlyUsed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PropertyCurrentlyUsed")

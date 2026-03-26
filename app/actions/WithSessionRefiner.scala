@@ -27,8 +27,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
 case class WithSessionRefiner @Inject() (
   @Named("session") sessionRepository: SessionRepo
-)(implicit override val executionContext: ExecutionContext)
-    extends ActionRefiner[Request, SessionRequest] {
+)(implicit override val executionContext: ExecutionContext
+) extends ActionRefiner[Request, SessionRequest] {
 
   implicit def hc(implicit request: Request[?]): HeaderCarrier =
     HeaderCarrierConverter.fromRequestAndSession(request, request.session)

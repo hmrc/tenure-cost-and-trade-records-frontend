@@ -39,10 +39,10 @@ class CalculatingTheRentForController @Inject() (
   calculatingTheRentForView: calculatingTheRentFor,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with FranchiseAndLettingSupport
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with FranchiseAndLettingSupport
+  with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails = getIncomeRecord(index).collect {

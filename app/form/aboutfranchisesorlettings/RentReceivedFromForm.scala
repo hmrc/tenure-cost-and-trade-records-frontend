@@ -29,8 +29,9 @@ object RentReceivedFromForm {
     Form(
       mapping(
         "annualRent"  -> currencyMapping(".annualRent"),
-        "declaration" -> of[Boolean]
-          .verifying(messages("rent.received.from.confirm.error"), value => value)
+        "declaration" ->
+          of[Boolean]
+            .verifying(messages("rent.received.from.confirm.error"), value => value)
       )(RentReceivedFrom.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
 }

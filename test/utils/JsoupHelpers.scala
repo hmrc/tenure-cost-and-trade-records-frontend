@@ -29,9 +29,11 @@ import scala.jdk.CollectionConverters.*
 
 trait JsoupHelpers:
   extension (el: Element) def value: String = Option(el.`val`()).get
+
   extension (d: Document)
-    def heading: String                  = d.select("h1").first().text().trim
-    def backLink: String                 = d.select("a.govuk-back-link").first().attribute("href").getValue
+    def heading: String  = d.select("h1").first().text().trim
+    def backLink: String = d.select("a.govuk-back-link").first().attribute("href").getValue
+
     def errorMessage(id: String): String =
       d.select(s"""p.govuk-error-message[id="$id-error"]""").textNodes().asScala.last.text().trim
     def error(id: String): String        = d.select(s"""a[href="#$id"]""").textNodes().asScala.last.text().trim
@@ -40,7 +42,8 @@ trait JsoupHelpers:
     def input(n: String): Element        = d.select(s"""input.govuk-input[name="$n"]""").first()
     def textarea(n: String): Element     = d.select(s"""textarea.govuk-textarea[name="$n"]""").first()
     def submitAction: String             = d.select("form").first().attr("action")
-    def summaryList: List[String]        =
+
+    def summaryList: List[String] =
       d.select("""dl.govuk-summary-list""")
         .first()
         .children()
@@ -61,6 +64,7 @@ trait JsoupHelpers:
   def notBeChecked = new CheckboxElementMatcher(expectedCheck = false)
 
   class CheckboxElementMatcher(expectedCheck: Boolean) extends Matcher[Element]:
+
     override def apply(actualElement: Element): MatchResult =
       MatchResult(
         matches = actualElement.hasAttr("checked") == expectedCheck,
@@ -69,6 +73,7 @@ trait JsoupHelpers:
       )
 
   class RadioElementsMatcher(expectedValue: Option[String]) extends Matcher[List[Element]]:
+
     override def apply(actualElements: List[Element]): MatchResult =
       MatchResult(
         matches =
@@ -89,6 +94,7 @@ trait JsoupHelpers:
   def haveChecked(value: String) = new RadioElementsMatcher(expectedValue = Some(value))
 
   class InputElementMatcher(expectedValue: Option[String]) extends Matcher[Element]:
+
     override def apply(actualElement: Element): MatchResult =
       MatchResult(
         matches =

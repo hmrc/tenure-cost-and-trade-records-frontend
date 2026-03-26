@@ -37,12 +37,14 @@ object FeeReceivedForm {
 
   private def feeReceivedPerYearSeq(
     years: Seq[String]
-  )(using messages: Messages): Mapping[Seq[FeeReceivedPerYear]] =
+  )(using messages: Messages
+  ): Mapping[Seq[FeeReceivedPerYear]] =
     mappingPerYear(years, (year, idx) => s"year[$idx]" -> columnMapping(year))
 
   def feeReceivedForm(
     years: Seq[String]
-  )(using messages: Messages): Form[FeeReceived] =
+  )(using messages: Messages
+  ): Form[FeeReceived] =
     Form {
       mapping(
         "feeReceivedPerYear"    -> feeReceivedPerYearSeq(years),

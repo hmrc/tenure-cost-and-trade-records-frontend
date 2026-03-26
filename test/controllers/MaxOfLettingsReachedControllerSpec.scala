@@ -41,9 +41,10 @@ trait MaxOfLettingsReachedControllerBehaviours:
       val request = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
       val result  = controller.submit(Some("connection"))(request)
       status(result)                   shouldBe SEE_OTHER
-      header("Location", result).value shouldBe controllers.connectiontoproperty.routes.ProvideContactDetailsController
-        .show()
-        .url
+      header("Location", result).value shouldBe
+        controllers.connectiontoproperty.routes.ProvideContactDetailsController
+          .show()
+          .url
       reset(navigator)
     }
 

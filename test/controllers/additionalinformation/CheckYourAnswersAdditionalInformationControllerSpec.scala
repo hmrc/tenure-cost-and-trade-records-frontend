@@ -107,6 +107,7 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val checkYourAnswersAdditionalInformation: String =
         "checkYourAnswersAdditionalInformation"
     }

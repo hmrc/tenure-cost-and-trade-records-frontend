@@ -24,6 +24,7 @@ case class LettingPartOfPropertyRentDetails(
   annualRent: BigDecimal,
   dateInput: LocalDate
 )
+
 object LettingPartOfPropertyRentDetails {
   implicit val format: OFormat[LettingPartOfPropertyRentDetails] = Json.format
 }

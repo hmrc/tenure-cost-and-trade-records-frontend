@@ -27,11 +27,12 @@ import play.api.test.Helpers._
 class TypeOfLettingControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def typeOfLettingController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
-  )                    =
+  ) =
     new TypeOfLettingController(
       stubMessagesControllerComponents(),
       mockAudit,

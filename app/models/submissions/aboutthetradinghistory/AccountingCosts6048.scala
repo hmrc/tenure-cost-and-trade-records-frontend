@@ -28,6 +28,7 @@ case class AccountingCosts6048(
   bookkeepingOrAccountancy: Option[BigDecimal] = None,
   bankCharges: Option[BigDecimal] = None
 ) {
+
   def total: BigDecimal = Seq(
     wagesAndNationalInsurance,
     depreciationBuildings,

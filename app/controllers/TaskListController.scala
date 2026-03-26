@@ -29,7 +29,7 @@ class TaskListController @Inject() (
   taskListView: taskList,
   withSessionRefiner: WithSessionRefiner
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport {
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(taskListView())

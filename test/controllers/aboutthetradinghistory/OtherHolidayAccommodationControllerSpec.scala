@@ -32,6 +32,7 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec {
 
   import TestData._
   import utils.FormBindingTestAssertions._
+
   def otherHolidayAccommodationController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne

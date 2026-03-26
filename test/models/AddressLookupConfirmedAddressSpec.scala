@@ -24,16 +24,16 @@ class AddressLookupConfirmedAddressSpec extends TestBaseSpec {
 
   val testAddress: JsValue =
     Json.parse(input = """{
-        |"auditRef": "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2",
-        |"address": {
-        |   "lines": ["Line1","Line2","Line3","Line4"],
-        |   "postcode":"NE1 1LX",
-        |   "country": {
-        |       "code": "GB",
-        |       "name": "United Kingdom"
-        |   }
-        |}
-        |}""".stripMargin)
+                         |"auditRef": "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2",
+                         |"address": {
+                         |   "lines": ["Line1","Line2","Line3","Line4"],
+                         |   "postcode":"NE1 1LX",
+                         |   "country": {
+                         |       "code": "GB",
+                         |       "name": "United Kingdom"
+                         |   }
+                         |}
+                         |}""".stripMargin)
 
   "AddressLookup" must {
     "return correct string format when passed asString from Json" in {

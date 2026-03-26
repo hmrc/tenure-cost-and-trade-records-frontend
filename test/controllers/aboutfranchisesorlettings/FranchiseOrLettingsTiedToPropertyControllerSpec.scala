@@ -31,9 +31,10 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
 
   import TestData._
   val mockAudit: Audit = mock[Audit]
+
   def franchiseOrLettingsTiedToPropertyController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
-  )                    =
+  ) =
     new FranchiseOrLettingsTiedToPropertyController(
       stubMessagesControllerComponents(),
       mockAudit,

@@ -46,10 +46,10 @@ class IsParkingRentPaidSeparatelyController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsParkingRentPaidSeparately")
@@ -81,7 +81,8 @@ class IsParkingRentPaidSeparatelyController @Inject() (
     )
   }
 
-  private def leaseOrAgreementPartThree(implicit
+  private def leaseOrAgreementPartThree(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
@@ -89,9 +90,7 @@ class IsParkingRentPaidSeparatelyController @Inject() (
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show().url
       case _    =>
-        if (
-          leaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.doesRentIncludeParkingOrGarage).contains(AnswerYes)
-        ) {
+        if (leaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.doesRentIncludeParkingOrGarage).contains(AnswerYes)) {
           controllers.aboutYourLeaseOrTenure.routes.IncludedInRentParkingSpacesController.show().url
         } else {
           controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show().url

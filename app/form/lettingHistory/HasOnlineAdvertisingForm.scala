@@ -22,6 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.single
 
 object HasOnlineAdvertisingForm {
+
   val theForm: Form[AnswersYesNo] = Form(
     single(
       "answer" -> answerYesNo("lettingHistory.hasOnlineAdvertising.required")

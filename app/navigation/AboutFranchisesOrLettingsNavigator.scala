@@ -58,41 +58,53 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController
           .show(getRentalIncomeIndex(answers))
     }
-  override val routeMap: Map[Identifier, Session => Call]  = Map(
+
+  override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
-    CateringOperationBusinessPageId            -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(getRentalIncomeIndex(answers))
-    ),
-    FeeReceivedPageId                          -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
-    ),
+    CateringOperationBusinessPageId            ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(getRentalIncomeIndex(answers))
+      ),
+    FeeReceivedPageId                          ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
+      ),
     FranchiseTypeDetailsId                     -> franchiseTypeDetailsRouting,
-    ConcessionTypeDetailsId                    -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))
-    ),
-    ConcessionTypeFeesId                       -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
-    ),
-    LettingTypeDetailsId                       -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(getRentalIncomeIndex(answers))
-    ),
-    RentalIncomeRentId                         -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))
-    ),
-    RentalIncomeIncludedId                     -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
-    ),
-    RentReceivedFromPageId                     -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(getRentalIncomeIndex(answers))
-    ),
-    CalculatingTheRentForPageId                -> (answers =>
-      controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))
-    ),
-    MaxOfLettingsReachedCurrentId              -> (_ =>
-      controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-    ),
-    CheckYourAnswersAboutFranchiseOrLettingsId -> (_ =>
-      controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")
-    )
+    ConcessionTypeDetailsId                    ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))
+      ),
+    ConcessionTypeFeesId                       ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
+      ),
+    LettingTypeDetailsId                       ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(getRentalIncomeIndex(answers))
+      ),
+    RentalIncomeRentId                         ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))
+      ),
+    RentalIncomeIncludedId                     ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
+      ),
+    RentReceivedFromPageId                     ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(getRentalIncomeIndex(answers))
+      ),
+    CalculatingTheRentForPageId                ->
+      (answers =>
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))
+      ),
+    MaxOfLettingsReachedCurrentId              ->
+      (_ =>
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
+      ),
+    CheckYourAnswersAboutFranchiseOrLettingsId ->
+      (_ =>
+        controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")
+      )
   )
 }

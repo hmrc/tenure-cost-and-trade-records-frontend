@@ -15,6 +15,7 @@
  */
 
 package form.aboutyouandtheproperty
+
 import form.MappingSupport.createYesNoType
 import play.api.data.Form
 import play.api.data.Forms.mapping

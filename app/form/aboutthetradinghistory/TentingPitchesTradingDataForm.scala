@@ -33,7 +33,8 @@ object TentingPitchesTradingDataForm {
 
   def tentingPitchesTradingDataForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[TentingPitchesTradingData]] =
+  )(using messages: Messages
+  ): Form[Seq[TentingPitchesTradingData]] =
     Form {
       mappingPerYear(years, (year, idx) => s"tentingPitches[$idx]" -> columnMapping(year))
     }

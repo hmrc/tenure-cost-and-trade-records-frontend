@@ -46,27 +46,32 @@ trait FakeViews { this: Injecting =>
   val errorView: error              = inject[error]
 
   // Request reference number
-  val requestReferenceNumberPropertyDetailsView: requestReferenceNumberPropertyDetails   =
+  val requestReferenceNumberPropertyDetailsView: requestReferenceNumberPropertyDetails =
     inject[requestReferenceNumberPropertyDetails]
-  val requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails     =
+
+  val requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails =
     inject[requestReferenceNumberContactDetails]
+
   val requestReferenceNumberCheckYourAnswersView: requestReferenceNumberCheckYourAnswers =
     inject[requestReferenceNumberCheckYourAnswers]
-  val requestReferenceNumberConfirmationView: requestReferenceNumberConfirmation         =
+
+  val requestReferenceNumberConfirmationView: requestReferenceNumberConfirmation =
     inject[requestReferenceNumberConfirmation]
 
   // generic confirmation page
   val genericRemoveConfirmationView: genericRemoveConfirmation = inject[genericRemoveConfirmation]
 
   // Connection to the property
-  val areYouThirdPartyView: areYouThirdParty                                                 = inject[areYouThirdParty]
-  val areYouStillConnectedView: areYouStillConnected                                         = inject[areYouStillConnected]
-  val connectionToThePropertyView: connectionToTheProperty                                   = inject[connectionToTheProperty]
-  val editAddressView: editAddress                                                           = inject[editAddress]
-  val referenceNumberView: referenceNumber                                                   = inject[referenceNumber]
-  val downloadPDFView: downloadPDF                                                           = inject[downloadPDF]
-  val checkYourAnswersConnectionToProperty: checkYourAnswersConnectionToProperty             =
+  val areYouThirdPartyView: areYouThirdParty               = inject[areYouThirdParty]
+  val areYouStillConnectedView: areYouStillConnected       = inject[areYouStillConnected]
+  val connectionToThePropertyView: connectionToTheProperty = inject[connectionToTheProperty]
+  val editAddressView: editAddress                         = inject[editAddress]
+  val referenceNumberView: referenceNumber                 = inject[referenceNumber]
+  val downloadPDFView: downloadPDF                         = inject[downloadPDF]
+
+  val checkYourAnswersConnectionToProperty: checkYourAnswersConnectionToProperty =
     inject[checkYourAnswersConnectionToProperty]
+
   val checkYourAnswersConnectionToVacantProperty: checkYourAnswersConnectionToVacantProperty =
     inject[checkYourAnswersConnectionToVacantProperty]
 //  val confirmationConnectionToProperty: confirmationConnectionToProperty                     = inject[confirmationConnectionToProperty]
@@ -78,59 +83,67 @@ trait FakeViews { this: Injecting =>
   val vacantPropertiesStartDateView: vacantPropertyStartDate                                 = inject[vacantPropertyStartDate]
   val isRentReceivedFromLettingView: isRentReceivedFromLetting                               = inject[isRentReceivedFromLetting]
   val provideContactDetailsView: provideContactDetails                                       = inject[provideContactDetails]
-  val addAnotherLettingPartOfPropertyView: addAnotherLettingPartOfProperty                   =
+
+  val addAnotherLettingPartOfPropertyView: addAnotherLettingPartOfProperty =
     inject[addAnotherLettingPartOfProperty]
-  val tenantDetailsView: tenantDetails                                                       = inject[tenantDetails]
-  val lettingPartOfPropertyRentDetailsView: lettingPartOfPropertyRentDetails                 =
+  val tenantDetailsView: tenantDetails                                     = inject[tenantDetails]
+
+  val lettingPartOfPropertyRentDetailsView: lettingPartOfPropertyRentDetails =
     inject[lettingPartOfPropertyRentDetails]
-  val lettingPartOfPropertyRentIncludesView: lettingPartOfPropertyRentIncludes               =
+
+  val lettingPartOfPropertyRentIncludesView: lettingPartOfPropertyRentIncludes =
     inject[lettingPartOfPropertyRentIncludes]
   // Not connected
-  val pastConnectionView: pastConnection                                                     = inject[pastConnection]
-  val removeConnectionView: removeConnection                                                 = inject[removeConnection]
-  val checkYourAnswersNotConnectedView: checkYourAnswersNotConnected                         = inject[checkYourAnswersNotConnected]
+  val pastConnectionView: pastConnection                                       = inject[pastConnection]
+  val removeConnectionView: removeConnection                                   = inject[removeConnection]
+  val checkYourAnswersNotConnectedView: checkYourAnswersNotConnected           = inject[checkYourAnswersNotConnected]
 //  val confirmationNotConnectedView: confirmationNotConnected                                      = inject[confirmationNotConnected]
-  val vacantPropertiesView: vacantProperties                                                 = inject[vacantProperties]
+  val vacantPropertiesView: vacantProperties                                   = inject[vacantProperties]
 
   // About you and the property
-  val aboutYouView: aboutYou                                                     = inject[aboutYou]
-  val aboutThePropertyView: aboutTheProperty                                     = inject[aboutTheProperty]
-  val aboutThePropertyStringView: aboutThePropertyString                         = inject[aboutThePropertyString]
-  val propertyCurrentlyUsedView: propertyCurrentlyUsed                           = inject[propertyCurrentlyUsed]
-  val websiteForPropertyView: websiteForProperty                                 = inject[websiteForProperty]
-  val premisesLicenceGrantedView: premisesLicenseGranted                         = inject[premisesLicenseGranted]
-  val premisesLicenceGrantedDetailsView: premisesLicenseGrantedDetails           = inject[premisesLicenseGrantedDetails]
-  val licensableActivitiesView: licensableActivities                             = inject[licensableActivities]
-  val licensableActivitiesDetailsView: licensableActivitiesDetails               = inject[licensableActivitiesDetails]
-  val premisesLicensableView: premisesLicenseConditions                          = inject[premisesLicenseConditions]
-  val premisesLicenceConditionsDetailsView: premisesLicenseConditionsDetails     =
+  val aboutYouView: aboutYou                                           = inject[aboutYou]
+  val aboutThePropertyView: aboutTheProperty                           = inject[aboutTheProperty]
+  val aboutThePropertyStringView: aboutThePropertyString               = inject[aboutThePropertyString]
+  val propertyCurrentlyUsedView: propertyCurrentlyUsed                 = inject[propertyCurrentlyUsed]
+  val websiteForPropertyView: websiteForProperty                       = inject[websiteForProperty]
+  val premisesLicenceGrantedView: premisesLicenseGranted               = inject[premisesLicenseGranted]
+  val premisesLicenceGrantedDetailsView: premisesLicenseGrantedDetails = inject[premisesLicenseGrantedDetails]
+  val licensableActivitiesView: licensableActivities                   = inject[licensableActivities]
+  val licensableActivitiesDetailsView: licensableActivitiesDetails     = inject[licensableActivitiesDetails]
+  val premisesLicensableView: premisesLicenseConditions                = inject[premisesLicenseConditions]
+
+  val premisesLicenceConditionsDetailsView: premisesLicenseConditionsDetails =
     inject[premisesLicenseConditionsDetails]
-  val enforcementActionsTakenView: enforcementActionBeenTaken                    = inject[enforcementActionBeenTaken]
-  val enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails   =
+  val enforcementActionsTakenView: enforcementActionBeenTaken                = inject[enforcementActionBeenTaken]
+
+  val enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails =
     inject[enforcementActionBeenTakenDetails]
-  val tiedForGoodsView: tiedForGoods                                             = inject[tiedForGoods]
-  val tiedForGoodsDetailsView: tiedForGoodsDetails                               = inject[tiedForGoodsDetails]
-  val checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty     =
+  val tiedForGoodsView: tiedForGoods                                           = inject[tiedForGoods]
+  val tiedForGoodsDetailsView: tiedForGoodsDetails                             = inject[tiedForGoodsDetails]
+
+  val checkYourAnswersAboutThePropertyView: checkYourAnswersAboutTheProperty =
     inject[checkYourAnswersAboutTheProperty]
-  val charityQuestionView: charityQuestion                                       = inject[charityQuestion]
-  val tradingActivityView: tradingActivity                                       = inject[tradingActivity]
-  val renewablesPlantView: renewablesPlant                                       = inject[renewablesPlant]
-  val threeYearsConstructedView: threeYearsConstructed                           = inject[threeYearsConstructed]
-  val costsBreakdownView: costsBreakdown                                         = inject[costsBreakdown]
-  val plantAndTechnologyView: plantAndTechnology                                 = inject[plantAndTechnology]
-  val generatorCapacityView: generatorCapacity                                   = inject[generatorCapacity]
-  val batteriesCapacityView: batteriesCapacity                                   = inject[batteriesCapacity]
+  val charityQuestionView: charityQuestion                                   = inject[charityQuestion]
+  val tradingActivityView: tradingActivity                                   = inject[tradingActivity]
+  val renewablesPlantView: renewablesPlant                                   = inject[renewablesPlant]
+  val threeYearsConstructedView: threeYearsConstructed                       = inject[threeYearsConstructed]
+  val costsBreakdownView: costsBreakdown                                     = inject[costsBreakdown]
+  val plantAndTechnologyView: plantAndTechnology                             = inject[plantAndTechnology]
+  val generatorCapacityView: generatorCapacity                               = inject[generatorCapacity]
+  val batteriesCapacityView: batteriesCapacity                               = inject[batteriesCapacity]
   //  6048
-  val commercialLettingQuestionView: commercialLettingQuestion                   = inject[commercialLettingQuestion]
-  val commercialLettingAvailabilityView: commercialLettingAvailability           = inject[commercialLettingAvailability]
+  val commercialLettingQuestionView: commercialLettingQuestion               = inject[commercialLettingQuestion]
+  val commercialLettingAvailabilityView: commercialLettingAvailability       = inject[commercialLettingAvailability]
+
   val commercialLettingAvailabilityWelshView: commercialLettingAvailabilityWelsh =
     inject[commercialLettingAvailabilityWelsh]
   val completedCommercialLettingsView: completedCommercialLettings               = inject[completedCommercialLettings]
-  val completedCommercialLettingsWelshView: completedCommercialLettingsWelsh     =
+
+  val completedCommercialLettingsWelshView: completedCommercialLettingsWelsh =
     inject[completedCommercialLettingsWelsh]
-  val partsUnavailableView: partsUnavailable                                     = inject[partsUnavailable]
-  val occupiersDetailsView: occupiersDetails                                     = inject[occupiersDetails]
-  val occupiersDetailsListView: occupiersDetailsList                             = inject[occupiersDetailsList]
+  val partsUnavailableView: partsUnavailable                                 = inject[partsUnavailable]
+  val occupiersDetailsView: occupiersDetails                                 = inject[occupiersDetails]
+  val occupiersDetailsListView: occupiersDetailsList                         = inject[occupiersDetailsList]
 
   // Accommodation details
   val accommodationUnitView: accommodationUnit6048                     = inject[accommodationUnit6048]
@@ -144,206 +157,237 @@ trait FakeViews { this: Injecting =>
   val accommodationDetailsCYAView: accommodationDetailsCYA6048         = inject[accommodationDetailsCYA6048]
 
   // About your trading history
-  val whenDidYouFistOccupyView: whenDidYouFirstOccupy                                          = inject[whenDidYouFirstOccupy]
-  val financialYearEndView: financialYearEnd                                                   = inject[financialYearEnd]
-  val financialYearEndDatesView: financialYearEndDates                                         = inject[financialYearEndDates]
-  val editFinancialYearEndDateView: editFinancialYearEndDate                                   = inject[editFinancialYearEndDate]
-  val financialYearEndDatesSummaryView: financialYearEndDatesSummary                           = inject[financialYearEndDatesSummary]
-  val checkYourAnswersAccountingInfoView: checkYourAnswersAccountingInfo                       = inject[checkYourAnswersAccountingInfo]
-  val turnoverView: turnover                                                                   = inject[turnover]
-  val turnover6020View: turnover6020                                                           = inject[turnover6020]
-  val turnover6030View: turnover6030                                                           = inject[turnover6030]
-  val otherCostsView: otherCosts                                                               = inject[otherCosts]
-  val electricityGenerated6076View: electricityGenerated6076                                   = inject[electricityGenerated6076]
-  val grossReceiptsExcludingVATView: grossReceiptsExcludingVAT                                 = inject[grossReceiptsExcludingVAT]
-  val grossReceiptsForBaseLoadView: grossReceiptsForBaseLoad                                   = inject[grossReceiptsForBaseLoad]
-  val premisesCostsView: premisesCosts                                                         = inject[premisesCosts]
-  val otherIncome6076View: otherIncome6076                                                     = inject[otherIncome6076]
-  val costOfSales6076View: costOfSales6076                                                     = inject[costOfSales6076]
-  val costOfSales6076IntermittentView: costOfSales6076Intermittent                             = inject[costOfSales6076Intermittent]
-  val staffCostsView: staffCosts                                                               = inject[staffCosts]
-  val operationalExpenses6076View: operationalExpenses6076                                     = inject[operationalExpenses6076]
-  val headOfficeExpenses6076View: headOfficeExpenses6076                                       = inject[headOfficeExpenses6076]
-  val fixedOperatingExpensesView: fixedOperatingExpenses                                       = inject[fixedOperatingExpenses]
-  val variableOperatingExpensesView: variableOperatingExpenses                                 = inject[variableOperatingExpenses]
-  val totalPayrollCostsView: totalPayrollCosts                                                 = inject[totalPayrollCosts]
-  val bunkeredFuelQuestionView: bunkeredFuelQuestion                                           = inject[bunkeredFuelQuestion]
-  val bunkerFuelCardDetailsView: bunkerFuelCardsDetails                                        = inject[bunkerFuelCardsDetails]
-  val addAnotherBunkerFuelCardsDetailsView: addAnotherBunkerFuelCardDetails                    =
+  val whenDidYouFistOccupyView: whenDidYouFirstOccupy                    = inject[whenDidYouFirstOccupy]
+  val financialYearEndView: financialYearEnd                             = inject[financialYearEnd]
+  val financialYearEndDatesView: financialYearEndDates                   = inject[financialYearEndDates]
+  val editFinancialYearEndDateView: editFinancialYearEndDate             = inject[editFinancialYearEndDate]
+  val financialYearEndDatesSummaryView: financialYearEndDatesSummary     = inject[financialYearEndDatesSummary]
+  val checkYourAnswersAccountingInfoView: checkYourAnswersAccountingInfo = inject[checkYourAnswersAccountingInfo]
+  val turnoverView: turnover                                             = inject[turnover]
+  val turnover6020View: turnover6020                                     = inject[turnover6020]
+  val turnover6030View: turnover6030                                     = inject[turnover6030]
+  val otherCostsView: otherCosts                                         = inject[otherCosts]
+  val electricityGenerated6076View: electricityGenerated6076             = inject[electricityGenerated6076]
+  val grossReceiptsExcludingVATView: grossReceiptsExcludingVAT           = inject[grossReceiptsExcludingVAT]
+  val grossReceiptsForBaseLoadView: grossReceiptsForBaseLoad             = inject[grossReceiptsForBaseLoad]
+  val premisesCostsView: premisesCosts                                   = inject[premisesCosts]
+  val otherIncome6076View: otherIncome6076                               = inject[otherIncome6076]
+  val costOfSales6076View: costOfSales6076                               = inject[costOfSales6076]
+  val costOfSales6076IntermittentView: costOfSales6076Intermittent       = inject[costOfSales6076Intermittent]
+  val staffCostsView: staffCosts                                         = inject[staffCosts]
+  val operationalExpenses6076View: operationalExpenses6076               = inject[operationalExpenses6076]
+  val headOfficeExpenses6076View: headOfficeExpenses6076                 = inject[headOfficeExpenses6076]
+  val fixedOperatingExpensesView: fixedOperatingExpenses                 = inject[fixedOperatingExpenses]
+  val variableOperatingExpensesView: variableOperatingExpenses           = inject[variableOperatingExpenses]
+  val totalPayrollCostsView: totalPayrollCosts                           = inject[totalPayrollCosts]
+  val bunkeredFuelQuestionView: bunkeredFuelQuestion                     = inject[bunkeredFuelQuestion]
+  val bunkerFuelCardDetailsView: bunkerFuelCardsDetails                  = inject[bunkerFuelCardsDetails]
+
+  val addAnotherBunkerFuelCardsDetailsView: addAnotherBunkerFuelCardDetails =
     inject[addAnotherBunkerFuelCardDetails]
-  val acceptLowMarginFuelCardView: acceptLowMarginFuelCard                                     = inject[acceptLowMarginFuelCard]
-  val changeOccupationAndAccountingInfoView: changeOccupationAndAccountingInfo                 =
+  val acceptLowMarginFuelCardView: acceptLowMarginFuelCard                  = inject[acceptLowMarginFuelCard]
+
+  val changeOccupationAndAccountingInfoView: changeOccupationAndAccountingInfo =
     inject[changeOccupationAndAccountingInfo]
-  val areYouVATRegisteredView: areYouVATRegistered                                             = inject[areYouVATRegistered]
-  val income6048View: income6048                                                               = inject[income6048]
-  val fixedCosts6048View: fixedCosts6048                                                       = inject[fixedCosts6048]
-  val accountingCosts6048View: accountingCosts6048                                             = inject[accountingCosts6048]
-  val administrativeCosts6048View: administrativeCosts6048                                     = inject[administrativeCosts6048]
-  val operationalCosts6048View: operationalCosts6048                                           = inject[operationalCosts6048]
-  val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                                 = inject[lowMarginFuelCardsDetails]
-  val addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails              =
+  val areYouVATRegisteredView: areYouVATRegistered                             = inject[areYouVATRegistered]
+  val income6048View: income6048                                               = inject[income6048]
+  val fixedCosts6048View: fixedCosts6048                                       = inject[fixedCosts6048]
+  val accountingCosts6048View: accountingCosts6048                             = inject[accountingCosts6048]
+  val administrativeCosts6048View: administrativeCosts6048                     = inject[administrativeCosts6048]
+  val operationalCosts6048View: operationalCosts6048                           = inject[operationalCosts6048]
+  val lowMarginFuelCardsDetailsView: lowMarginFuelCardsDetails                 = inject[lowMarginFuelCardsDetails]
+
+  val addAnotherLowMarginFuelCardsDetailsView: addAnotherLowMarginFuelCardDetails =
     inject[addAnotherLowMarginFuelCardDetails]
-  val totalFuelSoldView: totalFuelSold                                                         = inject[totalFuelSold]
-  val percentageFromFuelCardsView: percentageFromFuelCards                                     = inject[percentageFromFuelCards]
-  val customerCreditAccountsView: customerCreditAccounts                                       = inject[customerCreditAccounts]
-  val bunkeredFuelSoldView: bunkeredFuelSold                                                   = inject[bunkeredFuelSold]
-  val incomeExpenditureSummaryView: incomeExpenditureSummary                                   = inject[incomeExpenditureSummary]
-  val incomeExpenditureSummary6076View: incomeExpenditureSummary6076                           = inject[incomeExpenditureSummary6076]
-  val unusualCircumstancesView: unusualCircumstances                                           = inject[unusualCircumstances]
-  val whatYouWillNeedView: whatYouWillNeed                                                     = inject[whatYouWillNeed]
-  val electricVehicleChargingPointsView: electricVehicleChargingPoints                         = inject[electricVehicleChargingPoints]
-  val grossReceiptsCaravanFleetHireView: grossReceiptsCaravanFleetHire6045                     =
+  val totalFuelSoldView: totalFuelSold                                            = inject[totalFuelSold]
+  val percentageFromFuelCardsView: percentageFromFuelCards                        = inject[percentageFromFuelCards]
+  val customerCreditAccountsView: customerCreditAccounts                          = inject[customerCreditAccounts]
+  val bunkeredFuelSoldView: bunkeredFuelSold                                      = inject[bunkeredFuelSold]
+  val incomeExpenditureSummaryView: incomeExpenditureSummary                      = inject[incomeExpenditureSummary]
+  val incomeExpenditureSummary6076View: incomeExpenditureSummary6076              = inject[incomeExpenditureSummary6076]
+  val unusualCircumstancesView: unusualCircumstances                              = inject[unusualCircumstances]
+  val whatYouWillNeedView: whatYouWillNeed                                        = inject[whatYouWillNeed]
+  val electricVehicleChargingPointsView: electricVehicleChargingPoints            = inject[electricVehicleChargingPoints]
+
+  val grossReceiptsCaravanFleetHireView: grossReceiptsCaravanFleetHire6045 =
     inject[grossReceiptsCaravanFleetHire6045]
-  val staticCaravansView: staticCaravans                                                       = inject[staticCaravans]
-  val caravansTrading6045View: caravansTrading6045                                             = inject[caravansTrading6045]
-  val caravansAgeCategoriesView: caravansAgeCategories                                         = inject[caravansAgeCategories]
-  val caravansTotalSiteCapacityView: caravansTotalSiteCapacity                                 = inject[caravansTotalSiteCapacity]
-  val caravansPerServiceView: caravansPerService                                               = inject[caravansPerService]
-  val caravansAnnualPitchFeeView: caravansAnnualPitchFee                                       = inject[caravansAnnualPitchFee]
-  val otherHolidayAccommodationView: otherHolidayAccommodation                                 = inject[otherHolidayAccommodation]
-  val totalSiteCapacity6045View: totalSiteCapacity6045                                         = inject[totalSiteCapacity6045]
-  val checkYourAnswersTentingPitchesView: checkYourAnswersTentingPitches                       = inject[checkYourAnswersTentingPitches]
-  val tentingPitchesOnSiteView: tentingPitchesOnSite                                           = inject[tentingPitchesOnSite]
-  val pitchesForCaravansView: pitchesForCaravans                                               = inject[pitchesForCaravans]
-  val pitchesForGlampingView: pitchesForGlamping                                               = inject[pitchesForGlamping]
-  val rallyAreasView: rallyAreas                                                               = inject[rallyAreas]
-  val tentingPitchesTotalView: tentingPitchesTotal                                             = inject[tentingPitchesTotal]
-  val tentingPitchesCertificatedView: tentingPitchesCertificated                               = inject[tentingPitchesCertificated]
-  val additionalActivitiesOnSiteView: additionalActivitiesOnSite                               = inject[additionalActivitiesOnSite]
-  val additionalShopsView: additionalShops                                                     = inject[additionalShops]
-  val additionalCateringView: additionalCatering                                               = inject[additionalCatering]
-  val additionalBarsClubsView: additionalBarsClubs                                             = inject[additionalBarsClubs]
-  val additionalAmusementsView: additionalAmusements                                           = inject[additionalAmusements]
-  val additionalMiscView: additionalMisc                                                       = inject[additionalMisc]
-  val checkYourAnswersAdditionalActivities: checkYourAnswersAdditionalActivities               =
+  val staticCaravansView: staticCaravans                                   = inject[staticCaravans]
+  val caravansTrading6045View: caravansTrading6045                         = inject[caravansTrading6045]
+  val caravansAgeCategoriesView: caravansAgeCategories                     = inject[caravansAgeCategories]
+  val caravansTotalSiteCapacityView: caravansTotalSiteCapacity             = inject[caravansTotalSiteCapacity]
+  val caravansPerServiceView: caravansPerService                           = inject[caravansPerService]
+  val caravansAnnualPitchFeeView: caravansAnnualPitchFee                   = inject[caravansAnnualPitchFee]
+  val otherHolidayAccommodationView: otherHolidayAccommodation             = inject[otherHolidayAccommodation]
+  val totalSiteCapacity6045View: totalSiteCapacity6045                     = inject[totalSiteCapacity6045]
+  val checkYourAnswersTentingPitchesView: checkYourAnswersTentingPitches   = inject[checkYourAnswersTentingPitches]
+  val tentingPitchesOnSiteView: tentingPitchesOnSite                       = inject[tentingPitchesOnSite]
+  val pitchesForCaravansView: pitchesForCaravans                           = inject[pitchesForCaravans]
+  val pitchesForGlampingView: pitchesForGlamping                           = inject[pitchesForGlamping]
+  val rallyAreasView: rallyAreas                                           = inject[rallyAreas]
+  val tentingPitchesTotalView: tentingPitchesTotal                         = inject[tentingPitchesTotal]
+  val tentingPitchesCertificatedView: tentingPitchesCertificated           = inject[tentingPitchesCertificated]
+  val additionalActivitiesOnSiteView: additionalActivitiesOnSite           = inject[additionalActivitiesOnSite]
+  val additionalShopsView: additionalShops                                 = inject[additionalShops]
+  val additionalCateringView: additionalCatering                           = inject[additionalCatering]
+  val additionalBarsClubsView: additionalBarsClubs                         = inject[additionalBarsClubs]
+  val additionalAmusementsView: additionalAmusements                       = inject[additionalAmusements]
+  val additionalMiscView: additionalMisc                                   = inject[additionalMisc]
+
+  val checkYourAnswersAdditionalActivities: checkYourAnswersAdditionalActivities =
     inject[checkYourAnswersAdditionalActivities]
-  val checkYourAnswersTentingPitches: checkYourAnswersTentingPitches                           =
+
+  val checkYourAnswersTentingPitches: checkYourAnswersTentingPitches =
     inject[checkYourAnswersTentingPitches]
-  val grossReceiptsLettingUnitsView: grossReceiptsLettingUnits6045                             = inject[grossReceiptsLettingUnits6045]
-  val grossReceiptsSubLetUnitsView: grossReceiptsSubLetUnits6045                               = inject[grossReceiptsSubLetUnits6045]
-  val checkYourAnswersAdditionalActivitiesView: checkYourAnswersAdditionalActivities           =
+  val grossReceiptsLettingUnitsView: grossReceiptsLettingUnits6045   = inject[grossReceiptsLettingUnits6045]
+  val grossReceiptsSubLetUnitsView: grossReceiptsSubLetUnits6045     = inject[grossReceiptsSubLetUnits6045]
+
+  val checkYourAnswersAdditionalActivitiesView: checkYourAnswersAdditionalActivities =
     inject[checkYourAnswersAdditionalActivities]
+
   val checkYourAnswersOtherHolidayAccommodationView: checkYourAnswersOtherHolidayAccommodation =
     inject[checkYourAnswersOtherHolidayAccommodation]
-  val checkYourAnswersAboutTheTradingHistoryView: checkYourAnswersAboutTheTradingHistory       =
+
+  val checkYourAnswersAboutTheTradingHistoryView: checkYourAnswersAboutTheTradingHistory =
     inject[checkYourAnswersAboutTheTradingHistory]
 
   // About the franchise or letting
-  val franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty              =
+  val franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty =
     inject[franchiseOrLettingsTiedToProperty]
-  val cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails          =
+
+  val cateringOperationDetailsView: cateringOperationOrLettingAccommodationDetails =
     inject[cateringOperationOrLettingAccommodationDetails]
-  val franchiseTypeDetailsView: franchiseTypeDetails                                        =
+
+  val franchiseTypeDetailsView: franchiseTypeDetails =
     inject[franchiseTypeDetails]
-  val concessionTypeDetailsView: concessionTypeDetails                                      =
+
+  val concessionTypeDetailsView: concessionTypeDetails =
     inject[concessionTypeDetails]
-  val lettingTypeDetailsView: lettingTypeDetails                                            =
+
+  val lettingTypeDetailsView: lettingTypeDetails =
     inject[lettingTypeDetails]
-  val rentalIncomeRentView: rentalIncomeRent                                                =
+
+  val rentalIncomeRentView: rentalIncomeRent =
     inject[rentalIncomeRent]
-  val rentalIncomeIncludedView: rentalIncomeIncluded                                        =
+
+  val rentalIncomeIncludedView: rentalIncomeIncluded =
     inject[rentalIncomeIncluded]
-  val feeReceivedView: feeReceived                                                          = inject[feeReceived]
+  val feeReceivedView: feeReceived                   = inject[feeReceived]
+
   val lettingOtherPartOfPropertyDetailsView: cateringOperationOrLettingAccommodationDetails =
     inject[cateringOperationOrLettingAccommodationDetails]
-  val checkYourAnswersAboutFranchiseOrLettings: checkYourAnswersAboutFranchiseOrLettings    =
+
+  val checkYourAnswersAboutFranchiseOrLettings: checkYourAnswersAboutFranchiseOrLettings =
     inject[checkYourAnswersAboutFranchiseOrLettings]
-  val rentReceivedFromView: rentReceivedFrom                                                = inject[rentReceivedFrom]
-  val calculatingTheRentView: calculatingTheRentFor                                         = inject[calculatingTheRentFor]
-  val typeOfLettingView: typeOfLetting                                                      = inject[typeOfLetting]
-  val typeOfIncomeView: typeOfIncome                                                        = inject[typeOfIncome]
-  val telecomMastLettingView: telecomMastLetting                                            = inject[telecomMastLetting]
-  val rentDetailsView: rentDetails                                                          = inject[rentDetails]
-  val otherLettingView: otherLetting                                                        = inject[otherLetting]
-  val atmLettingView: atmLetting                                                            = inject[atmLetting]
-  val advertisingRightView: advertisingRightLetting                                         = inject[advertisingRightLetting]
-  val addOrRemoveLettingView: addOrRemoveLetting                                            = inject[addOrRemoveLetting]
-  val rentalIncomeListView: rentalIncomeList                                                = inject[rentalIncomeList]
+  val rentReceivedFromView: rentReceivedFrom                                             = inject[rentReceivedFrom]
+  val calculatingTheRentView: calculatingTheRentFor                                      = inject[calculatingTheRentFor]
+  val typeOfLettingView: typeOfLetting                                                   = inject[typeOfLetting]
+  val typeOfIncomeView: typeOfIncome                                                     = inject[typeOfIncome]
+  val telecomMastLettingView: telecomMastLetting                                         = inject[telecomMastLetting]
+  val rentDetailsView: rentDetails                                                       = inject[rentDetails]
+  val otherLettingView: otherLetting                                                     = inject[otherLetting]
+  val atmLettingView: atmLetting                                                         = inject[atmLetting]
+  val advertisingRightView: advertisingRightLetting                                      = inject[advertisingRightLetting]
+  val addOrRemoveLettingView: addOrRemoveLetting                                         = inject[addOrRemoveLetting]
+  val rentalIncomeListView: rentalIncomeList                                             = inject[rentalIncomeList]
   // About the lease or tenure
-  val aboutYourLandlordView: aboutYourLandlord                                              = inject[aboutYourLandlord]
-  val typeOfTenureView: typeOfTenure                                                        = inject[typeOfTenure]
+  val aboutYourLandlordView: aboutYourLandlord                                           = inject[aboutYourLandlord]
+  val typeOfTenureView: typeOfTenure                                                     = inject[typeOfTenure]
 
   val currentRentPayableWithin12MonthsView: currentRentPayableWithin12Months = inject[currentRentPayableWithin12Months]
   val propertyUseLeasebackAgreementView: propertyUseLeasebackArrangement     = inject[propertyUseLeasebackArrangement]
   val currentAnnualRentView: currentAnnualRent                               = inject[currentAnnualRent]
   val leaseOrAgreementYearsView: leaseOrAgreementYears                       = inject[leaseOrAgreementYears]
 
-  val rentIncludeTradeServicesView: rentIncludeTradeServices                                         = inject[rentIncludeTradeServices]
-  val doesTheRentPayableView: doesTheRentPayable                                                     = inject[doesTheRentPayable]
-  val currentRentFirstPaidView: currentRentFirstPaid                                                 = inject[currentRentFirstPaid]
-  val ultimatelyResponsibleInsideRepairsView: ultimatelyResponsibleInsideRepairs                     =
+  val rentIncludeTradeServicesView: rentIncludeTradeServices = inject[rentIncludeTradeServices]
+  val doesTheRentPayableView: doesTheRentPayable             = inject[doesTheRentPayable]
+  val currentRentFirstPaidView: currentRentFirstPaid         = inject[currentRentFirstPaid]
+
+  val ultimatelyResponsibleInsideRepairsView: ultimatelyResponsibleInsideRepairs =
     inject[ultimatelyResponsibleInsideRepairs]
-  val ultimatelyResponsibleOutsideRepairsView: ultimatelyResponsibleOutsideRepairs                   =
+
+  val ultimatelyResponsibleOutsideRepairsView: ultimatelyResponsibleOutsideRepairs =
     inject[ultimatelyResponsibleOutsideRepairs]
-  val ultimatelyResponsibleBuildingInsuranceView: ultimatelyResponsibleBuildingInsurance             =
+
+  val ultimatelyResponsibleBuildingInsuranceView: ultimatelyResponsibleBuildingInsurance =
     inject[ultimatelyResponsibleBuildingInsurance]
-  val isRentReviewPlannedView: isRentReviewPlanned                                                   = inject[isRentReviewPlanned]
-  val intervalsOfRentReviewView: intervalsOfRentReview                                               = inject[intervalsOfRentReview]
-  val includedInYourRentView: includedInYourRent                                                     = inject[includedInYourRent]
-  val currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin                                 = inject[currentLeaseOrAgreementBegin]
-  val connectedToLandlordView: connectedToLandlord                                                   = inject[connectedToLandlord]
-  val connectedToLandlordDetailsView: connectedToLandlordDetails                                     = inject[connectedToLandlordDetails]
-  val provideDetailsOfYourLeaseView: provideDetailsOfYourLease                                       = inject[provideDetailsOfYourLease]
-  val rentOpenMarketValueView: rentOpenMarketValue                                                   = inject[rentOpenMarketValue]
-  val whatIsYourRentBasedOnView: whatIsYourRentBasedOn                                               = inject[whatIsYourRentBasedOn]
-  val rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI                                   = inject[rentIncreaseAnnuallyWithRPI]
-  val rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings                               = inject[rentIncludeFixtureAndFittings]
-  val rentIncludeFixtureAndFittingsDetailsView: rentIncludeFixtureAndFittingsDetails                 =
+  val isRentReviewPlannedView: isRentReviewPlanned                                       = inject[isRentReviewPlanned]
+  val intervalsOfRentReviewView: intervalsOfRentReview                                   = inject[intervalsOfRentReview]
+  val includedInYourRentView: includedInYourRent                                         = inject[includedInYourRent]
+  val currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin                     = inject[currentLeaseOrAgreementBegin]
+  val connectedToLandlordView: connectedToLandlord                                       = inject[connectedToLandlord]
+  val connectedToLandlordDetailsView: connectedToLandlordDetails                         = inject[connectedToLandlordDetails]
+  val provideDetailsOfYourLeaseView: provideDetailsOfYourLease                           = inject[provideDetailsOfYourLease]
+  val rentOpenMarketValueView: rentOpenMarketValue                                       = inject[rentOpenMarketValue]
+  val whatIsYourRentBasedOnView: whatIsYourRentBasedOn                                   = inject[whatIsYourRentBasedOn]
+  val rentIncreaseAnnuallyWithRPIView: rentIncreaseAnnuallyWithRPI                       = inject[rentIncreaseAnnuallyWithRPI]
+  val rentIncludeFixtureAndFittingsView: rentIncludeFixtureAndFittings                   = inject[rentIncludeFixtureAndFittings]
+
+  val rentIncludeFixtureAndFittingsDetailsView: rentIncludeFixtureAndFittingsDetails =
     inject[rentIncludeFixtureAndFittingsDetails]
+
   val rentIncludeFixtureAndFittingsDetailsTextAreaView: rentIncludeFixtureAndFittingsDetailsTextArea =
     inject[rentIncludeFixtureAndFittingsDetailsTextArea]
   val rentIncludesVatView: rentIncludesVat                                                           = inject[rentIncludesVat]
   val rentIncludeTradeServicesDetailsView: rentIncludeTradeServicesDetails                           = inject[rentIncludeTradeServicesDetails]
-  val rentIncludeTradeServicesDetailsTextAreaView: rentIncludeTradeServicesDetailsTextArea           =
+
+  val rentIncludeTradeServicesDetailsTextAreaView: rentIncludeTradeServicesDetailsTextArea =
     inject[rentIncludeTradeServicesDetailsTextArea]
-  val rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet                 =
+
+  val rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet =
     inject[rentPayableVaryAccordingToGrossOrNet]
-  val legalOrPlanningRestrictionsView: legalOrPlanningRestrictions                                   = inject[legalOrPlanningRestrictions]
-  val legalOrPlanningRestrictionsDetailsView: legalOrPlanningRestrictionsDetails                     =
+  val legalOrPlanningRestrictionsView: legalOrPlanningRestrictions                   = inject[legalOrPlanningRestrictions]
+
+  val legalOrPlanningRestrictionsDetailsView: legalOrPlanningRestrictionsDetails =
     inject[legalOrPlanningRestrictionsDetails]
-  val checkYourAnswersAboutYourLeaseOrTenureView: checkYourAnswersAboutYourLeaseOrTenure             =
+
+  val checkYourAnswersAboutYourLeaseOrTenureView: checkYourAnswersAboutYourLeaseOrTenure =
     inject[checkYourAnswersAboutYourLeaseOrTenure]
-  val tenantsLeaseAgreementExpireView: tenancyLeaseAgreementExpire                                   = inject[tenancyLeaseAgreementExpire]
-  val tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails                     =
+  val tenantsLeaseAgreementExpireView: tenancyLeaseAgreementExpire                       = inject[tenancyLeaseAgreementExpire]
+
+  val tenantsAdditionsDisregardedDetailsView: tenantsAdditionsDisregardedDetails =
     inject[tenantsAdditionsDisregardedDetails]
-  val workCarriedOutDetailsView: workCarriedOutDetails                                               = inject[workCarriedOutDetails]
-  val workCarriedOutConditionView: workCarriedOutCondition                                           = inject[workCarriedOutCondition]
-  val isGivenRentFreePeriodView: isGivenRentFreePeriod                                               = inject[isGivenRentFreePeriod]
-  val rentFreePeriodDetailsView: rentFreePeriodDetails                                               = inject[rentFreePeriodDetails]
-  val tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded                                   = inject[tenantsAdditionsDisregarded]
-  val leaseSurrenderedEarlyView: leaseSurrenderdEarly                                                = inject[leaseSurrenderdEarly]
-  val benefitsGivenView: benefitsGiven                                                               = inject[benefitsGiven]
-  val benefitsGivenDetailsView: benefitsGivenDetails                                                 = inject[benefitsGivenDetails]
-  val capitalSumDescriptionView: capitalSumDescription                                               = inject[capitalSumDescription]
-  val methodToFixCurrentRentView: methodToFixCurrentRent                                             = inject[methodToFixCurrentRent]
-  val rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails   =
+  val workCarriedOutDetailsView: workCarriedOutDetails                           = inject[workCarriedOutDetails]
+  val workCarriedOutConditionView: workCarriedOutCondition                       = inject[workCarriedOutCondition]
+  val isGivenRentFreePeriodView: isGivenRentFreePeriod                           = inject[isGivenRentFreePeriod]
+  val rentFreePeriodDetailsView: rentFreePeriodDetails                           = inject[rentFreePeriodDetails]
+  val tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded               = inject[tenantsAdditionsDisregarded]
+  val leaseSurrenderedEarlyView: leaseSurrenderdEarly                            = inject[leaseSurrenderdEarly]
+  val benefitsGivenView: benefitsGiven                                           = inject[benefitsGiven]
+  val benefitsGivenDetailsView: benefitsGivenDetails                             = inject[benefitsGivenDetails]
+  val capitalSumDescriptionView: capitalSumDescription                           = inject[capitalSumDescription]
+  val methodToFixCurrentRentView: methodToFixCurrentRent                         = inject[methodToFixCurrentRent]
+
+  val rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails =
     inject[rentPayableVaryAccordingToGrossOrNetDetails]
-  val rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers                         = inject[rentPayableVaryOnQuantityOfBeers]
-  val incentivesPaymentsConditionsView: incentivesPaymentsConditions                                 = inject[incentivesPaymentsConditions]
-  val paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted                                       = inject[paymentWhenLeaseIsGranted]
-  val propertyUseLeasebackArrangementView: propertyUseLeasebackArrangement                           = inject[propertyUseLeasebackArrangement]
-  val payACapitalSumView: payACapitalSum                                                             = inject[payACapitalSum]
-  val payACapitalSumDetailsView: payACapitalSumDetails                                               = inject[payACapitalSumDetails]
-  val payACapitalSumAmountDetailsView: payACapitalSumAmountDetails                                   = inject[payACapitalSumAmountDetails]
-  val canRentBeReducedOnReviewView: canRentBeReducedOnReview                                         = inject[canRentBeReducedOnReview]
-  val rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails           =
+  val rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers                       = inject[rentPayableVaryOnQuantityOfBeers]
+  val incentivesPaymentsConditionsView: incentivesPaymentsConditions                               = inject[incentivesPaymentsConditions]
+  val paymentWhenLeaseIsGrantedView: paymentWhenLeaseIsGranted                                     = inject[paymentWhenLeaseIsGranted]
+  val propertyUseLeasebackArrangementView: propertyUseLeasebackArrangement                         = inject[propertyUseLeasebackArrangement]
+  val payACapitalSumView: payACapitalSum                                                           = inject[payACapitalSum]
+  val payACapitalSumDetailsView: payACapitalSumDetails                                             = inject[payACapitalSumDetails]
+  val payACapitalSumAmountDetailsView: payACapitalSumAmountDetails                                 = inject[payACapitalSumAmountDetails]
+  val canRentBeReducedOnReviewView: canRentBeReducedOnReview                                       = inject[canRentBeReducedOnReview]
+
+  val rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails =
     inject[rentPayableVaryOnQuantityOfBeersDetails]
-  val howIsCurrentRentFixedView: howIsCurrentRentFixed                                               = inject[howIsCurrentRentFixed]
-  val checkYourAnswersAboutLeaseAndTenureView: checkYourAnswersAboutYourLeaseOrTenure                =
+  val howIsCurrentRentFixedView: howIsCurrentRentFixed                                     = inject[howIsCurrentRentFixed]
+
+  val checkYourAnswersAboutLeaseAndTenureView: checkYourAnswersAboutYourLeaseOrTenure =
     inject[checkYourAnswersAboutYourLeaseOrTenure]
-  val paymentForTradeServicesView: paymentForTradeServices                                           = inject[paymentForTradeServices]
-  val tradeServicesDescriptionView: tradeServicesDescription                                         = inject[tradeServicesDescription]
-  val tradeServicesListView: tradeServicesList                                                       = inject[tradeServicesList]
-  val servicePaidSeparatelyView: servicePaidSeparately                                               = inject[servicePaidSeparately]
-  val servicePaidSeparatelyChargeView: servicePaidSeparatelyCharge                                   = inject[servicePaidSeparatelyCharge]
-  val servicePaidSeparatelyListView: servicePaidSeparatelyList                                       = inject[servicePaidSeparatelyList]
-  val propertyUpdatesView: propertyUpdates                                                           = inject[propertyUpdates]
-  val rentDevelopedLandView: rentDevelopedLand                                                       = inject[rentDevelopedLand]
-  val rentDevelopedLandDetailsView: rentDevelopedLandDetails                                         = inject[rentDevelopedLandDetails]
-  val rentIncludeStructuresBuildingsView: rentIncludeStructuresBuildings                             = inject[rentIncludeStructuresBuildings]
-  val rentIncludeStructuresBuildingsDetailsView: rentIncludeStructuresBuildingsDetails               =
+  val paymentForTradeServicesView: paymentForTradeServices                            = inject[paymentForTradeServices]
+  val tradeServicesDescriptionView: tradeServicesDescription                          = inject[tradeServicesDescription]
+  val tradeServicesListView: tradeServicesList                                        = inject[tradeServicesList]
+  val servicePaidSeparatelyView: servicePaidSeparately                                = inject[servicePaidSeparately]
+  val servicePaidSeparatelyChargeView: servicePaidSeparatelyCharge                    = inject[servicePaidSeparatelyCharge]
+  val servicePaidSeparatelyListView: servicePaidSeparatelyList                        = inject[servicePaidSeparatelyList]
+  val propertyUpdatesView: propertyUpdates                                            = inject[propertyUpdates]
+  val rentDevelopedLandView: rentDevelopedLand                                        = inject[rentDevelopedLand]
+  val rentDevelopedLandDetailsView: rentDevelopedLandDetails                          = inject[rentDevelopedLandDetails]
+  val rentIncludeStructuresBuildingsView: rentIncludeStructuresBuildings              = inject[rentIncludeStructuresBuildings]
+
+  val rentIncludeStructuresBuildingsDetailsView: rentIncludeStructuresBuildingsDetails =
     inject[rentIncludeStructuresBuildingsDetails]
-  val surrenderedLeaseAgreementView: surrenderedLeaseAgreementDetails                                = inject[surrenderedLeaseAgreementDetails]
+  val surrenderedLeaseAgreementView: surrenderedLeaseAgreementDetails                  = inject[surrenderedLeaseAgreementDetails]
 
   // Car parking lease
   val doesRentIncludeParkingView: doesRentIncludeParking               = inject[doesRentIncludeParking]
@@ -363,8 +407,9 @@ trait FakeViews { this: Injecting =>
   val maxOfLettingsReachedView: maxOfLettingsReached = inject[maxOfLettingsReached]
 
   // Additional information
-  val furtherInformationOrRemarksView: furtherInformationOrRemarks                     = inject[furtherInformationOrRemarks]
-  val contactDetailsQuestionView: contactDetailsQuestion                               = inject[contactDetailsQuestion]
+  val furtherInformationOrRemarksView: furtherInformationOrRemarks = inject[furtherInformationOrRemarks]
+  val contactDetailsQuestionView: contactDetailsQuestion           = inject[contactDetailsQuestion]
+
   val checkYourAnswersAdditionalInformationView: checkYourAnswersAdditionalInformation =
     inject[checkYourAnswersAdditionalInformation]
 

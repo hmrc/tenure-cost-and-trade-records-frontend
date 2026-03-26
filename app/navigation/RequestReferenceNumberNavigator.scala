@@ -30,15 +30,18 @@ class RequestReferenceNumberNavigator @Inject() (audit: Audit) extends Navigator
     Some(controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show())
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
-    NoReferenceNumberPageId                      -> (_ =>
-      controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
-    ),
-    NoReferenceNumberContactDetailsPageId        -> (_ =>
-      controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show()
-    ),
-    CheckYourAnswersRequestReferenceNumberPageId -> (_ =>
-      controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation()
-    )
+    NoReferenceNumberPageId                      ->
+      (_ =>
+        controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
+      ),
+    NoReferenceNumberContactDetailsPageId        ->
+      (_ =>
+        controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show()
+      ),
+    CheckYourAnswersRequestReferenceNumberPageId ->
+      (_ =>
+        controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation()
+      )
   )
 
 }

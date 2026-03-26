@@ -44,10 +44,10 @@ class RentalIncomeListController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with FranchiseAndLettingSupport
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with FranchiseAndLettingSupport
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).apply { implicit request =>
     audit.sendChangeLink("RentalIncomeList")

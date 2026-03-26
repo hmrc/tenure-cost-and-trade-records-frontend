@@ -33,10 +33,11 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
   import TestData._
 
   val mockAudit: Audit = mock[Audit]
+
   def propertyUseLeasebackAgreementController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  )                    =
+  ) =
     new PropertyUseLeasebackArrangementController(
       stubMessagesControllerComponents(),
       mockAudit,

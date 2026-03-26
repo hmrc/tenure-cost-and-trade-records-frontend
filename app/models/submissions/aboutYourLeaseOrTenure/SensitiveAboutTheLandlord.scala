@@ -26,6 +26,7 @@ case class SensitiveAboutTheLandlord(
   landlordFullName: SensitiveString,
   landlordAddress: Option[SensitiveAddress]
 ) extends Sensitive[AboutTheLandlord] {
+
   override def decryptedValue: AboutTheLandlord = AboutTheLandlord(
     landlordFullName.decryptedValue,
     landlordAddress.map(_.decryptedValue)

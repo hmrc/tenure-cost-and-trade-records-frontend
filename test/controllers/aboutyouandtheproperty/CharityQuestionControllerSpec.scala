@@ -31,9 +31,10 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   val mockAudit: Audit = mock[Audit]
+
   def charityQuestionController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  )                    =
+  ) =
     new CharityQuestionController(
       stubMessagesControllerComponents(),
       mockAudit,

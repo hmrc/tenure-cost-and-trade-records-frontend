@@ -38,10 +38,10 @@ class RentDetailsController @Inject() (
   rentDetailsView: rentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[LettingPartOfProperty] = for {
@@ -122,7 +122,10 @@ class RentDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(existingDetails: Option[LettingPartOfProperty], idx: Option[Int])(implicit
+  private def getBackLink(
+    existingDetails: Option[LettingPartOfProperty],
+    idx: Option[Int]
+  )(implicit
     request: SessionRequest[AnyContent]
   ): String =
     if (navigator.from == "CYA") {

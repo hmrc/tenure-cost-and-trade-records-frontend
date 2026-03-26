@@ -15,6 +15,7 @@
  */
 
 package controllers.connectiontoproperty
+
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
@@ -43,9 +44,9 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport:
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AddAnotherLettingPartOfProperty")

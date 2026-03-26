@@ -39,10 +39,10 @@ class LowMarginFuelCardDetailsController @Inject() (
   view: lowMarginFuelCardsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingLowMarginFuelCardDetails: Option[LowMarginFuelCardDetail] = for {
@@ -82,8 +82,9 @@ class LowMarginFuelCardDetailsController @Inject() (
               appendedDetails.indexOf(defaultDetails) -> appendedDetails
             } { detailsToUpdate =>
               val indexToUpdate = existingLowMarginFuelCardsDetails.indexOf(detailsToUpdate)
-              indexToUpdate -> existingLowMarginFuelCardsDetails
-                .updated(indexToUpdate, detailsToUpdate.copy(lowMarginFuelCardDetail = data))
+              indexToUpdate ->
+                existingLowMarginFuelCardsDetails
+                  .updated(indexToUpdate, detailsToUpdate.copy(lowMarginFuelCardDetail = data))
             }
             aboutTheTradingHistory.copy(lowMarginFuelCardsDetails = Some(updatedDetails._2))
           }

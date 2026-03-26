@@ -123,6 +123,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val addAnotherLettingPartOfProperty: String =
         "addAnotherLettingPartOfProperty"
     }

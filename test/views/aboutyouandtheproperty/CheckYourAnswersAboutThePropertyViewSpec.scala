@@ -37,32 +37,32 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   private def createView6020 = () =>
-    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996020001"))(using
-      SessionRequest(baseFilled6020Session, fakeRequest),
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996020001"))(
+      using SessionRequest(baseFilled6020Session, fakeRequest),
       messages
     )
 
   private def createView6030 = () =>
-    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996030001"))(using
-      SessionRequest(baseFilled6030Session, fakeRequest),
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996030001"))(
+      using SessionRequest(baseFilled6030Session, fakeRequest),
       messages
     )
 
   private def createView6048 = () =>
-    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048002"))(using
-      SessionRequest(baseFilled6048Session, fakeRequest),
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048002"))(
+      using SessionRequest(baseFilled6048Session, fakeRequest),
       messages
     )
 
   private def createView6048Welsh = () =>
-    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048001"))(using
-      SessionRequest(baseFilled6048Session, fakeRequest),
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048001"))(
+      using SessionRequest(baseFilled6048Session, fakeRequest),
       messages
     )
 
   private def createView6076 = () =>
-    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996076001"))(using
-      SessionRequest(baseFilled6076Session, fakeRequest),
+    checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996076001"))(
+      using SessionRequest(baseFilled6076Session, fakeRequest),
       messages
     )
 

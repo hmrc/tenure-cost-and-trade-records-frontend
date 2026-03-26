@@ -42,6 +42,7 @@ trait PrintableTenantDetails {
 object PrintableTenantDetails extends Aliases:
 
   extension (printableTenantDetails: PrintableTenantDetails)
+
     def escapedHtml: String =
       printableTenantDetails.tenantDetails
         .map(Text(_).asHtml)

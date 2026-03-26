@@ -315,6 +315,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     given Session = session // having lettingHistory = None
 
   trait SessionWithNoIntendedLettings:
+
     given Session = session.copy(
       lettingHistory = Some(
         LettingHistory(
@@ -324,6 +325,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     )
 
   trait SessionWithSomeIntendedLettings(intendedLettings: IntendedDetail):
+
     given Session = session.copy(
       lettingHistory = Some(
         LettingHistory(

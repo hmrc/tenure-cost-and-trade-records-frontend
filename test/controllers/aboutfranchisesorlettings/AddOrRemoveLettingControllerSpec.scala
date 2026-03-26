@@ -32,11 +32,12 @@ import scala.language.reflectiveCalls
 class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
   import TestData._
   val mockAudit: Audit = mock[Audit]
+
   def addOrRemoveLettingController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
-  )                    = new AddOrRemoveLettingController(
+  ) = new AddOrRemoveLettingController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutFranchisesOrLettingsNavigator,
@@ -220,6 +221,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val addAnotherLetting: String =
         "addAnotherLetting"
     }

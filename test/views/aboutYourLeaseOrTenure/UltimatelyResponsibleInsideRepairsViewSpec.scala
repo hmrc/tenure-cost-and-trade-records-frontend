@@ -48,9 +48,10 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
-        .show()
-        .url
+      backlinkUrl shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
+          .show()
+          .url
     }
 
     "Section heading is visible" in {

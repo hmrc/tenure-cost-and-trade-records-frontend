@@ -28,10 +28,11 @@ object SaveAsDraftLoginForm {
 
   val saveAsDraftLoginForm: Form[String] = Form(
     single(
-      "password" -> text
-        .verifying(
-          minLength(passwordLength, "error.password.minLength")
-        )
+      "password" ->
+        text
+          .verifying(
+            minLength(passwordLength, "error.password.minLength")
+          )
     )
   )
 

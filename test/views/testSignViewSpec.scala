@@ -15,6 +15,7 @@
  */
 
 package views
+
 import views.behaviours.ViewBehaviours
 
 class testSignViewSpec extends ViewBehaviours {

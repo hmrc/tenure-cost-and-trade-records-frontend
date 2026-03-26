@@ -40,9 +40,9 @@ class GrossReceiptsForBaseLoadController @Inject() (
   view: grossReceiptsForBaseLoad,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("GrossReceiptsForBaseLoad")
@@ -64,10 +64,9 @@ class GrossReceiptsForBaseLoadController @Inject() (
         grossReceiptsForBaseLoadForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
-          val updatedSections =
-            (success zip turnoverSections6076).map { case (updatedGrossReceiptsForBaseLoad, turnoverSection) =>
-              turnoverSection.copy(grossReceiptsForBaseLoad = Some(updatedGrossReceiptsForBaseLoad))
-            }
+          val updatedSections = (success zip turnoverSections6076).map { case (updatedGrossReceiptsForBaseLoad, turnoverSection) =>
+            turnoverSection.copy(grossReceiptsForBaseLoad = Some(updatedGrossReceiptsForBaseLoad))
+          }
           val updatedData     = updateAboutTheTradingHistoryPartOne(
             _.copy(
               turnoverSections6076 = Some(updatedSections)
@@ -88,7 +87,8 @@ class GrossReceiptsForBaseLoadController @Inject() (
 
   private def runWithSessionCheck(
     action: (Seq[TurnoverSection6076], Seq[String]) => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)

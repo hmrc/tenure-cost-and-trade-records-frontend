@@ -32,7 +32,8 @@ object AdditionalCateringForm {
 
   def additionalCateringForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[AdditionalCatering]] =
+  )(using messages: Messages
+  ): Form[Seq[AdditionalCatering]] =
     Form {
       mappingPerYear(years, (year, idx) => s"additionalCatering[$idx]" -> columnMapping(year))
     }

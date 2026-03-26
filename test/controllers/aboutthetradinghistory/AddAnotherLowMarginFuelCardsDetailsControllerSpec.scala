@@ -118,10 +118,12 @@ class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec {
     }
 
   }
+
   object TestData {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val addAnotherLowMarginFuelCardsDetails: String =
         "addAnotherLowMarginFuelCardsDetails"
     }

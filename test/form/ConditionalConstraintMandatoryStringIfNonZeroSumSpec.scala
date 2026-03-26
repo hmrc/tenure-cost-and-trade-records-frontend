@@ -33,9 +33,10 @@ import scala.util.Try
 class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyFlatSpec with should.Matchers {
 
   private def columnMapping: Mapping[BigDecimal] = single(
-    "otherIncome" -> text
-      .verifying("error.otherIncome.range", s => Try(BigDecimal(s)).isSuccess)
-      .transform[BigDecimal](BigDecimal(_), _.toString)
+    "otherIncome" ->
+      text
+        .verifying("error.otherIncome.range", s => Try(BigDecimal(s)).isSuccess)
+        .transform[BigDecimal](BigDecimal(_), _.toString)
   )
 
   private val form: Form[NonZeroSumModel] = Form(

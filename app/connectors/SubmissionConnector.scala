@@ -31,8 +31,11 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppConfig, httpClientV2: HttpClientV2)(
-  implicit ec: ExecutionContext
+class HodSubmissionConnector @Inject() (
+  config: ServicesConfig,
+  appConfig: AppConfig,
+  httpClientV2: HttpClientV2
+)(implicit ec: ExecutionContext
 ) extends SubmissionConnector:
 
   private val serviceUrl        = config.baseUrl("tenure-cost-and-trade-records")
@@ -48,22 +51,33 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
 
   private val requestRefNumURL: URL = url"$serviceUrl/tenure-cost-and-trade-records/submissions/requestRefNum"
 
-  override def submitRequestReferenceNumber(submission: RequestReferenceNumberSubmission)(implicit
+  override def submitRequestReferenceNumber(
+    submission: RequestReferenceNumberSubmission
+  )(implicit
     hc: HeaderCarrier
   ): Future[HttpResponse] =
     sendSubmission(requestRefNumURL, submission)
 
-  override def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
+  override def submitNotConnected(
+    refNumber: String,
+    submission: NotConnectedSubmission
+  )(implicit
     hc: HeaderCarrier
   ): Future[HttpResponse] =
     sendSubmission(notConnectedSubmissionURL(refNumber), submission)
 
-  override def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
+  override def submitConnected(
+    refNumber: String,
+    submission: ConnectedSubmission
+  )(implicit
     hc: HeaderCarrier
   ): Future[HttpResponse] =
     sendSubmission(connectedSubmissionURL(refNumber), submission)
 
-  private def sendSubmission[T](url: URL, submission: T)(implicit
+  private def sendSubmission[T](
+    url: URL,
+    submission: T
+  )(implicit
     tjs: Writes[T],
     hc: HeaderCarrier
   ): Future[HttpResponse] =
@@ -83,14 +97,23 @@ class HodSubmissionConnector @Inject() (config: ServicesConfig, appConfig: AppCo
 
 @ImplementedBy(classOf[HodSubmissionConnector])
 trait SubmissionConnector:
-  def submitRequestReferenceNumber(submission: RequestReferenceNumberSubmission)(implicit
+
+  def submitRequestReferenceNumber(
+    submission: RequestReferenceNumberSubmission
+  )(implicit
     hc: HeaderCarrier
   ): Future[HttpResponse]
 
-  def submitNotConnected(refNumber: String, submission: NotConnectedSubmission)(implicit
+  def submitNotConnected(
+    refNumber: String,
+    submission: NotConnectedSubmission
+  )(implicit
     hc: HeaderCarrier
   ): Future[HttpResponse]
 
-  def submitConnected(refNumber: String, submission: ConnectedSubmission)(implicit
+  def submitConnected(
+    refNumber: String,
+    submission: ConnectedSubmission
+  )(implicit
     hc: HeaderCarrier
   ): Future[HttpResponse]

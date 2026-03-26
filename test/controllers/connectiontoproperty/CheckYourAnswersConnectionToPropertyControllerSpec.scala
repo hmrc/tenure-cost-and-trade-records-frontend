@@ -94,6 +94,7 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val checkYourAnswersConnectionToProperty: String =
         "answersChecked"
     }

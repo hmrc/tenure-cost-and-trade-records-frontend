@@ -33,11 +33,12 @@ class CommercialLettingAvailabilityControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
+
   def controller(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  )                    = new CommercialLettingAvailabilityController(
+  ) = new CommercialLettingAvailabilityController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

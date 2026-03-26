@@ -43,9 +43,9 @@ class OperationalCosts6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OperationalCosts6048")
@@ -74,12 +74,11 @@ class OperationalCosts6048Controller @Inject() (
         operationalCosts6048Form(years),
         formWithErrors => BadRequest(operationalCosts6048View(formWithErrors, getBackLink)),
         success => {
-          val updatedSections =
-            (success._1 zip turnoverSections6048).map { case (operationalCosts, previousSection) =>
-              previousSection.copy(
-                operationalCosts = Some(operationalCosts)
-              )
-            }
+          val updatedSections = (success._1 zip turnoverSections6048).map { case (operationalCosts, previousSection) =>
+            previousSection.copy(
+              operationalCosts = Some(operationalCosts)
+            )
+          }
           val details         = success._2
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
@@ -100,7 +99,8 @@ class OperationalCosts6048Controller @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6048] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6048)
       .filter(_.nonEmpty)

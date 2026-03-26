@@ -29,11 +29,12 @@ class TentingPitchesCertificatedControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   val mockAudit: Audit = mock[Audit]
+
   def tentingPitchesCertificatedController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  )                    = new TentingPitchesCertificatedController(
+  ) = new TentingPitchesCertificatedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

@@ -41,9 +41,9 @@ class FixedOperatingExpensesController @Inject() (
   fixedOperatingExpensesView: fixedOperatingExpenses,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("FixedOperatingExpenses")
@@ -105,7 +105,8 @@ class FixedOperatingExpensesController @Inject() (
 
   private def runWithSessionCheck(
     action: AboutTheTradingHistory => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .filter(_.turnoverSections.nonEmpty)

@@ -46,10 +46,10 @@ class AcceptLowMarginFuelCardController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AcceptLowMarginFuelCard")
@@ -76,9 +76,11 @@ class AcceptLowMarginFuelCardController @Inject() (
           .map { _ =>
             navigator.cyaPage
               .filter(_ =>
-                navigator.from == "CYA" && (data == AnswerNo || tradingHistory
-                  .flatMap(_.doYouAcceptLowMarginFuelCard)
-                  .contains(AnswerYes))
+                navigator.from == "CYA" &&
+                  (data == AnswerNo ||
+                    tradingHistory
+                      .flatMap(_.doYouAcceptLowMarginFuelCard)
+                      .contains(AnswerYes))
               )
               .getOrElse(navigator.nextPage(AcceptLowMarginFuelCardsId, updatedData).apply(updatedData))
           }
@@ -87,7 +89,8 @@ class AcceptLowMarginFuelCardController @Inject() (
     )
   }
 
-  private def tradingHistory(implicit
+  private def tradingHistory(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistory] = request.sessionData.aboutTheTradingHistory
 

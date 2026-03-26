@@ -42,10 +42,10 @@ class TotalSiteCapacity6045Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TotalSiteCapacity6045")
@@ -83,7 +83,8 @@ class TotalSiteCapacity6045Controller @Inject() (
     )
   }
 
-  private def aboutTheTradingHistoryPartOne(implicit
+  private def aboutTheTradingHistoryPartOne(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
 

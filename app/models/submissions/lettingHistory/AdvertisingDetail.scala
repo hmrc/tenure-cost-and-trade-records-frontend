@@ -22,6 +22,7 @@ case class AdvertisingDetail(
   websiteAddress: String,
   propertyReferenceNumber: String
 ):
+
   override def equals(that: Any): Boolean = that match {
     case AdvertisingDetail(websiteAddress, propertyReferenceNumber) =>
       this.websiteAddress.equalsIgnoreCase(websiteAddress) && this.propertyReferenceNumber.equalsIgnoreCase(
@@ -31,7 +32,8 @@ case class AdvertisingDetail(
   }
 
 object AdvertisingDetail:
-  given Format[AdvertisingDetail]                               = Json.format
+  given Format[AdvertisingDetail] = Json.format
+
   def unapply(obj: AdvertisingDetail): Option[(String, String)] = Some(
     (obj.websiteAddress, obj.propertyReferenceNumber)
   )

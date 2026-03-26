@@ -35,8 +35,8 @@ class LocalDateFormatter(
   allowPastDates: Boolean,
   allowFutureDates: Boolean,
   years: Option[Seq[Int]] = None
-)(using messages: Messages)
-    extends Formatter[LocalDate] {
+)(using messages: Messages
+) extends Formatter[LocalDate] {
 
   require(
     allowPastDates || allowFutureDates,

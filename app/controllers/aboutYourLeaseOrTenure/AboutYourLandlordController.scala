@@ -45,11 +45,11 @@ class AboutYourLandlordController @Inject() (
   addressLookupConnector: AddressLookupConnector,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with AddressLookupSupport(addressLookupConnector)
-    with I18nSupport
-    with Logging:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with AddressLookupSupport(addressLookupConnector)
+  with I18nSupport
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AboutYourLandlord")

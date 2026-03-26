@@ -42,13 +42,15 @@ object LettingPartOfProperty {
     case atmLetting: ATMLetting                           =>
       Json.obj("type" -> "ATMLetting") ++ Json.toJson(atmLetting)(using ATMLetting.format).as[JsObject]
     case telecomMastLetting: TelecomMastLetting           =>
-      Json.obj("type" -> "TelecomMastLetting") ++ Json
-        .toJson(telecomMastLetting)(using TelecomMastLetting.format)
-        .as[JsObject]
+      Json.obj("type" -> "TelecomMastLetting") ++
+        Json
+          .toJson(telecomMastLetting)(using TelecomMastLetting.format)
+          .as[JsObject]
     case advertisingRightLetting: AdvertisingRightLetting =>
-      Json.obj("type" -> "AdvertisingRightLetting") ++ Json
-        .toJson(advertisingRightLetting)(using AdvertisingRightLetting.format)
-        .as[JsObject]
+      Json.obj("type" -> "AdvertisingRightLetting") ++
+        Json
+          .toJson(advertisingRightLetting)(using AdvertisingRightLetting.format)
+          .as[JsObject]
     case otherLetting: OtherLetting                       =>
       Json.obj("type" -> "OtherLetting") ++ Json.toJson(otherLetting)(using OtherLetting.format).as[JsObject]
   }
@@ -61,6 +63,7 @@ case class RentDetails(
   annualRent: BigDecimal,
   sumFixedDate: LocalDate
 )
+
 object RentDetails {
   implicit val format: Format[RentDetails] = Json.format
 }

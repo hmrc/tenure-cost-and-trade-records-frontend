@@ -47,9 +47,9 @@ class ResidentListController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
     Ok(theListView(theListForm, permanentResidents(request.sessionData)))
@@ -107,7 +107,10 @@ class ResidentListController @Inject() (
 
   private def eventuallySaveOrUpdateSessionWith(
     hasMoreResidents: Boolean
-  )(using session: Session, hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
+  )(using session: Session,
+    hc: HeaderCarrier,
+    ec: ExecutionContext
+  ): Future[SessionWrapper] =
     if !hasMoreResidents && permanentResidents(session).isEmpty
     then {
       val newSession = withHasPermanentResidents(false)
@@ -116,7 +119,10 @@ class ResidentListController @Inject() (
 
   private def withResidentDetailAt(
     index: Int
-  )(func: ResidentDetail => Future[Result])(using request: SessionRequest[AnyContent]): Future[Result] =
+  )(
+    func: ResidentDetail => Future[Result]
+  )(using request: SessionRequest[AnyContent]
+  ): Future[Result] =
     LettingHistory
       .permanentResidents(request.sessionData)
       .lift(index)
@@ -124,8 +130,11 @@ class ResidentListController @Inject() (
         func.apply(residentialDetail)
       }
 
-  private def renderTheConfirmationViewWith(theForm: Form[AnswersYesNo], residentialDetail: ResidentDetail, index: Int)(
-    using request: SessionRequest[AnyContent]
+  private def renderTheConfirmationViewWith(
+    theForm: Form[AnswersYesNo],
+    residentialDetail: ResidentDetail,
+    index: Int
+  )(using request: SessionRequest[AnyContent]
   ) =
     theConfirmationView(
       theForm,

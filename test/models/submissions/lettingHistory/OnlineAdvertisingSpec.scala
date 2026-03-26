@@ -137,6 +137,7 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
     given Session = session // having lettingHistory = None
 
   trait SessionWithSomeLettingHistory(onlineAdvertising: List[AdvertisingDetail] = Nil):
+
     given Session = session.copy(
       lettingHistory = Some(
         LettingHistory(

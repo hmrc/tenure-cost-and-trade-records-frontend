@@ -26,6 +26,7 @@ trait AnswerYesNoMatchers:
   def beAnswerNo  = new AnswerYesNoMatcher(expected = AnswerNo)
 
   class AnswerYesNoMatcher(expected: AnswersYesNo) extends Matcher[AnswersYesNo]:
+
     override def apply(actual: AnswersYesNo): MatchResult =
       MatchResult(
         actual == expected,

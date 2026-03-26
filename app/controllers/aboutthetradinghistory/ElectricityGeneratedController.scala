@@ -45,9 +45,9 @@ class ElectricityGeneratedController @Inject() (
   electricityGeneratedView: electricityGenerated6076,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ElectricityGenerated")
@@ -74,10 +74,9 @@ class ElectricityGeneratedController @Inject() (
         electricityGeneratedForm(years),
         formWithErrors => BadRequest(electricityGeneratedView(formWithErrors, getBackLink)),
         success => {
-          val updatedSections =
-            (success zip turnoverSections6076).map { case (data, previousSection) =>
-              previousSection.copy(tradingPeriod = data._1, electricityGenerated = Some(data._2))
-            }
+          val updatedSections = (success zip turnoverSections6076).map { case (data, previousSection) =>
+            previousSection.copy(tradingPeriod = data._1, electricityGenerated = Some(data._2))
+          }
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
@@ -100,7 +99,8 @@ class ElectricityGeneratedController @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6076] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)

@@ -43,9 +43,9 @@ class NoOpInternalAuthTokenInitialiser @Inject() () extends InternalAuthTokenIni
 class InternalAuthTokenInitialiserImpl @Inject() (
   configuration: Configuration,
   httpClientV2: HttpClientV2
-)(implicit ec: ExecutionContext)
-    extends InternalAuthTokenInitialiser
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends InternalAuthTokenInitialiser
+  with Logging {
 
   private val internalAuthService: Service = configuration.get[Service]("microservice.services.internal-auth")
   private val internalAuthToken            = configuration.get[String]("internalAuthToken")

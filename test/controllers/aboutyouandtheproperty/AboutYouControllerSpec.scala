@@ -134,7 +134,8 @@ class AboutYouControllerSpec extends TestBaseSpec {
       val email1TooLong    = "contactDetails.email.email.tooLong"
     }
 
-    val tooLongEmail                      = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
+    val tooLongEmail = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
+
     val baseFormData: Map[String, String] = Map(
       "contactDetails.phone"  -> "12345678901",
       "contactDetails.phone"  -> "01234 123123",

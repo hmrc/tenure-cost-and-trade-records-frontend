@@ -28,11 +28,12 @@ import play.api.test.FakeRequest
 class RentDetailsControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def rentDetailsController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
-  )                    = new RentDetailsController(
+  ) = new RentDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutFranchisesOrLettingsNavigator,

@@ -34,11 +34,12 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   val mockAudit: Audit = mock[Audit]
+
   def isParkingRentPaidSeparatelyController(
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  )                    = new IsParkingRentPaidSeparatelyController(
+  ) = new IsParkingRentPaidSeparatelyController(
     isParkingRentPaidSeparatelyView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

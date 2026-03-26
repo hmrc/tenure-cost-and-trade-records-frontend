@@ -28,6 +28,7 @@ case class IntendedDetail(
 )
 
 object IntendedDetail:
-  given Format[IntendedDetail]     = Json.format
+  given Format[IntendedDetail] = Json.format
+
   def unapply(obj: IntendedDetail) =
     Some(obj.nights, obj.hasStopped, obj.whenWasLastLet, obj.isYearlyAvailable, obj.tradingSeason)

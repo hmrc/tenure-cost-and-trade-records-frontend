@@ -330,12 +330,13 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       case _       => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show()
     }
 
-  private def whatIsYourRentBasedOnRouting: Session => Call    = answers =>
+  private def whatIsYourRentBasedOnRouting: Session => Call = answers =>
     answers.forType match {
       case FOR6010 | FOR6015 | FOR6016 | FOR6030 =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
       case _                                     => controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show()
     }
+
   private def tradeServicesDescriptionRouting: Session => Call = answers =>
     controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(getIndexOfTradeServices(answers))
 
@@ -504,38 +505,44 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     ConnectedToLandlordPageId                     -> connectedToLandlordRouting,
     ConnectedToLandlordDetailsPageId              -> connectedToLandlordDetailsRouting,
     LeaseOrAgreementDetailsPageId                 -> leaseOrAgreementDetailsRouting,
-    CurrentRentPayableWithin12monthsPageId        -> (_ =>
-      aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
-    ),
+    CurrentRentPayableWithin12monthsPageId        ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+      ),
     ProvideDetailsOfYourLeasePageId               -> provideDetailsOfYourLeaseRouting,
     PropertyUseLeasebackAgreementId               -> propertyUseLeasebackAgreementRouting,
     CurrentAnnualRentPageId                       -> currentAnnualRentRouting,
     CurrentRentFirstPaidPageId                    -> currentRentFirstPaidRouting,
-    TenancyLeaseAgreementExpirePageId             -> (_ =>
-      aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
-    ),
+    TenancyLeaseAgreementExpirePageId             ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+      ),
     CurrentLeaseBeginPageId                       -> (_ => aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show()),
     IncludedInYourRentPageId                      -> includedInYourRentRouting,
     DoesRentPayablePageId                         -> doesRentPayableRouting,
-    UltimatelyResponsibleInsideRepairsPageId      -> (_ =>
-      aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
-    ),
-    UltimatelyResponsibleOutsideRepairsPageId     -> (_ =>
-      aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()
-    ),
+    UltimatelyResponsibleInsideRepairsPageId      ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show()
+      ),
+    UltimatelyResponsibleOutsideRepairsPageId     ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.show()
+      ),
     UltimatelyResponsibleBusinessInsurancePageId  -> ultimatelyResponsibleBuildingInsuranceRouting,
     RentIncludeTradeServicesPageId                -> rentIncludeTradeServicesRouting,
-    RentIncludeTradeServicesDetailsPageId         -> (_ =>
-      aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
-    ),
+    RentIncludeTradeServicesDetailsPageId         ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
+      ),
     RentIncludesVatPageId                         -> (_ => aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
     RentFixtureAndFittingsPageId                  -> rentFixtureAndFittingsRouting,
     RentFixtureAndFittingsDetailsPageId           -> (_ => aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show()),
     RentOpenMarketPageId                          -> rentRentOpenMarketRouting,
     WhatRentBasedOnPageId                         -> whatIsYourRentBasedOnRouting,
-    RentIncreaseByRPIPageId                       -> (_ =>
-      aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
-    ),
+    RentIncreaseByRPIPageId                       ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show()
+      ),
     RentPayableVaryAccordingToGrossOrNetId        -> payableGrossOrNetRouting,
     RentPayableVaryAccordingToGrossOrNetDetailsId -> payableGrossOrNetDetailsRouting,
     RentVaryQuantityOfBeersId                     -> rentVaryQuantityOfBeersRouting,
@@ -562,9 +569,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     PayCapitalSumDetailsId                        -> payCapitalSumDetailsRouting,
     PayWhenLeaseGrantedId                         -> (_ => aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show()),
     LegalOrPlanningRestrictionId                  -> legalOrPlanningRestrictionRouting,
-    LegalOrPlanningRestrictionDetailsId           -> (_ =>
-      aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
-    ),
+    LegalOrPlanningRestrictionDetailsId           ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
+      ),
     TradeServicesDescriptionId                    -> tradeServicesDescriptionRouting,
     TradeServicesListId                           -> tradeServicesListRouting,
     ServicePaidSeparatelyId                       -> servicePaidSeparatelyRouting,
@@ -574,9 +582,10 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     TypeOfTenureId                                -> (_ => aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show()),
     ThroughputAffectsRentId                       -> doesRentVaryToThroughputRouting,
     ThroughputAffectsRentDetailsId                -> (_ => aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()),
-    IsVATPayableForWholePropertyId                -> (_ =>
-      aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
-    ),
+    IsVATPayableForWholePropertyId                ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
+      ),
     IsRentUnderReviewId                           -> isRentUnderReviewRouting,
     DoesRentIncludeParkingId                      -> doesRentIncludeParkingRouting,
     IncludedInRentParkingSpacesId                 -> (_ => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show()),
@@ -588,14 +597,17 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
     RentDevelopedLandId                           -> rentDevelopedLandRouting,
     RentDevelopedLandDetailsId                    -> (_ => aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show()),
     RentIncludeStructuresBuildingsId              -> rentIncludeStructuresBuildingsRouting,
-    RentIncludeStructuresBuildingsDetailsId       -> (_ =>
-      aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
-    ),
-    SurrenderedLeaseAgreementDetailsId            -> (_ =>
-      aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
-    ),
-    CheckYourAnswersAboutYourLeaseOrTenureId      -> (_ =>
-      controllers.routes.TaskListController.show().withFragment("leaseOrAgreement")
-    )
+    RentIncludeStructuresBuildingsDetailsId       ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show()
+      ),
+    SurrenderedLeaseAgreementDetailsId            ->
+      (_ =>
+        aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
+      ),
+    CheckYourAnswersAboutYourLeaseOrTenureId      ->
+      (_ =>
+        controllers.routes.TaskListController.show().withFragment("leaseOrAgreement")
+      )
   )
 }

@@ -31,7 +31,8 @@ import java.time.temporal.ChronoUnit
 
 object RentalPeriodForm extends RentalPeriodSupport:
 
-  def theForm(using
+  def theForm(
+    using
     request: SessionRequest[AnyContent],
     messages: Messages,
     dateUtil: DateUtilLocalised

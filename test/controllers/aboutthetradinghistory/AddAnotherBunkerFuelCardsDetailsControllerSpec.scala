@@ -15,6 +15,7 @@
  */
 
 package controllers.aboutthetradinghistory
+
 import actions.SessionRequest
 import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
@@ -122,10 +123,12 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
     }
 
   }
+
   object TestData {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val addAnotherBunkerFuelCardsDetails: String =
         "addAnotherBunkerFuelCardsDetails"
     }

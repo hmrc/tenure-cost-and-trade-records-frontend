@@ -23,6 +23,7 @@ case class AdditionalActivities(
   additionalActivitiesOnSite: Option[AnswersYesNo] = None,
   checkYourAnswersAdditionalActivities: Option[AnswersYesNo] = None
 )
+
 object AdditionalActivities {
   implicit val format: OFormat[AdditionalActivities] = Json.format
 }

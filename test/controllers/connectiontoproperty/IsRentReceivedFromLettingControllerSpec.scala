@@ -31,9 +31,10 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
   import TestData._
 
   val mockAudit: Audit = mock[Audit]
+
   def isRentReceivedFromLettingController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  )                    =
+  ) =
     new IsRentReceivedFromLettingController(
       stubMessagesControllerComponents(),
       mockAudit,

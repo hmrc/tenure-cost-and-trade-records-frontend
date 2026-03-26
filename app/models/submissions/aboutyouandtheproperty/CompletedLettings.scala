@@ -24,6 +24,7 @@ case class CompletedLettings(
   financialYearEnd: LocalDate,
   numberOfNights: Int
 )
+
 object CompletedLettings {
   implicit val format: OFormat[CompletedLettings] = Json.format
 }

@@ -27,8 +27,7 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   * @author Yuriy Tumakha
   */
-case class RequestBuilderStub(responseStatusOrFailure: Either[Throwable, Int], requestBody: String = "")
-    extends RequestBuilder:
+case class RequestBuilderStub(responseStatusOrFailure: Either[Throwable, Int], requestBody: String = "") extends RequestBuilder:
 
   override def transform(transform: WSRequest => WSRequest): RequestBuilder = this
 

@@ -34,7 +34,7 @@ class ErrorHandlerController @Inject() (
   jsonErrorView: JsonParseError,
   cc: MessagesControllerComponents
 ) extends FrontendController(cc)
-    with I18nSupport {
+  with I18nSupport {
 
   def showJsonError = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(Ok(jsonErrorView(Some(controllers.routes.LoginController.show.url))))

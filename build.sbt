@@ -35,11 +35,10 @@ lazy val microservice = Project(appName, file("."))
     digest / includeFilter := GlobFilter("*.js") || GlobFilter("*.min.css")
   )
 
-lazy val it =
-  (project in file("it"))
-    .enablePlugins(PlayScala)
-    .dependsOn(microservice % "test->test")
-    .settings(commonSettings)
-    .settings(itSettings())
+lazy val it = (project in file("it"))
+  .enablePlugins(PlayScala)
+  .dependsOn(microservice % "test->test")
+  .settings(commonSettings)
+  .settings(itSettings())
 
 addCommandAlias("precommit", "scalafmtSbt;scalafmtAll;it/Test/scalafmt;coverage;test;it/test;coverageReport")

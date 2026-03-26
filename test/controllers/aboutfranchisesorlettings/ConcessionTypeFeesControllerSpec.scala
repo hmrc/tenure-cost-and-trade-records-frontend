@@ -25,7 +25,8 @@ import utils.TestBaseSpec
 class ConcessionTypeFeesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
-  def controller       =
+
+  def controller =
     new ConcessionTypeFeesController(
       stubMessagesControllerComponents(),
       mockAudit,

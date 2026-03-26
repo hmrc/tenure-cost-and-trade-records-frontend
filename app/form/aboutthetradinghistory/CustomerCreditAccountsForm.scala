@@ -32,7 +32,10 @@ object CustomerCreditAccountsForm {
       mappingPerYear(years, (year, idx) => "" -> customerCreditAccountsMapping(year, idx))
     }
 
-  private def customerCreditAccountsMapping(year: String, idx: Int)(using
+  private def customerCreditAccountsMapping(
+    year: String,
+    idx: Int
+  )(using
     messages: Messages
   ): Mapping[CustomerCreditAccounts] =
     mapping(

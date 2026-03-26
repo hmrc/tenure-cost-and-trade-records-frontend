@@ -63,7 +63,10 @@ abstract class Navigator @Inject() (audit: Audit):
   /**
     * Get next page with possible redirect back to CYA.
     */
-  def nextPage(id: Identifier, session: Session)(implicit
+  def nextPage(
+    id: Identifier,
+    session: Session
+  )(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
@@ -72,7 +75,11 @@ abstract class Navigator @Inject() (audit: Audit):
   /**
     * Get next page call with request parameter.
     */
-  def nextPageWithParam(id: Identifier, session: Session, paramAndValue: String)(implicit
+  def nextPageWithParam(
+    id: Identifier,
+    session: Session,
+    paramAndValue: String
+  )(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Call =

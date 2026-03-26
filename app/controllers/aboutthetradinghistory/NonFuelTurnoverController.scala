@@ -45,9 +45,9 @@ class NonFuelTurnoverController @Inject() (
   turnoverView: turnover6020,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("NonFuelTurnover")
@@ -74,10 +74,9 @@ class NonFuelTurnoverController @Inject() (
         turnoverForm6020(years),
         formWithErrors => BadRequest(turnoverView(formWithErrors, getBackLink(tradingHistory))),
         success => {
-          val turnoverSections6020 =
-            (success zip yearEndDates).map { case (turnoverSection, finYearEnd) =>
-              turnoverSection.copy(financialYearEnd = finYearEnd)
-            }
+          val turnoverSections6020 = (success zip yearEndDates).map { case (turnoverSection, finYearEnd) =>
+            turnoverSection.copy(financialYearEnd = finYearEnd)
+          }
 
           val updatedData = updateAboutTheTradingHistory(
             _.copy(
@@ -100,7 +99,8 @@ class NonFuelTurnoverController @Inject() (
 
   private def runWithSessionCheck(
     action: AboutTheTradingHistory => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .filter(_.turnoverSections6020.exists(_.nonEmpty))
@@ -111,7 +111,8 @@ class NonFuelTurnoverController @Inject() (
 
   private def getBackLink(
     tradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[AnyContent]): String =
+  )(implicit request: SessionRequest[AnyContent]
+  ): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

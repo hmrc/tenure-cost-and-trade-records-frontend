@@ -32,9 +32,10 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
+
   def licensableActivitiesDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  )                    = new LicensableActivitiesDetailsController(
+  ) = new LicensableActivitiesDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

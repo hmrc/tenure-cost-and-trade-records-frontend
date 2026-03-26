@@ -26,9 +26,10 @@ import utils.TestBaseSpec
 class TotalFuelSoldControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def totalFuelSoldController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  )                    = new TotalFuelSoldController(
+  ) = new TotalFuelSoldController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

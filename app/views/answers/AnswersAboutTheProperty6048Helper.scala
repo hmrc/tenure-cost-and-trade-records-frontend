@@ -34,11 +34,11 @@ object AnswersAboutTheProperty6048Helper:
           CardEntry(
             label = messages("checkYourAnswersAboutTheProperty.occupiersDetails"),
             value = s"""
-                     |<p class="govuk-body">
-                     |${occupier.name}<br>
-                     |${occupier.address}
-                     |</p>
-                     |""".stripMargin,
+                       |<p class="govuk-body">
+                       |${occupier.name}<br>
+                       |${occupier.address}
+                       |</p>
+                       |""".stripMargin,
             changeAction = Some(routes.OccupiersDetailsController.show(Some(index)).asChangeLink("partsUnavailable"))
           )
         )

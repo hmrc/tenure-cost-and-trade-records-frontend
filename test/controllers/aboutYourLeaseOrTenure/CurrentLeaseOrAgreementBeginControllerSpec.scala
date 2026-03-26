@@ -32,9 +32,10 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
+
   def currentLeaseOrAgreementBeginController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  )                    = new CurrentLeaseOrAgreementBeginController(
+  ) = new CurrentLeaseOrAgreementBeginController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

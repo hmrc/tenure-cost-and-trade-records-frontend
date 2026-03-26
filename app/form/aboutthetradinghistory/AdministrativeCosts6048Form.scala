@@ -44,7 +44,8 @@ object AdministrativeCosts6048Form {
 
   def administrativeCosts6048Form(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[AdministrativeCosts6048]] =
+  )(using messages: Messages
+  ): Form[Seq[AdministrativeCosts6048]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }

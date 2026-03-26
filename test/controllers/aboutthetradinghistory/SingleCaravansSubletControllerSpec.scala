@@ -27,7 +27,8 @@ class SingleCaravansSubletControllerSpec extends TestBaseSpec {
   private val previousPage = aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show().url
   private val nextPage     = aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show().url
 
-  val mockAudit: Audit               = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
+
   def singleCaravansSubletController =
     new SingleCaravansSubletController(
       caravansTrading6045View,

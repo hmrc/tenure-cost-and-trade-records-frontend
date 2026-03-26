@@ -23,11 +23,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.{JsSuccess, Json}
 
-class SensitiveRequestReferenceNumberDetailsSpec
-    extends AnyFlatSpec
-    with Matchers
-    with OptionValues
-    with MongoCryptoSupport:
+class SensitiveRequestReferenceNumberDetailsSpec extends AnyFlatSpec with Matchers with OptionValues with MongoCryptoSupport:
 
   val clearDetails = RequestReferenceNumberDetails(
     propertyDetails = Some(

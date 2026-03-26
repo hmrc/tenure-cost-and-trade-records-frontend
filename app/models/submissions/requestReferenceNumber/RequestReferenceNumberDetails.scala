@@ -31,7 +31,8 @@ object RequestReferenceNumberDetails:
 
   def updateRequestReferenceNumber(
     copy: RequestReferenceNumberDetails => RequestReferenceNumberDetails
-  )(implicit sessionRequest: SessionRequest[?]): Session =
+  )(implicit sessionRequest: SessionRequest[?]
+  ): Session =
 
     val currentRequestReferenceNumber = sessionRequest.sessionData.requestReferenceNumberDetails
 

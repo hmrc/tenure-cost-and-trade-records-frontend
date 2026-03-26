@@ -21,6 +21,7 @@ import play.api.mvc.Call
 object CheckYourAnswersHelpers:
 
   extension (call: Call)
+
     def asChangeLink(fragment: String): Call =
       call.copy(
         url = withFrom + s"&change=true#$fragment"

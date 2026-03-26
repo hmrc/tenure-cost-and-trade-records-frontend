@@ -34,7 +34,8 @@ object AboutLeaseOrAgreementPartFour {
 
   def updateAboutLeaseOrAgreementPartFour(
     copy: AboutLeaseOrAgreementPartFour => AboutLeaseOrAgreementPartFour
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]
+  ): Session = {
     val currentAboutLeaseOrAgreementPartFour = sessionRequest.sessionData.aboutLeaseOrAgreementPartFour
 
     val updatedAboutLeaseOrAgreementPartFour = currentAboutLeaseOrAgreementPartFour match {

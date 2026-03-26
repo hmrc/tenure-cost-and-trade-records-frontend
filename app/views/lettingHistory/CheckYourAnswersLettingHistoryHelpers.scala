@@ -33,7 +33,9 @@ object CheckYourAnswersLettingHistoryHelpers:
 
   def permanentResidentsCardsData(
     fragment: String
-  )(using request: SessionRequest[AnyContent], messages: Messages): Seq[CardData] =
+  )(using request: SessionRequest[AnyContent],
+    messages: Messages
+  ): Seq[CardData] =
     LettingHistory.permanentResidents(request.sessionData).zipWithIndex.map { (resident, index) =>
       CardData(
         index = index,
@@ -51,7 +53,9 @@ object CheckYourAnswersLettingHistoryHelpers:
 
   def completedLettingsCardsData(
     fragment: String
-  )(using request: SessionRequest[AnyContent], messages: Messages): Seq[CardData] =
+  )(using request: SessionRequest[AnyContent],
+    messages: Messages
+  ): Seq[CardData] =
     LettingHistory.completedLettings(request.sessionData).zipWithIndex.map { (occupier, index) =>
       CardData(
         index = index,
@@ -72,7 +76,9 @@ object CheckYourAnswersLettingHistoryHelpers:
 
   def onlineAdvertisingCardsData(
     fragment: String
-  )(using request: SessionRequest[AnyContent], messages: Messages): Seq[CardData] =
+  )(using request: SessionRequest[AnyContent],
+    messages: Messages
+  ): Seq[CardData] =
     LettingHistory.onlineAdvertising(request.sessionData).zipWithIndex.map { (advertising, index) =>
       CardData(
         index = index,
@@ -91,7 +97,9 @@ object CheckYourAnswersLettingHistoryHelpers:
   def intendedLettingsSummaryData(
     dateUtil: DateUtilLocalised,
     fragment: String
-  )(using request: SessionRequest[AnyContent], messages: Messages): Seq[SummaryEntry] = {
+  )(using request: SessionRequest[AnyContent],
+    messages: Messages
+  ): Seq[SummaryEntry] = {
     val data = mutable.Buffer(
       SummaryEntry(
         key = messages("lettingHistory.checkYourAnswers.intendedLettings.nights"),

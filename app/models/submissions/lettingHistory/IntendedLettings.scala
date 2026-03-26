@@ -265,6 +265,7 @@ trait IntendedLettings:
     yield tradingPeriod
 
 object IntendedLettings:
+
   def doesMeetLettingCriteria(session: Session): Option[Boolean] =
     for
       lettingHistory   <- session.lettingHistory

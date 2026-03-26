@@ -34,8 +34,8 @@ import scala.util.{Failure, Success, Try}
 class DayMonthFormatter(
   fieldNameKey: String,
   allow29February: Boolean
-)(using messages: Messages)
-    extends Formatter[DayMonthsDuration] {
+)(using messages: Messages
+) extends Formatter[DayMonthsDuration] {
 
   private val dayMonthFields = Seq("day", "month")
   private val validationYear = if allow29February then 2020 else 2021

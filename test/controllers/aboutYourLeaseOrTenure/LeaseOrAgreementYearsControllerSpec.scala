@@ -29,9 +29,10 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
   val mockAboutYourLeaseOrTenureNavigator: AboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
   val mockAudit: Audit = mock[Audit]
+
   def leaseOrAgreementYearsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  )                    =
+  ) =
     new LeaseOrAgreementYearsController(
       stubMessagesControllerComponents(),
       mockAudit,

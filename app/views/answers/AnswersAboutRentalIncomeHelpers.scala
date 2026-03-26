@@ -32,19 +32,20 @@ object AnswersAboutRentalIncomeHelpers:
     maybePropertyRentDetails: Option[PropertyRentDetails],
     index: Int,
     dateUtil: DateUtilLocalised
-  )(using messages: Messages) =
+  )(using messages: Messages
+  ) =
     CardEntry(
       label = messages("checkYourAnswersAboutFranchiseOrLettings.annualRent"),
       value = maybePropertyRentDetails.fold("")(propertyRentDetails =>
         s"""
-             |<p class='govuk-body'>
-             |${propertyRentDetails.annualRent.asMoney}<br>
-             |${messages(
+           |<p class='govuk-body'>
+           |${propertyRentDetails.annualRent.asMoney}<br>
+           |${messages(
             "checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
             dateUtil.formatDayMonthAbbrYear(propertyRentDetails.dateInput)
           )}
-             |</p>
-             |""".stripMargin
+           |</p>
+           |""".stripMargin
       ),
       changeAction = Some(routes.RentalIncomeRentController.show(index).asChangeLink("rentReceived"))
     )
@@ -52,15 +53,16 @@ object AnswersAboutRentalIncomeHelpers:
   private def rentReceivedCardEntry(
     maybeRentReceivedFrom: Option[RentReceivedFrom],
     index: Int
-  )(using messages: Messages) =
+  )(using messages: Messages
+  ) =
     CardEntry(
       label = messages("checkYourAnswersAboutFranchiseOrLettings.annualRent"),
       value = maybeRentReceivedFrom.fold("")(propertyRentDetails => s"""
-           |<p class='govuk-body'>
-           |${propertyRentDetails.annualRent.asMoney}<br>
-           |${messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover")}
-           |</p>
-           |""".stripMargin),
+                                                                       |<p class='govuk-body'>
+                                                                       |${propertyRentDetails.annualRent.asMoney}<br>
+                                                                       |${messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover")}
+                                                                       |</p>
+                                                                       |""".stripMargin),
       changeAction = Some(routes.RentReceivedFromController.show(index).asChangeLink("annualRent"))
     )
 
@@ -68,7 +70,8 @@ object AnswersAboutRentalIncomeHelpers:
     calculatingTheRent: Option[CalculatingTheRent],
     index: Int,
     dateUtil: DateUtilLocalised
-  )(using messages: Messages) =
+  )(using messages: Messages
+  ) =
     CardEntry(
       label = messages("checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated"),
       value = calculatingTheRent.fold("")(calculatingTheRent =>
@@ -86,7 +89,10 @@ object AnswersAboutRentalIncomeHelpers:
       changeAction = Some(routes.CalculatingTheRentForController.show(index).asChangeLink("annualRent"))
     )
 
-  private def itemsIncludedCardEntry(maybeItemsIncluded: Option[List[String]], index: Int)(using
+  private def itemsIncludedCardEntry(
+    maybeItemsIncluded: Option[List[String]],
+    index: Int
+  )(using
     messages: Messages
   ) =
     CardEntry(
@@ -116,12 +122,12 @@ object AnswersAboutRentalIncomeHelpers:
           label = messages("checkYourAnswersAboutFranchiseOrLettings.businessOperatorName"),
           value = record.businessDetails.fold("") { businessDetails =>
             s"""
-                 |<p class="govuk-body">
-                 |${businessDetails.operatorName}<br>
-                 |${businessDetails.typeOfBusiness}<br>
-                 |${businessDetails.cateringAddress.map(_.escapedHtml).getOrElse("")}
-                 |</p>
-                 |""".stripMargin
+               |<p class="govuk-body">
+               |${businessDetails.operatorName}<br>
+               |${businessDetails.typeOfBusiness}<br>
+               |${businessDetails.cateringAddress.map(_.escapedHtml).getOrElse("")}
+               |</p>
+               |""".stripMargin
           },
           changeAction = Some(routes.FranchiseTypeDetailsController.show(index).asChangeLink("rentReceived"))
         ),
@@ -147,12 +153,12 @@ object AnswersAboutRentalIncomeHelpers:
           label = messages("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName"),
           value = record.operatorDetails.fold("") { operatorDetails =>
             s"""
-                 |<p class="govuk-body">
-                 |${operatorDetails.operatorName}<br>
-                 |${operatorDetails.typeOfBusiness}<br>
-                 |${operatorDetails.lettingAddress.map(_.escapedHtml).getOrElse("")}
-                 |</p>
-                 |""".stripMargin
+               |<p class="govuk-body">
+               |${operatorDetails.operatorName}<br>
+               |${operatorDetails.typeOfBusiness}<br>
+               |${operatorDetails.lettingAddress.map(_.escapedHtml).getOrElse("")}
+               |</p>
+               |""".stripMargin
           },
           changeAction = Some(routes.LettingTypeDetailsController.show(index).asChangeLink("lettingOperatorName"))
         ),
@@ -252,7 +258,8 @@ object AnswersAboutRentalIncomeHelpers:
     businessCounter: Int,
     index: Int,
     dateUtil: DateUtilLocalised
-  )(using messages: Messages) = {
+  )(using messages: Messages
+  ) = {
     val fragment = "franchiseOperatorName"
     CardData(
       index = businessCounter,
@@ -278,7 +285,10 @@ object AnswersAboutRentalIncomeHelpers:
     )
   }
 
-  def cardsData(rentalIncome: Seq[IncomeRecord], dateUtil: DateUtilLocalised)(using
+  def cardsData(
+    rentalIncome: Seq[IncomeRecord],
+    dateUtil: DateUtilLocalised
+  )(using
     request: SessionRequest[?],
     messages: Messages
   ): Seq[CardData] = {

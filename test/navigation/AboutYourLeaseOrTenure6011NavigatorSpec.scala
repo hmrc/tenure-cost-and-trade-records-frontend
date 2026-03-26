@@ -88,8 +88,9 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
     "return a function that goes to tenancy lease agreement expire page when current rent first paid has been completed" in {
       navigator
         .nextPage(CurrentRentFirstPaidPageId, session6011)
-        .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
-        .show()
+        .apply(session6011) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
+          .show()
     }
 
     "return a function that goes to tenancy lease expire page when current rent first paid has been completed" in {
@@ -105,8 +106,9 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
         .nextPage(CurrentRentFirstPaidPageId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
+          .show()
     }
 
     "return a function that goes to Tenancy lease agreement page when What is your current rent has been completed" in {
@@ -122,8 +124,9 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
         .nextPage(CurrentRentFirstPaidPageId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
+          .show()
     }
 
     "return a function that goes to further information page when tenancy lease agreement expire has been completed" in {

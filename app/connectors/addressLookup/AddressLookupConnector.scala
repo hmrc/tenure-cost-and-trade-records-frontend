@@ -38,9 +38,9 @@ class AddressLookupConnector @Inject() (
   appConfig: AppConfig,
   servicesConfig: ServicesConfig,
   httpClientV2: HttpClientV2
-)(using ec: ExecutionContext)
-    extends FrontendHeaderCarrierProvider
-    with Logging:
+)(using ec: ExecutionContext
+) extends FrontendHeaderCarrierProvider
+  with Logging:
 
   def initJourney(config: AddressLookupConfig)(implicit request: SessionRequest[AnyContent]): Future[Option[String]] =
     val additionalParameter =
@@ -60,83 +60,83 @@ class AddressLookupConnector @Inject() (
 
     // See https://github.com/hmrc/address-lookup-frontend?tab=readme-ov-file#configuring-a-journey
     val journeyConfig = Json.parse(s"""{
-        |  "version": 2,
-        |  "options": {
-        |    "continueUrl": "${hostUrl + config.offRampCall.url + separator + additionalParameter}",
-        |    "phaseFeedbackLink": "/help/alpha",
-        |    "showPhaseBanner": false,
-        |    "alphaPhase": false,
-        |    "showBackButtons": true,
-        |    "includeHMRCBranding": true,
-        |    "ukMode": true,
-        |    "selectPageConfig": {
-        |      "proposalListLimit": 10,
-        |      "showSearchLinkAgain": true
-        |    },
-        |    "confirmPageConfig": {
-        |      "showChangeLink": true,
-        |      "showSubHeadingAndInfo": true,
-        |      "showSearchAgainLink": true,
-        |      "showConfirmChangeText": false
-        |    },
-        |    "timeoutConfig": {
-        |      "timeoutAmount": 890,
-        |      "timeoutUrl": "${controllers.routes.SaveAsDraftController.sessionTimeout.url}"
-        |    }
-        |  },
-        |  "labels": {
-        |    "en": {
-        |      "appLevelLabels": {
-        |        "navTitle":  "${messages("site.service_name")}"
-        |      },
-        |      "lookupPageLabels": {
-        |        "title": "${messages(config.lookupPageHeadingKey)}",
-        |        "heading": "${messages(config.lookupPageHeadingKey)}"
-        |      },
-        |      "selectPageLabels": {
-        |        "title": "${messages(config.selectPageHeadingKey)}",
-        |        "heading": "${messages(config.selectPageHeadingKey)}"
-        |       },
-        |      "editPageLabels": {
-        |        "title": "Enter the address manually",
-        |        "heading": "Enter the address manually"
-        |      },
-        |      "confirmPageLabels": {
-        |        "title": "${messages(config.confirmPageLabelKey)}",
-        |        "heading": "${messages(config.confirmPageLabelKey)}",
-        |        "submitLabel": "Use this address",
-        |        "searchAgainLinkText": "Use a different address",
-        |        "changeLinkText": "Edit this address",
-        |        "infoMessage": ""
-        |      }
-        |    },
-        |    "cy": {
-        |      "appLevelLabels": {
-        |        "navTitle":  "${messages("site.service_name")(using Lang("CY"))}"
-        |      },
-        |      "lookupPageLabels": {
-        |        "title": "${messages(config.lookupPageHeadingKey)}",
-        |        "heading": "${messages(config.lookupPageHeadingKey)}"
-        |      },
-        |      "selectPageLabels": {
-        |        "title": "${messages(config.selectPageHeadingKey)}",
-        |        "heading": "${messages(config.selectPageHeadingKey)}"
-        |       },
-        |      "editPageLabels": {
-        |        "title": "Rhowch y cyfeiriad â llaw",
-        |        "heading": "Rhowch y cyfeiriad â llaw"
-        |      },
-        |      "confirmPageLabels": {
-        |       "title": "${messages(config.confirmPageLabelKey)}",
-        |       "heading": "${messages(config.confirmPageLabelKey)}",
-        |       "submitLabel": "Defnyddiwch y cyfeiriad hwn",
-        |       "searchAgainLinkText": "Defnyddiwch gyfeiriad gwahanol",
-        |       "changeLinkText": "Golygu'r cyfeiriad hwn",
-        |       "infoMessage": ""
-        |      }
-        |    }
-        |  }
-        |}""".stripMargin)
+                                      |  "version": 2,
+                                      |  "options": {
+                                      |    "continueUrl": "${hostUrl + config.offRampCall.url + separator + additionalParameter}",
+                                      |    "phaseFeedbackLink": "/help/alpha",
+                                      |    "showPhaseBanner": false,
+                                      |    "alphaPhase": false,
+                                      |    "showBackButtons": true,
+                                      |    "includeHMRCBranding": true,
+                                      |    "ukMode": true,
+                                      |    "selectPageConfig": {
+                                      |      "proposalListLimit": 10,
+                                      |      "showSearchLinkAgain": true
+                                      |    },
+                                      |    "confirmPageConfig": {
+                                      |      "showChangeLink": true,
+                                      |      "showSubHeadingAndInfo": true,
+                                      |      "showSearchAgainLink": true,
+                                      |      "showConfirmChangeText": false
+                                      |    },
+                                      |    "timeoutConfig": {
+                                      |      "timeoutAmount": 890,
+                                      |      "timeoutUrl": "${controllers.routes.SaveAsDraftController.sessionTimeout.url}"
+                                      |    }
+                                      |  },
+                                      |  "labels": {
+                                      |    "en": {
+                                      |      "appLevelLabels": {
+                                      |        "navTitle":  "${messages("site.service_name")}"
+                                      |      },
+                                      |      "lookupPageLabels": {
+                                      |        "title": "${messages(config.lookupPageHeadingKey)}",
+                                      |        "heading": "${messages(config.lookupPageHeadingKey)}"
+                                      |      },
+                                      |      "selectPageLabels": {
+                                      |        "title": "${messages(config.selectPageHeadingKey)}",
+                                      |        "heading": "${messages(config.selectPageHeadingKey)}"
+                                      |       },
+                                      |      "editPageLabels": {
+                                      |        "title": "Enter the address manually",
+                                      |        "heading": "Enter the address manually"
+                                      |      },
+                                      |      "confirmPageLabels": {
+                                      |        "title": "${messages(config.confirmPageLabelKey)}",
+                                      |        "heading": "${messages(config.confirmPageLabelKey)}",
+                                      |        "submitLabel": "Use this address",
+                                      |        "searchAgainLinkText": "Use a different address",
+                                      |        "changeLinkText": "Edit this address",
+                                      |        "infoMessage": ""
+                                      |      }
+                                      |    },
+                                      |    "cy": {
+                                      |      "appLevelLabels": {
+                                      |        "navTitle":  "${messages("site.service_name")(using Lang("CY"))}"
+                                      |      },
+                                      |      "lookupPageLabels": {
+                                      |        "title": "${messages(config.lookupPageHeadingKey)}",
+                                      |        "heading": "${messages(config.lookupPageHeadingKey)}"
+                                      |      },
+                                      |      "selectPageLabels": {
+                                      |        "title": "${messages(config.selectPageHeadingKey)}",
+                                      |        "heading": "${messages(config.selectPageHeadingKey)}"
+                                      |       },
+                                      |      "editPageLabels": {
+                                      |        "title": "Rhowch y cyfeiriad â llaw",
+                                      |        "heading": "Rhowch y cyfeiriad â llaw"
+                                      |      },
+                                      |      "confirmPageLabels": {
+                                      |       "title": "${messages(config.confirmPageLabelKey)}",
+                                      |       "heading": "${messages(config.confirmPageLabelKey)}",
+                                      |       "submitLabel": "Defnyddiwch y cyfeiriad hwn",
+                                      |       "searchAgainLinkText": "Defnyddiwch gyfeiriad gwahanol",
+                                      |       "changeLinkText": "Golygu'r cyfeiriad hwn",
+                                      |       "infoMessage": ""
+                                      |      }
+                                      |    }
+                                      |  }
+                                      |}""".stripMargin)
 
     httpClientV2
       .post(initUrl)

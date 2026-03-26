@@ -26,11 +26,18 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ErrorHandler @Inject() (errorTemplate: ErrorTemplate, val messagesApi: MessagesApi)(implicit
+class ErrorHandler @Inject() (
+  errorTemplate: ErrorTemplate,
+  val messagesApi: MessagesApi
+)(implicit
   val ec: ExecutionContext
 ) extends FrontendErrorHandler {
 
-  def standardErrorTemplate(pageTitle: String, heading: String, message: String)(implicit
+  def standardErrorTemplate(
+    pageTitle: String,
+    heading: String,
+    message: String
+  )(implicit
     request: RequestHeader
   ): Future[Html] =
     render { implicit request =>

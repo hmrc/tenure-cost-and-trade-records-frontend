@@ -29,11 +29,12 @@ import utils.TestBaseSpec
 class RentalIncomeListControllerSpec extends TestBaseSpec {
   import TestData._
   val mockAudit: Audit = mock[Audit]
+
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettings6045
     )
-  )                    = new RentalIncomeListController(
+  ) = new RentalIncomeListController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutFranchisesOrLettingsNavigator,
@@ -159,6 +160,7 @@ class RentalIncomeListControllerSpec extends TestBaseSpec {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val rentalIncomeList: String =
         "rentalIncomeList"
     }

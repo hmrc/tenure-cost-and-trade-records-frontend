@@ -32,6 +32,7 @@ import scala.concurrent.Future.successful
 class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   val residentDetails = ResidentDetail(name = "Mr. One", address = "Address One")
+
   val occupierDetails = OccupierDetail(
     name = "Mr. One",
     address = None,
@@ -112,11 +113,14 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
       .thenReturn(successful(()))
 
   trait SessionCapturingFixture:
+
     given argumentCaptorToSession: Conversion[ArgumentCaptor[Session], Session] with
       def apply(c: ArgumentCaptor[Session]) = c.getValue
 
   extension (r: FakeRequest[AnyContent])
+
     def withQueryParams(params: (String, String)*) =
       r.withTarget(RequestTarget(r.uri, r.path, queryString = Map(params.map((k, v) => k -> Seq(v))*)))
-    def withFragment(fragment: String)             =
+
+    def withFragment(fragment: String) =
       r.withTarget(RequestTarget(r.uri, r.path + "#" + fragment, r.queryString))

@@ -34,7 +34,9 @@ object AccommodationLettingHistory6048Form {
 
   private def columnMapping(
     year: String
-  )(using request: SessionRequest[AnyContent], messages: Messages): Mapping[AccommodationLettingHistory] =
+  )(using request: SessionRequest[AnyContent],
+    messages: Messages
+  ): Mapping[AccommodationLettingHistory] =
     val maxNights = AccountingInformationUtil.maxNightsInFinYear6048(year.toInt)
     val maxWeeks  = AccountingInformationUtil.maxWeeksInFinYear6048(year.toInt)
 
@@ -55,7 +57,9 @@ object AccommodationLettingHistory6048Form {
 
   def accommodationLettingHistory6048Form(
     years: Seq[String]
-  )(using request: SessionRequest[AnyContent], messages: Messages): Form[Seq[AccommodationLettingHistory]] =
+  )(using request: SessionRequest[AnyContent],
+    messages: Messages
+  ): Form[Seq[AccommodationLettingHistory]] =
     Form {
       mappingPerYear(years, (year, idx) => s"lettingHistory[$idx]" -> columnMapping(year))
     }

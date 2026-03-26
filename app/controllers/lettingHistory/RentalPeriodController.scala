@@ -44,9 +44,9 @@ class RentalPeriodController @Inject (
   theView: RentalPeriodView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport:
 
   given DateUtilLocalised = dateUtil
   type PartiallyAppliedView = Form[LocalPeriod] => Html
@@ -93,7 +93,8 @@ class RentalPeriodController @Inject (
     maybeIndex: Option[Int]
   )(
     generateResult: (PartiallyAppliedView, OccupierDetail, Int) => Future[Result]
-  )(using request: SessionRequest[AnyContent]): Future[Result] = {
+  )(using request: SessionRequest[AnyContent]
+  ): Future[Result] = {
 
     val result =
       for

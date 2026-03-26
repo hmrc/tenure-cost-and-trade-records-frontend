@@ -30,7 +30,10 @@ case class StubBackendConnector() extends BackendConnector {
 
   var draft: Option[(String, SubmissionDraft)] = None
 
-  override def verifyCredentials(refNumber: String, postcode: String)(implicit
+  override def verifyCredentials(
+    refNumber: String,
+    postcode: String
+  )(implicit
     hc: HeaderCarrier
   ): Future[FORLoginResponse] = ???
 

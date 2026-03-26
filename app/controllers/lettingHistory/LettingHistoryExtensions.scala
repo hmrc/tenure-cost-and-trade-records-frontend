@@ -24,11 +24,15 @@ import uk.gov.hmrc.http.HeaderCarrier
 import scala.concurrent.{ExecutionContext, Future}
 
 extension (repository: SessionRepo)
+
   def saveOrUpdateSession(
     session: SessionWrapper
-  )(using hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
+  )(using hc: HeaderCarrier,
+    ec: ExecutionContext
+  ): Future[SessionWrapper] =
     repository.saveOrUpdate(session.data).map(_ => session)
 
 extension (sessionData: Session)
+
   def withChangedData(bool: Boolean) =
     SessionWrapper(sessionData, changed = bool)

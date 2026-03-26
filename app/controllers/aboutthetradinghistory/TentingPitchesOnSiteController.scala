@@ -33,6 +33,7 @@ import views.html.aboutthetradinghistory.tentingPitchesOnSite
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class TentingPitchesOnSiteController @Inject() (
   mcc: MessagesControllerComponents,
@@ -41,10 +42,10 @@ class TentingPitchesOnSiteController @Inject() (
   view: tentingPitchesOnSite,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TentingPitchesOnSite")

@@ -28,6 +28,7 @@ case class GrossReceiptsExcludingVAT(
   balancingServices: Option[BigDecimal] = None,
   embeddedBenefits: Option[BigDecimal] = None
 ) {
+
   def total: BigDecimal = Seq(
     electricitySales,
     feedInTariff,

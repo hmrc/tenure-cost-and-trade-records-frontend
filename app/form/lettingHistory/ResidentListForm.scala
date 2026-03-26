@@ -22,6 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.single
 
 object ResidentListForm:
+
   val theForm = Form[AnswersYesNo](
     single(
       "answer" -> answerYesNo(errorMessage = "lettingHistory.residentList.hasMoreResidents.required")

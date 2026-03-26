@@ -168,6 +168,7 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val addOccupiersDetails: String =
         "occupiersDetailsList"
     }

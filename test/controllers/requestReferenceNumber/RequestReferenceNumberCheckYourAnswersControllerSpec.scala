@@ -33,6 +33,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
   trait ControllerWithInjectedSubmissionConnectorFixture(
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
   ):
+
     val controller = new RequestReferenceNumberCheckYourAnswersController(
       stubMessagesControllerComponents(),
       inject[SubmissionConnector],
@@ -48,7 +49,8 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
   ):
     val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
-    val controller                                   = new RequestReferenceNumberCheckYourAnswersController(
+
+    val controller = new RequestReferenceNumberCheckYourAnswersController(
       stubMessagesControllerComponents(),
       mockSubmissionConnector,
       requestReferenceNumberCheckYourAnswersView,
@@ -92,9 +94,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
         prefilledRequestRefNumCYA
       ) {
         when(
-          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using
-            any[HeaderCarrier]
-          )
+          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using any[HeaderCarrier])
         ).thenReturn(Future.successful(HttpResponse(CREATED)))
 
         val result = controller.submit()(fakeRequest)
@@ -104,9 +104,10 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
         header(
           "Location",
           result
-        ).value shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
-          .confirmation()
-          .url
+        ).value shouldBe
+          controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
+            .confirmation()
+            .url
       }
     }
     "handle exception and return InternalServerError" should {
@@ -116,9 +117,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
 
         // Mocking the submissionConnector to throw an exception
         when(
-          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using
-            any[HeaderCarrier]
-          )
+          mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using any[HeaderCarrier])
         )
           .thenReturn(Future.failed(new RuntimeException("Test Exception")))
 
@@ -129,9 +128,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
         status(result) shouldBe INTERNAL_SERVER_ERROR
 
         // Verify that the error is logged
-        verify(mockSubmissionConnector).submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using
-          any[HeaderCarrier]
-        )
+        verify(mockSubmissionConnector).submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using any[HeaderCarrier])
 
       }
     }

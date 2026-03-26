@@ -43,10 +43,10 @@ class TypeOfIncomeController @Inject() (
   view: typeOfIncome,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingIncomeRecords                 =
@@ -70,7 +70,7 @@ class TypeOfIncomeController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]): Action[AnyContent]                                 = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingIncomeRecords =
       request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
 
@@ -118,11 +118,14 @@ class TypeOfIncomeController @Inject() (
       )
     }
   }
+
   private def updateSessionAndRedirect(
     updatedRecords: IndexedSeq[IncomeRecord],
     source: TypeOfIncome,
     updatedIndex: Option[Int]
-  )(implicit request: SessionRequest[AnyContent], hc: HeaderCarrier): Future[Result] = {
+  )(implicit request: SessionRequest[AnyContent],
+    hc: HeaderCarrier
+  ): Future[Result] = {
     val existingFranchisesOrLetting =
       request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
     val updatedSession              = request.sessionData.copy(
@@ -157,7 +160,10 @@ class TypeOfIncomeController @Inject() (
           sourceType = TypeLetting
         )
 
-  private def toSpecificController(typeOfLetting: TypeOfIncome, index: Option[Int])(implicit
+  private def toSpecificController(
+    typeOfLetting: TypeOfIncome,
+    index: Option[Int]
+  )(implicit
     request: SessionRequest[AnyContent]
   ): Call = {
     val targetIndex = index.getOrElse(0)

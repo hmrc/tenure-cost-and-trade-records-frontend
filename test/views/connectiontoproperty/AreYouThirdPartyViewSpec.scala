@@ -35,20 +35,20 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   private val backLink = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
 
   private def createView = () =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary, false)(using
-      sessionRequest,
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary, false)(
+      using sessionRequest,
       messages
     )
 
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary, false)(using
-      sessionRequest,
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetailsNoSession.toSummary, false)(
+      using sessionRequest,
       messages
     )
 
   private def createViewUsingForm6076 = (form: Form[AnswersYesNo]) =>
-    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary, false)(using
-      sessionRequest6076,
+    areYouThirdPartyView(form, backLink, "Wombles Inc", stillConnectedDetails6076YesSession.toSummary, false)(
+      using sessionRequest6076,
       messages
     )
 

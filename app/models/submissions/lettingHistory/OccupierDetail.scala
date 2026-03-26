@@ -23,6 +23,7 @@ case class OccupierDetail(
   address: Option[OccupierAddress],
   rentalPeriod: Option[LocalPeriod]
 ):
+
   override def equals(that: Any): Boolean = that match {
     case OccupierDetail(name, address, None)               =>
       this.name.equalsIgnoreCase(name) && this.address == address && this.rentalPeriod.isEmpty
@@ -34,6 +35,7 @@ case class OccupierDetail(
   }
 
 object OccupierDetail:
+
   def unapply(obj: OccupierDetail): Option[(String, Option[OccupierAddress], Option[LocalPeriod])] =
     Some(obj.name, obj.address, obj.rentalPeriod)
   given Format[OccupierDetail]                                                                     = Json.format

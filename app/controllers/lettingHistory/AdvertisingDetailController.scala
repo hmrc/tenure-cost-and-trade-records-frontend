@@ -41,9 +41,9 @@ class AdvertisingDetailController @Inject() (
   theView: OnlineAdvertisingDetailView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport:
 
   def show(maybeIndex: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply {
     implicit request =>
@@ -94,5 +94,6 @@ class AdvertisingDetailController @Inject() (
     theView: OnlineAdvertisingDetailView,
     theFormWithErrors: Form[AdvertisingDetail],
     maybeIndex: Option[Int]
-  )(using request: SessionRequest[AnyContent]) =
+  )(using request: SessionRequest[AnyContent]
+  ) =
     successful(BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex)))

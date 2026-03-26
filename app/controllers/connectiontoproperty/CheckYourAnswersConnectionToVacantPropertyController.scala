@@ -34,8 +34,8 @@ class CheckYourAnswersConnectionToVacantPropertyController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(

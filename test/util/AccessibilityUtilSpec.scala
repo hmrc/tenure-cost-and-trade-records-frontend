@@ -25,7 +25,7 @@ class AccessibilityUtilSpec extends TestBaseSpec {
 
   private val mockDateUtilLocalised       = mock[DateUtilLocalised]
   private val accessibilityUtil           = new AccessibilityUtil(mockDateUtilLocalised)
-  private implicit val messages: Messages = mock[Messages]
+  implicit private val messages: Messages = mock[Messages]
 
   "ariaBuilder" should {
     "return formatted aria label message" in {

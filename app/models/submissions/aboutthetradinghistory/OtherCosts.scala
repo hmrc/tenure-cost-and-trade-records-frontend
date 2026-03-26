@@ -22,6 +22,7 @@ case class OtherCosts(
   otherCosts: Seq[OtherCost] = Seq.empty,
   otherCostDetails: Option[String] = None
 )
+
 object OtherCosts {
   implicit val format: OFormat[OtherCosts] = Json.format
 }

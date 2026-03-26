@@ -42,11 +42,11 @@ class RentalIncomeRentController @Inject() (
   view: rentalIncomeRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with FranchiseAndLettingSupport
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with FranchiseAndLettingSupport
+  with I18nSupport
+  with Logging {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails = getIncomeRecord(index).collect {

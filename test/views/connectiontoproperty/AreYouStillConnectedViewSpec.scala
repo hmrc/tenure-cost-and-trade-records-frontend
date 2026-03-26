@@ -66,7 +66,8 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
 
         "display language toggles" in {
           val doc = asDocument(createView())
-          doc.getElementById("cymraeg-switch") != null || !doc
+          doc.getElementById("cymraeg-switch") != null ||
+          !doc
             .getElementsByAttributeValue("href", "/valuation-office-agency-contact-frontend/language/cymraeg")
             .isEmpty
         }

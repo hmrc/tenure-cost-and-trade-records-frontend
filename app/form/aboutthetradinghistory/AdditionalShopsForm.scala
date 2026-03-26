@@ -33,7 +33,8 @@ object AdditionalShopsForm {
 
   def additionalShopsForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[AdditionalShops]] =
+  )(using messages: Messages
+  ): Form[Seq[AdditionalShops]] =
     Form {
       mappingPerYear(years, (year, idx) => s"additionalShops[$idx]" -> columnMapping(year))
     }

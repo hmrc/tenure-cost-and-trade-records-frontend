@@ -47,10 +47,10 @@ class OccupierListController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with RentalPeriodSupport
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with RentalPeriodSupport
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
     Ok(theListView(theListForm, effectiveRentalPeriod, completedLettings(request.sessionData), backLinkUrl))
@@ -108,15 +108,21 @@ class OccupierListController @Inject() (
 
   private def eventuallySaveOrUpdateSessionWith(
     hadMoreOccupier: Boolean
-  )(using session: Session, hc: HeaderCarrier, ec: ExecutionContext): Future[SessionWrapper] =
+  )(using session: Session,
+    hc: HeaderCarrier,
+    ec: ExecutionContext
+  ): Future[SessionWrapper] =
     if !hadMoreOccupier && completedLettings(session).isEmpty
     then {
       val newSession = withHasCompletedLettings(false)
       repository.saveOrUpdateSession(newSession)
     } else successful(session.withChangedData(false))
 
-  private def renderTheConfirmationViewWith(theForm: Form[AnswersYesNo], occupierDetail: OccupierDetail, index: Int)(
-    using request: SessionRequest[AnyContent]
+  private def renderTheConfirmationViewWith(
+    theForm: Form[AnswersYesNo],
+    occupierDetail: OccupierDetail,
+    index: Int
+  )(using request: SessionRequest[AnyContent]
   ) =
     theConfirmationView(
       theForm,
@@ -127,7 +133,10 @@ class OccupierListController @Inject() (
 
   private def withOccupierDetailAt(
     index: Int
-  )(func: OccupierDetail => Future[Result])(using request: SessionRequest[AnyContent]): Future[Result] =
+  )(
+    func: OccupierDetail => Future[Result]
+  )(using request: SessionRequest[AnyContent]
+  ): Future[Result] =
     LettingHistory
       .completedLettings(request.sessionData)
       .lift(index)

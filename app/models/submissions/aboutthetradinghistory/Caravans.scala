@@ -62,8 +62,7 @@ object Caravans:
   end CaravanHireType
 
   enum CaravansTradingPage(val pageId: Identifier, val unitType: CaravanUnitType, val lettingType: CaravanLettingType):
-    case SingleCaravansOwnedByOperator
-        extends CaravansTradingPage(SingleCaravansOwnedByOperatorId, Single, OwnedByOperator)
+    case SingleCaravansOwnedByOperator extends CaravansTradingPage(SingleCaravansOwnedByOperatorId, Single, OwnedByOperator)
     case SingleCaravansSublet extends CaravansTradingPage(SingleCaravansSubletId, Single, SubletByOperator)
     case TwinCaravansOwnedByOperator extends CaravansTradingPage(TwinCaravansOwnedByOperatorId, Twin, OwnedByOperator)
     case TwinCaravansSublet extends CaravansTradingPage(TwinCaravansSubletId, Twin, SubletByOperator)

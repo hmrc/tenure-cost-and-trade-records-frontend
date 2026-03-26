@@ -43,10 +43,10 @@ class IsRentReceivedFromLettingController @Inject() (
   isRentReceivedFromLettingView: isRentReceivedFromLetting,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsRentReceivedFromLetting")
@@ -66,7 +66,7 @@ class IsRentReceivedFromLettingController @Inject() (
 
   }
 
-  def submit: Action[AnyContent]                                        = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       isRentReceivedFromLettingForm,
       formWithErrors =>
@@ -86,8 +86,9 @@ class IsRentReceivedFromLettingController @Inject() (
             navigator
               .cyaPageDependsOnSession(updatedData)
               .filter(_ =>
-                navigator.from == "CYA" && (data == AnswerNo ||
-                  request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived).contains(AnswerYes))
+                navigator.from == "CYA" &&
+                  (data == AnswerNo ||
+                    request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived).contains(AnswerYes))
               )
               .getOrElse(navigator.nextWithoutRedirectToCYA(LettingIncomePageId, updatedData).apply(updatedData))
           }
@@ -95,6 +96,7 @@ class IsRentReceivedFromLettingController @Inject() (
       }
     )
   }
+
   private def getBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>

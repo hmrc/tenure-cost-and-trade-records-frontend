@@ -47,7 +47,8 @@ object VariableOperatingExpensesForm {
 
   private def variableOperatingExpensesSeq(
     years: Seq[String]
-  )(using messages: Messages): Mapping[Seq[VariableOperatingExpenses]] =
+  )(using messages: Messages
+  ): Mapping[Seq[VariableOperatingExpenses]] =
     mappingPerYear(years, (year, idx) => s"year[$idx]" -> columnMapping(year))
 
   private def otherExpensesDetailsRequired: Constraint[VariableOperatingExpensesSections] =
@@ -59,7 +60,8 @@ object VariableOperatingExpensesForm {
 
   def variableOperatingExpensesForm(
     years: Seq[String]
-  )(using messages: Messages): Form[VariableOperatingExpensesSections] =
+  )(using messages: Messages
+  ): Form[VariableOperatingExpensesSections] =
     Form {
       mapping(
         "variableOperatingExpenses" -> variableOperatingExpensesSeq(years),

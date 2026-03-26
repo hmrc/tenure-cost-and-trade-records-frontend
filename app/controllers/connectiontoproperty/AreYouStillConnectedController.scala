@@ -41,10 +41,10 @@ class AreYouStillConnectedController @Inject() (
   theView: AreYouStillConnectedView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with ReadOnlySupport
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with ReadOnlySupport
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("AreYouStillConnected")
@@ -60,7 +60,7 @@ class AreYouStillConnectedController @Inject() (
     )
   }
 
-  def submit: Action[AnyContent]                                              = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AddressConnectionType](
       theForm,
       formWithErrors =>
@@ -89,6 +89,7 @@ class AreYouStillConnectedController @Inject() (
       }
     )
   }
+
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")

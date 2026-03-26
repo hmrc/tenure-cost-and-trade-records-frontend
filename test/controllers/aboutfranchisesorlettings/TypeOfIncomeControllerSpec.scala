@@ -31,11 +31,12 @@ import utils.FakeObjects
 class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
 
   val mockAudit: Audit = mock[Audit]
+
   def typeOfIncomeController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettings6045
     )
-  )                    =
+  ) =
     new TypeOfIncomeController(
       stubMessagesControllerComponents(),
       mockAudit,

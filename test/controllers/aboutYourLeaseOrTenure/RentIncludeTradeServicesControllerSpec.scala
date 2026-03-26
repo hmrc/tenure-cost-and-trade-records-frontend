@@ -27,9 +27,10 @@ import utils.TestBaseSpec
 class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def rentIncludeTradeServicesController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  )                    = new RentIncludeTradeServicesController(
+  ) = new RentIncludeTradeServicesController(
     stubMessagesControllerComponents(),
     mockAudit,
     inject[AboutYourLeaseOrTenureNavigator],

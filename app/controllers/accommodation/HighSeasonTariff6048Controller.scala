@@ -43,10 +43,11 @@ class HighSeasonTariff6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext, dateUtil: DateUtilLocalised)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext,
+  dateUtil: DateUtilLocalised
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -82,13 +83,15 @@ class HighSeasonTariff6048Controller @Inject() (
     )
   }
 
-  private def currentUnit(implicit
+  private def currentUnit(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationUnit] =
     request.sessionData.accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
-  private def backLink(implicit
+  private def backLink(
+    implicit
     request: SessionRequest[AnyContent]
   ): String =
     s"${controllers.accommodation.routes.AccommodationLettingHistory6048Controller.show.url}?idx=${navigator.idx}"

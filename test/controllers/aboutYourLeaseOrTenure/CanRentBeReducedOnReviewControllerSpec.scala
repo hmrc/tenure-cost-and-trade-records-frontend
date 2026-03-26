@@ -117,7 +117,8 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
   }
 
   object TestData {
-    val errorKey: ErrorKey                = new ErrorKey
+    val errorKey: ErrorKey = new ErrorKey
+
     class ErrorKey {
       val canRentBeReducedOnReview: String = "canRentBeReducedOnReview"
     }

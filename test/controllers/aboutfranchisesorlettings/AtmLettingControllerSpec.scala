@@ -35,6 +35,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
+
     val controller = new AtmLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],

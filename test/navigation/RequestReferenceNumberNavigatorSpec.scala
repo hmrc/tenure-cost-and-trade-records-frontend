@@ -48,8 +48,9 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
         .nextPage(NoReferenceNumberPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
-        ) shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
-        .show()
+        ) shouldBe
+        controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
+          .show()
     }
 
     "return a function that goes to RequestReferenceNumberCheckYourAnswersController from NoReferenceNumberContactDetailsPageId" in {
@@ -57,8 +58,9 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
         .nextPage(NoReferenceNumberContactDetailsPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
-        ) shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
-        .show()
+        ) shouldBe
+        controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
+          .show()
     }
 
     "return a function that goes to request reference number confirmation from CheckYourAnswersRequestReferenceNumberPageId" in {
@@ -66,16 +68,18 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
         .nextPage(CheckYourAnswersRequestReferenceNumberPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
-        ) shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
-        .confirmation()
+        ) shouldBe
+        controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
+          .confirmation()
     }
 
     "return the CYA url" in {
       val result = navigator.cyaPage
       result.map(
-        _.url shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
-          .show()
-          .url
+        _.url shouldBe
+          controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
+            .show()
+            .url
       )
     }
   }

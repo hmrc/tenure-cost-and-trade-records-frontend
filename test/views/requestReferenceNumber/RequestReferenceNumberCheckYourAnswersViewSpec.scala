@@ -40,9 +40,10 @@ class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehavio
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
-        .show()
-        .url
+      backlinkUrl shouldBe
+        controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
+          .show()
+          .url
     }
 
     "contain submit and send button with the value Accept and send" in {

@@ -41,9 +41,9 @@ class ResidentDetailController @Inject() (
   theView: ResidentDetailView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport:
 
   def show(maybeIndex: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply {
     implicit request =>
@@ -65,29 +65,28 @@ class ResidentDetailController @Inject() (
         Ok(theView(filledForm.getOrElse(freshForm), backLinkUrl, maybeIndex))
   }
 
-  def submit(maybeIndex: Option[Int] = None): Action[AnyContent] =
-    (Action andThen sessionRefiner).async { implicit request =>
-      continueOrSaveAsDraft[ResidentDetail](
-        theForm,
-        theFormWithErrors => badRequestWith(theView, theFormWithErrors, maybeIndex),
-        resident =>
-          given Session = request.sessionData
-          if hasBeenAlreadyEntered(resident, at = maybeIndex)
-          then
-            badRequestWith(
-              theView,
-              theForm
-                .fill(resident)
-                .withError("duplicate", "lettingHistory.residentDetail.duplicate"),
-              maybeIndex
-            )
-          else
-            for
-              newSession   <- successful(byAddingOrUpdatingPermanentResident(resident, maybeIndex))
-              savedSession <- repository.saveOrUpdateSession(newSession)
-            yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
-      )
-    }
+  def submit(maybeIndex: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[ResidentDetail](
+      theForm,
+      theFormWithErrors => badRequestWith(theView, theFormWithErrors, maybeIndex),
+      resident =>
+        given Session = request.sessionData
+        if hasBeenAlreadyEntered(resident, at = maybeIndex)
+        then
+          badRequestWith(
+            theView,
+            theForm
+              .fill(resident)
+              .withError("duplicate", "lettingHistory.residentDetail.duplicate"),
+            maybeIndex
+          )
+        else
+          for
+            newSession   <- successful(byAddingOrUpdatingPermanentResident(resident, maybeIndex))
+            savedSession <- repository.saveOrUpdateSession(newSession)
+          yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
+    )
+  }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = ResidentDetailPageId)

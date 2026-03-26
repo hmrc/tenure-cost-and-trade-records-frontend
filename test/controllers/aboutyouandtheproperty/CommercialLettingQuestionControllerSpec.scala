@@ -32,12 +32,13 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
+
   def controller(
     isWelsh: Boolean = false,
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  )                    = new CommercialLettingQuestionController(
+  ) = new CommercialLettingQuestionController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

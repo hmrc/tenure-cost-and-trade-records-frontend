@@ -42,9 +42,9 @@ class TradingSeasonController @Inject (
   theView: TradingSeasonView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport:
 
   given DateUtilLocalised = dateUtil
 

@@ -31,10 +31,11 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   val mockAudit: Audit = mock[Audit]
+
   def propertyCurrentlyUsedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  )                    = new PropertyCurrentlyUsedController(
+  ) = new PropertyCurrentlyUsedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

@@ -15,6 +15,7 @@
  */
 
 package form.aboutyouandtheproperty
+
 import models.submissions.aboutyouandtheproperty.PropertyCurrentlyUsed
 import org.scalatestplus.play._
 import play.api.data.FormError

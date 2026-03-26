@@ -29,12 +29,16 @@ object PercentageFromFuelCardsForm {
 
   def percentageFromFuelCardsForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[PercentageFromFuelCards]] =
+  )(using messages: Messages
+  ): Form[Seq[PercentageFromFuelCards]] =
     Form {
       mappingPerYear(years, (year, idx) => "" -> percentageFromFuelCardsMapping(year, idx))
     }
 
-  private def percentageFromFuelCardsMapping(year: String, idx: Int)(using
+  private def percentageFromFuelCardsMapping(
+    year: String,
+    idx: Int
+  )(using
     messages: Messages
   ): Mapping[PercentageFromFuelCards] =
     mapping(

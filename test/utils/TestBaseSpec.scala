@@ -52,22 +52,22 @@ import java.time.{Clock, Instant, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
 
 trait TestBaseSpec
-    extends AnyWordSpec
-    with Matchers
-    with AnswerYesNoMatchers
-    with FutureAwaits
-    with DefaultAwaitTimeout
-    with MockitoExtendedSugar
-    with ScalaFutures
-    with Inside
-    with GuiceOneAppPerSuite
-    with Injecting
-    with GlobalExecutionContext
-    with RepositoryUtils
-    with FakeObjects
-    with FakeViews
-    with FakeNavigation
-    with OptionValues {
+  extends AnyWordSpec
+  with Matchers
+  with AnswerYesNoMatchers
+  with FutureAwaits
+  with DefaultAwaitTimeout
+  with MockitoExtendedSugar
+  with ScalaFutures
+  with Inside
+  with GuiceOneAppPerSuite
+  with Injecting
+  with GlobalExecutionContext
+  with RepositoryUtils
+  with FakeObjects
+  with FakeViews
+  with FakeNavigation
+  with OptionValues {
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
@@ -79,7 +79,7 @@ trait TestBaseSpec
       )
       .build()
 
-  override implicit val patienceConfig: PatienceConfig =
+  implicit override val patienceConfig: PatienceConfig =
     PatienceConfig(timeout = Span(10, Seconds), interval = Span(20, Millis))
 
   def frontendAppConfig: AppConfig = inject[AppConfig]
@@ -107,6 +107,7 @@ trait TestBaseSpec
   )
 
   extension (request: FakeRequest[AnyContentAsEmpty.type])
+
     def withQueryString(elems: (String, Seq[String])*): FakeRequest[AnyContentAsEmpty.type] =
       request.withTarget(RequestTarget("", "", Map(elems*)))
 

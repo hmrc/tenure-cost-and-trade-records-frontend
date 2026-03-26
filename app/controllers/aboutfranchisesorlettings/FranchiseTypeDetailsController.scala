@@ -47,11 +47,11 @@ class FranchiseTypeDetailsController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with AddressLookupSupport(addressLookupConnector)
-    with I18nSupport
-    with Logging:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with AddressLookupSupport(addressLookupConnector)
+  with I18nSupport
+  with Logging:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("FranchiseTypeDetails")
@@ -119,7 +119,10 @@ class FranchiseTypeDetailsController @Inject() (
     )
   }
 
-  private def sessionWithBusinessDetails(formData: BusinessDetails, idx: Int)(using
+  private def sessionWithBusinessDetails(
+    formData: BusinessDetails,
+    idx: Int
+  )(using
     request: SessionRequest[AnyContent]
   ): (Session, Int) = {
     var updatedIndex   = 0

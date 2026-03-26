@@ -51,6 +51,7 @@ trait PrintableAddress {
 object PrintableAddress extends Aliases:
 
   extension (printableAddress: PrintableAddress)
+
     def escapedHtml: String =
       printableAddress.addressLines
         .map(Text(_).asHtml)

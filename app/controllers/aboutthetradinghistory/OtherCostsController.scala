@@ -41,9 +41,9 @@ class OtherCostsController @Inject() (
   otherCostsView: otherCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OtherCosts")
@@ -110,7 +110,8 @@ class OtherCostsController @Inject() (
 
   private def runWithSessionCheckForOtherCosts(
     action: AboutTheTradingHistory => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]) =
+  )(implicit request: SessionRequest[AnyContent]
+  ) =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)

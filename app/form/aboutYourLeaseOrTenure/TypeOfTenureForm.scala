@@ -30,7 +30,8 @@ object TypeOfTenureForm {
         Invalid(Seq(ValidationError("error.typeOfTenureDetails.required")))
       else Valid
   }
-  val typeOfTenureMapping: Mapping[TypeOfTenure]            = mapping(
+
+  val typeOfTenureMapping: Mapping[TypeOfTenure] = mapping(
     "typeOfTenure"        -> list(text).verifying(
       nonEmptyList("error.typeOfTenure.required")
     ),

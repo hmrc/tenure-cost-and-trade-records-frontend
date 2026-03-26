@@ -29,9 +29,10 @@ class TentingPitchesTotalControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   val mockAudit: Audit = mock[Audit]
+
   def tentingPitchesTotalController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
-  )                    = new TentingPitchesTotalController(
+  ) = new TentingPitchesTotalController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

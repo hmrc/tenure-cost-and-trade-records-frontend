@@ -22,6 +22,7 @@ import play.api.libs.json.Format
   * @author Yuriy Tumakha
   */
 enum ForType:
+
   case FOR6010, // Public Houses
     FOR6011, // Pubs, licensed restaurants and wine bars
     FOR6015, // Hotels

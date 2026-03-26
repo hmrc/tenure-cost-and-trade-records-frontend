@@ -25,6 +25,7 @@ case class SensitiveRemoveConnectionDetails(
   removeConnectionDetails: Option[SensitiveRemoveConnectionsDetails] = None,
   pastConnectionType: Option[AnswersYesNo] = None
 ) extends Sensitive[RemoveConnectionDetails]:
+
   override def decryptedValue: RemoveConnectionDetails = RemoveConnectionDetails(
     removeConnectionDetails.map(_.decryptedValue),
     pastConnectionType

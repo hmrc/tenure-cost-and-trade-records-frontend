@@ -22,7 +22,9 @@ import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumInformationDetail
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 import play.api.i18n.Messages
+
 object PayACapitalSumDetailsForm {
+
   def payACapitalSumDetailsForm(using messages: Messages): Form[PayACapitalSumInformationDetails] =
     Form(
       mapping(

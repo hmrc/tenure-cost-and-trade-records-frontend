@@ -46,11 +46,12 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
-  private def aboutTheTradingHistoryData(implicit
+  private def aboutTheTradingHistoryData(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistory] =
     request.sessionData.aboutTheTradingHistory

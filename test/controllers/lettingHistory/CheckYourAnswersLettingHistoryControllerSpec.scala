@@ -67,10 +67,11 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe controllers.routes.TaskListController
-          .show()
-          .withFragment("letting-history")
-          .toString
+        redirectLocation(result).value shouldBe
+          controllers.routes.TaskListController
+            .show()
+            .withFragment("letting-history")
+            .toString
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         sectionCompleted(data).value   shouldBe true
       }
@@ -82,7 +83,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
     sectionCompleted: Option[Boolean] = None,
     isYearlyAvailable: Option[Boolean] = Some(true)
   ) extends MockRepositoryFixture
-      with SessionCapturingFixture:
+    with SessionCapturingFixture:
 
     val controller = new CheckYourAnswersLettingHistoryController(
       mcc = stubMessagesControllerComponents(),

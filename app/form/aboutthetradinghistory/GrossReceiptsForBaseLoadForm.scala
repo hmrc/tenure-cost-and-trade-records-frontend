@@ -44,7 +44,8 @@ object GrossReceiptsForBaseLoadForm {
 
   def grossReceiptsForBaseLoadForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[GrossReceiptsForBaseLoad]] =
+  )(using messages: Messages
+  ): Form[Seq[GrossReceiptsForBaseLoad]] =
     Form {
       single(
         "grossReceiptsForBaseLoad" -> mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))

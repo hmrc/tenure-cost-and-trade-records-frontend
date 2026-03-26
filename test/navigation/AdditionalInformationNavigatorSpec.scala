@@ -46,8 +46,9 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .nextPage(FurtherInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
-        ) shouldBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
-        .show()
+        ) shouldBe
+        controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
+          .show()
     }
 
     "return a function that goes to task list page when CYA has been completed" in {
@@ -55,16 +56,18 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .nextPage(CheckYourAnswersAdditionalInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
-        ) shouldBe controllers.routes.TaskListController
-        .show()
+        ) shouldBe
+        controllers.routes.TaskListController
+          .show()
     }
 
     "return the CYA url" in {
       val result = navigator.cyaPage
       result.map(
-        _.url shouldBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
-          .show()
-          .url
+        _.url shouldBe
+          controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
+            .show()
+            .url
       )
     }
   }

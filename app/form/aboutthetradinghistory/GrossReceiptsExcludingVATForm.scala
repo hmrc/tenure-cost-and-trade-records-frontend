@@ -37,7 +37,8 @@ object GrossReceiptsExcludingVATForm {
 
   def grossReceiptsExcludingVATForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[GrossReceiptsExcludingVAT]] =
+  )(using messages: Messages
+  ): Form[Seq[GrossReceiptsExcludingVAT]] =
     Form {
       mappingPerYear(years, (year, idx) => s"grossReceiptsExcludingVAT[$idx]" -> columnMapping(year))
     }
