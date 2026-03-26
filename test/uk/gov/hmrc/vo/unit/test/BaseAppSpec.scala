@@ -19,8 +19,6 @@ package uk.gov.hmrc.vo.unit.test
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Injecting}
-import uk.gov.hmrc.vo.unit.BaseSpec
-import uk.gov.hmrc.vo.unit.test2.BaseSpec
 
 /**
   * @author Yuriy Tumakha

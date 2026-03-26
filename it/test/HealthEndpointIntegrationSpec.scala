@@ -39,13 +39,7 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.ws.WSClient
 import play.api.test.Injecting
 
-class HealthEndpointIntegrationSpec
-    extends AnyWordSpec
-    with Matchers
-    with ScalaFutures
-    with IntegrationPatience
-    with GuiceOneServerPerSuite
-    with Injecting {
+class HealthEndpointIntegrationSpec extends AnyWordSpec with Matchers with ScalaFutures with IntegrationPatience with GuiceOneServerPerSuite with Injecting {
 
   private val wsClient = inject[WSClient]
   private val baseUrl  = s"http://localhost:$port"

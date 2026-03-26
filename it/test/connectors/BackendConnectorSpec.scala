@@ -39,7 +39,7 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll with Befo
 
   protected def basicWireMockConfig(): WireMockConfiguration = wireMockConfig()
 
-  protected implicit lazy val wireMockServer: WireMockServer = {
+  implicit protected lazy val wireMockServer: WireMockServer = {
     val server = new WireMockServer(11111)
     server.start()
     server

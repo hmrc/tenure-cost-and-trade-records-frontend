@@ -22,10 +22,10 @@ object AppDependencies {
   )
 
   private val test = Seq(
-    "uk.gov.hmrc"       %% "bootstrap-test-play-30"  % bootstrapVersion               % Test,
-    "org.scalatestplus" %% "scalacheck-1-18"         % scalaTestPlusScalaCheckVersion % Test,
-    "org.scalatestplus" %% "mockito-5-12"            % scalaTestPlusMockitoVersion    % Test,
-    "org.jsoup"          % "jsoup"                   % jsoupVersion                   % Test
+    "uk.gov.hmrc"       %% "bootstrap-test-play-30" % bootstrapVersion               % Test,
+    "org.scalatestplus" %% "scalacheck-1-18"        % scalaTestPlusScalaCheckVersion % Test,
+    "org.scalatestplus" %% "mockito-5-12"           % scalaTestPlusMockitoVersion    % Test,
+    "org.jsoup"          % "jsoup"                  % jsoupVersion                   % Test
   )
 
   val appDependencies: Seq[ModuleID] = compile ++ test
