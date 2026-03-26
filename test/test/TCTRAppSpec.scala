@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package config
+package test
 
-import models.Done
-import play.api.test.Helpers.*
-import uk.gov.hmrc.vo.unit.test.BaseSpec
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
+import uk.gov.hmrc.vo.unit.test.BaseAppSpec
 
-class NoOpInternalAuthTokenInitialiserSpec extends BaseSpec:
+/**
+  * @author Yuriy Tumakha
+  */
+class TCTRAppSpec extends BaseAppSpec:
 
-  "NoOpInternalAuthTokenInitialiser.initialised method" should {
-    "return Done" in {
-      val initialiser = NoOpInternalAuthTokenInitialiser()
-      val result      = await(initialiser.initialised)
-
-      result shouldBe Done
-    }
-  }
+  override def fakeApplication(): Application =
+    new GuiceApplicationBuilder()
+      .configure(
+        "metrics.jvm"                         -> false,
+        "metrics.enabled"                     -> false,
+        "create-internal-auth-token-on-start" -> false
+      )
+      .build()

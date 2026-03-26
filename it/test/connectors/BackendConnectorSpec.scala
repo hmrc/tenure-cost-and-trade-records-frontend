@@ -93,9 +93,8 @@ class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll with Befo
           .willReturn(aResponse().withStatus(201))
       )
 
-      val result = await(backendConnector.saveAsDraft(testId, submissionDraft, new HeaderCarrier()))
+      await(backendConnector.saveAsDraft(testId, submissionDraft, new HeaderCarrier()))
 
-      result should be(()) // Assuming the method returns Unit on success
       wireMockServer.verify(putRequestedFor(urlEqualTo(endpointBase + testId)))
     }
 

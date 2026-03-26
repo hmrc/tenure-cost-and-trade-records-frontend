@@ -26,7 +26,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class RefNumRequest[A](val refNum: String, request: Request[A], messagesApi: MessagesApi) extends MessagesRequest[A](request, messagesApi)
 
 class RefNumAction @Inject() (
-  bodyParser: BodyParsers.Default,
+  bodyParser: BodyParser[AnyContent],
   messagesApi: MessagesApi
 )(implicit
   val executionContext: ExecutionContext

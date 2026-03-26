@@ -17,8 +17,13 @@
 package uk.gov.hmrc.vo.unit.test
 
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.api.Configuration
+import play.api.i18n.MessagesApi
+import play.api.mvc.{AnyContent, BodyParser, BodyParsers}
 import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Injecting}
+
+import scala.concurrent.ExecutionContext
 
 /**
   * @author Yuriy Tumakha
@@ -30,3 +35,11 @@ abstract class BaseAppSpec extends BaseSpec with GuiceOneAppPerSuite with Inject
   val putRequest    = FakeRequest(PUT, "/")
   val patchRequest  = FakeRequest(PATCH, "/")
   val deleteRequest = FakeRequest(DELETE, "/")
+
+  given ExecutionContext = inject[ExecutionContext]
+
+  val configuration: Configuration = inject[Configuration]
+
+  val messagesApi: MessagesApi = inject[MessagesApi]
+
+  val bodyParser: BodyParser[AnyContent] = inject[BodyParsers.Default]

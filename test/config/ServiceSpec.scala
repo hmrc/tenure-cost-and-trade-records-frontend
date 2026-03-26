@@ -16,23 +16,19 @@
 
 package config
 
-import config.Service.convertToString
-import play.api.Configuration
-import utils.TestBaseSpec
+import test.TCTRAppSpec
 
-class ServiceSpec extends TestBaseSpec {
+class ServiceSpec extends TCTRAppSpec:
 
   "Service" should {
     "be loaded correctly from configuration" in {
-      val config                = inject[Configuration]
-      val internalAuth: Service = config.get[Service]("microservice.services.internal-auth")
-      internalAuth.host             shouldBe "localhost"
-      internalAuth.port             shouldBe "8470"
-      internalAuth.protocol         shouldBe "http"
-      internalAuth.baseUrl          shouldBe "http://localhost:8470"
-      internalAuth.toString         shouldBe "http://localhost:8470"
-      convertToString(internalAuth) shouldBe "http://localhost:8470"
+      val internalAuth: Service = configuration.get[Service]("microservice.services.internal-auth")
+
+      internalAuth.host                     shouldBe "localhost"
+      internalAuth.port                     shouldBe "8470"
+      internalAuth.protocol                 shouldBe "http"
+      internalAuth.baseUrl                  shouldBe "http://localhost:8470"
+      internalAuth.toString                 shouldBe "http://localhost:8470"
+      Service.convertToString(internalAuth) shouldBe "http://localhost:8470"
     }
   }
-
-}
