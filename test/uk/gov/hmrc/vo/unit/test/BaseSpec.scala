@@ -16,10 +16,11 @@
 
 package uk.gov.hmrc.vo.unit.test
 
+import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.should
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.{BeforeAndAfter, EitherValues, OptionValues}
+import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, BeforeAndAfterEach, EitherValues, OptionValues}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.Logging
 import uk.gov.hmrc.vo.unit.test.mock.HttpClientMocks
@@ -33,7 +34,11 @@ abstract class BaseSpec
   with HttpClientMocks
   with OptionValues
   with EitherValues
+  with ScalaFutures
+  with IntegrationPatience
   with BeforeAndAfter
+  with BeforeAndAfterAll
+  with BeforeAndAfterEach
   with ScalaCheckPropertyChecks
   with TableDrivenPropertyChecks
   with Logging

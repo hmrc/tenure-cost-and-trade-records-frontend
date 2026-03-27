@@ -16,20 +16,9 @@
 
 package test
 
-import play.api.Application
-import play.api.inject.guice.GuiceApplicationBuilder
 import uk.gov.hmrc.vo.unit.test.BaseAppSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class TCTRAppSpec extends BaseAppSpec:
-
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"                         -> false,
-        "metrics.enabled"                     -> false,
-        "create-internal-auth-token-on-start" -> false
-      )
-      .build()
+abstract class TCTRAppSpec extends BaseAppSpec with TCTRApplicationFactory

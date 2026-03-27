@@ -16,151 +16,122 @@
 
 package connectors
 
-import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.*
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration.*
 import models.ForType.*
-import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
-import play.api.Application
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.Json
-import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier, UpstreamErrorResponse}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import play.api.Configuration
+import test.TCTRServerSpec
+import uk.gov.hmrc.http.{BadRequestException, UpstreamErrorResponse}
 
-class BackendConnectorSpec extends TestBaseSpec with BeforeAndAfterAll with BeforeAndAfterEach {
+class BackendConnectorSpec extends TCTRServerSpec:
 
-  // private val wireMockPort = 11111
+  override def fakeAppConfiguration: Configuration =
+    Configuration(
+      "microservice.services.tenure-cost-and-trade-records.port" -> wireMockServer.port
+    ).withFallback(super.fakeAppConfiguration)
 
-  private val endpointBase = "/tenure-cost-and-trade-records/saveAsDraft/"
+  private val authenticatePath = "/tenure-cost-and-trade-records/authenticate"
+  private val saveAsDraftPath  = "/tenure-cost-and-trade-records/saveAsDraft/"
 
-  // Inject the required dependencies
-  val backendConnector: DefaultBackendConnector = inject[DefaultBackendConnector]
-
-  protected def basicWireMockConfig(): WireMockConfiguration = wireMockConfig()
-
-  implicit protected lazy val wireMockServer: WireMockServer = {
-    val server = new WireMockServer(11111)
-    server.start()
-    server
-  }
-
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"                                              -> false,
-        "metrics.enabled"                                          -> false,
-        "create-internal-auth-token-on-start"                      -> false,
-        "microservice.services.tenure-cost-and-trade-records.port" -> 11111
-      )
-      .build()
-
-  override def beforeAll(): Unit = {
-    super.beforeAll()
-    configureFor("localhost", 11111)
-    wireMockServer.start()
-  }
-
-  override def afterEach(): Unit =
-    wireMockServer.resetAll()
-
-  override def afterAll(): Unit = {
-    wireMockServer.stop()
-    super.afterAll()
-  }
+  private val backendConnector: BackendConnector = inject[BackendConnector]
 
   "BackendConnector" should {
-
     "Login successfully given correct reference number and postcode" in {
       val testID             = "99996010008"
       val responseJsonString =
-        """
-          |{"forAuthToken":"Basic OTk5OTYwMTAwMDE6U2Vuc2l0aXZlKC4uLik=","forType":"FOR6010","address":{"buildingNameNumber":"001","street1":"GORING ROAD","town":"GORING-BY-SEA, WORTHING","postcode":"BN12 4AX"},"isWelsh":false}
-          |""".stripMargin
-      stubFor(
-        post(urlEqualTo("/tenure-cost-and-trade-records/authenticate")).willReturn(
-          aResponse().withStatus(200).withBody(responseJsonString)
+        """{"forAuthToken":"Basic OTk5OTYwMTAwMDE6U2Vuc2l0aXZlKC4uLik=","forType":"FOR6010",
+          |"address":{"buildingNameNumber":"001","street1":"GORING ROAD","town":"GORING-BY-SEA,LONDON","postcode":"BN12 4AX"},"isWelsh":false}""".stripMargin
+      wireMockServer.stubFor(
+        post(urlEqualTo(authenticatePath)).willReturn(
+          aResponse().withStatus(OK).withBody(responseJsonString)
         )
       )
-      val result             = await(backendConnector.verifyCredentials(testID, "SomePostCode"))
+
+      val result = backendConnector.verifyCredentials(testID, "SomePostCode").futureValue
       result.forType shouldBe FOR6010.toString
+
+      wireMockServer.verify(postRequestedFor(urlEqualTo(authenticatePath)))
     }
 
     "save SubmissionDraft successfully" in {
       val testId = "99996010004"
-      stubFor(
-        put(urlEqualTo(endpointBase + testId))
-          .willReturn(aResponse().withStatus(201))
+      wireMockServer.stubFor(
+        put(urlEqualTo(s"$saveAsDraftPath$testId"))
+          .willReturn(aResponse().withStatus(CREATED))
       )
 
-      await(backendConnector.saveAsDraft(testId, submissionDraft, new HeaderCarrier()))
+      await(backendConnector.saveAsDraft(testId, submissionDraft, hc))
 
-      wireMockServer.verify(putRequestedFor(urlEqualTo(endpointBase + testId)))
+      wireMockServer.verify(putRequestedFor(urlEqualTo(s"$saveAsDraftPath$testId")))
     }
 
     "throw BadRequestException exception on save with wrong id" in {
       val testId = "99997777111"
-      stubFor(
-        put(urlEqualTo(endpointBase + testId))
-          .willReturn(aResponse().withStatus(400))
+      wireMockServer.stubFor(
+        put(urlEqualTo(s"$saveAsDraftPath$testId"))
+          .willReturn(aResponse().withStatus(BAD_REQUEST))
       )
 
       intercept[BadRequestException] {
-        await(backendConnector.saveAsDraft(testId, submissionDraft, new HeaderCarrier()))
+        await(backendConnector.saveAsDraft(testId, submissionDraft, hc))
       }
+
+      wireMockServer.verify(putRequestedFor(urlEqualTo(s"$saveAsDraftPath$testId")))
     }
 
     "load SubmissionDraft successfully" in {
-      // Assuming a get method in connector, adjust accordingly
       val testId = "99996010006"
-      stubFor(
-        get(urlEqualTo(endpointBase + testId))
-          .willReturn(aResponse().withStatus(200).withBody(Json.stringify(Json.toJson(submissionDraft))))
+      wireMockServer.stubFor(
+        get(urlEqualTo(s"$saveAsDraftPath$testId"))
+          .willReturn(aResponse().withStatus(OK).withBody(Json.stringify(Json.toJson(submissionDraft))))
       )
 
-      val result = await(backendConnector.loadSubmissionDraft(testId, new HeaderCarrier()))
-
-      // Adjust the assertion according to your expected result
+      val result = backendConnector.loadSubmissionDraft(testId, hc).futureValue
       result.get shouldBe submissionDraft
+
+      wireMockServer.verify(getRequestedFor(urlEqualTo(s"$saveAsDraftPath$testId")))
     }
 
-    "handle unknown id for load SubmissionDraft" in {
-      // Adjust based on your expected behavior for unknown ids
+    "return None for unknown id on load SubmissionDraft" in {
       val testId = "unknownId_123"
-      stubFor(
-        get(urlEqualTo(endpointBase + testId))
-          .willReturn(aResponse().withStatus(404))
+      val cleanedId = "123"
+      wireMockServer.stubFor(
+        get(urlEqualTo(s"$saveAsDraftPath$cleanedId"))
+          .willReturn(aResponse().withStatus(NOT_FOUND))
       )
 
-      val result = await(backendConnector.loadSubmissionDraft(testId, new HeaderCarrier()))
-
-      // Adjust the assertion based on your expected behavior
+      val result = backendConnector.loadSubmissionDraft(testId, hc).futureValue
       result shouldBe None
+
+      wireMockServer.verify(getRequestedFor(urlEqualTo(s"$saveAsDraftPath$cleanedId")))
     }
 
     "delete SubmissionDraft successfully" in {
       val testId = "99996010007"
-      stubFor(
-        delete(urlEqualTo(endpointBase + testId))
-          .willReturn(aResponse().withStatus(200).withBody(Json.stringify(Json.obj("deletedCount" -> 1))))
+      wireMockServer.stubFor(
+        delete(urlEqualTo(s"$saveAsDraftPath$testId"))
+          .willReturn(aResponse().withStatus(OK).withBody(Json.stringify(Json.obj("deletedCount" -> 1))))
       )
-      val result = await(backendConnector.deleteSubmissionDraft(testId, new HeaderCarrier()))
 
+      val result = backendConnector.deleteSubmissionDraft(testId, hc).futureValue
       result shouldBe 1
-      wireMockServer.verify(deleteRequestedFor(urlEqualTo(endpointBase + testId)))
+
+      wireMockServer.verify(deleteRequestedFor(urlEqualTo(s"$saveAsDraftPath$testId")))
     }
 
     "throw Unauthorized exception on 403 response for delete" in {
       val testId = "99996010008"
-      stubFor(
-        delete(urlEqualTo(endpointBase + testId))
-          .willReturn(aResponse().withStatus(403))
+      wireMockServer.stubFor(
+        delete(urlEqualTo(s"$saveAsDraftPath$testId"))
+          .willReturn(aResponse().withStatus(FORBIDDEN))
       )
 
       intercept[UpstreamErrorResponse] {
-        await(backendConnector.deleteSubmissionDraft(testId, new HeaderCarrier()))
+        await(backendConnector.deleteSubmissionDraft(testId, hc))
       }
+
+      wireMockServer.verify(deleteRequestedFor(urlEqualTo(s"$saveAsDraftPath$testId")))
     }
 
   }
-}

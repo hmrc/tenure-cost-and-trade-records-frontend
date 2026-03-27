@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package utils
+package test
 
 import models.ForType.*
 import models.submissions.Form6010.*
@@ -48,7 +48,7 @@ import models.{Session, SubmissionDraft}
 import java.time.temporal.ChronoUnit.MILLIS
 import java.time.{Instant, LocalDate}
 
-trait FakeObjects:
+trait TestObjects:
 
   val referenceNumber: String = "99996010004"
 

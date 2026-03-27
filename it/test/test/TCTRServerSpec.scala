@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+package test
 
-import models.submissions.ConnectedSubmission
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.Json
-import test.TestObjects
+import uk.gov.hmrc.vo.integration.test.BaseServerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class ConnectedSubmissionSpec extends AnyFlatSpec with Matchers with TestObjects:
-
-  "ConnectedSubmission" should "be serialized/deserialized from JSON" in {
-    val json = Json.toJson(connectedSubmission)
-    json.as[ConnectedSubmission] shouldBe connectedSubmission
-  }
+abstract class TCTRServerSpec extends BaseServerSpec with TCTRApplicationFactory

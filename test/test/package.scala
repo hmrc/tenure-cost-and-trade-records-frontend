@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+import scala.concurrent.Future
+import scala.language.implicitConversions
 
-import models.submissions.ConnectedSubmission
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.Json
-import test.TestObjects
-
-/**
-  * @author Yuriy Tumakha
-  */
-class ConnectedSubmissionSpec extends AnyFlatSpec with Matchers with TestObjects:
-
-  "ConnectedSubmission" should "be serialized/deserialized from JSON" in {
-    val json = Json.toJson(connectedSubmission)
-    json.as[ConnectedSubmission] shouldBe connectedSubmission
-  }
+package object test:
+  implicit def toFut[A](a: A): Future[A]                     = Future.successful(a)
+  implicit def toOpt[A](a: A): Option[A]                     = Some(a)
+  implicit def toBigDecimal(num: Int): BigDecimal            = BigDecimal(num)
+  implicit def toBigDecimalOpt(num: Int): Option[BigDecimal] = toBigDecimal(num)

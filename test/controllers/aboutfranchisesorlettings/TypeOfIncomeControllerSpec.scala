@@ -25,10 +25,10 @@ import play.api.http.Status.*
 import play.api.libs.json.{JsError, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import test.TestObjects
 import utils.TestBaseSpec
-import utils.FakeObjects
 
-class TypeOfIncomeControllerSpec extends TestBaseSpec with FakeObjects {
+class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects {
 
   val mockAudit: Audit = mock[Audit]
 

@@ -33,7 +33,6 @@ enum ForType:
     FOR6046, // Caravan sites – rental
     FOR6048, // Self-catering holiday homes
     FOR6076 // Renewable Energy
-end ForType
 
 object ForType:
   implicit val format: Format[ForType] = Scala3EnumJsonFormat.format

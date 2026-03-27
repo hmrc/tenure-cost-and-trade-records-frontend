@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package models.submissions.connectiontoproperty
+package uk.gov.hmrc.vo.integration.test
 
-import models.submissions.ConnectedSubmission
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.Json
-import test.TestObjects
+import org.scalatestplus.play.WsScalaTestClient
+import org.scalatestplus.play.guice.GuiceOneServerPerSuite
+import uk.gov.hmrc.vo.unit.test.{BaseSpec, InjectedAppObjects}
 
 /**
   * @author Yuriy Tumakha
   */
-class ConnectedSubmissionSpec extends AnyFlatSpec with Matchers with TestObjects:
+abstract class BaseServerSpec extends BaseSpec with HttpWireMock with GuiceOneServerPerSuite with InjectedAppObjects with WsScalaTestClient:
 
-  "ConnectedSubmission" should "be serialized/deserialized from JSON" in {
-    val json = Json.toJson(connectedSubmission)
-    json.as[ConnectedSubmission] shouldBe connectedSubmission
-  }
+  println(s"Play server port: $port")
+
+  val serverBaseUrl = s"http://localhost:$port"

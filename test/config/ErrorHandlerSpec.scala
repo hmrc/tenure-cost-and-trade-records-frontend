@@ -16,7 +16,6 @@
 
 package config
 
-import play.api.test.Helpers.*
 import test.TCTRAppSpec
 
 class ErrorHandlerSpec extends TCTRAppSpec:
@@ -25,7 +24,7 @@ class ErrorHandlerSpec extends TCTRAppSpec:
 
   "standardErrorTemplate" should {
     "render HTML" in {
-      val html = await(errorHandler.standardErrorTemplate("title", "heading", "message")(using getRequest))
+      val html = errorHandler.standardErrorTemplate("title", "heading", "message")(using getRequest).futureValue
       html.contentType shouldBe "text/html"
     }
   }
