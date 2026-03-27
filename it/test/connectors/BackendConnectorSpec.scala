@@ -94,7 +94,7 @@ class BackendConnectorSpec extends TCTRServerSpec:
     }
 
     "return None for unknown id on load SubmissionDraft" in {
-      val testId = "unknownId_123"
+      val testId    = "unknownId_123"
       val cleanedId = "123"
       wireMockServer.stubFor(
         get(urlEqualTo(s"$saveAsDraftPath$cleanedId"))

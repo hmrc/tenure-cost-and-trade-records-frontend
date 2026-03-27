@@ -16,9 +16,12 @@
 
 package test
 
+import config.AppConfig
 import uk.gov.hmrc.vo.unit.test.BaseAppSpec
 
 /**
   * @author Yuriy Tumakha
   */
-abstract class TCTRAppSpec extends BaseAppSpec with TCTRApplicationFactory
+abstract class TCTRAppSpec extends BaseAppSpec with TCTRApplicationFactory:
+
+  val appConfig: AppConfig = inject[AppConfig]

@@ -22,6 +22,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.{AnyContent, BodyParser, BodyParsers}
 import play.api.test.{HasApp, Injecting}
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import scala.concurrent.ExecutionContext
 
@@ -36,7 +37,8 @@ trait InjectedAppObjects extends Injecting:
   given ec: ExecutionContext = inject[ExecutionContext]
   given wsClient: WSClient   = inject[WSClient]
 
-  val configuration: Configuration = inject[Configuration]
+  val configuration: Configuration   = inject[Configuration]
+  val servicesConfig: ServicesConfig = inject[ServicesConfig]
 
   val messagesApi: MessagesApi = inject[MessagesApi]
 
