@@ -44,7 +44,7 @@ import play.api.mvc.{AnyContentAsEmpty, Request, Result}
 import play.api.test.{DefaultAwaitTimeout, FakeRequest, FutureAwaits, Injecting}
 import repositories.SessionRepository
 import repository.RepositoryUtils
-import test.TestObjects
+import test.{InjectedViews, TestObjects}
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
@@ -66,7 +66,7 @@ trait TestBaseSpec
   with GlobalExecutionContext
   with RepositoryUtils
   with TestObjects
-  with FakeViews
+  with InjectedViews
   with FakeNavigation
   with OptionValues {
 

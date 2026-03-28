@@ -14,27 +14,26 @@
  * limitations under the License.
  */
 
-package utils
+package test
 
 import play.api.test.Injecting
-import views.html.aboutYourLeaseOrTenure._
-import views.html.aboutfranchisesorlettings._
-import views.html.aboutthetradinghistory.{whatYouWillNeed, _}
-import views.html.aboutyouandtheproperty._
-import views.html.accommodation._
+import views.html.*
+import views.html.aboutYourLeaseOrTenure.*
+import views.html.aboutfranchisesorlettings.*
+import views.html.aboutthetradinghistory.*
+import views.html.aboutyouandtheproperty.*
+import views.html.accommodation.*
 import views.html.additionalinformation.{checkYourAnswersAdditionalInformation, furtherInformationOrRemarks}
-import views.html.connectiontoproperty._
+import views.html.connectiontoproperty.*
 import views.html.downloadFORTypeForm.downloadPDF
 import views.html.error.{JsonParseError, error}
 import views.html.feedback.{feedback, feedbackThx}
-import views.html.notconnected._
-import views.html.requestReferenceNumber.requestReferenceNumberPropertyDetails
-import views.html.requestReferenceNumber.requestReferenceNumberContactDetails
-import views.html.requestReferenceNumber.requestReferenceNumberCheckYourAnswers
-import views.html.requestReferenceNumber.requestReferenceNumberConfirmation
-import views.html._
+import views.html.notconnected.*
+import views.html.requestReferenceNumber.{requestReferenceNumberCheckYourAnswers, requestReferenceNumberConfirmation, requestReferenceNumberContactDetails, requestReferenceNumberPropertyDetails}
 
-trait FakeViews { this: Injecting =>
+trait InjectedViews:
+
+  this: Injecting =>
 
   // Test sign
   val testSignView: testSign = inject[testSign]
@@ -416,5 +415,3 @@ trait FakeViews { this: Injecting =>
   // Feedback
   val feedbackView: feedback   = inject[feedback]
   val feedbackThx: feedbackThx = inject[feedbackThx]
-
-}

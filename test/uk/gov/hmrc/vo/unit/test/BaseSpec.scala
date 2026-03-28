@@ -20,10 +20,13 @@ import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.should
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.{BeforeAndAfter, BeforeAndAfterAll, BeforeAndAfterEach, EitherValues, OptionValues}
+import org.scalatest.*
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import play.api.Logging
+import play.api.test.DefaultAwaitTimeout
 import uk.gov.hmrc.vo.unit.test.mock.HttpClientMocks
+
+import java.nio.charset.StandardCharsets
 
 /**
   * @author Yuriy Tumakha
@@ -36,9 +39,13 @@ abstract class BaseSpec
   with EitherValues
   with ScalaFutures
   with IntegrationPatience
+  with DefaultAwaitTimeout
   with BeforeAndAfter
   with BeforeAndAfterAll
   with BeforeAndAfterEach
   with ScalaCheckPropertyChecks
   with TableDrivenPropertyChecks
-  with Logging
+  with HtmlAssertions
+  with Logging:
+
+  val UTF8: String = StandardCharsets.UTF_8.name.toLowerCase

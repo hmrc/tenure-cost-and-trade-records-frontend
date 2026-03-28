@@ -18,22 +18,18 @@ package controllers
 
 import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import org.jsoup.Jsoup
 import org.scalatest.BeforeAndAfter
 import play.api.http.Status.*
-import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
-import utils.{HtmlAssertionHelper, TestBaseSpec}
+import test.TCTRAppSpec
 
-class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlAssertionHelper {
-
-  private val postRequest = FakeRequest("POST", "/")
+class FeedbackControllerSpec extends TCTRAppSpec:
 
   private val auditServiceMock: Audit = mock[Audit]
 
   def feedbackController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) = new FeedbackController(
+  ) = FeedbackController(
     stubMessagesControllerComponents(),
     feedbackView,
     feedbackThx,
@@ -45,20 +41,16 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
   val comments = "Really amazing bro, wow!"
   val rating   = "5"
 
-  before {
-    reset(auditServiceMock)
-  }
-
   "Feedback controller" should {
     "return HTML and 200 status for feedback form page" in {
-      val result = feedbackController().feedback(fakeRequest)
+      val result = feedbackController().feedback(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
 
     "return HTML and 200 status for thank you page" in {
-      val result = feedbackController().feedbackThx(fakeRequest)
+      val result = feedbackController().feedbackThx(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
@@ -92,7 +84,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
     }
     "SUBMIT vacant property feedback empty"                should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = feedbackController().feedbackSharedSubmit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+        val res = feedbackController().feedbackSharedSubmit(postRequest.withFormUrlEncodedBody(Seq.empty*))
         status(res) shouldBe BAD_REQUEST
       }
     }
@@ -166,8 +158,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val html   = Jsoup.parse(contentAsString(result))
-        assertPageContainsElement(html, "feedback-rating-error")
+        assertPageContainsElement(contentAsString(result), "feedback-rating-error")
       }
     }
 
@@ -181,9 +172,7 @@ class FeedbackControllerSpec extends TestBaseSpec with BeforeAndAfter with HtmlA
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val html           = Jsoup.parse(contentAsString(result))
-        assertPageContainsElement(html, "feedback-comments-error")
+        assertPageContainsElement(contentAsString(result), "feedback-comments-error")
       }
     }
   }
-}
