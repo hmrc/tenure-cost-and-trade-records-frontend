@@ -28,8 +28,8 @@ class AppConfig @Inject() (val configuration: Configuration) extends VOServiceCo
   override def serviceRoot: Call                    = controllers.routes.Application.index
   override def isWelshTranslationAvailable: Boolean = true
 
-  //TODO: Remove and use feedbackFrontendUrl
-  def feedbackTCTRUrl: String  = controllers.routes.FeedbackController.feedback.url
+  // TODO: Remove and use feedbackFrontendUrl
+  def feedbackTCTRUrl: String = controllers.routes.FeedbackController.feedback.url
 
   val useDummyIp: Boolean        = getBoolean("useDummyTrueIP")
   val startPageRedirect: Boolean = getBoolean("startPageRedirect")
