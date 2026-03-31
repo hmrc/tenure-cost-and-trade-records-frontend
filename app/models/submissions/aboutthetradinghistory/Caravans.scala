@@ -16,12 +16,12 @@
 
 package models.submissions.aboutthetradinghistory
 
-import models.Scala3EnumJsonFormat
 import models.submissions.aboutthetradinghistory.Caravans.CaravanLettingType.{OwnedByOperator, SubletByOperator}
 import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.{Single, Twin}
 import models.submissions.common.AnswersYesNo
 import navigation.identifiers.*
 import play.api.libs.json.{Format, Json, OFormat}
+import uk.gov.hmrc.vo.service.model.Scala3EnumJsonFormat
 
 /**
   * 6045/6046 Trading history - Static holiday or leisure caravans pages.

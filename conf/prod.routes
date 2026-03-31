@@ -1,3 +1,6 @@
 # Add all the application routes to the app.routes file
-->         /send-trade-and-cost-information app.Routes
-->         /                                health.Routes
+->         /send-trade-and-cost-information     app.Routes
+
+GET        /ping/ping                           uk.gov.hmrc.play.health.HealthController.ping
+
+GET        /                                    uk.gov.hmrc.vo.service.controller.local.RootRedirectController.rootRedirect

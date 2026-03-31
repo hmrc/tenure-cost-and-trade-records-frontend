@@ -25,7 +25,7 @@ import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
-import form.Scala3EnumFieldMapping.enumMappingRequired
+import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingRequired
 import models.submissions.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutfranchisesorlettings.*

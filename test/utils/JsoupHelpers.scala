@@ -32,7 +32,7 @@ trait JsoupHelpers:
 
   extension (d: Document)
     def heading: String  = d.select("h1").first().text().trim
-    def backLink: String = d.select("a.govuk-back-link").first().attribute("href").getValue
+    def backLink: String = d.select("a.govuk-back-link").first().attr("href")
 
     def errorMessage(id: String): String =
       d.select(s"""p.govuk-error-message[id="$id-error"]""").textNodes().asScala.last.text().trim

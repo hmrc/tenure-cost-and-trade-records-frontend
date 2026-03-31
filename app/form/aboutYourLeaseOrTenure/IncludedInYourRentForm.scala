@@ -17,7 +17,7 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.{nonEmptySeq, noneCantBeSelectedWithOtherSeq}
-import form.Scala3EnumFieldMapping.enumMappingSeq
+import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingSeq
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*

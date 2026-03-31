@@ -19,13 +19,13 @@
 @import play.api.Configuration
 @import uk.gov.hmrc.govukfrontend.views.html.components.{GovukBackLink, GovukErrorSummary, GovukLayout, GovukNotificationBanner, GovukPhaseBanner, TwoThirdsMainContent}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{HtmlContent, Text}
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.notificationbanner.NotificationBanner
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @import uk.gov.hmrc.hmrcfrontend.views.config.StandardBetaBanner
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcFooter
 @import uk.gov.hmrc.hmrcfrontend.views.html.helpers.{HmrcHead, HmrcLanguageSelectHelper, HmrcScripts, HmrcStandardHeader}
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.footer.{Footer, FooterItem, Meta}
-@import views.html.govuk.{FullWidthMainContent, head}
+@import uk.gov.hmrc.vo.service.view.html.FullWidthMainContent
+@import views.html.govuk.head
 
 @this(
         appConfig: AppConfig,
@@ -41,7 +41,6 @@
         govukBackLink: GovukBackLink,
         govukErrorSummary: GovukErrorSummary,
         govukNotificationBanner: GovukNotificationBanner,
-        configuration: Configuration,
         twoThirdsMainContent: TwoThirdsMainContent,
         fullWidthMainContent: FullWidthMainContent
 )
@@ -69,14 +68,14 @@
     @hmrcStandardHeader(
         serviceName = Some(messages("site.service_name")),
         serviceUrl = Some(routes.Application.index.url),
-        isWelshTranslationAvailable = true,
+        isWelshTranslationAvailable = appConfig.isWelshTranslationAvailable,
         displayHmrcBanner = !showFeedback
     )
 }
 
 @beforeBLock = {
     @if(showFeedback) {
-        @govukPhaseBanner(standardBetaBanner(routes.FeedbackController.feedback.url))
+        @govukPhaseBanner(standardBetaBanner(appConfig.feedbackTCTRUrl))
     }
 
     @if(showAccountInfo && summary.isDefined) {
@@ -102,11 +101,8 @@
         @includes.summaryErrors(theForm = theForm, govukErrorSummary = govukErrorSummary)
     }
 
-    @if(showBanner && configuration.get[Boolean]("bannerNotice.enabled")) {
-        @govukNotificationBanner(NotificationBanner(
-            content = HtmlContent("<p class='govuk-notification-banner__heading'>" + configuration.get[String]("bannerNotice." + messages.lang.code + ".body") + "</p>"),
-            title = Text(configuration.get[String]("bannerNotice." + messages.lang.code + ".title"))
-        ))
+    @if(showBanner && appConfig.isNotificationBannerEnabled) {
+        @govukNotificationBanner(appConfig.notificationBanner)
     }
 
     @if(showSection) {
