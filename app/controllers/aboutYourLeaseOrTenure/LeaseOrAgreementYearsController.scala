@@ -102,7 +102,7 @@ class LeaseOrAgreementYearsController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#lease-or-agreement-details"
+      case "TL" => controllers.routes.TaskListController.show.url + "#lease-or-agreement-details"
       case _    =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
           case Some(AnswerYes) =>

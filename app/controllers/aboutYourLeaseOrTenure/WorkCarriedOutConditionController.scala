@@ -82,7 +82,7 @@ class WorkCarriedOutConditionController @Inject() (
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
       case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url
-      case _               => controllers.routes.TaskListController.show().url
+      case _               => controllers.routes.TaskListController.show.url
     }
 
 }

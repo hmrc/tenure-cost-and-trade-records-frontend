@@ -48,7 +48,7 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
+        controllers.routes.TaskListController.show.url
       )
     }
 
@@ -59,13 +59,13 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
+        controllers.routes.TaskListController.show.url
       )
     }
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = typeOfTenureController().show()(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url + "#type-of-tenure")
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url + "#type-of-tenure")
     }
   }
 

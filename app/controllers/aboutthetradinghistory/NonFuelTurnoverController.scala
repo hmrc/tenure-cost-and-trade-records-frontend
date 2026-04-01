@@ -116,7 +116,7 @@ class NonFuelTurnoverController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#non-fuel-turnover"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#non-fuel-turnover"
       case _     =>
         tradingHistory.doYouAcceptLowMarginFuelCard match {
           case Some(AnswerYes) =>

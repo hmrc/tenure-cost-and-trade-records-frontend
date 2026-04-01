@@ -87,7 +87,7 @@ class PlantAndTechnologyController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#how-is-used"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#how-is-used"
       case _     =>
         request.sessionData.aboutYouAndTheProperty
           .flatMap(_.threeYearsConstructed) match {
@@ -95,7 +95,7 @@ class PlantAndTechnologyController @Inject() (
             controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show().url
           case Some(AnswerNo)  =>
             controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
-          case _               => controllers.routes.TaskListController.show().url
+          case _               => controllers.routes.TaskListController.show.url
         }
     }
 }

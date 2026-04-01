@@ -88,7 +88,7 @@ class PaymentForTradeServicesController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#payment-for-trade-services"
+      case "TL" => controllers.routes.TaskListController.show.url + "#payment-for-trade-services"
       case _    =>
         answers.aboutLeaseOrAgreementPartThree.flatMap { aboutYourLeaseOrAgreement =>
           aboutYourLeaseOrAgreement.tradeServices.lastOption.map(_ => aboutYourLeaseOrAgreement.tradeServices.size - 1)

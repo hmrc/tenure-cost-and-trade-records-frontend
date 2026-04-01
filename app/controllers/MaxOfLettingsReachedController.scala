@@ -126,7 +126,7 @@ class MaxOfLettingsReachedController @Inject() (
         )
       case _                    =>
         (
-          routes.TaskListController.show().url,
+          routes.TaskListController.show.url,
           None
         )
     }

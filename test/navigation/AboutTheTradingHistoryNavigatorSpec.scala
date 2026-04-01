@@ -674,7 +674,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(CheckYourAnswersOtherHolidayAccommodationId, sessionAboutYou6045)
         .apply(sessionAboutYou6045) shouldBe
-        controllers.routes.TaskListController.show().withFragment("tradingHistory")
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
     }
 
     "return a function that goes to catering  page when additional activities shops is completed" in {
@@ -715,10 +715,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes to task list  page when additional activities cya completed" in {
       navigator
         .nextPage(CheckYourAnswersAdditionalActivitiesId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) shouldBe
-        controllers.routes.TaskListController
-          .show()
-          .withFragment("tradingHistory")
+        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory")
     }
 
     // end of 6045
@@ -859,10 +856,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes to TaskList trading history, when CYA for tenting pitches ready " in {
       navigator
         .nextPage(CheckYourAnswersTentingPitchesId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) shouldBe
-        controllers.routes.TaskListController
-          .show()
-          .withFragment("tradingHistory")
+        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory")
     }
     "financialYearEndRouting is called" should {
 

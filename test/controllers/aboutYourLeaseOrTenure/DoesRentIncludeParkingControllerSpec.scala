@@ -69,7 +69,7 @@ class DoesRentIncludeParkingControllerSpec extends TestBaseSpec {
     "return correct backLink when 'from=TL' query param is present" in {
       val result = doesRentIncludeParkingController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url + "#does-rent-include-parking"
+        controllers.routes.TaskListController.show.url + "#does-rent-include-parking"
       )
     }
   }

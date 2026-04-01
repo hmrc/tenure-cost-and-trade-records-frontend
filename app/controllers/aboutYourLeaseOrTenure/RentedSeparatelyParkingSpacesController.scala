@@ -84,7 +84,7 @@ class RentedSeparatelyParkingSpacesController @Inject() (
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url
+      case "TL" => controllers.routes.TaskListController.show.url
       case _    => controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
     }
 

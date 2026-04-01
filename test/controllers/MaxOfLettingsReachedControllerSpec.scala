@@ -124,7 +124,7 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
         "typeOfIncome" -> controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(4).url,
         "rentalIncome" -> controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(4).url,
         "lettings"     -> controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(9).url,
-        ""             -> routes.TaskListController.show().url
+        ""             -> routes.TaskListController.show.url
       )
 
       for ((src, expectedBackLink) <- testCases) {

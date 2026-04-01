@@ -87,7 +87,7 @@ class AddressLookupConnector @Inject() (
                                       |  "labels": {
                                       |    "en": {
                                       |      "appLevelLabels": {
-                                      |        "navTitle":  "${messages("site.service_name")}"
+                                      |        "navTitle":  "${messages("service.name")}"
                                       |      },
                                       |      "lookupPageLabels": {
                                       |        "title": "${messages(config.lookupPageHeadingKey)}",
@@ -112,7 +112,7 @@ class AddressLookupConnector @Inject() (
                                       |    },
                                       |    "cy": {
                                       |      "appLevelLabels": {
-                                      |        "navTitle":  "${messages("site.service_name")(using Lang("CY"))}"
+                                      |        "navTitle":  "${messages("service.name")(using Lang("CY"))}"
                                       |      },
                                       |      "lookupPageLabels": {
                                       |        "title": "${messages(config.lookupPageHeadingKey)}",

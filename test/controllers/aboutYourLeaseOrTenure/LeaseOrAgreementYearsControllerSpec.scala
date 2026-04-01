@@ -79,7 +79,7 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
     "return correct backLink when 'from=TL' query param is present" in {
       val result = leaseOrAgreementYearsController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url + "#lease-or-agreement-details"
+        controllers.routes.TaskListController.show.url + "#lease-or-agreement-details"
       )
     }
   }

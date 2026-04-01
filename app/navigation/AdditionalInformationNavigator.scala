@@ -33,6 +33,6 @@ class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(
       (_ =>
         controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show()
       ),
-    CheckYourAnswersAdditionalInformationId -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersAdditionalInformationId -> (_ => controllers.routes.TaskListController.show)
   )
 }

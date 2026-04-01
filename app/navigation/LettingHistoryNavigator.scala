@@ -26,4 +26,4 @@ import javax.inject.Inject
 class LettingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) with BackwardNavigation with ForwardNavigation with RentalPeriodSupport:
 
   val checkYourAnswerCall: Call = routes.CheckYourAnswersLettingHistoryController.show
-  val taskListCall: Call        = controllers.routes.TaskListController.show().withFragment("letting-history")
+  val taskListCall: Call        = controllers.routes.TaskListController.show.withFragment("letting-history")

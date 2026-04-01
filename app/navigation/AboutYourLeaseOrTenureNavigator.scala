@@ -607,7 +607,7 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
       ),
     CheckYourAnswersAboutYourLeaseOrTenureId      ->
       (_ =>
-        controllers.routes.TaskListController.show().withFragment("leaseOrAgreement")
+        controllers.routes.TaskListController.show.withFragment("leaseOrAgreement")
       )
   )
 }

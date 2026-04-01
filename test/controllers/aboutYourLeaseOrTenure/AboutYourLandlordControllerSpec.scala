@@ -63,7 +63,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
+        controllers.routes.TaskListController.show.url
       )
     }
 
@@ -85,18 +85,18 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
+        controllers.routes.TaskListController.show.url
       )
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
       val result = aboutYourLandlordController().show()(fakeRequestFromCYA)
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = aboutYourLandlordController().show()(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url + "#about-your-landlord")
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url + "#about-your-landlord")
     }
   }
 

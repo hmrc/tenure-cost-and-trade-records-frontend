@@ -84,7 +84,7 @@ class PropertyCurrentlyUsedController @Inject() (
 
   private def backLink(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL"  => controllers.routes.TaskListController.show().url
+      case "TL"  => controllers.routes.TaskListController.show.url
       case "CYA" => routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }

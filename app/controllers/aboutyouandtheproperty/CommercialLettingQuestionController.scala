@@ -115,7 +115,7 @@ class CommercialLettingQuestionController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case "TL"  => s"${controllers.routes.TaskListController.show().url}#about-the-property"
+      case "TL"  => s"${controllers.routes.TaskListController.show.url}#about-the-property"
       case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 

@@ -85,7 +85,7 @@ class PartsUnavailableController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case "TL"  => s"${controllers.routes.TaskListController.show().url}#family-usage"
+      case "TL"  => s"${controllers.routes.TaskListController.show.url}#family-usage"
       case _     =>
         if (request.sessionData.isWelsh) {
           controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url

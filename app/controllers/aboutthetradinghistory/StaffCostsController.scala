@@ -121,7 +121,7 @@ class StaffCostsController @Inject() (
           case _     =>
             aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
         }
-      case _                  => controllers.routes.TaskListController.show().url
+      case _                  => controllers.routes.TaskListController.show.url
     }
 
 }

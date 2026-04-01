@@ -87,7 +87,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
 
     "return back link to Task list page when 'from=TL' query param is present for not vacant properties" in {
       val result = vacantPropertiesController().show(fakeRequestFromTL)
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url + "#vacant-properties")
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url + "#vacant-properties")
     }
 
     "return Edit Address page URL when addressConnectionType is AddressConnectionTypeYesChangeAddress and 'from' is not set" in {

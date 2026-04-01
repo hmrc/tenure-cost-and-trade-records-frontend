@@ -30,7 +30,7 @@ class TentingPitchesOnSiteViewSpec extends QuestionViewBehaviours[AnswersYesNo] 
 
   override val form: Form[AnswersYesNo] = TentingPitchesOnSiteForm.tentingPitchesOnSiteForm
 
-  private val backLink = controllers.routes.TaskListController.show().url
+  private val backLink = controllers.routes.TaskListController.show.url
 
   private def createView = () => tentingPitchesOnSiteView(form, backLink)(using sessionRequest, messages)
 
@@ -46,7 +46,7 @@ class TentingPitchesOnSiteViewSpec extends QuestionViewBehaviours[AnswersYesNo] 
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url
+      backlinkUrl shouldBe controllers.routes.TaskListController.show.url
     }
 
     "Section heading is visible" in {

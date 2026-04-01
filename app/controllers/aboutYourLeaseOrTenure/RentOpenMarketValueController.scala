@@ -85,7 +85,7 @@ class RentOpenMarketValueController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#rent-open-market-value"
+      case "TL" => controllers.routes.TaskListController.show.url + "#rent-open-market-value"
       case _    =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match {
           case Some(AnswerYes) =>

@@ -206,6 +206,6 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       (_ =>
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
       ),
-    CheckYourAnswersAboutThePropertyPageId  -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersAboutThePropertyPageId  -> (_ => controllers.routes.TaskListController.show)
   )
 }

@@ -104,7 +104,7 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
       ),
     CheckYourAnswersAboutFranchiseOrLettingsId ->
       (_ =>
-        controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")
+        controllers.routes.TaskListController.show.withFragment("franchiseAndLettings")
       )
   )
 }

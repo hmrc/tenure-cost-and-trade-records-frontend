@@ -68,10 +68,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe
-          controllers.routes.TaskListController
-            .show()
-            .withFragment("letting-history")
-            .toString
+          controllers.routes.TaskListController.show.withFragment("letting-history").toString
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
         sectionCompleted(data).value   shouldBe true
       }

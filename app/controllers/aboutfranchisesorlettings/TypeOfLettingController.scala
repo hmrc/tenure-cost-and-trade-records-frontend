@@ -153,7 +153,7 @@ class TypeOfLettingController @Inject() (
           else {
             controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
           }
-        case _           => controllers.routes.TaskListController.show().url
+        case _           => controllers.routes.TaskListController.show.url
       }
     }
 }

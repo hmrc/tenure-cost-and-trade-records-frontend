@@ -1,6 +1,6 @@
 # COMMON
 ########
-site.service_name = Declare your business trade and cost information
+service.name = Declare your business trade and cost information
 service.title = {0} - Declare your business trade and cost information - GOV.UK
 gov.name = GOV.UK
 label.continue=Parhewch

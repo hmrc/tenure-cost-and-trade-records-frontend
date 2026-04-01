@@ -85,7 +85,7 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#payment-when-lease-is-granted"
+      case "TL" => controllers.routes.TaskListController.show.url + "#payment-when-lease-is-granted"
       case _    =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
           case Some(AnswerYes) =>

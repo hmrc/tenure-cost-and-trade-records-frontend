@@ -22,7 +22,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 @import uk.gov.hmrc.hmrcfrontend.views.config.StandardBetaBanner
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcFooter
-@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.{HmrcHead, HmrcLanguageSelectHelper, HmrcScripts, HmrcStandardHeader}
+@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.{HmrcHead, HmrcScripts, HmrcStandardHeader}
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.footer.{Footer, FooterItem, Meta}
 @import uk.gov.hmrc.vo.service.view.html.FullWidthMainContent
 @import views.html.govuk.head
@@ -37,7 +37,6 @@
         hmrcScripts: HmrcScripts,
         govukPhaseBanner: GovukPhaseBanner,
         standardBetaBanner: StandardBetaBanner,
-        hmrcLanguageSelectHelper: HmrcLanguageSelectHelper,
         govukBackLink: GovukBackLink,
         govukErrorSummary: GovukErrorSummary,
         govukNotificationBanner: GovukNotificationBanner,
@@ -66,8 +65,8 @@
 
 @headerBlock = {
     @hmrcStandardHeader(
-        serviceName = Some(messages("site.service_name")),
-        serviceUrl = Some(routes.Application.index.url),
+        serviceName = Some(messages("service.name")),
+        serviceUrl = Some(appConfig.serviceHome.url),
         isWelshTranslationAvailable = appConfig.isWelshTranslationAvailable,
         displayHmrcBanner = !showFeedback
     )
@@ -75,14 +74,12 @@
 
 @beforeBLock = {
     @if(showFeedback) {
-        @govukPhaseBanner(standardBetaBanner(appConfig.feedbackTCTRUrl))
+        @govukPhaseBanner(standardBetaBanner(appConfig.serviceFeedback.url))
     }
 
     @if(showAccountInfo && summary.isDefined) {
         @views.html.includes.account_info_header(summary.get)
     }
-
-    @hmrcLanguageSelectHelper()
 
     @backLinkUrl.map { url =>
         <div>@govukBackLink(
@@ -124,12 +121,12 @@
 @title = @{
     if(theForm != null) {
         if(theForm.hasErrors) {
-            messages("error.title") + " " + pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+            messages("error.title") + " " + pageTitle.getOrElse(pageHeading) + " - " + messages("service.name") + " - " + messages("gov.name")
         } else {
-            pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+            pageTitle.getOrElse(pageHeading) + " - " + messages("service.name") + " - " + messages("gov.name")
         }
     } else {
-        pageTitle.getOrElse(pageHeading) + " - " + messages("site.service_name") + " - " + messages("gov.name")
+        pageTitle.getOrElse(pageHeading) + " - " + messages("service.name") + " - " + messages("gov.name")
     }
 }
 

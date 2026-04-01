@@ -87,7 +87,7 @@ class AboutThePropertyController @Inject() (
 
   private def backLink(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
+      case "TL" => controllers.routes.TaskListController.show.url + "#about-the-property"
       case _    => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 

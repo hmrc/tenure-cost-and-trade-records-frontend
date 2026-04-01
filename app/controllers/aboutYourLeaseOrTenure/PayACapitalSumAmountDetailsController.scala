@@ -87,7 +87,7 @@ class PayACapitalSumAmountDetailsController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-amount-details"
+      case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-amount-details"
       case _    =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url

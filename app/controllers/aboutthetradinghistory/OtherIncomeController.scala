@@ -134,7 +134,7 @@ class OtherIncomeController @Inject() (
           case _     =>
             aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
         }
-      case _                  => controllers.routes.TaskListController.show().url
+      case _                  => controllers.routes.TaskListController.show.url
     }
 
 }

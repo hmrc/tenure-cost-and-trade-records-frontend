@@ -164,7 +164,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AreYouStillConnectedPageId                     -> areYouStillConnectedRouting,
     EditAddressPageId                              -> editAddressRouting,
-    ConnectionToPropertyPageId                     -> (_ => controllers.routes.TaskListController.show()),
+    ConnectionToPropertyPageId                     -> (_ => controllers.routes.TaskListController.show),
     VacantPropertiesPageId                         -> isPropertyVacant,
     PropertyBecomeVacantPageId                     ->
       (_ =>
@@ -190,6 +190,6 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     LettingPartOfPropertyItemsIncludedInRentPageId -> lettingPartOfPropertyItemsIncludedInRentConditionsRouting,
     AddAnotherLettingPartOfPropertyPageId          -> addAnotherLettingsConditionsRouting,
     MaxOfLettingsReachedId                         -> (_ => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()),
-    CheckYourAnswersConnectionToPropertyId         -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersConnectionToPropertyId         -> (_ => controllers.routes.TaskListController.show)
   )
 }

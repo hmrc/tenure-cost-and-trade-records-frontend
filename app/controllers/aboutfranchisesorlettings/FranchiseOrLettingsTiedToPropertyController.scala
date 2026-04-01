@@ -108,7 +108,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
     if (navigator.from == "CYA") {
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     } else {
-      controllers.routes.TaskListController.show().url + "#franchise-or-lettings-tied-to-property"
+      controllers.routes.TaskListController.show.url + "#franchise-or-lettings-tied-to-property"
     }
 
 }

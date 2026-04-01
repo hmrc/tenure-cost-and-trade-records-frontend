@@ -24,12 +24,12 @@ import uk.gov.hmrc.vo.service.config.VOServiceConfig
 @Singleton
 class AppConfig @Inject() (val configuration: Configuration) extends VOServiceConfig:
 
-  override def serviceID: String                    = "TCTR"
-  override def serviceRoot: Call                    = controllers.routes.Application.index
-  override def isWelshTranslationAvailable: Boolean = true
+  override def serviceID: String      = "TCTR"
+  override def serviceLocalRoot: Call = controllers.routes.Application.index
+  override def serviceHome: Call      = controllers.routes.Application.index
+  override def serviceFeedback: Call  = controllers.routes.FeedbackController.feedback // TODO: Remove to use feedbackFrontendForm
 
-  // TODO: Remove and use feedbackFrontendUrl
-  def feedbackTCTRUrl: String = controllers.routes.FeedbackController.feedback.url
+  override def isWelshTranslationAvailable: Boolean = true
 
   val useDummyIp: Boolean        = getBoolean("useDummyTrueIP")
   val startPageRedirect: Boolean = getBoolean("startPageRedirect")

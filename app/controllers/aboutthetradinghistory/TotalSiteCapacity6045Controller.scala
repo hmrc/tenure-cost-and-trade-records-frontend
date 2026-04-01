@@ -91,7 +91,7 @@ class TotalSiteCapacity6045Controller @Inject() (
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     // TODO update CYA?
     navigator.from match {
-      case "TL"  => controllers.routes.TaskListController.show().url
+      case "TL"  => controllers.routes.TaskListController.show.url
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show().url
       case _     => controllers.aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url

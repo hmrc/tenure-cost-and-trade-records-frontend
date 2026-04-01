@@ -227,7 +227,7 @@ trait ViewBehaviours extends ViewSpecBase {
     val doc    = asDocument(html)
     val header = doc.getElementsByAttributeValue("class", "govuk-service-navigation__service-name").first()
     val link   = header.children.first
-    link.text shouldBe messagesApi("site.service_name")(using Lang(Locale.UK))
+    link.text shouldBe messagesApi("service.name")(using Lang(Locale.UK))
   }
 
 }

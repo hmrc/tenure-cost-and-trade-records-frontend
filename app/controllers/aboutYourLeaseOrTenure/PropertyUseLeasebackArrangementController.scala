@@ -96,7 +96,7 @@ class PropertyUseLeasebackArrangementController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#leaseback-arrangement"
+      case "TL" => controllers.routes.TaskListController.show.url + "#leaseback-arrangement"
       case _    =>
         answers.forType match {
           case FOR6020 | FOR6076 | FOR6045 | FOR6046 | FOR6048 =>

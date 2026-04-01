@@ -109,8 +109,8 @@ class AdditionalActivitiesOnSiteController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageForAdditionalActivities.url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#additional-activities-on-site"
-      case _     => controllers.routes.TaskListController.show().url
+      case "TL"  => controllers.routes.TaskListController.show.url + "#additional-activities-on-site"
+      case _     => controllers.routes.TaskListController.show.url
 
     }
 }

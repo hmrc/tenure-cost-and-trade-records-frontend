@@ -88,7 +88,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
 
       "return correct backLink when 'from=TL' query param is present" in new ControllerFixture {
         val result = controller.show()(FakeRequest(GET, "/path?from=TL"))
-        contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+        contentAsString(result) should include(controllers.routes.TaskListController.show.url)
       }
 
       "SUBMIT /" should {

@@ -36,7 +36,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.permanentResidents.heading"
-        page.backLink          shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
+        page.backLink          shouldBe controllers.routes.TaskListController.show.withFragment("letting-history").toString
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }

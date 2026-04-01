@@ -86,6 +86,6 @@ class UnusualCircumstancesController @Inject() (
     answers.sessionData.forType match {
       case FOR6015 => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
       case FOR6030 => controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url
-      case _       => controllers.routes.TaskListController.show().url
+      case _       => controllers.routes.TaskListController.show.url
     }
 }

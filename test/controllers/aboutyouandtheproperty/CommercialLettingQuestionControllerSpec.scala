@@ -69,7 +69,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = controller().show()(fakeRequestFromTL)
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url + "#about-the-property")
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url + "#about-the-property")
     }
     "return correct backLink when 'from=CYA' query param is present" in {
       val result = controller().show()(fakeRequestFromCYA)

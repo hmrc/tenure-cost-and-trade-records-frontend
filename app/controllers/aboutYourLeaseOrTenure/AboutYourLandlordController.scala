@@ -140,8 +140,8 @@ class AboutYourLandlordController @Inject() (
       controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show().url
     else
       navigator.from match {
-        case "TL" => controllers.routes.TaskListController.show().url + "#about-your-landlord"
-        case _    => controllers.routes.TaskListController.show().url
+        case "TL" => controllers.routes.TaskListController.show.url + "#about-your-landlord"
+        case _    => controllers.routes.TaskListController.show.url
       }
 
   private def sessionWithLandlordAddress(address: Address)(using session: Session) =

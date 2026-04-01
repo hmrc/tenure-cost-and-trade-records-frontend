@@ -97,7 +97,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, sessionAboutFranchiseOrLetting6010NoSession)
         .apply(
           sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")
+        ) shouldBe controllers.routes.TaskListController.show.withFragment("franchiseAndLettings")
     }
 
     // TEST FOR SINGLE RENTAL INCOME LOOP LOOP 6010

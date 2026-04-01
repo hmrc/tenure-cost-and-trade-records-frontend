@@ -110,7 +110,7 @@ class ElectricityGeneratedController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#electricity-generated"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#electricity-generated"
       case _     => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
     }
 

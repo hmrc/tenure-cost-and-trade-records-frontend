@@ -130,7 +130,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
-        page.backLink        shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
+        page.backLink        shouldBe controllers.routes.TaskListController.show.withFragment("letting-history").toString
         page.error("answer") shouldBe "lettingHistory.hasCompletedLettings.required"
       }
     }

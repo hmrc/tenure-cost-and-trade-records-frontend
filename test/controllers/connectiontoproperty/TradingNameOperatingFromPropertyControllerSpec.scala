@@ -120,7 +120,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
+        controllers.routes.TaskListController.show.url
       )
     }
   }
@@ -128,7 +128,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   "calculateBackLink" should {
     "return correct back link if query param from=TL is present" in {
       val result = tradingNameOperatingFromPropertyController().show(fakeRequestFromTL)
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
     "return correct back link if query param from=CYA is present" in {
@@ -142,7 +142,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
       val result =
         tradingNameOperatingFromPropertyController(forType = FOR6076, stillConnectedDetails = None).show(fakeRequest)
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
+        controllers.routes.TaskListController.show.url
       )
     }
   }

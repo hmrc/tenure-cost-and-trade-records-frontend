@@ -18,13 +18,18 @@ package config
 
 import com.typesafe.config.ConfigFactory
 import play.api.Configuration
-import uk.gov.hmrc.vo.unit.test.BaseSpec
+import test.TCTRAppSpec
 
-class AppConfigSpec extends BaseSpec:
+class AppConfigSpec extends TCTRAppSpec:
 
   private val defaultConfig = Configuration(ConfigFactory.load())
+  private val appConfig     = inject[AppConfig]
 
   "AppConfig" should {
+    "return feedbackFrontendUrl" in {
+      appConfig.serviceFeedback.url shouldBe "/send-trade-and-cost-information/feedback"
+      appConfig.serviceFeedback.url shouldBe controllers.routes.FeedbackController.feedback.url
+    }
 
     "return the correct boolean value for useDummyIp = true" in {
       val configuration = Configuration("useDummyTrueIP" -> true).withFallback(defaultConfig)

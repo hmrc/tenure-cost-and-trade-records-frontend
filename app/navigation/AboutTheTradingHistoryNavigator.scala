@@ -284,19 +284,19 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     TentingPitchesCertificatedId                -> (_ => routes.CheckYourAnswersTentingPitchesController.show()),
     CheckYourAnswersOtherHolidayAccommodationId ->
       (_ =>
-        controllers.routes.TaskListController.show().withFragment("tradingHistory")
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
       ),
     CheckYourAnswersTentingPitchesId            ->
       (_ =>
-        controllers.routes.TaskListController.show().withFragment("tradingHistory")
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
       ),
     CheckYourAnswersAdditionalActivitiesId      ->
       (_ =>
-        controllers.routes.TaskListController.show().withFragment("tradingHistory")
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
       ),
     CheckYourAnswersAboutTheTradingHistoryId    ->
       (_ =>
-        controllers.routes.TaskListController.show().withFragment("tradingHistory")
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
       ),
     ChangeOccupationAndAccountingId             -> (_ => routes.WhenDidYouFirstOccupyController.show()),
     AreYouVATRegisteredId                       -> (_ => routes.FinancialYearEndController.show()),

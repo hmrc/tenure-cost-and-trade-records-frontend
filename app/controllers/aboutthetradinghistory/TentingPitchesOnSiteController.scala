@@ -109,8 +109,8 @@ class TentingPitchesOnSiteController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageForTentingPitches.url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#tenting-pitches-on-site"
-      case _     => controllers.routes.TaskListController.show().url
+      case "TL"  => controllers.routes.TaskListController.show.url + "#tenting-pitches-on-site"
+      case _     => controllers.routes.TaskListController.show.url
 
     }
 }

@@ -89,7 +89,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
     ) match {
       case Some(AnswerYes) => controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show().url
       case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
-      case _               => controllers.routes.TaskListController.show().url
+      case _               => controllers.routes.TaskListController.show.url
     }
 
 }

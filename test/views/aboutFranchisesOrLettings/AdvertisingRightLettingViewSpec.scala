@@ -27,7 +27,7 @@ class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[Advertising
   private def advertisingRightLettingView = inject[views.html.aboutfranchisesorlettings.advertisingRightLetting]
 
   private val messageKeyPrefix = "label.advertisingRightLetting"
-  private val backLink         = controllers.routes.TaskListController.show().url
+  private val backLink         = controllers.routes.TaskListController.show.url
 
   override val form: Form[AdvertisingRightLetting] = AdvertisingRightLettingForm.theForm
 
@@ -51,7 +51,7 @@ class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[Advertising
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url
+      backlinkUrl shouldBe controllers.routes.TaskListController.show.url
     }
 
     "Section heading is visible" in {

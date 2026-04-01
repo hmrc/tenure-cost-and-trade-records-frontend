@@ -102,7 +102,7 @@ class VacantPropertiesController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
-      case "TL"  => controllers.routes.TaskListController.show().url + "#vacant-properties"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#vacant-properties"
       case _     =>
         request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
           case Some(AddressConnectionTypeYesChangeAddress) => routes.EditAddressController.show().url

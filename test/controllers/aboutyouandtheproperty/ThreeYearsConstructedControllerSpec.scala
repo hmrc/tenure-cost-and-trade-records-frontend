@@ -78,7 +78,7 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
     }
     "return correct back link if query param from=TL is present" in {
       val result = threeYearsConstructedController().show(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
     "return correct back link if query param from=CYA is present" in {
       val result = threeYearsConstructedController().show(FakeRequest(GET, "/path?from=CYA"))

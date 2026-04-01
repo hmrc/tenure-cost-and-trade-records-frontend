@@ -495,7 +495,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     "return a function that goes to task list page when CYA has been completed" in {
       navigator
         .nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, session6010)
-        .apply(session6010) shouldBe controllers.routes.TaskListController.show().withFragment("leaseOrAgreement")
+        .apply(session6010) shouldBe controllers.routes.TaskListController.show.withFragment("leaseOrAgreement")
     }
 
     "return a function that goes to does rent include fixture and fittings  when payment for trade service has been completed" in {

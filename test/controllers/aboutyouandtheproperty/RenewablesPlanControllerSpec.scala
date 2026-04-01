@@ -79,7 +79,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
       val result  = renewablesPlantController().show(request)
       val html    = contentAsString(result)
 
-      html should include(controllers.routes.TaskListController.show().url + "#technology-type")
+      html should include(controllers.routes.TaskListController.show.url + "#technology-type")
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
