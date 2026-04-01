@@ -68,7 +68,7 @@
         serviceName = Some(messages("service.name")),
         serviceUrl = Some(appConfig.serviceHome.url),
         isWelshTranslationAvailable = appConfig.isWelshTranslationAvailable,
-        displayHmrcBanner = !showFeedback
+        displayHmrcBanner = !showFeedback || request.path == appConfig.serviceLocalRoot.url
     )
 }
 
