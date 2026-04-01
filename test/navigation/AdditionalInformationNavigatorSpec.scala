@@ -57,8 +57,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
         .apply(
           additionalInformationSession
         ) shouldBe
-        controllers.routes.TaskListController
-          .show()
+        controllers.routes.TaskListController.show
     }
 
     "return the CYA url" in {

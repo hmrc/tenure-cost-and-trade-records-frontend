@@ -91,7 +91,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
                       .contains(AnswerYes)) ||
                     (data == AnswerYes && request.sessionData.forType == FOR6020 &&
                       request.sessionData.aboutFranchisesOrLettings
-                        .flatMap(_.lettings.map(_.size > 0))
+                        .flatMap(_.lettings.map(_.nonEmpty))
                         .getOrElse(false))
                 )
               )

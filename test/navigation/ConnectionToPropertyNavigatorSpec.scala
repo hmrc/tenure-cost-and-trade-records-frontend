@@ -126,9 +126,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
     "return a function that goes to the task list page when connection to the property has been selected" in {
       navigator
         .nextPage(ConnectionToPropertyPageId, stillConnectedDetailsYesSession)
-        .apply(stillConnectedDetailsYesSession) shouldBe
-        controllers.routes.TaskListController
-          .show()
+        .apply(stillConnectedDetailsYesSession) shouldBe controllers.routes.TaskListController.show
     }
 
   }

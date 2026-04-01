@@ -18,7 +18,6 @@ package controllers
 
 import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import org.scalatest.BeforeAndAfter
 import play.api.http.Status.*
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import test.TCTRAppSpec
