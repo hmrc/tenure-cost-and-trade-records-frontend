@@ -47,10 +47,10 @@ class FinancialYearEndController @Inject() (
   financialYearEndView: financialYearEnd,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     request.sessionData.aboutTheTradingHistory
@@ -144,10 +144,11 @@ class FinancialYearEndController @Inject() (
                   .filter(_ =>
                     navigator.from == "CYA" && !newFinancialYearEndHasChanged &&
                       (financialYearsUnchanged || (
-                        request.sessionData.forType == FOR6076 && request.sessionData.aboutTheTradingHistoryPartOne
-                          .flatMap(_.turnoverSections6076)
-                          .flatMap(_.headOption)
-                          .exists(_.electricityGenerated.isDefined)
+                        request.sessionData.forType == FOR6076 &&
+                          request.sessionData.aboutTheTradingHistoryPartOne
+                            .flatMap(_.turnoverSections6076)
+                            .flatMap(_.headOption)
+                            .exists(_.electricityGenerated.isDefined)
                       ) || (
                         (request.sessionData.forType == FOR6045 || request.sessionData.forType == FOR6046) &&
                           request.sessionData.aboutTheTradingHistoryPartOne
@@ -184,7 +185,8 @@ class FinancialYearEndController @Inject() (
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean,
     isFinancialYearsListUnchanged: Boolean
-  )(implicit request: SessionRequest[AnyContent]) = {
+  )(implicit request: SessionRequest[AnyContent]
+  ) = {
     val turnoverSections =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
         if (!newOccupationAndAccounting.financialYearEndHasChanged.get) {
@@ -246,7 +248,8 @@ class FinancialYearEndController @Inject() (
     newFinancialYearEndDates: Seq[LocalDate],
     newOccupationAndAccountingInfo: OccupationalAndAccountingInformation,
     newFinancialYearEndSameAsOld: Boolean
-  )(using request: SessionRequest[AnyContent]): Session = {
+  )(using request: SessionRequest[AnyContent]
+  ): Session = {
 
     val financialYearEndHasChanged    = newOccupationAndAccountingInfo.financialYearEndHasChanged.getOrElse(false)
     val originalTurnoverSections      = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty)
@@ -279,7 +282,8 @@ class FinancialYearEndController @Inject() (
     newFinancialYearEndDates: Seq[LocalDate],
     newOccupationAndAccountingInfo: OccupationalAndAccountingInformation,
     newFinancialYearEndSameAsOld: Boolean
-  )(using request: SessionRequest[AnyContent]): Session = {
+  )(using request: SessionRequest[AnyContent]
+  ): Session = {
 
     val financialYearEndHasChanged    = newOccupationAndAccountingInfo.financialYearEndHasChanged.getOrElse(false)
     val originalTurnoverSections      = aboutTheTradingHistory.turnoverSections6030

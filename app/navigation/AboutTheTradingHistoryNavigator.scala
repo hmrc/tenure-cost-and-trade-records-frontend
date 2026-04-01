@@ -42,7 +42,11 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   def cyaPageForAdditionalActivities: Call =
     routes.CheckYourAnswersAdditionalActivitiesController.show()
 
-  def nextPage6045(id: Identifier, session: Session, call: Call)(implicit
+  def nextPage6045(
+    id: Identifier,
+    session: Session,
+    call: Call
+  )(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
@@ -52,7 +56,10 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       nextWithoutRedirectToCYA(id, session)
     }
 
-  override def nextPage(id: Identifier, session: Session)(implicit
+  override def nextPage(
+    id: Identifier,
+    session: Session
+  )(implicit
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
@@ -275,18 +282,22 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     WhatYouWillNeedPageId                       -> whatYouWillNeedRouting,
     TentingPitchesTotalId                       -> (_ => routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ => routes.CheckYourAnswersTentingPitchesController.show()),
-    CheckYourAnswersOtherHolidayAccommodationId -> (_ =>
-      controllers.routes.TaskListController.show().withFragment("tradingHistory")
-    ),
-    CheckYourAnswersTentingPitchesId            -> (_ =>
-      controllers.routes.TaskListController.show().withFragment("tradingHistory")
-    ),
-    CheckYourAnswersAdditionalActivitiesId      -> (_ =>
-      controllers.routes.TaskListController.show().withFragment("tradingHistory")
-    ),
-    CheckYourAnswersAboutTheTradingHistoryId    -> (_ =>
-      controllers.routes.TaskListController.show().withFragment("tradingHistory")
-    ),
+    CheckYourAnswersOtherHolidayAccommodationId ->
+      (_ =>
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
+      ),
+    CheckYourAnswersTentingPitchesId            ->
+      (_ =>
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
+      ),
+    CheckYourAnswersAdditionalActivitiesId      ->
+      (_ =>
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
+      ),
+    CheckYourAnswersAboutTheTradingHistoryId    ->
+      (_ =>
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
+      ),
     ChangeOccupationAndAccountingId             -> (_ => routes.WhenDidYouFirstOccupyController.show()),
     AreYouVATRegisteredId                       -> (_ => routes.FinancialYearEndController.show()),
     Income6048Id                                -> (_ => routes.FixedCosts6048Controller.show),

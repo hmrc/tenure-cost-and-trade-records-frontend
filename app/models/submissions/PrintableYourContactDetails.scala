@@ -42,6 +42,7 @@ trait PrintableYourContactDetails {
 object PrintableYourContactDetails extends Aliases:
 
   extension (printableYourContactDetails: PrintableYourContactDetails)
+
     def escapedHtml: String =
       printableYourContactDetails.yourContactDetails
         .map(Text(_).asHtml)

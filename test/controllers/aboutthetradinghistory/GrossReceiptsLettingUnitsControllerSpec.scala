@@ -29,7 +29,8 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
 
   private val nextPage = aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url
 
-  val mockAudit: Audit                    = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
+
   def grossReceiptsLettingUnitsController =
     new GrossReceiptsLettingUnitsController(
       stubMessagesControllerComponents(),

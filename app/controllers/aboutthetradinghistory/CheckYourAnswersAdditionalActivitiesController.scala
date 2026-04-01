@@ -32,6 +32,7 @@ import views.html.aboutthetradinghistory.checkYourAnswersAdditionalActivities
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class CheckYourAnswersAdditionalActivitiesController @Inject() (
   mcc: MessagesControllerComponents,
@@ -39,10 +40,10 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
   view: checkYourAnswersAdditionalActivities,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -98,7 +99,7 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
     ) match {
       case Some(AnswerYes) => controllers.aboutthetradinghistory.routes.AdditionalMiscController.show().url
       case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
-      case _               => controllers.routes.TaskListController.show().url
+      case _               => controllers.routes.TaskListController.show.url
     }
 
 }

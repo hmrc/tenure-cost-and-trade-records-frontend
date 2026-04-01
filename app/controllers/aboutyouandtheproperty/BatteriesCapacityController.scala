@@ -38,10 +38,10 @@ class BatteriesCapacityController @Inject() (
   view: batteriesCapacity,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with ReadOnlySupport
-    with I18nSupport {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with ReadOnlySupport
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("BatteriesCapacity")

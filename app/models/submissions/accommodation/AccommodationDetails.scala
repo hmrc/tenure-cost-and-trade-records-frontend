@@ -38,7 +38,8 @@ object AccommodationDetails:
 
   def updateAccommodationDetails(
     copy: AccommodationDetails => AccommodationDetails
-  )(implicit sessionRequest: SessionRequest[?]): Session =
+  )(implicit sessionRequest: SessionRequest[?]
+  ): Session =
     val accommodationDetails = copy(
       sessionRequest.sessionData.accommodationDetails.getOrElse(initialAccommodationDetails)
     )
@@ -47,7 +48,8 @@ object AccommodationDetails:
   def updateAccommodationUnit(
     idx: Int,
     update: AccommodationUnit => AccommodationUnit
-  )(implicit sessionRequest: SessionRequest[?]): Session =
+  )(implicit sessionRequest: SessionRequest[?]
+  ): Session =
     updateAccommodationDetails { accommodationDetails =>
       val accommodationUnits =
         if accommodationDetails.accommodationUnits.size == idx then

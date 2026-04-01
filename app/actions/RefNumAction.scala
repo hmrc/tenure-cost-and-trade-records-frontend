@@ -23,14 +23,16 @@ import play.api.mvc._
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class RefNumRequest[A](val refNum: String, request: Request[A], messagesApi: MessagesApi)
-    extends MessagesRequest[A](request, messagesApi)
+class RefNumRequest[A](val refNum: String, request: Request[A], messagesApi: MessagesApi) extends MessagesRequest[A](request, messagesApi)
 
-class RefNumAction @Inject() (bodyParser: BodyParsers.Default, messagesApi: MessagesApi)(implicit
+class RefNumAction @Inject() (
+  bodyParser: BodyParser[AnyContent],
+  messagesApi: MessagesApi
+)(implicit
   val executionContext: ExecutionContext
 ) extends ActionBuilder[RefNumRequest, AnyContent]
-    with ActionRefiner[Request, RefNumRequest]
-    with MessagesActionBuilder {
+  with ActionRefiner[Request, RefNumRequest]
+  with MessagesActionBuilder {
 
   override def refine[A](request: Request[A]): Future[Either[Result, RefNumRequest[A]]] = Future.successful {
 

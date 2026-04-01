@@ -46,10 +46,10 @@ class CheckYourAnswersNotConnectedController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   import FeedbackFormMapper.feedbackForm
 
@@ -89,7 +89,9 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier, messages: Messages): Future[Unit] = {
+  )(implicit hc: HeaderCarrier,
+    messages: Messages
+  ): Future[Unit] = {
     val sessionRemoveConnection = session.removeConnectionDetails.flatMap(_.removeConnectionDetails)
 
     val submission = NotConnectedSubmission(

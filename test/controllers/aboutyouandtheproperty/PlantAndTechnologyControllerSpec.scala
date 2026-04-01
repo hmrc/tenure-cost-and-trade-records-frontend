@@ -34,10 +34,11 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
+
   def plantAndTechnologyController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  )                    = new PlantAndTechnologyController(
+  ) = new PlantAndTechnologyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -82,7 +83,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
       val result  = plantAndTechnologyController().show(request)
       val html    = contentAsString(result)
 
-      html should include(controllers.routes.TaskListController.show().url + "#how-is-used")
+      html should include(controllers.routes.TaskListController.show.url + "#how-is-used")
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
@@ -118,7 +119,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
       val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(fakeRequest)
       val html                             = contentAsString(result)
 
-      html should include(controllers.routes.TaskListController.show().url)
+      html should include(controllers.routes.TaskListController.show.url)
     }
   }
 

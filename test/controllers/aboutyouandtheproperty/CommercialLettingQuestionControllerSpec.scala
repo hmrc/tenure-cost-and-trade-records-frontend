@@ -32,12 +32,13 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
+
   def controller(
     isWelsh: Boolean = false,
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  )                    = new CommercialLettingQuestionController(
+  ) = new CommercialLettingQuestionController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -68,7 +69,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = controller().show()(fakeRequestFromTL)
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url + "#about-the-property")
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url + "#about-the-property")
     }
     "return correct backLink when 'from=CYA' query param is present" in {
       val result = controller().show()(fakeRequestFromCYA)

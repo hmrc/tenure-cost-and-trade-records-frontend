@@ -41,9 +41,9 @@ class IncomeExpenditureSummary6076Controller @Inject() (
   view: incomeExpenditureSummary6076,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IncomeExpenditureSummary6076")
@@ -75,25 +75,24 @@ class IncomeExpenditureSummary6076Controller @Inject() (
         incomeExpenditureSummary6076Form,
         formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, entries)),
         data => {
-          val updatedSections =
-            (entries zip turnoverSections6076).map { case (entry, previousSection) =>
-              previousSection.copy(
-                incomeAndExpenditureSummary = Some(
-                  IncomeAndExpenditureSummary6076(
-                    totalGrossReceipts = entry.totalGrossReceipts,
-                    totalBaseLoadReceipts = entry.totalBaseLoadReceipts,
-                    totalOtherIncome = entry.totalOtherIncome,
-                    totalCostOfSales = entry.totalCostOfSales,
-                    totalCostOfSalesIntermittent = entry.totalCostOfSalesIntermittent,
-                    totalStaffCosts = entry.totalStaffCosts,
-                    totalPremisesCosts = entry.totalPremisesCosts,
-                    totalOperationalExpenses = entry.totalOperationalExpenses,
-                    headOfficeExpenses = entry.headOfficeExpenses,
-                    netProfitOrLoss = entry.netProfitOrLoss
-                  )
+          val updatedSections = (entries zip turnoverSections6076).map { case (entry, previousSection) =>
+            previousSection.copy(
+              incomeAndExpenditureSummary = Some(
+                IncomeAndExpenditureSummary6076(
+                  totalGrossReceipts = entry.totalGrossReceipts,
+                  totalBaseLoadReceipts = entry.totalBaseLoadReceipts,
+                  totalOtherIncome = entry.totalOtherIncome,
+                  totalCostOfSales = entry.totalCostOfSales,
+                  totalCostOfSalesIntermittent = entry.totalCostOfSalesIntermittent,
+                  totalStaffCosts = entry.totalStaffCosts,
+                  totalPremisesCosts = entry.totalPremisesCosts,
+                  totalOperationalExpenses = entry.totalOperationalExpenses,
+                  headOfficeExpenses = entry.headOfficeExpenses,
+                  netProfitOrLoss = entry.netProfitOrLoss
                 )
               )
-            }
+            )
+          }
 
           val updatedData = updateAboutTheTradingHistoryPartOne {
             _.copy(
@@ -112,7 +111,8 @@ class IncomeExpenditureSummary6076Controller @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6076] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
@@ -132,8 +132,8 @@ class IncomeExpenditureSummary6076Controller @Inject() (
       val operationalExpenses     = section.operationalExpenses.map(_.total).getOrElse(zeroBigDecimal)
       val headOfficeExpenses      = section.headOfficeExpenses.getOrElse(zeroBigDecimal)
 
-      val netProfitOrLoss =
-        (grossReceipts + baseLoadReceipts + otherIncome) - (costOfSales + staffCosts + premisesCosts + operationalExpenses + headOfficeExpenses)
+      val netProfitOrLoss = (grossReceipts + baseLoadReceipts + otherIncome) -
+        (costOfSales + staffCosts + premisesCosts + operationalExpenses + headOfficeExpenses)
 
       IncomeExpenditure6076Entry(
         financialYearEnd = section.financialYearEnd.toString,

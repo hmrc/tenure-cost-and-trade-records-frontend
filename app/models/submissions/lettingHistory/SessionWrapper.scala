@@ -22,6 +22,7 @@ case class SessionWrapper(data: Session, changed: Boolean):
   def notChanged: Boolean = !changed
 
 object SessionWrapper:
+
   def unchanged(using session: Session) =
     SessionWrapper(data = session, changed = false)
 

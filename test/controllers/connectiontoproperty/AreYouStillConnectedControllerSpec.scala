@@ -82,7 +82,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
     "return back link to Task List when 'from=TL' query param is present" in {
       val result = areYouStillConnectedController().show(fakeRequestFromTL)
 
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
     "return back link to Login page when no 'from' query param is present" in {

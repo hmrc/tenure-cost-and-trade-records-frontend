@@ -80,7 +80,7 @@
     sectionName = messages("label.section.aboutYourTradingHistory"),
     summary = Some(request.sessionData.toSummary),
     backLinkUrl = fromLocation match {
-        case "TL" => controllers.routes.TaskListController.show().url + "#turnover"
+        case "TL" => controllers.routes.TaskListController.show.url + "#turnover"
         case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
         case _ => controllers.aboutthetradinghistory.routes.TurnoverController.show().url
     },

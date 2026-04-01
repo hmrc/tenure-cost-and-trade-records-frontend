@@ -33,8 +33,11 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
 
   implicit def toFut[A](a: A): Future[A] = Future.successful(a)
 
-  def continueOrSaveAsDraft[T](form: Form[T], hasErrors: Form[T] => Future[Result], success: T => Future[Result])(
-    implicit request: SessionRequest[AnyContent]
+  def continueOrSaveAsDraft[T](
+    form: Form[T],
+    hasErrors: Form[T] => Future[Result],
+    success: T => Future[Result]
+  )(implicit request: SessionRequest[AnyContent]
   ): Future[Result] =
     form
       .bindFromRequest()
@@ -43,7 +46,9 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
         success.andThen(continueOrSaveAsDraft)
       )
 
-  def continueOrSaveAsDraft(successResult: Future[Result])(implicit
+  def continueOrSaveAsDraft(
+    successResult: Future[Result]
+  )(implicit
     request: SessionRequest[AnyContent]
   ): Future[Result] =
     if (isSaveAsDraft) saveAsDraftRedirect else successResult

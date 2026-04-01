@@ -42,10 +42,10 @@ class CheckYourAnswersLettingHistoryController @Inject() (
   theView: CheckYourAnswersView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging:
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     val filledForm =

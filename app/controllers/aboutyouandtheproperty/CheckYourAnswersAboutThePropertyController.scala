@@ -42,10 +42,10 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   theView: CheckYourAnswersAboutThePropertyView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val freshForm  = theForm

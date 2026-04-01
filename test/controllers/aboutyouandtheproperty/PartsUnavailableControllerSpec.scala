@@ -54,7 +54,7 @@ class PartsUnavailableControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = controller().show()(fakeRequestFromTL)
-      contentAsString(result) should include(s"${controllers.routes.TaskListController.show().url}#family-usage")
+      contentAsString(result) should include(s"${controllers.routes.TaskListController.show.url}#family-usage")
     }
     "return correct backLink when 'from=CYA' query param is present" in {
       val result = controller().show()(fakeRequestFromCYA)

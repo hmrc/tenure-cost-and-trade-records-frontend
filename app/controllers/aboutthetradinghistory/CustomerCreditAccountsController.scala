@@ -43,9 +43,9 @@ class CustomerCreditAccountsController @Inject() (
   view: customerCreditAccounts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CustomerCreditAccounts")
@@ -78,10 +78,9 @@ class CustomerCreditAccountsController @Inject() (
               )
             ),
           success => {
-            val accounts =
-              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (account, finYearEnd) =>
-                account.copy(financialYearEnd = finYearEnd)
-              }
+            val accounts = (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (account, finYearEnd) =>
+              account.copy(financialYearEnd = finYearEnd)
+            }
 
             val updatedData = updateAboutTheTradingHistory(_.copy(customerCreditAccounts = Some(accounts)))
             session
@@ -92,11 +91,11 @@ class CustomerCreditAccountsController @Inject() (
       }
   }
 
-  private def backLink(answers: Session)(implicit request: SessionRequest[AnyContent]): String      =
+  private def backLink(answers: Session)(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#customer-credit-accounts"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#customer-credit-accounts"
       case _     =>
         answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion) match {
           case Some(AnswerYes) =>
@@ -104,6 +103,7 @@ class CustomerCreditAccountsController @Inject() (
           case _               => routes.BunkeredFuelQuestionController.show().url
         }
     }
+
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
 

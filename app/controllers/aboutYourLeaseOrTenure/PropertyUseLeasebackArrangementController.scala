@@ -44,10 +44,10 @@ class PropertyUseLeasebackArrangementController @Inject() (
   propertyUseLeasebackAgreementView: propertyUseLeasebackArrangement,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PropertyUseLeasebackArrangement")
@@ -96,7 +96,7 @@ class PropertyUseLeasebackArrangementController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#leaseback-arrangement"
+      case "TL" => controllers.routes.TaskListController.show.url + "#leaseback-arrangement"
       case _    =>
         answers.forType match {
           case FOR6020 | FOR6076 | FOR6045 | FOR6046 | FOR6048 =>

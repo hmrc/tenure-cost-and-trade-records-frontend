@@ -46,7 +46,7 @@ class ServicePaidSeparatelyListController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport {
+  with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection =

@@ -41,9 +41,9 @@ class UnusualCircumstancesController @Inject() (
   unusualCircumstancesView: unusualCircumstances,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("UnusualCircumstances")
@@ -86,6 +86,6 @@ class UnusualCircumstancesController @Inject() (
     answers.sessionData.forType match {
       case FOR6015 => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
       case FOR6030 => controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url
-      case _       => controllers.routes.TaskListController.show().url
+      case _       => controllers.routes.TaskListController.show.url
     }
 }

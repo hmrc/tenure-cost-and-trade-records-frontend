@@ -44,10 +44,10 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FrontendController(mcc)
-    with AddressLookupSupport(addressLookupConnector)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FrontendController(mcc)
+  with AddressLookupSupport(addressLookupConnector)
+  with I18nSupport:
 
   def startWithSession: Action[AnyContent] = Action.async { implicit request =>
     repository.start(Session("", FOR6010, Address("", None, "", None, ""), "", isWelsh = false))

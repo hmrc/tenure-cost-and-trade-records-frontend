@@ -17,11 +17,13 @@
 package models
 
 import play.api.libs.json.Format
+import uk.gov.hmrc.vo.service.model.Scala3EnumJsonFormat
 
 /**
   * @author Yuriy Tumakha
   */
 enum ForType:
+
   case FOR6010, // Public Houses
     FOR6011, // Pubs, licensed restaurants and wine bars
     FOR6015, // Hotels
@@ -32,7 +34,6 @@ enum ForType:
     FOR6046, // Caravan sites – rental
     FOR6048, // Self-catering holiday homes
     FOR6076 // Renewable Energy
-end ForType
 
 object ForType:
   implicit val format: Format[ForType] = Scala3EnumJsonFormat.format

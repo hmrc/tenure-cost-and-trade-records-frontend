@@ -40,10 +40,10 @@ class TypeOfLettingController @Inject() (
   typeOfLettingView: typeOfLetting,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[TypeOfLetting] = for {
@@ -110,7 +110,9 @@ class TypeOfLettingController @Inject() (
     updatedLettings: IndexedSeq[LettingPartOfProperty],
     lettingType: TypeOfLetting,
     index: Option[Int]
-  )(implicit request: SessionRequest[AnyContent], hc: HeaderCarrier): Future[Result] = {
+  )(implicit request: SessionRequest[AnyContent],
+    hc: HeaderCarrier
+  ): Future[Result] = {
     val existingFranchisesOrLetting =
       request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
     val updatedSession              = request.sessionData.copy(
@@ -122,6 +124,7 @@ class TypeOfLettingController @Inject() (
       Redirect(toSpecificController(lettingType, index))
     }
   }
+
   private def createLettingType(typeOfLetting: TypeOfLetting): LettingPartOfProperty = typeOfLetting match {
     case TypeOfLettingAutomatedTellerMachine => ATMLetting(None, None, None)
     case TypeOfLettingTelecomMast            => TelecomMastLetting(None, None, None, None)
@@ -150,7 +153,7 @@ class TypeOfLettingController @Inject() (
           else {
             controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
           }
-        case _           => controllers.routes.TaskListController.show().url
+        case _           => controllers.routes.TaskListController.show.url
       }
     }
 }

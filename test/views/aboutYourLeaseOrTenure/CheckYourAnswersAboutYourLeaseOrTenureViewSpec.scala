@@ -45,8 +45,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehavio
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(using sessionRequest6011, messages)
 
   private def createView6020 = () =>
-    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(using
-      sessionRequest6020full,
+    checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996020001"))(
+      using sessionRequest6020full,
       messages
     )
 

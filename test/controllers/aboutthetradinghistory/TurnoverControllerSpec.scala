@@ -27,9 +27,10 @@ import utils.TestBaseSpec
 class TurnoverControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def turnoverController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  )                    = new TurnoverController(
+  ) = new TurnoverController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,
@@ -52,7 +53,7 @@ class TurnoverControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = turnoverController().show()(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
     "return correct backLink when 'from=IES' query param is present" in {

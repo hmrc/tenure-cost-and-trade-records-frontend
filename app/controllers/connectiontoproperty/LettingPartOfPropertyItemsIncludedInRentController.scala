@@ -39,9 +39,9 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
   lettingPartOfPropertyRentIncludesView: lettingPartOfPropertyRentIncludes,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("LettingPartOfPropertyItemsIncludedInRent")

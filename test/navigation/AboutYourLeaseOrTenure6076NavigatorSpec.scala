@@ -70,8 +70,9 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         .nextPage(LeaseOrAgreementDetailsPageId, session6076Full)
         .apply(
           session6076Full
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
+          .show()
     }
 
     "return a function that goes to connected to landlord details when connection to landlord yes has been completed1" in {
@@ -137,8 +138,9 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
+          .show()
     }
 
     "return a function that goes to Ultimately responsible IR page when Ultimately Responsible OR has been completed" in {
@@ -156,8 +158,9 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         .nextPage(UltimatelyResponsibleInsideRepairsPageId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController
+          .show()
     }
 
     "return a function that goes to rent include trade services page when Ultimately Responsible BI has been completed" in {
@@ -175,8 +178,9 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         .nextPage(UltimatelyResponsibleBusinessInsurancePageId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
+          .show()
     }
 
     "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {
@@ -192,8 +196,9 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         .nextPage(MethodToFixCurrentRentsId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
+          .show()
     }
 
     "return a function that goes to ProvideDetailsOfYourLeaseController when forType is FOR6076 and propertyUseLeasebackAgreement is Some('no')" in {

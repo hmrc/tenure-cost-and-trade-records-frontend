@@ -34,7 +34,7 @@
  summary = Some(summary),
  sectionName = messages("label.section.aboutTheProperty"),
  backLinkUrl = { fromLocation match {
-  case "TL" => controllers.routes.TaskListController.show().url+"#charity-question"
+  case "TL" => controllers.routes.TaskListController.show.url+"#charity-question"
   case _ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
  }
  },

@@ -44,8 +44,9 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6010NoSession)
         .apply(
           sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
-        .show()
+        ) shouldBe
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+          .show()
     }
 
     "return a function that goes to type of income page when franchise page has been completed yes 6015" in {
@@ -61,8 +62,9 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6015NoSession)
         .apply(
           sessionAboutFranchiseOrLetting6015NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
-        .show()
+        ) shouldBe
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+          .show()
     }
     "return a function that goes to rental income included page when rent received from page has been completed" in {
       aboutFranchisesOrLettingsNavigator
@@ -77,8 +79,9 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(MaxOfLettingsReachedCurrentId, sessionAboutFranchiseOrLetting6010NoSession)
         .apply(
           sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
-        .show()
+        ) shouldBe
+        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+          .show()
     }
 
     "return a function that goes to add another letting page when fee received completed" in {
@@ -94,7 +97,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         .nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, sessionAboutFranchiseOrLetting6010NoSession)
         .apply(
           sessionAboutFranchiseOrLetting6010NoSession
-        ) shouldBe controllers.routes.TaskListController.show().withFragment("franchiseAndLettings")
+        ) shouldBe controllers.routes.TaskListController.show.withFragment("franchiseAndLettings")
     }
 
     // TEST FOR SINGLE RENTAL INCOME LOOP LOOP 6010
@@ -191,8 +194,9 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
           .nextPage(FranchiseOrLettingsTiedToPropertyId, updatedSession)
           .apply(
             updatedSession
-          ) shouldBe controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
-          .show()
+          ) shouldBe
+          controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+            .show()
       }
 
       "return a function that goes to concession type fees page when  concession type details finished" in {

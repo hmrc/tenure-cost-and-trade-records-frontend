@@ -45,10 +45,10 @@ class LettingPartOfPropertyDetailsController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with AddressLookupSupport(addressLookupConnector)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with AddressLookupSupport(addressLookupConnector)
+  with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("LettingPartOfPropertyDetails")
@@ -100,8 +100,9 @@ class LettingPartOfPropertyDetailsController @Inject() (
                 appendedSections.indexOf(defaultSection) -> appendedSections
               } { sectionToUpdate =>
                 val indexToUpdate = existingSections.indexOf(sectionToUpdate)
-                indexToUpdate -> existingSections
-                  .updated(indexToUpdate, sectionToUpdate.copy(tenantDetails = formData))
+                indexToUpdate ->
+                  existingSections
+                    .updated(indexToUpdate, sectionToUpdate.copy(tenantDetails = formData))
               }
             updatedSectionIndex = idx
             stillConnectedDetails

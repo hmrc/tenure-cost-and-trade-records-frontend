@@ -90,18 +90,19 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
           page.error("genericRemoveConfirmation") shouldBe "error.confirmableAction.required"
           verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
-        "be handling confirmation POST /remove?index=0 by actually removing the resident and then replying redirect to the 'Resident List' page" in new ControllerFixture(
-          oneResident
-        ) {
-          // Confirm the removal of the resident at index 0 (who is "Mr. One")
-          val result = controller.performRemove(index = 0)(
-            fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
-          )
-          status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe routes.ResidentListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          permanentResidents(data)       shouldBe empty // instead of having size 1
-        }
+        "be handling confirmation POST /remove?index=0 by actually removing the resident and then replying redirect to the 'Resident List' page" in
+          new ControllerFixture(
+            oneResident
+          ) {
+            // Confirm the removal of the resident at index 0 (who is "Mr. One")
+            val result = controller.performRemove(index = 0)(
+              fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
+            )
+            status(result) shouldBe SEE_OTHER
+            redirectLocation(result).value shouldBe routes.ResidentListController.show.url
+            verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
+            permanentResidents(data)       shouldBe empty // instead of having size 1
+          }
         "be handling denying POST /remove?index=0 by replying redirect to the 'Resident List' page" in new ControllerFixture(
           oneResident
         ) {
@@ -132,9 +133,10 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
         ) {
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
           status(result)                 shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe routes.MaxNumberReachedController
-            .show(kind = "permanentResidents")
-            .url
+          redirectLocation(result).value shouldBe
+            routes.MaxNumberReachedController
+              .show(kind = "permanentResidents")
+              .url
         }
       }
     }
@@ -157,9 +159,8 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
     }
   }
 
-  trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil)
-      extends MockRepositoryFixture
-      with SessionCapturingFixture:
+  trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil) extends MockRepositoryFixture with SessionCapturingFixture:
+
     val controller = new ResidentListController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],

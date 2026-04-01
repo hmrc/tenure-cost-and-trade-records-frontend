@@ -30,7 +30,8 @@ trait AddressLookupSupport(connector: AddressLookupConnector)(using ec: Executio
 
   def redirectToAddressLookupFrontend(
     config: AddressLookupConfig
-  )(using request: SessionRequest[AnyContent]): Future[Result] =
+  )(using request: SessionRequest[AnyContent]
+  ): Future[Result] =
     connector
       .initJourney(config)
       .flatMap {

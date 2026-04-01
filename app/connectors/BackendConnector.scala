@@ -51,7 +51,10 @@ class DefaultBackendConnector @Inject() (
 
   private def saveAsDraftURL(refNumber: String): URL = url"$backendBaseUrl/saveAsDraft/${cleanedRefNumber(refNumber)}"
 
-  override def verifyCredentials(refNumber: String, postcode: String)(implicit
+  override def verifyCredentials(
+    refNumber: String,
+    postcode: String
+  )(implicit
     hc: HeaderCarrier
   ): Future[FORLoginResponse] =
     val credentials = Credentials(cleanedRefNumber(refNumber), postcode)

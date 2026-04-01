@@ -42,9 +42,9 @@ class EditFinancialYearEndDateController @Inject() (
   editFinancialYearEndDateView: editFinancialYearEndDate,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("EditFinancialYearEndDate")
@@ -84,7 +84,8 @@ class EditFinancialYearEndDateController @Inject() (
 
   private def isTurnOverNonEmpty(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[AnyContent]): Boolean =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Boolean =
     request.sessionData.forType match {
       case FOR6020           => aboutTheTradingHistory.turnoverSections6020.exists(_.nonEmpty)
       case FOR6030           => aboutTheTradingHistory.turnoverSections6030.nonEmpty
@@ -171,7 +172,8 @@ class EditFinancialYearEndDateController @Inject() (
 
   private def isTurnoverSectionStarted(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[AnyContent]) =
+  )(implicit request: SessionRequest[AnyContent]
+  ) =
     request.sessionData.forType match {
       case FOR6020           =>
         aboutTheTradingHistory.turnoverSections6020.flatMap(_.headOption).exists(_.shop.isDefined)
@@ -199,7 +201,8 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+  )(implicit request: SessionRequest[AnyContent]
+  ): Session = {
     val turnoverSections =
       aboutTheTradingHistory.turnoverSections
         .updated(index, aboutTheTradingHistory.turnoverSections(index).copy(financialYearEnd = data))
@@ -236,7 +239,8 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+  )(implicit request: SessionRequest[AnyContent]
+  ): Session = {
     val turnoverSections6020    = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty)
     val updatedTurnoverSections = turnoverSections6020.updated(
       index,
@@ -256,7 +260,8 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+  )(implicit request: SessionRequest[AnyContent]
+  ): Session = {
     val turnoverSections6030       = aboutTheTradingHistory.turnoverSections6030
     val updatedTurnoverSection6030 =
       turnoverSections6030.updated(index, turnoverSections6030(index).copy(financialYearEnd = data))
@@ -274,7 +279,8 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+  )(implicit request: SessionRequest[AnyContent]
+  ): Session = {
     val turnoverSections6045    =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).getOrElse(Seq.empty)
     val updatedTurnoverSections = turnoverSections6045.updated(
@@ -300,7 +306,8 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+  )(implicit request: SessionRequest[AnyContent]
+  ): Session = {
     val turnoverSections6048    =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).getOrElse(Seq.empty)
     val updatedTurnoverSections = turnoverSections6048.updated(
@@ -326,7 +333,8 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]): Session = {
+  )(implicit request: SessionRequest[AnyContent]
+  ): Session = {
     val turnoverSections6076    =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
     val updatedTurnoverSections = turnoverSections6076.updated(

@@ -36,8 +36,8 @@ class MonthYearFormatter(
   fieldNameKey: String,
   allowPastDates: Boolean,
   allowFutureDates: Boolean
-)(using messages: Messages)
-    extends Formatter[MonthsYearDuration] {
+)(using messages: Messages
+) extends Formatter[MonthsYearDuration] {
 
   require(
     allowPastDates || allowFutureDates,

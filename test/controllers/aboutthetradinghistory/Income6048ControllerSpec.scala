@@ -24,7 +24,8 @@ import utils.TestBaseSpec
 
 class Income6048ControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit     = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
+
   private val previousPage =
     aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
   private val nextPage     = aboutthetradinghistory.routes.FixedCosts6048Controller.show.url

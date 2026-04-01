@@ -25,7 +25,8 @@ import utils.TestBaseSpec
 
 class StaffCostsControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit     = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
+
   def staffCostsController =
     new StaffCostsController(
       stubMessagesControllerComponents(),

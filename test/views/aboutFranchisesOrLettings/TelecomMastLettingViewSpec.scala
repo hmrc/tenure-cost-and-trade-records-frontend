@@ -27,7 +27,7 @@ class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetti
   private def TelecomMastLettingView = inject[views.html.aboutfranchisesorlettings.telecomMastLetting]
 
   private val messageKeyPrefix = "label.telecomMastLetting"
-  private val backLink         = controllers.routes.TaskListController.show().url
+  private val backLink         = controllers.routes.TaskListController.show.url
 
   override val form: Form[TelecomMastLetting] = TelecomMastLettingForm.theForm
 
@@ -51,7 +51,7 @@ class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetti
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url
+      backlinkUrl shouldBe controllers.routes.TaskListController.show.url
     }
 
     "Section heading is visible" in {

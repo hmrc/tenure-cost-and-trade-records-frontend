@@ -20,8 +20,12 @@ import models.Session
 import models.submissions.lettingHistory.SessionWrapper.{change as changeSession, unchanged as unchangedSession}
 
 trait OnlineAdvertising:
+
   @deprecated
-  def withoutTheAbilityToDetectChanges(ifEmpty: LettingHistory, copyFunc: LettingHistory => LettingHistory)(using
+  def withoutTheAbilityToDetectChanges(
+    ifEmpty: LettingHistory,
+    copyFunc: LettingHistory => LettingHistory
+  )(using
     session: Session
   ): SessionWrapper
 
@@ -65,7 +69,10 @@ trait OnlineAdvertising:
     yield hasOnlineAdvertising
 
   @deprecated(message = "This method is not yet able to detect changes")
-  def byAddingOrUpdatingOnlineAdvertising(index: Option[Int], newAdvert: AdvertisingDetail)(using
+  def byAddingOrUpdatingOnlineAdvertising(
+    index: Option[Int],
+    newAdvert: AdvertisingDetail
+  )(using
     session: Session
   ): SessionWrapper =
     // TODO Implement the ability the detect changes (see PermanentResidents.byAddingOrUpdatingPermanentResident)

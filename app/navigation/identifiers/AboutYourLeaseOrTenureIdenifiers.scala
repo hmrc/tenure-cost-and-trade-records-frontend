@@ -69,6 +69,7 @@ case object RentIncludeTradeServicesPageId extends Identifier {
 case object RentIncludeTradeServicesDetailsPageId extends Identifier {
   override def toString: String = "rentIncludeTradeServicesDetailsPage"
 }
+
 case object RentIncludesVatPageId extends Identifier {
   override def toString: String = "rentIncludesVatPage"
 }
@@ -127,18 +128,23 @@ case object TenantsAdditionsDisregardedId extends Identifier {
 case object LeaseSurrenderedEarlyId extends Identifier {
   override def toString: String = "leaseSurrenderedEarlyPage"
 }
+
 case object BenefitsGivenId extends Identifier {
   override def toString: String = "benefitsGivenPage"
 }
+
 case object BenefitsGivenDetailsId extends Identifier {
   override def toString: String = "benefitsGivenDetailsPage"
 }
+
 case object CapitalSumDescriptionId extends Identifier {
   override def toString: String = "capitalSumDescriptionPage"
 }
+
 case object WorkCarriedOutDetailsId extends Identifier {
   override def toString: String = "workCarriedOutDetailsPage"
 }
+
 case object WorkCarriedOutConditionId extends Identifier {
   override def toString: String = "workCarriedOutConditionPage"
 }
@@ -149,6 +155,7 @@ case object TenantsAdditionsDisregardedDetailsId extends Identifier {
 
 case object PayCapitalSumId extends Identifier { override def toString: String = "payCapitalSumPage" }
 case object PayCapitalSumDetailsId extends Identifier { override def toString: String = "payCapitalSumDetailsPage" }
+
 case object PayCapitalSumAmountDetailsId extends Identifier {
   override def toString: String = "payCapitalSumAmountDetailsPage"
 }

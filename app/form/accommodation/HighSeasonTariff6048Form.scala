@@ -31,7 +31,8 @@ import util.DateUtilLocalised
   */
 object HighSeasonTariff6048Form extends RentalPeriodSupport:
 
-  def highSeasonTariff6048Form(using
+  def highSeasonTariff6048Form(
+    using
     request: SessionRequest[AnyContent],
     messages: Messages,
     dateUtil: DateUtilLocalised

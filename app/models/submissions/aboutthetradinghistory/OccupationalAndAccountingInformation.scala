@@ -24,6 +24,7 @@ case class OccupationalAndAccountingInformation(
   currentFinancialYearEnd: Option[DayMonthsDuration] = None,
   financialYearEndHasChanged: Option[Boolean] = None
 )
+
 object OccupationalAndAccountingInformation {
   implicit val format: OFormat[OccupationalAndAccountingInformation] = Json.format
 }

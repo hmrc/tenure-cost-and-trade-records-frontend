@@ -40,7 +40,8 @@ end ListPageConfig
 
 object ListPageConfig:
 
-  given queryStringBinder(using
+  given queryStringBinder(
+    using
     stringBinder: QueryStringBindable[String]
   ): QueryStringBindable[ListPageConfig] =
     new QueryStringBindable[ListPageConfig]:

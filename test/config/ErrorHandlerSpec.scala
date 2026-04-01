@@ -16,17 +16,15 @@
 
 package config
 
-import utils.TestBaseSpec
+import test.TCTRAppSpec
 
-class ErrorHandlerSpec extends TestBaseSpec {
+class ErrorHandlerSpec extends TCTRAppSpec:
 
   private val errorHandler = inject[ErrorHandler]
 
   "standardErrorTemplate" should {
     "render HTML" in {
-      val html = await(errorHandler.standardErrorTemplate("title", "heading", "message")(using fakeRequest))
+      val html = errorHandler.standardErrorTemplate("title", "heading", "message")(using getRequest).futureValue
       html.contentType shouldBe "text/html"
     }
   }
-
-}

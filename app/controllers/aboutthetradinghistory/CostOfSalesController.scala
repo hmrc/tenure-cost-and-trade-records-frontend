@@ -41,9 +41,9 @@ class CostOfSalesController @Inject() (
   costOfSalesView: costOfSales,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CostOfSales")
@@ -72,10 +72,9 @@ class CostOfSalesController @Inject() (
         costOfSalesForm(years(aboutTheTradingHistory)),
         formWithErrors => BadRequest(costOfSalesView(formWithErrors, navigator.from)),
         data => {
-          val costOfSales =
-            (data zip financialYearEndDates(aboutTheTradingHistory)).map { case (costOfSales, finYearEnd) =>
-              costOfSales.copy(financialYearEnd = finYearEnd)
-            }
+          val costOfSales = (data zip financialYearEndDates(aboutTheTradingHistory)).map { case (costOfSales, finYearEnd) =>
+            costOfSales.copy(financialYearEnd = finYearEnd)
+          }
 
           val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
           session
@@ -93,7 +92,8 @@ class CostOfSalesController @Inject() (
 
   private def runWithSessionCheck(
     action: AboutTheTradingHistory => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .filter(_.turnoverSections.nonEmpty)

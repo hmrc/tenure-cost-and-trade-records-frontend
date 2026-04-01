@@ -47,11 +47,11 @@ class LettingTypeDetailsController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with AddressLookupSupport(addressLookupConnector)
-    with Logging:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with AddressLookupSupport(addressLookupConnector)
+  with Logging:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("LettingTypeDetails")
@@ -117,7 +117,10 @@ class LettingTypeDetailsController @Inject() (
     )
   }
 
-  private def sessionWithOperatorDetails(formData: OperatorDetails, idx: Int)(using
+  private def sessionWithOperatorDetails(
+    formData: OperatorDetails,
+    idx: Int
+  )(using
     request: SessionRequest[AnyContent]
   ): (Session, Int) =
     var updatedIndex   = 0

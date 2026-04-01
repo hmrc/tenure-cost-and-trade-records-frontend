@@ -23,6 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.data.validation.{Constraint, Invalid, Valid}
 
 import scala.util.Try
+
 object BunkerFuelCardDetailsForm {
 
   private val positiveBigDecimal: Constraint[BigDecimal] = Constraint("constraint.positive") { value =>

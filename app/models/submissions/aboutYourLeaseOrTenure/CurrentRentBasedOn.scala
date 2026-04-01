@@ -16,8 +16,8 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import models.Scala3EnumJsonFormat
 import play.api.libs.json.Format
+import uk.gov.hmrc.vo.service.model.Scala3EnumJsonFormat
 
 /**
   * @author Yuriy Tumakha

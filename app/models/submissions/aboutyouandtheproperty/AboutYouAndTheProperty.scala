@@ -53,7 +53,8 @@ object AboutYouAndTheProperty:
 
   def updateAboutYouAndTheProperty(
     copy: AboutYouAndTheProperty => AboutYouAndTheProperty
-  )(implicit sessionRequest: SessionRequest[?]): Session =
+  )(implicit sessionRequest: SessionRequest[?]
+  ): Session =
 
     val currentAboutTheProperty = sessionRequest.sessionData.aboutYouAndTheProperty
 

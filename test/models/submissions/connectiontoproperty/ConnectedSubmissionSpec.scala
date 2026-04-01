@@ -20,12 +20,12 @@ import models.submissions.ConnectedSubmission
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
-import utils.FakeObjects
+import test.TestObjects
 
 /**
   * @author Yuriy Tumakha
   */
-class ConnectedSubmissionSpec extends AnyFlatSpec with Matchers with FakeObjects:
+class ConnectedSubmissionSpec extends AnyFlatSpec with Matchers with TestObjects:
 
   "ConnectedSubmission" should "be serialized/deserialized from JSON" in {
     val json = Json.toJson(connectedSubmission)

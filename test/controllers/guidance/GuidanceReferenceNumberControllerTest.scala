@@ -100,8 +100,9 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
   }
 
   trait ControllerFixture:
-    val connector  = mock[BackendConnector]
+    val connector = mock[BackendConnector]
     when(connector.retrieveFORType(anyString, any[HeaderCarrier])).thenReturn(successful("FOR6012"))
+
     val controller = new GuidanceReferenceNumberController(
       mcc = stubMessagesControllerComponents(),
       connector = connector,

@@ -46,11 +46,11 @@ class ContactDetailsQuestionController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with AddressLookupSupport(addressLookupConnector)
-    with ReadOnlySupport
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with AddressLookupSupport(addressLookupConnector)
+  with ReadOnlySupport
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("ContactDetailsQuestion")

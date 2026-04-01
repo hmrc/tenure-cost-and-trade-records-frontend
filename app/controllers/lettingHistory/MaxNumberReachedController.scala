@@ -39,9 +39,9 @@ class MaxNumberReachedController @Inject() (
   theView: MaxNumberReachedView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport:
 
   def show(kind: String): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     val freshForm      = theForm

@@ -41,9 +41,9 @@ class TotalPayrollCostsController @Inject() (
   totalPayrollCostsView: totalPayrollCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TotalPayrollCosts")
@@ -75,10 +75,9 @@ class TotalPayrollCostsController @Inject() (
               )
             ),
           success => {
-            val totalPaytollCosts =
-              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (totalPaytollCost, finYearEnd) =>
-                totalPaytollCost.copy(financialYearEnd = finYearEnd)
-              }
+            val totalPaytollCosts = (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (totalPaytollCost, finYearEnd) =>
+              totalPaytollCost.copy(financialYearEnd = finYearEnd)
+            }
 
             val updatedData = updateAboutTheTradingHistory(_.copy(totalPayrollCostSections = totalPaytollCosts))
             session
@@ -91,7 +90,8 @@ class TotalPayrollCostsController @Inject() (
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
-  private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String]                    =
+
+  private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
     financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)
 
 }

@@ -16,41 +16,36 @@
 
 package actions
 
-import play.api.mvc.Results._
-import play.api.mvc.{AnyContentAsEmpty, BodyParsers, Result}
-import play.api.test.Helpers._
-import play.api.test.FakeRequest
-import utils.TestBaseSpec
+import play.api.mvc.Results.*
+import play.api.mvc.{AnyContent, Result}
+import play.api.test.Helpers.*
+import test.TCTRAppSpec
 
 import scala.concurrent.Future
 
-class RefNumActionSpec extends TestBaseSpec {
+class RefNumActionSpec extends TCTRAppSpec:
+
+  private val refNumAction = RefNumAction(bodyParser, messagesApi)
 
   "RefNumAction" should {
-    val bodyParsers    = inject[BodyParsers.Default]
-    val action         = new RefNumAction(bodyParsers, messagesApi)
-    val sessionRequest = FakeRequest().withSession()
-
     "return a Redirect result when 'refNum' is not present in session" in {
+      val sessionRequest = getRequest.withSession()
 
-      val result: Future[Result] =
-        action.invokeBlock(sessionRequest, (_: RefNumRequest[AnyContentAsEmpty.type]) => Future.successful(Ok("")))
+      val result: Future[Result] = refNumAction.invokeBlock(sessionRequest, (_: RefNumRequest[AnyContent]) => Future.successful(Ok("")))
 
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(controllers.routes.LoginController.show.url)
     }
 
     "return OK  when 'refNum' is present in session" in {
+      val refNum            = "test"
+      val requestWithRefNum = getRequest.withSession("refNum" -> refNum)
 
-      val refNum                 = "test"
-      val requestWithRefNum      = FakeRequest().withSession("refNum" -> refNum)
-      val result: Future[Result] = action.invokeBlock(
+      val result: Future[Result] = refNumAction.invokeBlock(
         requestWithRefNum,
-        (refNumRequest: RefNumRequest[AnyContentAsEmpty.type]) =>
-          Future.successful(Ok(s"RefNum: ${refNumRequest.refNum}"))
+        (refNumRequest: RefNumRequest[AnyContent]) => Future.successful(Ok(s"RefNum: ${refNumRequest.refNum}"))
       )
 
       status(result) shouldBe OK
     }
   }
-}

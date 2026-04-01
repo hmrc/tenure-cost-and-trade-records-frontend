@@ -33,12 +33,17 @@ object CommercialLettingAvailabilityWelshForm {
 
   def commercialLettingAvailabilityWelshForm(
     years: Seq[String]
-  )(using request: SessionRequest[AnyContent], messages: Messages): Form[Seq[LettingAvailability]] =
+  )(using request: SessionRequest[AnyContent],
+    messages: Messages
+  ): Form[Seq[LettingAvailability]] =
     Form {
       mappingPerYear(years, (year, idx) => "" -> lettingAvailAbilityMapping(year, idx))
     }
 
-  private def lettingAvailAbilityMapping(year: String, idx: Int)(using
+  private def lettingAvailAbilityMapping(
+    year: String,
+    idx: Int
+  )(using
     request: SessionRequest[AnyContent],
     messages: Messages
   ): Mapping[LettingAvailability] =

@@ -40,10 +40,10 @@ class RenewablesPlantController @Inject() (
   theView: RenewablesPlantView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with ReadOnlySupport
-    with I18nSupport {
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with ReadOnlySupport
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("RenewablesPlant")
@@ -79,7 +79,7 @@ class RenewablesPlantController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#technology-type"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#technology-type"
       case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 }

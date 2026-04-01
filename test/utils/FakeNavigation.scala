@@ -24,11 +24,12 @@ trait FakeNavigation { this: Injecting =>
 
   implicit def implicitRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
-  val requestReferenceNumberNavigator: RequestReferenceNumberNavigator       = inject[RequestReferenceNumberNavigator]
-  val connectedToPropertyNavigator: ConnectionToPropertyNavigator            = inject[ConnectionToPropertyNavigator]
-  val removeConnectionNavigator: RemoveConnectionNavigator                   = inject[RemoveConnectionNavigator]
-  val aboutYouAndThePropertyNavigator: AboutYouAndThePropertyNavigator       = inject[AboutYouAndThePropertyNavigator]
-  val aboutYourTradingHistoryNavigator: AboutTheTradingHistoryNavigator      = inject[AboutTheTradingHistoryNavigator]
+  val requestReferenceNumberNavigator: RequestReferenceNumberNavigator  = inject[RequestReferenceNumberNavigator]
+  val connectedToPropertyNavigator: ConnectionToPropertyNavigator       = inject[ConnectionToPropertyNavigator]
+  val removeConnectionNavigator: RemoveConnectionNavigator              = inject[RemoveConnectionNavigator]
+  val aboutYouAndThePropertyNavigator: AboutYouAndThePropertyNavigator  = inject[AboutYouAndThePropertyNavigator]
+  val aboutYourTradingHistoryNavigator: AboutTheTradingHistoryNavigator = inject[AboutTheTradingHistoryNavigator]
+
   val aboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
     inject[AboutFranchisesOrLettingsNavigator]
   val aboutYourLeaseOrTenureNavigator: AboutYourLeaseOrTenureNavigator       = inject[AboutYourLeaseOrTenureNavigator]

@@ -43,10 +43,10 @@ class PayACapitalSumDetailsController @Inject() (
   payACapitalSumDetailsView: payACapitalSumDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PayACapitalSumDetails")
@@ -84,7 +84,7 @@ class PayACapitalSumDetailsController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-details"
+      case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-details"
       case _    =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
           case Some(AnswerYes) =>

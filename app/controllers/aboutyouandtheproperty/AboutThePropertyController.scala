@@ -41,10 +41,10 @@ class AboutThePropertyController @Inject() (
   aboutThePropertyView: aboutTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AboutTheProperty")
@@ -87,7 +87,7 @@ class AboutThePropertyController @Inject() (
 
   private def backLink(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#about-the-property"
+      case "TL" => controllers.routes.TaskListController.show.url + "#about-the-property"
       case _    => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 

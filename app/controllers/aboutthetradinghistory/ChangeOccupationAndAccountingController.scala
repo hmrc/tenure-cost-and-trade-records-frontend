@@ -44,8 +44,8 @@ class ChangeOccupationAndAccountingController @Inject() (
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ChangeOccupationAndAccounting")

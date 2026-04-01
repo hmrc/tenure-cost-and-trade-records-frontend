@@ -41,9 +41,9 @@ class TotalFuelSoldController @Inject() (
   view: totalFuelSold,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TotalFuelSold")
@@ -75,10 +75,9 @@ class TotalFuelSoldController @Inject() (
               )
             ),
           success => {
-            val totalFuelSold =
-              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (totalFuelSold, finYearEnd) =>
-                totalFuelSold.copy(financialYearEnd = finYearEnd)
-              }
+            val totalFuelSold = (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (totalFuelSold, finYearEnd) =>
+              totalFuelSold.copy(financialYearEnd = finYearEnd)
+            }
 
             val updatedData = updateAboutTheTradingHistory(_.copy(totalFuelSold = Some(totalFuelSold)))
             session
@@ -93,7 +92,7 @@ class TotalFuelSoldController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#fuel-sales"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#fuel-sales"
       case _     => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
     }
 

@@ -15,6 +15,7 @@
  */
 
 package controllers.aboutYourLeaseOrTenure
+
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
@@ -39,10 +40,10 @@ class WorkCarriedOutDetailsController @Inject() (
   view: workCarriedOutDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("WorkCarriedOutDetails")

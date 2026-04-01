@@ -40,9 +40,9 @@ class Turnover6030Controller @Inject() (
   turnoverView: turnover6030,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("Turnover6030")
@@ -70,11 +70,10 @@ class Turnover6030Controller @Inject() (
           turnoverForm6030(numberOfColumns, financialYearEndDates(aboutTheTradingHistory)),
           formWithErrors => BadRequest(turnoverView(formWithErrors)),
           success => {
-            val turnoverSections6030 =
-              (success zip financialYearEndDates(aboutTheTradingHistory)).map {
-                case (turnoverSection6030, finYearEnd) =>
-                  turnoverSection6030.copy(financialYearEnd = finYearEnd)
-              }
+            val turnoverSections6030 = (success zip financialYearEndDates(aboutTheTradingHistory)).map {
+              case (turnoverSection6030, finYearEnd) =>
+                turnoverSection6030.copy(financialYearEnd = finYearEnd)
+            }
 
             val updatedData = updateAboutTheTradingHistory(
               _.copy(

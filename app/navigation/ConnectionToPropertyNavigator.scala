@@ -92,7 +92,7 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
       case _               => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
     }
 
-  private def isAnyRentReceived: Session => Call                          = answers =>
+  private def isAnyRentReceived: Session => Call = answers =>
     answers.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
       case Some(AnswerYes) =>
         if answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty then
@@ -108,11 +108,13 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
           }
       case _               => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
     }
-  private def tradingNameOwnTheProperty: Session => Call                  = answers =>
+
+  private def tradingNameOwnTheProperty: Session => Call = answers =>
     answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match {
       case Some(AnswerYes) => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
       case _               => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
     }
+
   private def getLettingPartOfPropertyDetailsIndex(session: Session): Int =
     session.stillConnectedDetails.map(_.lettingPartOfPropertyDetailsIndex).getOrElse(0)
 
@@ -162,28 +164,32 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AreYouStillConnectedPageId                     -> areYouStillConnectedRouting,
     EditAddressPageId                              -> editAddressRouting,
-    ConnectionToPropertyPageId                     -> (_ => controllers.routes.TaskListController.show()),
+    ConnectionToPropertyPageId                     -> (_ => controllers.routes.TaskListController.show),
     VacantPropertiesPageId                         -> isPropertyVacant,
-    PropertyBecomeVacantPageId                     -> (_ =>
-      controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
-    ),
+    PropertyBecomeVacantPageId                     ->
+      (_ =>
+        controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
+      ),
     LettingIncomePageId                            -> isAnyRentReceived,
-    TradingNameOperatingFromPropertyPageId         -> (_ =>
-      controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()
-    ),
+    TradingNameOperatingFromPropertyPageId         ->
+      (_ =>
+        controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()
+      ),
     TradingNameOwnThePropertyPageId                -> tradingNameOwnTheProperty,
     TradingNamePayingRentPageId                    -> (_ => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()),
-    AreYouThirdPartyPageId                         -> (_ =>
-      controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
-    ),
-    ProvideYourContactDetailsPageId                -> (_ =>
-      controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show()
-    ),
+    AreYouThirdPartyPageId                         ->
+      (_ =>
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
+      ),
+    ProvideYourContactDetailsPageId                ->
+      (_ =>
+        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show()
+      ),
     LettingPartOfPropertyDetailsPageId             -> lettingPartOfPropertyRentDetailsConditionsRouting,
     LettingPartOfPropertyRentDetailsPageId         -> lettingsPartOfPropertyRentDetailsConditionsRouting,
     LettingPartOfPropertyItemsIncludedInRentPageId -> lettingPartOfPropertyItemsIncludedInRentConditionsRouting,
     AddAnotherLettingPartOfPropertyPageId          -> addAnotherLettingsConditionsRouting,
     MaxOfLettingsReachedId                         -> (_ => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()),
-    CheckYourAnswersConnectionToPropertyId         -> (_ => controllers.routes.TaskListController.show())
+    CheckYourAnswersConnectionToPropertyId         -> (_ => controllers.routes.TaskListController.show)
   )
 }

@@ -47,14 +47,19 @@ class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
 
   private def createView6016 = () =>
     whatYouWillNeedView(form, Summary("99996016001"))(using sessionRequest6016, messages)
+
   private def createView6020 = () =>
     whatYouWillNeedView(form, Summary("99996020001"))(using sessionRequest6020, messages)
+
   private def createView6030 = () =>
     whatYouWillNeedView(form, Summary("99996030001"))(using sessionRequest6030, messages)
+
   private def createView6045 = () =>
     whatYouWillNeedView(form, Summary("99996045001"))(using sessionRequest6045, messages)
+
   private def createView6048 = () =>
     whatYouWillNeedView(form, Summary("99996048001"))(using sessionRequest6048, messages)
+
   private def createView6076 = () =>
     whatYouWillNeedView(form, Summary("99996076001"))(using sessionRequest6076, messages)
 
@@ -70,7 +75,7 @@ class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url
+      backlinkUrl shouldBe controllers.routes.TaskListController.show.url
     }
 
     "contain whatYouWillNeed.header1" in {

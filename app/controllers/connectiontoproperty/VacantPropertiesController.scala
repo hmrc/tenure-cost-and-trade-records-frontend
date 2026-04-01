@@ -42,11 +42,11 @@ class VacantPropertiesController @Inject() (
   theView: VacantPropertiesView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with ReadOnlySupport
-    with Logging:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with ReadOnlySupport
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("VacantProperties")
@@ -102,7 +102,7 @@ class VacantPropertiesController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
-      case "TL"  => controllers.routes.TaskListController.show().url + "#vacant-properties"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#vacant-properties"
       case _     =>
         request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
           case Some(AddressConnectionTypeYesChangeAddress) => routes.EditAddressController.show().url

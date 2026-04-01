@@ -170,8 +170,9 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(WhatRentBasedOnPageId, session6016)
         .apply(
           session6016
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController
+          .show()
     }
 
     "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
@@ -189,8 +190,9 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
         .nextPage(HowIsCurrentRentFixedId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+          .show()
     }
 
     "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {

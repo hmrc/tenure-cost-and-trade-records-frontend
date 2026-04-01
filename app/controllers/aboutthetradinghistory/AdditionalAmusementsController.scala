@@ -40,9 +40,9 @@ class AdditionalAmusementsController @Inject() (
   view: additionalAmusements,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AdditionalAmusements")
@@ -68,10 +68,9 @@ class AdditionalAmusementsController @Inject() (
         additionalAmusementsForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
-          val updatedSections =
-            (success zip turnoverSections6045).map { case (data, previousSection) =>
-              previousSection.copy(additionalAmusements = data)
-            }
+          val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
+            previousSection.copy(additionalAmusements = data)
+          }
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
@@ -97,7 +96,8 @@ class AdditionalAmusementsController @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6045)
       .filter(_.nonEmpty)

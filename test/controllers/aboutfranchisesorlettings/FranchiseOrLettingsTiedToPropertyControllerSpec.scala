@@ -31,9 +31,10 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
 
   import TestData._
   val mockAudit: Audit = mock[Audit]
+
   def franchiseOrLettingsTiedToPropertyController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
-  )                    =
+  ) =
     new FranchiseOrLettingsTiedToPropertyController(
       stubMessagesControllerComponents(),
       mockAudit,
@@ -63,7 +64,7 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
     "return task list back link if no query params in the url" in {
       val result = franchiseOrLettingsTiedToPropertyController().show()(fakeRequest)
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url + "#franchise-or-lettings-tied-to-property"
+        controllers.routes.TaskListController.show.url + "#franchise-or-lettings-tied-to-property"
       )
     }
   }

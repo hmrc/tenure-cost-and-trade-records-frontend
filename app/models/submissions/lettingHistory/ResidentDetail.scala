@@ -22,6 +22,7 @@ case class ResidentDetail(
   name: String,
   address: String
 ):
+
   override def equals(that: Any): Boolean = that match {
     case ResidentDetail(name, address) => /* this.name.trim.equalsIgnoreCase(name.trim) && */
       this.address.trim.equalsIgnoreCase(address.trim)

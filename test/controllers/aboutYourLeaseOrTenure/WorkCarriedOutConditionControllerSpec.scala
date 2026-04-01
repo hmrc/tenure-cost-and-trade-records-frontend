@@ -77,7 +77,7 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url
+        controllers.routes.TaskListController.show.url
       )
     }
   }

@@ -40,9 +40,9 @@ class CompletedCommercialLettingsWelshController @Inject() (
   view: completedCommercialLettingsWelsh,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CompletedCommercialLettingsWelsh")
@@ -77,10 +77,9 @@ class CompletedCommercialLettingsWelshController @Inject() (
               )
             ),
           success => {
-            val updatedLettingData =
-              (success zip financialYearEndDates(data)).map { case (completedLettings, finYearEnd) =>
-                completedLettings.copy(financialYearEnd = finYearEnd)
-              }
+            val updatedLettingData = (success zip financialYearEndDates(data)).map { case (completedLettings, finYearEnd) =>
+              completedLettings.copy(financialYearEnd = finYearEnd)
+            }
             val updatedData        = updateAboutYouAndThePropertyPartTwo { partTwo =>
               partTwo.copy(
                 completedCommercialLettingsWelsh = Option(updatedLettingData)

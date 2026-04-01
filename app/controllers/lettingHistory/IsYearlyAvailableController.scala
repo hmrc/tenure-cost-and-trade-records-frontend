@@ -41,9 +41,9 @@ class IsYearlyAvailableController @Inject (
   theView: IsYearlyAvailableView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
     val freshForm  = theForm
@@ -71,12 +71,13 @@ class IsYearlyAvailableController @Inject (
   }
 
   private def keyFragment(using request: SessionRequest[AnyContent]): String =
-    val fragment = for
-      intention  <- intendedLettings(request.sessionData)
-      hasStopped <- intention.hasStopped
-    yield
-      if (hasStopped) "hasStoppedLetting"
-      else "eitherMeetsCriteriaOrHasNotStopped"
+    val fragment =
+      for
+        intention  <- intendedLettings(request.sessionData)
+        hasStopped <- intention.hasStopped
+      yield
+        if (hasStopped) "hasStoppedLetting"
+        else "eitherMeetsCriteriaOrHasNotStopped"
     fragment.getOrElse("eitherMeetsCriteriaOrHasNotStopped")
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =

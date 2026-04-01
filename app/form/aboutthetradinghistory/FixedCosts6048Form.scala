@@ -39,7 +39,8 @@ object FixedCosts6048Form {
 
   def fixedCosts6048Form(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[FixedCosts6048]] =
+  )(using messages: Messages
+  ): Form[Seq[FixedCosts6048]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }

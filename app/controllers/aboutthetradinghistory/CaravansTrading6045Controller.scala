@@ -44,7 +44,7 @@ abstract class CaravansTrading6045Controller(
   mcc: MessagesControllerComponents,
   audit: Audit
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport {
+  with I18nSupport {
 
   val pageId: Identifier              = tradingPage.pageId
   val unitType: CaravanUnitType       = tradingPage.unitType
@@ -112,7 +112,8 @@ abstract class CaravansTrading6045Controller(
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]
-  )(using request: SessionRequest[AnyContent]): Future[Result] =
+  )(using request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6045)
       .filter(_.nonEmpty)

@@ -212,6 +212,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     given Session = session // having lettingHistory = None
 
   trait SessionWithSomeLettingHistory(completedLettings: List[OccupierDetail] = Nil):
+
     given Session = session.copy(
       lettingHistory = Some(
         LettingHistory(

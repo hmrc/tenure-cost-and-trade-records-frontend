@@ -130,7 +130,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
-        page.backLink        shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
+        page.backLink        shouldBe controllers.routes.TaskListController.show.withFragment("letting-history").toString
         page.error("answer") shouldBe "lettingHistory.hasCompletedLettings.required"
       }
     }
@@ -141,7 +141,8 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
     completedLettings: List[OccupierDetail] = Nil,
     mayHaveMoreCompletedLettings: Option[Boolean] = None
   ) extends MockRepositoryFixture
-      with SessionCapturingFixture:
+    with SessionCapturingFixture:
+
     val controller = new HasCompletedLettingsController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],

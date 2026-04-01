@@ -42,7 +42,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
   val aboutTheProperty: Option[AboutYouAndTheProperty]               = Some(AboutYouAndTheProperty(None))
   val aboutThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(AboutYouAndThePropertyPartTwo(None))
 
-  val removeConnection: Option[RemoveConnectionDetails]       = Some(
+  val removeConnection: Option[RemoveConnectionDetails] = Some(
     RemoveConnectionDetails(
       Some(
         RemoveConnectionsDetails(
@@ -53,13 +53,16 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
       )
     )
   )
-  val additionalInformation: Option[AdditionalInformation]    = Some(
+
+  val additionalInformation: Option[AdditionalInformation] = Some(
     AdditionalInformation(Some("test"))
   )
+
   val stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(
     StillConnectedDetails(Some(AddressConnectionTypeYes))
   )
-  val sessionAdditionalInformation: Session                   =
+
+  val sessionAdditionalInformation: Session =
     Session(
       "99996010004",
       FOR6010,
@@ -87,8 +90,9 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
         .nextPage(PastConnectionId, sessionAdditionalInformation)
         .apply(
           sessionAdditionalInformation
-        ) shouldBe controllers.notconnected.routes.RemoveConnectionController
-        .show()
+        ) shouldBe
+        controllers.notconnected.routes.RemoveConnectionController
+          .show()
     }
 
     "return a function that goes to CYA page when remove connection has been completed" in {
@@ -96,8 +100,9 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
         .nextPage(RemoveConnectionId, sessionAdditionalInformation)
         .apply(
           sessionAdditionalInformation
-        ) shouldBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController
-        .show()
+        ) shouldBe
+        controllers.notconnected.routes.CheckYourAnswersNotConnectedController
+          .show()
     }
 
     "return the CYA url" in {

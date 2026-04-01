@@ -35,20 +35,22 @@ import scala.concurrent.duration.*
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class SessionRepository @Inject() (mongo: MongoComponent)(implicit
+class SessionRepository @Inject() (
+  mongo: MongoComponent
+)(implicit
   executionContext: ExecutionContext,
   crypto: MongoCrypto
 ) extends PlayMongoRepository[SensitiveSessionData](
-      collectionName = "sessions",
-      mongoComponent = mongo,
-      domainFormat = SensitiveSessionData.format,
-      indexes =
-        Seq(IndexModel(Indexes.ascending("createdAt"), IndexOptions().name("sessionTTL").expireAfter(2L, HOURS))),
-      extraCodecs = Seq(
-        Codecs.playFormatCodec(MongoJavatimeFormats.instantFormat)
-      )
+    collectionName = "sessions",
+    mongoComponent = mongo,
+    domainFormat = SensitiveSessionData.format,
+    indexes =
+      Seq(IndexModel(Indexes.ascending("createdAt"), IndexOptions().name("sessionTTL").expireAfter(2L, HOURS))),
+    extraCodecs = Seq(
+      Codecs.playFormatCodec(MongoJavatimeFormats.instantFormat)
     )
-    with SessionRepo {
+  )
+  with SessionRepo {
 
   def start(data: Session)(implicit hc: HeaderCarrier): Future[Unit] =
     saveOrUpdate(data)
@@ -122,8 +124,8 @@ object SessionData {
   val format: OFormat[SessionData]            = Json.format
 }
 
-case class SensitiveSessionData(_id: String, data: SensitiveSession, createdAt: Instant = Instant.now)
-    extends Sensitive[SessionData] {
+case class SensitiveSessionData(_id: String, data: SensitiveSession, createdAt: Instant = Instant.now) extends Sensitive[SessionData] {
+
   override def decryptedValue: SessionData = SessionData(
     _id,
     data.decryptedValue,

@@ -18,7 +18,7 @@ package form.aboutthetradinghistory
 
 import form.ConditionalConstraintMappings.mandatoryIfOneOfValuesIs
 import form.MappingSupport.*
-import form.Scala3EnumFieldMapping.enumMappingSeq
+import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingSeq
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices
 import models.submissions.aboutthetradinghistory.CaravansAnnualPitchFee
 import play.api.data.Form

@@ -44,10 +44,10 @@ class RentOpenMarketValueController @Inject() (
   rentOpenMarketValueView: rentOpenMarketValue,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentOpenMarketValue")
@@ -85,7 +85,7 @@ class RentOpenMarketValueController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#rent-open-market-value"
+      case "TL" => controllers.routes.TaskListController.show.url + "#rent-open-market-value"
       case _    =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match {
           case Some(AnswerYes) =>

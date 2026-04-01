@@ -32,9 +32,10 @@ class CalculatingTheRentControllerSpec extends TestBaseSpec {
     mock[AboutFranchisesOrLettingsNavigator]
 
   val mockAudit: Audit = mock[Audit]
+
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings60156016)
-  )                    =
+  ) =
     new CalculatingTheRentForController(
       stubMessagesControllerComponents(),
       mockAudit,

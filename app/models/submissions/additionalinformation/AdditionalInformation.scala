@@ -32,7 +32,8 @@ object AdditionalInformation:
 
   def updateAdditionalInformation(
     copy: AdditionalInformation => AdditionalInformation
-  )(implicit sessionRequest: SessionRequest[?]): Session =
+  )(implicit sessionRequest: SessionRequest[?]
+  ): Session =
 
     val currentAdditionalInformation = sessionRequest.sessionData.additionalInformation
 

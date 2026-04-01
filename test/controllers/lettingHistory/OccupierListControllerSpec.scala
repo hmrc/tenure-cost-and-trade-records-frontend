@@ -90,18 +90,19 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
           page.error("genericRemoveConfirmation") shouldBe "error.confirmableAction.required"
           verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
-        "be handling confirmation POST /remove?index=0 by actually removing the occupier and then replying redirect to the 'Occupier List' page" in new ControllerFixture(
-          oneOccupier
-        ) {
-          // Confirm the removal of the resident at index 0 (who is "Mr. One")
-          val result = controller.performRemove(index = 0)(
-            fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
-          )
-          status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe routes.OccupierListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          completedLettings(data)        shouldBe empty // instead of having size 1
-        }
+        "be handling confirmation POST /remove?index=0 by actually removing the occupier and then replying redirect to the 'Occupier List' page" in
+          new ControllerFixture(
+            oneOccupier
+          ) {
+            // Confirm the removal of the resident at index 0 (who is "Mr. One")
+            val result = controller.performRemove(index = 0)(
+              fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
+            )
+            status(result) shouldBe SEE_OTHER
+            redirectLocation(result).value shouldBe routes.OccupierListController.show.url
+            verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
+            completedLettings(data)        shouldBe empty // instead of having size 1
+          }
         "be handling denying POST /remove?index=0 by replying redirect to the 'Occupier List' page" in new ControllerFixture(
           oneOccupier
         ) {
@@ -132,9 +133,10 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         ) {
           val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
           status(result)                 shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe routes.MaxNumberReachedController
-            .show(kind = "completedLettings")
-            .url
+          redirectLocation(result).value shouldBe
+            routes.MaxNumberReachedController
+              .show(kind = "completedLettings")
+              .url
         }
       }
     }
@@ -157,9 +159,8 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
     }
   }
 
-  trait ControllerFixture(completedLettings: List[OccupierDetail] = Nil)
-      extends MockRepositoryFixture
-      with SessionCapturingFixture:
+  trait ControllerFixture(completedLettings: List[OccupierDetail] = Nil) extends MockRepositoryFixture with SessionCapturingFixture:
+
     val controller = new OccupierListController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],

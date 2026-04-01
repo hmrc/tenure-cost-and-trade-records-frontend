@@ -14,21 +14,11 @@
  * limitations under the License.
  */
 
-package config
+import scala.concurrent.Future
+import scala.language.implicitConversions
 
-import com.google.inject.AbstractModule
-import com.google.inject.name.Names
-import repositories._
-
-import java.time.Clock
-
-class GuiceModule extends AbstractModule {
-
-  override def configure(): Unit = {
-    bind(classOf[SessionRepo])
-      .annotatedWith(Names.named("session"))
-      .to(classOf[SessionRepository])
-    bind(classOf[Clock]).toInstance(Clock.systemUTC())
-  }
-
-}
+package object test:
+  implicit def toFut[A](a: A): Future[A]                     = Future.successful(a)
+  implicit def toOpt[A](a: A): Option[A]                     = Some(a)
+  implicit def toBigDecimal(num: Int): BigDecimal            = BigDecimal(num)
+  implicit def toBigDecimalOpt(num: Int): Option[BigDecimal] = toBigDecimal(num)

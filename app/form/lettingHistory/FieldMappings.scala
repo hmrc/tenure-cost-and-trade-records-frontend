@@ -31,7 +31,11 @@ object FieldMappings:
   def nonEmptyText(errorMessage: String): Mapping[String] =
     text.verifying(nonEmpty(errorMessage = errorMessage))
 
-  def constrainedLocalDate(prefix: String, field: String, period: LocalPeriod)(using
+  def constrainedLocalDate(
+    prefix: String,
+    field: String,
+    period: LocalPeriod
+  )(using
     messages: Messages,
     dateUtil: DateUtilLocalised
   ): Mapping[LocalDate] =

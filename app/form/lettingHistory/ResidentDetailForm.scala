@@ -23,6 +23,7 @@ import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ResidentDetailForm:
+
   val theForm = Form(
     mapping(
       "name"    -> nonEmptyText(errorMessage = "lettingHistory.residentDetail.name.required"),

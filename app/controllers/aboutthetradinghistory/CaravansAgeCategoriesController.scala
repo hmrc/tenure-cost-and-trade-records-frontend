@@ -47,8 +47,8 @@ abstract class CaravansAgeCategoriesController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit
 ) extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+  with I18nSupport
+  with Logging {
 
   implicit val ec: ExecutionContext = mcc.executionContext
 

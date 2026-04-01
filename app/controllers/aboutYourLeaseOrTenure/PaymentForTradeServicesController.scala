@@ -43,10 +43,10 @@ class PaymentForTradeServicesController @Inject() (
   paymentView: paymentForTradeServices,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PaymentForTradeServices")
@@ -88,7 +88,7 @@ class PaymentForTradeServicesController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#payment-for-trade-services"
+      case "TL" => controllers.routes.TaskListController.show.url + "#payment-for-trade-services"
       case _    =>
         answers.aboutLeaseOrAgreementPartThree.flatMap { aboutYourLeaseOrAgreement =>
           aboutYourLeaseOrAgreement.tradeServices.lastOption.map(_ => aboutYourLeaseOrAgreement.tradeServices.size - 1)

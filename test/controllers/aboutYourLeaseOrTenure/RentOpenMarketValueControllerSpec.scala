@@ -90,7 +90,7 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
       val result  = rentOpenMarketValueController().show(request)
       val html    = contentAsString(result)
 
-      html should include(controllers.routes.TaskListController.show().url + "#rent-open-market-value")
+      html should include(controllers.routes.TaskListController.show.url + "#rent-open-market-value")
     }
   }
 

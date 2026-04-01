@@ -32,9 +32,9 @@ class DownloadPDFReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   connector: BackendConnector,
   referenceNumberView: ReferenceNumberView
-)(using ec: ExecutionContext)
-    extends FrontendController(mcc)
-    with Logging:
+)(using ec: ExecutionContext
+) extends FrontendController(mcc)
+  with Logging:
 
   def show: Action[AnyContent] = Action { implicit request =>
     Ok(referenceNumberView(theForm, call = routes.DownloadPDFReferenceNumberController.submit()))

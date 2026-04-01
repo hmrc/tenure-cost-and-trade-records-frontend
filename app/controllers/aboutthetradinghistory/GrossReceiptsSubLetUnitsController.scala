@@ -40,9 +40,9 @@ class GrossReceiptsSubLetUnitsController @Inject() (
   view: grossReceiptsSubLetUnits6045,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("GrossReceiptsSubLetUnits")
@@ -69,10 +69,9 @@ class GrossReceiptsSubLetUnitsController @Inject() (
         grossReceiptsSubLetUnitsForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
-          val updatedSections =
-            (success zip turnoverSections6045).map { case (data, previousSection) =>
-              previousSection.copy(grossReceiptsSubLetUnits = Some(data))
-            }
+          val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
+            previousSection.copy(grossReceiptsSubLetUnits = Some(data))
+          }
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
             _.copy(
@@ -97,7 +96,8 @@ class GrossReceiptsSubLetUnitsController @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6045)
       .filter(_.nonEmpty)

@@ -28,11 +28,12 @@ import utils.TestBaseSpec
 class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def isGivenRentFreePeriodController(
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
       prefilledAboutLeaseOrAgreementPartFour
     )
-  )                    = new IsGivenRentFreePeriodController(
+  ) = new IsGivenRentFreePeriodController(
     isGivenRentFreePeriodView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

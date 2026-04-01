@@ -44,10 +44,10 @@ class PayACapitalSumController @Inject() (
   payACapitalSumView: payACapitalSum,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PayACapitalSum")
@@ -91,7 +91,7 @@ class PayACapitalSumController @Inject() (
 
   private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url + "#pay-a-capital-sum"
+      case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum"
       case _    =>
         answers.forType match {
           case FOR6020           =>
@@ -101,7 +101,7 @@ class PayACapitalSumController @Inject() (
               case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url
               case _               =>
                 logger.warn("Back link for pay capital sum page reached with unknown benefits given value")
-                controllers.routes.TaskListController.show().url
+                controllers.routes.TaskListController.show.url
             }
           case FOR6045 | FOR6046 =>
             if answers.aboutLeaseOrAgreementPartFour.flatMap(_.isGivenRentFreePeriod).contains(AnswerYes) then

@@ -23,6 +23,7 @@ import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.nonEmpty
 
 object RemoveConnectionForm {
+
   val removeConnectionForm: Form[RemoveConnectionsDetails] = Form(
     mapping(
       "removeConnectionFullName"       -> default(text, "").verifying(

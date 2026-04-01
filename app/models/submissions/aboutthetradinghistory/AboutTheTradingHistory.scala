@@ -58,7 +58,8 @@ object AboutTheTradingHistory {
 
   def updateAboutTheTradingHistory(
     copy: AboutTheTradingHistory => AboutTheTradingHistory
-  )(implicit sessionRequest: SessionRequest[?]): Session = {
+  )(implicit sessionRequest: SessionRequest[?]
+  ): Session = {
 
     val currentAboutTheTradingHistory = sessionRequest.sessionData.aboutTheTradingHistory
 
@@ -76,6 +77,7 @@ object AboutTheTradingHistory {
       TurnoverSection
 
   class WrappedTurnoverSection(wrapped: TurnoverSectionUnion) {
+
     def financialYearEnd: LocalDate = wrapped match
       case TurnoverSection6020(financialYearEnd, _, _, _, _, _, _)                               => financialYearEnd
       case TurnoverSection6030(financialYearEnd, _, _, _)                                        => financialYearEnd

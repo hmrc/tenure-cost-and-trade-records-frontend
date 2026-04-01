@@ -29,13 +29,14 @@ import org.jsoup.Jsoup
 class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def currentRentFirstPaidController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  )                    = new CurrentRentFirstPaidController(
+  ) = new CurrentRentFirstPaidController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

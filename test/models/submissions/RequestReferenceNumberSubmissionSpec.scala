@@ -20,14 +20,14 @@ import models.submissions.common.{Address, ContactDetails}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 import play.api.libs.json.Json
-import utils.FakeObjects
+import test.TestObjects
 
 import java.time.Instant
 
 /**
   * @author Yuriy Tumakha
   */
-class RequestReferenceNumberSubmissionSpec extends AnyFlatSpec with should.Matchers with FakeObjects:
+class RequestReferenceNumberSubmissionSpec extends AnyFlatSpec with should.Matchers with TestObjects:
 
   "RequestReferenceNumberSubmission model" should "be serialized/deserialized from json" in {
 

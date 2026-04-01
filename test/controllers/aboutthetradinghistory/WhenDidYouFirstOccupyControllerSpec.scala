@@ -36,10 +36,11 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
+
   def aboutYourTradingHistoryController(
     forType: ForType = FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  )                    = new WhenDidYouFirstOccupyController(
+  ) = new WhenDidYouFirstOccupyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

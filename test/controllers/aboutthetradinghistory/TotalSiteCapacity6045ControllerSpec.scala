@@ -58,7 +58,7 @@ class TotalSiteCapacity6045ControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = totalSiteCapacity6045Controller().show()(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {

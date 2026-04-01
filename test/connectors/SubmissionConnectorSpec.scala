@@ -16,76 +16,60 @@
 
 package connectors
 
+import models.submissions.{ConnectedSubmission, NotConnectedSubmission}
 import org.scalatest.RecoverMethods.recoverToExceptionIf
-import play.api.http.Status.{BAD_REQUEST, CREATED}
-import uk.gov.hmrc.http.client.HttpClientV2
+import play.api.test.Helpers.*
+import test.TCTRAppSpec
 import uk.gov.hmrc.http.{BadRequestException, HeaderCarrier}
-import utils.TestBaseSpec
 
 import java.net.URL
 
-class SubmissionConnectorSpec extends TestBaseSpec {
+class SubmissionConnectorSpec extends TCTRAppSpec:
 
-  val refNumber = "12345678"
+  private val refNumber = "12345678"
 
-  private def httpPutMock(responseStatus: Int): HttpClientV2 =
-    val httpClientV2Mock = mock[HttpClientV2]
-    when(
-      httpClientV2Mock.put(any[URL])(using any[HeaderCarrier])
-    ).thenReturn(RequestBuilderStub(Right(responseStatus)))
-    httpClientV2Mock
+  "SubmissionConnector on submitNotConnected" should {
+    "make a PUT request and handle success response" in {
+      val httpMock  = httpClientMock(PUT, responseBody = notConnectedSubmission, responseStatus = CREATED)
+      val connector = HodSubmissionConnector(servicesConfig, appConfig, httpMock)
 
-  "SubmissionConnector" when {
+      val result = connector.submitNotConnected(refNumber, notConnectedSubmission).futureValue
 
-    "submitNotConnected is called" should {
+      result.status                          shouldBe CREATED
+      result.json.as[NotConnectedSubmission] shouldBe notConnectedSubmission
 
-      "make a PUT request and handle success response" in {
-        val httpMock  = httpPutMock(CREATED)
-        val connector = new HodSubmissionConnector(servicesConfig, frontendAppConfig, httpMock)
-
-        val result = connector.submitNotConnected(refNumber, notConnectedSubmission).futureValue
-
-        result.status shouldBe CREATED
-        result.body     should include(""""previouslyConnected":false""")
-
-        verify(httpMock)
-          .put(any[URL])(using any[HeaderCarrier])
-      }
-
-      "handle BadRequestException response" in {
-        val httpMock  = httpPutMock(BAD_REQUEST)
-        val connector = new HodSubmissionConnector(servicesConfig, frontendAppConfig, httpMock)
-
-        val exception = recoverToExceptionIf[BadRequestException] {
-          connector.submitNotConnected(refNumber, notConnectedSubmission)
-        }.futureValue
-
-        exception.getMessage should include(""""previouslyConnected":false""")
-
-        verify(httpMock)
-          .put(any[URL])(using any[HeaderCarrier])
-      }
+      verify(httpMock)
+        .put(any[URL])(using any[HeaderCarrier])
     }
 
-    "submitConnected is called" should {
+    "handle BadRequestException response" in {
+      val httpMock  = httpClientMock(PUT, responseBody = "Bad Request", responseStatus = BAD_REQUEST)
+      val connector = HodSubmissionConnector(servicesConfig, appConfig, httpMock)
 
-      "make a PUT request and handle success response" in {
-        val httpMock  = httpPutMock(CREATED)
-        val connector = new HodSubmissionConnector(servicesConfig, frontendAppConfig, httpMock)
+      val exception = recoverToExceptionIf[BadRequestException] {
+        connector.submitNotConnected(refNumber, notConnectedSubmission)
+      }.futureValue
 
-        val result = connector.submitConnected(refNumber, connectedSubmission).futureValue
+      println(exception.getMessage)
 
-        result.status shouldBe CREATED
-        result.body     should include(
-          """"stillConnectedDetails":{"addressConnectionType":"yes","connectionToProperty":"occupierTrustee","editAddress":{"buildingNameNumber":"Street 1","street1":"Street 2","town":"Town","county":"County","postcode":"BN12 4AX"},"isPropertyVacant":"yes","tradingNameOperatingFromProperty":"ABC LTD","""
-        )
+      exception.getMessage shouldBe """"Bad Request""""
 
-        verify(httpMock)
-          .put(any[URL])(using any[HeaderCarrier])
-      }
-
+      verify(httpMock)
+        .put(any[URL])(using any[HeaderCarrier])
     }
-
   }
 
-}
+  "SubmissionConnector on submitConnected" should {
+    "make a PUT request and handle success response" in {
+      val httpMock  = httpClientMock(PUT, responseBody = connectedSubmission, responseStatus = CREATED)
+      val connector = HodSubmissionConnector(servicesConfig, appConfig, httpMock)
+
+      val result = connector.submitConnected(refNumber, connectedSubmission).futureValue
+
+      result.status                       shouldBe CREATED
+      result.json.as[ConnectedSubmission] shouldBe connectedSubmission
+
+      verify(httpMock)
+        .put(any[URL])(using any[HeaderCarrier])
+    }
+  }

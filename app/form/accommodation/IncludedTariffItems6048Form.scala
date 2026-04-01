@@ -17,7 +17,7 @@
 package form.accommodation
 
 import form.MappingSupport.{nonEmptySeq, noneCantBeSelectedWithOtherSeq}
-import form.Scala3EnumFieldMapping.enumMappingSeq
+import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingSeq
 import models.submissions.accommodation.AccommodationTariffItem
 import play.api.data.Form
 import play.api.data.Forms.*

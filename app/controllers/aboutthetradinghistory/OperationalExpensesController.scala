@@ -45,9 +45,9 @@ class OperationalExpensesController @Inject() (
   operationalExpensesView: operationalExpenses6076,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OperationalExpenses")
@@ -76,10 +76,9 @@ class OperationalExpensesController @Inject() (
         operationalExpensesForm(years),
         formWithErrors => BadRequest(operationalExpensesView(formWithErrors, getBackLink)),
         success => {
-          val updatedSections =
-            (success._1 zip turnoverSections6076).map { case (operationalExpenses, previousSection) =>
-              previousSection.copy(operationalExpenses = Some(operationalExpenses))
-            }
+          val updatedSections = (success._1 zip turnoverSections6076).map { case (operationalExpenses, previousSection) =>
+            previousSection.copy(operationalExpenses = Some(operationalExpenses))
+          }
           val details         = success._2
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
@@ -104,7 +103,8 @@ class OperationalExpensesController @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6076] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)

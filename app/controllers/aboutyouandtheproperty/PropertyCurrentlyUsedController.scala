@@ -41,10 +41,10 @@ class PropertyCurrentlyUsedController @Inject() (
   view: propertyCurrentlyUsed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PropertyCurrentlyUsed")
@@ -84,7 +84,7 @@ class PropertyCurrentlyUsedController @Inject() (
 
   private def backLink(implicit request: Request[AnyContent]): String =
     navigator.from match {
-      case "TL"  => controllers.routes.TaskListController.show().url
+      case "TL"  => controllers.routes.TaskListController.show.url
       case "CYA" => routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }

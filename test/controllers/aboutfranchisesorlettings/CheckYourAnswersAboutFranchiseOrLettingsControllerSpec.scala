@@ -156,6 +156,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val checkYourAnswersAboutFranchiseOrLettings: String =
         "checkYourAnswersAboutFranchiseOrLettings"
     }

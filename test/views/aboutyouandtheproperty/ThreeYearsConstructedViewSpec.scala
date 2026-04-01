@@ -56,14 +56,15 @@ class ThreeYearsConstructedViewSpec extends QuestionViewBehaviours[AnswersYesNo]
     "has a link marked with back.link.label leading to Task List page if page assessed from Task List" in {
       val doc         = asDocument(createViewFromTL())
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url + "#site-construction-details"
+      backlinkUrl shouldBe controllers.routes.TaskListController.show.url + "#site-construction-details"
     }
     "has a link marked with back.link.label leading to CYA page if page accessed from Check your answer" in {
       val doc         = asDocument(createViewFromCYA())
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
-        .show()
-        .url
+      backlinkUrl shouldBe
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController
+          .show()
+          .url
     }
 
     "Section heading is visible" in {

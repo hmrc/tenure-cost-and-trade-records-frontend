@@ -32,7 +32,8 @@ object GrossReceiptsSubLetUnitsForm {
 
   def grossReceiptsSubLetUnitsForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[GrossReceiptsSubLetUnits]] =
+  )(using messages: Messages
+  ): Form[Seq[GrossReceiptsSubLetUnits]] =
     Form {
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     }

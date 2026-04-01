@@ -40,9 +40,9 @@ class CostOfSales6076IntermittentController @Inject() (
   view: costOfSales6076Intermittent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CostOfSales6076Intermittent")
@@ -69,10 +69,9 @@ class CostOfSales6076IntermittentController @Inject() (
         costOfSales6076IntermittentForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
         success => {
-          val updatedSections =
-            (success._1 zip turnoverSections6076).map { case (costOfSales6076, turnoverSection) =>
-              turnoverSection.copy(costOfSales6076IntermittentSum = Some(costOfSales6076))
-            }
+          val updatedSections = (success._1 zip turnoverSections6076).map { case (costOfSales6076, turnoverSection) =>
+            turnoverSection.copy(costOfSales6076IntermittentSum = Some(costOfSales6076))
+          }
           val details         = success._2
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
@@ -96,7 +95,8 @@ class CostOfSales6076IntermittentController @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6076] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)

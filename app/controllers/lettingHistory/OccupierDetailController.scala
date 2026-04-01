@@ -43,11 +43,11 @@ class OccupierDetailController @Inject (
   sessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with AddressLookupSupport(addressLookupConnector)
-    with RentalPeriodSupport
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with AddressLookupSupport(addressLookupConnector)
+  with RentalPeriodSupport
+  with I18nSupport:
 
   def show(maybeIndex: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).apply {
     implicit request =>
@@ -76,37 +76,36 @@ class OccupierDetailController @Inject (
         )
   }
 
-  def submit(maybeIndex: Option[Int] = None): Action[AnyContent] =
-    (Action andThen sessionRefiner).async { implicit request =>
-      continueOrSaveAsDraft[OccupierDetail](
-        theForm,
-        theFormWithErrors =>
-          successful(
-            BadRequest(
-              theView(
-                theFormWithErrors,
-                effectiveRentalPeriod,
-                backLinkUrl,
-                maybeIndex
-              )
+  def submit(maybeIndex: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[OccupierDetail](
+      theForm,
+      theFormWithErrors =>
+        successful(
+          BadRequest(
+            theView(
+              theFormWithErrors,
+              effectiveRentalPeriod,
+              backLinkUrl,
+              maybeIndex
             )
-          ),
-        formData =>
-          given Session                      = request.sessionData
-          val (updatedIndex, updatedSession) = byAddingOrUpdatingOccupier(formData, maybeIndex)
-          for
-            _              <- repository.saveOrUpdateSession(updatedSession)
-            redirectResult <- redirectToAddressLookupFrontend(
-                                config = AddressLookupConfig(
-                                  lookupPageHeadingKey = "lettingHistory.occupierDetail.address.lookupPageHeading",
-                                  selectPageHeadingKey = "lettingHistory.occupierDetail.address.selectPageHeading",
-                                  confirmPageLabelKey = "lettingHistory.occupierDetail.address.confirmPageHeading",
-                                  offRampCall = routes.OccupierDetailController.addressLookupCallback(updatedIndex)
-                                )
+          )
+        ),
+      formData =>
+        given Session                      = request.sessionData
+        val (updatedIndex, updatedSession) = byAddingOrUpdatingOccupier(formData, maybeIndex)
+        for
+          _              <- repository.saveOrUpdateSession(updatedSession)
+          redirectResult <- redirectToAddressLookupFrontend(
+                              config = AddressLookupConfig(
+                                lookupPageHeadingKey = "lettingHistory.occupierDetail.address.lookupPageHeading",
+                                selectPageHeadingKey = "lettingHistory.occupierDetail.address.selectPageHeading",
+                                confirmPageLabelKey = "lettingHistory.occupierDetail.address.confirmPageHeading",
+                                offRampCall = routes.OccupierDetailController.addressLookupCallback(updatedIndex)
                               )
-          yield redirectResult
-      )
-    }
+                            )
+        yield redirectResult
+    )
+  }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = OccupierDetailPageId)
@@ -123,6 +122,7 @@ class OccupierDetailController @Inject (
   }
 
   extension (confirmed: AddressLookupConfirmedAddress)
+
     def asOccupierAddress = OccupierAddress(
       confirmed.buildingNameNumber,
       confirmed.street1,

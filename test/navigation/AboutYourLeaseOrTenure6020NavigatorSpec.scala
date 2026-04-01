@@ -73,15 +73,17 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     "return a function that goes to throughput page when disregarded addition details has been completed " in {
       navigator
         .nextPage(CurrentAnnualRentPageId, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController
-        .show()
+        .apply(session6020) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController
+          .show()
     }
 
     "return a function that goes to lease surrendered early page when disregarded addition details has been completed " in {
       navigator
         .nextPage(TenantsAdditionsDisregardedDetailsId, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController
-        .show()
+        .apply(session6020) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController
+          .show()
     }
 
     "return a function that goes to benefits given page when lease surrendered has been completed " in {
@@ -196,22 +198,25 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     "return a function that goes to other factors affecting the rent page when pay a capital sum description has been completed " in {
       navigator
         .nextPage(CapitalSumDescriptionId, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController
-        .show()
+        .apply(session6020) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController
+          .show()
     }
 
     "return a function that goes to lease or agreement page when about the landlord has been completed " in {
       navigator
         .nextPage(AboutTheLandlordPageId, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController
-        .show()
+        .apply(session6020) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController
+          .show()
     }
 
     "return a function that goes to when the current rent was agreed  when does the rent payable include has been completed " in {
       navigator
         .nextPage(IncludedInRent6020Id, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController
-        .show()
+        .apply(session6020) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController
+          .show()
     }
 
     "return a function that goes to what is the rent based on when the current rent was agreed has been completed with No " in {
@@ -239,8 +244,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       )
       navigator
         .nextPage(IsVATPayableForWholePropertyId, session)
-        .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
-        .show()
+        .apply(session) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
+          .show()
     }
 
     "return a function that goes to IsVATPayableForWholePropertyController when 'vat' is included in includedInYourRent" in {
@@ -290,8 +296,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
 
       navigator
         .nextPage(RentOpenMarketPageId, session)
-        .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
-        .show()
+        .apply(session) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+          .show()
     }
 
     "return a function that goes to MethodToFixCurrentRentController when HowIsCurrentRentFixed has been completed " in {
@@ -308,8 +315,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
 
       navigator
         .nextPage(HowIsCurrentRentFixedId, session)
-        .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
-        .show()
+        .apply(session) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+          .show()
     }
     "return a function that goes to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
 
@@ -326,8 +334,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
+          .show()
     }
 
     "return a function that goes to rented equipment details page when rent includes fixtures and fitting answer is Yes" in {
@@ -343,8 +352,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(RentFixtureAndFittingsPageId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController
+          .show()
     }
 
     "return a function that goes to work carried out condition page when property updates answer is no" in {
@@ -360,8 +370,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(PropertyUpdatesId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController
+          .show()
     }
 
     "return a function that goes to fixture and fittings details page when fixture and fittings with yes has been completed" in {
@@ -369,8 +380,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(RentFixtureAndFittingsPageId, session6020)
         .apply(
           session6020
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller
+          .show()
     }
 
     "return a function that goes to rent vary on quantity of beer page when rent by gross or net turnover with no has been completed" in {
@@ -378,8 +390,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(RentPayableVaryAccordingToGrossOrNetId, session6020)
         .apply(
           session6020
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+          .show()
     }
 
     "return a function that goes to rent include trade services page when Ultimately Responsible BI has been completed" in {
@@ -397,15 +410,17 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(UltimatelyResponsibleBusinessInsurancePageId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController
+          .show()
     }
 
     "return a function that goes to incentives payment when can rent be reduced has been completed" in {
       navigator
         .nextPage(CanRentBeReducedOnReviewId, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController
-        .show()
+        .apply(session6020) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController
+          .show()
     }
 
     "return a function that goes to setting the current rent when What is your current rent has been completed" in {
@@ -413,8 +428,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(WhatRentBasedOnPageId, session6020)
         .apply(
           session6020
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+          .show()
     }
 
     "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
@@ -432,8 +448,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(HowIsCurrentRentFixedId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+          .show()
     }
 
     "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {
@@ -449,29 +466,33 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(MethodToFixCurrentRentsId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
+          .show()
     }
 
     "return a function that goes to is rent under review when intervals of rent has been completed " in {
       navigator
         .nextPage(IntervalsOfRentReviewId, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController
-        .show()
+        .apply(session6020) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController
+          .show()
     }
 
     "return a function that goes to how was the current rent agreed  when setting the current rent has been completed " in {
       navigator
         .nextPage(HowIsCurrentRentFixedId, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
-        .show()
+        .apply(session6020) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+          .show()
     }
 
     "return a function that goes to does rent include parking  when payment for trade service has been completed   qw" in {
       navigator
         .nextPage(PaymentForTradeServicesId, session6020)
-        .apply(session6020) shouldBe controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController
-        .show()
+        .apply(session6020) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController
+          .show()
     }
 
     "return a function that goes to ultimately responsible outside when included in your rent has been completed" in {
@@ -479,8 +500,9 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
         .nextPage(IncludedInYourRentPageId, session6020)
         .apply(
           session6020
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
+          .show()
     }
 
     "return a function that goes to trade services description page when addAnotherService is yes" in {

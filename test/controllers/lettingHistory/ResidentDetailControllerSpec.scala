@@ -156,9 +156,8 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
 
   }
 
-  trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil)
-      extends MockRepositoryFixture
-      with SessionCapturingFixture:
+  trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil) extends MockRepositoryFixture with SessionCapturingFixture:
+
     val controller = new ResidentDetailController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],

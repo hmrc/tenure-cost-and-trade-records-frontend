@@ -26,12 +26,13 @@ import utils.TestBaseSpec
 class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def leaseSurrenderedEarlyController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  )                    = new LeaseSurrenderedEarlyController(
+  ) = new LeaseSurrenderedEarlyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

@@ -91,7 +91,7 @@ class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
         navigator
           .nextPage(CheckYourAnswersAboutThePropertyPageId, aboutYouAndTheProperty6010YesSession)
           .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.routes.TaskListController.show()
+          controllers.routes.TaskListController.show
       }
 
       "navigate to AboutThePropertyController after completing ContactDetailsQuestion with no" in {

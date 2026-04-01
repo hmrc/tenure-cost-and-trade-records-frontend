@@ -14,28 +14,11 @@
  * limitations under the License.
  */
 
-package connectors
+package test
 
-import com.github.tomakehurst.wiremock.WireMockServer
-import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Suite}
+import uk.gov.hmrc.vo.integration.test.BaseServerSpec
 
-trait AddressLookupMockServer(port: Int) extends BeforeAndAfterAll with BeforeAndAfterEach {
-  this: Suite =>
-
-  protected val service = new WireMockServer(port)
-
-  override def beforeAll(): Unit = {
-    service.start()
-    super.beforeAll()
-  }
-
-  override def beforeEach(): Unit = {
-    service.resetAll()
-    super.beforeEach()
-  }
-
-  override def afterAll(): Unit = {
-    super.afterAll()
-    service.stop()
-  }
-}
+/**
+  * @author Yuriy Tumakha
+  */
+abstract class TCTRServerSpec extends BaseServerSpec with TCTRApplicationFactory

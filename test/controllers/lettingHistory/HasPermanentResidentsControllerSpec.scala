@@ -36,7 +36,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.permanentResidents.heading"
-        page.backLink          shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
+        page.backLink          shouldBe controllers.routes.TaskListController.show.withFragment("letting-history").toString
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
@@ -131,9 +131,10 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         )
         status(result) shouldBe BAD_REQUEST
         val page   = contentAsJsoup(result)
-        page.backLink        shouldBe routes.CheckYourAnswersLettingHistoryController.show
-          .withFragment("some-fragment")
-          .toString
+        page.backLink        shouldBe
+          routes.CheckYourAnswersLettingHistoryController.show
+            .withFragment("some-fragment")
+            .toString
         page.error("answer") shouldBe "lettingHistory.hasPermanentResidents.required"
       }
     }
@@ -143,7 +144,8 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
     permanentResidents: List[ResidentDetail] = Nil,
     mayHaveMorePermanentResidents: Option[Boolean] = None
   ) extends MockRepositoryFixture
-      with SessionCapturingFixture:
+    with SessionCapturingFixture:
+
     val controller = new HasPermanentResidentsController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],

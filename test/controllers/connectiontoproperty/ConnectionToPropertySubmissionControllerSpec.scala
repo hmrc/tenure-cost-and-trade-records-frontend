@@ -34,10 +34,11 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
   val audit: Audit                             = mock[Audit]
   val submissionConnector: SubmissionConnector = mock[SubmissionConnector]
   val errorHandler: ErrorHandler               = mock[ErrorHandler]
+
   // doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
   def connectionToPropertySubmissionController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  )                                            =
+  ) =
     new ConnectionToPropertySubmissionController(
       stubMessagesControllerComponents(),
       submissionConnector,

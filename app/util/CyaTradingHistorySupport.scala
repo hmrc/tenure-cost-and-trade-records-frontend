@@ -40,13 +40,15 @@ class CyaTradingHistorySupport @Inject() (
     val weeksSuffix = if tradingPeriod == 1 then "turnover.week" else "turnover.weeks"
     s"$tradingPeriod ${messages(weeksSuffix)}"
 
-  def sectionAnswers(using
+  def sectionAnswers(
+    using
     request: SessionRequest[?],
     messages: Messages
   ): SectionAnswersRowBuilder[AboutTheTradingHistory] =
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
 
-  def sectionAnswers1(using
+  def sectionAnswers1(
+    using
     request: SessionRequest[?],
     messages: Messages
   ): SectionAnswersRowBuilder[AboutTheTradingHistoryPartOne] =
@@ -62,8 +64,11 @@ class CyaTradingHistorySupport @Inject() (
     }.mkString
   )
 
-  def table(valuesGrid: Seq[Seq[String]], financialYearEnds: Seq[LocalDate], messageKeys: Option[Seq[String]] = None)(
-    using messages: Messages
+  def table(
+    valuesGrid: Seq[Seq[String]],
+    financialYearEnds: Seq[LocalDate],
+    messageKeys: Option[Seq[String]] = None
+  )(using messages: Messages
   ): Html =
     Html(
       valuesGrid
@@ -103,7 +108,8 @@ class CyaTradingHistorySupport @Inject() (
     valueLabelKey: String,
     valueOpt: Option[String],
     classes: String = "no-border-bottom"
-  )(using messages: Messages): SummaryListRow =
+  )(using messages: Messages
+  ): SummaryListRow =
     answer(valueLabelKey, Seq(valueOpt.getOrElse("")), None, classes)
 
   def answer(
@@ -111,7 +117,8 @@ class CyaTradingHistorySupport @Inject() (
     values: Seq[String],
     additionalParagraph: Option[String] = None,
     classes: String = "no-border-bottom"
-  )(using messages: Messages): SummaryListRow =
+  )(using messages: Messages
+  ): SummaryListRow =
     SummaryListRow(
       key = Key(Text(messages(valueLabelKey))),
       value = Value(
@@ -131,7 +138,8 @@ class CyaTradingHistorySupport @Inject() (
   def financialYearEndDatesTable(
     financialYearEndDates: Seq[LocalDate],
     dateUtil: DateUtilLocalised
-  )(using messages: Messages): Html =
+  )(using messages: Messages
+  ): Html =
     table(
       financialYearEndDates.map(financialYearEnd => Seq(dateUtil.formatDayMonthAbbrYear(financialYearEnd))),
       financialYearEndDates
@@ -139,7 +147,8 @@ class CyaTradingHistorySupport @Inject() (
 
   def financialYearEndDates(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(using request: SessionRequest[?]): Seq[LocalDate] =
+  )(using request: SessionRequest[?]
+  ): Seq[LocalDate] =
     forType match {
       case FOR6020           => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
       case FOR6030           => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
@@ -284,7 +293,8 @@ class CyaTradingHistorySupport @Inject() (
       messageKeys = Some(turnoverMessageKeys60156016)
     ).body
 
-  def accountingInformation(using
+  def accountingInformation(
+    using
     request: SessionRequest[?],
     messages: Messages
   ): Html =
@@ -342,7 +352,8 @@ class CyaTradingHistorySupport @Inject() (
       ).body
     )
 
-  def occupationDetails(using
+  def occupationDetails(
+    using
     request: SessionRequest[?],
     messages: Messages
   ): Html =

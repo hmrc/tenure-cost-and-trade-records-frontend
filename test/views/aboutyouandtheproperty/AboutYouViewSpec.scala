@@ -44,7 +44,7 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url + "#about-you"
+      backlinkUrl shouldBe controllers.routes.TaskListController.show.url + "#about-you"
     }
 
     "Section heading is visible" in {

@@ -20,10 +20,12 @@ import play.api.data.Form
 import play.api.data.Forms.{boolean, single}
 
 object MaxNumberReachedForm {
+
   val theForm: Form[Boolean] = Form[Boolean] {
     single(
-      "understood" -> boolean
-        .verifying("lettingHistory.maxNumberReached.understanding.required", understand => understand)
+      "understood" ->
+        boolean
+          .verifying("lettingHistory.maxNumberReached.understanding.required", understand => understand)
     )
   }
 }

@@ -30,11 +30,12 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   val mockAudit: Audit = mock[Audit]
+
   def tentingPitchesOnSiteController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  )                    = new TentingPitchesOnSiteController(
+  ) = new TentingPitchesOnSiteController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,
@@ -61,7 +62,7 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = tentingPitchesOnSiteController().show()(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {

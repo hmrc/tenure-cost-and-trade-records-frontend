@@ -203,21 +203,27 @@ case object CaravansAnnualPitchFeeId extends Identifier {
 case object GrossReceiptsHolidayUnitsId extends Identifier {
   override def toString: String = "grossReceiptsHolidayUnitsPage"
 }
+
 case object GrossReceiptsSubLetUnitsId extends Identifier {
   override def toString: String = "grossReceiptsSubLetUnitsPage"
 }
+
 case object OtherHolidayAccommodationId extends Identifier {
   override def toString: String = "otherHolidayAccommodationPage"
 }
+
 case object TotalSiteCapacityId extends Identifier {
   override def toString: String = "TotalSiteCapacityPage"
 }
+
 case object TentingPitchesOnSiteId extends Identifier {
   override def toString: String = "tentingPitchesOnSitePage"
 }
+
 case object TentingPitchesTotalId extends Identifier {
   override def toString: String = "tentingPitchesTotalPage"
 }
+
 case object TentingPitchesCertificatedId extends Identifier {
   override def toString: String = "tentingPitchesCertificatedPage"
 }
@@ -226,6 +232,7 @@ case object PitchesForCaravansId extends Identifier {
   override def toString: String = "pitchesForCaravansPage"
 
 }
+
 case object PitchesForGlampingId extends Identifier {
   override def toString: String = "pitchesForGlampingPage"
 }

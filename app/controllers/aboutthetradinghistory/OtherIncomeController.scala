@@ -47,9 +47,9 @@ class OtherIncomeController @Inject() (
   otherIncomeView: otherIncome6076,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OtherIncome")
@@ -77,10 +77,9 @@ class OtherIncomeController @Inject() (
         otherIncomeForm(years),
         formWithErrors => BadRequest(otherIncomeView(formWithErrors, getBackLink)),
         success => {
-          val updatedSections =
-            (success._1 zip turnoverSections6076).map { case (otherIncome, previousSection) =>
-              previousSection.copy(otherIncome = otherIncome)
-            }
+          val updatedSections = (success._1 zip turnoverSections6076).map { case (otherIncome, previousSection) =>
+            previousSection.copy(otherIncome = otherIncome)
+          }
           val details         = success._2
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
@@ -105,7 +104,8 @@ class OtherIncomeController @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6076] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]): Future[Result] =
+  )(implicit request: SessionRequest[AnyContent]
+  ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
@@ -134,7 +134,7 @@ class OtherIncomeController @Inject() (
           case _     =>
             aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
         }
-      case _                  => controllers.routes.TaskListController.show().url
+      case _                  => controllers.routes.TaskListController.show.url
     }
 
 }

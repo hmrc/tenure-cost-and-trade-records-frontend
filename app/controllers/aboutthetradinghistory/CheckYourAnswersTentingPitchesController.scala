@@ -32,6 +32,7 @@ import views.html.aboutthetradinghistory.checkYourAnswersTentingPitches
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class CheckYourAnswersTentingPitchesController @Inject() (
   mcc: MessagesControllerComponents,
@@ -39,10 +40,10 @@ class CheckYourAnswersTentingPitchesController @Inject() (
   view: checkYourAnswersTentingPitches,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
@@ -88,7 +89,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
     ) match {
       case Some(AnswerYes) => controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show().url
       case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
-      case _               => controllers.routes.TaskListController.show().url
+      case _               => controllers.routes.TaskListController.show.url
     }
 
 }

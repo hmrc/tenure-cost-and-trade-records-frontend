@@ -35,7 +35,10 @@ abstract class Navigator(audit: Audit):
   val checkYourAnswerCall: Call
   val taskListCall: Call
 
-  def backLinkUrl(ofPage: PageIdentifier, navigation: NavigationData = Map.empty)(using
+  def backLinkUrl(
+    ofPage: PageIdentifier,
+    navigation: NavigationData = Map.empty
+  )(using
     request: SessionRequest[AnyContent]
   ): Option[String] =
     (
@@ -51,7 +54,11 @@ abstract class Navigator(audit: Audit):
 
   val forwardNavigationMap: NavigationMap
 
-  def redirect(currentPage: PageIdentifier, session: SessionWrapper, navigation: NavigationData = Map.empty)(using
+  def redirect(
+    currentPage: PageIdentifier,
+    session: SessionWrapper,
+    navigation: NavigationData = Map.empty
+  )(using
     hc: HeaderCarrier,
     request: SessionRequest[AnyContent]
   ): Result =

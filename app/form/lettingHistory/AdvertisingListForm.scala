@@ -22,6 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.single
 
 object AdvertisingListForm {
+
   val theForm: Form[AnswersYesNo] = Form[AnswersYesNo](
     single(
       "answer" -> answerYesNo(errorMessage = "lettingHistory.advertisingList.hasMoreWebsites.required")

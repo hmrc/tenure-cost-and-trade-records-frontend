@@ -31,10 +31,11 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
   import utils.FormBindingTestAssertions._
 
   val mockAudit: Audit = mock[Audit]
+
   def propertyCurrentlyUsedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  )                    = new PropertyCurrentlyUsedController(
+  ) = new PropertyCurrentlyUsedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -84,7 +85,7 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = propertyCurrentlyUsedController().show()(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {

@@ -19,12 +19,12 @@ package models.submissions.aboutthetradinghistory
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
-import utils.FakeObjects
+import test.TestObjects
 
 /**
   * @author Yuriy Tumakha
   */
-class AboutTheTradingHistorySpec extends AnyFlatSpec with Matchers with FakeObjects {
+class AboutTheTradingHistorySpec extends AnyFlatSpec with Matchers with TestObjects {
 
   "AboutTheTradingHistory" should "handle turnover models" in {
     val tradingHistory = prefilledAboutYourTradingHistory

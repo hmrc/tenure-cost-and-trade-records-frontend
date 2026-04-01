@@ -43,11 +43,11 @@ class TelecomMastLettingController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   addressLookupConnector: AddressLookupConnector,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with AddressLookupSupport(addressLookupConnector)
-    with I18nSupport
-    with Logging:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with AddressLookupSupport(addressLookupConnector)
+  with I18nSupport
+  with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TelecomMastLetting")
@@ -149,19 +149,18 @@ class TelecomMastLettingController @Inject() (
     )
   }
 
-  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] =
-    (Action andThen withSessionRefiner).async { implicit request =>
-      given Session = request.sessionData
-      for
-        confirmedAddress <- getConfirmedAddress(id)
-        lettingAddress   <- confirmedAddress.asAddress
-        newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
-        _                <- repository.saveOrUpdate(newSession)
-      yield
-        if navigator.from == "CYA"
-        then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
-        else Redirect(routes.RentDetailsController.show(idx))
-    }
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    given Session = request.sessionData
+    for
+      confirmedAddress <- getConfirmedAddress(id)
+      lettingAddress   <- confirmedAddress.asAddress
+      newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+      _                <- repository.saveOrUpdate(newSession)
+    yield
+      if navigator.from == "CYA"
+      then Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+      else Redirect(routes.RentDetailsController.show(idx))
+  }
 
   private def backLink(idx: Option[Int])(using r: SessionRequest[AnyContent]): String =
     if navigator.from == "CYA"

@@ -25,7 +25,8 @@ import utils.TestBaseSpec
 
 class ElectricityGeneratedControllerSpec extends TestBaseSpec {
 
-  val mockAudit: Audit               = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
+
   def electricityGeneratedController =
     new ElectricityGeneratedController(
       stubMessagesControllerComponents(),

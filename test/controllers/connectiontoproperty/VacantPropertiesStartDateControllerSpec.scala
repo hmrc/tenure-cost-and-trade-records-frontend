@@ -27,9 +27,10 @@ import utils.TestBaseSpec
 class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def vacantPropertiesStartDateController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  )                    =
+  ) =
     new VacantPropertiesStartDateController(
       stubMessagesControllerComponents(),
       mockAudit,

@@ -41,9 +41,9 @@ class PercentageFromFuelCardsController @Inject() (
   view: percentageFromFuelCards,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("PercentageFromFuelCards")
@@ -76,10 +76,9 @@ class PercentageFromFuelCardsController @Inject() (
               )
             ),
           success => {
-            val cards =
-              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (card, finYearEnd) =>
-                card.copy(financialYearEnd = finYearEnd)
-              }
+            val cards = (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (card, finYearEnd) =>
+              card.copy(financialYearEnd = finYearEnd)
+            }
 
             val updatedData = updateAboutTheTradingHistory(_.copy(percentageFromFuelCards = Some(cards)))
             session
@@ -94,7 +93,7 @@ class PercentageFromFuelCardsController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#low-margin-fuel-cards"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#low-margin-fuel-cards"
       case _     => controllers.aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show().url
     }
 

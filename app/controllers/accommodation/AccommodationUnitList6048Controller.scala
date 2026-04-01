@@ -47,10 +47,10 @@ class AccommodationUnitList6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -102,7 +102,9 @@ class AccommodationUnitList6048Controller @Inject() (
     )
   }
 
-  private def performRemove(removeLastAllowed: Boolean = false)(implicit
+  private def performRemove(
+    removeLastAllowed: Boolean = false
+  )(implicit
     request: SessionRequest[AnyContent]
   ): Future[Result] =
     val updatedData = updateAccommodationDetails(accommodationDetails =>
@@ -124,22 +126,26 @@ class AccommodationUnitList6048Controller @Inject() (
         else Redirect(s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=0")
       }
 
-  private def accommodationDetails(implicit
+  private def accommodationDetails(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 
-  private def accommodationUnits(implicit
+  private def accommodationUnits(
+    implicit
     request: SessionRequest[AnyContent]
   ): List[AccommodationUnit] =
     accommodationDetails.fold(List.empty)(_.accommodationUnits)
 
-  private def selectedUnit(implicit
+  private def selectedUnit(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationUnit] =
     accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
-  private def selectedUnitName(implicit
+  private def selectedUnitName(
+    implicit
     request: SessionRequest[AnyContent]
   ): String =
     selectedUnit.fold("")(_.unitName)

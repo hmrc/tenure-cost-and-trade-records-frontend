@@ -26,6 +26,7 @@ import java.util.Locale
 object DateUtil:
 
   extension (localDate: LocalDate)
+
     def shortDate: String =
       localDate.format(shortDateFormatter)
 

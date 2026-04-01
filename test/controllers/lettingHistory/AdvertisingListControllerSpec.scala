@@ -96,17 +96,18 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           page.error("genericRemoveConfirmation") shouldBe "error.confirmableAction.required"
           verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
-        "be handling confirmation POST /remove?index=0 by actually removing the advertising detailsand then replying redirect to the 'Advertising List' page" in new ControllerFixture(
-          oneAdvertising
-        ) {
-          val result = controller.performRemove(index = 0)(
-            fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
-          )
-          status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
-          verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          onlineAdvertising(data)        shouldBe empty
-        }
+        "be handling confirmation POST /remove?index=0 by actually removing the advertising detailsand then replying redirect to the 'Advertising List' page" in
+          new ControllerFixture(
+            oneAdvertising
+          ) {
+            val result = controller.performRemove(index = 0)(
+              fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
+            )
+            status(result) shouldBe SEE_OTHER
+            redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
+            verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
+            onlineAdvertising(data)        shouldBe empty
+          }
         "be handling denying POST /remove?index=0 by replying redirect to the 'Advertising List' page" in new ControllerFixture(
           oneAdvertising
         ) {
@@ -140,9 +141,10 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe routes.MaxNumberReachedController
-            .show(kind = "onlineAdvertising")
-            .url
+          redirectLocation(result).value shouldBe
+            routes.MaxNumberReachedController
+              .show(kind = "onlineAdvertising")
+              .url
         }
       }
     }
@@ -169,9 +171,8 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
     }
   }
 
-  trait ControllerFixture(list: List[AdvertisingDetail] = Nil)
-      extends MockRepositoryFixture
-      with SessionCapturingFixture:
+  trait ControllerFixture(list: List[AdvertisingDetail] = Nil) extends MockRepositoryFixture with SessionCapturingFixture:
+
     val controller = new AdvertisingListController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],

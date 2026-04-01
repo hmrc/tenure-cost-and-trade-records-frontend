@@ -76,7 +76,8 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
   trait ControllerAndConnectorFixture:
     val connector            = mock[BackendConnector]
     val givenReferenceNumber = captor[String]
-    val controller           = new DownloadPDFReferenceNumberController(
+
+    val controller = new DownloadPDFReferenceNumberController(
       stubMessagesControllerComponents(),
       connector,
       referenceNumberView

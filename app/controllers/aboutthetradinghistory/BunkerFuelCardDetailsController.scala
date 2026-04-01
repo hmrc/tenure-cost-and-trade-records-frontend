@@ -39,10 +39,10 @@ class BunkerFuelCardDetailsController @Inject() (
   view: bunkerFuelCardsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingBunkerFuelCardDetails: Option[BunkerFuelCardDetails] = for {
@@ -82,8 +82,9 @@ class BunkerFuelCardDetailsController @Inject() (
               appendedDetails.indexOf(defaultDetails) -> appendedDetails
             } { detailsToUpdate =>
               val indexToUpdate = existingBunkerFuelCardsDetails.indexOf(detailsToUpdate)
-              indexToUpdate -> existingBunkerFuelCardsDetails
-                .updated(indexToUpdate, detailsToUpdate.copy(bunkerFuelCardDetails = data))
+              indexToUpdate ->
+                existingBunkerFuelCardsDetails
+                  .updated(indexToUpdate, detailsToUpdate.copy(bunkerFuelCardDetails = data))
             }
             aboutTheTradingHistory.copy(bunkerFuelCardsDetails = Some(updatedDetails._2))
           }

@@ -32,8 +32,8 @@ class GuidanceReferenceNumberController @Inject() (
   mcc: MessagesControllerComponents,
   connector: BackendConnector,
   referenceNumberView: ReferenceNumberView
-)(using ec: ExecutionContext)
-    extends FrontendController(mcc):
+)(using ec: ExecutionContext
+) extends FrontendController(mcc):
 
   def show: Action[AnyContent] = Action { implicit request =>
     val eventuallyFilledForm =

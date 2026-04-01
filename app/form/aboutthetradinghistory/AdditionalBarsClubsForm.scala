@@ -35,7 +35,8 @@ object AdditionalBarsClubsForm {
 
   def additionalBarsClubsForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[AdditionalBarsClubs]] =
+  )(using messages: Messages
+  ): Form[Seq[AdditionalBarsClubs]] =
     Form {
       mappingPerYear(years, (year, idx) => s"additionalBarsClubs[$idx]" -> columnMapping(year))
     }

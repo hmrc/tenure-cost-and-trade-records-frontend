@@ -45,10 +45,10 @@ class IsRentReviewPlannedController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging:
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsRentReviewPlanned")
@@ -76,6 +76,7 @@ class IsRentReviewPlannedController @Inject() (
     )
   }
 
-  private def leaseOrAgreementPartTwo(implicit
+  private def leaseOrAgreementPartTwo(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartTwo] = request.sessionData.aboutLeaseOrAgreementPartTwo

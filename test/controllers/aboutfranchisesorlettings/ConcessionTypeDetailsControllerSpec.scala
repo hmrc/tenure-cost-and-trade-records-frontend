@@ -27,9 +27,10 @@ import utils.TestBaseSpec
 class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
-  )                    =
+  ) =
     new ConcessionTypeDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,

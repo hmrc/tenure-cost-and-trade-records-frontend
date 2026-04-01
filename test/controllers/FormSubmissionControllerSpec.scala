@@ -84,8 +84,8 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
       val result: Future[Result] = formSubmissionController.submit(fakeRequest)
 
       status(result) shouldBe INTERNAL_SERVER_ERROR
-      verify(audit, times(2)).sendExplicitAudit(anyString, any[JsObject])(using
-        any[HeaderCarrier],
+      verify(audit, times(2)).sendExplicitAudit(anyString, any[JsObject])(
+        using any[HeaderCarrier],
         any[ExecutionContext]
       )
       verify(errorHandler, times(1)).internalServerErrorTemplate(using any[Request[?]])

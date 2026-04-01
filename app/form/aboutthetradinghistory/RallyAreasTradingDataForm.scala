@@ -32,7 +32,8 @@ object RallyAreasTradingDataForm {
 
   def rallyAreasTradingDataForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[RallyAreasTradingData]] =
+  )(using messages: Messages
+  ): Form[Seq[RallyAreasTradingData]] =
     Form {
       mappingPerYear(years, (year, idx) => s"rallyAreas[$idx]" -> columnMapping(year))
     }

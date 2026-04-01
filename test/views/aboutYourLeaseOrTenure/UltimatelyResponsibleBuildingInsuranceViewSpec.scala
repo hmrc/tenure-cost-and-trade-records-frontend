@@ -23,8 +23,7 @@ import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class UltimatelyResponsibleBuildingInsuranceViewSpec
-    extends QuestionViewBehaviours[UltimatelyResponsibleBuildingInsurance] {
+class UltimatelyResponsibleBuildingInsuranceViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleBuildingInsurance] {
 
   private val messageKeyPrefix = "ultimatelyResponsibleBI"
 
@@ -48,9 +47,10 @@ class UltimatelyResponsibleBuildingInsuranceViewSpec
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
-        .show()
-        .url
+      backlinkUrl shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController
+          .show()
+          .url
     }
 
     "Section heading is visible" in {

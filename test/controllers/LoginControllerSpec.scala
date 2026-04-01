@@ -207,8 +207,8 @@ class LoginControllerSpec extends TestBaseSpec {
       val audit = mock[Audit]
       doNothing()
         .when(audit)
-        .sendExplicitAudit(any[String], any[UserData])(using
-          any[HeaderCarrier],
+        .sendExplicitAudit(any[String], any[UserData])(
+          using any[HeaderCarrier],
           any[ExecutionContext],
           any[Writes[UserData]]
         )
@@ -257,8 +257,8 @@ class LoginControllerSpec extends TestBaseSpec {
             accommodationDetails = None
           )
         )
-      )(using
-        any[HeaderCarrier],
+      )(
+        using any[HeaderCarrier],
         any[ExecutionContext],
         any[Writes[UserData]]
       )

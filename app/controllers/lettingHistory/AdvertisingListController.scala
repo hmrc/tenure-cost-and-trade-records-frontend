@@ -46,9 +46,9 @@ class AdvertisingListController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(using ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport:
+)(using ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
     Ok(theListView(theForm))
@@ -104,7 +104,10 @@ class AdvertisingListController @Inject() (
 
   private def withAdvertisingDetailAt(
     index: Int
-  )(func: AdvertisingDetail => Future[Result])(using request: SessionRequest[AnyContent]): Future[Result] =
+  )(
+    func: AdvertisingDetail => Future[Result]
+  )(using request: SessionRequest[AnyContent]
+  ): Future[Result] =
     LettingHistory
       .onlineAdvertising(request.sessionData)
       .lift(index)
@@ -112,8 +115,11 @@ class AdvertisingListController @Inject() (
         func.apply(entry)
       }
 
-  private def renderTheConfirmationViewWith(theForm: Form[AnswersYesNo], advertising: AdvertisingDetail, index: Int)(
-    using request: SessionRequest[AnyContent]
+  private def renderTheConfirmationViewWith(
+    theForm: Form[AnswersYesNo],
+    advertising: AdvertisingDetail,
+    index: Int
+  )(using request: SessionRequest[AnyContent]
   ) =
     theConfirmationView(
       theForm,

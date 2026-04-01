@@ -42,10 +42,10 @@ class OtherHolidayAccommodationController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OtherHolidayAccommodation")
@@ -79,14 +79,15 @@ class OtherHolidayAccommodationController @Inject() (
     )
   }
 
-  private def aboutTheTradingHistoryPartOne(implicit
+  private def aboutTheTradingHistoryPartOne(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     // TODO update CYA?
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url
-      case _    => controllers.routes.TaskListController.show().url
+      case "TL" => controllers.routes.TaskListController.show.url
+      case _    => controllers.routes.TaskListController.show.url
     }
 }

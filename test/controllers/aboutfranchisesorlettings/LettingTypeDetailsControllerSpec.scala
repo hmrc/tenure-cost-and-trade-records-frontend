@@ -28,10 +28,7 @@ import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future.successful
 
-class LettingTypeDetailsControllerSpec
-    extends TestBaseSpec
-    with LettingTypeDetailsControllerBehaviours
-    with JsoupHelpers:
+class LettingTypeDetailsControllerSpec extends TestBaseSpec with LettingTypeDetailsControllerBehaviours with JsoupHelpers:
 
   "the LettingTypeDetails controller" when {
     "handling GET requests"            should {
@@ -77,6 +74,7 @@ class LettingTypeDetailsControllerSpec
   trait ControllerFixture extends MockAddressLookup:
     val repository = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
+
     val controller = new LettingTypeDetailsController(
       stubMessagesControllerComponents(),
       mock[Audit],

@@ -33,10 +33,11 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
   import TestData._
 
   val mockAudit: Audit = mock[Audit]
+
   def propertyUseLeasebackAgreementController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  )                    =
+  ) =
     new PropertyUseLeasebackArrangementController(
       stubMessagesControllerComponents(),
       mockAudit,
@@ -95,7 +96,7 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = propertyUseLeasebackAgreementController().show()(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
   }
 

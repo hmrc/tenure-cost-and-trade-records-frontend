@@ -40,10 +40,10 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
   theView: CheckYourAnswersAboutFranchiseOrLettingsView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging:
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val freshForm  = theForm

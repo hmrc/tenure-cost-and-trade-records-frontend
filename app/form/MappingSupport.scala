@@ -25,7 +25,7 @@ import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
-import form.Scala3EnumFieldMapping.enumMappingRequired
+import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingRequired
 import models.submissions.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutfranchisesorlettings.*
@@ -46,6 +46,7 @@ import scala.util.matching.Regex
 object MappingSupport:
 
   extension [A](seq: Seq[A])
+
     def toTuple2: Option[(A, A)] = seq match {
       case Seq(a, b) => Some((a, b))
       case _         => None
@@ -56,27 +57,35 @@ object MappingSupport:
       case _            => None
     }
 
-  val typeOfLettingMapping: Mapping[TypeOfLetting]                = enumMappingRequired(TypeOfLetting, Errors.typeOfLetting)
-  val typeOfIncomeMapping: Mapping[TypeOfIncome]                  = enumMappingRequired(TypeOfIncome, Errors.typeOfIncome)
-  val connectionToThePropertyType: Mapping[ConnectionToProperty]  =
+  val typeOfLettingMapping: Mapping[TypeOfLetting] = enumMappingRequired(TypeOfLetting, Errors.typeOfLetting)
+  val typeOfIncomeMapping: Mapping[TypeOfIncome]   = enumMappingRequired(TypeOfIncome, Errors.typeOfIncome)
+
+  val connectionToThePropertyType: Mapping[ConnectionToProperty] =
     enumMappingRequired(ConnectionToProperty, Errors.connectionToPropertyError)
-  val addressConnectionType: Mapping[AddressConnectionType]       =
+
+  val addressConnectionType: Mapping[AddressConnectionType] =
     enumMappingRequired(AddressConnectionType, Errors.isConnectedError)
+
   val methodToFixCurrentRentType: Mapping[MethodToFixCurrentRent] =
     enumMappingRequired(MethodToFixCurrentRent, Errors.methodToFixCurrentRents)
-  val renewablesPlantMapping: Mapping[RenewablesPlantType]        =
+
+  val renewablesPlantMapping: Mapping[RenewablesPlantType] =
     enumMappingRequired(RenewablesPlantType, Errors.renewablesPlant)
-  val outsideRepairsType: Mapping[OutsideRepairs]                 = enumMappingRequired(OutsideRepairs, Errors.outsideRepairs)
-  val insideRepairsType: Mapping[InsideRepairs]                   = enumMappingRequired(InsideRepairs, Errors.insideRepairs)
-  val buildingInsuranceType: Mapping[BuildingInsurance]           =
+  val outsideRepairsType: Mapping[OutsideRepairs]          = enumMappingRequired(OutsideRepairs, Errors.outsideRepairs)
+  val insideRepairsType: Mapping[InsideRepairs]            = enumMappingRequired(InsideRepairs, Errors.insideRepairs)
+
+  val buildingInsuranceType: Mapping[BuildingInsurance] =
     enumMappingRequired(BuildingInsurance, Errors.buildingInsurance)
 
-  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed]      =
+  val howIsCurrentRentFixedType: Mapping[CurrentRentFixed] =
     enumMappingRequired(CurrentRentFixed, Errors.howIsCurrentRentFixed)
-  val whatIsYourRentBasedOnType: Mapping[CurrentRentBasedOn]    =
+
+  val whatIsYourRentBasedOnType: Mapping[CurrentRentBasedOn] =
     enumMappingRequired(CurrentRentBasedOn, Errors.currentRentBasedOn)
-  val currentPropertyUsedMapping: Mapping[CurrentPropertyUsed]  =
+
+  val currentPropertyUsedMapping: Mapping[CurrentPropertyUsed] =
     enumMappingRequired(CurrentPropertyUsed, Errors.propertyCurrentlyUsed)
+
   val tiedForGoodsDetailsType: Mapping[TiedForGoodsInformation] =
     enumMappingRequired(TiedForGoodsInformation, Errors.tiedForGoodsDetails)
 
@@ -182,7 +191,8 @@ object MappingSupport:
     minValue: T,
     maxValue: T,
     errorMessage: String = "error.range"
-  )(using ordering: scala.math.Ordering[T]): Constraint[T] =
+  )(using ordering: scala.math.Ordering[T]
+  ): Constraint[T] =
     Constraint[T]("constraint.between", minValue, maxValue) { v =>
       if ordering.compare(v, minValue) < 0 || ordering.compare(v, maxValue) > 0 then
         Invalid(ValidationError(errorMessage, minValue, maxValue))
@@ -234,7 +244,11 @@ object MappingSupport:
       )
       .verifying(invalidErrorMessage, (minWeeks to 52).contains(_))
 
-  def nonNegativeNumberWithYear(field: String, year: String, maxValue: Int = 1000000)(using
+  def nonNegativeNumberWithYear(
+    field: String,
+    year: String,
+    maxValue: Int = 1000000
+  )(using
     messages: Messages
   ): Mapping[Option[Int]] =
     optional(

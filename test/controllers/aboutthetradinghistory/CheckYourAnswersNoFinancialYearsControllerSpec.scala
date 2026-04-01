@@ -73,10 +73,8 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe controllers.routes.TaskListController
-          .show()
-          .withFragment("tradingHistory")
-          .toString
+        redirectLocation(result).value shouldBe
+          controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
         val newSession = captor[Session]
         verify(repository).saveOrUpdate(newSession.capture())(using any)
         newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
@@ -89,10 +87,7 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe controllers.routes.TaskListController
-          .show()
-          .withFragment("tradingHistory")
-          .toString
+        redirectLocation(result).value shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
         val newSession = captor[Session]
         verify(repository).saveOrUpdate(newSession.capture())(using any)
         newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes

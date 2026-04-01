@@ -96,13 +96,14 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       )
     )
 
-  private val sessionAboutYou6010             = sessionAboutYou.copy(referenceNumber = "99996010004", forType = FOR6010)
-  private val sessionAboutYou6015             = sessionAboutYou.copy(referenceNumber = "99996015004", forType = FOR6015)
-  private val sessionAboutYou6020             = sessionAboutYou.copy(referenceNumber = "99996020004", forType = FOR6020)
-  private val sessionAboutYou6030             = sessionAboutYou.copy(referenceNumber = "99996030004", forType = FOR6030)
-  private val sessionAboutYou6045             = sessionAboutYou.copy(referenceNumber = "99996045004", forType = FOR6045)
-  private val sessionAboutYou6048             = sessionAboutYou.copy(referenceNumber = "99996048004", forType = FOR6048)
-  private val sessionAboutYou6076             = sessionAboutYou.copy(referenceNumber = "99996076004", forType = FOR6076)
+  private val sessionAboutYou6010 = sessionAboutYou.copy(referenceNumber = "99996010004", forType = FOR6010)
+  private val sessionAboutYou6015 = sessionAboutYou.copy(referenceNumber = "99996015004", forType = FOR6015)
+  private val sessionAboutYou6020 = sessionAboutYou.copy(referenceNumber = "99996020004", forType = FOR6020)
+  private val sessionAboutYou6030 = sessionAboutYou.copy(referenceNumber = "99996030004", forType = FOR6030)
+  private val sessionAboutYou6045 = sessionAboutYou.copy(referenceNumber = "99996045004", forType = FOR6045)
+  private val sessionAboutYou6048 = sessionAboutYou.copy(referenceNumber = "99996048004", forType = FOR6048)
+  private val sessionAboutYou6076 = sessionAboutYou.copy(referenceNumber = "99996076004", forType = FOR6076)
+
   private val sessionAboutYouIntermittent6076 =
     sessionAboutYouIntermittent.copy(referenceNumber = "99996076004", forType = FOR6076)
 
@@ -120,15 +121,17 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes financial-year-end page when what you will need has been completed" in {
       navigator
         .nextPage(WhatYouWillNeedPageId, sessionAboutYou6076)
-        .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController
-        .show()
+        .apply(sessionAboutYou6076) shouldBe
+        controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController
+          .show()
     }
 
     "return a function that goes financial-year-end page when what you will need has been completed 6010" in {
       navigator
         .nextPage(WhatYouWillNeedPageId, sessionAboutYou6010)
-        .apply(sessionAboutYou6010) shouldBe controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController
-        .show()
+        .apply(sessionAboutYou6010) shouldBe
+        controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController
+          .show()
     }
 
     "return a function that goes vat registerd page when what you will need has been completed" in {
@@ -150,8 +153,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage(FinancialYearEndPageId, sessionAboutYou)
         .apply(
           sessionAboutYou
-        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
+          .show()
     }
 
     "return a function that goes the turnover page when financial-year-end has been completed 6020" in {
@@ -159,8 +163,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage(FinancialYearEndPageId, sessionAboutYou6020)
         .apply(
           sessionAboutYou6020
-        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
+          .show()
     }
 
     "return a function that goes the turnover page when financial-year-end has been completed 6030" in {
@@ -168,8 +173,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage(FinancialYearEndPageId, sessionAboutYou6030)
         .apply(
           sessionAboutYou6030
-        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
+          .show()
     }
 
     "return a function that goes the turnover page when financial-year-end has been completed 6045" in {
@@ -177,8 +183,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage(FinancialYearEndPageId, sessionAboutYou6045)
         .apply(
           sessionAboutYou6045
-        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
+          .show()
     }
 
     "return a function that goes the turnover page when financial-year-end has been completed 6076" in {
@@ -186,8 +193,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage(FinancialYearEndPageId, sessionAboutYou6076)
         .apply(
           sessionAboutYou6076
-        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController
+          .show()
     }
 
     "return a function that goes the total payroll costs page when about your cost of sales has been completed" in {
@@ -207,8 +215,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the fixed operating expenses page when variable operating expenses has been completed" in {
       navigator
         .nextPage(VariableOperatingExpensesId, sessionAboutYou)
-        .apply(sessionAboutYou) shouldBe controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController
-        .show()
+        .apply(sessionAboutYou) shouldBe
+        controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController
+          .show()
     }
 
     "return a function that goes other costs page when fixed operating expenses has been completed" in {
@@ -222,8 +231,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage(ElectricVehicleChargingPointsId, sessionAboutYou)
         .apply(
           sessionAboutYou
-        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController
+          .show()
     }
 
     "return a function that goes the non fuel turnover page when total payroll cost has been completed" in {
@@ -237,36 +247,41 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the bunkered fuel question page when total fuel sold has been completed" in {
       navigator
         .nextPage(TotalFuelSoldId, sessionAboutYou6020)
-        .apply(sessionAboutYou6020) shouldBe controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController
-        .show()
+        .apply(sessionAboutYou6020) shouldBe
+        controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController
+          .show()
     }
     "return a function that goes income expenditure page when other costs has been completed" in {
       navigator
         .nextPage(OtherCostsId, sessionAboutYou6020)
         .apply(
           sessionAboutYou6020
-        ) shouldBe controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController
+          .show()
     }
     "return a function that goes bunker fuel card details  page when bunkered fuel sold has been completed" in {
       navigator
         .nextPage(BunkeredFuelSoldId, sessionAboutYou6020)
-        .apply(sessionAboutYou6020) shouldBe controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController
-        .show(None)
+        .apply(sessionAboutYou6020) shouldBe
+        controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController
+          .show(None)
     }
     "return a function that goes the percentage from fuel cards page when customer credit account has been completed" in {
       navigator
         .nextPage(CustomerCreditAccountsId, sessionAboutYou6020)
-        .apply(sessionAboutYou6020) shouldBe controllers.aboutthetradinghistory.routes.AcceptLowMarginFuelCardController
-        .show()
+        .apply(sessionAboutYou6020) shouldBe
+        controllers.aboutthetradinghistory.routes.AcceptLowMarginFuelCardController
+          .show()
     }
     "return a function that goes the low margin fuel card details page when percentage from fuel has been completed" in {
       navigator
         .nextPage(PercentageFromFuelCardsId, sessionAboutYou6020)
         .apply(
           sessionAboutYou6020
-        ) shouldBe controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController
+          .show()
     }
     "return a function that goes the add another bunker card page when bunker card detail has been completed" in {
       navigator
@@ -278,8 +293,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the customer credit account page when add another bunker fuel card has been completed" in {
       navigator
         .nextPage(AddAnotherBunkerFuelCardsDetailsId, sessionAboutYou6020)
-        .apply(sessionAboutYou6020) shouldBe controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController
-        .show()
+        .apply(sessionAboutYou6020) shouldBe
+        controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController
+          .show()
     }
     "return a function that goes the non fuel turnover page when add another low margin fuel card has been completed" in {
       navigator
@@ -450,8 +466,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes the unusual circumstances  page when turnover page has been completed form 6030" in {
       navigator
         .nextPage(TurnoverPageId, sessionAboutYou6030)
-        .apply(sessionAboutYou6030) shouldBe controllers.aboutthetradinghistory.routes.UnusualCircumstancesController
-        .show()
+        .apply(sessionAboutYou6030) shouldBe
+        controllers.aboutthetradinghistory.routes.UnusualCircumstancesController
+          .show()
     }
 
     // 6045
@@ -473,8 +490,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage6045(TentingPitchesOnSiteId, sessionWithNoTentingPitchesOnSite, navigator.cyaPageForTentingPitches)
         .apply(
           sessionWithNoTentingPitchesOnSite
-        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController
+          .show()
     }
     "return a function that goes the tenting pitches all year page when tenting pitches on site completed with yes" in {
       val sessionWithYesTentingPitchesOnSite = sessionAboutYou6045.copy(
@@ -516,8 +534,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         )
         .apply(
           sessionWithNoAdditionalActivitiesOnSite
-        ) shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController
+          .show()
     }
 
     "return a function that goes the additional activities all year page when additional activities on site completed with yes" in {
@@ -655,7 +674,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
       navigator
         .nextPage(CheckYourAnswersOtherHolidayAccommodationId, sessionAboutYou6045)
         .apply(sessionAboutYou6045) shouldBe
-        controllers.routes.TaskListController.show().withFragment("tradingHistory")
+        controllers.routes.TaskListController.show.withFragment("tradingHistory")
     }
 
     "return a function that goes to catering  page when additional activities shops is completed" in {
@@ -696,9 +715,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes to task list  page when additional activities cya completed" in {
       navigator
         .nextPage(CheckYourAnswersAdditionalActivitiesId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController
-        .show()
-        .withFragment("tradingHistory")
+        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory")
     }
 
     // end of 6045
@@ -708,8 +725,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage(GrossReceiptsExcludingVatId, sessionAboutYouBaseload)
         .apply(
           sessionAboutYouBaseload
-        ) shouldBe controllers.aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController
+          .show()
     }
 
     "return a function that goes to gross receipts for base load page when  gross receipts excluding vat completed" in {
@@ -717,8 +735,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
         .nextPage(GrossReceiptsExcludingVatId, sessionAboutYouIntermittent6076)
         .apply(
           sessionAboutYouIntermittent6076
-        ) shouldBe controllers.aboutthetradinghistory.routes.OtherIncomeController
-        .show()
+        ) shouldBe
+        controllers.aboutthetradinghistory.routes.OtherIncomeController
+          .show()
     }
 
     "return a function that goes to cost of sales 6076 page when  other income completed" in {
@@ -758,8 +777,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes to operational expenses page when  premises  costs completed" in {
       navigator
         .nextPage(PremisesCostsId, sessionAboutYou6076)
-        .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.OperationalExpensesController
-        .show()
+        .apply(sessionAboutYou6076) shouldBe
+        controllers.aboutthetradinghistory.routes.OperationalExpensesController
+          .show()
     }
     "return a function that goes to other income page when operational cost completed" in {
       navigator
@@ -782,8 +802,9 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes to total fuel page when financial years 6076 completed" in {
       navigator
         .nextPage(CheckYourAnswersAccountingInfoPageId, sessionAboutYou6076)
-        .apply(sessionAboutYou6076) shouldBe controllers.aboutthetradinghistory.routes.ElectricityGeneratedController
-        .show()
+        .apply(sessionAboutYou6076) shouldBe
+        controllers.aboutthetradinghistory.routes.ElectricityGeneratedController
+          .show()
     }
 
     "return a function that goes to total fuel page when financial years 6010 completed" in {
@@ -835,9 +856,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
     "return a function that goes to TaskList trading history, when CYA for tenting pitches ready " in {
       navigator
         .nextPage(CheckYourAnswersTentingPitchesId, sessionAboutYou6045)
-        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController
-        .show()
-        .withFragment("tradingHistory")
+        .apply(sessionAboutYou6045) shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory")
     }
     "financialYearEndRouting is called" should {
 

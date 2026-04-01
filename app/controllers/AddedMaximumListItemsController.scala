@@ -44,10 +44,10 @@ class AddedMaximumListItemsController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show(list: ListPageConfig): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -58,20 +58,19 @@ class AddedMaximumListItemsController @Inject() (
     )
   }
 
-  def submit(list: ListPageConfig): Action[AnyContent] =
-    (Action andThen withSessionRefiner).async { implicit request =>
-      continueOrSaveAsDraft[Option[Boolean]](
-        addedMaximumListItemsForm(list.itemsInPluralKey),
-        formWithErrors => BadRequest(addedMaximumListItemsView(formWithErrors, list)),
-        data => {
-          val updatedData = saveAnswer(list, data)
+  def submit(list: ListPageConfig): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    continueOrSaveAsDraft[Option[Boolean]](
+      addedMaximumListItemsForm(list.itemsInPluralKey),
+      formWithErrors => BadRequest(addedMaximumListItemsView(formWithErrors, list)),
+      data => {
+        val updatedData = saveAnswer(list, data)
 
-          session
-            .saveOrUpdate(updatedData)
-            .map(_ => Redirect(nextPage(list)))
-        }
-      )
-    }
+        session
+          .saveOrUpdate(updatedData)
+          .map(_ => Redirect(nextPage(list)))
+      }
+    )
+  }
 
   private def sessionData(using request: SessionRequest[AnyContent]): Session = request.sessionData
 
@@ -86,7 +85,10 @@ class AddedMaximumListItemsController @Inject() (
       case LowMarginFuelCards     => sessionData.aboutTheTradingHistory.flatMap(_.exceededMaxLowMarginFuelCards)
     }
 
-  private def saveAnswer(list: ListPageConfig, data: Option[Boolean])(using
+  private def saveAnswer(
+    list: ListPageConfig,
+    data: Option[Boolean]
+  )(using
     request: SessionRequest[AnyContent]
   ): Session =
     list match {

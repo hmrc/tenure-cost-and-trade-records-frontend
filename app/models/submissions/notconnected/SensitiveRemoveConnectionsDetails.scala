@@ -27,6 +27,7 @@ case class SensitiveRemoveConnectionsDetails(
   removeConnectionDetails: SensitiveContactDetails,
   removeConnectionAdditionalInfo: Option[String]
 ) extends Sensitive[RemoveConnectionsDetails] {
+
   override def decryptedValue: RemoveConnectionsDetails = RemoveConnectionsDetails(
     removeConnectionFullName.decryptedValue,
     removeConnectionDetails.decryptedValue,

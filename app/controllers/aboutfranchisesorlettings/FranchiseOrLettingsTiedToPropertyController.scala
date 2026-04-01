@@ -42,9 +42,9 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("FranchiseOrLettingsTiedToProperty")
@@ -91,7 +91,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
                       .contains(AnswerYes)) ||
                     (data == AnswerYes && request.sessionData.forType == FOR6020 &&
                       request.sessionData.aboutFranchisesOrLettings
-                        .flatMap(_.lettings.map(_.size > 0))
+                        .flatMap(_.lettings.map(_.nonEmpty))
                         .getOrElse(false))
                 )
               )
@@ -108,7 +108,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
     if (navigator.from == "CYA") {
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     } else {
-      controllers.routes.TaskListController.show().url + "#franchise-or-lettings-tied-to-property"
+      controllers.routes.TaskListController.show.url + "#franchise-or-lettings-tied-to-property"
     }
 
 }

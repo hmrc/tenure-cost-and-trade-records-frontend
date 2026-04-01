@@ -40,6 +40,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
 
   trait ControllerFixture:
+
     def financialYearEndController(
       forType: ForType = FOR6010,
       aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)

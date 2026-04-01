@@ -17,22 +17,16 @@
 package config
 
 import models.Done
-import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.should
+import play.api.test.Helpers.*
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-import scala.concurrent.Await
-import scala.concurrent.duration.DurationInt
+class NoOpInternalAuthTokenInitialiserSpec extends BaseSpec:
 
-class NoOpInternalAuthTokenInitialiserSpec extends AnyFreeSpec with should.Matchers {
+  "NoOpInternalAuthTokenInitialiser.initialised method" should {
+    "return Done" in {
+      val initialiser = NoOpInternalAuthTokenInitialiser()
+      val result      = await(initialiser.initialised)
 
-  "NoOpInternalAuthTokenInitialiser" - {
-    "initialised method" - {
-      "should return Done" in {
-        val initialiser = new NoOpInternalAuthTokenInitialiser()
-        val result      = Await.result(initialiser.initialised, 2.seconds)
-
-        result shouldBe Done
-      }
+      result shouldBe Done
     }
   }
-}

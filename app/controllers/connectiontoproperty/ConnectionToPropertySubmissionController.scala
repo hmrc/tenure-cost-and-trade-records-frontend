@@ -44,10 +44,10 @@ class ConnectionToPropertySubmissionController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FrontendController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FrontendController(mcc)
+  with I18nSupport
+  with Logging {
 
   import FeedbackFormMapper.feedbackForm
 
@@ -86,7 +86,8 @@ class ConnectionToPropertySubmissionController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier): Future[Unit] = {
+  )(implicit hc: HeaderCarrier
+  ): Future[Unit] = {
 
     val submission = ConnectedSubmission(session)
 

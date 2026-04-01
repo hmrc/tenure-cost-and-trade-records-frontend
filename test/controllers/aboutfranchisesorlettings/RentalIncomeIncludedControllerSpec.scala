@@ -36,9 +36,10 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec {
   override val messagesApi: MessagesApi                                          = controllerComponents.messagesApi
   override val messages: Messages                                                = messagesApi.preferred(fakeRequest)
   val mockAudit: Audit                                                           = mock[Audit]
+
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
-  )                                                                              =
+  ) =
     new RentalIncomeIncludedController(
       controllerComponents,
       mockAudit,

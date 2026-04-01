@@ -25,6 +25,7 @@ case class SessionRequest[A](
 ) extends WrappedRequest[A](request) {}
 
 object SessionRequest:
+
   extension (request: SessionRequest[AnyContent])
     def isFromCheckYourAnswer: Boolean = isFrom("CYA")
 

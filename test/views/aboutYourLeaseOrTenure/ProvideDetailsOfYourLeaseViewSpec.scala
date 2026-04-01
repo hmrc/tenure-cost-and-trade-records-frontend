@@ -42,9 +42,10 @@ class ProvideDetailsOfYourLeaseViewSpec extends QuestionViewBehaviours[String] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
-        .show()
-        .url
+      backlinkUrl shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
+          .show()
+          .url
     }
 
     "Section heading is visible" in {

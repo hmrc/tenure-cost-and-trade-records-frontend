@@ -19,12 +19,12 @@ package models
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
-import utils.FakeObjects
+import test.TestObjects
 
 /**
   * @author Yuriy Tumakha
   */
-class SessionSpec extends AnyFlatSpec with Matchers with FakeObjects:
+class SessionSpec extends AnyFlatSpec with Matchers with TestObjects:
 
   "Session" should "be serialized/deserialized from JSON - 6010" in {
     val json = Json.toJson(aboutYourTradingHistory6010YesSession)

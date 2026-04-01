@@ -27,7 +27,7 @@ class AtmLettingViewSpec extends QuestionViewBehaviours[ATMLetting] {
   private def AtmLettingView = inject[views.html.aboutfranchisesorlettings.atmLetting]
 
   private val messageKeyPrefix = "label.atmLetting"
-  private val backLink         = controllers.routes.TaskListController.show().url
+  private val backLink         = controllers.routes.TaskListController.show.url
 
   override val form: Form[ATMLetting] = ATMLettingForm.theForm
 
@@ -51,7 +51,7 @@ class AtmLettingViewSpec extends QuestionViewBehaviours[ATMLetting] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url
+      backlinkUrl shouldBe controllers.routes.TaskListController.show.url
     }
 
     "Section heading is visible" in {

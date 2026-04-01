@@ -35,5 +35,4 @@ trait MockAddressLookup extends MockitoExtendedSugar:
     auditRef = "auditRef",
     id = Some("id")
   )
-  when(addressLookupConnector.getConfirmedAddress(anyString)(using any))
-    .thenReturn(successful(addressLookupConfirmedAddress))
+  when(addressLookupConnector.getConfirmedAddress(anyString)(using any)).thenReturn(successful(addressLookupConfirmedAddress))

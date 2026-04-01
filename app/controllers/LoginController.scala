@@ -93,10 +93,10 @@ class LoginController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   test: testSign // setup proper error page
-)(implicit ec: ExecutionContext)
-    extends FrontendController(mcc)
-    with Logging
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FrontendController(mcc)
+  with Logging
+  with I18nSupport {
 
   import LoginController.loginForm
 
@@ -140,7 +140,10 @@ class LoginController @Inject() (
     Future.successful(Ok(test()))
   }
 
-  def verifyLogin(referenceNumber: String, postcode: String)(implicit
+  def verifyLogin(
+    referenceNumber: String,
+    postcode: String
+  )(implicit
     r: MessagesRequest[AnyContent]
   ): Future[Result] = {
 
@@ -194,7 +197,12 @@ class LoginController @Inject() (
 
   }
 
-  private def auditLogin(refNumber: String, returnUser: Boolean, address: Address, formOfReturn: String)(implicit
+  private def auditLogin(
+    refNumber: String,
+    returnUser: Boolean,
+    address: Address,
+    formOfReturn: String
+  )(implicit
     hc: HeaderCarrier
   ): Unit = {
     val json = Json.obj(
@@ -206,7 +214,12 @@ class LoginController @Inject() (
     audit.sendExplicitAudit("UserLogin", json)
   }
 
-  private def auditLockedOut(refNumber: String, postcode: String, postcodeCleaned: String, lockedIP: String)(implicit
+  private def auditLockedOut(
+    refNumber: String,
+    postcode: String,
+    postcodeCleaned: String,
+    lockedIP: String
+  )(implicit
     hc: HeaderCarrier
   ): Unit = {
     val detailJson = Json.obj(

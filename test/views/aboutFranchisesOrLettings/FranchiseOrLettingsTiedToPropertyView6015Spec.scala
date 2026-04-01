@@ -29,7 +29,7 @@ class FranchiseOrLettingsTiedToPropertyView6015Spec extends QuestionViewBehaviou
 
   val messageKeyPrefix = "franchiseLettings"
 
-  val backLink = s"${controllers.routes.TaskListController.show().url}#franchise-or-lettings-tied-to-property"
+  val backLink = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
 
   override val form: Form[AnswersYesNo] = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 
@@ -48,7 +48,7 @@ class FranchiseOrLettingsTiedToPropertyView6015Spec extends QuestionViewBehaviou
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url + "#franchise-or-lettings-tied-to-property"
+      backlinkUrl shouldBe controllers.routes.TaskListController.show.url + "#franchise-or-lettings-tied-to-property"
     }
 
     "Section heading is visible" in {

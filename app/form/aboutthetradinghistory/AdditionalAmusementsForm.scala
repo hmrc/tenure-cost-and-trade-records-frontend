@@ -30,7 +30,8 @@ object AdditionalAmusementsForm:
 
   def additionalAmusementsForm(
     years: Seq[String]
-  )(using messages: Messages): Form[Seq[Option[BigDecimal]]] =
+  )(using messages: Messages
+  ): Form[Seq[Option[BigDecimal]]] =
     Form {
       mappingPerYear(years, (year, idx) => s"additionalAmusements[$idx]" -> columnMapping(year))
     }

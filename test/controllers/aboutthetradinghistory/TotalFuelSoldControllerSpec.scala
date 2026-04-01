@@ -26,9 +26,10 @@ import utils.TestBaseSpec
 class TotalFuelSoldControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def totalFuelSoldController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  )                    = new TotalFuelSoldController(
+  ) = new TotalFuelSoldController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,
@@ -58,7 +59,7 @@ class TotalFuelSoldControllerSpec extends TestBaseSpec {
 
     "return correct backLink when 'from=TL' query param is present" in {
       val result = totalFuelSoldController().show()(FakeRequest(GET, "/path?from=TL"))
-      contentAsString(result) should include(controllers.routes.TaskListController.show().url)
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
   }

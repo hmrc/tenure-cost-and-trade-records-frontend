@@ -21,6 +21,7 @@ import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object RequestReferenceNumberPropertyDetailsForm:
+
   val theForm = Form[String](
     single(
       "businessTradingName" -> default(text, "").verifying(

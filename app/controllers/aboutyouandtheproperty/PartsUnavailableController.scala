@@ -41,10 +41,10 @@ class PartsUnavailableController @Inject() (
   view: partsUnavailable,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PartsUnavailable")
@@ -85,7 +85,7 @@ class PartsUnavailableController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case "TL"  => s"${controllers.routes.TaskListController.show().url}#family-usage"
+      case "TL"  => s"${controllers.routes.TaskListController.show.url}#family-usage"
       case _     =>
         if (request.sessionData.isWelsh) {
           controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url

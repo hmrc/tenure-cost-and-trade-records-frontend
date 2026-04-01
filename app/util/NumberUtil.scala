@@ -46,6 +46,7 @@ object NumberUtil:
   given funcBigDecOptToFuncString[T]: Conversion[T => Option[BigDecimal], T => String]     = _ andThen bigDecimalOptToString
 
   extension (str: String)
+
     private def removedTrailingZeros: String =
       str.replace(".00", "")
 
@@ -53,6 +54,7 @@ object NumberUtil:
       Text(str).asHtml.body
 
   extension (bigDecimal: BigDecimal)
+
     def asMoney: String =
       asMoneyFull.removedTrailingZeros
 

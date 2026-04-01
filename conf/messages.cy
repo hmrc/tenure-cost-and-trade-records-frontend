@@ -1,10 +1,8 @@
 # COMMON
 ########
-site.service_name = Declare your business trade and cost information
+service.name = Declare your business trade and cost information
 service.title = {0} - Declare your business trade and cost information - GOV.UK
 gov.name = GOV.UK
-phase.beta = BETA
-phase.text = This is a new service – <a href="{0}" class="govuk-link" rel="noreferrer noopener" target="_blank" id="betaFeedback">share your feedback</a> to help improve it.
 label.continue=Parhewch
 button.label.continue = Yn eich blaen
 button.label.sendYourFeedback = Send your feedback

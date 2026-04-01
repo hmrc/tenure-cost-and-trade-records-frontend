@@ -41,10 +41,10 @@ class ElectricVehicleChargingPointsController @Inject() (
   electricVehicleChargingPointsView: electricVehicleChargingPoints,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ElectricVehicleChargingPoints")
@@ -88,7 +88,7 @@ class ElectricVehicleChargingPointsController @Inject() (
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#ev-charging-point"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#ev-charging-point"
       case _     => controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show().url
     }
 

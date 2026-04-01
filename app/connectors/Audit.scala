@@ -76,5 +76,5 @@ class TctrAuditConnector @Inject() (
   val auditingConfig: AuditingConfig,
   val auditChannel: AuditChannel,
   val datastreamMetrics: DatastreamMetrics
-)(implicit val ec: ExecutionContext)
-    extends Audit {}
+)(implicit val ec: ExecutionContext
+) extends Audit {}

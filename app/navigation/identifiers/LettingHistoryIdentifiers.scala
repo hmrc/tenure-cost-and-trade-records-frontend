@@ -77,6 +77,7 @@ case object CheckYourAnswersPageId extends Identifier:
   override def toString: String = "checkYourAnswers"
 
 extension (string: String)
+
   def asPageIdentifier: Option[Identifier] = string match
     case "hasPermanentResidentsPage" => Some(HasPermanentResidentsPageId)
     case "residentDetailPage"        => Some(ResidentDetailPageId)

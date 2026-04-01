@@ -38,9 +38,9 @@ class MaxOfLettingsReachedController @Inject() (
   connectionNavigator: ConnectionToPropertyNavigator,
   franchiseNavigator: AboutFranchisesOrLettingsNavigator,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show(src: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val (backLink, form) = getDetails(src, request)
@@ -126,7 +126,7 @@ class MaxOfLettingsReachedController @Inject() (
         )
       case _                    =>
         (
-          routes.TaskListController.show().url,
+          routes.TaskListController.show.url,
           None
         )
     }

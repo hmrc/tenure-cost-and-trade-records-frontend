@@ -43,8 +43,8 @@
  summary = Some(summary),
  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
  backLinkUrl = { fromLocation match {
-   case "TL" => controllers.routes.TaskListController.show().url+"#type-of-tenure"
-   case _ => controllers.routes.TaskListController.show().url
+   case "TL" => controllers.routes.TaskListController.show.url+"#type-of-tenure"
+   case _ => controllers.routes.TaskListController.show.url
   }
  },
  theForm = theForm

@@ -44,11 +44,11 @@ class TradingNameOperatingFromPropertyController @Inject() (
   theView: TradingNameOperatingFromPropertyVie,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with ReadOnlySupport
-    with I18nSupport
-    with Logging:
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with ReadOnlySupport
+  with I18nSupport
+  with Logging:
 
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 
@@ -131,7 +131,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "TL"  =>
-        controllers.routes.TaskListController.show().url + "#name-of-operator-from-property"
+        controllers.routes.TaskListController.show.url + "#name-of-operator-from-property"
       case "CYA" => routes.CheckYourAnswersConnectionToPropertyController.show().url
       case _     =>
         request.sessionData.forType match {
@@ -142,7 +142,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
               case Some(AddressConnectionTypeYesChangeAddress) =>
                 routes.EditAddressController.show().url
               case _                                           =>
-                controllers.routes.TaskListController.show().url
+                controllers.routes.TaskListController.show.url
             }
           case _       => routes.VacantPropertiesController.show().url
         }

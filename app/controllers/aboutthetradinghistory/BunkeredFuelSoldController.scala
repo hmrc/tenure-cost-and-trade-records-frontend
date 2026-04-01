@@ -32,6 +32,7 @@ import views.html.aboutthetradinghistory.bunkeredFuelSold
 import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class BunkeredFuelSoldController @Inject() (
   mcc: MessagesControllerComponents,
@@ -40,9 +41,9 @@ class BunkeredFuelSoldController @Inject() (
   view: bunkeredFuelSold,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("BunkeredFuelSold")
@@ -75,10 +76,9 @@ class BunkeredFuelSoldController @Inject() (
               )
             ),
           success => {
-            val bunkeredFuelSold =
-              (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (bunkeredFuelSold, finYearEnd) =>
-                bunkeredFuelSold.copy(financialYearEnd = finYearEnd)
-              }
+            val bunkeredFuelSold = (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (bunkeredFuelSold, finYearEnd) =>
+              bunkeredFuelSold.copy(financialYearEnd = finYearEnd)
+            }
 
             val updatedData = updateAboutTheTradingHistory(_.copy(bunkeredFuelSold = Some(bunkeredFuelSold)))
             session

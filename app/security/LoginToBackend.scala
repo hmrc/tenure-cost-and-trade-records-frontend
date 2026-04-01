@@ -31,7 +31,11 @@ object LoginToBackend {
 
   def apply(
     v: VerifyCredentials
-  )(rn: RefNumber, pc: Postcode)(implicit ec: ExecutionContext): Future[LoginResult] =
+  )(
+    rn: RefNumber,
+    pc: Postcode
+  )(implicit ec: ExecutionContext
+  ): Future[LoginResult] =
     for {
       lr <- v(rn, pc)
     } yield ned(

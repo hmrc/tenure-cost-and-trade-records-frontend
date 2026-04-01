@@ -76,9 +76,7 @@ object AccountingInformationUtil {
     if (firstOccupy.years >= lastCompleteFinancialYear) Seq.empty
     else {
       val firstFinancialYearEnd =
-        if (
-          firstOccupy.months > financialYear.months || (firstOccupy.months == financialYear.months && 1 > financialYear.days)
-        )
+        if (firstOccupy.months > financialYear.months || (firstOccupy.months == financialYear.months && 1 > financialYear.days))
           firstOccupy.years + 1
         else
           firstOccupy.years
@@ -139,7 +137,8 @@ object AccountingInformationUtil {
     aboutTheTradingHistory: AboutTheTradingHistory,
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean
-  )(using request: SessionRequest[AnyContent]): Session = {
+  )(using request: SessionRequest[AnyContent]
+  ): Session = {
 
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
@@ -179,7 +178,8 @@ object AccountingInformationUtil {
     aboutTheTradingHistory: AboutTheTradingHistory,
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean
-  )(using request: SessionRequest[AnyContent]): Session = {
+  )(using request: SessionRequest[AnyContent]
+  ): Session = {
 
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
@@ -219,7 +219,8 @@ object AccountingInformationUtil {
     aboutTheTradingHistory: AboutTheTradingHistory,
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean
-  )(using request: SessionRequest[AnyContent]): Session = {
+  )(using request: SessionRequest[AnyContent]
+  ): Session = {
 
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
@@ -264,7 +265,8 @@ object AccountingInformationUtil {
 
   def backLinkToFinancialYearEndDates(
     navigator: AboutTheTradingHistoryNavigator
-  )(using request: SessionRequest[AnyContent]): String =
+  )(using request: SessionRequest[AnyContent]
+  ): String =
     navigator.from match {
       case "CYA" =>
         navigator.cyaPage

@@ -26,32 +26,38 @@ import util.DateUtilLocalised
 import java.time.LocalDate
 
 object DateMappings {
+
   def requiredDateMapping(
     fieldNameKey: String,
     allowPastDates: Boolean = false,
     allowFutureDates: Boolean = false,
     years: Option[Seq[Int]] = None
-  )(using messages: Messages): Mapping[LocalDate] =
+  )(using messages: Messages
+  ): Mapping[LocalDate] =
     of(using new LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates, years))
 
   def monthYearMapping(
     fieldNameKey: String,
     allowPastDates: Boolean = false,
     allowFutureDates: Boolean = false
-  )(using messages: Messages): Mapping[MonthsYearDuration] =
+  )(using messages: Messages
+  ): Mapping[MonthsYearDuration] =
     of(using new MonthYearFormatter(fieldNameKey, allowPastDates, allowFutureDates))
 
   def dayMonthMapping(
     fieldNameKey: String,
     allow29February: Boolean = false
-  )(using messages: Messages): Mapping[DayMonthsDuration] =
+  )(using messages: Messages
+  ): Mapping[DayMonthsDuration] =
     of(using new DayMonthFormatter(fieldNameKey, allow29February))
 
   def betweenDates(
     startDate: LocalDate,
     endDate: LocalDate,
     errorMessage: String = "error.range"
-  )(using messages: Messages, dateUtil: DateUtilLocalised): Constraint[LocalDate] =
+  )(using messages: Messages,
+    dateUtil: DateUtilLocalised
+  ): Constraint[LocalDate] =
     Constraint[LocalDate]("constraint.between.dates", startDate, endDate) { date =>
       if date.isBefore(startDate) || date.isAfter(endDate) then
         val rangeStartEnd = Seq(startDate, endDate).map(dateUtil.formatDate)

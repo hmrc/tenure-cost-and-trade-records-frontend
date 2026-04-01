@@ -31,7 +31,8 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
 
   private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   private val mockTaskListView                    = mock[taskList]
-  private val sessionRequest                      =
+
+  private val sessionRequest =
     SessionRequest(aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes, fakeRequest)
   when(mockTaskListView()(using any, any)).thenReturn(HtmlFormat.empty)
 

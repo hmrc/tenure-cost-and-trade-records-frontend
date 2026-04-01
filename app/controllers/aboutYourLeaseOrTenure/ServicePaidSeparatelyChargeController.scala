@@ -39,11 +39,11 @@ class ServicePaidSeparatelyChargeController @Inject() (
   view: servicePaidSeparatelyCharge,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
-  def show(index: Int): Action[AnyContent]   = (Action andThen withSessionRefiner) { implicit request =>
+  def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("ServicePaidSeparatelyCharge")
 
     val existingSection = request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid.lift(index))
@@ -59,6 +59,7 @@ class ServicePaidSeparatelyChargeController @Inject() (
       )
     }
   }
+
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[BigDecimal](
       servicePaidSeparatelyChargeForm,

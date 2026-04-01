@@ -15,6 +15,7 @@
  */
 
 package controllers.aboutyouandtheproperty
+
 import connectors.Audit
 import form.Errors
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
@@ -34,9 +35,10 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
+
   def renewablesPlantController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  )                    = new RenewablesPlantController(
+  ) = new RenewablesPlantController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -77,7 +79,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
       val result  = renewablesPlantController().show(request)
       val html    = contentAsString(result)
 
-      html should include(controllers.routes.TaskListController.show().url + "#technology-type")
+      html should include(controllers.routes.TaskListController.show.url + "#technology-type")
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {

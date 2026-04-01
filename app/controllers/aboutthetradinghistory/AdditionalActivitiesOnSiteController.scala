@@ -33,6 +33,7 @@ import views.html.aboutthetradinghistory.additionalActivitiesOnSite
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class AdditionalActivitiesOnSiteController @Inject() (
   mcc: MessagesControllerComponents,
@@ -41,10 +42,10 @@ class AdditionalActivitiesOnSiteController @Inject() (
   view: additionalActivitiesOnSite,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AdditionalActivitiesOnSite")
@@ -108,8 +109,8 @@ class AdditionalActivitiesOnSiteController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageForAdditionalActivities.url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#additional-activities-on-site"
-      case _     => controllers.routes.TaskListController.show().url
+      case "TL"  => controllers.routes.TaskListController.show.url + "#additional-activities-on-site"
+      case _     => controllers.routes.TaskListController.show.url
 
     }
 }

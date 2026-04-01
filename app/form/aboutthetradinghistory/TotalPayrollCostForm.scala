@@ -25,6 +25,7 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 
 object TotalPayrollCostForm {
+
   private def totalPayrollCostMapping(year: String)(using messages: Messages): Mapping[TotalPayrollCost] = mapping(
     "financial-year-end"     -> ignored(LocalDate.EPOCH),
     "managers-and-staff"     -> turnoverSalesMappingWithYear("managers-and-staff", year),

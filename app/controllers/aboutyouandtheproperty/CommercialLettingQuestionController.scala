@@ -44,10 +44,10 @@ class CommercialLettingQuestionController @Inject() (
   view: commercialLettingQuestion,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CommercialLettingQuestion")
@@ -115,7 +115,7 @@ class CommercialLettingQuestionController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case "TL"  => s"${controllers.routes.TaskListController.show().url}#about-the-property"
+      case "TL"  => s"${controllers.routes.TaskListController.show.url}#about-the-property"
       case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
     }
 

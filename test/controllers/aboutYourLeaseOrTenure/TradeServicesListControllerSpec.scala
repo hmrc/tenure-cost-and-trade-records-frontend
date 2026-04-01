@@ -149,6 +149,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey {
+
       val addTradeService: String =
         "tradeServicesList"
     }

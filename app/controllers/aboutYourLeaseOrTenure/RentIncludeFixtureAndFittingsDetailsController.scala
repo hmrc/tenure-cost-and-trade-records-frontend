@@ -45,9 +45,9 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   rentIncludeFixtureAndFittingsDetailsTextAreaView: rentIncludeFixtureAndFittingsDetailsTextArea,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
 

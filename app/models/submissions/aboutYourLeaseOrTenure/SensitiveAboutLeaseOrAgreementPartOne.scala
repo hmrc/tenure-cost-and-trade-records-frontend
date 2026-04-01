@@ -45,6 +45,7 @@ case class SensitiveAboutLeaseOrAgreementPartOne(
   checkYourAnswersAboutYourLeaseOrTenure: Option[AnswersYesNo] = None,
   rentIncludesVat: Option[AnswersYesNo] = None
 ) extends Sensitive[AboutLeaseOrAgreementPartOne]:
+
   override def decryptedValue: AboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(
     aboutTheLandlord.map(_.decryptedValue),
     connectedToLandlord,

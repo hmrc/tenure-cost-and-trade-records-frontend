@@ -23,10 +23,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
 
-class ElectricVehicleChargingPointsMappingSpec
-    extends AnyWordSpecLike
-    with should.Matchers
-    with TableDrivenPropertyChecks {
+class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
 
   trait Setup {
     val form = Form(single("electricVehicleChargingPoints" -> validateSpacesOrBays))

@@ -25,7 +25,7 @@ GET         /invalid-form-type                                  controllers.Logi
 GET         /timeout                                            controllers.SaveAsDraftController.timeout(path)
 GET         /sessiontimeout                                     controllers.SaveAsDraftController.sessionTimeout
 
-GET         /task-list                                          controllers.TaskListController.show()
+GET         /task-list                                          controllers.TaskListController.show
 
 # SAVE AS DRAFT
 GET         /saved                                              controllers.SaveAsDraftController.customPassword(path)

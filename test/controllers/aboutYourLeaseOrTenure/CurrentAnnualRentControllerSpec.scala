@@ -28,10 +28,11 @@ import utils.TestBaseSpec
 class CurrentAnnualRentControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
+
   def currentAnnualRentController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  )                    = new CurrentAnnualRentController(
+  ) = new CurrentAnnualRentController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

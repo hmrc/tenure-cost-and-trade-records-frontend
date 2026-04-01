@@ -18,9 +18,18 @@ package config
 
 import javax.inject.{Inject, Singleton}
 import play.api.Configuration
+import play.api.mvc.Call
+import uk.gov.hmrc.vo.service.config.VOServiceConfig
 
 @Singleton
-class AppConfig @Inject() (config: Configuration):
+class AppConfig @Inject() (val configuration: Configuration) extends VOServiceConfig:
+
+  override def serviceID: String      = "TCTR"
+  override def serviceLocalRoot: Call = controllers.routes.Application.index
+  override def serviceHome: Call      = controllers.routes.Application.index
+  override def serviceFeedback: Call  = controllers.routes.FeedbackController.feedback // TODO: Remove to use feedbackFrontendForm
+
+  override def isWelshTranslationAvailable: Boolean = true
 
   val useDummyIp: Boolean        = getBoolean("useDummyTrueIP")
   val startPageRedirect: Boolean = getBoolean("startPageRedirect")
@@ -36,9 +45,9 @@ class AppConfig @Inject() (config: Configuration):
   val tctrFrontendUrl: String       = getString("urls.tctrFrontend")
 
   private def getString(key: String): String =
-    config.getOptional[String](key).getOrElse(throw ConfigSettingMissing(key))
+    configuration.getOptional[String](key).getOrElse(throw ConfigSettingMissing(key))
 
   private def getBoolean(key: String): Boolean =
-    config.getOptional[Boolean](key).getOrElse(throw ConfigSettingMissing(key))
+    configuration.getOptional[Boolean](key).getOrElse(throw ConfigSettingMissing(key))
 
 case class ConfigSettingMissing(key: String) extends Exception(key)

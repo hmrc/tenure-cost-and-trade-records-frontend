@@ -111,7 +111,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
         val page = contentAsJsoup(result)
-        page.backLink             shouldBe controllers.routes.TaskListController.show().withFragment("letting-history").toString
+        page.backLink             shouldBe controllers.routes.TaskListController.show.withFragment("letting-history").toString
         page.checkbox("understood") should notBeChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
@@ -189,7 +189,8 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
     mayHaveMoreCompletedLettings: Option[Boolean] = None,
     mayHaveMoreAdvertisingOnline: Option[Boolean] = None
   ) extends MockRepositoryFixture
-      with SessionCapturingFixture:
+    with SessionCapturingFixture:
+
     val controller = new MaxNumberReachedController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],

@@ -40,9 +40,9 @@ class TradeServicesDescriptionController @Inject() (
   tradeServicesDescriptionView: tradeServicesDescription,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport {
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[String] = for {
@@ -87,8 +87,9 @@ class TradeServicesDescriptionController @Inject() (
               appendedSections.indexOf(defaultSection) -> appendedSections
             } { sectionToUpdate =>
               val indexToUpdate = existingSections.indexOf(sectionToUpdate)
-              indexToUpdate -> existingSections
-                .updated(indexToUpdate, sectionToUpdate.copy(details = data))
+              indexToUpdate ->
+                existingSections
+                  .updated(indexToUpdate, sectionToUpdate.copy(details = data))
             }
             aboutLeaseOrAgreementPartThree
               .copy(

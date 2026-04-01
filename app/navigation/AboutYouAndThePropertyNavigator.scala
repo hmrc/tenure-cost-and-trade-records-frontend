@@ -53,7 +53,7 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
   }
 
-  private def websiteForPropertyRouting: Session => Call     = answers =>
+  private def websiteForPropertyRouting: Session => Call = answers =>
     answers.forType match {
       case FOR6015 | FOR6016 =>
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
@@ -63,11 +63,13 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       case _                 => controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
 
     }
-  private def charityQuestionRouting: Session => Call        = answers =>
+
+  private def charityQuestionRouting: Session => Call = answers =>
     answers.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.TradingActivityController.show()
       case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
+
   private def premisesLicenseGrantedRouting: Session => Call = answers =>
     if (answers.forType.equals(FOR6015) || answers.forType.equals(FOR6016)) {
       answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
@@ -152,12 +154,14 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
     CommercialLettingQuestionId             -> commercialLettingQuestionRouting,
-    CommercialLettingAvailabilityId         -> (_ =>
-      controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show()
-    ),
-    CommercialLettingAvailabilityWelshId    -> (_ =>
-      controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show()
-    ),
+    CommercialLettingAvailabilityId         ->
+      (_ =>
+        controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show()
+      ),
+    CommercialLettingAvailabilityWelshId    ->
+      (_ =>
+        controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show()
+      ),
     CompletedCommercialLettingsId           -> completedCommercialLettingsRouting,
     CompletedCommercialLettingsWelshId      -> completedCommercialLettingsRouting,
     PartsUnavailableId                      -> partsUnavailableRouting,
@@ -167,35 +171,41 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     PropertyCurrentlyUsedPageId             -> (_ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()),
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,
     CharityQuestionPageId                   -> charityQuestionRouting,
-    TradingActivityPageId                   -> (_ =>
-      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    ),
+    TradingActivityPageId                   ->
+      (_ =>
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      ),
     PremisesLicenseGrantedId                -> premisesLicenseGrantedRouting,
     PremisesLicenseGrantedDetailsId         -> premisesLicenseGrantedDetailsRouting,
     LicensableActivityPageId                -> licensableActivityRouting,
-    LicensableActivityDetailsPageId         -> (_ =>
-      controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
-    ),
+    LicensableActivityDetailsPageId         ->
+      (_ =>
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
+      ),
     PremisesLicenceConditionsPageId         -> premisesLicenceConditionsRouting,
-    PremisesLicenceConditionsDetailsPageId  -> (_ =>
-      controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
-    ),
+    PremisesLicenceConditionsDetailsPageId  ->
+      (_ =>
+        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
+      ),
     EnforcementActionBeenTakenPageId        -> enforcementActionTakenRouting,
-    EnforcementActionBeenTakenDetailsPageId -> (_ =>
-      controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
-    ),
+    EnforcementActionBeenTakenDetailsPageId ->
+      (_ =>
+        controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
+      ),
     TiedForGoodsPageId                      -> tiedGoodsRouting,
-    TiedForGoodsDetailsPageId               -> (_ =>
-      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    ),
+    TiedForGoodsDetailsPageId               ->
+      (_ =>
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      ),
     RenewablesPlantPageId                   -> (_ => controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show()),
     ThreeYearsConstructedPageId             -> threeYearsConstructedRouting,
     CostsBreakdownId                        -> (_ => controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()),
     PlantAndTechnologyId                    -> (_ => controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show()),
     GeneratorCapacityId                     -> (_ => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show()),
-    BatteriesCapacityId                     -> (_ =>
-      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    ),
-    CheckYourAnswersAboutThePropertyPageId  -> (_ => controllers.routes.TaskListController.show())
+    BatteriesCapacityId                     ->
+      (_ =>
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      ),
+    CheckYourAnswersAboutThePropertyPageId  -> (_ => controllers.routes.TaskListController.show)
   )
 }

@@ -44,10 +44,10 @@ class RentedSeparatelyParkingSpacesController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentedSeparatelyParkingSpaces")
@@ -77,13 +77,14 @@ class RentedSeparatelyParkingSpacesController @Inject() (
     )
   }
 
-  private def leaseOrAgreementPartThree(implicit
+  private def leaseOrAgreementPartThree(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     navigator.from match {
-      case "TL" => controllers.routes.TaskListController.show().url
+      case "TL" => controllers.routes.TaskListController.show.url
       case _    => controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
     }
 

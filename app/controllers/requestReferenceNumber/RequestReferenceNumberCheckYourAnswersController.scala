@@ -47,10 +47,10 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   import controllers.FeedbackFormMapper.feedbackForm
 
@@ -101,7 +101,9 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
 
   private def submitRequestRefNumToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier, messages: Messages): Future[Unit] = {
+  )(implicit hc: HeaderCarrier,
+    messages: Messages
+  ): Future[Unit] = {
     val sessionRequestRefNum        = session.requestReferenceNumberDetails
     val sessionRequestRefNumAddress = sessionRequestRefNum.flatMap(_.propertyDetails)
     val sessionRequestRefNumDetails = sessionRequestRefNum.flatMap(_.contactDetails)

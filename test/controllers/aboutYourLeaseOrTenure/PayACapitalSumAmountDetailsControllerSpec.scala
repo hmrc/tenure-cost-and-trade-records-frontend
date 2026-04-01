@@ -78,7 +78,7 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec {
     "return correct backLink when 'from=TL' query param is present" in {
       val result = payACapitalSumAmountDetailsController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(
-        controllers.routes.TaskListController.show().url + "#pay-a-capital-sum-amount-details"
+        controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-amount-details"
       )
     }
 

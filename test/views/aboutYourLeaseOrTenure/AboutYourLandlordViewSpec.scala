@@ -27,7 +27,7 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String] {
   private def aboutYourLandordView = inject[views.html.aboutYourLeaseOrTenure.aboutYourLandlord]
 
   private val messageKeyPrefix = "aboutYourLandlord6010"
-  private val backLink         = controllers.routes.TaskListController.show().url
+  private val backLink         = controllers.routes.TaskListController.show.url
 
   override val form: Form[String] = AboutTheLandlordForm.theForm
 
@@ -53,7 +53,7 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String] {
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show().url
+      backlinkUrl shouldBe controllers.routes.TaskListController.show.url
     }
 
     "Section heading is visible" in {

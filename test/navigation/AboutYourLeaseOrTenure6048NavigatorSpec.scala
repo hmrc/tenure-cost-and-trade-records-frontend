@@ -56,8 +56,9 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec {
       )
       navigator
         .nextPage(HowIsCurrentRentFixedId, answers)
-        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
-        .show()
+        .apply(answers) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
+          .show()
     }
 
     "return a function that goes to how rent is currently fixed  page when UR building insurance is completed123" in {
@@ -66,8 +67,9 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec {
       )
       navigator
         .nextPage(UltimatelyResponsibleBusinessInsurancePageId, answers)
-        .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
-        .show()
+        .apply(answers) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
+          .show()
     }
 
     "return a function that goes to work carried out condition page when property updates answer is no123" in {
@@ -83,15 +85,17 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec {
         .nextPage(PayCapitalSumId, session)
         .apply(
           session
-        ) shouldBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController
-        .show()
+        ) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController
+          .show()
     }
 
     "return a function that goes to does rent include fixture and fittings  when is parking rent paid separately has been completed123" in {
       navigator
         .nextPage(PayCapitalSumDetailsId, session6048)
-        .apply(session6048) shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController
-        .show()
+        .apply(session6048) shouldBe
+        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController
+          .show()
     }
 
   }

@@ -89,9 +89,8 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
     }
   }
 
-  trait ControllerFixture(whenWasLastLet: Option[LocalDate] = None)
-      extends MockRepositoryFixture
-      with SessionCapturingFixture:
+  trait ControllerFixture(whenWasLastLet: Option[LocalDate] = None) extends MockRepositoryFixture with SessionCapturingFixture:
+
     val controller = new WhenWasLastLetController(
       mcc = stubMessagesControllerComponents(),
       dateUtil = inject[DateUtilLocalised],

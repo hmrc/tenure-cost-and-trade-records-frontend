@@ -28,10 +28,7 @@ import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future.successful
 
-class FranchiseTypeDetailsControllerSpec
-    extends TestBaseSpec
-    with FranchiseTypeDetailsControllerBehaviours
-    with JsoupHelpers:
+class FranchiseTypeDetailsControllerSpec extends TestBaseSpec with FranchiseTypeDetailsControllerBehaviours with JsoupHelpers:
 
   "the FranchiseTypeDetails controller" when {
     "handling GET requests"            should {
@@ -88,6 +85,7 @@ class FranchiseTypeDetailsControllerSpec
   trait ControllerFixture extends MockAddressLookup:
     val repository = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
+
     val controller = new FranchiseTypeDetailsController(
       stubMessagesControllerComponents(),
       mock[Audit],

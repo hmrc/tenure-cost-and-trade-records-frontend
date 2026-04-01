@@ -47,10 +47,10 @@ class StaticCaravansController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("StaticCaravans")
@@ -82,7 +82,8 @@ class StaticCaravansController @Inject() (
     )
   }
 
-  private def savedAnswer(implicit
+  private def savedAnswer(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AnswersYesNo] = request.sessionData.aboutTheTradingHistoryPartOne
     .flatMap(_.caravans)

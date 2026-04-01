@@ -40,10 +40,10 @@ class PlantAndTechnologyController @Inject() (
   view: plantAndTechnology,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with ReadOnlySupport
-    with I18nSupport {
+)(implicit val ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with ReadOnlySupport
+  with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PlantAndTechnology")
@@ -87,7 +87,7 @@ class PlantAndTechnologyController @Inject() (
   private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case "TL"  => controllers.routes.TaskListController.show().url + "#how-is-used"
+      case "TL"  => controllers.routes.TaskListController.show.url + "#how-is-used"
       case _     =>
         request.sessionData.aboutYouAndTheProperty
           .flatMap(_.threeYearsConstructed) match {
@@ -95,7 +95,7 @@ class PlantAndTechnologyController @Inject() (
             controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show().url
           case Some(AnswerNo)  =>
             controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
-          case _               => controllers.routes.TaskListController.show().url
+          case _               => controllers.routes.TaskListController.show.url
         }
     }
 }

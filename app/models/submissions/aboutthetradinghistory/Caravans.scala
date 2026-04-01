@@ -16,12 +16,12 @@
 
 package models.submissions.aboutthetradinghistory
 
-import models.Scala3EnumJsonFormat
 import models.submissions.aboutthetradinghistory.Caravans.CaravanLettingType.{OwnedByOperator, SubletByOperator}
 import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.{Single, Twin}
 import models.submissions.common.AnswersYesNo
 import navigation.identifiers.*
 import play.api.libs.json.{Format, Json, OFormat}
+import uk.gov.hmrc.vo.service.model.Scala3EnumJsonFormat
 
 /**
   * 6045/6046 Trading history - Static holiday or leisure caravans pages.
@@ -62,8 +62,7 @@ object Caravans:
   end CaravanHireType
 
   enum CaravansTradingPage(val pageId: Identifier, val unitType: CaravanUnitType, val lettingType: CaravanLettingType):
-    case SingleCaravansOwnedByOperator
-        extends CaravansTradingPage(SingleCaravansOwnedByOperatorId, Single, OwnedByOperator)
+    case SingleCaravansOwnedByOperator extends CaravansTradingPage(SingleCaravansOwnedByOperatorId, Single, OwnedByOperator)
     case SingleCaravansSublet extends CaravansTradingPage(SingleCaravansSubletId, Single, SubletByOperator)
     case TwinCaravansOwnedByOperator extends CaravansTradingPage(TwinCaravansOwnedByOperatorId, Twin, OwnedByOperator)
     case TwinCaravansSublet extends CaravansTradingPage(TwinCaravansSubletId, Twin, SubletByOperator)

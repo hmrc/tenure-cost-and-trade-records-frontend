@@ -61,7 +61,7 @@ class NonFuelTurnoverControllerSpec extends TestBaseSpec {
       val result = nonFuelTurnoverController().show()(FakeRequest(GET, "/path?from=TL"))
       val html   = contentAsString(result)
 
-      html should include(controllers.routes.TaskListController.show().url + "#")
+      html should include(controllers.routes.TaskListController.show.url + "#")
     }
   }
 

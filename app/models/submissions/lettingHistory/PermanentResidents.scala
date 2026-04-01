@@ -60,7 +60,10 @@ trait PermanentResidents:
       hasPermanentResidents <- lettingHistory.hasPermanentResidents
     yield hasPermanentResidents
 
-  def byAddingOrUpdatingPermanentResident(newResident: ResidentDetail, maybeIndex: Option[Int] = None)(using
+  def byAddingOrUpdatingPermanentResident(
+    newResident: ResidentDetail,
+    maybeIndex: Option[Int] = None
+  )(using
     session: Session
   ): SessionWrapper =
     session.lettingHistory match

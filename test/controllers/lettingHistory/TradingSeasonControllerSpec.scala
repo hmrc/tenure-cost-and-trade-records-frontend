@@ -107,9 +107,8 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
     }
   }
 
-  trait ControllerFixture(period: Option[LocalPeriod] = None)
-      extends MockRepositoryFixture
-      with SessionCapturingFixture:
+  trait ControllerFixture(period: Option[LocalPeriod] = None) extends MockRepositoryFixture with SessionCapturingFixture:
+
     val controller = new TradingSeasonController(
       mcc = stubMessagesControllerComponents(),
       dateUtil = inject[DateUtilLocalised],

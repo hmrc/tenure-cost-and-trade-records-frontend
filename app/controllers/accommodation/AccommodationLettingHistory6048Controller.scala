@@ -44,10 +44,10 @@ class AccommodationLettingHistory6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext)
-    extends FORDataCaptureController(mcc)
-    with I18nSupport
-    with Logging {
+)(implicit ec: ExecutionContext
+) extends FORDataCaptureController(mcc)
+  with I18nSupport
+  with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val yearEndDates = finYearEndDates
@@ -75,10 +75,9 @@ class AccommodationLettingHistory6048Controller @Inject() (
       formWithErrors =>
         BadRequest(accommodationLettingHistoryView(formWithErrors, yearEndDates, currentUnitName, backLink)),
       data => {
-        val updatedLettingHistory =
-          (data zip yearEndDates).map { case (lettingHistory, yearEnd) =>
-            lettingHistory.copy(financialYearEnd = yearEnd)
-          }
+        val updatedLettingHistory = (data zip yearEndDates).map { case (lettingHistory, yearEnd) =>
+          lettingHistory.copy(financialYearEnd = yearEnd)
+        }
 
         val updatedData = updateAccommodationUnit(
           navigator.idx,
@@ -98,28 +97,33 @@ class AccommodationLettingHistory6048Controller @Inject() (
     )
   }
 
-  private def finYearEndDates(implicit
+  private def finYearEndDates(
+    implicit
     request: SessionRequest[AnyContent]
   ): Seq[LocalDate] =
     val firstOccupy = request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate)
     AccountingInformationUtil.financialYearsRequiredAccommodation6048(firstOccupy, request.sessionData.isWelsh)
 
-  private def accommodationDetails(implicit
+  private def accommodationDetails(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 
-  private def currentUnit(implicit
+  private def currentUnit(
+    implicit
     request: SessionRequest[AnyContent]
   ): Option[AccommodationUnit] =
     accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
-  private def currentUnitName(implicit
+  private def currentUnitName(
+    implicit
     request: SessionRequest[AnyContent]
   ): String =
     currentUnit.fold("")(_.unitName)
 
-  private def backLink(implicit
+  private def backLink(
+    implicit
     request: SessionRequest[AnyContent]
   ): String =
     s"${controllers.accommodation.routes.AvailableRooms6048Controller.show.url}?idx=${navigator.idx}"

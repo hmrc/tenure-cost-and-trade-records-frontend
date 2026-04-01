@@ -22,6 +22,7 @@ case class BunkerFuelCardDetails(
   name: String,
   handlingFee: BigDecimal
 )
+
 object BunkerFuelCardDetails {
   implicit val format: OFormat[BunkerFuelCardDetails] = Json.format
 }

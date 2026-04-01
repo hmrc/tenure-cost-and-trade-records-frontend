@@ -30,7 +30,8 @@ case class OccupierAddress(
 
   override def equals(that: Any): Boolean = that match {
     case OccupierAddress(line1, line2, town, county, postcode) =>
-      this.buildingNameNumber.equalsIgnoreCase(line1) && this.street1.equalsIgnoreCase(line2) && this.town
+      this.buildingNameNumber.equalsIgnoreCase(line1) && this.street1.equalsIgnoreCase(line2) &&
+      this.town
         .equalsIgnoreCase(
           town
         ) && this.county.equalsIgnoreCase(county) && this.postcode.equalsIgnoreCase(postcode)
@@ -38,6 +39,7 @@ case class OccupierAddress(
   }
 
   extension (opt: Option[String])
+
     def equalsIgnoreCase(that: Option[String]): Boolean = (opt, that) match {
       case (Some(a), Some(b)) => a.equalsIgnoreCase(b)
       case (None, None)       => true
@@ -45,6 +47,7 @@ case class OccupierAddress(
     }
 
 object OccupierAddress:
+
   def unapply(obj: OccupierAddress): Option[(String, Option[String], String, Option[String], String)] =
     Some(obj.buildingNameNumber, obj.street1, obj.town, obj.county, obj.postcode)
   given Format[OccupierAddress]                                                                       = Json.format
