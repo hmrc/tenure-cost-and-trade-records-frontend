@@ -41,7 +41,18 @@ class AppConfig @Inject() (val configuration: Configuration) extends VOServiceCo
   // Timeout Dialog
   override def timeoutDialogEnabledExcept: Set[Call] = Set(
     serviceMenuHome,
-    controllers.routes.LoginController.show // TODO: Add
+    controllers.routes.LoginController.show,
+    controllers.routes.LoginController.loggedOut,
+    controllers.routes.LoginController.lockedOut,
+    controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation(),
+    controllers.routes.SaveAsDraftController.loginToResume,
+    controllers.routes.SaveAsDraftController.customPassword(""),
+    controllers.routes.SaveAsDraftController.timeout(""),
+    controllers.routes.SaveAsDraftController.sessionTimeout,
+    controllers.routes.FormSubmissionController.confirmation(),
+    controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation(),
+    controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation(),
+    controllers.error.routes.ErrorHandlerController.showJsonError
   )
 
   override def signOutCall: Option[Call] = Some(controllers.routes.LoginController.logout)

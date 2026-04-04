@@ -28,8 +28,7 @@
 
 @layout(
     pageHeading = messages("heading.login.loginFailed"),
-    backLinkUrl = controllers.routes.LoginController.show.url,
-    withTimeoutDialog = false
+    backLinkUrl = controllers.routes.LoginController.show.url
 ) {
 
     @if(remainingAttempts == 1){

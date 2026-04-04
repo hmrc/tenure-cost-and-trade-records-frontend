@@ -17,11 +17,11 @@
 package controllers.error
 
 import actions.WithSessionRefiner
-
 import play.api.i18n.I18nSupport
-import play.api.mvc.MessagesControllerComponents
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.error.JsonParseError
+
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
@@ -34,10 +34,8 @@ class ErrorHandlerController @Inject() (
   jsonErrorView: JsonParseError,
   cc: MessagesControllerComponents
 ) extends FrontendController(cc)
-  with I18nSupport {
+  with I18nSupport:
 
-  def showJsonError = (Action andThen withSessionRefiner).async { implicit request =>
+  def showJsonError: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(Ok(jsonErrorView(Some(controllers.routes.LoginController.show.url))))
   }
-
-}
