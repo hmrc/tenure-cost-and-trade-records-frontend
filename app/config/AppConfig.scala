@@ -24,10 +24,13 @@ import uk.gov.hmrc.vo.service.config.VOServiceConfig
 @Singleton
 class AppConfig @Inject() (val configuration: Configuration) extends VOServiceConfig:
 
-  override def serviceLocalRoot: Call = controllers.routes.Application.index
-  override def serviceMenuHome: Call  = controllers.routes.Application.index
-  override def theFirstPage: Call     = controllers.routes.LoginController.show
-  override def feedbackPage: Call     = controllers.routes.FeedbackController.feedback // TODO: Remove to use feedbackFrontendForm
+  override def serviceLocalRoot: Call    = controllers.routes.Application.index
+  override def serviceMenuHome: Call     = controllers.routes.Application.index
+  override def theFirstPage: Call        = controllers.routes.LoginController.show
+  override def feedbackPage: Call        = controllers.routes.FeedbackController.feedback // TODO: Remove to use feedbackFrontendForm
+  override def signOutCall: Option[Call] = Some(controllers.routes.LoginController.logout)
+
+  override def timeoutCall(using request: RequestHeader): Option[Call] = Some(controllers.routes.SaveAsDraftController.timeout(request.uri))
 
   override def isWelshTranslationAvailable: Boolean = true
 
@@ -38,7 +41,6 @@ class AppConfig @Inject() (val configuration: Configuration) extends VOServiceCo
     controllers.routes.LoginController.show
   )
 
-  // Timeout Dialog
   override def timeoutDialogEnabledExcept: Set[Call] = Set(
     serviceMenuHome,
     controllers.routes.LoginController.show,
@@ -54,10 +56,6 @@ class AppConfig @Inject() (val configuration: Configuration) extends VOServiceCo
     controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation(),
     controllers.error.routes.ErrorHandlerController.showJsonError
   )
-
-  override def signOutCall: Option[Call] = Some(controllers.routes.LoginController.logout)
-
-  override def timeoutCall(using request: RequestHeader): Option[Call] = Some(controllers.routes.SaveAsDraftController.timeout(request.uri))
 
   val useDummyIp: Boolean        = getBoolean("useDummyTrueIP")
   val startPageRedirect: Boolean = getBoolean("startPageRedirect")
