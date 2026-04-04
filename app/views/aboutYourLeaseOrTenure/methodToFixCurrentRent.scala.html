@@ -16,11 +16,12 @@
 
 @import models.pages.Summary
 @import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF

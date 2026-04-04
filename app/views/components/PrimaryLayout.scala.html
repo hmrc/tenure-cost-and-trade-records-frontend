@@ -1,0 +1,97 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import config.AppConfig
+@import models.pages.Summary
+@import play.api.Configuration
+@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukBackLink, GovukNotificationBanner}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
+@import uk.gov.hmrc.vo.service.view.html.StandardPage
+@import views.html.includes.summaryErrors
+
+@this(
+        appConfig: AppConfig,
+        standardPage: StandardPage,
+        summaryErrors: summaryErrors,
+        govukBackLink: GovukBackLink,
+        govukNotificationBanner: GovukNotificationBanner
+)
+
+@(
+        pageTitle: Option[String] = None,
+        pageHeading: String,
+        theForm: Form[?] = null,
+        showBanner: Boolean = false,
+        showFeedback: Boolean = true,
+        showH1: Boolean = true,
+        showSection: Boolean = false,
+        showAccountInfo: Boolean = true,
+        summary: Option[Summary] = None,
+        sectionName: Option[String] = None,
+        backLinkUrl: Option[String] = None,
+        beforeContentBlock: Option[Html] = None,
+        withTimeoutDialog: Boolean = true,
+        fullWidth: Boolean = false,
+        readOnly: Boolean = false
+)(contentBlock: Html)(implicit request: Request[?], messages: Messages)
+
+@title = @{
+    val errorPrefix = Option(theForm).filter(_.hasErrors).fold("")(_ => s"${messages("error.title")} ")
+    s"$errorPrefix${pageTitle.getOrElse(pageHeading)}"
+}
+
+@beforeContent = {
+    @summary.filter(_ => showAccountInfo).map { info =>
+        @views.html.includes.account_info_header(info)
+    }
+
+    @backLinkUrl.map { url =>
+        @govukBackLink(BackLink(url))
+    }
+}
+
+@contentWithHeading = {
+    @if(theForm != null) {
+        @summaryErrors(theForm)
+    }
+
+    @if(showBanner && appConfig.isNotificationBannerEnabled) {
+        @govukNotificationBanner(appConfig.notificationBanner)
+    }
+
+    @if(showSection) {
+        <span class="govuk-caption-m">@sectionName</span>
+    }
+
+    @if(showH1) {
+        <h1 class="govuk-heading-l">@pageHeading</h1>
+    }
+
+    @contentBlock
+
+    <script type="text/javascript">
+            @readOnly &&
+            document.querySelectorAll('form fieldset').forEach(form => form.setAttribute('inert', 'true'));
+    </script>
+}
+
+@standardPage(
+    title,
+    backLinkUrl,
+    fullWidth,
+    beforeContentBlock = beforeContent,
+    footerBlock = Some(CustomFooter())
+)(contentWithHeading)

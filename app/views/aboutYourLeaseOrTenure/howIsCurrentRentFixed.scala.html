@@ -15,6 +15,7 @@
  *@
 
 @import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
@@ -26,7 +27,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import models.pages.Summary
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         govukDetails: GovukDetails,

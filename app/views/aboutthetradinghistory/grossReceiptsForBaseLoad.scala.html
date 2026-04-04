@@ -15,14 +15,15 @@
  *@
 
 @import actions.SessionRequest
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.GrossReceiptsForBaseLoad
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import java.time.LocalDate
 @import util.AccessibilityUtil
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,

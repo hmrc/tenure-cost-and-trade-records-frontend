@@ -15,13 +15,14 @@
  *@
 
 @import actions.SessionRequest
+@import views.html.components.PrimaryLayout
 @import models.ForType.*
 @import models.submissions.Form6010.DayMonthsDuration
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
 @import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
@@ -29,7 +30,7 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,
         govukCheckboxes: GovukCheckboxes,

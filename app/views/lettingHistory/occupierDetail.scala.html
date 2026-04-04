@@ -15,13 +15,14 @@
  *@
 
 @import actions.SessionRequest
+@import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.OccupierDetail
 @import models.submissions.lettingHistory.LocalPeriod
-@import controllers.lettingHistory.routes
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import util.DateUtilLocalised
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukButton: GovukButton, dateUtil: DateUtilLocalised)
+@this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
 @(theForm: Form[OccupierDetail], fiscalPeriod: LocalPeriod, backLink: Option[String], maybeIndex: Option[Int])(implicit request: SessionRequest[?], messages: Messages)
 

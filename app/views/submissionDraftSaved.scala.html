@@ -14,7 +14,9 @@
  * limitations under the License.
  *@
 
-@this(layout: Layout)
+@import views.html.components.PrimaryLayout
+
+@this(layout: PrimaryLayout)
 
 @(expiryDate: String, exitPath: String)(implicit request: Request[?], messages: Messages)
 

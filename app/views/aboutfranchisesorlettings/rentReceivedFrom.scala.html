@@ -15,9 +15,10 @@
  *@
 
 @import actions.SessionRequest
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
@@ -27,7 +28,7 @@
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Input
 @import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukInput: GovukInput,
         govukButton: GovukButton,
         govukCheckboxes: GovukCheckboxes,

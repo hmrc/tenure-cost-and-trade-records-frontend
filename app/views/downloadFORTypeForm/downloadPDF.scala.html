@@ -14,11 +14,12 @@
  * limitations under the License.
  *@
 
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
 @import scala.collection.StringOps
 
-@this(layout: Layout)
+@this(layout: PrimaryLayout)
 
 
 @(forTypeStr: String, referenceNumber: String)(implicit request: Request[?], messages: Messages)

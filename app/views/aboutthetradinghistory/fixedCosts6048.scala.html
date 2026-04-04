@@ -16,7 +16,8 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.FixedCosts6048
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import util.DateUtilLocalised
 @import util.NumberUtil.{*, given}
@@ -26,7 +27,7 @@
 @import scala.language.implicitConversions
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         formWithCSRF: FormWithCSRF,
         govukButton: GovukButton,
         govukInput: GovukInput,

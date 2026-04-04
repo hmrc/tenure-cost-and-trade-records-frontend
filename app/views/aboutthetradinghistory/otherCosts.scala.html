@@ -16,13 +16,14 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.OtherCosts
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.Implicits._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.Implicits.*
 @import util.DateUtilLocalised
 @import util.NumberUtil.*
 @import util.AccessibilityUtil
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,

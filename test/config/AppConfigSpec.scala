@@ -27,8 +27,8 @@ class AppConfigSpec extends TCTRAppSpec:
 
   "AppConfig" should {
     "return feedbackFrontendUrl" in {
-      appConfig.serviceFeedback.url shouldBe "/send-trade-and-cost-information/feedback"
-      appConfig.serviceFeedback.url shouldBe controllers.routes.FeedbackController.feedback.url
+      appConfig.feedbackPage.url shouldBe "/send-trade-and-cost-information/feedback"
+      appConfig.feedbackPage.url shouldBe controllers.routes.FeedbackController.feedback.url
     }
 
     "return the correct boolean value for useDummyIp = true" in {
@@ -65,21 +65,6 @@ class AppConfigSpec extends TCTRAppSpec:
       val configuration = Configuration("urls.tctrFrontend" -> "https://frontend.com").withFallback(defaultConfig)
       val appConfig     = AppConfig(configuration)
       appConfig.tctrFrontendUrl shouldBe "https://frontend.com"
-    }
-
-    "throw ConfigSettingMissing exception if config is empty" in {
-      a[ConfigSettingMissing] should be thrownBy AppConfig(Configuration.empty)
-    }
-
-    "return the correct default URLs" in {
-      val appConfig = AppConfig(defaultConfig)
-
-      appConfig.cookiesUrl            shouldBe "https://www.tax.service.gov.uk/help/cookies"
-      appConfig.privacyNoticeUrl      shouldBe "https://www.tax.service.gov.uk/help/privacy"
-      appConfig.termsAndConditionsUrl shouldBe "https://www.tax.service.gov.uk/help/terms-and-conditions"
-      appConfig.helpUsingGovUkUrl     shouldBe "https://www.gov.uk/help"
-      appConfig.contactGovUkUrl       shouldBe "https://www.gov.uk/government/organisations/hm-revenue-customs/contact"
-      appConfig.welshHelpUrl          shouldBe "https://www.gov.uk/cymraeg"
     }
 
   }

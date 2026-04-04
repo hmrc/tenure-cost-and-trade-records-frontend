@@ -17,6 +17,7 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.LocalPeriod
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
@@ -24,10 +25,10 @@
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.PrefixOrSuffix
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import util.DateUtilLocalised
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukButton: GovukButton, dateUtil: DateUtilLocalised)
+@this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukInput: GovukInput, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
 @(theForm: Form[Int], fiscalPeriod: LocalPeriod, backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 

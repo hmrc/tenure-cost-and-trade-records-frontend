@@ -14,13 +14,14 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import actions.SessionRequest
 @import models.ForType.*
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         govukButton: GovukButton,
         govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF

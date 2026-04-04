@@ -18,19 +18,20 @@
 @import models.submissions.common.AnswersYesNo.*
 @import models.submissions.connectiontoproperty.AddressConnectionType.*
 @import views.html.answers.answersAllSectionsTable
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 
 @import form.Feedback
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         answersAllSections: answersAllSectionsTable,
         govukButton: GovukButton,
         govukRadios: GovukRadios,

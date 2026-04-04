@@ -20,13 +20,14 @@
 @import models.submissions.lettingHistory.OccupierDetail
 @import models.submissions.lettingHistory.LocalPeriod
 @import navigation.identifiers.{asPageIdentifier, OccupierRemovePageId}
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{HtmlContent, Text}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryList, SummaryListRow, Value}
 @import util.DateUtilLocalised
 @import util.DateUtil.*
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
+@this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
 @(theForm: Form[AnswersYesNo], fiscalPeriod: LocalPeriod, completedLettings: List[OccupierDetail], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 

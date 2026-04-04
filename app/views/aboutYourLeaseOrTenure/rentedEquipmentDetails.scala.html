@@ -14,14 +14,15 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.Implicits._
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.*
 @import models.pages.Summary
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         govukButton: GovukButton,
         hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF

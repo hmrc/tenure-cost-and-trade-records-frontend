@@ -15,19 +15,20 @@
  *@
 
 @import actions.SessionRequest
-@import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMiscDetails}
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import util.AccessibilityUtil
+@import util.DateUtilLocalised
 @import java.time.LocalDate
 
 @this(
 
-        layout: Layout,
+        layout: PrimaryLayout,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF,
         govukInput: GovukInput,

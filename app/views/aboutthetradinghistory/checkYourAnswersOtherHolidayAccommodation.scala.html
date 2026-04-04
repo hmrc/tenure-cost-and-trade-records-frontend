@@ -15,12 +15,13 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
 @import models.submissions.common.AnswersYesNo
 @import views.html.answers.answersOtherHolidayAccommodation
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         answersSectionOtherHolidayAccommodation: answersOtherHolidayAccommodation,
         formWithCSRF: FormWithCSRF

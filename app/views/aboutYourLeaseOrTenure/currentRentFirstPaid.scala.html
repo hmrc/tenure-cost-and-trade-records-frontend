@@ -15,12 +15,13 @@
  *@
 
 @import models.pages.Summary
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput}
 
 @import java.time.LocalDate
 
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,
         formWithCSRF: FormWithCSRF
