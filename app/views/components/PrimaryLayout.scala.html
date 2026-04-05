@@ -14,20 +14,16 @@
  * limitations under the License.
  *@
 
-@import config.AppConfig
 @import models.pages.Summary
+@import models.template.FormatRefNum
 @import play.api.Configuration
-@import uk.gov.hmrc.govukfrontend.views.html.components.{GovukBackLink, GovukNotificationBanner}
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.backlink.BackLink
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{ErrorSummary, Text}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.vo.service.model.AccountInfo
 @import uk.gov.hmrc.vo.service.view.html.StandardPage
-@import views.html.includes.summaryErrors
 
 @this(
-        appConfig: AppConfig,
-        standardPage: StandardPage,
-        summaryErrors: summaryErrors,
-        govukBackLink: GovukBackLink,
-        govukNotificationBanner: GovukNotificationBanner
+        standardPage: StandardPage
 )
 
 @(
@@ -44,38 +40,27 @@
         readOnly: Boolean = false
 )(contentBlock: Html)(implicit request: Request[?], messages: Messages)
 
-@title = @{
-    val errorPrefix = Option(theForm).filter(_.hasErrors).fold("")(_ => s"${messages("error.title")} ")
-    s"$errorPrefix${pageTitle.getOrElse(pageHeading)}"
+@accountInfo = @{
+    summary.filter(_ => showAccountInfo)
+        .map(info => AccountInfo(FormatRefNum(info.referenceNumber), info.address.map(_.singleLine).getOrElse("")))
 }
 
-@beforeContent = {
-    @summary.filter(_ => showAccountInfo).map { info =>
-        @views.html.includes.account_info_header(info)
-    }
-
-    @backLinkUrl.map { url =>
-        @govukBackLink(BackLink(url))
+@errorSummary = @{
+    Option(theForm).filter(_.hasErrors).map { form =>
+        ErrorSummary(
+            errorList = form.errors.map { error =>
+                FormError(
+                    error.key,
+                    error.messages.map(str=> str.replaceAll("[\\[|\\]]", "")),
+                    error.args
+                )
+            }.asTextErrorLinks,
+            title = Text(messages("label.checkTheForm"))
+        )
     }
 }
 
-@contentWithHeading = {
-    @if(theForm != null) {
-        @summaryErrors(theForm)
-    }
-
-    @if(appConfig.showNotificationBanner) {
-        @govukNotificationBanner(appConfig.notificationBanner)
-    }
-
-    @if(showSection) {
-        <span class="govuk-caption-m">@sectionName</span>
-    }
-
-    @if(showH1) {
-        <h1 class="govuk-heading-l">@pageHeading</h1>
-    }
-
+@content = {
     @contentBlock
 
     <script type="text/javascript">
@@ -85,9 +70,12 @@
 }
 
 @standardPage(
-    title,
+    pageTitle.getOrElse(pageHeading),
+    accountInfo,
     backLinkUrl,
-    fullWidth,
-    beforeContentBlock = beforeContent,
+    errorSummary,
+    sectionName = sectionName.filter(_ => showSection),
+    showH1 = showH1,
+    fullWidth = fullWidth,
     footerBlock = Some(CustomFooter())
-)(contentWithHeading)
+)(content)
