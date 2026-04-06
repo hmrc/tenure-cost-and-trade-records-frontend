@@ -42,7 +42,7 @@
 
 @accountInfo = @{
     summary.filter(_ => showAccountInfo)
-        .map(info => AccountInfo(FormatRefNum(info.referenceNumber), info.address.map(_.singleLine).getOrElse("")))
+        .map(info => AccountInfo(FormatRefNum(info.referenceNumber), info.address.map(_.singleLine)))
 }
 
 @errorSummary = @{
@@ -77,5 +77,5 @@
     sectionName = sectionName.filter(_ => showSection),
     showH1 = showH1,
     fullWidth = fullWidth,
-    footerBlock = Some(CustomFooter())
+    footerBlock = CustomFooter()
 )(content)
