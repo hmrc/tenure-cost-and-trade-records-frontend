@@ -38,7 +38,7 @@
         backLinkUrl: Option[String] = None,
         fullWidth: Boolean = false,
         readOnly: Boolean = false
-)(contentBlock: Html)(implicit request: Request[?], messages: Messages)
+)(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
 
 @accountInfo = @{
     summary.filter(_ => showAccountInfo)

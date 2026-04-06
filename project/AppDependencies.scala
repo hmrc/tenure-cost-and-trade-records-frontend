@@ -10,7 +10,7 @@ object AppDependencies {
   private val cryptoJsonVersion             = "8.4.0"
 
   // Test dependencies
-  private val voTestVersion = "0.2.0"
+  private val voTestVersion = "0.3.0-SNAPSHOT"
 
   private val compile = Seq(
     "uk.gov.hmrc"       %% "bootstrap-frontend-play-30"            % bootstrapVersion,
