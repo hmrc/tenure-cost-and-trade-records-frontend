@@ -17,12 +17,13 @@
 @import actions.SessionRequest
 @import controllers.aboutthetradinghistory.routes
 @import models.submissions.common.AnswersYesNo
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichFormErrors
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import util.DateUtilLocalised
 
-@this(layout: Layout, govukSummaryList: GovukSummaryList, govukWarningText: GovukWarningText, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukButton: GovukButton, dateUtil: DateUtilLocalised)
+@this(layout: PrimaryLayout, govukSummaryList: GovukSummaryList, govukWarningText: GovukWarningText, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
 @(theForm: Form[AnswersYesNo], backLinkUrl: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
 

@@ -15,11 +15,12 @@
  *@
 
 @import models.ForType.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukInput: GovukInput,
         formWithCSRF: FormWithCSRF

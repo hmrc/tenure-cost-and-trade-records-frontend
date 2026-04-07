@@ -17,13 +17,14 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfPermanentResidents, MaxNumberOfOnlineAdvertising}
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{CheckboxItem, Checkboxes}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
 
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukButton: GovukButton)
+@this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukButton: GovukButton)
 
 @(theForm: Form[Boolean], alreadyChecked: Boolean, kind: String, backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 

@@ -16,8 +16,9 @@
 
 @import form.Feedback
 
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
@@ -26,7 +27,7 @@
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.charactercount.CharacterCount
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         govukRadios: GovukRadios,
         govukButton:GovukButton,
         hmrcCharacterCount: HmrcCharacterCount,
@@ -37,8 +38,7 @@
 
 @layout(
     pageHeading = messages("label.feedback.heading"),
-    theForm = theForm,
-    showFeedback = false
+    theForm = theForm
 ) {
 
     <p class="govuk-body">@messages("label.feedback.p1")</p>

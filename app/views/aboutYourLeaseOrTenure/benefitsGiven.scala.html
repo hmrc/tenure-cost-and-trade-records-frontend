@@ -14,13 +14,14 @@
  * limitations under the License.
  *@
 
+@import models.pages.Summary
 @import models.submissions.common.AnswersYesNo
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.pages.Summary
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF

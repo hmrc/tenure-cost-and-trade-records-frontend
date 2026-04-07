@@ -15,13 +15,14 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.submissions.common.CheckYourAnswersAndConfirm
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
 @import models.pages.Summary
 @import views.html.answers.answersConnectionToTheProperty
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         answersSectionConnectionToTheProperty: answersConnectionToTheProperty,

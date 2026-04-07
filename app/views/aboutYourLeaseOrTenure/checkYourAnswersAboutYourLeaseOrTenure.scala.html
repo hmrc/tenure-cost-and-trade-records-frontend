@@ -18,11 +18,12 @@
 @import models.submissions.common.AnswersYesNo
 @import models.pages.Summary
 @import views.html.answers.{answersAboutYourLeaseOrTenure, answersAboutYourLease6020, answersAboutYourLease6030}
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.ForType.{FOR6020, FOR6030}
 
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         answersSection: answersAboutYourLeaseOrTenure,
         answersSection6020: answersAboutYourLease6020,

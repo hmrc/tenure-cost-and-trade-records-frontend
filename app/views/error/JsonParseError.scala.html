@@ -15,14 +15,14 @@
  *@
 
 @import actions.SessionRequest
+@import views.html.components.PrimaryLayout
 
-@this(layout: Layout)
+@this(layout: PrimaryLayout)
 
 @(backLinkUrl: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
     pageHeading = messages("error.json.page.heading"),
-    withTimeoutDialog = false,
     summary = Some(request.sessionData.toSummary),
     backLinkUrl = backLinkUrl
 ) {

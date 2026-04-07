@@ -17,13 +17,14 @@
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.CaravansAnnualPitchFee
 @import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import views.html.includes.multiCheckbox
 
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         govukButton: GovukButton,
         govukInput: GovukInput,
         formWithCSRF: FormWithCSRF,

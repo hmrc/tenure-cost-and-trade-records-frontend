@@ -14,12 +14,13 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.submissions.aboutthetradinghistory.LowMarginFuelCardDetail
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukInput: GovukInput,
         formWithCSRF: FormWithCSRF
@@ -29,7 +30,6 @@
 
 @layout(
     pageHeading = messages("lowMarginFuelCardDetails.heading"),
-    showH1 = true,
     showSection = true,
     summary = Some(summary),
     sectionName = messages("label.section.aboutYourTradingHistory"),

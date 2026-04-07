@@ -14,8 +14,9 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import actions.SessionRequest
 @import models.ForType.*
 @import util.SectionAnswersRowBuilder
@@ -24,7 +25,7 @@
 
 @import java.time.LocalDate
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
     govukButton: GovukButton,
     formWithCSRF: FormWithCSRF,
     govukSummaryList: GovukSummaryList,

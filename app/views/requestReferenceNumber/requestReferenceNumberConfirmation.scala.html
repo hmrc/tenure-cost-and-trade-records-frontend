@@ -15,15 +15,16 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.Radios
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 
 @import form.Feedback
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         hmrcCharacterCount: HmrcCharacterCount,
@@ -36,8 +37,7 @@
     pageHeading = messages("label.connectionToProperty.confirm.heading"),
     summary = Some(request.sessionData.toSummary),
     showH1 = false,
-    showAccountInfo = false,
-    withTimeoutDialog = false
+    showAccountInfo = false
 ) {
 
     <div class="govuk-panel govuk-panel--confirmation govuk-!-display-none-print">

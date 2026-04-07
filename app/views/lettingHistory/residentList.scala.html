@@ -19,11 +19,12 @@
 @import models.submissions.common.AnswersYesNo
 @import models.submissions.lettingHistory.ResidentDetail
 @import navigation.identifiers.{asPageIdentifier, ResidentRemovePageId}
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Text, HtmlContent}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryList, SummaryListRow, Value}
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton)
+@this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton)
 
 @(theForm: Form[AnswersYesNo], permanentResidents: List[ResidentDetail])(implicit request: SessionRequest[?], messages: Messages)
 

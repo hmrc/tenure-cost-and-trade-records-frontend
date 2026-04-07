@@ -16,12 +16,13 @@
 
 @import models.pages.Summary
 @import models.submissions.common.AnswersYesNo
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend, RadioItem, Radios}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF

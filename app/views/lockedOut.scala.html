@@ -14,15 +14,15 @@
  * limitations under the License.
  *@
 
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
-@this(layout: Layout)
+@this(layout: PrimaryLayout)
 
 @()(implicit request: Request[?],  messages: Messages)
 
 @layout(
-    pageHeading = messages("heading.login.lockedOut"),
-    withTimeoutDialog = false
+    pageHeading = messages("heading.login.lockedOut")
 ) {
     <p class="govuk-body">@messages("error.login.lockedOut")</p>
     <p class="govuk-body">@HtmlContent(messages("error.login.lockedOut.p1")).asHtml</p>

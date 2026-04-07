@@ -14,13 +14,14 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         govukInput: GovukInput,
         govukButton: GovukButton,
         formWithCSRF: FormWithCSRF)
@@ -29,10 +30,8 @@
 
 @layout(
     pageHeading = messages("login.heading"),
-    showBanner = true,
     showAccountInfo = false,
-    theForm = theForm,
-    withTimeoutDialog = false
+    theForm = theForm
 ) {
 
     <p class="govuk-body">@messages("label.letter")</p>

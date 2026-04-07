@@ -14,11 +14,12 @@
  * limitations under the License.
  *@
 
-@import models.ForType._
 @import controllers.guidance.GuidancePage
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import models.ForType.*
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 
-@this(layout: Layout, govukInsetText : GovukInsetText)
+@this(layout: PrimaryLayout, govukInsetText : GovukInsetText)
 
 @(forType: ForType)(implicit request: Request[AnyContent], messages: Messages)
 

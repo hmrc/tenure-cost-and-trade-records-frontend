@@ -1,0 +1,81 @@
+@*
+ * Copyright 2026 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import models.pages.Summary
+@import models.template.FormatRefNum
+@import play.api.Configuration
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{ErrorSummary, Text}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.vo.service.model.AccountInfo
+@import uk.gov.hmrc.vo.service.view.html.StandardPage
+
+@this(
+        standardPage: StandardPage
+)
+
+@(
+        pageTitle: Option[String] = None,
+        pageHeading: String,
+        theForm: Form[?] = null,
+        showH1: Boolean = true,
+        showSection: Boolean = false,
+        showAccountInfo: Boolean = true,
+        summary: Option[Summary] = None,
+        sectionName: Option[String] = None,
+        backLinkUrl: Option[String] = None,
+        fullWidth: Boolean = false,
+        readOnly: Boolean = false
+)(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
+
+@accountInfo = @{
+    summary.filter(_ => showAccountInfo)
+        .map(info => AccountInfo(FormatRefNum(info.referenceNumber), info.address.map(_.singleLine)))
+}
+
+@errorSummary = @{
+    Option(theForm).filter(_.hasErrors).map { form =>
+        ErrorSummary(
+            errorList = form.errors.map { error =>
+                FormError(
+                    error.key,
+                    error.messages.map(str=> str.replaceAll("[\\[|\\]]", "")),
+                    error.args
+                )
+            }.asTextErrorLinks,
+            title = Text(messages("label.checkTheForm"))
+        )
+    }
+}
+
+@content = {
+    @contentBlock
+
+    <script type="text/javascript">
+            @readOnly &&
+            document.querySelectorAll('form fieldset').forEach(form => form.setAttribute('inert', 'true'));
+    </script>
+}
+
+@standardPage(
+    pageTitle.getOrElse(pageHeading),
+    accountInfo,
+    backLinkUrl,
+    errorSummary,
+    sectionName = sectionName.filter(_ => showSection),
+    showH1 = showH1,
+    fullWidth = fullWidth,
+    footerBlock = CustomFooter()
+)(content)

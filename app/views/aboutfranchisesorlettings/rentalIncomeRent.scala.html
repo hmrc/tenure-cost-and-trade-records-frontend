@@ -14,9 +14,10 @@
  * limitations under the License.
  *@
 
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits._
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Label
@@ -26,7 +27,7 @@
 @import models.pages.Summary
 @import models.ForType.*
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukInput: GovukInput,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,

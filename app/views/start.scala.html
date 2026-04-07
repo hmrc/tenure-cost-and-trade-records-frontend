@@ -14,12 +14,13 @@
  * limitations under the License.
  *@
 
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
 
-@this(layout: Layout, govukButton: GovukButton)
+@this(layout: PrimaryLayout, govukButton: GovukButton)
 
 @()(implicit request: Request[AnyContent], messages: Messages)
 
@@ -27,9 +28,7 @@
 
 @layout(
     pageHeading = messages("start.page.heading"),
-    showBanner = true,
-    showAccountInfo = false,
-    withTimeoutDialog = false
+    showAccountInfo = false
 ) {
 
     <h2 class="govuk-heading-m">@{messages("start.subheading")}</h2>

@@ -15,12 +15,13 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
 @import views.html.answers.vacantPropertyAnswersTable
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         govukButton: GovukButton,
         govukWarningText: GovukWarningText,
         vacantPropertyAnswers: vacantPropertyAnswersTable,

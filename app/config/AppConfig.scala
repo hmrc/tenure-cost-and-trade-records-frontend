@@ -18,36 +18,47 @@ package config
 
 import javax.inject.{Inject, Singleton}
 import play.api.Configuration
-import play.api.mvc.Call
+import play.api.mvc.{Call, RequestHeader}
 import uk.gov.hmrc.vo.service.config.VOServiceConfig
 
 @Singleton
 class AppConfig @Inject() (val configuration: Configuration) extends VOServiceConfig:
 
-  override def serviceID: String      = "TCTR"
-  override def serviceLocalRoot: Call = controllers.routes.Application.index
-  override def serviceHome: Call      = controllers.routes.Application.index
-  override def serviceFeedback: Call  = controllers.routes.FeedbackController.feedback // TODO: Remove to use feedbackFrontendForm
+  override def serviceLocalRoot: Call    = controllers.routes.Application.index
+  override def serviceMenuHome: Call     = controllers.routes.Application.index
+  override def theFirstPage: Call        = controllers.routes.LoginController.show
+  override def feedbackPage: Call        = controllers.routes.FeedbackController.feedback // TODO: Remove to use feedbackFrontendForm
+  override def signOutCall: Option[Call] = Some(controllers.routes.LoginController.logout)
+
+  override def timeoutCall(using request: RequestHeader): Option[Call] = Some(controllers.routes.SaveAsDraftController.timeout(request.uri))
 
   override def isWelshTranslationAvailable: Boolean = true
+
+  override def stylesheet: Option[Call] = Some(controllers.routes.Assets.versioned("stylesheets/app.min.css"))
+
+  override def notificationBannerEnabledOn: Set[Call] = Set(
+    serviceMenuHome,
+    controllers.routes.LoginController.show
+  )
+
+  override def timeoutDialogEnabledExcept: Set[Call] = Set(
+    serviceMenuHome,
+    controllers.routes.LoginController.show,
+    controllers.routes.LoginController.loggedOut,
+    controllers.routes.LoginController.lockedOut,
+    controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation(),
+    controllers.routes.SaveAsDraftController.loginToResume,
+    controllers.routes.SaveAsDraftController.customPassword(""),
+    controllers.routes.SaveAsDraftController.timeout(""),
+    controllers.routes.SaveAsDraftController.sessionTimeout,
+    controllers.routes.FormSubmissionController.confirmation(),
+    controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation(),
+    controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation(),
+    controllers.error.routes.ErrorHandlerController.showJsonError
+  )
 
   val useDummyIp: Boolean        = getBoolean("useDummyTrueIP")
   val startPageRedirect: Boolean = getBoolean("startPageRedirect")
   val govukStartPage: String     = getString("govukStartPage")
-
-  val cookiesUrl: String            = "https://www.tax.service.gov.uk/help/cookies"
-  val privacyNoticeUrl: String      = "https://www.tax.service.gov.uk/help/privacy"
-  val termsAndConditionsUrl: String = "https://www.tax.service.gov.uk/help/terms-and-conditions"
-  val helpUsingGovUkUrl: String     = "https://www.gov.uk/help"
-  val contactGovUkUrl: String       = "https://www.gov.uk/government/organisations/hm-revenue-customs/contact"
-  val welshHelpUrl: String          = "https://www.gov.uk/cymraeg"
-  val internalAuthToken: String     = getString("internalAuthToken")
-  val tctrFrontendUrl: String       = getString("urls.tctrFrontend")
-
-  private def getString(key: String): String =
-    configuration.getOptional[String](key).getOrElse(throw ConfigSettingMissing(key))
-
-  private def getBoolean(key: String): Boolean =
-    configuration.getOptional[Boolean](key).getOrElse(throw ConfigSettingMissing(key))
-
-case class ConfigSettingMissing(key: String) extends Exception(key)
+  val internalAuthToken: String  = getString("internalAuthToken")
+  val tctrFrontendUrl: String    = getString("urls.tctrFrontend")

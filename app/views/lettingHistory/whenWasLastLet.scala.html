@@ -16,13 +16,14 @@
 
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import util.DateUtil.exampleDayMonthYear
 @import java.time.LocalDate
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukDateInput: GovukDateInput, govukButton: GovukButton)
+@this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukDateInput: GovukDateInput, govukButton: GovukButton)
 
 @(theForm: Form[LocalDate], backLink: Option[String])(implicit request: SessionRequest[?], messages: Messages)
 

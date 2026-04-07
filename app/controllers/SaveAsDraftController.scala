@@ -135,6 +135,7 @@ class SaveAsDraftController @Inject() (
   def timeout(exitPath: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val session = request.sessionData
     if (session.saveAsDraftPassword.isDefined) {
+      audit.sendExplicitAudit("UserTimeout", session.toUserData)
       saveSubmissionDraft(session, exitPath)
     } else {
       val generatedPassword = AlphanumericPasswordGenerator.generatePassword

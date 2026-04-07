@@ -129,7 +129,7 @@ class AddressLookupConnectorSpec extends TCTRServerSpec:
       val confirmedAddress = connector.getConfirmedAddress(id = "123456789").futureValue
 
       confirmedAddress.auditRef shouldBe "bed4bd24-72da-42a7-9338-f43431b7ed72"
-      confirmedAddress.id.value shouldBe "GB990091234524"
+      confirmedAddress.id.get   shouldBe "GB990091234524"
       confirmedAddress.address  shouldBe AddressLookupAddress(
         Some(List("10 Other Place", "Some District", "Anytown")),
         Some("ZZ1 1ZZ"),

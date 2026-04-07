@@ -16,10 +16,11 @@
 
 @import actions.SessionRequest
 @import models.submissions.accommodation.AccommodationTariffItem
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import views.html.includes.multiCheckbox
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         multiCheckboxes: multiCheckbox,
         formWithCSRF: FormWithCSRF

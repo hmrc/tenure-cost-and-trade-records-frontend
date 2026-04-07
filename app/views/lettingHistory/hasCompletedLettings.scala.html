@@ -18,12 +18,13 @@
 @import controllers.lettingHistory.routes
 @import models.submissions.common.AnswersYesNo
 @import models.submissions.lettingHistory.LocalPeriod
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
 @import util.DateUtilLocalised
 
-@this(layout: Layout, formWithCSRF: FormWithCSRF, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
+@this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
 @(theForm: Form[AnswersYesNo], fiscalPeriod: LocalPeriod, backLink: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
 

@@ -17,11 +17,12 @@
 @import actions.SessionRequest
 @import models.pages.ListPageConfig
 @import models.pages.ListPageConfig.*
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukCheckboxes: GovukCheckboxes,
         formWithCSRF: FormWithCSRF

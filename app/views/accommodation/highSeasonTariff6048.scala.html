@@ -16,13 +16,14 @@
 
 @import actions.SessionRequest
 @import models.submissions.accommodation.HighSeasonTariff
-@import uk.gov.hmrc.govukfrontend.views.html.components._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.AccountingInformationUtil
 @import util.DateUtilLocalised
 
 @import java.time.YearMonth
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton,
         govukDateInput: GovukDateInput,
         formWithCSRF: FormWithCSRF,

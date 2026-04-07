@@ -14,9 +14,10 @@
  * limitations under the License.
  *@
 
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
 
-@this(layout: Layout)
+@this(layout: PrimaryLayout)
 
 @(remainingAttempts: Int)(implicit request: Request[?], messages: Messages)
 
@@ -27,8 +28,7 @@
 
 @layout(
     pageHeading = messages("heading.login.loginFailed"),
-    backLinkUrl = controllers.routes.LoginController.show.url,
-    withTimeoutDialog = false
+    backLinkUrl = controllers.routes.LoginController.show.url
 ) {
 
     @if(remainingAttempts == 1){

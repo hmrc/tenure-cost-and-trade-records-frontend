@@ -14,13 +14,14 @@
  * limitations under the License.
  *@
 
-@this(layout: Layout)
+@import views.html.components.PrimaryLayout
+
+@this(layout: PrimaryLayout)
 
 @()(implicit request: Request[?], messages: Messages)
 
 @layout(
-    pageHeading = messages("logout.header"),
-    withTimeoutDialog = false
+    pageHeading = messages("logout.header")
 ) {
 
     <p class="govuk-body">@messages("logout.paragraph")</p>

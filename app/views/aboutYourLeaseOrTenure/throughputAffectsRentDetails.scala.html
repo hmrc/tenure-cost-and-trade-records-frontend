@@ -15,12 +15,13 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components._
-@import uk.gov.hmrc.hmrcfrontend.views.Implicits._
+@import views.html.components.PrimaryLayout
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.{CharacterCount, HmrcCharacterCount}
 
 @this(
-        layout: Layout,
+        layout: PrimaryLayout,
         govukButton: GovukButton,
         hmrcCharacterCount: HmrcCharacterCount,
         formWithCSRF: FormWithCSRF

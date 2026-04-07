@@ -14,12 +14,13 @@
  * limitations under the License.
  *@
 
+@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 
 
-@this(layout: Layout,
+@this(layout: PrimaryLayout,
         govukButton: GovukButton
 )
 
@@ -29,7 +30,6 @@
 @layout(
     pageHeading = messages("feedback.thankyou.h1"),
     showH1 = false,
-    showFeedback = false,
     fullWidth = true
 ) {
     <div class="govuk-width-container">
