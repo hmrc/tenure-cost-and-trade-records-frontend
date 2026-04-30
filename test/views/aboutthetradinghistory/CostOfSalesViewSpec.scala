@@ -50,10 +50,10 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
     }
 
     "Section heading is visible" in {
-      val form1    = CostOfSalesForm.costOfSalesForm(Seq("2025"))(using messages)
-      val doc      = asDocument(createViewUsingForm(form1))
-      val captions = doc.getElementsByClass("govuk-caption-m").eachText()
-      assert(captions.contains(messages("label.section.aboutYourTradingHistory")))
+      val form1 = CostOfSalesForm.costOfSalesForm(Seq("2025"))(using messages)
+      val doc   = asDocument(createViewUsingForm(form1))
+      val html  = doc.getElementsByClass("govuk-caption-m").first.html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {

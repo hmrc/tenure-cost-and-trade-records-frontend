@@ -51,9 +51,9 @@ class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSo
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").first().text()
-      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").first.html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {

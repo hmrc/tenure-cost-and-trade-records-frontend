@@ -44,7 +44,7 @@ class StaffCostsViewSpec extends QuestionViewBehaviours[Seq[StaffCosts]] {
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
-      val html = doc.getElementsByClass("govuk-caption-m").html()
+      val html = doc.getElementsByClass("govuk-caption-m").first.html()
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 

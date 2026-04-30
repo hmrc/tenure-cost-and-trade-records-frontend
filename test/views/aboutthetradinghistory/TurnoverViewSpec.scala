@@ -57,16 +57,14 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").first().text()
-      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").first.html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contains paragraph details" in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("turnover.p1")))
-      // TODO - Reinstate paragraph when cut and paste functionality developed
-//      assert(doc.toString.contains(messages("turnover.p2")))
     }
 
     "contain get help section" in {
