@@ -42,9 +42,9 @@ class PremisesCostsViewSpec extends QuestionViewBehaviours[Seq[PremisesCosts]] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText.contains(messages("label.section.aboutYourTradingHistory")))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contain continue button with the value Continue" in {

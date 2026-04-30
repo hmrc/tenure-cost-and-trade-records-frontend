@@ -47,9 +47,9 @@ class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+      val doc  = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {

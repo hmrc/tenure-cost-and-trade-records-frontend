@@ -19,7 +19,6 @@ package models.submissions.lettingHistory
 import models.submissions.PrintableAddress
 import play.api.libs.json.{Format, Json}
 
-@deprecated(message = "Avoid duplicated code by just using the common.Address type instead of this one")
 case class OccupierAddress(
   buildingNameNumber: String,
   street1: Option[String],
@@ -28,26 +27,24 @@ case class OccupierAddress(
   postcode: String
 ) extends PrintableAddress:
 
-  override def equals(that: Any): Boolean = that match {
-    case OccupierAddress(line1, line2, town, county, postcode) =>
-      this.buildingNameNumber.equalsIgnoreCase(line1) && this.street1.equalsIgnoreCase(line2) &&
-      this.town
-        .equalsIgnoreCase(
-          town
-        ) && this.county.equalsIgnoreCase(county) && this.postcode.equalsIgnoreCase(postcode)
-    case _                                                     => false
-  }
+  override def equals(that: Any): Boolean =
+    that match
+      case OccupierAddress(line1, line2, town, county, postcode) =>
+        this.buildingNameNumber.equalsIgnoreCase(line1) && this.street1.equalsIgnoreCase(line2) &&
+        this.town.equalsIgnoreCase(town) && this.county.equalsIgnoreCase(county) && this.postcode.equalsIgnoreCase(postcode)
+      case _                                                     => false
 
   extension (opt: Option[String])
 
-    def equalsIgnoreCase(that: Option[String]): Boolean = (opt, that) match {
-      case (Some(a), Some(b)) => a.equalsIgnoreCase(b)
-      case (None, None)       => true
-      case _                  => false
-    }
+    def equalsIgnoreCase(that: Option[String]): Boolean =
+      (opt, that) match
+        case (Some(a), Some(b)) => a.equalsIgnoreCase(b)
+        case (None, None)       => true
+        case _                  => false
 
 object OccupierAddress:
 
   def unapply(obj: OccupierAddress): Option[(String, Option[String], String, Option[String], String)] =
     Some(obj.buildingNameNumber, obj.street1, obj.town, obj.county, obj.postcode)
-  given Format[OccupierAddress]                                                                       = Json.format
+
+  given Format[OccupierAddress] = Json.format

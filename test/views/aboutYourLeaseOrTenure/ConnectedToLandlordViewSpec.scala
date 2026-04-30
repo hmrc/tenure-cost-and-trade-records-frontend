@@ -51,9 +51,9 @@ class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
     "contain heading for 6020 question" in {

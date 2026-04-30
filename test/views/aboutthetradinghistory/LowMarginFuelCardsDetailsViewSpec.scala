@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.LowMarginFuelCardDetail
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class lowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMarginFuelCardDetail] {
+class LowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMarginFuelCardDetail] {
 
   override val form: Form[LowMarginFuelCardDetail] = lowMarginFuelCardDetailsForm
 
@@ -54,9 +54,9 @@ class lowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMargin
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contain continue button with the value Continue" in {
