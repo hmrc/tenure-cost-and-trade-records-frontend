@@ -18,7 +18,7 @@ package form.aboutthetradinghistory
 
 import form.MappingSupport.{tradingPeriodWeeks, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.TurnoverSection
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 

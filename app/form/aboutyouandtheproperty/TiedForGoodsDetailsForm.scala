@@ -17,8 +17,8 @@
 package form.aboutyouandtheproperty
 
 import form.MappingSupport.tiedForGoodsDetailsType
-import models.submissions.aboutyouandtheproperty.TiedForGoodsInformationDetails
 import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
+import models.submissions.aboutyouandtheproperty.TiedForGoodsInformationDetails
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}

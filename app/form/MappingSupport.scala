@@ -25,7 +25,6 @@ import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
-import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingRequired
 import models.submissions.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutfranchisesorlettings.*
@@ -34,10 +33,11 @@ import models.submissions.common.*
 import models.submissions.common.ResponsibilityParty.*
 import models.submissions.connectiontoproperty.*
 import play.api.data.Forms.*
+import play.api.data.Mapping
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
-import play.api.data.Mapping
 import play.api.i18n.Messages
+import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingRequired
 import util.NumberUtil.zeroBigDecimal
 
 import scala.util.Try

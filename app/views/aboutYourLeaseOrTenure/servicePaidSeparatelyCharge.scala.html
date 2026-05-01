@@ -14,15 +14,12 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
+@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Input, PrefixOrSuffix}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
-@import models.pages.Summary
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukInput: GovukInput,

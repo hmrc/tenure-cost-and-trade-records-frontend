@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport._
+import form.MappingSupport.*
 import models.submissions.aboutthetradinghistory.TurnoverSection6020
 import play.api.data.Forms.{ignored, mapping}
 import play.api.data.{Form, Mapping}

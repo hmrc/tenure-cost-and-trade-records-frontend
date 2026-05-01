@@ -18,8 +18,8 @@ package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.nonEmptyList
 import models.submissions.aboutYourLeaseOrTenure.TypeOfTenure
-import play.api.data._
-import play.api.data.Forms._
+import play.api.data.*
+import play.api.data.Forms.*
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 object TypeOfTenureForm {

@@ -15,22 +15,12 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
-@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Actions, Fieldset, Legend, RadioItem, Radios, SummaryList}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Key, SummaryListRow}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,

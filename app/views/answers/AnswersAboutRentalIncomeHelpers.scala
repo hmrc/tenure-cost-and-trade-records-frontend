@@ -18,8 +18,8 @@ package views.answers
 
 import actions.SessionRequest
 import controllers.aboutfranchisesorlettings.routes
-import models.submissions.aboutfranchisesorlettings.{CalculatingTheRent, Concession6015IncomeRecord, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord, PropertyRentDetails, RentReceivedFrom}
 import models.ForType.FOR6030
+import models.submissions.aboutfranchisesorlettings.*
 import play.api.i18n.Messages
 import util.DateUtilLocalised
 import util.NumberUtil.*

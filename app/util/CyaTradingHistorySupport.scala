@@ -17,17 +17,17 @@
 package util
 
 import actions.SessionRequest
+import controllers.toOpt
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, CostOfSales, TurnoverSection}
 import play.api.i18n.Messages
 import play.api.mvc.Call
 import play.twirl.api.Html
-import controllers.toOpt
-
-import java.time.LocalDate
 import uk.gov.hmrc.govukfrontend.views.html.components.*
 import util.NumberUtil.*
+
+import java.time.LocalDate
 import javax.inject.Inject
 
 class CyaTradingHistorySupport @Inject() (

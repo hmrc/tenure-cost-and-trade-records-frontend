@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport._
+import form.MappingSupport.*
 import models.submissions.aboutthetradinghistory.GrossReceiptsCaravanFleetHire
 import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}

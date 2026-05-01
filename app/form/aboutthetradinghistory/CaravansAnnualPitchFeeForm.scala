@@ -18,12 +18,12 @@ package form.aboutthetradinghistory
 
 import form.ConditionalConstraintMappings.mandatoryIfOneOfValuesIs
 import form.MappingSupport.*
-import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingSeq
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices
 import models.submissions.aboutthetradinghistory.CaravansAnnualPitchFee
 import play.api.data.Form
 import play.api.data.Forms.*
 import play.api.data.validation.Constraints.maxLength
+import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingSeq
 
 /**
   * 6045/6046 Trading history - Caravans annual pitch fee per provided service.

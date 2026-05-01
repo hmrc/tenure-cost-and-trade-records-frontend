@@ -16,15 +16,13 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSections
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
-@import util.DateUtilLocalised
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.{CharacterCount, HmrcCharacterCount}
+@import util.{AccessibilityUtil, DateUtilLocalised}
 @import util.NumberUtil.*
-@import util.AccessibilityUtil
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,

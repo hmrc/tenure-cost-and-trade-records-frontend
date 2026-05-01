@@ -16,12 +16,12 @@
 
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
-@import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfPermanentResidents, MaxNumberOfOnlineAdvertising}
-@import views.html.components.PrimaryLayout
+@import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfOnlineAdvertising, MaxNumberOfPermanentResidents}
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{CheckboxItem, Checkboxes}
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukButton: GovukButton)

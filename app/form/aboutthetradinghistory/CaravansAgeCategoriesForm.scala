@@ -17,9 +17,8 @@
 package form.aboutthetradinghistory
 
 import form.MappingSupport.nonNegativeNumber
-import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType
 import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.{FleetHire, PrivateSublet}
-import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType
+import models.submissions.aboutthetradinghistory.Caravans.{CaravanHireType, CaravanUnitType}
 import models.submissions.aboutthetradinghistory.{CaravansAge, CaravansPerAgeCategory}
 import play.api.data.Form
 import play.api.data.Forms.mapping

@@ -14,15 +14,14 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
+@import models.pages.{IncomeExpenditureEntry, Summary}
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import models.pages.Summary
-@import models.pages.IncomeExpenditureEntry
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
 @import util.NumberUtil.*
-@import util.DateUtilLocalised
+@import views.html.components.PrimaryLayout
+
 @import java.time.LocalDate
-@import util.AccessibilityUtil
 
 
 @this(

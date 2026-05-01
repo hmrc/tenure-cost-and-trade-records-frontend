@@ -17,9 +17,9 @@
 package views.lettingHistory
 
 import actions.SessionRequest
-import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
+import models.submissions.lettingHistory.LettingHistory.*
 
 object LettingHistoryTaskListHelper:
 

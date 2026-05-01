@@ -20,7 +20,7 @@ import form.DateMappings.requiredDateMapping
 import form.MappingSupport.currencyMapping
 import models.submissions.aboutfranchisesorlettings.PropertyRentDetails
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.i18n.Messages
 
 object IncomeRecordRentForm {

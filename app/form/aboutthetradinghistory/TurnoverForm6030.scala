@@ -18,7 +18,7 @@ package form.aboutthetradinghistory
 
 import form.MappingSupport.{tradingPeriodWeeks, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.TurnoverSection6030
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages

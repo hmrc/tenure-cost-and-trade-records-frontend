@@ -17,7 +17,6 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.{nonEmptySeq, noneCantBeSelectedWithOtherSeq}
-import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingSeq
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.IncludedInYourRentInformation.*
@@ -25,6 +24,7 @@ import models.submissions.aboutYourLeaseOrTenure.{IncludedInYourRentDetails, Inc
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.data.validation.*
+import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingSeq
 
 object IncludedInYourRentForm:
 

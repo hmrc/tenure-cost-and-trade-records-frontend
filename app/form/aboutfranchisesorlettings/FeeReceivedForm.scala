@@ -16,7 +16,7 @@
 
 package form.aboutfranchisesorlettings
 
-import form.MappingSupport._
+import form.MappingSupport.*
 import models.submissions.aboutfranchisesorlettings.{FeeReceived, FeeReceivedPerYear}
 import play.api.data.Forms.{ignored, mapping, optional, text}
 import play.api.data.{Form, Mapping}

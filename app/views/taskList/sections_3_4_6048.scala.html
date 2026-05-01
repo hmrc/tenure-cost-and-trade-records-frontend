@@ -16,9 +16,9 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
-@import views.lettingHistory.LettingHistoryTaskListHelper
 @import models.submissions.common.AnswersYesNo
 @import models.submissions.lettingHistory.LettingHistory
+@import views.lettingHistory.LettingHistoryTaskListHelper
 
 @(forType: ForType, section2Completed: Option[AnswersYesNo], section4AccommodationCompleted: Option[AnswersYesNo], sectionLettingHistoryCompleted: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
