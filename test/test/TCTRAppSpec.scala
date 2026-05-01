@@ -18,6 +18,7 @@ package test
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.AppConfig
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
@@ -32,8 +33,6 @@ import models.{ForType, Session}
 import play.api.mvc.{Request, Result}
 import repositories.SessionRepository
 import uk.gov.hmrc.vo.unit.test.BaseAppSpec
-
-import models.ForType.*
 
 import scala.concurrent.Future
 

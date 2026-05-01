@@ -18,7 +18,7 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.WhatIsYourCurrentRentBasedOnForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure._
+import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

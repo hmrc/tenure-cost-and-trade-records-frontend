@@ -18,14 +18,14 @@ package controllers.aboutyouandtheproperty
 
 import connectors.Audit
 import form.Errors
+import form.aboutyouandtheproperty.RenewablesPlantForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.common.AnswersYesNo.*
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
-import form.aboutyouandtheproperty.RenewablesPlantForm.theForm
-import models.submissions.common.AnswersYesNo.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls

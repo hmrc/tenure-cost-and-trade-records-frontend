@@ -16,8 +16,8 @@
 
 package security
 
-import models.ForType.*
 import models.FORLoginResponse
+import models.ForType.*
 import models.submissions.common.Address
 import security.LoginToBackend.{Postcode, RefNumber}
 import utils.UnitTest
@@ -26,7 +26,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class LoginToBackendSpec extends UnitTest {
-  import TestData._
+  import TestData.*
 
   type ReferenceNumber = String
 

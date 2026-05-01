@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm._
+import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.*
 import models.submissions.common.AnswersYesNo.*
 import org.scalatestplus.play.PlaySpec
 import play.api.data.FormError

@@ -21,9 +21,9 @@ import connectors.Audit
 import controllers.aboutthetradinghistory
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
 import models.ForType.*
-import models.{ForType, Session}
 import models.submissions.Form6010.DayMonthsDuration
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
+import models.{ForType, Session}
 import play.api.data.Form
 import play.api.http.Status
 import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}

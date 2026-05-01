@@ -16,16 +16,16 @@
 
 package crypto
 
-import org.scalatest.wordspec.AnyWordSpecLike
+import crypto.SensitiveFormats.*
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.Configuration
-import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import play.api.libs.json.{Json, OFormat}
-import SensitiveFormats._
+import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
 
 class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
-  import SensitiveFormatsSpec._
+  import SensitiveFormatsSpec.*
 
   val testConfig: Configuration = loadTestConfig()
 
@@ -67,7 +67,7 @@ object SensitiveFormatsSpec {
   )
 
   object SensitiveTestEntity {
-    import crypto.SensitiveFormats._
+    import crypto.SensitiveFormats.*
 
     implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveTestEntity] = Json.format
   }

@@ -22,7 +22,7 @@ import form.connectiontoproperty.AreYouStillConnectedForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls

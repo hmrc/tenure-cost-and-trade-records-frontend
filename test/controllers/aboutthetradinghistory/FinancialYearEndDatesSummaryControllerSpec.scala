@@ -23,7 +23,7 @@ import models.ForType.*
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {

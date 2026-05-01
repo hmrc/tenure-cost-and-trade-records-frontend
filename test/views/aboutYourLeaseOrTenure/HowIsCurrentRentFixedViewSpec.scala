@@ -19,8 +19,8 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
+import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours

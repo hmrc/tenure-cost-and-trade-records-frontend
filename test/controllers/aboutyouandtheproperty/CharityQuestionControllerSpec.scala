@@ -27,8 +27,8 @@ import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
 class CharityQuestionControllerSpec extends TestBaseSpec {
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 

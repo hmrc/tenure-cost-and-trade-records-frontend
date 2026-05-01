@@ -18,7 +18,7 @@ package navigation
 
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.common.AnswersYesNo.*
-import navigation.identifiers._
+import navigation.identifiers.*
 import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {

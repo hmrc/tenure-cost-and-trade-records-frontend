@@ -30,7 +30,7 @@ import utils.TestBaseSpec
 
 class OccupiersDetailsListControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 

@@ -27,9 +27,9 @@ import scala.language.reflectiveCalls
 
 class LicensableActivitiesControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.aboutyouandtheproperty.LicensableActivitiesForm._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import form.aboutyouandtheproperty.LicensableActivitiesForm.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 

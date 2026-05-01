@@ -18,7 +18,7 @@ package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.TiedForGoodsDetailsForm
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty._
+import models.submissions.aboutyouandtheproperty.*
 import models.submissions.aboutyouandtheproperty.TiedForGoodsInformation.*
 import play.api.data.Form
 import play.twirl.api.Html

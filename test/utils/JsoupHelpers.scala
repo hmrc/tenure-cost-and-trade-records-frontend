@@ -21,9 +21,10 @@ import org.apache.pekko.stream.testkit.NoMaterializer
 import org.apache.pekko.util.Timeout
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
+import org.scalatest.matchers.{MatchResult, Matcher}
 import play.api.mvc.Result
 import play.api.test.Helpers.contentAsString
-import org.scalatest.matchers.{MatchResult, Matcher}
+
 import scala.concurrent.Future
 import scala.jdk.CollectionConverters.*
 

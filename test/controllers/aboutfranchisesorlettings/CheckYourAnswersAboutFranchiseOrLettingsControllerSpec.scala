@@ -18,8 +18,8 @@ package controllers.aboutfranchisesorlettings
 
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.TypeOfIncome.{TypeConcession, TypeFranchise, TypeLetting}
 import models.submissions.aboutfranchisesorlettings.*
+import models.submissions.aboutfranchisesorlettings.TypeOfIncome.{TypeConcession, TypeFranchise, TypeLetting}
 import models.submissions.common.AnswersYesNo.AnswerYes
 import models.{ForType, Session}
 import play.api.http.Status

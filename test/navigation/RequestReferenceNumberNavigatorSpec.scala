@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec

@@ -18,12 +18,11 @@ package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
 import connectors.Audit
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.theForm
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.FakeRequest
-import play.api.test.Helpers
+import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers.{POST, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
@@ -32,7 +31,7 @@ import scala.language.reflectiveCalls
 
 class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 

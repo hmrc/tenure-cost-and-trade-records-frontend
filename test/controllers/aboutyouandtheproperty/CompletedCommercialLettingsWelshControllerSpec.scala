@@ -30,7 +30,7 @@ import java.time.LocalDate
 
 class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
 
-  import utils.FormBindingTestAssertions._
+  import utils.FormBindingTestAssertions.*
 
   private val mockAudit: Audit = mock[Audit]
 

@@ -17,8 +17,8 @@
 package views.additionalInformation
 
 import actions.SessionRequest
-import models.submissions.common.AnswersYesNo
 import form.additionalinformation.CheckYourAnswersAdditionalInformationForm
+import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 

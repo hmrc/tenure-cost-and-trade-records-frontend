@@ -31,7 +31,7 @@ import scala.language.reflectiveCalls
 
 class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 

@@ -26,8 +26,8 @@ import utils.TestBaseSpec
 
 class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 

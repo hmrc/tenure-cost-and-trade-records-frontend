@@ -21,7 +21,7 @@ import connectors.Audit
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
@@ -31,7 +31,7 @@ import scala.language.reflectiveCalls
 
 class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 

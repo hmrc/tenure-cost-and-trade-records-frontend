@@ -17,13 +17,13 @@
 package navigation
 
 import connectors.Audit
+import controllers.connectiontoproperty.routes
+import models.submissions.common.AnswersYesNo.*
+import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, LettingPartOfPropertyRentDetails, TenantDetails}
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
-import controllers.connectiontoproperty.routes
-import models.submissions.common.AnswersYesNo.*
-import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, LettingPartOfPropertyRentDetails, TenantDetails}
 
 import scala.concurrent.ExecutionContext
 

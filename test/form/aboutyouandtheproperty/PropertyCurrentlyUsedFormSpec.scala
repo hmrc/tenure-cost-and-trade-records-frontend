@@ -17,7 +17,7 @@
 package form.aboutyouandtheproperty
 
 import models.submissions.aboutyouandtheproperty.PropertyCurrentlyUsed
-import org.scalatestplus.play._
+import org.scalatestplus.play.*
 import play.api.data.FormError
 
 class PropertyCurrentlyUsedFormSpec extends PlaySpec {

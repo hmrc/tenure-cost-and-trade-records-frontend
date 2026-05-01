@@ -23,15 +23,15 @@ import models.audit.UserData
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json, Writes}
 import play.api.mvc.Result
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import security.LoginToBackend.{Postcode, RefNumber}
 import security.NoExistingDocument
 import stub.StubSessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.Helpers.fakeRequest2MessageRequest
-import views.html.login
-import utils.TestBaseSpec
 import util.DateUtil.nowInUK
+import utils.Helpers.fakeRequest2MessageRequest
+import utils.TestBaseSpec
+import views.html.login
 
 import scala.concurrent.{ExecutionContext, Future}
 

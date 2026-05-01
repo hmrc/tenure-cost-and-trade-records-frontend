@@ -20,14 +20,14 @@ import actions.SessionRequest
 import connectors.Audit
 import form.aboutfranchisesorlettings.RentalIncomeListForm.theForm
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, ConcessionIncomeRecord}
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class RentalIncomeListControllerSpec extends TestBaseSpec {
-  import TestData._
+  import TestData.*
   val mockAudit: Audit = mock[Audit]
 
   def controller(

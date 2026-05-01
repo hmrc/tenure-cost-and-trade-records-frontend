@@ -23,7 +23,7 @@ import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
 import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import models.submissions.common.AnswersYesNo.*
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec

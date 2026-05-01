@@ -16,10 +16,10 @@
 
 package form.aboutthetradinghistory
 
+import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.*
+import models.submissions.common.AnswersYesNo.*
 import org.scalatestplus.play.PlaySpec
 import play.api.data.FormError
-import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm._
-import models.submissions.common.AnswersYesNo.*
 
 class AddAnotherLowMarginFuelCardsDetailsFormSpec extends PlaySpec {
 

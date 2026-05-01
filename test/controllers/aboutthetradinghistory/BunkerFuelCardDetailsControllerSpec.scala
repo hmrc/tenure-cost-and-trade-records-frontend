@@ -21,8 +21,8 @@ import navigation.AboutTheTradingHistoryNavigator
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
-import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
 class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec {

@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, CompletedLettings, LettingAvailability}
 import models.submissions.common.AnswersYesNo.*
-import navigation.identifiers.{CommercialLettingAvailabilityId, CommercialLettingAvailabilityWelshId, CommercialLettingQuestionId, CompletedCommercialLettingsId, CompletedCommercialLettingsWelshId, ContactDetailsQuestionId, OccupiersDetailsId, PartsUnavailableId}
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec

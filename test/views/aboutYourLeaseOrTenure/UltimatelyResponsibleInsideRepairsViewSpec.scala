@@ -19,8 +19,8 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
-import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
+import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 

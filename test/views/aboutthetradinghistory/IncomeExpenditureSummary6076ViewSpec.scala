@@ -16,12 +16,12 @@
 
 package views.aboutthetradinghistory
 
+import actions.SessionRequest
 import form.aboutthetradinghistory.IncomeExpenditureSummary6076Form
 import models.pages.Summary
 import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
-import actions.SessionRequest
 
 class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String] {
 

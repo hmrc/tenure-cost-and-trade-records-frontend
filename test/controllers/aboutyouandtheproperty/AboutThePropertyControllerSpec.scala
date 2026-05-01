@@ -17,20 +17,20 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
-import play.api.http.Status
-import play.api.test.Helpers._
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
 import form.aboutyouandtheproperty.AboutThePropertyForm.aboutThePropertyForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
+import play.api.http.Status
 import play.api.test.FakeRequest
+import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.mustContainError
+import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
 class AboutThePropertyControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 

@@ -17,8 +17,8 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import form.aboutyouandtheproperty.CostsBreakdownForm.costsBreakdownForm
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest

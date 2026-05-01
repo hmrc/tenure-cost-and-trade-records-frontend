@@ -22,16 +22,16 @@ import models.ForType.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
 class WebsiteForPropertyControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.aboutyouandtheproperty.WebsiteForPropertyForm._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import form.aboutyouandtheproperty.WebsiteForPropertyForm.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 

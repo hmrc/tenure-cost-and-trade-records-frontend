@@ -24,7 +24,7 @@ import org.scalatest.matchers.should
   */
 class NumberUtilSpec extends AnyFlatSpec with should.Matchers {
 
-  import NumberUtil._
+  import NumberUtil.*
 
   "NumberUtil.asMoney" should "format numbers in UK money format" in {
     BigDecimal(1222000).asMoney shouldBe "£1,222,000"

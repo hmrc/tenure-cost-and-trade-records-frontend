@@ -18,9 +18,9 @@ package controllers.accommodation
 
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
 import util.AccountingInformationUtil.previousFinancialYear6048
 import util.DateUtilLocalised
+import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 

@@ -16,21 +16,21 @@
 
 package controllers.aboutfranchisesorlettings
 
-import models.ForType.*
-import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
-import play.api.http.Status
-import utils.TestBaseSpec
-import utils.FormBindingTestAssertions.mustContainError
-import play.api.test.Helpers._
 import actions.SessionRequest
 import connectors.Audit
+import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
+import models.ForType.*
+import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
+import play.api.http.Status
 import play.api.test.FakeRequest
+import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.mustContainError
+import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
 class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
-  import TestData._
+  import TestData.*
   val mockAudit: Audit = mock[Audit]
 
   def addOrRemoveLettingController(

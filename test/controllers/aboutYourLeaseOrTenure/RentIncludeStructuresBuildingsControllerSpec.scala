@@ -22,8 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour,
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
-import utils.toOpt
+import utils.{TestBaseSpec, toOpt}
 
 import scala.language.reflectiveCalls
 

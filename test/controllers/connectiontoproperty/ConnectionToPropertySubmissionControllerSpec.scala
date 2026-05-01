@@ -17,12 +17,12 @@
 package controllers.connectiontoproperty
 
 import config.ErrorHandler
-import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
-import play.api.test.Helpers.{CREATED, status, stubMessagesControllerComponents}
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.ConnectedSubmission
+import models.submissions.connectiontoproperty.StillConnectedDetails
+import play.api.http.Status
 import play.api.mvc.Request
+import play.api.test.Helpers.{CREATED, status, stubMessagesControllerComponents}
 import play.twirl.api.Html
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import utils.TestBaseSpec

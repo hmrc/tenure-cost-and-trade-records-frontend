@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OtherHolidayAccommodation, TouringAndTentingPitches}
+import models.submissions.aboutthetradinghistory.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 import models.submissions.common.AnswersYesNo.*

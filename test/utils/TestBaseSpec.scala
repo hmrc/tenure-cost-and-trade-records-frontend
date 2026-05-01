@@ -18,23 +18,23 @@ package utils
 
 import actions.{SessionRequest, WithSessionRefiner}
 import config.AppConfig
+import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import models.submissions.aboutyouandtheproperty.*
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
+import models.submissions.aboutyouandtheproperty.*
+import models.submissions.accommodation.AccommodationDetails
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import models.submissions.notconnected.RemoveConnectionDetails
-import models.ForType.*
-import models.submissions.accommodation.AccommodationDetails
-import models.{ForType, Session}
 import models.submissions.lettingHistory.LettingHistory
+import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
-import org.scalatest.{Inside, OptionValues}
+import models.{ForType, Session}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.{Inside, OptionValues}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Application
 import play.api.i18n.{Messages, MessagesApi}

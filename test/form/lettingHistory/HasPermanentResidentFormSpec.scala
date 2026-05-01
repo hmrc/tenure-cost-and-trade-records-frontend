@@ -16,8 +16,8 @@
 
 package form.lettingHistory
 
-import models.submissions.common.AnswersYesNo.*
 import form.lettingHistory.HasPermanentResidentsForm.theForm
+import models.submissions.common.AnswersYesNo.*
 
 class HasPermanentResidentFormSpec extends FormSpec:
 

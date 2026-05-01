@@ -16,7 +16,7 @@
 
 package navigation
 
-import navigation.identifiers._
+import navigation.identifiers.*
 import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {

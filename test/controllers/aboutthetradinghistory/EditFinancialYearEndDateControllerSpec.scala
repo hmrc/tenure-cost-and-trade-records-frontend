@@ -19,13 +19,12 @@ package controllers.aboutthetradinghistory
 import actions.SessionRequest
 import connectors.Audit
 import controllers.aboutthetradinghistory
-import models.ForType
 import models.ForType.*
-import models.Session
+import models.{ForType, Session}
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {

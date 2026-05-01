@@ -17,18 +17,19 @@
 package controllers.notconnected
 
 import form.Errors
+import form.notconnected.PastConnectionForm.*
 import models.submissions.notconnected.RemoveConnectionDetails
-import form.notconnected.PastConnectionForm._
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class PastConnectionControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   def pastConnectionController(
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)

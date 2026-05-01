@@ -23,15 +23,15 @@ import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
 class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 

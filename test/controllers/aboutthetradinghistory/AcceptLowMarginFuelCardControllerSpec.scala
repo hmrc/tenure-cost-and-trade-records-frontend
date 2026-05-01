@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 /**

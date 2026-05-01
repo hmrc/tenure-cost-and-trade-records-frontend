@@ -19,7 +19,7 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.AboutThePropertyForm
 import models.ForType.*
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty._
+import models.submissions.aboutyouandtheproperty.*
 import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
 import play.api.data.Form
 import play.twirl.api.Html

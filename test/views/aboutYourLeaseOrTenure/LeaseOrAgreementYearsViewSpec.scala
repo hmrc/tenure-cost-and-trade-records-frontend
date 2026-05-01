@@ -18,7 +18,7 @@ package views.aboutYourLeaseOrTenure
 
 import form.aboutYourLeaseOrTenure.LeaseOrAgreementYearsForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure._
+import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours

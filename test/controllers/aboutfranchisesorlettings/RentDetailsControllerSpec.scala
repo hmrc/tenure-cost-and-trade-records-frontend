@@ -21,9 +21,9 @@ import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.mvc.request.RequestTarget
-import utils.TestBaseSpec
-import play.api.test.Helpers.*
 import play.api.test.FakeRequest
+import play.api.test.Helpers.*
+import utils.TestBaseSpec
 
 class RentDetailsControllerSpec extends TestBaseSpec {
 

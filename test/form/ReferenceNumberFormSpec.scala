@@ -16,7 +16,7 @@
 
 package form
 
-import ReferenceNumberForm.theForm as theForm
+import form.ReferenceNumberForm.theForm
 import models.submissions.ReferenceNumber
 import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec

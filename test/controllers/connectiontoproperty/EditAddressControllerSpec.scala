@@ -17,8 +17,8 @@
 package controllers.connectiontoproperty
 
 import connectors.Audit
-import models.submissions.connectiontoproperty.StillConnectedDetails
 import form.connectiontoproperty.EditAddressForm.editAddressForm
+import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*

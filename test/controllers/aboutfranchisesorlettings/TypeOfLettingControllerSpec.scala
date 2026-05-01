@@ -21,8 +21,8 @@ import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
-import play.api.test.Helpers._
 
 class TypeOfLettingControllerSpec extends TestBaseSpec {
 

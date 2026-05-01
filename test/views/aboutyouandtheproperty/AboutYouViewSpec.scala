@@ -17,8 +17,8 @@
 package views.aboutyouandtheproperty
 
 import form.aboutyouandtheproperty.AboutYouForm
-import models.submissions.aboutyouandtheproperty.CustomerDetails
 import models.pages.Summary
+import models.submissions.aboutyouandtheproperty.CustomerDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 

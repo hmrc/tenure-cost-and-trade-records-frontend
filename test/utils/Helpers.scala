@@ -17,8 +17,9 @@
 package utils
 
 import actions.RefNumAction
-import play.api.mvc._
+import play.api.mvc.*
 import play.api.test.FakeRequest
+
 import scala.language.implicitConversions
 
 object Helpers {
@@ -34,10 +35,8 @@ object Helpers {
 
 }
 
-import play.api.Configuration
-import play.api.Environment
-import play.api.Mode
 import crypto.MongoCrypto
+import play.api.{Configuration, Environment, Mode}
 
 trait SensitiveTestHelper {
 

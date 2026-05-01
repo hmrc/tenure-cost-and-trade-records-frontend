@@ -30,8 +30,8 @@ import scala.language.reflectiveCalls
   */
 class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 

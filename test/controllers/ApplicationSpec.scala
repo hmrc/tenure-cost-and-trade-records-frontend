@@ -17,7 +17,7 @@
 package controllers
 
 import play.api.http.Status
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class ApplicationSpec extends TestBaseSpec {

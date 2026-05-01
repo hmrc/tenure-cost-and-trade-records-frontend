@@ -18,8 +18,8 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
 class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {

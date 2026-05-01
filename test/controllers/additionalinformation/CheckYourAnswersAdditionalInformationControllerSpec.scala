@@ -20,14 +20,15 @@ import form.additionalinformation.CheckYourAnswersAdditionalInformationForm.chec
 import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   def checkYourAdditionalInformationController(
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)

@@ -21,7 +21,7 @@ import connectors.Audit
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutthetradinghistory.costOfSales

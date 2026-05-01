@@ -19,7 +19,6 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesForm
 import models.submissions.common.AnswersYesNo
-
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html

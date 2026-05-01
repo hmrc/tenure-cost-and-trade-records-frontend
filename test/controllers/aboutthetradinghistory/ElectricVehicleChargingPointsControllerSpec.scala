@@ -20,7 +20,7 @@ import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec {
