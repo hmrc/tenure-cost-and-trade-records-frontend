@@ -35,7 +35,7 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
 
   val navigator = new AboutYourLeaseOrTenureNavigator(audit)
 
-  val session6045 = Session(
+  val session6045: Session = Session(
     "99996045004",
     FOR6045,
     prefilledAddress,

@@ -19,6 +19,7 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.AdditionalAmusementsForm
 import play.api.data.Form
+import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
 class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[BigDecimal]]] {
@@ -30,7 +31,7 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[Big
   override val form: Form[Seq[Option[BigDecimal]]] =
     AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages)
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
   private val backLink = controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show().url
 

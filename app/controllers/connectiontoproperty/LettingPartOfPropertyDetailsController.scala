@@ -70,7 +70,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TenantDetails](
       theForm,
       formWithErrors =>
@@ -130,7 +130,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
     )
   }
 
-  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
       confirmedAddress     <- getConfirmedAddress(id)

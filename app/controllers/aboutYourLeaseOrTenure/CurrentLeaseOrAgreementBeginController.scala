@@ -59,7 +59,7 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CurrentLeaseOrAgreementBegin](
       currentLeaseOrAgreementBeginForm,
       formWithErrors => BadRequest(currentLeaseOrAgreementBeginView(formWithErrors, request.sessionData.toSummary)),

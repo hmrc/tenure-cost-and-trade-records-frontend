@@ -66,7 +66,7 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
 
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     (for {
       existingSections <- request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails)
       currentSection   <- existingSections.lift(index)

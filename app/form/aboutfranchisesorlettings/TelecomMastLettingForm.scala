@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object TelecomMastLettingForm:
 
-  val theForm = Form[TelecomMastLetting](
+  val theForm: Form[TelecomMastLetting] = Form[TelecomMastLetting](
     mapping(
       "operatingCompanyName" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatingCompanyName.required"),

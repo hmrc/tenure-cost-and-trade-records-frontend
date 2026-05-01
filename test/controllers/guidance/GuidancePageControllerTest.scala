@@ -16,87 +16,91 @@
 
 package controllers.guidance
 
+import org.jsoup.nodes.Document
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import utils.{JsoupHelpers, TestBaseSpec}
 import views.html.guidance.guidancePage as GuidancePageView
+
+import scala.concurrent.Future
 
 class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
 
   "the GuidancePage controller" should {
     "be handling GET /FOR6010 and reply 200 with the guidance page" in new ControllerFixture {
-      val result = controller.show("FOR6010")(fakeGetRequest)
+      val result: Future[Result] = controller.show("FOR6010")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
       charset(result).value     shouldBe UTF8
-      val page = contentAsJsoup(result)
+      val page: Document = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6010.heading"
     }
     "be handling GET /FOR6011 and reply 200 with the guidance page" in new ControllerFixture {
-      val result = controller.show("FOR6011")(fakeGetRequest)
+      val result: Future[Result] = controller.show("FOR6011")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
       charset(result).value     shouldBe UTF8
-      val page = contentAsJsoup(result)
+      val page: Document = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6011.heading"
     }
     "be handling GET /FOR6015 and reply 200 with the guidance page" in new ControllerFixture {
-      val result = controller.show("FOR6015")(fakeGetRequest)
+      val result: Future[Result] = controller.show("FOR6015")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
       charset(result).value     shouldBe UTF8
-      val page = contentAsJsoup(result)
+      val page: Document = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6015.heading"
     }
     "be handling GET /FOR6016 and reply 200 with the guidance page" in new ControllerFixture {
-      val result = controller.show("FOR6016")(fakeGetRequest)
+      val result: Future[Result] = controller.show("FOR6016")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
       charset(result).value     shouldBe UTF8
-      val page = contentAsJsoup(result)
+      val page: Document = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6016.heading"
     }
     "be handling GET /FOR6020 and reply 200 with the guidance page" in new ControllerFixture {
-      val result = controller.show("FOR6020")(fakeGetRequest)
+      val result: Future[Result] = controller.show("FOR6020")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
       charset(result).value     shouldBe UTF8
-      val page = contentAsJsoup(result)
+      val page: Document = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6020.heading"
     }
     "be handling GET /FOR6030 and reply 200 with the guidance page" in new ControllerFixture {
-      val result = controller.show("FOR6030")(fakeGetRequest)
+      val result: Future[Result] = controller.show("FOR6030")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
       charset(result).value     shouldBe UTF8
-      val page = contentAsJsoup(result)
+      val page: Document = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6030.heading"
     }
     "be handling GET /FOR6045 and reply 200 with the guidance page" in new ControllerFixture {
-      val result = controller.show("FOR6045")(fakeGetRequest)
+      val result: Future[Result] = controller.show("FOR6045")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
       charset(result).value     shouldBe UTF8
-      val page = contentAsJsoup(result)
+      val page: Document = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6045.heading"
     }
     "be handling GET /FOR6048 and reply 200 with the guidance page" in new ControllerFixture {
-      val result = controller.show("FOR6048")(fakeGetRequest)
+      val result: Future[Result] = controller.show("FOR6048")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
       charset(result).value     shouldBe UTF8
-      val page = contentAsJsoup(result)
+      val page: Document = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6048.heading"
     }
     "be handling GET /FOR6076 and reply 200 with the guidance page" in new ControllerFixture {
-      val result = controller.show("FOR6076")(fakeGetRequest)
+      val result: Future[Result] = controller.show("FOR6076")(fakeGetRequest)
       status(result)            shouldBe OK
       contentType(result).value shouldBe HTML
       charset(result).value     shouldBe UTF8
-      val page = contentAsJsoup(result)
+      val page: Document = contentAsJsoup(result)
       page.heading shouldBe "guidance.FOR6076.heading"
     }
     "be handling GET /invalid and reply 404 with an error message" in new ControllerFixture {
-      val result = controller.show("invalid")(fakeGetRequest)
+      val result: Future[Result] = controller.show("invalid")(fakeGetRequest)
       status(result)          shouldBe NOT_FOUND
       contentAsString(result) shouldBe "Invalid forType: invalid"
     }

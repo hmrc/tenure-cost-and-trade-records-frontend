@@ -61,7 +61,7 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersAdditionalActivitiesForm,
       formWithErrors =>

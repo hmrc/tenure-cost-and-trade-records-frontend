@@ -18,8 +18,8 @@ package models.submissions.lettingHistory
 
 import models.ForType.FOR6048
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.common.Address as CommonAddress
+import models.submissions.lettingHistory.LettingHistory.*
 import org.scalatest.OptionValues
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -31,14 +31,14 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
   "the IntendedLettings trait" when {
     "copying the session withNumberOfNights"    should {
       "set an integer value although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session = withNumberOfNights(100)
+        val session: SessionWrapper = withNumberOfNights(100)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
         intendedLettings(session.data).value.nights.value mustBe 100
       }
       "set an integer value although lettingHistory.intendedLettings was None" in new SessionWithNoIntendedLettings {
-        val session = withNumberOfNights(100)
+        val session: SessionWrapper = withNumberOfNights(100)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -47,7 +47,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "set an integer value although lettingHistory.intendedLettings.nights was None" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(nights = None)
       ) {
-        val session = withNumberOfNights(100)
+        val session: SessionWrapper = withNumberOfNights(100)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -56,7 +56,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "keep the value if lettingHistory.intendedLettings.nights is the same" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(nights = Some(100))
       ) {
-        val session = withNumberOfNights(100)
+        val session: SessionWrapper = withNumberOfNights(100)
         session.changed mustBe false
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -71,7 +71,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           tradingSeason = Some(period)
         )
       ) {
-        val session = withNumberOfNights(141) // meets criteria
+        val session: SessionWrapper = withNumberOfNights(141) // meets criteria
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -84,14 +84,14 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
     "copying the session withHasStopped"        should {
       "set a boolean value although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session = withHasStopped(true)
+        val session: SessionWrapper = withHasStopped(true)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
         intendedLettings(session.data).value.hasStopped.value mustBe true
       }
       "set a boolean value although lettingHistory.intendedLettings was None" in new SessionWithNoIntendedLettings {
-        val session = withHasStopped(true)
+        val session: SessionWrapper = withHasStopped(true)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -100,7 +100,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "set a boolean value although lettingHistory.intendedLettings.hasStopped was None" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(hasStopped = None)
       ) {
-        val session = withHasStopped(true)
+        val session: SessionWrapper = withHasStopped(true)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -109,7 +109,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "keep the value if lettingHistory.intendedLettings.hasStopped is the same" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(hasStopped = Some(true))
       ) {
-        val session = withHasStopped(true)
+        val session: SessionWrapper = withHasStopped(true)
         session.changed mustBe false
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -124,7 +124,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           tradingSeason = Some(period)
         )
       ) {
-        val session = withHasStopped(false)
+        val session: SessionWrapper = withHasStopped(false)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -137,14 +137,14 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
     "copying the session withWhenWasLastLet"    should {
       "set a date value although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session = withWhenWasLastLet(date)
+        val session: SessionWrapper = withWhenWasLastLet(date)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
         intendedLettings(session.data).value.whenWasLastLet.value mustBe date
       }
       "set a date value although lettingHistory.intendedLettings was None" in new SessionWithNoIntendedLettings {
-        val session = withWhenWasLastLet(date)
+        val session: SessionWrapper = withWhenWasLastLet(date)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -153,7 +153,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "set a date value although lettingHistory.intendedLettings.whenWasLastLet was None" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(whenWasLastLet = None)
       ) {
-        val session = withWhenWasLastLet(date)
+        val session: SessionWrapper = withWhenWasLastLet(date)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -162,7 +162,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "keep the value if lettingHistory.intendedLettings.whenWasLastLet is the same" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(whenWasLastLet = Some(date))
       ) {
-        val session = withWhenWasLastLet(date)
+        val session: SessionWrapper = withWhenWasLastLet(date)
         session.changed mustBe false
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -177,8 +177,8 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           tradingSeason = Some(period)
         )
       ) {
-        val threeDaysAfter = date.plusDays(3)
-        val session        = withWhenWasLastLet(threeDaysAfter)
+        val threeDaysAfter: LocalDate = date.plusDays(3)
+        val session: SessionWrapper        = withWhenWasLastLet(threeDaysAfter)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -191,14 +191,14 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
     "copying the session withIsYearlyAvailable" should {
       "set a boolean value although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session = withIsYearlyAvailable(true)
+        val session: SessionWrapper = withIsYearlyAvailable(true)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
         intendedLettings(session.data).value.isYearlyAvailable.value mustBe true
       }
       "set a boolean value although lettingHistory.intendedLettings was None" in new SessionWithNoIntendedLettings {
-        val session = withIsYearlyAvailable(true)
+        val session: SessionWrapper = withIsYearlyAvailable(true)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -207,7 +207,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "set a boolean value although lettingHistory.intendedLettings.isYearlyAvailable was None" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(isYearlyAvailable = None)
       ) {
-        val session = withIsYearlyAvailable(true)
+        val session: SessionWrapper = withIsYearlyAvailable(true)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -216,7 +216,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "keep the value if lettingHistory.intendedLettings.isYearlyAvailable is the same" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(isYearlyAvailable = Some(true))
       ) {
-        val session = withIsYearlyAvailable(true)
+        val session: SessionWrapper = withIsYearlyAvailable(true)
         session.changed mustBe false
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -231,7 +231,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           tradingSeason = Some(period)
         )
       ) {
-        val session = withIsYearlyAvailable(false)
+        val session: SessionWrapper = withIsYearlyAvailable(false)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -244,14 +244,14 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
     "copying the session withTradingPeriod"     should {
       "set a period value although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session = withTradingPeriod(period)
+        val session: SessionWrapper = withTradingPeriod(period)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
         intendedLettings(session.data).value.tradingSeason.value mustBe period
       }
       "set a period value although lettingHistory.intendedLettings was None" in new SessionWithNoIntendedLettings {
-        val session = withTradingPeriod(period)
+        val session: SessionWrapper = withTradingPeriod(period)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -260,7 +260,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "set a period value although lettingHistory.intendedLettings.tradingPeriod was None" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(tradingSeason = None)
       ) {
-        val session = withTradingPeriod(period)
+        val session: SessionWrapper = withTradingPeriod(period)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -269,7 +269,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "keep the value if lettingHistory.intendedLettings.tradingPeriod is the same" in new SessionWithSomeIntendedLettings(
         intendedLettings = IntendedDetail(tradingSeason = Some(period))
       ) {
-        val session = withTradingPeriod(period)
+        val session: SessionWrapper = withTradingPeriod(period)
         session.changed mustBe false
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -284,8 +284,8 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           tradingSeason = Some(period)
         )
       ) {
-        val aDifferentPeriod = period.copy(fromDate = date.plusDays(3))
-        val session          = withTradingPeriod(aDifferentPeriod)
+        val aDifferentPeriod: LocalPeriod = period.copy(fromDate = date.plusDays(3))
+        val session: SessionWrapper          = withTradingPeriod(aDifferentPeriod)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -298,7 +298,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
   }
 
-  val session = Session(
+  val session: Session = Session(
     referenceNumber = "99996010004",
     forType = FOR6048,
     address = CommonAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX"),
@@ -307,9 +307,9 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     lettingHistory = None
   )
 
-  val date = LocalDate.of(2024, 3, 31)
+  val date: LocalDate = LocalDate.of(2024, 3, 31)
 
-  val period = LocalPeriod(date, date)
+  val period: LocalPeriod = LocalPeriod(date, date)
 
   trait SessionWithNoLettingHistory:
     given Session = session // having lettingHistory = None

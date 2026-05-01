@@ -64,7 +64,7 @@ class CommercialLettingAvailabilityWelshController @Inject() (
       }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutYouAndThePropertyPartTwo
       .filter(_.commercialLetDate.isDefined)
       .fold(Future(Redirect(routes.CommercialLettingQuestionController.show()))) { data =>

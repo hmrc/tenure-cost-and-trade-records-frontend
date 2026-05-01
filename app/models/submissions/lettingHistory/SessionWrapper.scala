@@ -23,7 +23,7 @@ case class SessionWrapper(data: Session, changed: Boolean):
 
 object SessionWrapper:
 
-  def unchanged(using session: Session) =
+  def unchanged(using session: Session): SessionWrapper =
     SessionWrapper(data = session, changed = false)
 
   def change(newLettingHistory: LettingHistory)(using session: Session): SessionWrapper =

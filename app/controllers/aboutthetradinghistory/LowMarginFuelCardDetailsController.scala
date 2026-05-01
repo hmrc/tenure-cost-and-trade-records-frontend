@@ -63,7 +63,7 @@ class LowMarginFuelCardDetailsController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LowMarginFuelCardDetail](
       lowMarginFuelCardDetailsForm,
       formWithErrors => BadRequest(view(formWithErrors, index, getBackLinkUrl(index), request.sessionData.toSummary)),

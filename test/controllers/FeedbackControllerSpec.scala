@@ -28,7 +28,7 @@ class FeedbackControllerSpec extends TCTRAppSpec:
 
   def feedbackController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) = FeedbackController(
+  ): FeedbackController = FeedbackController(
     stubMessagesControllerComponents(),
     feedbackView,
     feedbackThx,

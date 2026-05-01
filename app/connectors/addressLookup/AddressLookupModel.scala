@@ -31,7 +31,7 @@ case class AddressLookupConfirmedAddress(
   val county: Option[String]     = address.lines.flatMap(lines => Option.when(lines.size > 3)(lines(2)))
   val postcode: String           = address.postcode.getOrElse("")
 
-  def asAddress = Address(
+  def asAddress: Address = Address(
     this.buildingNameNumber,
     this.street1,
     this.town,

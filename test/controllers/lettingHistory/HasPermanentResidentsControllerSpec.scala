@@ -19,10 +19,13 @@ package controllers.lettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasPermanentResidents as HasPermanentResidentsView
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
@@ -30,18 +33,18 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
   "the HasPermanentResidents controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.permanentResidents.heading"
         page.backLink          shouldBe controllers.routes.TaskListController.show.withFragment("letting-history").toString
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'PermanentResidentDetail' page" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
@@ -57,11 +60,11 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
           permanentResidents = oneResident
         ) {
-          val result = controller.show(fakeGetRequest)
+          val result: Future[Result] = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.radios("answer") shouldNot be(empty)
           page.radios("answer")    should haveChecked("yes")
           page.radios("answer") shouldNot haveChecked("no")
@@ -69,7 +72,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         "be handling POST answer='yes' by replying 303 redirect to the 'PermanentResidentDetail' page" in new ControllerFixture(
           permanentResidents = oneResident
         ) {
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
@@ -85,7 +88,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           mayHaveMorePermanentResidents = Some(true)
         ) {
           // Answering 'no' will clear out all permanent residents
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "no"
             )
@@ -102,7 +105,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         "be handling POST answer='yes' by replying 303 redirect to the 'PermanentResidentList' page" in new ControllerFixture(
           permanentResidents = fiveResidents
         ) {
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
@@ -117,7 +120,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of the user providing answers" should {
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest
             .withFormUrlEncodedBody(
               "answer" -> "" // missing
@@ -130,7 +133,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
             )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.backLink        shouldBe
           routes.CheckYourAnswersLettingHistoryController.show
             .withFragment("some-fragment")

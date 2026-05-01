@@ -22,7 +22,7 @@ import play.api.data.validation.Constraints.nonEmpty
 
 object BatteriesCapacityForm {
 
-  val batteriesCapacityForm = Form(
+  val batteriesCapacityForm: Form[String] = Form(
     single(
       "batteriesCapacity" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.batteriesCapacity.required")

@@ -21,11 +21,17 @@ import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, LocalPeriod, OccupierAddress, OccupierDetail}
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import org.mockito.ArgumentCaptor
 import play.api.libs.json.Json
+import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}
+import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.occupierDetail as OccupierDetailView
+
+import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
@@ -33,25 +39,25 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
   "the OccupierDetail controller" when {
     "the user session is fresh"                        should {
       "be handling GET by replying 200 with the form showing empty name" in new ControllerFixture {
-        val result = controller.show(maybeIndex = None)(fakeGetRequest)
+        val result: Future[Result] = controller.show(maybeIndex = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.occupierDetail.heading"
         page.backLink    shouldBe routes.HasCompletedLettingsController.show.url
         page.input("name") should beEmpty
       }
       "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture {
         val name    = "Mr. First"
-        val request = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "name" -> name
         )
-        val result  = controller.submit()(request)
+        val result: Future[Result]  = controller.submit()(request)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
 
-        val sessionCaptor = captor[Session]
+        val sessionCaptor: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(sessionCaptor.capture())(using any)
         val session       = sessionCaptor.getValue
 
@@ -68,11 +74,11 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET ?index=0 by replying 200 with the form pre-filled with name" in new ControllerFixture(
           oneOccupier
         ) {
-          val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
+          val result: Future[Result] = controller.show(maybeIndex = Some(0))(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.input("name") should haveValue(oneOccupier.head.name)
         }
         "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture(
@@ -80,14 +86,14 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         ) {
           // Post an additional resident detail and expect it to become the second resident
           val name    = "Mr. Additional"
-          val request = fakePostRequest.withFormUrlEncodedBody(
+          val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
             "name" -> name
           )
-          val result  = controller.submit()(request)
+          val result: Future[Result]  = controller.submit()(request)
           status(result)                 shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe "/on-ramp"
 
-          val sessionCaptor = captor[Session]
+          val sessionCaptor: ArgumentCaptor[Session] = captor[Session]
           verify(repository, once).saveOrUpdate(sessionCaptor.capture())(using any[HeaderCarrier])
           val session       = sessionCaptor.getValue
 
@@ -100,7 +106,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         ) {
           pending
           // Post the second resident detail again and expect it to be changed
-          val request = fakePostRequest.withFormUrlEncodedBody(
+          val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
             "name"             -> twoOccupiers.last.name,
             "address.line1"    -> "22, Different Street",
             "address.line2"    -> "",
@@ -109,11 +115,11 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
             "address.county"   -> "Nowhere",
             "address.postcode" -> "BN124AX"
           )
-          val result  = controller.submit(maybeIndex = Some(1))(request)
+          val result: Future[Result]  = controller.submit(maybeIndex = Some(1))(request)
           status(result)                 shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.RentalPeriodController.show(index = Some(1)).url
 
-          val sessionCaptor = captor[Session]
+          val sessionCaptor: ArgumentCaptor[Session] = captor[Session]
           verify(repository, once).saveOrUpdate(sessionCaptor.capture())(using any[HeaderCarrier])
           val session       = sessionCaptor.getValue
 
@@ -134,7 +140,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET by replying 303 redirect to the 'Occupiers List' page" in new ControllerFixture(
           fiveOccupiers
         ) {
-          val result = controller.show(maybeIndex = None)(fakeGetRequest)
+          val result: Future[Result] = controller.show(maybeIndex = None)(fakeGetRequest)
           status(result)                 shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.OccupierListController.show.url
         }
@@ -142,13 +148,13 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of what the user might have submitted" should {
       "be handling invalid POST by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit()(
+        val result: Future[Result] = controller.submit()(
           fakePostRequest.withFormUrlEncodedBody(
             "name" -> ""
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("name") shouldBe "lettingHistory.occupierDetail.name.required"
       }
     }
@@ -157,15 +163,15 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         twoOccupiers
       ) {
         val idx    = 1
-        val result = controller.addressLookupCallback(idx, "confirmedAddress")(fakeRequest)
+        val result: Future[Result] = controller.addressLookupCallback(idx, "confirmedAddress")(fakeRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentalPeriodController.show(Some(idx)).url
 
-        val idCaptor = captor[String]
+        val idCaptor: ArgumentCaptor[String] = captor[String]
         verify(addressLookupConnector, once).getConfirmedAddress(idCaptor)(using any[HeaderCarrier])
         idCaptor.getValue shouldBe "confirmedAddress"
 
-        val sessionCaptor = captor[Session]
+        val sessionCaptor: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(sessionCaptor)(using any)
         val session       = sessionCaptor.getValue
 
@@ -192,7 +198,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
 
   trait ControllerFixture(completedLettings: List[OccupierDetail] = Nil) extends MockAddressLookup:
 
-    val repository = mock[SessionRepo]
+    val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
     val controller = new OccupierDetailController(

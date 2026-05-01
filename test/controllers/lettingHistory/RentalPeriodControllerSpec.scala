@@ -16,16 +16,19 @@
 
 package controllers.lettingHistory
 
-import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.*
+import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}
+import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
 import views.html.lettingHistory.rentalPeriod as RentalPeriodView
 
 import java.time.LocalDate
-
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
@@ -33,11 +36,11 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
   "the RentalPeriod controller" when {
     "the user has not entered any period yet"       should {
       "be handling GET index=0 by replying 200 with the form showing date fields" in new ControllerFixture {
-        val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
+        val result: Future[Result] = controller.show(maybeIndex = Some(0))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading               shouldBe "lettingHistory.rentalPeriod.heading"
         page.backLink              shouldBe routes.OccupierDetailController.show(Some(0)).url
         page.input("fromDate.day")   should beEmpty
@@ -48,7 +51,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
         page.input("toDate.year")    should beEmpty
       }
       "be handling POST index=0 by replying 303 redirect to 'Occupier List' page" in new ControllerFixture {
-        val request = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "fromDate.day"   -> "1",
           "fromDate.month" -> "4",
           "fromDate.year"  -> (previousFiscalYearEnd - 1).toString,
@@ -56,7 +59,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           "toDate.month"   -> "3",
           "toDate.year"    -> previousFiscalYearEnd.toString
         )
-        val result  = controller.submit(maybeIndex = Some(0))(request)
+        val result: Future[Result]  = controller.submit(maybeIndex = Some(0))(request)
         status(result)                                           shouldBe SEE_OTHER
         redirectLocation(result).value                           shouldBe routes.OccupierListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -74,11 +77,11 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           )
         )
       ) {
-        val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
+        val result: Future[Result] = controller.show(maybeIndex = Some(0))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.backLink              shouldBe routes.OccupierDetailController.show(index = Some(0)).url
         page.input("fromDate.day")   should haveValue("10")
         page.input("fromDate.month") should haveValue("9")
@@ -90,17 +93,17 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
     }
     "regardless users having entered period or not" should {
       "be handling GET / missing index by replying 303 redirect to 'Occupiers List' page" in new ControllerFixture {
-        val result = controller.show(maybeIndex = None)(fakeGetRequest)
+        val result: Future[Result] = controller.show(maybeIndex = None)(fakeGetRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.OccupierListController.show.url
       }
       "be handling GET / unknown index by replying 303 redirect to 'Occupiers List' page" in new ControllerFixture {
-        val result = controller.show(maybeIndex = Some(99))(fakeGetRequest)
+        val result: Future[Result] = controller.show(maybeIndex = Some(99))(fakeGetRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.OccupierListController.show.url
       }
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(maybeIndex = Some(0))(
+        val result: Future[Result] = controller.submit(maybeIndex = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "fromDate.day"   -> "",
             "fromDate.month" -> "",
@@ -111,7 +114,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("fromDate.day") shouldBe "error.date.required"
       }
     }

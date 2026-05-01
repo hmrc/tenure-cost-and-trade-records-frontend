@@ -17,11 +17,15 @@
 package controllers.guidance
 
 import connectors.BackendConnector
+import org.jsoup.nodes.Document
+import org.mockito.ArgumentCaptor
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
 import views.html.referenceNumber as ReferenceNumberView
 
+import scala.concurrent.Future
 import scala.concurrent.Future.{failed, successful}
 
 class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpers:
@@ -29,11 +33,11 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
   "the GuidanceReferenceNumber controller" when {
     "the user has not provided any reference number yet"   should {
       "be handling GET and reply 200 with an empty HTML from" in new ControllerFixture {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading                shouldBe "referenceNumber.heading"
         page.backLink               shouldBe controllers.routes.Application.index.url
         page.input("referenceNumber") should beEmpty
@@ -41,7 +45,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
     }
     "the user has already provided their reference number" should {
       "be handling GET and reply 200 with prefilled HTML form" in new ControllerFixture {
-        val result = controller.show(
+        val result: Future[Result] = controller.show(
           fakeGetRequest
             .withSession(
               "referenceNumber" -> "99996076012"
@@ -50,7 +54,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         status(result) shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading                        shouldBe "referenceNumber.heading"
         page.backLink                       shouldBe controllers.routes.Application.index.url
         page.input("referenceNumber").value shouldBe "99996076012"
@@ -58,18 +62,18 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
     }
     "regardless of the user providing answers"             should {
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest
             .withFormUrlEncodedBody(
               "referenceNumber" -> "" // missing
             )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("referenceNumber") shouldBe "error.referenceNumber.required"
       }
       "be handling POST referenceNumber by replying 303 redirect to the 'GuidancePage' page" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest
             .withFormUrlEncodedBody(
               "referenceNumber" -> "99996076012"
@@ -77,14 +81,14 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe controllers.guidance.routes.GuidancePageController.show("FOR6012").url
-        val arg0 = captor[String]
+        val arg0: ArgumentCaptor[String] = captor[String]
         verify(connector, once).retrieveFORType(arg0, any[HeaderCarrier])
         arg0.getValue shouldBe "99996076012"
       }
       "be handling POST referenceNumber by replying 404 if it fails to retrieve FOR type" in new ControllerFixture {
         when(connector.retrieveFORType(anyString, any[HeaderCarrier]))
           .thenReturn(failed(new Exception("Failed to retrieve FOR type")))
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest
             .withFormUrlEncodedBody(
               "referenceNumber" -> "b@d nUm83r" // invalid !!!
@@ -92,7 +96,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         )
         status(result) shouldBe INTERNAL_SERVER_ERROR
         contentAsString(result) shouldBe "Failed to retrieve FOR type"
-        val arg0 = captor[String]
+        val arg0: ArgumentCaptor[String] = captor[String]
         verify(connector, once).retrieveFORType(arg0, any[HeaderCarrier])
         arg0.getValue shouldBe "b@d nUm83r"
       }
@@ -100,7 +104,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
   }
 
   trait ControllerFixture:
-    val connector = mock[BackendConnector]
+    val connector: BackendConnector = mock[BackendConnector]
     when(connector.retrieveFORType(anyString, any[HeaderCarrier])).thenReturn(successful("FOR6012"))
 
     val controller = new GuidanceReferenceNumberController(

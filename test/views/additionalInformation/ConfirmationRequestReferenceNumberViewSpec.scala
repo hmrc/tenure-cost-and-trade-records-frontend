@@ -18,12 +18,13 @@ package views.additionalInformation
 
 import actions.SessionRequest
 import controllers.FeedbackFormMapper
+import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.ViewBehaviours
 
 class ConfirmationRequestReferenceNumberViewSpec extends ViewBehaviours {
 
   val messageKeyPrefix = "label.connectionToProperty.confirm"
-  val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
+  val sessionRequest: SessionRequest[AnyContentAsEmpty.type]   = SessionRequest(baseFilled6010Session, fakeRequest)
 
   private val form       = FeedbackFormMapper.feedbackForm
   private def createView = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)

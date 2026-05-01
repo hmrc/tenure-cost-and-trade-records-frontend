@@ -676,14 +676,14 @@ trait TestObjects:
     whatYouWillNeed = "test"
   )
 
-  val staffCostsTestData = StaffCosts(
+  val staffCostsTestData: StaffCosts = StaffCosts(
     wagesAndSalaries = Some(BigDecimal(50000.00)),
     nationalInsurance = Some(BigDecimal(5000.00)),
     pensionContributions = Some(BigDecimal(3000.00)),
     remunerations = Some(BigDecimal(7000.00))
   )
 
-  val grossReceiptsForBaseLoad = GrossReceiptsForBaseLoad(
+  val grossReceiptsForBaseLoad: GrossReceiptsForBaseLoad = GrossReceiptsForBaseLoad(
     renewableHeatIncentiveBioMethane = Some(BigDecimal(50000.00)),
     renewableHeatIncentiveBioMass = Some(BigDecimal(40000.00)),
     byProductSales = Some(BigDecimal(30000.00)),
@@ -691,7 +691,7 @@ trait TestObjects:
     gateIncomeFromWaste = Some(BigDecimal(10000.00))
   )
 
-  val premisesCosts = PremisesCosts(
+  val premisesCosts: PremisesCosts = PremisesCosts(
     energyAndUtilities = Some(BigDecimal(10000.00)),
     buildingRepairAndMaintenance = Some(BigDecimal(20000.00)),
     repairsAndRenewalsOfFixtures = Some(BigDecimal(30000.00)),

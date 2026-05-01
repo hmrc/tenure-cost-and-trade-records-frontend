@@ -18,7 +18,7 @@ package controllers.form
 
 import form.ElectricVehicleChargingPointsMapping.validateSpacesOrBays
 import org.scalatest.matchers.should
-import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
 import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
@@ -26,13 +26,13 @@ import play.api.data.Forms.single
 class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
 
   trait Setup {
-    val form = Form(single("electricVehicleChargingPoints" -> validateSpacesOrBays))
+    val form: Form[Int] = Form(single("electricVehicleChargingPoints" -> validateSpacesOrBays))
   }
 
   "web address validation" should {
 
     "catch mandatory condition" in new Setup {
-      val isInput = Table(
+      val isInput: TableFor2[String, Boolean] = Table(
         ("number", "validity"),
         ("123", true),
         ("", false)
@@ -50,7 +50,7 @@ class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with shou
     }
 
     "catch negative number" in new Setup {
-      val isInput = Table(
+      val isInput: TableFor2[String, Boolean] = Table(
         ("number", "validity"),
         ("123", true),
         ("-1", false)
@@ -68,7 +68,7 @@ class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with shou
     }
 
     "catch over 999 number" in new Setup {
-      val isInput = Table(
+      val isInput: TableFor2[String, Boolean] = Table(
         ("number", "validity"),
         ("123", true),
         ("9999", false)

@@ -22,8 +22,7 @@ import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.lettingHistory.OccupierDetailForm.theForm
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, byAddingOrUpdatingOccupier, byUpdatingOccupierAddress}
-import models.submissions.lettingHistory.OccupierDetail
-import models.submissions.lettingHistory.OccupierAddress
+import models.submissions.lettingHistory.{OccupierAddress, OccupierDetail}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.OccupierDetailPageId
 import play.api.i18n.I18nSupport
@@ -110,7 +109,7 @@ class OccupierDetailController @Inject (
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = OccupierDetailPageId)
 
-  def addressLookupCallback(idx: Int, id: String) = (Action andThen sessionRefiner).async { implicit request =>
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)

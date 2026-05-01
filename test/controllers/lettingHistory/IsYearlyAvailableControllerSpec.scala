@@ -16,13 +16,16 @@
 
 package controllers.lettingHistory
 
-import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import models.submissions.lettingHistory.LettingHistory.*
+import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.isYearlyAvailable as IsYearlyAvailableView
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
@@ -30,28 +33,28 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
   "the IsYearlyAvailable controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.heading"
         page.backLink          shouldBe routes.HowManyNightsController.show.url
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing answer!
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.required"
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'Do you advert online' page" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
@@ -67,11 +70,11 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         hasStopped = Some(true),
         isYearlyAvailable = Some(true)
       ) {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.hasStoppedLetting.heading"
         page.backLink          shouldBe routes.WhenWasLastLetController.show.url
         page.radios("answer") shouldNot be(empty)
@@ -82,20 +85,20 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         hasStopped = Some(false),
         isYearlyAvailable = Some(true)
       ) {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing answer!
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.required"
       }
       "be handling POST answer='no' by replying 303 redirect to the 'Give lenght of trading session' page" in new ControllerFixture(
         hasStopped = Some(false),
         isYearlyAvailable = Some(true)
       ) {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "no"
           )

@@ -59,7 +59,7 @@ class GrossReceiptsExcludingVATController @Inject() (
     }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { turnoverSections6076 =>
       continueOrSaveAsDraft[Seq[GrossReceiptsExcludingVAT]](
         grossReceiptsExcludingVATForm(years(turnoverSections6076)),

@@ -20,8 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OtherCostsForm.form
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OtherCost, OtherCosts}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OtherCost, OtherCosts}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.OtherCostsId
 import play.api.i18n.I18nSupport
@@ -66,7 +66,7 @@ class OtherCostsController @Inject() (
     }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheckForOtherCosts { aboutTheTradingHistory =>
       continueOrSaveAsDraft[OtherCosts](
         form,

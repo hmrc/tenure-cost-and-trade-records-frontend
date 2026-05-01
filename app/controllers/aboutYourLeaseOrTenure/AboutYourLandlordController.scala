@@ -33,8 +33,8 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord as AboutYourLandlordView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future.successful
 
 @Singleton
 class AboutYourLandlordController @Inject() (
@@ -71,7 +71,7 @@ class AboutYourLandlordController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       theForm,
       formWithErrors =>
@@ -119,7 +119,7 @@ class AboutYourLandlordController @Inject() (
       )
     )
 
-  def addressLookupCallback(id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+  def addressLookupCallback(id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)

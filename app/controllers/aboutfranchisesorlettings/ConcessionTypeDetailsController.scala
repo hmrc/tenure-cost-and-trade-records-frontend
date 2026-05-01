@@ -69,7 +69,7 @@ class ConcessionTypeDetailsController @Inject() (
     )
   }
 
-  def submit(idx: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[ConcessionBusinessDetails](
       concessionTypeDetailsForm,
       formWithErrors =>

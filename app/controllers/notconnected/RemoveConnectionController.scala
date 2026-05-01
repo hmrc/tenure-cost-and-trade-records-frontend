@@ -21,9 +21,9 @@ import controllers.FORDataCaptureController
 import form.notconnected.RemoveConnectionForm.removeConnectionForm
 import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
 import models.submissions.notconnected.RemoveConnectionsDetails
-import play.api.i18n.I18nSupport
 import navigation.RemoveConnectionNavigator
 import navigation.identifiers.RemoveConnectionId
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.notconnected.removeConnection
@@ -57,7 +57,7 @@ class RemoveConnectionController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RemoveConnectionsDetails](
       removeConnectionForm,
       formWithErrors =>

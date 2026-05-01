@@ -18,14 +18,17 @@ package controllers.aboutfranchisesorlettings
 
 import connectors.Audit
 import models.Session
-import models.submissions.aboutfranchisesorlettings.ConcessionIncomeRecord
+import models.submissions.aboutfranchisesorlettings.{ConcessionIncomeRecord, FeeReceivedPerYear}
+import org.jsoup.nodes.Document
 import org.mockito.ArgumentCaptor
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.JsoupHelpers.*
 import utils.TestBaseSpec
 
+import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 class FeeReceivedControllerSpec extends TestBaseSpec:
@@ -33,16 +36,16 @@ class FeeReceivedControllerSpec extends TestBaseSpec:
   "the FeeReceived controller" when {
     "handling GET / requests"  should {
       "reply 303 redirect if the given index does not exist" in new ControllerFixture {
-        val result = controller.show(3)(fakeRequest)
+        val result: Future[Result] = controller.show(3)(fakeRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.CateringOperationBusinessDetailsController.show(Some(3)).url
       }
       "reply 200 and the pre-filled form if given index exists" in new ControllerFixture {
-        val result = controller.show(0)(fakeRequest)
+        val result: Future[Result] = controller.show(0)(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val html = contentAsJsoup(result)
+        val html: Document = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                                       shouldBe "feeReceived.heading"
         html.getElementById("feeReceivedPerYear.year[0].tradingPeriod").value            shouldBe "52"
         html.getElementById("feeReceivedPerYear.year[0].concessionOrFranchiseFee").value shouldBe "1000"
@@ -51,15 +54,15 @@ class FeeReceivedControllerSpec extends TestBaseSpec:
     }
     "handling POST / requests" should {
       "reply 400 and error messages if the form is submitted with invalid data" in new ControllerFixture {
-        val result  = controller.submit(0)(fakePostRequest)
-        val content = contentAsString(result)
+        val result: Future[Result]  = controller.submit(0)(fakePostRequest)
+        val content: String = contentAsString(result)
         status(result) shouldBe BAD_REQUEST
         content          should include("error.weeksMapping.blank")
         content          should include("error.feeReceived.concessionOrFranchiseFee.required")
         reset(repository)
       }
       "reply 303 when the form is submitted with good data and index=0" in new ControllerFixture {
-        val result = controller.submit(0)(
+        val result: Future[Result] = controller.submit(0)(
           fakePostRequest.withFormUrlEncodedBody(
             "feeReceivedPerYear.year[0].tradingPeriod"            -> "24",
             "feeReceivedPerYear.year[0].concessionOrFranchiseFee" -> "500"
@@ -68,7 +71,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentalIncomeListController.show(1).url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        val feeReceivedPerYear =
+        val feeReceivedPerYear: FeeReceivedPerYear =
           data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
             .asInstanceOf[ConcessionIncomeRecord]
             .feeReceived

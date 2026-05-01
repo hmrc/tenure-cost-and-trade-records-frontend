@@ -61,7 +61,7 @@ class UnusualCircumstancesController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[UnusualCircumstances](
       unusualCircumstancesForm,
       formWithErrors =>

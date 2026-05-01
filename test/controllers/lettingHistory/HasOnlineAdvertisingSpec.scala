@@ -19,10 +19,13 @@ package controllers.lettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{AdvertisingDetail, IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasOnlineAdvertising as HasOnlineAdvertisingView
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
@@ -32,18 +35,18 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture(
         isYearlyAvailable = Some(true)
       ) {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.hasOnlineAdvertising.heading"
         page.backLink          shouldBe routes.IsYearlyAvailableController.show.url
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
       "be handling POST answer='yes' and reply 303 redirect to the 'OnlineAdvertisingDetail' page" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
@@ -59,11 +62,11 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
           onlineAdvertising = oneAdvertising
         ) {
-          val result = controller.show(fakeGetRequest)
+          val result: Future[Result] = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.radios("answer") shouldNot be(empty)
           page.radios("answer")    should haveChecked("yes")
           page.radios("answer") shouldNot haveChecked("no")
@@ -71,7 +74,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         "be handling POST answer='yes' and reply 303 redirect to the 'OnlineAdvertisingDetail' page" in new ControllerFixture(
           onlineAdvertising = oneAdvertising
         ) {
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
@@ -87,7 +90,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           mayHaveMoreOnlineAdvertising = Some(true)
         ) {
           // Answering 'no' will clear out all online advertising
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "no"
             )
@@ -104,7 +107,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         "be handling POST answer='yes' by replying 303 redirect to the 'OnlineAdvertisingList' page" in new ControllerFixture(
           onlineAdvertising = fiveAdvertisings
         ) {
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
@@ -121,13 +124,13 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
       "be handling invalid POST answer=null and reply 400 with error message" in new ControllerFixture(
         isYearlyAvailable = Some(false)
       ) {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.backLink        shouldBe routes.TradingSeasonController.show.url
         page.error("answer") shouldBe "lettingHistory.hasOnlineAdvertising.required"
       }

@@ -23,7 +23,7 @@ import play.api.data.Forms.{mapping, nonEmptyText, optional, text}
 
 object NotConnectedForm {
 
-  val notConnectedForm = Form(
+  val notConnectedForm: Form[NotConnectedContactDetails] = Form(
     mapping(
       "fullName"              -> nonEmptyText(maxLength = 50),
       "contactDetails"        -> contactDetailsMapping,

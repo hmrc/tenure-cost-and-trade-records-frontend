@@ -27,7 +27,7 @@ import play.api.libs.json.{JsSuccess, Json}
 
 class SensitiveRemoveConnectionDetailsSpec extends AnyFlatSpec with Matchers with OptionValues with MongoCryptoSupport:
 
-  val clearEnvelope = RemoveConnectionDetails(
+  val clearEnvelope: RemoveConnectionDetails = RemoveConnectionDetails(
     removeConnectionDetails = Some(
       RemoveConnectionsDetails(
         removeConnectionFullName = "fullName",

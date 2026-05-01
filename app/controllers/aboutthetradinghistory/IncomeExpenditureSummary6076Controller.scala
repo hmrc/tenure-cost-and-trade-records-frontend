@@ -67,7 +67,7 @@ class IncomeExpenditureSummary6076Controller @Inject() (
     }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { turnoverSections6076 =>
       val entries = createEntries(turnoverSections6076)
 

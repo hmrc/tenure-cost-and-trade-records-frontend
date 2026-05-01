@@ -31,4 +31,4 @@ object AddAnotherLettingForm:
       .transform[AnswersYesNo](_.get, Some(_))
   )(x => x)(b => Some(b))
 
-  val addAnotherLettingForm = Form(baseAddAnotherLettingMapping)
+  val addAnotherLettingForm: Form[AnswersYesNo] = Form(baseAddAnotherLettingMapping)

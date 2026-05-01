@@ -16,13 +16,16 @@
 
 package controllers.lettingHistory
 
-import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import models.submissions.lettingHistory.LettingHistory.*
+import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.checkYourAnswersLettingHistory as CheckYourAnswerLettingHistoryView
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControllerSpec:
@@ -32,21 +35,21 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
       "be handling GET by replying 200 with the empty form" in new ControllerFixture(
         hasOnlineAdvertising = Some(false)
       ) {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading  shouldBe "lettingHistory.checkYourAnswers.heading"
         page.backLink shouldBe routes.HasOnlineAdvertisingController.show.url
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("answer") shouldBe "error.checkYourAnswersRadio.required"
       }
     }
@@ -55,13 +58,13 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         isYearlyAvailable = Some(false),
         hasOnlineAdvertising = Some(true)
       ) {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'TaskList' page" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )

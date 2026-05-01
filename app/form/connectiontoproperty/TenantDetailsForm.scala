@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object TenantDetailsForm {
 
-  val theForm = Form[TenantDetails](
+  val theForm: Form[TenantDetails] = Form[TenantDetails](
     mapping(
       "tenantName"           -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.tenantName.required"),

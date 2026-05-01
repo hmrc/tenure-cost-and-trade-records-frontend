@@ -16,16 +16,19 @@
 
 package controllers.lettingHistory
 
-import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.*
+import models.submissions.lettingHistory.LettingHistory.*
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}
+import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtilLocalised
 import views.html.lettingHistory.tradingSeason as TradingSeasonView
 
 import java.time.{LocalDate, Year}
-
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
@@ -33,11 +36,11 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
   "the TradingSeasonLength controller" when {
     "the user has not entered any period yet"       should {
       "be handling GET by replying 200 with the form showing date fields" in new ControllerFixture {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading               shouldBe "lettingHistory.intendedLettings.tradingSeason.heading"
         page.backLink              shouldBe routes.IsYearlyAvailableController.show.url
         page.input("fromDate.day")   should beEmpty
@@ -47,13 +50,13 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
 
       }
       "be handling POST index=0 by replying 303 redirect to 'Occupier List' page" in new ControllerFixture {
-        val request = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "fromDate.day"   -> "1",
           "fromDate.month" -> "4",
           "toDate.day"     -> "31",
           "toDate.month"   -> "3"
         )
-        val result  = controller.submit(request)
+        val result: Future[Result]  = controller.submit(request)
         status(result)                                            shouldBe SEE_OTHER
         redirectLocation(result).value                            shouldBe routes.HasOnlineAdvertisingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -78,11 +81,11 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
           )
         )
       ) {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.backLink              shouldBe routes.IsYearlyAvailableController.show.url
         page.input("fromDate.day")   should haveValue("10")
         page.input("fromDate.month") should haveValue("9")
@@ -92,7 +95,7 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
     }
     "regardless users having entered period or not" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "fromDate.day"   -> "",
             "fromDate.month" -> "",
@@ -101,7 +104,7 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("fromDate.day") shouldBe "error.date.required"
       }
     }

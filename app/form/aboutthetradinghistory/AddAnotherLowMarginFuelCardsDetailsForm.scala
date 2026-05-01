@@ -23,7 +23,7 @@ import play.api.data.Forms.{mapping, optional}
 
 object AddAnotherLowMarginFuelCardsDetailsForm {
 
-  val theForm = Form(
+  val theForm: Form[AnswersYesNo] = Form(
     mapping(
       "addAnotherLowMarginFuelCardsDetails" -> optional(
         createYesNoType("error.addAnotherLowMarginFuelCardsDetails.required")

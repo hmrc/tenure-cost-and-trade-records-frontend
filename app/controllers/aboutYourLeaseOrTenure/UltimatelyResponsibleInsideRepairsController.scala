@@ -60,7 +60,7 @@ class UltimatelyResponsibleInsideRepairsController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[UltimatelyResponsibleInsideRepairs](
       ultimatelyResponsibleInsideRepairsForm,
       formWithErrors => BadRequest(ultimatelyResponsibleIRView(formWithErrors, request.sessionData.toSummary)),

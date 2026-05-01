@@ -20,13 +20,16 @@ import models.Session
 import models.submissions.lettingHistory.LettingHistory.onlineAdvertising
 import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
-import play.api.http.Status.*
+import org.jsoup.nodes.Document
 import play.api.http.MimeTypes.HTML
+import play.api.http.Status.*
+import play.api.mvc.Result
 import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.advertisingList as AdvertisingList
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
@@ -34,28 +37,28 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
   "the AdvertisingList controller" when {
     "the user session is fresh"      should {
       "be handling GET /list by replying 200 with the form showing an empty list of advertising details" in new ControllerFixture {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.advertisingList.heading.plural"
         // TODO page.backLink    shouldBe None
         page.summaryList shouldBe empty
       }
       "be handling GET /remove?index=0 by replying redirect to the 'Advertising Online List' page" in new ControllerFixture {
-        val result = controller.remove(index = 0)(fakeGetRequest)
+        val result: Future[Result] = controller.remove(index = 0)(fakeGetRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
       }
       "be handling POST /remove?index=0 by replying redirect to the 'Advertising Online List' page" in new ControllerFixture {
-        val result = controller.performRemove(index = 0)(fakePostRequest)
+        val result: Future[Result] = controller.performRemove(index = 0)(fakePostRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
         verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
       }
       "be handling POST /list?hasMoreAdvertisingDetails=yes by replying redirect to the 'Advertising Online Detail' page" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
@@ -69,30 +72,30 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /list and reply 200 by showing the list of known online advertising details" in new ControllerFixture(
           oneAdvertising
         ) {
-          val result = controller.show(fakeGetRequest)
+          val result: Future[Result] = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.summaryList     shouldNot be(empty)
           page.summaryList.head shouldBe oneAdvertising.head.websiteAddress
         }
         "be handling GET /remove?index=0 by replying 200 with the 'Confirm remove' page" in new ControllerFixture(
           oneAdvertising
         ) {
-          val result = controller.remove(index = 0)(fakeGetRequest)
+          val result: Future[Result] = controller.remove(index = 0)(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.submitAction shouldBe routes.AdvertisingListController.performRemove(0).url
         }
         "be handling invalid POST /remove?index=0 by replying 400 with error messages" in new ControllerFixture(
           oneAdvertising
         ) {
-          val result = controller.performRemove(index = 0)(fakePostRequest)
+          val result: Future[Result] = controller.performRemove(index = 0)(fakePostRequest)
           status(result) shouldBe BAD_REQUEST
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.error("genericRemoveConfirmation") shouldBe "error.confirmableAction.required"
           verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
@@ -100,7 +103,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           new ControllerFixture(
             oneAdvertising
           ) {
-            val result = controller.performRemove(index = 0)(
+            val result: Future[Result] = controller.performRemove(index = 0)(
               fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
             )
             status(result) shouldBe SEE_OTHER
@@ -111,7 +114,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
         "be handling denying POST /remove?index=0 by replying redirect to the 'Advertising List' page" in new ControllerFixture(
           oneAdvertising
         ) {
-          val result = controller.performRemove(index = 0)(
+          val result: Future[Result] = controller.performRemove(index = 0)(
             fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
           )
           status(result) shouldBe SEE_OTHER
@@ -123,19 +126,19 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
         "be handling invalid POST /list by replying 400 with error messages" in new ControllerFixture(
           fiveAdvertisings
         ) {
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "" // missing
             )
           )
           status(result) shouldBe BAD_REQUEST
-          val page   = contentAsJsoup(result)
+          val page: Document   = contentAsJsoup(result)
           page.error("answer") shouldBe "lettingHistory.advertisingList.hasMoreWebsites.required"
         }
         "be handling POST /list?hasMoreAdvertisingDetails=yes by replying redirect to the 'Max Number of Advertising' page" in new ControllerFixture(
           fiveAdvertisings
         ) {
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
@@ -150,17 +153,17 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of the user session" should {
       "be handling invalid POST /list by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.advertisingList.hasMoreWebsites.required"
       }
       "be handling POST /list?hasMoreAdvertisingDetails=no by replying redirect to the CYA page" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "no"
           )

@@ -26,7 +26,7 @@ trait MockAddressLookup extends MockitoExtendedSugar:
   val addressLookupConnector: AddressLookupConnector = mock[AddressLookupConnector]
   when(addressLookupConnector.initJourney(any[AddressLookupConfig])(using any)).thenReturn(successful(Some("/on-ramp")))
 
-  val addressLookupConfirmedAddress = AddressLookupConfirmedAddress(
+  val addressLookupConfirmedAddress: AddressLookupConfirmedAddress = AddressLookupConfirmedAddress(
     address = AddressLookupAddress(
       lines = Some(Seq("line1", "line2", "line3")),
       postcode = Some("postcode"),

@@ -19,6 +19,7 @@ package form.lettingHistory
 import actions.SessionRequest
 import controllers.lettingHistory.FiscalYearSupport
 import form.lettingHistory.WhenWasLastLetForm.theForm
+import play.api.data.Form
 import play.api.mvc.AnyContent
 
 import java.time.LocalDate
@@ -26,19 +27,19 @@ import java.time.LocalDate
 class WhenWasLastLetFormSpec extends FormSpec:
 
   it should "bind good data as expected" in new SessionFixture {
-    val data  = Map(
+    val data: Map[String, String]  = Map(
       "date.day"   -> "1",
       "date.month" -> "4",
       "date.year"  -> "2024"
     )
-    val bound = theForm.bind(data)
+    val bound: Form[LocalDate] = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
   }
 
   it should "unbind good data as expected" in new SessionFixture {
-    val date   = LocalDate.of(2024, 8, 13)
-    val filled = theForm.fill(date)
+    val date: LocalDate   = LocalDate.of(2024, 8, 13)
+    val filled: Form[LocalDate] = theForm.fill(date)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
       "date.day"   -> "13",
@@ -48,7 +49,7 @@ class WhenWasLastLetFormSpec extends FormSpec:
   }
 
   it should "detect errors related to fields being required" in new SessionFixture {
-    val bound = theForm.bind(
+    val bound: Form[LocalDate] = theForm.bind(
       Map(
         "date.day"   -> "",
         "date.month" -> "",

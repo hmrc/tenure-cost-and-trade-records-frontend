@@ -17,8 +17,8 @@
 package views.aboutFranchisesOrLettings
 
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm
-import models.pages.Summary
 import models.ForType.*
+import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
@@ -28,7 +28,7 @@ import views.behaviours.QuestionViewBehaviours
 class FranchiseOrLettingsTiedToPropertyView6045Spec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "franchiseLettings.6045"
-  val backLink         = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
+  val backLink: String         = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
 
   override val form: Form[AnswersYesNo] = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 

@@ -62,7 +62,7 @@ class CalculatingTheRentForController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CalculatingTheRent](
       theForm,
       formWithErrors =>

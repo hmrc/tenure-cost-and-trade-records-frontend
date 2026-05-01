@@ -21,12 +21,16 @@ import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.common.Address
 import models.submissions.common.AnswersYesNo.*
+import org.jsoup.nodes.Document
+import org.mockito.ArgumentCaptor
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
 import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
 
+import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelpers:
@@ -51,11 +55,11 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
   "the ContactDetailsQuestion controller" when {
     "handling GET /"                   should {
       "reply 200 with an empty form" in new ControllerFixture {
-        val result = controller.show(fakeRequest)
+        val result: Future[Result] = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading                        shouldBe "contactDetailsQuestion.heading"
         page.backLink                       shouldBe routes.AboutYouController.show().url
         page.radios("contactDetailsQuestion") should haveNoneChecked
@@ -63,37 +67,37 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
       "reply 200 with a pre-filled form" in new ControllerFixture(
         aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(AnswerYes)))
       ) {
-        val result = controller.show(fakeRequest)
+        val result: Future[Result] = controller.show(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading                        shouldBe "contactDetailsQuestion.heading"
         page.backLink                       shouldBe routes.AboutYouController.show().url
         page.radios("contactDetailsQuestion") should haveChecked("yes")
       }
 
       "GET / return HTML" in new ControllerFixture {
-        val result = controller.show(fakeRequest)
+        val result: Future[Result] = controller.show(fakeRequest)
         contentType(result)     shouldBe Some("text/html")
         Helpers.charset(result) shouldBe Some("utf-8")
       }
 
       "GET / return 200 no contact details in the session" in new ControllerFixture(aboutYouAndTheProperty = None) {
-        val result = controller.show(fakeRequest)
+        val result: Future[Result] = controller.show(fakeRequest)
         status(result)          shouldBe OK
         contentType(result)     shouldBe Some("text/html")
         Helpers.charset(result) shouldBe Some("utf-8")
       }
 
       "return correct backLink when 'from=TL' query param is present" in new ControllerFixture {
-        val result = controller.show()(FakeRequest(GET, "/path?from=TL"))
+        val result: Future[Result] = controller.show()(FakeRequest(GET, "/path?from=TL"))
         contentAsString(result) should include(controllers.routes.TaskListController.show.url)
       }
 
       "SUBMIT /" should {
         "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
-          val res = controller.submit(
+          val res: Future[Result] = controller.submit(
             FakeRequest().withFormUrlEncodedBody(Seq.empty*)
           )
           status(res) shouldBe BAD_REQUEST
@@ -101,7 +105,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
       }
 
       "Redirect when form data submitted" in new ControllerFixture {
-        val res = controller.submit(
+        val res: Future[Result] = controller.submit(
           FakeRequest(POST, "/").withFormUrlEncodedBody(
             "contactDetailsQuestion" -> "yes"
           )
@@ -111,39 +115,39 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
     }
     "handling POST /"                  should {
       "reply 404 if the submitted data is invalid" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "contactDetailsQuestion" -> "" // missing
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("contactDetailsQuestion") shouldBe "error.contactDetailsQuestion.missing"
       }
       "reply 303 redirect to the address lookup page" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "contactDetailsQuestion" -> "yes"
           )
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
-        val session = captor[Session]
+        val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         session.getValue.aboutYouAndTheProperty.value.altDetailsQuestion.value shouldBe AnswerYes
       }
     }
     "retrieving the confirmed address" should {
       "reply 303 redirect to the next page" in new ControllerFixture {
-        val result = controller.addressLookupCallback("confirmedAddress")(fakeRequest)
+        val result: Future[Result] = controller.addressLookupCallback("confirmedAddress")(fakeRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AboutThePropertyController.show().url
 
-        val id = captor[String]
+        val id: ArgumentCaptor[String] = captor[String]
         verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
         id.getValue shouldBe "confirmedAddress"
 
-        val session = captor[Session]
+        val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session)(using any)
         session.getValue.aboutYouAndTheProperty.value.alternativeContactAddress.value shouldBe Address(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,

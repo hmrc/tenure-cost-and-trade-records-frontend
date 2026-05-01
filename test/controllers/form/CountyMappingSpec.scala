@@ -18,7 +18,7 @@ package controllers.form
 
 import form.CountyMapping.validateCounty
 import org.scalatest.matchers.should
-import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
 import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
@@ -26,13 +26,13 @@ import play.api.data.Forms.single
 class CountyMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
 
   trait Setup {
-    val form = Form(single("county" -> validateCounty))
+    val form: Form[String] = Form(single("county" -> validateCounty))
   }
 
   "county validation" should {
 
     "catch invalid length error" in new Setup {
-      val lengths = Table(
+      val lengths: TableFor2[String, Boolean] = Table(
         ("county", "validity"),
         ("ICantBelieveTheNameForThisTestIsMoreThanFiftyCharactersLong", false), // 59
         ("ICantBelieveTheNameForThisTestIsEvenMoreThanFiftyCharactersLong", false), // 63
@@ -52,7 +52,7 @@ class CountyMappingSpec extends AnyWordSpecLike with should.Matchers with TableD
     }
 
     "catch mandatory condition" in new Setup {
-      val isInput = Table(
+      val isInput: TableFor2[String, Boolean] = Table(
         ("county", "validity"),
         ("Lancashire", true),
         ("", false)

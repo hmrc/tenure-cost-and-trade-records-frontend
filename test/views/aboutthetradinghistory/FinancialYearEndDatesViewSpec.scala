@@ -19,6 +19,7 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.FinancialYearEndDatesForm.financialYearEndDatesForm
 import play.api.data.Form
+import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
@@ -28,7 +29,7 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
 
   val messageKeyPrefix = "financialYearEndDates"
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
+  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
   private val finYears = Seq(today, today.minusYears(1), today.minusYears(2)).map(_.getYear)
 

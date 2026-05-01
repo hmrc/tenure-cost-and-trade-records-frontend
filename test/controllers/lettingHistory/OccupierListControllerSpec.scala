@@ -17,14 +17,17 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{LettingHistory, OccupierDetail}
 import models.submissions.lettingHistory.LettingHistory.*
+import models.submissions.lettingHistory.{LettingHistory, OccupierDetail}
 import navigation.LettingHistoryNavigator
-import play.api.test.Helpers._
+import org.jsoup.nodes.Document
+import play.api.mvc.Result
+import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.occupierList as OccupierListView
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class OccupierListControllerSpec extends LettingHistoryControllerSpec:
@@ -32,28 +35,28 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
   "the OccupierList controller" when {
     "the user session is fresh"      should {
       "be handling GET /list by replying 200 with the form showing an empty list of occupiers" in new ControllerFixture {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.occupierList.heading.plural"
         // TODO page.backLink    shouldBe None
         page.summaryList shouldBe empty
       }
       "be handling GET /remove?index=0 by replying redirect to the 'Occupiers List' page" in new ControllerFixture {
-        val result = controller.remove(index = 0)(fakeGetRequest)
+        val result: Future[Result] = controller.remove(index = 0)(fakeGetRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.OccupierListController.show.url
       }
       "be handling POST /remove?index=0 by replying redirect to the 'Occupier List' page" in new ControllerFixture {
-        val result = controller.performRemove(index = 0)(fakePostRequest)
+        val result: Future[Result] = controller.performRemove(index = 0)(fakePostRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.OccupierListController.show.url
         verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
       }
       "be handling POST /list?hadMoreOccupiers=yes by replying redirect to the 'Occupiers Detail' page" in new ControllerFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
+        val result: Future[Result] = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.OccupierDetailController.show().url
       }
@@ -63,30 +66,30 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /list and reply 200 by showing the list of known residents" in new ControllerFixture(
           oneOccupier
         ) {
-          val result = controller.show(fakeGetRequest)
+          val result: Future[Result] = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.summaryList   shouldNot be(empty)
           page.summaryList.head should include(oneOccupier.head.name)
         }
         "be handling GET /remove?index=0 by replying 200 with the 'Confirm remove' page" in new ControllerFixture(
           oneOccupier
         ) {
-          val result = controller.remove(index = 0)(fakeGetRequest)
+          val result: Future[Result] = controller.remove(index = 0)(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.submitAction shouldBe routes.OccupierListController.performRemove(0).url
         }
         "be handling invalid POST /remove?index=0 by replying 400 with error messages" in new ControllerFixture(
           oneOccupier
         ) {
-          val result = controller.performRemove(index = 0)(fakePostRequest) // genericRemoveConfirmation is missing
+          val result: Future[Result] = controller.performRemove(index = 0)(fakePostRequest) // genericRemoveConfirmation is missing
           status(result) shouldBe BAD_REQUEST
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.error("genericRemoveConfirmation") shouldBe "error.confirmableAction.required"
           verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
@@ -95,7 +98,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
             oneOccupier
           ) {
             // Confirm the removal of the resident at index 0 (who is "Mr. One")
-            val result = controller.performRemove(index = 0)(
+            val result: Future[Result] = controller.performRemove(index = 0)(
               fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
             )
             status(result) shouldBe SEE_OTHER
@@ -107,7 +110,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
           oneOccupier
         ) {
           // Deny the removal of the resident at index 0 (who is "Mr. One")
-          val result = controller.performRemove(index = 0)(
+          val result: Future[Result] = controller.performRemove(index = 0)(
             fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
           )
           status(result) shouldBe SEE_OTHER
@@ -119,19 +122,19 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
         "be handling invalid POST /list by replying 400 with error messages" in new ControllerFixture(
           fiveOccupiers
         ) {
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "" // yer or no is missing!
             )
           )
           status(result) shouldBe BAD_REQUEST
-          val page   = contentAsJsoup(result)
+          val page: Document   = contentAsJsoup(result)
           page.error("answer") shouldBe "lettingHistory.occupierList.hadMoreOccupiers.required"
         }
         "be handling POST /list?hadMoreOccupiers=yes by replying redirect to the 'Max Number of Occupiers' page" in new ControllerFixture(
           fiveOccupiers
         ) {
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
+          val result: Future[Result] = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
           status(result)                 shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe
             routes.MaxNumberReachedController
@@ -142,17 +145,17 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of the user session" should {
       "be handling invalid POST /list by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "" // yes or no is missing
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document   = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.occupierList.hadMoreOccupiers.required"
       }
       "be handling POST /list?hadMoreOccupiers=no by replying redirect to the 'Letting intention' page" in new ControllerFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
+        val result: Future[Result] = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.HowManyNightsController.show.url
       }

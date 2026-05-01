@@ -19,14 +19,14 @@ package controllers.aboutfranchisesorlettings
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
+import form.aboutfranchisesorlettings.RentDetailsForm.rentDetailsForm
+import models.submissions.aboutfranchisesorlettings.*
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.rentDetails
-import form.aboutfranchisesorlettings.RentDetailsForm.rentDetailsForm
-import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, RentDetails, TelecomMastLetting}
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
@@ -78,7 +78,7 @@ class RentDetailsController @Inject() (
     operatorName
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingDetails = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings.get.lift(index))
     continueOrSaveAsDraft[RentDetails](
       rentDetailsForm,

@@ -26,7 +26,7 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object ElectricVehicleChargingPointsForm {
 
-  val electricVehicleChargingPointsForm = Form(
+  val electricVehicleChargingPointsForm: Form[ElectricVehicleChargingPoints] = Form(
     mapping(
       "electricVehicleChargingPoints" -> createYesNoType("error.electricVehicleChargingPoints.required"),
       "spacesOrBays"                  -> mandatoryIfEqual(

@@ -23,6 +23,7 @@ import models.submissions.lettingHistory.LettingHistory.*
 import org.scalatest.OptionValues
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+
 import java.time.LocalDate
 
 class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
@@ -30,13 +31,13 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
   "the CompletedLettings trait" when {
     "copying the session withHasCompletedLettings"            should {
       "set a boolean value although lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session = withHasCompletedLettings(true)
+        val session: SessionWrapper = withHasCompletedLettings(true)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         hasCompletedLettings(session.data).value mustBe true
       }
       "set a boolean value although lettingHistory.hasCompletedLettings was None" in new SessionWithSomeLettingHistory {
-        val session = withHasCompletedLettings(true)
+        val session: SessionWrapper = withHasCompletedLettings(true)
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
         // completedLettings(session.data) must be(empty)
@@ -44,7 +45,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "confirm the boolean value which was already set" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val session = withHasCompletedLettings(true)
+        val session: SessionWrapper = withHasCompletedLettings(true)
         session.changed mustBe false
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) mustNot be(empty)
@@ -52,7 +53,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "negate the boolean value which was already set" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val session = withHasCompletedLettings(false)
+        val session: SessionWrapper = withHasCompletedLettings(false)
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe false
         completedLettings(session.data) mustBe empty
@@ -60,8 +61,8 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "double negate the boolean value which was already set" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val session1 = withHasCompletedLettings(false)
-        val session2 = withHasCompletedLettings(true)(using session1.data)
+        val session1: SessionWrapper = withHasCompletedLettings(false)
+        val session2: SessionWrapper = withHasCompletedLettings(true)(using session1.data)
         session2.changed mustBe true
         hasCompletedLettings(session2.data).value mustBe true
       }
@@ -94,7 +95,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "change resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val updatedJohnBrown = OccupierDetail(johnBrown.name, aliceWhite.address, rentalPeriod = None)
+        val updatedJohnBrown: OccupierDetail = OccupierDetail(johnBrown.name, aliceWhite.address, rentalPeriod = None)
         private val session  = byAddingOrUpdatingOccupier(updatedJohnBrown, maybeIndex = Some(0))._2
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
@@ -115,7 +116,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
     "copying the session byUpdatingOccupierRentalPeriod"      should {
       "create some empty lettingHistory if it was None" in new SessionWithNoLettingHistory {
-        val session = byUpdatingOccupierRentalPeriod(0, year2024)
+        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
         session.changed mustBe true
         hasCompletedLettings(session.data) mustBe None
         completedLettings(session.data) mustBe empty
@@ -123,7 +124,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "keep the empty completedLettings" in new SessionWithSomeLettingHistory(
         completedLettings = List.empty
       ) {
-        val session = byUpdatingOccupierRentalPeriod(0, year2024)
+        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
         session.changed mustBe false
         hasCompletedLettings(session.data) mustBe None
         completedLettings(session.data) mustBe empty
@@ -131,7 +132,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "patch the existing occupier if the given rental period is different" in new SessionWithSomeLettingHistory(
         completedLettings = List(johnBrown)
       ) {
-        val session = byUpdatingOccupierRentalPeriod(0, year2024)
+        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
         session.changed mustBe true
         completedLettings(session.data).head.name mustBe johnBrown.name
         completedLettings(session.data).head.address mustBe johnBrown.address
@@ -142,7 +143,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
           johnBrown.copy(rentalPeriod = Some(year2024))
         )
       ) {
-        val session = byUpdatingOccupierRentalPeriod(0, year2024)
+        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
         session.changed mustBe false
         completedLettings(session.data).head.name mustBe johnBrown.name
         completedLettings(session.data).head.address mustBe johnBrown.address
@@ -151,14 +152,14 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
     "copying the session byRemovingCompletedLettingAt"        should {
       "set an empty completedLettings list although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session = byRemovingCompletedLettingAt(2)
+        val session: SessionWrapper = byRemovingCompletedLettingAt(2)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         hasCompletedLettings(session.data).value mustBe false
         completedLettings(session.data) mustBe empty
       }
       "remove from empty completedLettings list when lettingHistory is not None" in new SessionWithSomeLettingHistory {
-        val session = byRemovingCompletedLettingAt(0)
+        val session: SessionWrapper = byRemovingCompletedLettingAt(0)
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe false
         completedLettings(session.data) mustBe empty
@@ -166,7 +167,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
       "remove existent resident from completedLettings list" in new SessionWithSomeLettingHistory(completedLettings =
         List(johnBrown)
       ) {
-        val session = byRemovingCompletedLettingAt(0)
+        val session: SessionWrapper = byRemovingCompletedLettingAt(0)
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe false
         completedLettings(session.data) mustBe empty
@@ -174,7 +175,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     }
   }
 
-  val session = Session(
+  val session: Session = Session(
     referenceNumber = "99996010004",
     forType = FOR6048,
     address = CommonAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX"),
@@ -183,12 +184,12 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     lettingHistory = None
   )
 
-  val year2024 = LocalPeriod(
+  val year2024: LocalPeriod = LocalPeriod(
     fromDate = LocalDate.of(2024, 1, 1),
     toDate = LocalDate.of(2024, 12, 31)
   )
 
-  val johnBrown = OccupierDetail(
+  val johnBrown: OccupierDetail = OccupierDetail(
     name = "John Brown",
     address = Some(
       OccupierAddress(
@@ -202,7 +203,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     rentalPeriod = None
   )
 
-  val aliceWhite = OccupierDetail(
+  val aliceWhite: OccupierDetail = OccupierDetail(
     name = "Alice White",
     address = None,
     rentalPeriod = None
