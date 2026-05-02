@@ -77,12 +77,10 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
         .flatMap(_.addAnotherBunkerFuelCardDetails)
         .orElse(Option.when(navigator.from == "CYA")(AnswerNo))
 
-    Future.successful(
-      Ok(
-        theListView(
-          addAnother.fold(theForm)(theForm.fill),
-          index
-        )
+    Ok(
+      theListView(
+        addAnother.fold(theForm)(theForm.fill),
+        index
       )
     )
   }
@@ -94,12 +92,10 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors =>
-        Future.successful(
-          BadRequest(
-            theListView(
-              formWithErrors,
-              index
-            )
+        BadRequest(
+          theListView(
+            formWithErrors,
+            index
           )
         ),
       formData =>
@@ -148,14 +144,12 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
   def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     getCardName(idx)
       .map { cardName =>
-        Future.successful(
-          Ok(
-            theRemoveView(
-              confirmableActionForm,
-              cardName,
-              controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx),
-              routes.AddAnotherBunkerFuelCardsDetailsController.show(idx)
-            )
+        Ok(
+          theRemoveView(
+            confirmableActionForm,
+            cardName,
+            controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.performRemove(idx),
+            routes.AddAnotherBunkerFuelCardsDetailsController.show(idx)
           )
         )
       }
@@ -168,15 +162,13 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
       formWithErrors =>
         getCardName(idx)
           .map { cardName =>
-            Future.successful(
-              BadRequest(
-                theRemoveView(
-                  formWithErrors,
-                  cardName,
-                  controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController
-                    .performRemove(idx),
-                  routes.AddAnotherBunkerFuelCardsDetailsController.show(idx)
-                )
+            BadRequest(
+              theRemoveView(
+                formWithErrors,
+                cardName,
+                controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController
+                  .performRemove(idx),
+                routes.AddAnotherBunkerFuelCardsDetailsController.show(idx)
               )
             )
           }

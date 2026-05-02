@@ -53,14 +53,12 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
 
     val existingSection = request.sessionData.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lift(index))
 
-    Future.successful(
-      Ok(
-        theListView(
-          existingSection
-            .flatMap(_.addAnotherLettingToProperty)
-            .fold(theForm)(theForm.fill),
-          index
-        )
+    Ok(
+      theListView(
+        existingSection
+          .flatMap(_.addAnotherLettingToProperty)
+          .fold(theForm)(theForm.fill),
+        index
       )
     )
   }
@@ -69,7 +67,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
     if (request.sessionData.stillConnectedDetails.exists(_.lettingPartOfPropertyDetailsIndex >= 4)) {
 
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("connection")).url
-      Future.successful(Redirect(redirectUrl))
+      Redirect(redirectUrl)
     } else {
       continueOrSaveAsDraft[AnswersYesNo](
         theForm,
@@ -84,22 +82,20 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
           request.sessionData.stillConnectedDetails
             .map(_.lettingPartOfPropertyDetails)
             .filter(_.nonEmpty)
-            .fold(
-              Future.successful(
-                Redirect(
-                  if (formData == AnswerYes) {
-                    routes.LettingPartOfPropertyDetailsController.show()
-                  } else {
-                    navigator
-                      .cyaPageDependsOnSession(request.sessionData)
-                      .filter(_ => navigator.from == "CYA" && formData == AnswerNo)
-                      .getOrElse(
-                        navigator
-                          .nextWithoutRedirectToCYA(AddAnotherLettingPartOfPropertyPageId, request.sessionData)
-                          .apply(request.sessionData)
-                      )
-                  }
-                )
+            .fold[Future[Result]](
+              Redirect(
+                if (formData == AnswerYes) {
+                  routes.LettingPartOfPropertyDetailsController.show()
+                } else {
+                  navigator
+                    .cyaPageDependsOnSession(request.sessionData)
+                    .filter(_ => navigator.from == "CYA" && formData == AnswerNo)
+                    .getOrElse(
+                      navigator
+                        .nextWithoutRedirectToCYA(AddAnotherLettingPartOfPropertyPageId, request.sessionData)
+                        .apply(request.sessionData)
+                    )
+                }
               )
             ) { existingSections =>
               val updatedSections = existingSections.updated(
@@ -130,14 +126,12 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
       .flatMap(_.lettingPartOfPropertyDetails.lift(idx))
       .map { lettingSections =>
         val name = lettingSections.tenantDetails.name
-        Future.successful(
-          Ok(
-            theConfirmationView(
-              confirmableActionForm,
-              name,
-              routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
-              callBackToCYAor(routes.AddAnotherLettingPartOfPropertyController.show(idx))
-            )
+        Ok(
+          theConfirmationView(
+            confirmableActionForm,
+            name,
+            routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
+            callBackToCYAor(routes.AddAnotherLettingPartOfPropertyController.show(idx))
           )
         )
       }

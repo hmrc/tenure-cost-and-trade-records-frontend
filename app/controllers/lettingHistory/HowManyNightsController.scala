@@ -29,7 +29,6 @@ import repositories.SessionRepo
 import views.html.lettingHistory.howManyNights as HowManyNightsView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -59,7 +58,7 @@ class HowManyNightsController @Inject (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[Int](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, currentRentalPeriod, backLinkUrl))),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, currentRentalPeriod, backLinkUrl)),
       nights =>
         given Session = request.sessionData
         for

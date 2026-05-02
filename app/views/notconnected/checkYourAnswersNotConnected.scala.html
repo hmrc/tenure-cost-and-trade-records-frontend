@@ -17,6 +17,7 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
 @import views.html.answers.notConnectedAnswersTable
 @import views.html.components.PrimaryLayout
 
@@ -30,28 +31,25 @@
 
 @(session: models.Session)(implicit request: Request[?], messages: Messages)
 
-    @layout(
-        pageHeading = messages("checkYourAnswersNotConnected.heading"),
-        summary = Some(session.toSummary),
-        fullWidth = true,
-        backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show().url
-    ) {
+@layout(
+    pageHeading = messages("checkYourAnswersNotConnected.heading"),
+    summary = Some(session.toSummary),
+    fullWidth = true,
+    backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show().url
+) {
+    @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit()) {
 
-        @formWithCSRF(action = controllers.notconnected.routes.CheckYourAnswersNotConnectedController.submit()) {
+        @notConnectedAnswers(session)
 
-            @notConnectedAnswers(session)
+        <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
 
-            <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
+        <p class="govuk-body">@messages("declaration.information")</p>
 
-            <p class="govuk-body">@messages("declaration.information")</p>
+        @govukWarningText(WarningText(
+            content = Text(messages("hint.declaration")),
+            classes = "govuk-!-margin-bottom-2"
+        ))
 
-            @govukWarningText(WarningText(
-                content = Text(messages("hint.declaration")),
-                classes = "govuk-!-margin-bottom-2"
-            ))
-
-            @includes.acceptAndSendButton(govukButton)
-
-        }
-
+        @govukButton(SubmitButton("send"))
     }
+}

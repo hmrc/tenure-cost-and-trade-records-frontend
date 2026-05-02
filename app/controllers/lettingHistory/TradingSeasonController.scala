@@ -31,7 +31,6 @@ import util.DateUtilLocalised
 import views.html.lettingHistory.tradingSeason as TradingSeasonView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -62,11 +61,11 @@ class TradingSeasonController @Inject (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LocalPeriod](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, backLinkUrl)),
       period =>
         given Session = request.sessionData
         for
-          newSession   <- successful(withTradingPeriod(period))
+          newSession   <- withTradingPeriod(period)
           savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = TradingSeasonLengthPageId, savedSession)
     )

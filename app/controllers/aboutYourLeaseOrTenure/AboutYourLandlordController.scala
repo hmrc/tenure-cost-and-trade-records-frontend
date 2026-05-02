@@ -27,6 +27,7 @@ import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.common.Address
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.Logging
+import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
@@ -34,7 +35,6 @@ import views.html.aboutYourLeaseOrTenure.aboutYourLandlord as AboutYourLandlordV
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class AboutYourLandlordController @Inject() (
@@ -53,20 +53,18 @@ class AboutYourLandlordController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AboutYourLandlord")
-    val freshForm  = theForm
-    val filledForm =
+    val freshForm: Form[String]          = theForm
+    val filledForm: Option[Form[String]] =
       for
         aboutLeaseOrAgreementPartOne <- request.sessionData.aboutLeaseOrAgreementPartOne
         aboutTheLandlord             <- aboutLeaseOrAgreementPartOne.aboutTheLandlord
       yield theForm.fill(aboutTheLandlord.landlordFullName)
 
-    successful(
-      Ok(
-        theView(
-          filledForm.getOrElse(freshForm),
-          request.sessionData.toSummary,
-          getBackLink(request.sessionData)
-        )
+    Ok(
+      theView(
+        filledForm.getOrElse(freshForm),
+        request.sessionData.toSummary,
+        getBackLink(request.sessionData)
       )
     )
   }
@@ -81,7 +79,7 @@ class AboutYourLandlordController @Inject() (
       formData => {
         given Session = request.sessionData
         for
-          newSession     <- successful(sessionWithLandlordFullName(formData))
+          newSession     <- sessionWithLandlordFullName(formData)
           _              <- repository.saveOrUpdate(newSession)
           redirectResult <- redirectToAddressLookupFrontend(
                               config = AddressLookupConfig(
@@ -124,7 +122,7 @@ class AboutYourLandlordController @Inject() (
     for
       confirmedAddress <- getConfirmedAddress(id)
       landlordAddress   = confirmedAddress.asAddress
-      newSession       <- successful(sessionWithLandlordAddress(landlordAddress))
+      newSession       <- sessionWithLandlordAddress(landlordAddress)
       _                <- repository.saveOrUpdate(newSession)
     yield navigator.from match {
       case "CYA" =>

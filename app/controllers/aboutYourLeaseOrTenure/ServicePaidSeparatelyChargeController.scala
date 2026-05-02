@@ -24,7 +24,7 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.ServicePaidSeparatelyChargeId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.servicePaidSeparatelyCharge
 
@@ -64,20 +64,16 @@ class ServicePaidSeparatelyChargeController @Inject() (
     continueOrSaveAsDraft[BigDecimal](
       servicePaidSeparatelyChargeForm,
       formWithErrors =>
-        Future.successful(
-          BadRequest(
-            view(
-              formWithErrors,
-              index,
-              request.sessionData.toSummary
-            )
+        BadRequest(
+          view(
+            formWithErrors,
+            index,
+            request.sessionData.toSummary
           )
         ),
       data =>
-        request.sessionData.aboutLeaseOrAgreementPartThree.fold(
-          Future.successful(
-            Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(index))
-          )
+        request.sessionData.aboutLeaseOrAgreementPartThree.fold[Future[Result]](
+          Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(index))
         ) { details =>
           val existingSections = details.servicesPaid
           val updatedDetails   = existingSections

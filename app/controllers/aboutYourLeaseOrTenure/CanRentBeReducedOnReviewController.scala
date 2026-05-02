@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.canRentBeReducedOnReview
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CanRentBeReducedOnReviewController @Inject() (
@@ -49,15 +49,13 @@ class CanRentBeReducedOnReviewController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CanRentBeReducedOnReview")
 
-    Future.successful(
-      Ok(
-        canRentBeReducedOnReviewView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReview) match {
-            case Some(data) => canRentBeReducedOnReviewForm.fill(data)
-            case _          => canRentBeReducedOnReviewForm
-          },
-          getBackLink
-        )
+    Ok(
+      canRentBeReducedOnReviewView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReview) match {
+          case Some(data) => canRentBeReducedOnReviewForm.fill(data)
+          case _          => canRentBeReducedOnReviewForm
+        },
+        getBackLink
       )
     )
   }

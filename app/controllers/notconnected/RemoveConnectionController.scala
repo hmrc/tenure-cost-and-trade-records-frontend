@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.notconnected.removeConnection
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RemoveConnectionController @Inject() (
@@ -43,16 +43,14 @@ class RemoveConnectionController @Inject() (
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        removeConnectionView(
-          request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
-            case Some(removeConnectionDetails) => removeConnectionForm.fill(removeConnectionDetails)
-            case _                             => removeConnectionForm
-          },
-          request.sessionData.toSummary,
-          calculateBackLink
-        )
+    Ok(
+      removeConnectionView(
+        request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
+          case Some(removeConnectionDetails) => removeConnectionForm.fill(removeConnectionDetails)
+          case _                             => removeConnectionForm
+        },
+        request.sessionData.toSummary,
+        calculateBackLink
       )
     )
   }

@@ -36,7 +36,6 @@ import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.occupierList as OccupierListView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -58,7 +57,7 @@ class OccupierListController @Inject() (
 
   def remove(index: Int): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     withOccupierDetailAt(index) { occupierDetails =>
-      successful(Ok(renderTheConfirmationViewWith(theRemoveConfirmationForm, occupierDetails, index)))
+      Ok(renderTheConfirmationViewWith(theRemoveConfirmationForm, occupierDetails, index))
     }
   }
 
@@ -68,9 +67,9 @@ class OccupierListController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors =>
-            successful(BadRequest(renderTheConfirmationViewWith(formWithErrors, occupierDetail, index))),
+            BadRequest(renderTheConfirmationViewWith(formWithErrors, occupierDetail, index)),
           answer =>
-            val eventuallySavedSession =
+            val eventuallySavedSession: Future[SessionWrapper] =
               if answer == AnswerYes then
                 given Session = request.sessionData
                 for
@@ -79,7 +78,7 @@ class OccupierListController @Inject() (
                 yield savedSession
               else
                 // AnswerNo
-                successful(request.sessionData.withChangedData(true))
+                request.sessionData.withChangedData(true)
 
             for savedSession <- eventuallySavedSession
             yield navigator.redirect(currentPage = OccupierRemovePageId, savedSession)
@@ -91,10 +90,8 @@ class OccupierListController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       theListForm,
       theFormWithErrors =>
-        successful(
-          BadRequest(
-            theListView(theFormWithErrors, effectiveRentalPeriod, completedLettings(request.sessionData), backLinkUrl)
-          )
+        BadRequest(
+          theListView(theFormWithErrors, effectiveRentalPeriod, completedLettings(request.sessionData), backLinkUrl)
         ),
       formData =>
         val answerBool = formData.toBoolean
@@ -116,7 +113,7 @@ class OccupierListController @Inject() (
     then {
       val newSession = withHasCompletedLettings(false)
       repository.saveOrUpdateSession(newSession)
-    } else successful(session.withChangedData(false))
+    } else session.withChangedData(false)
 
   private def renderTheConfirmationViewWith(
     theForm: Form[AnswersYesNo],
@@ -140,7 +137,7 @@ class OccupierListController @Inject() (
     LettingHistory
       .completedLettings(request.sessionData)
       .lift(index)
-      .fold(successful(Redirect(routes.OccupierListController.show))) { occupierDetail =>
+      .fold[Future[Result]](Redirect(routes.OccupierListController.show)) { occupierDetail =>
         func.apply(occupierDetail)
       }
 

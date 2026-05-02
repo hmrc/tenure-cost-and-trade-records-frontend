@@ -17,6 +17,7 @@
 @import actions.SessionRequest
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
 @import views.html.answers.vacantPropertyAnswersTable
 @import views.html.components.PrimaryLayout
 
@@ -30,26 +31,24 @@
 
 @(backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-    @layout(
-        pageHeading = messages("checkYourAnswersConnectionToVacantProperty.heading"),
-        backLinkUrl = backLink,
-        summary = Some(request.sessionData.toSummary),
-        fullWidth = true,
-        sectionName = messages("label.section.connectionToTheProperty")
-    ) {
+@layout(
+    pageHeading = messages("checkYourAnswersConnectionToVacantProperty.heading"),
+    backLinkUrl = backLink,
+    summary = Some(request.sessionData.toSummary),
+    fullWidth = true,
+    sectionName = messages("label.section.connectionToTheProperty")
+) {
+    @vacantPropertyAnswers()
 
-        @vacantPropertyAnswers()
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.submit()) {
 
-        @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.submit()) {
+        <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
+        <p class="govuk-body">@messages("declaration.information")</p>
 
-            <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
-            <p class="govuk-body">@messages("declaration.information")</p>
+        @govukWarningText(WarningText(
+            content = Text(messages("hint.declaration"))
+        ))
 
-            @govukWarningText(WarningText(
-                content = Text(messages("hint.declaration"))
-            ))
-
-            @includes.continueButton(govukButton, isSend = true)
-
-        }
+        @govukButton(SubmitButton("send"))
     }
+}

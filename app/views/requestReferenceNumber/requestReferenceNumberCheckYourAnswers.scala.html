@@ -17,6 +17,7 @@
 @import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
 @import util.SectionAnswersRowBuilder
 
 @this(layout: PrimaryLayout,
@@ -70,8 +71,6 @@
 
         <p class="govuk-body">@messages("request.information")</p>
 
-        @includes.confirmAndSendButton(govukButton)
-
+        @govukButton(SubmitButton("confirmAndSend"))
     }
-
 }

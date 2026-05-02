@@ -34,7 +34,7 @@ import util.NumberUtil.zeroBigDecimal
 import views.html.aboutYourLeaseOrTenure.{rentIncludeFixtureAndFittingsDetails, rentIncludeFixtureAndFittingsDetailsTextArea}
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentIncludeFixtureAndFittingsDetailsController @Inject() (
@@ -55,28 +55,24 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
     audit.sendChangeLink("RentIncludeFixtureAndFittingsDetails")
 
     if (forType == FOR6045 || forType == FOR6046) {
-      Future.successful(
-        Ok(
-          rentIncludeFixtureAndFittingsDetailsTextAreaView(
-            request.sessionData.aboutLeaseOrAgreementPartThree
-              .flatMap(_.rentIncludeFixtureAndFittingsDetailsTextArea) match {
-              case Some(rentIncludeFixtureAndFittingsDetailsTextArea) =>
-                rentIncludeFixtureAndFittingsDetailsTextAreaForm.fill(rentIncludeFixtureAndFittingsDetailsTextArea)
-              case _                                                  => rentIncludeFixtureAndFittingsDetailsTextAreaForm
-            },
-            request.sessionData.toSummary
-          )
+      Ok(
+        rentIncludeFixtureAndFittingsDetailsTextAreaView(
+          request.sessionData.aboutLeaseOrAgreementPartThree
+            .flatMap(_.rentIncludeFixtureAndFittingsDetailsTextArea) match {
+            case Some(rentIncludeFixtureAndFittingsDetailsTextArea) =>
+              rentIncludeFixtureAndFittingsDetailsTextAreaForm.fill(rentIncludeFixtureAndFittingsDetailsTextArea)
+            case _                                                  => rentIncludeFixtureAndFittingsDetailsTextAreaForm
+          },
+          request.sessionData.toSummary
         )
       )
     } else {
-      Future.successful(
-        Ok(
-          rentIncludeFixtureAndFittingsDetailsView(
-            rentIncludeFixtureAndFittingsDetailsForm().fill(
-              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittingsAmount)
-            ),
-            request.sessionData.toSummary
-          )
+      Ok(
+        rentIncludeFixtureAndFittingsDetailsView(
+          rentIncludeFixtureAndFittingsDetailsForm().fill(
+            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittingsAmount)
+          ),
+          request.sessionData.toSummary
         )
       )
     }

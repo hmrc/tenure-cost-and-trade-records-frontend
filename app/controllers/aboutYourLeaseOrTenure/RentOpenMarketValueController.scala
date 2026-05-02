@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentOpenMarketValue
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentOpenMarketValueController @Inject() (
@@ -52,16 +52,14 @@ class RentOpenMarketValueController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentOpenMarketValue")
 
-    Future.successful(
-      Ok(
-        rentOpenMarketValueView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
-            case Some(answer) => rentOpenMarketValuesForm.fill(answer)
-            case _            => rentOpenMarketValuesForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentOpenMarketValueView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
+          case Some(answer) => rentOpenMarketValuesForm.fill(answer)
+          case _            => rentOpenMarketValuesForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

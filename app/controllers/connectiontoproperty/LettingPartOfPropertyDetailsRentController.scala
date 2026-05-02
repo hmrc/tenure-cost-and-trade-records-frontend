@@ -73,15 +73,13 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
     continueOrSaveAsDraft[LettingPartOfPropertyRentDetails](
       lettingPartOfPropertyRentForm,
       formWithErrors =>
-        Future.successful(
-          BadRequest(
-            lettingPartOfPropertyRentDetailsView(
-              formWithErrors,
-              index,
-              existingSection.tenantDetails.name,
-              calculateBackLink(index),
-              request.sessionData.toSummary
-            )
+        BadRequest(
+          lettingPartOfPropertyRentDetailsView(
+            formWithErrors,
+            index,
+            existingSection.tenantDetails.name,
+            calculateBackLink(index),
+            request.sessionData.toSummary
           )
         ),
       data =>

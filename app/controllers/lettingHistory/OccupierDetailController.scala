@@ -32,7 +32,6 @@ import views.html.lettingHistory.occupierDetail as OccupierDetailView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class OccupierDetailController @Inject (
@@ -79,14 +78,12 @@ class OccupierDetailController @Inject (
     continueOrSaveAsDraft[OccupierDetail](
       theForm,
       theFormWithErrors =>
-        successful(
-          BadRequest(
-            theView(
-              theFormWithErrors,
-              effectiveRentalPeriod,
-              backLinkUrl,
-              maybeIndex
-            )
+        BadRequest(
+          theView(
+            theFormWithErrors,
+            effectiveRentalPeriod,
+            backLinkUrl,
+            maybeIndex
           )
         ),
       formData =>
@@ -114,7 +111,7 @@ class OccupierDetailController @Inject (
     for
       confirmedAddress <- getConfirmedAddress(id)
       occupierAddress  <- confirmedAddress.asOccupierAddress
-      newSession       <- successful(byUpdatingOccupierAddress(idx, occupierAddress))
+      newSession       <- byUpdatingOccupierAddress(idx, occupierAddress)
       navigationData    = Map("index" -> idx)
       savedSession     <- repository.saveOrUpdateSession(newSession)
     yield navigator.redirect(currentPage = OccupierDetailPageId, savedSession, navigationData)

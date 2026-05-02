@@ -17,12 +17,12 @@
 @import form.Feedback
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.{RadioItem, Radios}
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.charactercount.CharacterCount
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
 @import views.html.components.PrimaryLayout
 
 @this(
@@ -88,14 +88,6 @@
             )
         )
 
-        @govukButton(
-            Button(
-                attributes = Map("id" -> "send"),
-                content = Text(messages("button.label.sendYourFeedback")),
-                name = Some("send"),
-                value = Some("send"),
-                inputType = Some("submit")
-            )
-        )
+        @govukButton(SubmitButton("sendYourFeedback"))
     }
 }

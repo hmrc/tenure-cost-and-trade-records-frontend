@@ -36,7 +36,6 @@ import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.residentList as ResidentListView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -57,7 +56,7 @@ class ResidentListController @Inject() (
 
   def remove(index: Int): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     withResidentDetailAt(index) { residentialDetail =>
-      successful(Ok(renderTheConfirmationViewWith(theRemoveConfirmationForm, residentialDetail, index)))
+      Ok(renderTheConfirmationViewWith(theRemoveConfirmationForm, residentialDetail, index))
     }
   }
 
@@ -67,9 +66,9 @@ class ResidentListController @Inject() (
         .bindFromRequest()
         .fold(
           formWithErrors =>
-            successful(BadRequest(renderTheConfirmationViewWith(formWithErrors, residentialDetail, index))),
+            BadRequest(renderTheConfirmationViewWith(formWithErrors, residentialDetail, index)),
           answer =>
-            val eventuallySavedSession =
+            val eventuallySavedSession: Future[SessionWrapper] =
               if answer == AnswerYes then
                 given Session = request.sessionData
                 for
@@ -78,7 +77,7 @@ class ResidentListController @Inject() (
                 yield savedSession
               else
                 // AnswerNo
-                successful(request.sessionData.withChangedData(true))
+                request.sessionData.withChangedData(true)
 
             for savedSession <- eventuallySavedSession
             yield navigator.redirect(currentPage = ResidentRemovePageId, savedSession)
@@ -90,10 +89,8 @@ class ResidentListController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       theListForm,
       theFormWithErrors =>
-        successful(
-          BadRequest(
-            theListView(theFormWithErrors, permanentResidents(request.sessionData))
-          )
+        BadRequest(
+          theListView(theFormWithErrors, permanentResidents(request.sessionData))
         ),
       answer =>
         val answerBool = answer.toBoolean
@@ -115,7 +112,7 @@ class ResidentListController @Inject() (
     then {
       val newSession = withHasPermanentResidents(false)
       repository.saveOrUpdateSession(newSession)
-    } else successful(session.withChangedData(false))
+    } else session.withChangedData(false)
 
   private def withResidentDetailAt(
     index: Int
@@ -126,7 +123,7 @@ class ResidentListController @Inject() (
     LettingHistory
       .permanentResidents(request.sessionData)
       .lift(index)
-      .fold(successful(Redirect(routes.ResidentListController.show))) { residentialDetail =>
+      .fold[Future[Result]](Redirect(routes.ResidentListController.show)) { residentialDetail =>
         func.apply(residentialDetail)
       }
 

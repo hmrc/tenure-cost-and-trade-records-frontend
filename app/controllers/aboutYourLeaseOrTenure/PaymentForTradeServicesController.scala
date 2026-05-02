@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.paymentForTradeServices
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PaymentForTradeServicesController @Inject() (
@@ -51,16 +51,14 @@ class PaymentForTradeServicesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PaymentForTradeServices")
 
-    Future.successful(
-      Ok(
-        paymentView(
-          request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match {
-            case Some(answers) => paymentForTradeServicesForm.fill(answers)
-            case _             => paymentForTradeServicesForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      paymentView(
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match {
+          case Some(answers) => paymentForTradeServicesForm.fill(answers)
+          case _             => paymentForTradeServicesForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

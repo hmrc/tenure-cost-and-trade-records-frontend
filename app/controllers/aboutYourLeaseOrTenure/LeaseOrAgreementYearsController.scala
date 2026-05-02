@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.leaseOrAgreementYears
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class LeaseOrAgreementYearsController @Inject() (
@@ -51,16 +51,14 @@ class LeaseOrAgreementYearsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("LeaseOrAgreementYears")
 
-    Future.successful(
-      Ok(
-        leaseOrAgreementYearsView(
-          leaseOrAgreementDetailsInSession match {
-            case Some(leaseOrAgreementYearsDetails) => leaseOrAgreementYearsForm.fill(leaseOrAgreementYearsDetails)
-            case _                                  => leaseOrAgreementYearsForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      leaseOrAgreementYearsView(
+        leaseOrAgreementDetailsInSession match {
+          case Some(leaseOrAgreementYearsDetails) => leaseOrAgreementYearsForm.fill(leaseOrAgreementYearsDetails)
+          case _                                  => leaseOrAgreementYearsForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

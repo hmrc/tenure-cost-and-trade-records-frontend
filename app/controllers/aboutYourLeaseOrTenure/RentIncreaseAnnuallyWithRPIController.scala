@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentIncreaseAnnuallyWithRPI
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentIncreaseAnnuallyWithRPIController @Inject() (
@@ -51,17 +51,15 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncreaseAnnuallyWithRPI")
 
-    Future.successful(
-      Ok(
-        rentIncreaseAnnuallyWithRPIView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncreasedAnnuallyWithRPIDetails) match {
-            case Some(rentIncreasedAnnuallyWithRPIDetails) =>
-              rentIncreasedAnnuallyWithRPIDetailsForm.fill(rentIncreasedAnnuallyWithRPIDetails)
-            case None                                      => rentIncreasedAnnuallyWithRPIDetailsForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentIncreaseAnnuallyWithRPIView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncreasedAnnuallyWithRPIDetails) match {
+          case Some(rentIncreasedAnnuallyWithRPIDetails) =>
+            rentIncreasedAnnuallyWithRPIDetailsForm.fill(rentIncreasedAnnuallyWithRPIDetails)
+          case None                                      => rentIncreasedAnnuallyWithRPIDetailsForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

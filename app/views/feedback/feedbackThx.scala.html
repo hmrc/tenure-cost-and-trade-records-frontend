@@ -14,16 +14,15 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.vo.service.model.button.LinkButton
 @import views.html.components.PrimaryLayout
 
 
-@this(layout: PrimaryLayout,
+@this(
+        layout: PrimaryLayout,
         govukButton: GovukButton
 )
-
 
 @()(implicit request: Request[?], messages: Messages)
 
@@ -40,13 +39,7 @@
                 <br>
                 <br>
                 <br>
-                @govukButton(
-                    Button(
-                        content = Text(messages("feedback.backToLogin")),
-                        href = Some(routes.LoginController.show.url)
-                    )
-                )
-
+                @govukButton(LinkButton("startNewDeclaration", routes.LoginController.show.url))
             </div>
             <hr class="govuk-section-break govuk-section-break--xl govuk-section-break--visible">
             <div class="govuk-grid-column-one-third">
@@ -55,11 +48,7 @@
                 <p class="govuk-body"><a href="https://www.gov.uk/find-business-rates" class="govuk-link">@{messages("feedback.link2")}</a></p>
                 <p class="govuk-body"><a href="https://www.gov.uk/apply-for-business-rate-relief" class="govuk-link">@{messages("feedback.link3")}</a></p>
                 <p class="govuk-body"><a href="https://www.gov.uk/contact-your-local-council-about-business-rates" class="govuk-link">@{messages("feedback.link4")}</a></p>
-
             </div>
         </div>
     </div>
 }
-
-
-

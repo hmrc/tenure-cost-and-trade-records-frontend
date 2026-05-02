@@ -31,7 +31,7 @@ import views.html.connectiontoproperty.vacantPropertyStartDate
 
 import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class VacantPropertiesStartDateController @Inject() (
@@ -49,16 +49,14 @@ class VacantPropertiesStartDateController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("VacantPropertiesStartDate")
 
-    Future.successful(
-      Ok(
-        vacantPropertyStartDateView(
-          request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
-            case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fill(vacantPropertyStartDate)
-            case _                             => vacantPropertyStartDateForm
-          },
-          request.sessionData.toSummary,
-          calculateBackLink
-        )
+    Ok(
+      vacantPropertyStartDateView(
+        request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
+          case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fill(vacantPropertyStartDate)
+          case _                             => vacantPropertyStartDateForm
+        },
+        request.sessionData.toSummary,
+        calculateBackLink
       )
     )
 

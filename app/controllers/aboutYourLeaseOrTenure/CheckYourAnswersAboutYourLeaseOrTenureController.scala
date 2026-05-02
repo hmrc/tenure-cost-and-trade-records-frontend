@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.checkYourAnswersAboutYourLeaseOrTenure
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
@@ -48,20 +48,18 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersAboutYourLeaseOrTenureView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match {
-            case Some(answer) => checkYourAnswersAboutYourLeaseOrTenureForm.fill(answer)
-            case _            => checkYourAnswersAboutYourLeaseOrTenureForm
-          },
-          navigator.from match {
-            case "CYA" =>
-              controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
-            case _     => getBackLink(request.sessionData)
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      checkYourAnswersAboutYourLeaseOrTenureView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match {
+          case Some(answer) => checkYourAnswersAboutYourLeaseOrTenureForm.fill(answer)
+          case _            => checkYourAnswersAboutYourLeaseOrTenureForm
+        },
+        navigator.from match {
+          case "CYA" =>
+            controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
+          case _     => getBackLink(request.sessionData)
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -90,9 +88,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
               )
             )
         session.saveOrUpdate(updatedData).flatMap { _ =>
-          Future.successful(
-            Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData))
-          )
+          Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData))
         }
       }
     )

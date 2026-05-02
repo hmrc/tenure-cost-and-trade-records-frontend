@@ -111,9 +111,9 @@ class LoginController @Inject() (
           "ForRequestedFromContinue",
           DownloadPDFAudit(referenceNumberFromUrl, forType.toString, request.uri)
         )
-      case _             => Future.successful(Ok(login(form)))
+      case _             => Ok(login(form))
     }
-    Future.successful(Ok(login(form)))
+    Ok(login(form))
   }
 
   def logout: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -131,13 +131,13 @@ class LoginController @Inject() (
     loginForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(login(formWithErrors))),
+        formWithErrors => BadRequest(login(formWithErrors)),
         loginData => verifyLogin(loginData.referenceNumberCleaned, loginData.postcode)
       )
   }
 
   def notValidFORType: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(test()))
+    Ok(test())
   }
 
   def verifyLogin(

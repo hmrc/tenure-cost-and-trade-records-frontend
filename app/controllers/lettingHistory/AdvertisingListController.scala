@@ -24,7 +24,7 @@ import models.Session
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.lettingHistory.LettingHistory.byRemovingOnlineAdvertisingAt
-import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory}
+import models.submissions.lettingHistory.{AdvertisingDetail, LettingHistory, SessionWrapper}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.{AdvertisingListPageId, AdvertisingRemovePageId}
 import play.api.data.Form
@@ -35,7 +35,6 @@ import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.advertisingList as AdvertisingListView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -56,7 +55,7 @@ class AdvertisingListController @Inject() (
 
   def remove(index: Int): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     withAdvertisingDetailAt(index) { advertising =>
-      successful(Ok(renderTheConfirmationViewWith(theRemoveConfirmationForm, advertising, index)))
+      Ok(renderTheConfirmationViewWith(theRemoveConfirmationForm, advertising, index))
     }
   }
 
@@ -65,16 +64,16 @@ class AdvertisingListController @Inject() (
       theRemoveConfirmationForm
         .bindFromRequest()
         .fold(
-          formWithErrors => successful(BadRequest(renderTheConfirmationViewWith(formWithErrors, advertising, index))),
+          formWithErrors => BadRequest(renderTheConfirmationViewWith(formWithErrors, advertising, index)),
           answer =>
-            val eventuallySavedSession =
+            val eventuallySavedSession: Future[SessionWrapper] =
               if answer == AnswerYes then
                 given Session = request.sessionData
                 for
-                  newSession   <- successful(byRemovingOnlineAdvertisingAt(index))
+                  newSession   <- byRemovingOnlineAdvertisingAt(index)
                   savedSession <- repository.saveOrUpdateSession(newSession)
                 yield savedSession
-              else successful(request.sessionData.withChangedData(true))
+              else request.sessionData.withChangedData(true)
 
             for savedSession <- eventuallySavedSession
             yield navigator.redirect(currentPage = AdvertisingRemovePageId, savedSession)
@@ -86,18 +85,14 @@ class AdvertisingListController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       theFormWithErrors =>
-        successful(
-          BadRequest(
-            theListView(theFormWithErrors)
-          )
+        BadRequest(
+          theListView(theFormWithErrors)
         ),
       answer =>
-        successful(
-          navigator.redirect(
-            currentPage = AdvertisingListPageId,
-            session = request.sessionData.withChangedData(false),
-            navigation = Map("hasMoreAdvertisingDetails" -> answer.toBoolean)
-          )
+        navigator.redirect(
+          currentPage = AdvertisingListPageId,
+          session = request.sessionData.withChangedData(false),
+          navigation = Map("hasMoreAdvertisingDetails" -> answer.toBoolean)
         )
     )
   }
@@ -111,7 +106,7 @@ class AdvertisingListController @Inject() (
     LettingHistory
       .onlineAdvertising(request.sessionData)
       .lift(index)
-      .fold(successful(Redirect(routes.AdvertisingListController.show))) { entry =>
+      .fold[Future[Result]](Redirect(routes.AdvertisingListController.show)) { entry =>
         func.apply(entry)
       }
 

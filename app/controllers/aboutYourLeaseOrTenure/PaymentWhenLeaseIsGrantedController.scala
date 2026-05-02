@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.paymentWhenLeaseIsGranted
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PaymentWhenLeaseIsGrantedController @Inject() (
@@ -52,16 +52,14 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PaymentWhenLeaseIsGranted")
 
-    Future.successful(
-      Ok(
-        paymentWhenLeaseIsGrantedView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.receivePaymentWhenLeaseGranted) match {
-            case Some(data) => paymentWhenLeaseIsGrantedForm.fill(data)
-            case _          => paymentWhenLeaseIsGrantedForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      paymentWhenLeaseIsGrantedView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.receivePaymentWhenLeaseGranted) match {
+          case Some(data) => paymentWhenLeaseIsGrantedForm.fill(data)
+          case _          => paymentWhenLeaseIsGrantedForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

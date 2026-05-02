@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.whatIsYourRentBasedOn
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class WhatIsYourRentBasedOnController @Inject() (
@@ -48,16 +48,14 @@ class WhatIsYourRentBasedOnController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("WhatIsYourRentBasedOn")
 
-    Future.successful(
-      Ok(
-        whatIsYourRentBasedOnView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.whatIsYourCurrentRentBasedOnDetails) match {
-            case Some(whatIsYourCurrentRentBasedOnDetails) =>
-              whatIsYourCurrentRentBasedOnForm.fill(whatIsYourCurrentRentBasedOnDetails)
-            case None                                      => whatIsYourCurrentRentBasedOnForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      whatIsYourRentBasedOnView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.whatIsYourCurrentRentBasedOnDetails) match {
+          case Some(whatIsYourCurrentRentBasedOnDetails) =>
+            whatIsYourCurrentRentBasedOnForm.fill(whatIsYourCurrentRentBasedOnDetails)
+          case None                                      => whatIsYourCurrentRentBasedOnForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfBeersDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
@@ -46,19 +46,17 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryOnQuantityOfBeersDetails")
 
-    Future.successful(
-      Ok(
-        rentPayableVaryOnQuantityOfBeersDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo
-            .flatMap(_.rentPayableVaryOnQuantityOfBeersDetails) match {
-            case Some(rentPayableVaryOnQuantityOfBeersInformationDetails) =>
-              rentPayableVaryOnQuantityOfBeersDetailsForm.fill(
-                rentPayableVaryOnQuantityOfBeersInformationDetails
-              )
-            case _                                                        => rentPayableVaryOnQuantityOfBeersDetailsForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentPayableVaryOnQuantityOfBeersDetailsView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo
+          .flatMap(_.rentPayableVaryOnQuantityOfBeersDetails) match {
+          case Some(rentPayableVaryOnQuantityOfBeersInformationDetails) =>
+            rentPayableVaryOnQuantityOfBeersDetailsForm.fill(
+              rentPayableVaryOnQuantityOfBeersInformationDetails
+            )
+          case _                                                        => rentPayableVaryOnQuantityOfBeersDetailsForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

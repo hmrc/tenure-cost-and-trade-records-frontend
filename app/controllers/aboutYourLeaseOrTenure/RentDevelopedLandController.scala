@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentDevelopedLand
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentDevelopedLandController @Inject() (
@@ -49,16 +49,14 @@ class RentDevelopedLandController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentDevelopedLand")
 
-    Future.successful(
-      Ok(
-        rentDevelopedLandView(
-          request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match {
-            case Some(rentDevelopedLand) =>
-              rentDevelopedLandForm.fill(rentDevelopedLand)
-            case _                       => rentDevelopedLandForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentDevelopedLandView(
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match {
+          case Some(rentDevelopedLand) =>
+            rentDevelopedLandForm.fill(rentDevelopedLand)
+          case _                       => rentDevelopedLandForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

@@ -32,7 +32,6 @@ import views.html.lettingHistory.isYearlyAvailable as IsYearlyAvailableView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class IsYearlyAvailableController @Inject (
@@ -60,7 +59,7 @@ class IsYearlyAvailableController @Inject (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, keyFragment, backLinkUrl))),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, keyFragment, backLinkUrl)),
       answer =>
         given Session = request.sessionData
         for

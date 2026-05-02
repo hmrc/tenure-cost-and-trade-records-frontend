@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.connectionToTheProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ConnectionToThePropertyController @Inject() (
@@ -51,21 +51,19 @@ class ConnectionToThePropertyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ConnectionToTheProperty")
 
-    Future.successful(
-      Ok(
-        connectionToThePropertyView(
-          request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match {
-            case Some(connectionToProperty) => connectionToThePropertyForm.fill(connectionToProperty)
-            case _                          => connectionToThePropertyForm
-          },
-          getBackLink(request.sessionData) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for connection to property page reached with error: $msg")
-              throw RuntimeException(s"Navigation for connection to property page reached with error $msg")
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      connectionToThePropertyView(
+        request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match {
+          case Some(connectionToProperty) => connectionToThePropertyForm.fill(connectionToProperty)
+          case _                          => connectionToThePropertyForm
+        },
+        getBackLink(request.sessionData) match {
+          case Right(link) => link
+          case Left(msg)   =>
+            logger.warn(s"Navigation for connection to property page reached with error: $msg")
+            throw RuntimeException(s"Navigation for connection to property page reached with error $msg")
+        },
+        request.sessionData.toSummary
       )
     )
   }

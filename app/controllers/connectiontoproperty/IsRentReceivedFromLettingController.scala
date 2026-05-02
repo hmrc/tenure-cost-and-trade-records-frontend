@@ -33,7 +33,7 @@ import views.html.connectiontoproperty.isRentReceivedFromLetting
 
 import java.util.concurrent.TimeUnit
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class IsRentReceivedFromLettingController @Inject() (
@@ -51,16 +51,14 @@ class IsRentReceivedFromLettingController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsRentReceivedFromLetting")
 
-    Future.successful(
-      Ok(
-        isRentReceivedFromLettingView(
-          request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
-            case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
-            case _                       => isRentReceivedFromLettingForm
-          },
-          getBackLink,
-          request.sessionData.toSummary
-        )
+    Ok(
+      isRentReceivedFromLettingView(
+        request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+          case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
+          case _                       => isRentReceivedFromLettingForm
+        },
+        getBackLink,
+        request.sessionData.toSummary
       )
     )
 

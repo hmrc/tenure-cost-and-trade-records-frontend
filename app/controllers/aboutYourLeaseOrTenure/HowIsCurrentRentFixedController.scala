@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.howIsCurrentRentFixed
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class HowIsCurrentRentFixedController @Inject() (
@@ -52,16 +52,14 @@ class HowIsCurrentRentFixedController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("HowIsCurrentRentFixed")
 
-    Future.successful(
-      Ok(
-        howIsCurrentRentFixedView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed) match {
-            case Some(data) => howIsCurrentRentFixedForm.fill(data)
-            case _          => howIsCurrentRentFixedForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      howIsCurrentRentFixedView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed) match {
+          case Some(data) => howIsCurrentRentFixedForm.fill(data)
+          case _          => howIsCurrentRentFixedForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

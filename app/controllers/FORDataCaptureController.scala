@@ -29,7 +29,7 @@ import scala.concurrent.Future
   *
   * @author Yuriy Tumakha
   */
-abstract class FORDataCaptureController(cc: MessagesControllerComponents) extends FrontendController(cc) {
+abstract class FORDataCaptureController(cc: MessagesControllerComponents) extends FrontendController(cc):
 
   implicit def toFut[A](a: A): Future[A] = Future.successful(a)
 
@@ -59,5 +59,3 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
   private def saveAsDraftRedirect(using request: Request[?]): Result = Redirect(
     controllers.routes.SaveAsDraftController.customPassword(request.uri)
   )
-
-}

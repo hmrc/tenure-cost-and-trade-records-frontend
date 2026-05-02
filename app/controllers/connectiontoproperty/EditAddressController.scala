@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.editAddress
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class EditAddressController @Inject() (
@@ -47,16 +47,14 @@ class EditAddressController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("EditAddress")
 
-    Future.successful(
-      Ok(
-        editAddressView(
-          request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
-            case Some(editAddress) => editAddressForm.fill(editAddress)
-            case _                 => editAddressForm
-          },
-          request.sessionData.toSummary,
-          calculateBackLink
-        )
+    Ok(
+      editAddressView(
+        request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
+          case Some(editAddress) => editAddressForm.fill(editAddress)
+          case _                 => editAddressForm
+        },
+        request.sessionData.toSummary,
+        calculateBackLink
       )
     )
   }

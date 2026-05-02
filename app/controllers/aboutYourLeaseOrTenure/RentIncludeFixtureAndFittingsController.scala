@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentIncludeFixtureAndFittings
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentIncludeFixtureAndFittingsController @Inject() (
@@ -52,16 +52,14 @@ class RentIncludeFixtureAndFittingsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeFixtureAndFittings")
 
-    Future.successful(
-      Ok(
-        rentIncludeFixtureAndFittingsView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match {
-            case Some(answer) => rentIncludeFixturesAndFittingsForm.fill(answer)
-            case _            => rentIncludeFixturesAndFittingsForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentIncludeFixtureAndFittingsView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match {
+          case Some(answer) => rentIncludeFixturesAndFittingsForm.fill(answer)
+          case _            => rentIncludeFixturesAndFittingsForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

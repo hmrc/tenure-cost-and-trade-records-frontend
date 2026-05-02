@@ -30,7 +30,7 @@ import views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire
 
 import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TenancyLeaseAgreementExpireController @Inject() (
@@ -47,16 +47,14 @@ class TenancyLeaseAgreementExpireController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TenancyLeaseAgreementExpire")
 
-    Future.successful(
-      Ok(
-        tenancyLeaseAgreementExpireView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenancyLeaseAgreementExpire) match {
-            case Some(tenancyLeaseAgreementExpire) =>
-              tenancyLeaseAgreementExpireForm.fill(tenancyLeaseAgreementExpire)
-            case _                                 => tenancyLeaseAgreementExpireForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      tenancyLeaseAgreementExpireView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenancyLeaseAgreementExpire) match {
+          case Some(tenancyLeaseAgreementExpire) =>
+            tenancyLeaseAgreementExpireForm.fill(tenancyLeaseAgreementExpire)
+          case _                                 => tenancyLeaseAgreementExpireForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

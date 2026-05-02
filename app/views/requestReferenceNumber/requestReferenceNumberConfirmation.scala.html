@@ -15,13 +15,14 @@
  *@
 
 @import actions.SessionRequest
+@import form.Feedback
 @import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.Radios
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
 
-@import form.Feedback
 
 @this(
         layout: PrimaryLayout,
@@ -35,11 +36,10 @@
 
 @layout(
     pageHeading = messages("label.connectionToProperty.confirm.heading"),
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     showH1 = false,
     showAccountInfo = false
 ) {
-
     <div class="govuk-panel govuk-panel--confirmation govuk-!-display-none-print">
         <h1 class="govuk-panel__title">@messages("label.connectionToProperty.confirm.heading")</h1>
     </div>
@@ -47,7 +47,6 @@
     <div class="govuk-!-display-none-print">
         <p class="govuk-body">@messages("label.connectionToProperty.requestRefNum")</p>
     </div>
-
 
     <h2 class="govuk-heading-m">@messages("label.connectionToProperty.whatNext")</h2>
     <p class="govuk-body">@messages("label.connectionToProperty.reissued")</p>
@@ -70,7 +69,6 @@
         @formWithCSRF(
             action = routes.FeedbackController.feedbackRequestReferenceNumber,
             args = Symbol("novalidate") -> "novalidate" ) {
-
 
             <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
@@ -109,17 +107,8 @@
                 charCount = 2000
             )
 
-            @govukButton(
-                Button(
-                    attributes = Map("id" -> "send"),
-                    content = Text(messages("button.label.sendYourFeedback")),
-                    name = Some("send"),
-                    value = Some("send"),
-                    inputType = Some("submit")
-                )
-            )
+            @govukButton(SubmitButton("sendYourFeedback"))
         }
-
     </div>
 
 }

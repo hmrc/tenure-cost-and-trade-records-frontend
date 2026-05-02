@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.propertyUseLeasebackArrangement
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PropertyUseLeasebackArrangementController @Inject() (
@@ -52,20 +52,18 @@ class PropertyUseLeasebackArrangementController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PropertyUseLeasebackArrangement")
 
-    Future.successful(
-      Ok(
-        propertyUseLeasebackAgreementView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.propertyUseLeasebackAgreement) match {
-            case Some(propertyUseLeasebackAgreement) =>
-              propertyUseLeasebackArrangementForm.fill(propertyUseLeasebackAgreement)
-            case _                                   => propertyUseLeasebackArrangementForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.stillConnectedDetails
-            .flatMap(_.tradingNameOperatingFromProperty)
-            .getOrElse(""),
-          request.sessionData.toSummary
-        )
+    Ok(
+      propertyUseLeasebackAgreementView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.propertyUseLeasebackAgreement) match {
+          case Some(propertyUseLeasebackAgreement) =>
+            propertyUseLeasebackArrangementForm.fill(propertyUseLeasebackAgreement)
+          case _                                   => propertyUseLeasebackArrangementForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.stillConnectedDetails
+          .flatMap(_.tradingNameOperatingFromProperty)
+          .getOrElse(""),
+        request.sessionData.toSummary
       )
     )
   }

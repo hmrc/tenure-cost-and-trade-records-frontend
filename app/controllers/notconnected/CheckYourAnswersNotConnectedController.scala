@@ -54,7 +54,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   import FeedbackFormMapper.feedbackForm
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(checkYourAnswersNotConnectedView(request.sessionData)))
+    Ok(checkYourAnswersNotConnectedView(request.sessionData))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

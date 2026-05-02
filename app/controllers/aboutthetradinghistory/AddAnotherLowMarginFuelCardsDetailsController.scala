@@ -70,12 +70,10 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
         .flatMap(_.addAnotherLowMarginFuelCardDetails)
         .orElse(Option.when(navigator.from == "CYA")(AnswerNo))
 
-    Future.successful(
-      Ok(
-        theListView(
-          addAnother.fold(theForm)(theForm.fill),
-          index
-        )
+    Ok(
+      theListView(
+        addAnother.fold(theForm)(theForm.fill),
+        index
       )
     )
   }

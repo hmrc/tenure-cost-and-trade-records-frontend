@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.checkYourAnswersConnectionToProperty as CheckYourAnswersConnectionToPropertyView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersConnectionToPropertyController @Inject() (
@@ -78,9 +78,7 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
             Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url)
           )
         repo.saveOrUpdate(updatedData).flatMap { _ =>
-          Future.successful(
-            Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
-          )
+          Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
         }
       }
     )

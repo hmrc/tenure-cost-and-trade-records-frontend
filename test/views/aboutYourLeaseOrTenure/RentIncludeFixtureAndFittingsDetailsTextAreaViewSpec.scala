@@ -54,8 +54,8 @@ class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewB
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
   }
 }

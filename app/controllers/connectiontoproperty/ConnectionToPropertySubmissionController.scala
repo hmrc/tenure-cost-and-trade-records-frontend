@@ -60,12 +60,10 @@ class ConnectionToPropertySubmissionController @Inject() (
     val auditType                  = "VacantFormSubmission"
     val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
     val session                    = request.sessionData
-    submitToBackend(session).flatMap { _ =>
+    submitToBackend(session).map { _ =>
       val outcome = Json.obj("isSuccessful" -> true)
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
-      Future.successful(
-        Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
-      )
+      Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
     } recoverWith { case e: Exception =>
       val failureReason =
         s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")} - ${e.getMessage}"

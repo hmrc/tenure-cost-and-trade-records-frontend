@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentIncludeStructuresBuildingsDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentIncludeStructuresBuildingsDetailsController @Inject() (
@@ -48,16 +48,14 @@ class RentIncludeStructuresBuildingsDetailsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeStructuresBuildingsDetails")
 
-    Future.successful(
-      Ok(
-        rentIncludeStructuresBuildingsDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildingsDetails) match {
-            case Some(rentIncludeStructuresBuildingsDetails) =>
-              rentIncludeStructuresBuildingsDetailsForm.fill(rentIncludeStructuresBuildingsDetails)
-            case _                                           => rentIncludeStructuresBuildingsDetailsForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentIncludeStructuresBuildingsDetailsView(
+        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildingsDetails) match {
+          case Some(rentIncludeStructuresBuildingsDetails) =>
+            rentIncludeStructuresBuildingsDetailsForm.fill(rentIncludeStructuresBuildingsDetails)
+          case _                                           => rentIncludeStructuresBuildingsDetailsForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

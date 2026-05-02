@@ -18,6 +18,7 @@ package views.answers
 
 import actions.SessionRequest
 import controllers.aboutfranchisesorlettings.routes
+import controllers.*
 import models.ForType.FOR6030
 import models.submissions.aboutfranchisesorlettings.*
 import play.api.i18n.Messages
@@ -47,7 +48,7 @@ object AnswersAboutRentalIncomeHelpers:
            |</p>
            |""".stripMargin
       ),
-      changeAction = Some(routes.RentalIncomeRentController.show(index).asChangeLink("rentReceived"))
+      changeAction = routes.RentalIncomeRentController.show(index).asChangeLink("rentReceived")
     )
 
   private def rentReceivedCardEntry(
@@ -63,7 +64,7 @@ object AnswersAboutRentalIncomeHelpers:
                                                                        |${messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover")}
                                                                        |</p>
                                                                        |""".stripMargin),
-      changeAction = Some(routes.RentReceivedFromController.show(index).asChangeLink("annualRent"))
+      changeAction = routes.RentReceivedFromController.show(index).asChangeLink("annualRent")
     )
 
   private def howRentWasCalculatedCardEntry(
@@ -86,7 +87,7 @@ object AnswersAboutRentalIncomeHelpers:
            |""".stripMargin
       ),
       // TODO changeAction = None,
-      changeAction = Some(routes.CalculatingTheRentForController.show(index).asChangeLink("annualRent"))
+      changeAction = routes.CalculatingTheRentForController.show(index).asChangeLink("annualRent")
     )
 
   private def itemsIncludedCardEntry(
@@ -102,7 +103,7 @@ object AnswersAboutRentalIncomeHelpers:
         .filter(_.nonEmpty)
         .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
         .mkString("""<p class="govuk-body">""", "<br>", "</p>"),
-      changeAction = Some(routes.RentalIncomeIncludedController.show(index).asChangeLink("rentReceived"))
+      changeAction = routes.RentalIncomeIncludedController.show(index).asChangeLink("rentReceived")
     )
 
   private def franchiseCardsData(
@@ -129,7 +130,7 @@ object AnswersAboutRentalIncomeHelpers:
                |</p>
                |""".stripMargin
           },
-          changeAction = Some(routes.FranchiseTypeDetailsController.show(index).asChangeLink("rentReceived"))
+          changeAction = routes.FranchiseTypeDetailsController.show(index).asChangeLink("rentReceived")
         ),
         annualRentCardEntry(record.rent, index, dateUtil),
         itemsIncludedCardEntry(record.itemsIncluded, index)
@@ -160,7 +161,7 @@ object AnswersAboutRentalIncomeHelpers:
                |</p>
                |""".stripMargin
           },
-          changeAction = Some(routes.LettingTypeDetailsController.show(index).asChangeLink("lettingOperatorName"))
+          changeAction = routes.LettingTypeDetailsController.show(index).asChangeLink("lettingOperatorName")
         ),
         annualRentCardEntry(record.rent, index, dateUtil),
         itemsIncludedCardEntry(record.itemsIncluded, index)
@@ -196,22 +197,22 @@ object AnswersAboutRentalIncomeHelpers:
                |</p>
                |""".stripMargin
           },
-          changeAction = Some({
+          changeAction = {
             if (request.sessionData.forType == FOR6030)
-              routes.CateringOperationBusinessDetailsController.show(Some(index))
+              routes.CateringOperationBusinessDetailsController.show(index)
             else
               routes.ConcessionTypeDetailsController.show(index)
-          }.asChangeLink("operatorName"))
+          }.asChangeLink("operatorName")
         ),
         CardEntry(
           label = messages("feeReceived.concessionOrFranchiseFee"),
           value = "",
-          changeAction = Some({
+          changeAction = {
             if (request.sessionData.forType == FOR6030)
               routes.FeeReceivedController.show(index)
             else
               routes.ConcessionTypeFeesController.show(index)
-          }.asChangeLink("rentReceived")),
+          }.asChangeLink("rentReceived"),
           classes = "no-border-bottom"
         ),
         CardEntry(
@@ -276,7 +277,7 @@ object AnswersAboutRentalIncomeHelpers:
                |</p>
                |""".stripMargin
           },
-          changeAction = Some(routes.FranchiseTypeDetailsController.show(index).asChangeLink(fragment))
+          changeAction = routes.FranchiseTypeDetailsController.show(index).asChangeLink(fragment)
         ),
         rentReceivedCardEntry(record.rent, index),
         howRentWasCalculatedCardEntry(record.calculatingTheRent, index, dateUtil),

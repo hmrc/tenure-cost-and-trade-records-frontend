@@ -37,7 +37,7 @@ import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetails
 import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetailsTextArea
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentIncludeTradeServicesDetailsController @Inject() (
@@ -58,29 +58,25 @@ class RentIncludeTradeServicesDetailsController @Inject() (
     audit.sendChangeLink("RentIncludeTradeServicesDetails")
 
     if (forType == FOR6045 || forType == FOR6046) {
-      Future.successful(
-        Ok(
-          rentIncludeTradeServicesDetailsTextAreaView(
-            request.sessionData.aboutLeaseOrAgreementPartThree
-              .flatMap(_.rentIncludeTradeServicesDetailsTextArea) match {
-              case Some(rentIncludeTradeServicesDetailsTextArea) =>
-                rentIncludeTradeServicesDetailsTextAreaForm.fill(rentIncludeTradeServicesDetailsTextArea)
-              case _                                             => rentIncludeTradeServicesDetailsTextAreaForm
-            }
-          )
+      Ok(
+        rentIncludeTradeServicesDetailsTextAreaView(
+          request.sessionData.aboutLeaseOrAgreementPartThree
+            .flatMap(_.rentIncludeTradeServicesDetailsTextArea) match {
+            case Some(rentIncludeTradeServicesDetailsTextArea) =>
+              rentIncludeTradeServicesDetailsTextAreaForm.fill(rentIncludeTradeServicesDetailsTextArea)
+            case _                                             => rentIncludeTradeServicesDetailsTextAreaForm
+          }
         )
       )
     } else {
-      Future.successful(
-        Ok(
-          rentIncludeTradeServicesDetailsView(
-            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesInformation) match {
-              case Some(rentIncludeTradeServicesInformation) =>
-                rentIncludeTradeServicesDetailsForm().fill(rentIncludeTradeServicesInformation)
-              case _                                         => rentIncludeTradeServicesDetailsForm()
-            },
-            request.sessionData.toSummary
-          )
+      Ok(
+        rentIncludeTradeServicesDetailsView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesInformation) match {
+            case Some(rentIncludeTradeServicesInformation) =>
+              rentIncludeTradeServicesDetailsForm().fill(rentIncludeTradeServicesInformation)
+            case _                                         => rentIncludeTradeServicesDetailsForm()
+          },
+          request.sessionData.toSummary
         )
       )
     }

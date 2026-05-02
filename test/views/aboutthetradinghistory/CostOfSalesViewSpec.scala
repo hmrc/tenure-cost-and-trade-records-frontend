@@ -71,8 +71,8 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
     "contain continue button with the value Continue" in {
       val form2       = CostOfSalesForm.costOfSalesForm(Seq("2025", "2024"))(using messages)
       val doc         = asDocument(createViewUsingForm(form2))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
   }
 

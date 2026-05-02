@@ -34,7 +34,7 @@ import views.html.aboutYourLeaseOrTenure.rentPayableVaryAccordingToGrossOrNet
 import models.submissions.common.AnswersYesNo.*
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetController @Inject() (
@@ -52,18 +52,16 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryAccordingToGrossOrNet")
 
-    Future.successful(
-      Ok(
-        rentPayableVaryAccordingToGrossOrNetView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo
-            .flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
-            case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
-              rentPayableVaryAccordingToGrossOrNetForm.fill(rentPayableVaryAccordingToGrossOrNetDetails)
-            case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentPayableVaryAccordingToGrossOrNetView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo
+          .flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
+          case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
+            rentPayableVaryAccordingToGrossOrNetForm.fill(rentPayableVaryAccordingToGrossOrNetDetails)
+          case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

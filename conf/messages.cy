@@ -3,11 +3,10 @@
 service.name = Declare your business trade and cost information
 service.title = {0} - Declare your business trade and cost information - GOV.UK
 gov.name = GOV.UK
-label.continue=Parhewch
-button.label.continue = Yn eich blaen
-button.label.sendYourFeedback = Send your feedback
+button.continue.label = Yn eich blaen
+button.sendYourFeedback.label = Send your feedback
 button.label.submit = Submit
-button.label.send = Derbyn ac anfon
+button.send.label = Derbyn ac anfon
 back.link.label = Yn ôl
 button.label.save = Cadw fel drafft
 label.checkTheForm = Mae problem wedi codi
@@ -152,7 +151,7 @@ start.desc5 = If you would like information in an alternative format such as lar
 start.subheading6 = Explore the topic
 start.desc6 = <a href="https://www.gov.uk/find-business-rates" class="govuk-link" target="_blank">Find a business rates valuation</a> for any business property in England and Wales.
 start.desc7 = If you’d like to learn more about business rates before starting your form, visit our <a href="https://www.gov.uk/introduction-to-business-rates" class="govuk-link" target="_blank">introduction to business rates</a> section. It explains things like how your rates are calculated, how to pay, and whether you qualify for business rates relief.
-start.button = Start now
+button.start.label = Start now
 start.welsh = This service is also available in <a href="https://www.gov.uk" class="govuk-link" target="_blank">Welsh (Cymraeg)</a>
 start.desc8 = <a href="https://www.gov.uk/browse/business/premises-rates" class="govuk-link" target="_blank">Business premises and business rates</a> can direct you to a broad range of information and services. It covers many topics, including estimating your business rates, getting support for your business, and contacting your council about a business rates bill.
 
@@ -4170,7 +4169,7 @@ feedback.comments.maxLength=Comments must be 2000 characters or fewer
 confirmation.feedback.subheading=Overall, how did you feel about this service?
 confirmation.feedback.title=Feedback
 
-feedback.backToLogin = Start a new declaration
+button.startNewDeclaration.label = Start a new declaration
 feedback.thankyou.related = Related content
 feedback.link1 = Business rates
 feedback.link2 = Find a business rates valuation

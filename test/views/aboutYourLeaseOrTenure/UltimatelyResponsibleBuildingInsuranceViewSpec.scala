@@ -97,8 +97,8 @@ class UltimatelyResponsibleBuildingInsuranceViewSpec extends QuestionViewBehavio
 
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
   }
 }

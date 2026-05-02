@@ -30,7 +30,6 @@ import views.html.lettingHistory.maxNumberReached as MaxNumberReachedView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class MaxNumberReachedController @Inject() (
@@ -47,14 +46,14 @@ class MaxNumberReachedController @Inject() (
     val freshForm      = theForm
     val filledForm     = hasEvenMoreEntries(kind).map(bool => freshForm.fill(bool))
     val alreadyChecked = filledForm.exists(_.data("understood").toBoolean)
-    successful(Ok(theView(filledForm.getOrElse(freshForm), alreadyChecked, kind, backLinkUrl(kind))))
+    Ok(theView(filledForm.getOrElse(freshForm), alreadyChecked, kind, backLinkUrl(kind)))
   }
 
   def submit(kind: String): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[Boolean](
       theForm,
       theFormWithErrors =>
-        successful(BadRequest(theView(theFormWithErrors, alreadyChecked = false, kind, backLinkUrl(kind)))),
+        BadRequest(theView(theFormWithErrors, alreadyChecked = false, kind, backLinkUrl(kind))),
       understand => {
         given Session = request.sessionData
         for

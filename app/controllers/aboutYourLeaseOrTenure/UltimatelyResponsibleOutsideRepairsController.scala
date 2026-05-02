@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.ultimatelyResponsibleOutsideRepairs
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class UltimatelyResponsibleOutsideRepairsController @Inject() (
@@ -50,15 +50,13 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("UltimatelyResponsibleOutsideRepairs")
 
-    Future.successful(
-      Ok(
-        ultimatelyResponsibleORView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleOutsideRepairs) match {
-            case Some(ultimatelyResponsible) => ultimatelyResponsibleOutsideRepairsForm.fill(ultimatelyResponsible)
-            case _                           => ultimatelyResponsibleOutsideRepairsForm
-          },
-          getBackLink
-        )
+    Ok(
+      ultimatelyResponsibleORView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleOutsideRepairs) match {
+          case Some(ultimatelyResponsible) => ultimatelyResponsibleOutsideRepairsForm.fill(ultimatelyResponsible)
+          case _                           => ultimatelyResponsibleOutsideRepairsForm
+        },
+        getBackLink
       )
     )
   }
