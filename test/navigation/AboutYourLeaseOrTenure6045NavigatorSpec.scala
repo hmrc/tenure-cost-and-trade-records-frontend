@@ -33,7 +33,7 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec {
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+  val navigator = AboutYourLeaseOrTenureNavigator(audit)
 
   val session6045: Session = Session(
     "99996045004",

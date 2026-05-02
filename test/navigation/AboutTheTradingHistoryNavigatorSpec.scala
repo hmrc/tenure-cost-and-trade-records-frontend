@@ -39,7 +39,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
   private val audit: Audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  private val navigator = new AboutTheTradingHistoryNavigator(audit)
+  private val navigator = AboutTheTradingHistoryNavigator(audit)
 
   private val stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(
     StillConnectedDetails(Some(AddressConnectionTypeYes))

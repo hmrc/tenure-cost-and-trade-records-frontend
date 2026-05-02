@@ -89,7 +89,7 @@ class RentalIncomeIncludedController @Inject() (
                   case franchise: FranchiseIncomeRecord       => franchise.copy(itemsIncluded = Some(data))
                   case concession: Concession6015IncomeRecord => concession.copy(itemsIncluded = Some(data))
                   case letting: LettingIncomeRecord           => letting.copy(itemsIncluded = Some(data))
-                  case _                                      => throw new IllegalStateException("Unknown income record type")
+                  case _                                      => throw IllegalStateException("Unknown income record type")
                 }
               )
             }

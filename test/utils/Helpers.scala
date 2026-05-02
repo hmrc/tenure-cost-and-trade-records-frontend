@@ -20,17 +20,15 @@ import actions.RefNumAction
 import play.api.mvc.*
 import play.api.test.FakeRequest
 
-import scala.language.implicitConversions
-
 object Helpers {
 
   implicit def fakeRequest2MessageRequest[A](fakeRequest: FakeRequest[A]): MessagesRequest[A] =
-    new MessagesRequest[A](fakeRequest, play.api.test.Helpers.stubMessagesApi())
+    MessagesRequest[A](fakeRequest, play.api.test.Helpers.stubMessagesApi())
 
   def refNumAction(): RefNumAction = {
     val cc = play.api.test.Helpers.stubControllerComponents()
 
-    new RefNumAction(new play.api.mvc.BodyParsers.Default(cc.parsers), cc.messagesApi)(using cc.executionContext)
+    RefNumAction(play.api.mvc.BodyParsers.Default(cc.parsers), cc.messagesApi)(using cc.executionContext)
   }
 
 }
@@ -53,5 +51,5 @@ trait SensitiveTestHelper {
   }
 
   def createTestMongoCrypto(configuration: Configuration): MongoCrypto =
-    new TestMongoCrypto(configuration)
+    TestMongoCrypto(configuration)
 }

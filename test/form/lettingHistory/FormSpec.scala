@@ -35,7 +35,7 @@ import util.DateUtilLocalised
 class FormSpec extends AnyFlatSpec with Matchers with OptionValues with GuiceOneAppPerSuite with Injecting:
 
   override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
+    GuiceApplicationBuilder()
       .configure(
         "metrics.jvm"                         -> false,
         "metrics.enabled"                     -> false,

@@ -68,7 +68,7 @@ class DefaultBackendConnector @Inject() (
       .flatMap { response =>
         response.status match {
           case 200    => Future.successful(Json.parse(response.body).as[FORLoginResponse])
-          case 400    => Future.failed(new BadRequestException(response.body))
+          case 400    => Future.failed(BadRequestException(response.body))
           case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
         }
       }
@@ -95,7 +95,7 @@ class DefaultBackendConnector @Inject() (
       .flatMap { response =>
         response.status match {
           case 201    => Future.unit
-          case 400    => Future.failed(new BadRequestException(response.body))
+          case 400    => Future.failed(BadRequestException(response.body))
           case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
         }
       }

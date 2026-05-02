@@ -41,7 +41,7 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
   private val errorHandler        = mock[ErrorHandler]
   private val audit               = spy(inject[Audit])
 
-  private def formSubmissionController = new FormSubmissionController(
+  private def formSubmissionController = FormSubmissionController(
     stubMessagesControllerComponents(),
     submissionConnector,
     errorHandler,
@@ -75,7 +75,7 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
 
     "handle errors in submit form" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession)
-      val exception = new RuntimeException("Test exception")
+      val exception = RuntimeException("Test exception")
       when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
         .thenReturn(Future.failed(exception))
       when(errorHandler.internalServerErrorTemplate(using any[Request[?]]))

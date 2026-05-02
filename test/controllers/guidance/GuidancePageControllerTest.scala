@@ -108,7 +108,7 @@ class GuidancePageControllerTest extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture:
 
-    val controller = new GuidancePageController(
+    val controller = GuidancePageController(
       mcc = stubMessagesControllerComponents(),
       guidancePageView = inject[GuidancePageView]
     )

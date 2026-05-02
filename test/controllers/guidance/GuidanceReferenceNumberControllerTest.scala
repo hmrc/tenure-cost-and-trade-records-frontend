@@ -87,7 +87,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
       }
       "be handling POST referenceNumber by replying 404 if it fails to retrieve FOR type" in new ControllerFixture {
         when(connector.retrieveFORType(anyString, any[HeaderCarrier]))
-          .thenReturn(failed(new Exception("Failed to retrieve FOR type")))
+          .thenReturn(failed(Exception("Failed to retrieve FOR type")))
         val result: Future[Result] = controller.submit(
           fakePostRequest
             .withFormUrlEncodedBody(
@@ -107,7 +107,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
     val connector: BackendConnector = mock[BackendConnector]
     when(connector.retrieveFORType(anyString, any[HeaderCarrier])).thenReturn(successful("FOR6012"))
 
-    val controller = new GuidanceReferenceNumberController(
+    val controller = GuidanceReferenceNumberController(
       mcc = stubMessagesControllerComponents(),
       connector = connector,
       referenceNumberView = inject[ReferenceNumberView]

@@ -146,7 +146,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
   ) extends MockRepositoryFixture
     with SessionCapturingFixture:
 
-    val controller = new HasCompletedLettingsController(
+    val controller = HasCompletedLettingsController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[HasCompletedLettingsView],

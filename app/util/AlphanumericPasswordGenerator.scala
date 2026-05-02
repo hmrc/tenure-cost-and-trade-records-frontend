@@ -23,18 +23,16 @@ import java.security.SecureRandom
   *
   * @author Yuriy Tumakha
   */
-object AlphanumericPasswordGenerator {
+object AlphanumericPasswordGenerator:
 
   val passwordLength: Int               = 8
   private val validDigits               = (2 to 9).map(_.toString.head)
   private val validChars                = "abcdefghjkmnpqrstuvwxyz".toCharArray
   private val allowedChars: Array[Char] = validChars ++ validDigits
   private val maxIndex                  = allowedChars.length
-  private val random                    = new SecureRandom
+  private val random                    = SecureRandom()
 
   def generatePassword: String =
-    new String(
+    String(
       Array.fill(passwordLength)(allowedChars(random.nextInt(maxIndex)))
     )
-
-}

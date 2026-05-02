@@ -164,7 +164,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
 
   trait ControllerFixture(completedLettings: List[OccupierDetail] = Nil) extends MockRepositoryFixture with SessionCapturingFixture:
 
-    val controller = new OccupierListController(
+    val controller = OccupierListController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theListView = inject[OccupierListView],

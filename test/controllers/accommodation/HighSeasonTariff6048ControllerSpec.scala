@@ -31,8 +31,8 @@ class HighSeasonTariff6048ControllerSpec extends TestBaseSpec {
 
   private val nextPage = controllers.accommodation.routes.IncludedTariffItems6048Controller.show.url + "?idx=0"
 
-  def highSeasonTariff6048Controller =
-    new HighSeasonTariff6048Controller(
+  def highSeasonTariff6048Controller: HighSeasonTariff6048Controller =
+    HighSeasonTariff6048Controller(
       highSeasonTariffView,
       accommodationNavigator,
       preEnrichedActionRefiner(

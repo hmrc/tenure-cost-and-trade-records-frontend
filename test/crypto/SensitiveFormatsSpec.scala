@@ -29,7 +29,7 @@ class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveT
 
   val testConfig: Configuration = loadTestConfig()
 
-  implicit val crypto: MongoCrypto = new TestMongoCrypto(testConfig)
+  implicit val crypto: MongoCrypto = TestMongoCrypto(testConfig)
 
   "SensitiveFormats" should {
 

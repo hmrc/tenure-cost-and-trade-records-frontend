@@ -73,7 +73,7 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
 
   private val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
-  private def maxOfLettingsReachedController = new MaxOfLettingsReachedController(
+  private def maxOfLettingsReachedController = MaxOfLettingsReachedController(
     stubMessagesControllerComponents(),
     preEnrichedActionRefiner(),
     maxOfLettingsReachedView,

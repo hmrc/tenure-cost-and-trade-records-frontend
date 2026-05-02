@@ -131,7 +131,7 @@ class LettingTypeDetailsController @Inject() (
             idx,
             records(idx) match {
               case r: LettingIncomeRecord => r.copy(operatorDetails = Some(formData))
-              case _                      => throw new IllegalStateException("Unknown income record type")
+              case _                      => throw IllegalStateException("Unknown income record type")
             }
           )
         }

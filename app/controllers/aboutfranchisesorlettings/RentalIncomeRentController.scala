@@ -92,7 +92,7 @@ class RentalIncomeRentController @Inject() (
                 records(idx) match {
                   case franchise: FranchiseIncomeRecord => franchise.copy(rent = Some(data))
                   case letting: LettingIncomeRecord     => letting.copy(rent = Some(data))
-                  case _                                => throw new IllegalStateException("Unknown income record type")
+                  case _                                => throw IllegalStateException("Unknown income record type")
                 }
               )
             }

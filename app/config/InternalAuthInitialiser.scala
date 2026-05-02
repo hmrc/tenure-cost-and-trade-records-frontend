@@ -91,7 +91,7 @@ class InternalAuthTokenInitialiserImpl @Inject() (
           logger.info("Auth token initialised")
           Future.successful(Done)
         } else {
-          Future.failed(new RuntimeException("Unable to initialise internal-auth token"))
+          Future.failed(RuntimeException("Unable to initialise internal-auth token"))
         }
       }
   }

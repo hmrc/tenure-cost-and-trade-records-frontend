@@ -33,7 +33,7 @@ class PastConnectionControllerSpec extends TestBaseSpec {
 
   def pastConnectionController(
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
-  ) = new PastConnectionController(
+  ) = PastConnectionController(
     stubMessagesControllerComponents(),
     removeConnectionNavigator,
     pastConnectionView,

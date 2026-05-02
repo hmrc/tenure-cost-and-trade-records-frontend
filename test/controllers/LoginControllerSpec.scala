@@ -48,7 +48,7 @@ class LoginControllerSpec extends TestBaseSpec {
   }
 
   override def fakeApplication(): play.api.Application =
-    new GuiceApplicationBuilder()
+    GuiceApplicationBuilder()
       .configure(
         "metrics.jvm"                         -> false,
         "metrics.enabled"                     -> false,
@@ -59,7 +59,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
   "LoginController" should {
     "show login form" in {
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         inject[Audit],
         stubMessagesControllerComponents(),
@@ -85,7 +85,7 @@ class LoginControllerSpec extends TestBaseSpec {
     }
 
     "show logged out page" in {
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         inject[Audit],
         stubMessagesControllerComponents(),
@@ -110,7 +110,7 @@ class LoginControllerSpec extends TestBaseSpec {
       content should include("""logout.loginAgain""")
     }
     "show locked out page" in {
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         inject[Audit],
         stubMessagesControllerComponents(),
@@ -131,7 +131,7 @@ class LoginControllerSpec extends TestBaseSpec {
     }
 
     "show login failed page" in {
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         inject[Audit],
         stubMessagesControllerComponents(),
@@ -169,7 +169,7 @@ class LoginControllerSpec extends TestBaseSpec {
       val loginToBackend = mock[LoginToBackendAction]
       when(loginToBackend.apply(using any[HeaderCarrier], any[ExecutionContext])).thenReturn(loginToBackendFunction)
 
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         audit,
         stubMessagesControllerComponents(),
@@ -213,7 +213,7 @@ class LoginControllerSpec extends TestBaseSpec {
           any[Writes[UserData]]
         )
 
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         audit,
         stubMessagesControllerComponents(),

@@ -54,9 +54,6 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
 
   import controllers.FeedbackFormMapper.feedbackForm
 
-  lazy val confirmationUrl: String =
-    controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation().url
-
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(
       Ok(
@@ -81,7 +78,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
         auditType,
         submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome)
       )
-      Redirect(confirmationUrl)
+      Redirect(controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation().url)
     } recoverWith { case e: Exception =>
       val failureReason = s"Could not send request reference number data to HOD - ${hc.sessionId.getOrElse("")}"
       logger.error(failureReason, e)

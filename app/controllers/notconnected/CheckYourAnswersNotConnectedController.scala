@@ -53,9 +53,6 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   import FeedbackFormMapper.feedbackForm
 
-  lazy val confirmationUrl: String =
-    controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url
-
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Future.successful(Ok(checkYourAnswersNotConnectedView(request.sessionData)))
   }
@@ -69,7 +66,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
     submitToBackend(session).map { _ =>
       val outcome = Json.obj("isSuccessful" -> true)
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
-      Found(confirmationUrl)
+      Found(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url)
     } recoverWith { case e: Exception =>
       val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - $sessionId"
       logger.error(failureReason, e)

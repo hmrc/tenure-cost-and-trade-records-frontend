@@ -26,7 +26,7 @@ import utils.SensitiveTestHelper
 
 class SensitiveAddressSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
   val testConfig: Configuration    = loadTestConfig()
-  implicit val crypto: MongoCrypto = new TestMongoCrypto(testConfig)
+  implicit val crypto: MongoCrypto = TestMongoCrypto(testConfig)
 
   "SensitiveAddress" should {
 

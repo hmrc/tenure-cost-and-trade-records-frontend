@@ -37,7 +37,7 @@ class RefNumAction @Inject() (
   override def refine[A](request: Request[A]): Future[Either[Result, RefNumRequest[A]]] = Future.successful {
 
     request.session.get("refNum") match {
-      case Some(refNum) => Right(new RefNumRequest(refNum, request, messagesApi))
+      case Some(refNum) => Right(RefNumRequest(refNum, request, messagesApi))
       case None         => Left(Redirect(controllers.routes.LoginController.show))
     }
   }

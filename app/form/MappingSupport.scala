@@ -322,6 +322,6 @@ object MappingSupport:
       case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
       case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
       case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      case _            => throw new IllegalArgumentException("Financial years sequence is empty")
+      case _            => throw IllegalArgumentException("Financial years sequence is empty")
     }
   }

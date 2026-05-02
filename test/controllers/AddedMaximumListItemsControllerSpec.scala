@@ -42,7 +42,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
     controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show().url
 
   def addedMaximumListItemsController =
-    new AddedMaximumListItemsController(
+    AddedMaximumListItemsController(
       addedMaximumListItemsView,
       preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
       mockSessionRepo,

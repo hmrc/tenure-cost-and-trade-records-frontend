@@ -24,4 +24,4 @@ import play.api.Configuration
 trait MongoCryptoSupport:
   this: Suite =>
 
-  given MongoCrypto = new MongoCrypto(Configuration(ConfigFactory.load()))
+  given MongoCrypto = MongoCrypto(Configuration(ConfigFactory.load()))

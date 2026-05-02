@@ -157,7 +157,7 @@ class AddressLookupConnector @Inject() (
             successful(None)
       }
       .recoverWith { case e =>
-        failed(new Exception(s"Could not connect to the ADDRESS_LOOKUP_FRONTEND service (see $initUrl)", e))
+        failed(Exception(s"Could not connect to the ADDRESS_LOOKUP_FRONTEND service (see $initUrl)", e))
       }
 
   def getConfirmedAddress(id: String)(implicit hc: HeaderCarrier): Future[AddressLookupConfirmedAddress] =

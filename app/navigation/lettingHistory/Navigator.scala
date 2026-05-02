@@ -76,7 +76,7 @@ abstract class Navigator(audit: Audit):
     audit.sendContinueNextPage(session.data, nextCall.toString)
     nextCall match
       case Some(call) => Redirect(call)
-      case _          => throw new Exception("NavigatorIllegalState : couldn't determine next redirect call")
+      case _          => throw Exception("NavigatorIllegalState : couldn't determine next redirect call")
 
   // This helper method makes sure that the call is properly prefixed
   // and completed with the right fragment

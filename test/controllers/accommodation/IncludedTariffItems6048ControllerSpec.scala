@@ -29,8 +29,8 @@ class IncludedTariffItems6048ControllerSpec extends TestBaseSpec {
 
   private val nextPage = controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url + "?idx=0"
 
-  def includedTariffItems6048Controller =
-    new IncludedTariffItems6048Controller(
+  def includedTariffItems6048Controller: IncludedTariffItems6048Controller =
+    IncludedTariffItems6048Controller(
       includedTariffItemsView,
       accommodationNavigator,
       preEnrichedActionRefiner(

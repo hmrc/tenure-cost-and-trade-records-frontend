@@ -37,7 +37,7 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
   val audit: Audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new RemoveConnectionNavigator(audit)
+  val navigator = RemoveConnectionNavigator(audit)
 
   val aboutTheProperty: Option[AboutYouAndTheProperty]               = Some(AboutYouAndTheProperty(None))
   val aboutThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(AboutYouAndThePropertyPartTwo(None))

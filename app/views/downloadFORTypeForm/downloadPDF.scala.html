@@ -24,7 +24,7 @@
 
 @(forTypeStr: String, referenceNumber: String)(implicit request: Request[?], messages: Messages)
 
-@forWithoutPrefix = @{new StringOps(forTypeStr).filter(_.isDigit)}
+@forWithoutPrefix = @{StringOps(forTypeStr).filter(_.isDigit)}
 
 @findForType = @{
   ForType.find(forTypeStr)

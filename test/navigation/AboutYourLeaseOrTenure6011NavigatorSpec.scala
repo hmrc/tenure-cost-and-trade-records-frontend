@@ -34,7 +34,7 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec {
   private val audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  private val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+  private val navigator = AboutYourLeaseOrTenureNavigator(audit)
 
   private val session6011 =
     Session("99996010004", FOR6011, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)

@@ -27,7 +27,7 @@ class TaskListSpec extends TestBaseSpec {
 
   private val sessionRepo = StubSessionRepo()
 
-  private def taskListController = new TaskListController(
+  private def taskListController = TaskListController(
     stubMessagesControllerComponents(),
     inject[taskList],
     WithSessionRefiner(sessionRepo)

@@ -28,7 +28,7 @@ class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec {
   private val nextPage = controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url + "?idx=0"
 
   def accommodationLettingHistory6048Controller =
-    new AccommodationLettingHistory6048Controller(
+    AccommodationLettingHistory6048Controller(
       accommodationLettingHistoryView,
       accommodationNavigator,
       preEnrichedActionRefiner(

@@ -40,7 +40,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
 
   def mongoHasher: MongoHasher = inject[MongoHasher]
 
-  private def saveAsDraftController = new SaveAsDraftController(
+  private def saveAsDraftController = SaveAsDraftController(
     backendConnector,
     inject[customPasswordSaveAsDraft],
     inject[submissionDraftSaved],

@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 class ErrorHandlerControllerSpec extends TestBaseSpec {
 
   val errorHandlerController =
-    new ErrorHandlerController(preFilledSession, jsonErrorView = jsonErrorView, cc = stubMessagesControllerComponents())
+    ErrorHandlerController(preFilledSession, jsonErrorView = jsonErrorView, cc = stubMessagesControllerComponents())
 
   "ErrorHandlerController GET /" should {
 

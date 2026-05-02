@@ -34,7 +34,7 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
 
   def removeConnectionController(
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
-  ) = new RemoveConnectionController(
+  ) = RemoveConnectionController(
     stubMessagesControllerComponents(),
     removeConnectionNavigator,
     removeConnectionView,

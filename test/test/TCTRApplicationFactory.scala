@@ -32,6 +32,6 @@ trait TCTRApplicationFactory extends GuiceFakeApplicationFactory with TestObject
   )
 
   override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
+    GuiceApplicationBuilder()
       .configure(fakeAppConfiguration)
       .build()

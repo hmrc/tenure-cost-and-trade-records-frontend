@@ -90,8 +90,8 @@ class HodSubmissionConnector @Inject() (
       .flatMap { response =>
         response.status match {
           case 201    => Future.successful(response)
-          case 400    => Future.failed(new BadRequestException(response.body))
-          case status => Future.failed(new Exception(s"Unexpected response: $status"))
+          case 400    => Future.failed(BadRequestException(response.body))
+          case status => Future.failed(Exception(s"Unexpected response: $status"))
         }
       }
 

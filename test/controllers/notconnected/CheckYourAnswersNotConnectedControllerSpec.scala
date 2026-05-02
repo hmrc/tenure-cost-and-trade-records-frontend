@@ -35,7 +35,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
 
   def checkYourAdditionalInformationController(
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
-  ) = new CheckYourAnswersNotConnectedController(
+  ) = CheckYourAnswersNotConnectedController(
     stubMessagesControllerComponents(),
     mockSubmissionConnector,
     checkYourAnswersNotConnectedView,
@@ -68,7 +68,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
     "handle failed submit form with all sections" in {
       mockSessionRepo.saveOrUpdate(prefilledBaseSession)
       when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(using any[HeaderCarrier]))
-        .thenReturn(Future.failed(new Exception("Failed submission")))
+        .thenReturn(Future.failed(Exception("Failed submission")))
       val result = checkYourAdditionalInformationController().submit(fakeRequest)
       status(result) shouldBe INTERNAL_SERVER_ERROR
     }

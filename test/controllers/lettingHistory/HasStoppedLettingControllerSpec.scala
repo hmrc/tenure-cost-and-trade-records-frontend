@@ -97,7 +97,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
 
   trait ControllerFixture(hasStopped: Option[Boolean] = None) extends MockRepositoryFixture with SessionCapturingFixture:
 
-    val controller = new HasStoppedLettingController(
+    val controller = HasStoppedLettingController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[HasStoppedLettingView],

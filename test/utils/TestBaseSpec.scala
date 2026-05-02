@@ -68,10 +68,10 @@ trait TestBaseSpec
   with TestObjects
   with InjectedViews
   with FakeNavigation
-  with OptionValues {
+  with OptionValues:
 
   override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
+    GuiceApplicationBuilder()
       .configure(
         "metrics.jvm"                         -> false,
         "metrics.enabled"                     -> false,
@@ -204,8 +204,7 @@ trait TestBaseSpec
     lettingHistory: Option[LettingHistory] = None,
     accommodationDetails: Option[AccommodationDetails] = None
   ): WithSessionRefiner =
-    new WithSessionRefiner(mockSessionRepository) {
-
+    new WithSessionRefiner(mockSessionRepository):
       override def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
         Future.successful(
           Right(
@@ -236,5 +235,3 @@ trait TestBaseSpec
             )
           )
         )
-    }
-}

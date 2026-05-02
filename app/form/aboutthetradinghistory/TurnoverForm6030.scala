@@ -76,9 +76,7 @@ object TurnoverForm6030 {
           }
 
         case _ =>
-          throw new IllegalArgumentException(
-            s"Unexpected number of financial years: $expectedNumberOfFinancialYears"
-          )
+          throw IllegalArgumentException(s"Unexpected number of financial years: $expectedNumberOfFinancialYears")
       }
     }
   }

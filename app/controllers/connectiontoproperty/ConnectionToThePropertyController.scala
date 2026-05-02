@@ -62,7 +62,7 @@ class ConnectionToThePropertyController @Inject() (
             case Right(link) => link
             case Left(msg)   =>
               logger.warn(s"Navigation for connection to property page reached with error: $msg")
-              throw new RuntimeException(s"Navigation for connection to property page reached with error $msg")
+              throw RuntimeException(s"Navigation for connection to property page reached with error $msg")
           },
           request.sessionData.toSummary
         )

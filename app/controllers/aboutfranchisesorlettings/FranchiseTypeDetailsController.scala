@@ -136,7 +136,7 @@ class FranchiseTypeDetailsController @Inject() (
               case r: FranchiseIncomeRecord      => r.copy(businessDetails = Some(formData))
               case r: Concession6015IncomeRecord => r.copy(businessDetails = Some(formData))
               // case r: ConcessionIncomeRecord  => r.copy(businessDetails = Some(formData))
-              case _                             => throw new IllegalStateException("Unknown income record type")
+              case _                             => throw IllegalStateException("Unknown income record type")
             }
           )
         }

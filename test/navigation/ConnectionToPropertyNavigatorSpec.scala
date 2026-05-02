@@ -33,7 +33,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  private val navigator = new ConnectionToPropertyNavigator(audit)
+  private val navigator = ConnectionToPropertyNavigator(audit)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
