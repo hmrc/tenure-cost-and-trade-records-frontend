@@ -23,8 +23,8 @@ import views.behaviours.ViewBehaviours
 
 class ConfirmationRequestReferenceNumberViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "label.connectionToProperty.confirm"
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type]   = SessionRequest(baseFilled6010Session, fakeRequest)
+  val messageKeyPrefix                                       = "label.connectionToProperty.confirm"
+  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
 
   private val form       = FeedbackFormMapper.feedbackForm
   private def createView = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)

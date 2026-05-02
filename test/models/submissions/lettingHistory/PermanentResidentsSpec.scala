@@ -93,8 +93,8 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
       "change resident address which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
-        val newAddress = "20, NewAddress Avenue"
-        val session: SessionWrapper    = byAddingOrUpdatingPermanentResident(
+        val newAddress              = "20, NewAddress Avenue"
+        val session: SessionWrapper = byAddingOrUpdatingPermanentResident(
           ResidentDetail(
             name = johnBrown.name,
             address = newAddress

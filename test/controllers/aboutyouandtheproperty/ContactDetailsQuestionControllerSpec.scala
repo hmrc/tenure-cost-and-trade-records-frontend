@@ -121,7 +121,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("contactDetailsQuestion") shouldBe "error.contactDetailsQuestion.missing"
       }
       "reply 303 redirect to the address lookup page" in new ControllerFixture {

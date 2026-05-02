@@ -128,7 +128,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
             )
           )
           status(result) shouldBe BAD_REQUEST
-          val page: Document   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.error("answer") shouldBe "lettingHistory.occupierList.hadMoreOccupiers.required"
         }
         "be handling POST /list?hadMoreOccupiers=yes by replying redirect to the 'Max Number of Occupiers' page" in new ControllerFixture(
@@ -151,7 +151,7 @@ class OccupierListControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.occupierList.hadMoreOccupiers.required"
       }
       "be handling POST /list?hadMoreOccupiers=no by replying redirect to the 'Letting intention' page" in new ControllerFixture {

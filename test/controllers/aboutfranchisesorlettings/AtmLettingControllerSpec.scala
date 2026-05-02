@@ -73,12 +73,12 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       }
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
         val result: Future[Result] = controller.show(index = Some(0))(fakeRequest)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.input("bankOrCompany") should haveValue("HSBC")
       }
       "render back link to CYA if come from CYA" in new ControllerFixture {
         val result: Future[Result] = controller.show(Some(0))(fakeRequestFromCYA)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
     }
@@ -94,8 +94,8 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
         true
       ) {
-        val bankOrCompany = "New Amazing Bank"
-        val result: Future[Result]        = controller.submit(index = Some(0))(
+        val bankOrCompany          = "New Amazing Bank"
+        val result: Future[Result] = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "bankOrCompany" -> bankOrCompany
           )
@@ -109,8 +109,8 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         }
       }
       "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
-        val bankOrCompany = "Turned into Amazing Bank"
-        val result: Future[Result]        = controller.submit(index = Some(0))(
+        val bankOrCompany          = "Turned into Amazing Bank"
+        val result: Future[Result] = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "bankOrCompany" -> bankOrCompany
           )

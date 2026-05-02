@@ -133,7 +133,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
             )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.backLink        shouldBe
           routes.CheckYourAnswersLettingHistoryController.show
             .withFragment("some-fragment")

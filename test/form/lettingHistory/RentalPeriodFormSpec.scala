@@ -32,7 +32,7 @@ import java.time.LocalDate
 class RentalPeriodFormSpec extends FormSpec:
 
   it should "bind good data as expected" in new SessionFixture(isWelsh = false) {
-    val data: Map[String, String]  = Map(
+    val data: Map[String, String] = Map(
       "fromDate.day"   -> "1",
       "fromDate.month" -> "4",
       "fromDate.year"  -> (previousFiscalYearEnd - 1).toString,
@@ -40,7 +40,7 @@ class RentalPeriodFormSpec extends FormSpec:
       "toDate.month"   -> "3",
       "toDate.year"    -> previousFiscalYearEnd.toString
     )
-    val bound: Form[LocalPeriod] = theForm.bind(data)
+    val bound: Form[LocalPeriod]  = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
   }
@@ -50,7 +50,7 @@ class RentalPeriodFormSpec extends FormSpec:
       fromDate = LocalDate.of(previousFiscalYearEnd - 1, 8, 13),
       toDate = LocalDate.of(previousFiscalYearEnd, 12, 25)
     )
-    val filled: Form[LocalPeriod]       = theForm.fill(rentalPeriod)
+    val filled: Form[LocalPeriod] = theForm.fill(rentalPeriod)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
       "fromDate.day"   -> "13",

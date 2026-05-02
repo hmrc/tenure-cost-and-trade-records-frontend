@@ -69,7 +69,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
             )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("referenceNumber") shouldBe "error.referenceNumber.required"
       }
       "be handling POST referenceNumber by replying 303 redirect to the 'GuidancePage' page" in new ControllerFixture {

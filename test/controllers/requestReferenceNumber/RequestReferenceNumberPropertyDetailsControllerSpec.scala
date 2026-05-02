@@ -88,7 +88,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("businessTradingName") shouldBe "error.requestReferenceNumber.businessTradingName.required"
       }
       "throw exception if the address lookup service did not provide the /on-ramp location" in new ControllerFixture {

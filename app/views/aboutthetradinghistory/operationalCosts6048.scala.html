@@ -49,8 +49,8 @@
             @messages("turnover.6048.excludingVAT")
         }
     </p>
-@if(hintKey.nonEmpty) {
-    <span class="govuk-caption-m">@messages(hintKey)</span>
+@hintKey.map { hint =>
+    <span class="govuk-caption-m">@messages(hint)</span>
 }
 }
 

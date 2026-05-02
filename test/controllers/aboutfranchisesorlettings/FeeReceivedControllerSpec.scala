@@ -54,8 +54,8 @@ class FeeReceivedControllerSpec extends TestBaseSpec:
     }
     "handling POST / requests" should {
       "reply 400 and error messages if the form is submitted with invalid data" in new ControllerFixture {
-        val result: Future[Result]  = controller.submit(0)(fakePostRequest)
-        val content: String = contentAsString(result)
+        val result: Future[Result] = controller.submit(0)(fakePostRequest)
+        val content: String        = contentAsString(result)
         status(result) shouldBe BAD_REQUEST
         content          should include("error.weeksMapping.blank")
         content          should include("error.feeReceived.concessionOrFranchiseFee.required")

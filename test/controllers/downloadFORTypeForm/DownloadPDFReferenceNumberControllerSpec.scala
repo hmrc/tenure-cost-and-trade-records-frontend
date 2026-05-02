@@ -33,8 +33,8 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
   "the DownloadPDFReferenceNumber controller" when {
     "handling GET /"  should {
       "reply 200 with the HTML form" in new ControllerAndConnectorFixture {
-        val result: Future[Result]  = controller.show(fakeRequest)
-        val content: String = contentAsString(result)
+        val result: Future[Result] = controller.show(fakeRequest)
+        val content: String        = contentAsString(result)
         status(result)            shouldBe Status.OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
@@ -77,7 +77,7 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
   }
 
   trait ControllerAndConnectorFixture:
-    val connector: BackendConnector            = mock[BackendConnector]
+    val connector: BackendConnector                  = mock[BackendConnector]
     val givenReferenceNumber: ArgumentCaptor[String] = captor[String]
 
     val controller = new DownloadPDFReferenceNumberController(

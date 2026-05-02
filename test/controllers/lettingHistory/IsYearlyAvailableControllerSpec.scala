@@ -50,7 +50,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.required"
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'Do you advert online' page" in new ControllerFixture {
@@ -91,7 +91,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.required"
       }
       "be handling POST answer='no' by replying 303 redirect to the 'Give lenght of trading session' page" in new ControllerFixture(

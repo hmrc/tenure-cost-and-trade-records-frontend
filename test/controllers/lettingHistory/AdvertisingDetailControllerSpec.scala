@@ -51,7 +51,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           "websiteAddress"          -> "123.uk",
           "propertyReferenceNumber" -> "123abc"
         )
-        val result: Future[Result]  = controller.submit(None)(request)
+        val result: Future[Result]                           = controller.submit(None)(request)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -83,7 +83,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
             "websiteAddress"          -> "test.pl",
             "propertyReferenceNumber" -> "1234ref"
           )
-          val result: Future[Result]  = controller.submit(None)(request)
+          val result: Future[Result]                           = controller.submit(None)(request)
           status(result)                                     shouldBe SEE_OTHER
           redirectLocation(result).value                     shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -100,7 +100,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
             "websiteAddress"          -> "123.com",
             "propertyReferenceNumber" -> "aaa123"
           )
-          val result: Future[Result]  = controller.submit(None)(request)
+          val result: Future[Result]                           = controller.submit(None)(request)
           status(result) shouldBe BAD_REQUEST
           val page: Document = contentAsJsoup(result)
           page.error("duplicate") shouldBe "lettingHistory.advertisingDetail.duplicate"
@@ -112,7 +112,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
             "websiteAddress"          -> twoAdvertisings.last.websiteAddress,
             "propertyReferenceNumber" -> "otherReference123"
           )
-          val result: Future[Result]  = controller.submit(None)(request)
+          val result: Future[Result]                           = controller.submit(None)(request)
           status(result)                                     shouldBe SEE_OTHER
           redirectLocation(result).value                     shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -141,7 +141,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("websiteAddress") shouldBe "error.websiteAddressForProperty.required"
       }
     }

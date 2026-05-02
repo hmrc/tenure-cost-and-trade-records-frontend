@@ -50,7 +50,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.intendedLettings.hasStoppedLetting.required"
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'Last Rent' page" in new ControllerFixture {

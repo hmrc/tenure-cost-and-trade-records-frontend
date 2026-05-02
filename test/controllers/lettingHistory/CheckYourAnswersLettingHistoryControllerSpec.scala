@@ -49,7 +49,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "error.checkYourAnswersRadio.required"
       }
     }

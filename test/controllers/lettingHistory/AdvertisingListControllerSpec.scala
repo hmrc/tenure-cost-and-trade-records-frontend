@@ -132,7 +132,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
             )
           )
           status(result) shouldBe BAD_REQUEST
-          val page: Document   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.error("answer") shouldBe "lettingHistory.advertisingList.hasMoreWebsites.required"
         }
         "be handling POST /list?hasMoreAdvertisingDetails=yes by replying redirect to the 'Max Number of Advertising' page" in new ControllerFixture(
@@ -159,7 +159,7 @@ class AdvertisingListControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.advertisingList.hasMoreWebsites.required"
       }
       "be handling POST /list?hasMoreAdvertisingDetails=no by replying redirect to the CYA page" in new ControllerFixture {

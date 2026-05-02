@@ -74,13 +74,13 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
       }
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
         val result: Future[Result] = controller.show(index = Some(2))(fakeRequest)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.input("descriptionOfSpace")     should haveValue("Billboard")
         page.input("advertisingCompanyName") should haveValue("JCDx")
       }
       "render back link to CYA if come from CYA" in new ControllerFixture {
         val result: Future[Result] = controller.show(Some(0))(fakeRequestFromCYA)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
     }
@@ -99,7 +99,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
       ) {
         val descriptionOfSpace     = "New Ballet Hall"
         val advertisingCompanyName = "Dancing Company"
-        val result: Future[Result]                 = controller.submit(index = Some(0))(
+        val result: Future[Result] = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "descriptionOfSpace"     -> descriptionOfSpace,
             "advertisingCompanyName" -> advertisingCompanyName
@@ -118,7 +118,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
       "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
         val descriptionOfSpace     = "Turned into Ballet Hall"
         val advertisingCompanyName = "Dancing Company"
-        val result: Future[Result]                 = controller.submit(index = Some(2))(
+        val result: Future[Result] = controller.submit(index = Some(2))(
           fakePostRequest.withFormUrlEncodedBody(
             "descriptionOfSpace"     -> descriptionOfSpace,
             "advertisingCompanyName" -> advertisingCompanyName

@@ -74,13 +74,13 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       }
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
         val result: Future[Result] = controller.show(index = Some(3))(fakeRequest)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.input("lettingType") should haveValue("Charging point")
         page.input("tenantName")  should haveValue("Tesla")
       }
       "render back link to CYA if come from CYA" in new ControllerFixture {
         val result: Future[Result] = controller.show(Some(3))(fakeRequestFromCYA)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
     }
@@ -97,9 +97,9 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
         true
       ) {
-        val lettingType = "New garage"
-        val tenantName  = "Henry VIII"
-        val result: Future[Result]      = controller.submit(index = Some(0))(
+        val lettingType            = "New garage"
+        val tenantName             = "Henry VIII"
+        val result: Future[Result] = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "lettingType" -> lettingType,
             "tenantName"  -> tenantName
@@ -115,9 +115,9 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         }
       }
       "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
-        val lettingType = "Turned into New garage"
-        val tenantName  = "Charles I"
-        val result: Future[Result]      = controller.submit(index = Some(3))(
+        val lettingType            = "Turned into New garage"
+        val tenantName             = "Charles I"
+        val result: Future[Result] = controller.submit(index = Some(3))(
           fakePostRequest.withFormUrlEncodedBody(
             "lettingType" -> lettingType,
             "tenantName"  -> tenantName

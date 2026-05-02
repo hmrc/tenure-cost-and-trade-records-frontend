@@ -77,43 +77,43 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
   "Financial year end form" should {
     "error if financial year end day and month are missing " in new ControllerFixture {
-      val formData: Map[String, String] = baseFormData - errorKey.financialYearDay - errorKey.financialYearMonth
-      val form: Form[(DayMonthsDuration, Boolean)]     = accountingInformationForm(using messages).bind(formData)
+      val formData: Map[String, String]            = baseFormData - errorKey.financialYearDay - errorKey.financialYearMonth
+      val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.required", form)
     }
 
     "error if financial year day is missing " in new ControllerFixture {
-      val formData: Map[String, String] = baseFormData - errorKey.financialYearDay
-      val form: Form[(DayMonthsDuration, Boolean)]     = accountingInformationForm(using messages).bind(formData)
+      val formData: Map[String, String]            = baseFormData - errorKey.financialYearDay
+      val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.mustInclude", form)
     }
 
     "error if financial year month is missing" in new ControllerFixture {
-      val formData: Map[String, String] = baseFormData - errorKey.financialYearMonth
-      val form: Form[(DayMonthsDuration, Boolean)]     = accountingInformationForm(using messages).bind(formData)
+      val formData: Map[String, String]            = baseFormData - errorKey.financialYearMonth
+      val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearMonth, "error.date.mustInclude", form)
     }
 
     "error if financial year date is incorrect" in new ControllerFixture {
-      val formData: Map[String, String] = baseFormData.updated("financialYear.day", "31").updated("financialYear.month", "2")
-      val form: Form[(DayMonthsDuration, Boolean)]     = accountingInformationForm(using messages).bind(formData)
+      val formData: Map[String, String]            = baseFormData.updated("financialYear.day", "31").updated("financialYear.month", "2")
+      val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.invalid", form)
     }
 
     "error if financial year day is incorrect" in new ControllerFixture {
-      val formData: Map[String, String] = baseFormData.updated("financialYear.day", "32")
-      val form: Form[(DayMonthsDuration, Boolean)]     = accountingInformationForm(using messages).bind(formData)
+      val formData: Map[String, String]            = baseFormData.updated("financialYear.day", "32")
+      val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearDay, "error.date.day.invalid", form)
     }
 
     "error if financial year month is incorrect" in new ControllerFixture {
-      val formData: Map[String, String] = baseFormData.updated("financialYear.month", "13")
-      val form: Form[(DayMonthsDuration, Boolean)]     = accountingInformationForm(using messages).bind(formData)
+      val formData: Map[String, String]            = baseFormData.updated("financialYear.month", "13")
+      val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(using messages).bind(formData)
 
       mustContainError(errorKey.financialYearMonth, "error.date.month.invalid", form)
     }
@@ -122,12 +122,12 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
   "submit" should {
     "redirect to the next page when valid data is submitted" in new ControllerFixture {
       // Arrange
-      val validFormData: Map[String, String] = Map(
+      val validFormData: Map[String, String]               = Map(
         "financialYear.day"   -> "1",
         "financialYear.month" -> "4",
         "yearEndChanged"      -> "true"
       )
-      val request: FakeRequest[AnyContentAsFormUrlEncoded]       = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
+      val request: FakeRequest[AnyContentAsFormUrlEncoded] = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
@@ -140,12 +140,12 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
     }
     "redirect to the next page when valid 6030 data is submitted" in new ControllerFixture {
       // Arrange
-      val validFormData: Map[String, String]  = Map(
+      val validFormData: Map[String, String]                         = Map(
         "financialYear.day"   -> "1",
         "financialYear.month" -> "4",
         "yearEndChanged"      -> "true"
       )
-      val request: FakeRequest[AnyContentAsFormUrlEncoded]        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
+      val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(aboutYourTradingHistory6030YesSession, request)
       when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
@@ -161,12 +161,12 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
 
     "redirect to the next page when valid 6020 data is submitted" in new ControllerFixture {
       // Arrange
-      val validFormData: Map[String, String]  = Map(
+      val validFormData: Map[String, String]                         = Map(
         "financialYear.day"   -> "1",
         "financialYear.month" -> "4",
         "yearEndChanged"      -> "true"
       )
-      val request: FakeRequest[AnyContentAsFormUrlEncoded]        = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
+      val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(aboutYourTradingHistory6020YesSession, request)
       when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
@@ -181,13 +181,13 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
     }
 
     "redirect to the next page when valid 6045 data is submitted" in new ControllerFixture {
-      val validFormData: Map[String, String]  = Map(
+      val validFormData: Map[String, String]                         = Map(
         "financialYear.day"   -> "25",
         "financialYear.month" -> "4",
         "yearEndChanged"      -> "true"
       )
-      val session6045    = aboutYourTradingHistory6045YesSession
-      val request: FakeRequest[AnyContentAsFormUrlEncoded]        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
+      val session6045                                                = aboutYourTradingHistory6045YesSession
+      val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(session6045, request)
 
       when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
@@ -201,13 +201,13 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
     }
 
     "redirect to the next page when valid 6048 data is submitted" in new ControllerFixture {
-      val validFormData: Map[String, String]  = Map(
+      val validFormData: Map[String, String]                         = Map(
         "financialYear.day"   -> "25",
         "financialYear.month" -> "4",
         "yearEndChanged"      -> "true"
       )
-      val session6048    = aboutYourTradingHistory6048YesSession
-      val request: FakeRequest[AnyContentAsFormUrlEncoded]        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
+      val session6048                                                = aboutYourTradingHistory6048YesSession
+      val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(session6048, request)
 
       when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
@@ -221,13 +221,13 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
     }
 
     "redirect to the next page when valid 6076 data is submitted" in new ControllerFixture {
-      val validFormData: Map[String, String]  = Map(
+      val validFormData: Map[String, String]                         = Map(
         "financialYear.day"   -> "6",
         "financialYear.month" -> "4",
         "yearEndChanged"      -> "true"
       )
-      val session6076    = aboutYourTradingHistory6076YesSession
-      val request: FakeRequest[AnyContentAsFormUrlEncoded]        = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
+      val session6076                                                = aboutYourTradingHistory6076YesSession
+      val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(session6076, request)
 
       when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))

@@ -50,7 +50,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           "name"    -> "Mr. Unknown",
           "address" -> "Neverland"
         )
-        val result: Future[Result]  = controller.submit()(request)
+        val result: Future[Result]                           = controller.submit()(request)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.ResidentListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -82,7 +82,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
             "name"    -> "Mr. Unknown",
             "address" -> "Neverland"
           )
-          val result: Future[Result]  = controller.submit()(request)
+          val result: Future[Result]                           = controller.submit()(request)
           status(result)                      shouldBe SEE_OTHER
           redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -99,7 +99,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
             "name"    -> twoResidents.last.name,
             "address" -> "22, Different Street"
           )
-          val result: Future[Result]  = controller.submit(maybeIndex = Some(1))(request)
+          val result: Future[Result]                           = controller.submit(maybeIndex = Some(1))(request)
           status(result)                      shouldBe SEE_OTHER
           redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -117,7 +117,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
             "name"    -> "Mr. One",
             "address" -> "Address One"
           )
-          val result: Future[Result]  = controller.submit()(request)
+          val result: Future[Result]                           = controller.submit()(request)
           status(result) shouldBe BAD_REQUEST
           val page: Document = contentAsJsoup(result)
           page.error("duplicate") shouldBe "lettingHistory.residentDetail.duplicate"
@@ -143,7 +143,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("name")    shouldBe "lettingHistory.residentDetail.name.required"
         page.error("address") shouldBe "lettingHistory.residentDetail.address.required"
       }

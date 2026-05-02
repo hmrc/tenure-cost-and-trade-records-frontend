@@ -178,7 +178,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         )
       ) {
         val threeDaysAfter: LocalDate = date.plusDays(3)
-        val session: SessionWrapper        = withWhenWasLastLet(threeDaysAfter)
+        val session: SessionWrapper   = withWhenWasLastLet(threeDaysAfter)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)
@@ -285,7 +285,7 @@ class IntendedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         )
       ) {
         val aDifferentPeriod: LocalPeriod = period.copy(fromDate = date.plusDays(3))
-        val session: SessionWrapper          = withTradingPeriod(aDifferentPeriod)
+        val session: SessionWrapper       = withTradingPeriod(aDifferentPeriod)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         intendedLettings(session.data) mustNot be(None)

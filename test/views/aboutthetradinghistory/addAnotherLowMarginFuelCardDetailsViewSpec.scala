@@ -25,9 +25,9 @@ import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class addAnotherLowMarginFuelCardDetailsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
-  val messageKeyPrefix                  = "addAnotherLowMarginFuelCardDetails"
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type]                    = SessionRequest(baseFilled6010Session, fakeRequest)
-  override val form: Form[AnswersYesNo] = theForm
+  val messageKeyPrefix                                       = "addAnotherLowMarginFuelCardDetails"
+  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
+  override val form: Form[AnswersYesNo]                      = theForm
 
   def createView: () => Html = () =>
     addAnotherLowMarginFuelCardsDetailsView(

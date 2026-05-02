@@ -69,17 +69,17 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
       "generate back Link" should {
         "to CYA page if query param present" in new ControllerFixture {
           val result: Future[Result] = controller.show(index = Some(0))(fakeRequestFromCYA)
-          val page: Document   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.backLink shouldBe routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
         }
         "to previous letting page" in new ControllerFixture {
           val result: Future[Result] = controller.show(index = Some(1))(fakeRequest)
-          val page: Document   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.backLink shouldBe routes.AddAnotherLettingPartOfPropertyController.show(0).url
         }
         "to Is Rent Received From page if there is only 1 letting" in new ControllerFixture {
           val result: Future[Result] = controller.show(index = Some(0))(fakeRequest)
-          val page: Document   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.backLink shouldBe routes.IsRentReceivedFromLettingController.show().url
         }
       }
@@ -93,7 +93,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("tenantName")           shouldBe "error.tenantName.required"
         page.error("descriptionOfLetting") shouldBe "error.descriptionOfLetting.maxLength"
       }
@@ -107,9 +107,9 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
 
-        val session: ArgumentCaptor[Session]  = captor[Session]
+        val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
-        val captured = session.getValue
+        val captured                         = session.getValue
 
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
         val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
@@ -130,9 +130,9 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
 
-        val session: ArgumentCaptor[Session]  = captor[Session]
+        val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
-        val captured = session.getValue
+        val captured                         = session.getValue
 
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
         val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
@@ -154,9 +154,9 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
         id.getValue shouldBe "confirmedAddress"
 
-        val session: ArgumentCaptor[Session]  = captor[Session]
+        val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session)(using any)
-        val captured = session.getValue
+        val captured                         = session.getValue
 
         captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
         val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
@@ -187,7 +187,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
   trait ControllerFixture(
     lettingPartOfPropertyDetails: IndexedSeq[LettingPartOfPropertyDetails] = IndexedSeq.empty
   ) extends MockAddressLookup:
-    val audit: Audit      = mock[Audit]
+    val audit: Audit            = mock[Audit]
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 

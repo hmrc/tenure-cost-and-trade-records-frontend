@@ -74,13 +74,13 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       }
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
         val result: Future[Result] = controller.show(index = Some(1))(fakeRequest)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.input("operatingCompanyName") should haveValue("Vodafone")
         page.input("siteOfMast")           should haveValue("roof")
       }
       "render back link to CYA if come from CYA" in new ControllerFixture {
         val result: Future[Result] = controller.show(Some(0))(fakeRequestFromCYA)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
     }
@@ -97,9 +97,9 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
       "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
         true
       ) {
-        val operatingCompanyName = "New Bread and Butter Ltd"
-        val siteOfMast           = "Terrace"
-        val result: Future[Result]               = controller.submit(index = Some(0))(
+        val operatingCompanyName   = "New Bread and Butter Ltd"
+        val siteOfMast             = "Terrace"
+        val result: Future[Result] = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "operatingCompanyName" -> operatingCompanyName,
             "siteOfMast"           -> siteOfMast
@@ -117,9 +117,9 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         }
       }
       "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
-        val operatingCompanyName = "Turned into Bread and Butter Ltd"
-        val siteOfMast           = "Terrace"
-        val result: Future[Result]               = controller.submit(index = Some(1))(
+        val operatingCompanyName   = "Turned into Bread and Butter Ltd"
+        val siteOfMast             = "Terrace"
+        val result: Future[Result] = controller.submit(index = Some(1))(
           fakePostRequest.withFormUrlEncodedBody(
             "operatingCompanyName" -> operatingCompanyName,
             "siteOfMast"           -> siteOfMast

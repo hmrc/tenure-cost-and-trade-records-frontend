@@ -124,7 +124,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
             .withFormUrlEncodedBody("understood" -> "") // understood is missing!
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("understood") shouldBe "error.boolean"
       }
       "and the journey comes from the 'Resident List' page"    should {
@@ -134,7 +134,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
               .withFormUrlEncodedBody("understood" -> "false")
           )
           status(result) shouldBe BAD_REQUEST
-          val page: Document   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
         }
         "be handling POST kind=permanentResidents&understood=true by replying 303 redirect to the 'Has Completed Lettings' page" in new ControllerFixture {
@@ -153,7 +153,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
               .withFormUrlEncodedBody("understood" -> "false")
           )
           status(result) shouldBe BAD_REQUEST
-          val page: Document   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
         }
         "be handling POST kind=temporaryOccupiers&understood=true by replying 303 redirect to the 'How Many Nights' page" in new ControllerFixture {
@@ -172,7 +172,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
               .withFormUrlEncodedBody("understood" -> "false")
           )
           status(result) shouldBe BAD_REQUEST
-          val page: Document   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.error("understood") shouldBe "lettingHistory.maxNumberReached.understanding.required"
         }
         "be handling POST kind=onlineAdvertising&understood=true by replying 303 redirect to the '???' page" in new ControllerFixture {

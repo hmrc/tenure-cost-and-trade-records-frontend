@@ -28,7 +28,7 @@ import views.behaviours.QuestionViewBehaviours
 class FranchiseOrLettingsTiedToPropertyView6045Spec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "franchiseLettings.6045"
-  val backLink: String         = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
+  val backLink: String = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
 
   override val form: Form[AnswersYesNo] = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 

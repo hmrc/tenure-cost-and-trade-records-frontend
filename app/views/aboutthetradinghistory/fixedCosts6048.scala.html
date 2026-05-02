@@ -44,8 +44,8 @@
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
-@if(hintKey.nonEmpty) {
-    <span class="govuk-caption-m">@messages(hintKey)</span>
+@hintKey.map { hint =>
+    <span class="govuk-caption-m">@messages(hint)</span>
 }
 }
 

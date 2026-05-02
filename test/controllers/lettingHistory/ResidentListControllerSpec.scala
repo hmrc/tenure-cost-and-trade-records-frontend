@@ -128,7 +128,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
             )
           )
           status(result) shouldBe BAD_REQUEST
-          val page: Document   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.error("answer") shouldBe "lettingHistory.residentList.hasMoreResidents.required"
         }
         "be handling POST /list?hasMoreResidents=yes by replying redirect to the 'Max Number of Residents' page" in new ControllerFixture(
@@ -151,7 +151,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.residentList.hasMoreResidents.required"
       }
       "be handling POST /list?hasMoreResidents=no by replying redirect to the 'Commercial Lettings' page" in new ControllerFixture {

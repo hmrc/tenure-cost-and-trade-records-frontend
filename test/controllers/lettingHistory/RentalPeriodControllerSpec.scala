@@ -59,7 +59,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           "toDate.month"   -> "3",
           "toDate.year"    -> previousFiscalYearEnd.toString
         )
-        val result: Future[Result]  = controller.submit(maybeIndex = Some(0))(request)
+        val result: Future[Result]                           = controller.submit(maybeIndex = Some(0))(request)
         status(result)                                           shouldBe SEE_OTHER
         redirectLocation(result).value                           shouldBe routes.OccupierListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -114,7 +114,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("fromDate.day") shouldBe "error.date.required"
       }
     }

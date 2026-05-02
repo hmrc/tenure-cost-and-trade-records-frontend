@@ -46,24 +46,24 @@ class FranchiseTypeDetailsControllerSpec extends TestBaseSpec with FranchiseType
       }
       "reply 200 with a fresh HTML form if given unknown index" in new ControllerFixture {
         val result: Future[Result] = controller.show(2)(fakeRequest)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.input("operatorName")   should beEmpty
         page.input("typeOfBusiness") should beEmpty
       }
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
         val result: Future[Result] = controller.show(0)(fakeRequest)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.input("operatorName")   should haveValue(concession6015IncomeRecord.businessDetails.get.operatorName)
         page.input("typeOfBusiness") should haveValue(concession6015IncomeRecord.businessDetails.get.typeOfBusiness)
       }
       "render back link to CYA if request comes from CYA" in new ControllerFixture {
         val result: Future[Result] = controller.show(0)(fakeRequestFromCYA)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
       "render a correct back link to type of income page if no query parameters in the url " in new ControllerFixture {
         val result: Future[Result] = controller.show(0)(fakeRequest)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.TypeOfIncomeController.show(idx = Some(0)).url
       }
     }
@@ -114,9 +114,9 @@ trait FranchiseTypeDetailsControllerBehaviours:
 
   def savingIncomeRecordAndRedirectingToAddressLookupService(index: Int): Unit =
     s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture {
-      val operatorName   = "Godzilla"
-      val typeOfBusiness = "Atomic Bomb Factory"
-      val result: Future[Result]         = controller.submit(index)(
+      val operatorName           = "Godzilla"
+      val typeOfBusiness         = "Atomic Bomb Factory"
+      val result: Future[Result] = controller.submit(index)(
         fakePostRequest.withFormUrlEncodedBody(
           "operatorName"   -> operatorName,
           "typeOfBusiness" -> typeOfBusiness

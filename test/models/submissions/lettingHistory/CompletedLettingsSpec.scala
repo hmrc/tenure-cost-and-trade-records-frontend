@@ -96,7 +96,7 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
         List(johnBrown)
       ) {
         val updatedJohnBrown: OccupierDetail = OccupierDetail(johnBrown.name, aliceWhite.address, rentalPeriod = None)
-        private val session  = byAddingOrUpdatingOccupier(updatedJohnBrown, maybeIndex = Some(0))._2
+        private val session                  = byAddingOrUpdatingOccupier(updatedJohnBrown, maybeIndex = Some(0))._2
         session.changed mustBe true
         hasCompletedLettings(session.data).value mustBe true
         completedLettings(session.data) must have size 1

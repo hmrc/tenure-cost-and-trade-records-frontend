@@ -56,7 +56,7 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
           "toDate.day"     -> "31",
           "toDate.month"   -> "3"
         )
-        val result: Future[Result]  = controller.submit(request)
+        val result: Future[Result]                           = controller.submit(request)
         status(result)                                            shouldBe SEE_OTHER
         redirectLocation(result).value                            shouldBe routes.HasOnlineAdvertisingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -104,7 +104,7 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("fromDate.day") shouldBe "error.date.required"
       }
     }

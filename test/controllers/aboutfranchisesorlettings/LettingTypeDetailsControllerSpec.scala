@@ -46,18 +46,18 @@ class LettingTypeDetailsControllerSpec extends TestBaseSpec with LettingTypeDeta
       }
       "reply 200 with a fresh HTML form if given unknown index" in new ControllerFixture {
         val result: Future[Result] = controller.show(2)(fakeRequest)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.input("lettingOperatorName")   should beEmpty
         page.input("lettingTypeOfBusiness") should beEmpty
       }
       "render back link to CYA if request comes from CYA" in new ControllerFixture {
         val result: Future[Result] = controller.show(0)(fakeRequestFromCYA)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
       "render a correct back link to type of income page if no query parameters in the url " in new ControllerFixture {
         val result: Future[Result] = controller.show(0)(fakeRequest)
-        val page: Document   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.TypeOfIncomeController.show(idx = Some(0)).url
       }
     }
@@ -103,9 +103,9 @@ trait LettingTypeDetailsControllerBehaviours:
 
   def savingIncomeRecordAndRedirectingToAddressLookupService(index: Int): Unit =
     s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture {
-      val operatorName   = "Godzilla"
-      val typeOfBusiness = "Atomic Bomb Factory"
-      val result: Future[Result]         = controller.submit(index)(
+      val operatorName           = "Godzilla"
+      val typeOfBusiness         = "Atomic Bomb Factory"
+      val result: Future[Result] = controller.submit(index)(
         fakePostRequest.withFormUrlEncodedBody(
           "lettingOperatorName"   -> operatorName,
           "lettingTypeOfBusiness" -> typeOfBusiness
