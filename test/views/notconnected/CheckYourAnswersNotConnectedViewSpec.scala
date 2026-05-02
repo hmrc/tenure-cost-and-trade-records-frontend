@@ -95,7 +95,7 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
 
     "contain submit button with the value Accept and Send" in {
       val doc         = asDocument(createView())
-      val loginButton = doc.getElementById("continue-button").text()
+      val loginButton = doc.getElementById("send-button").text()
       assert(loginButton == messages("button.send.label"))
     }
   }

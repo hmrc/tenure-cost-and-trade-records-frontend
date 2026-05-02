@@ -82,7 +82,7 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.label.save"))
+      assert(loginButton == messages("button.save.label"))
     }
   }
 }

@@ -48,7 +48,7 @@ class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehavio
 
     "contain submit and send button with the value Accept and send" in {
       val doc         = asDocument(createView())
-      val loginButton = doc.getElementById("continue-button").text()
+      val loginButton = doc.getElementById("confirmAndSend-button").text()
       assert(loginButton == messages("button.confirmAndSend.label"))
     }
   }

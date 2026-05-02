@@ -78,7 +78,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.label.save"))
+      assert(loginButton == messages("button.save.label"))
     }
   }
   "max of Lettings franchise reached view for 6010" must {
