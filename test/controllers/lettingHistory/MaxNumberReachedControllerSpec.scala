@@ -195,7 +195,7 @@ class MaxNumberReachedControllerSpec extends LettingHistoryControllerSpec:
   ) extends MockRepositoryFixture
     with SessionCapturingFixture:
 
-    val controller = new MaxNumberReachedController(
+    val controller = MaxNumberReachedController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[MaxNumberReachedView],

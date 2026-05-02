@@ -31,7 +31,7 @@ class PartsUnavailableControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def controller(isWelsh: Boolean = false) = new PartsUnavailableController(
+  def controller(isWelsh: Boolean = false) = PartsUnavailableController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

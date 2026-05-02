@@ -46,7 +46,7 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
       validFormDataPerYear(1)
 
   private def controller =
-    new AdditionalCateringController(
+    AdditionalCateringController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

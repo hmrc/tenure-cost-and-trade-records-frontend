@@ -40,7 +40,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller: AdvertisingRightLettingController = new AdvertisingRightLettingController(
+    val controller: AdvertisingRightLettingController = AdvertisingRightLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,

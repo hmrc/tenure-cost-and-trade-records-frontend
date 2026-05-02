@@ -35,7 +35,7 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
 
   def checkYourAdditionalInformationController(
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
-  ) = CheckYourAnswersNotConnectedController(
+  ): CheckYourAnswersNotConnectedController = CheckYourAnswersNotConnectedController(
     stubMessagesControllerComponents(),
     mockSubmissionConnector,
     checkYourAnswersNotConnectedView,

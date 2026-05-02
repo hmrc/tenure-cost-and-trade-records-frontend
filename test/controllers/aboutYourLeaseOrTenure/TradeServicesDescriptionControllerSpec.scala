@@ -35,7 +35,7 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) =
-    new TradeServicesDescriptionController(
+    TradeServicesDescriptionController(
       stubMessagesControllerComponents(),
       mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],

@@ -41,7 +41,7 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartOneNoOpenMarket
     ),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = new RentPayableVaryAccordingToGrossOrNetController(
+  ) = RentPayableVaryAccordingToGrossOrNetController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

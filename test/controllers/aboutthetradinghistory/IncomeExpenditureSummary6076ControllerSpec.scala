@@ -30,7 +30,7 @@ class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec {
 
   def controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ) = new IncomeExpenditureSummary6076Controller(
+  ): IncomeExpenditureSummary6076Controller = IncomeExpenditureSummary6076Controller(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

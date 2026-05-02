@@ -31,8 +31,8 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def grossReceiptsLettingUnitsController =
-    new GrossReceiptsLettingUnitsController(
+  def grossReceiptsLettingUnitsController: GrossReceiptsLettingUnitsController =
+    GrossReceiptsLettingUnitsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

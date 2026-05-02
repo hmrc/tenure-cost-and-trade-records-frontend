@@ -51,7 +51,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  ) = new CommercialLettingAvailabilityWelshController(
+  ) = CommercialLettingAvailabilityWelshController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

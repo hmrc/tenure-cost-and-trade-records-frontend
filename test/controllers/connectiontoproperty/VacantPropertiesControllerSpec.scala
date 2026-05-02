@@ -31,7 +31,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
   def vacantPropertiesController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledVacantProperties)
   ) =
-    new VacantPropertiesController(
+    VacantPropertiesController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,

@@ -38,7 +38,7 @@ class CommercialLettingAvailabilityControllerSpec extends TestBaseSpec {
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  ) = new CommercialLettingAvailabilityController(
+  ) = CommercialLettingAvailabilityController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

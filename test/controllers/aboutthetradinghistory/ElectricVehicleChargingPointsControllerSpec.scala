@@ -29,7 +29,7 @@ class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec {
 
   def electricVehicleChargingPointsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ) = new ElectricVehicleChargingPointsController(
+  ): ElectricVehicleChargingPointsController = ElectricVehicleChargingPointsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

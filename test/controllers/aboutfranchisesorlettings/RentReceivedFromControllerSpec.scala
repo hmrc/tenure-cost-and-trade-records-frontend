@@ -34,8 +34,8 @@ class RentReceivedFromControllerSpec extends TestBaseSpec {
 
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings60156016)
-  ) =
-    new RentReceivedFromController(
+  ): RentReceivedFromController =
+    RentReceivedFromController(
       stubMessagesControllerComponents(),
       mockAudit,
       mockAboutFranchisesOrLettingsNavigator,

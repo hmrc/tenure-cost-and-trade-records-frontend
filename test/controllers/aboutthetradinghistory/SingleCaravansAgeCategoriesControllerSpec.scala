@@ -28,8 +28,8 @@ class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def singleCaravansAgeCategoriesController =
-    new SingleCaravansAgeCategoriesController(
+  def singleCaravansAgeCategoriesController: SingleCaravansAgeCategoriesController =
+    SingleCaravansAgeCategoriesController(
       caravansAgeCategoriesView,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(

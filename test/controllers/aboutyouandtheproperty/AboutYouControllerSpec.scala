@@ -36,7 +36,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
 
   def aboutYouController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new AboutYouController(
+  ) = AboutYouController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -45,7 +45,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def aboutYouControllerNone() = new AboutYouController(
+  def aboutYouControllerNone() = AboutYouController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

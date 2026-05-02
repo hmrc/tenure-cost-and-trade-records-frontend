@@ -32,7 +32,7 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) =
-    new TypeOfTenureController(
+    TypeOfTenureController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

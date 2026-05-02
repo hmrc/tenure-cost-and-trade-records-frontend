@@ -122,7 +122,7 @@ class RentalPeriodControllerSpec extends LettingHistoryControllerSpec with Fisca
 
   trait ControllerFixture(period: Option[LocalPeriod] = None) extends MockRepositoryFixture with SessionCapturingFixture:
 
-    val controller = RentalPeriodController(
+    val controller: RentalPeriodController = RentalPeriodController(
       mcc = stubMessagesControllerComponents(),
       dateUtil = inject[DateUtilLocalised],
       navigator = inject[LettingHistoryNavigator],

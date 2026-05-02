@@ -37,7 +37,7 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
   private val mockCostOfSalesView      = mock[costOfSales]
   when(mockCostOfSalesView.apply(any, any)(using any, any)).thenReturn(HtmlFormat.empty)
 
-  private val costOfSalesController = new CostOfSalesController(
+  private val costOfSalesController = CostOfSalesController(
     stubMessagesControllerComponents(),
     mockAudit,
     mockCostOfSalesNavigator,

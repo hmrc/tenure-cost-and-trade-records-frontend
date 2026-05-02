@@ -34,7 +34,7 @@ class TentingPitchesCertificatedControllerSpec extends TestBaseSpec {
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  ) = new TentingPitchesCertificatedController(
+  ): TentingPitchesCertificatedController = TentingPitchesCertificatedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

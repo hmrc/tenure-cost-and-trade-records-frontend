@@ -191,7 +191,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller = new LettingPartOfPropertyDetailsController(
+    val controller = LettingPartOfPropertyDetailsController(
       stubMessagesControllerComponents(),
       audit,
       connectedToPropertyNavigator,

@@ -33,7 +33,7 @@ class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
   private val mockWhenDidYouFirstOccupyView                          = mock[WhenDidYouFirstOccupyView]
   when(mockWhenDidYouFirstOccupyView.apply(any, any)(using any, any)).thenReturn(HtmlFormat.empty)
 
-  private val aboutYourTradingHistoryController = new WhenDidYouFirstOccupyController(
+  private val aboutYourTradingHistoryController = WhenDidYouFirstOccupyController(
     stubMessagesControllerComponents(),
     mockAudit,
     mockAboutYouNavigator,

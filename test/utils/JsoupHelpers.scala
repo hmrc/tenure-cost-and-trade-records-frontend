@@ -61,8 +61,8 @@ trait JsoupHelpers:
   //  S C A L A T E S T     M A T C H E R s
   // --------------------------------------------------------
 
-  def beChecked    = CheckboxElementMatcher(expectedCheck = true)
-  def notBeChecked = CheckboxElementMatcher(expectedCheck = false)
+  def beChecked: CheckboxElementMatcher    = CheckboxElementMatcher(expectedCheck = true)
+  def notBeChecked: CheckboxElementMatcher = CheckboxElementMatcher(expectedCheck = false)
 
   class CheckboxElementMatcher(expectedCheck: Boolean) extends Matcher[Element]:
 
@@ -91,8 +91,8 @@ trait JsoupHelpers:
           else s"""Radio group elements had checked values different than "${expectedValue.get}""""
       )
 
-  def haveNoneChecked            = RadioElementsMatcher(expectedValue = None)
-  def haveChecked(value: String) = RadioElementsMatcher(expectedValue = Some(value))
+  def haveNoneChecked: RadioElementsMatcher            = RadioElementsMatcher(expectedValue = None)
+  def haveChecked(value: String): RadioElementsMatcher = RadioElementsMatcher(expectedValue = Some(value))
 
   class InputElementMatcher(expectedValue: Option[String]) extends Matcher[Element]:
 
@@ -106,7 +106,7 @@ trait JsoupHelpers:
         rawNegatedFailureMessage = s"Input element had value $expectedValue"
       )
 
-  def haveValue(value: String) = InputElementMatcher(expectedValue = Some(value))
-  def beEmpty                  = InputElementMatcher(expectedValue = None)
+  def haveValue(value: String): InputElementMatcher = InputElementMatcher(expectedValue = Some(value))
+  def beEmpty: InputElementMatcher                  = InputElementMatcher(expectedValue = None)
 
 object JsoupHelpers extends JsoupHelpers

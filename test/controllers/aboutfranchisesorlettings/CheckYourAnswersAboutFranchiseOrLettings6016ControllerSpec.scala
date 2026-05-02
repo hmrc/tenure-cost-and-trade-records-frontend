@@ -33,8 +33,8 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
 
   def checkYourAnswersAboutFranchiseOrLettingsController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings60156016)
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
@@ -48,8 +48,8 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
 
   def checkYourAnswersAboutFranchiseOrLettingsControllerNo(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettingsNo6016)
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,

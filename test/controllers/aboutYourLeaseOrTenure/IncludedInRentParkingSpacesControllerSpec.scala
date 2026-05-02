@@ -33,7 +33,7 @@ class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = new IncludedInRentParkingSpacesController(
+  ) = IncludedInRentParkingSpacesController(
     includedInRentParkingSpacesView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

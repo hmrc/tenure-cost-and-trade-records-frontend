@@ -36,7 +36,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
 
   def areYouStillConnectedController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) = new AreYouStillConnectedController(
+  ) = AreYouStillConnectedController(
     stubMessagesControllerComponents(),
     mockAudit,
     connectedToPropertyNavigator,

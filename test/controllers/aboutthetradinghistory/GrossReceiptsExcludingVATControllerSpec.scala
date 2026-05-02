@@ -26,8 +26,8 @@ class GrossReceiptsExcludingVATControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def grossReceiptsExcludingVATController =
-    new GrossReceiptsExcludingVATController(
+  def grossReceiptsExcludingVATController: GrossReceiptsExcludingVATController =
+    GrossReceiptsExcludingVATController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

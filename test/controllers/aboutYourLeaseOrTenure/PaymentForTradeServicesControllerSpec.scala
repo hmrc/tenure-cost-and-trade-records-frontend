@@ -41,7 +41,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) =
-    new PaymentForTradeServicesController(
+    PaymentForTradeServicesController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

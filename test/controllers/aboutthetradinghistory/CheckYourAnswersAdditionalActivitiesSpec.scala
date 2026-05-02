@@ -30,8 +30,8 @@ class CheckYourAnswersAdditionalActivitiesSpec extends TestBaseSpec {
 
   def controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
-  ) =
-    new CheckYourAnswersAdditionalActivitiesController(
+  ): CheckYourAnswersAdditionalActivitiesController =
+    CheckYourAnswersAdditionalActivitiesController(
       stubMessagesControllerComponents(),
       aboutYourTradingHistoryNavigator,
       checkYourAnswersAdditionalActivitiesView,

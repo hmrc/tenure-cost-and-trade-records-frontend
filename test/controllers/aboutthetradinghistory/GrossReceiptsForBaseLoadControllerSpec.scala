@@ -27,8 +27,8 @@ class GrossReceiptsForBaseLoadControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def grossReceiptsForBaseLoadController =
-    new GrossReceiptsForBaseLoadController(
+  def grossReceiptsForBaseLoadController: GrossReceiptsForBaseLoadController =
+    GrossReceiptsForBaseLoadController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

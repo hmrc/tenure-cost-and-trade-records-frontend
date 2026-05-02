@@ -107,7 +107,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
     val connector: BackendConnector = mock[BackendConnector]
     when(connector.retrieveFORType(anyString, any[HeaderCarrier])).thenReturn(successful("FOR6012"))
 
-    val controller = GuidanceReferenceNumberController(
+    val controller: GuidanceReferenceNumberController = GuidanceReferenceNumberController(
       mcc = stubMessagesControllerComponents(),
       connector = connector,
       referenceNumberView = inject[ReferenceNumberView]

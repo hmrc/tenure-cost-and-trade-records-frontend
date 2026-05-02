@@ -36,8 +36,8 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any)(using any)).thenReturn(successful(()))
 
-    def controller(emptyTurnoverSections: Boolean = false) =
-      new CheckYourAnswersNoFinancialYearsController(
+    def controller(emptyTurnoverSections: Boolean = false): CheckYourAnswersNoFinancialYearsController =
+      CheckYourAnswersNoFinancialYearsController(
         mcc = stubMessagesControllerComponents(),
         navigator = aboutYourTradingHistoryNavigator,
         theView = inject[CheckYourAnswerNoFinancialYearsView],

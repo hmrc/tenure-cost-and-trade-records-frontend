@@ -35,7 +35,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
   ):
 
-    val controller = new RequestReferenceNumberCheckYourAnswersController(
+    val controller = RequestReferenceNumberCheckYourAnswersController(
       stubMessagesControllerComponents(),
       inject[SubmissionConnector],
       requestReferenceNumberCheckYourAnswersView,
@@ -51,7 +51,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
   ):
     val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
 
-    val controller = new RequestReferenceNumberCheckYourAnswersController(
+    val controller = RequestReferenceNumberCheckYourAnswersController(
       stubMessagesControllerComponents(),
       mockSubmissionConnector,
       requestReferenceNumberCheckYourAnswersView,
@@ -120,7 +120,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
         when(
           mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using any[HeaderCarrier])
         )
-          .thenReturn(Future.failed(new RuntimeException("Test Exception")))
+          .thenReturn(Future.failed(RuntimeException("Test Exception")))
 
         // Call the submit action
         val result: Future[Result] = controller.submit()(fakeRequest)

@@ -32,7 +32,7 @@ class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = new LeaseSurrenderedEarlyController(
+  ) = LeaseSurrenderedEarlyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

@@ -30,8 +30,8 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def grossReceiptsCaravanFleetHireController =
-    new GrossReceiptsCaravanFleetHireController(
+  def grossReceiptsCaravanFleetHireController: GrossReceiptsCaravanFleetHireController =
+    GrossReceiptsCaravanFleetHireController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

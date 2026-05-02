@@ -40,7 +40,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller: OtherLettingController = new OtherLettingController(
+    val controller: OtherLettingController = OtherLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,

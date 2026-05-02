@@ -27,7 +27,7 @@ class AccommodationDetailsCYA6048ControllerSpec extends TestBaseSpec {
 
   private val nextPage = "/send-trade-and-cost-information/task-list#accommodation-details"
 
-  def accommodationDetailsCYA6048Controller =
+  def accommodationDetailsCYA6048Controller: AccommodationDetailsCYA6048Controller =
     AccommodationDetailsCYA6048Controller(
       accommodationDetailsCYAView,
       accommodationNavigator,

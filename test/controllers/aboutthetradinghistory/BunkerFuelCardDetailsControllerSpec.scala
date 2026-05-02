@@ -32,7 +32,7 @@ class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec {
   private def createBunkerFuelCardDetailsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory)
   ) =
-    new BunkerFuelCardDetailsController(
+    BunkerFuelCardDetailsController(
       stubMessagesControllerComponents(),
       mockNavigator,
       bunkerFuelCardDetailsView,

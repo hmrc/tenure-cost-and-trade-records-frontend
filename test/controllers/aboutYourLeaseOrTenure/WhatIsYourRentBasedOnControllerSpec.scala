@@ -30,7 +30,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
   def whatIsYourRentBasedOnController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new WhatIsYourRentBasedOnController(
+    WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
@@ -40,7 +40,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
     )
 
   def whatIsYourRentBasedOnControllerNone =
-    new WhatIsYourRentBasedOnController(
+    WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

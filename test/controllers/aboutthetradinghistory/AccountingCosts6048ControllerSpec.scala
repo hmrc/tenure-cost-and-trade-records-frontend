@@ -31,8 +31,8 @@ class AccountingCosts6048ControllerSpec extends TestBaseSpec {
   private val cyaPage  = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
   val mockAudit: Audit = mock[Audit]
 
-  def accountingCosts6048Controller =
-    new AccountingCosts6048Controller(
+  def accountingCosts6048Controller: AccountingCosts6048Controller =
+    AccountingCosts6048Controller(
       accountingCosts6048View,
       mockAudit,
       aboutYourTradingHistoryNavigator,

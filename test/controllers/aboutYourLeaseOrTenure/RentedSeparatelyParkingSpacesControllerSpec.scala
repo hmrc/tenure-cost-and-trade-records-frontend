@@ -28,7 +28,7 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def rentedSeparatelyParkingSpacesController = new RentedSeparatelyParkingSpacesController(
+  def rentedSeparatelyParkingSpacesController = RentedSeparatelyParkingSpacesController(
     rentedSeparatelyParkingSpacesView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

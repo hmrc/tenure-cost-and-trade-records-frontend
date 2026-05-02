@@ -30,8 +30,8 @@ class CaravansAnnualPitchFeeControllerSpec extends TestBaseSpec {
 
   private val nextPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def caravansAnnualPitchFeeController =
-    new CaravansAnnualPitchFeeController(
+  def caravansAnnualPitchFeeController: CaravansAnnualPitchFeeController =
+    CaravansAnnualPitchFeeController(
       caravansAnnualPitchFeeView,
       mockAudit,
       aboutYourTradingHistoryNavigator,

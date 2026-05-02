@@ -33,7 +33,7 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
   def leaseOrAgreementYearsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
   ) =
-    new LeaseOrAgreementYearsController(
+    LeaseOrAgreementYearsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

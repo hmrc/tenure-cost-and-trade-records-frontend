@@ -37,7 +37,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
 
   def websiteForPropertyController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new WebsiteForPropertyController(
+  ) = WebsiteForPropertyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -48,7 +48,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
 
   def websiteForPropertyController6030(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyBlank)
-  ) = new WebsiteForPropertyController(
+  ) = WebsiteForPropertyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -59,7 +59,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
 
   def websiteForPropertyController6045(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyBlank)
-  ) = new WebsiteForPropertyController(
+  ) = WebsiteForPropertyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

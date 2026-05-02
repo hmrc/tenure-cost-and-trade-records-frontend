@@ -149,7 +149,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
 
   trait ControllerFixture(advertisingOnlineList: List[AdvertisingDetail] = Nil) extends MockRepositoryFixture with SessionCapturingFixture:
 
-    val controller = new AdvertisingDetailController(
+    val controller = AdvertisingDetailController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[AdvertisingDetailView],

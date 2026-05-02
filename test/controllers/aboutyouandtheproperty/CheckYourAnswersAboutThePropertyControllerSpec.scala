@@ -28,7 +28,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6010Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -38,7 +38,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6010No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -46,7 +46,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def checkYourAnswersAboutThePropertyController6010None() = new CheckYourAnswersAboutThePropertyController(
+  def checkYourAnswersAboutThePropertyController6010None() = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -56,7 +56,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6015Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -66,7 +66,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6015No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -74,7 +74,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def checkYourAnswersAboutThePropertyController6015None() = new CheckYourAnswersAboutThePropertyController(
+  def checkYourAnswersAboutThePropertyController6015None() = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -84,7 +84,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6030Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -94,7 +94,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6030No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -102,7 +102,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def checkYourAnswersAboutThePropertyController6030None() = new CheckYourAnswersAboutThePropertyController(
+  def checkYourAnswersAboutThePropertyController6030None() = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -112,7 +112,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6020(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -122,7 +122,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyController6076(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -132,7 +132,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyControllerYes6045(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -142,7 +142,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
 
   def checkYourAnswersAboutThePropertyControllerNo6045(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = new CheckYourAnswersAboutThePropertyController(
+  ) = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -150,7 +150,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def checkYourAnswersAboutThePropertyControllerNone() = new CheckYourAnswersAboutThePropertyController(
+  def checkYourAnswersAboutThePropertyControllerNone() = CheckYourAnswersAboutThePropertyController(
     stubMessagesControllerComponents(),
     aboutYouAndThePropertyNavigator,
     checkYourAnswersAboutThePropertyView,
@@ -289,7 +289,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
       def controller(
         partTwo: AboutYouAndThePropertyPartTwo,
         isPossibleWelsh: Boolean
-      ) = new CheckYourAnswersAboutThePropertyController(
+      ) = CheckYourAnswersAboutThePropertyController(
         stubMessagesControllerComponents(),
         aboutYouAndThePropertyNavigator,
         checkYourAnswersAboutThePropertyView,

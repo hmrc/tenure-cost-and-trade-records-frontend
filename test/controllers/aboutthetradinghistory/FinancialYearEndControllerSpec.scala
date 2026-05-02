@@ -46,7 +46,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
     def financialYearEndController(
       forType: ForType = FOR6010,
       aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-    ) = new FinancialYearEndController(
+    ): FinancialYearEndController = FinancialYearEndController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

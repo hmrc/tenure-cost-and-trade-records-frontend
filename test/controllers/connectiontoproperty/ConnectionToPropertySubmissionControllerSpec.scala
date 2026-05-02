@@ -39,7 +39,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
   def connectionToPropertySubmissionController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
   ) =
-    new ConnectionToPropertySubmissionController(
+    ConnectionToPropertySubmissionController(
       stubMessagesControllerComponents(),
       submissionConnector,
       errorHandler,
@@ -63,7 +63,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
     "submission fails" should {
       "return InternalServerError" in {
         when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
-          .thenReturn(Future.failed(new RuntimeException("Test error")))
+          .thenReturn(Future.failed(RuntimeException("Test error")))
         when(errorHandler.internalServerErrorTemplate(using org.mockito.ArgumentMatchers.any(classOf[Request[?]])))
           .thenReturn(Future.successful(Html("Some Error Message")))
         val result = connectionToPropertySubmissionController().submit(fakeRequest)

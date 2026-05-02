@@ -35,7 +35,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
 
   def aboutThePropertyStringController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYesString)
-  ) = new AboutThePropertyStringController(
+  ) = AboutThePropertyStringController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -46,7 +46,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
 
   def aboutThePropertyStringControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNoString)
-  ) = new AboutThePropertyStringController(
+  ) = AboutThePropertyStringController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -55,7 +55,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def aboutThePropertyStringControllerNone() = new AboutThePropertyStringController(
+  def aboutThePropertyStringControllerNone() = AboutThePropertyStringController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

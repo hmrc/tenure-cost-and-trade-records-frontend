@@ -27,8 +27,8 @@ class CostOfSales6076ControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def costOfSales6076Controller =
-    new CostOfSales6076Controller(
+  def costOfSales6076Controller: CostOfSales6076Controller =
+    CostOfSales6076Controller(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

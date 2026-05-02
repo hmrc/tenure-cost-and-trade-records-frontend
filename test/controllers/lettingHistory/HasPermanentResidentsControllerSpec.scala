@@ -149,7 +149,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
   ) extends MockRepositoryFixture
     with SessionCapturingFixture:
 
-    val controller = new HasPermanentResidentsController(
+    val controller = HasPermanentResidentsController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[HasPermanentResidentsView],

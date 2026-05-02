@@ -40,7 +40,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) =
-    new TradeServicesListController(
+    TradeServicesListController(
       stubMessagesControllerComponents(),
       mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],
@@ -51,7 +51,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
     )
 
   def tradeServicesListControllerNone =
-    new TradeServicesListController(
+    TradeServicesListController(
       stubMessagesControllerComponents(),
       mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],

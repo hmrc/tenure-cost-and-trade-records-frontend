@@ -35,7 +35,7 @@ class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
 
   def ultimatelyResponsibleInsideRepairsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = new UltimatelyResponsibleInsideRepairsController(
+  ) = UltimatelyResponsibleInsideRepairsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

@@ -38,7 +38,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
   def plantAndTechnologyController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  ) = new PlantAndTechnologyController(
+  ) = PlantAndTechnologyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -50,7 +50,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def plantAndTechnologyControllerNone() = new PlantAndTechnologyController(
+  def plantAndTechnologyControllerNone() = PlantAndTechnologyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

@@ -40,7 +40,7 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
   def aboutYourTradingHistoryController(
     forType: ForType = FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new WhenDidYouFirstOccupyController(
+  ): WhenDidYouFirstOccupyController = WhenDidYouFirstOccupyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

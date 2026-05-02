@@ -79,7 +79,7 @@ class LettingTypeDetailsControllerSpec extends TestBaseSpec with LettingTypeDeta
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller = new LettingTypeDetailsController(
+    val controller: LettingTypeDetailsController = LettingTypeDetailsController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,

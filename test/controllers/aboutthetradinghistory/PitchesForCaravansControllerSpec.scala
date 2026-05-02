@@ -27,8 +27,8 @@ class PitchesForCaravansControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def pitchesForCaravansController =
-    new PitchesForCaravansController(
+  def pitchesForCaravansController: PitchesForCaravansController =
+    PitchesForCaravansController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

@@ -35,7 +35,7 @@ class TradingActivityControllerSpec extends TestBaseSpec {
 
   def tradingActivityController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new TradingActivityController(
+  ) = TradingActivityController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -44,7 +44,7 @@ class TradingActivityControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def tradingActivityControllerNone() = new TradingActivityController(
+  def tradingActivityControllerNone() = TradingActivityController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

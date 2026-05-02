@@ -49,7 +49,7 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
       }
       "reply 303 redirect to the 'Download PDF' page when downloadPdfReferenceNumber is unknown" in new ControllerAndConnectorFixture {
         when(connector.retrieveFORType(any[String], any[HeaderCarrier]))
-          .thenReturn(failed(new Exception("cannot determine forType")))
+          .thenReturn(failed(Exception("cannot determine forType")))
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "referenceNumber" -> "unknown"
@@ -80,7 +80,7 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
     val connector: BackendConnector                  = mock[BackendConnector]
     val givenReferenceNumber: ArgumentCaptor[String] = captor[String]
 
-    val controller = new DownloadPDFReferenceNumberController(
+    val controller = DownloadPDFReferenceNumberController(
       stubMessagesControllerComponents(),
       connector,
       referenceNumberView

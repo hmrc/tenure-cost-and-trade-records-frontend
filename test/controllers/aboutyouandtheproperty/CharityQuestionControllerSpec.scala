@@ -35,7 +35,7 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
   def charityQuestionController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
   ) =
-    new CharityQuestionController(
+    CharityQuestionController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYouAndThePropertyNavigator,
@@ -44,7 +44,7 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def charityQuestionControllerNone() = new CharityQuestionController(
+  def charityQuestionControllerNone() = CharityQuestionController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

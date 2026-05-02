@@ -33,7 +33,7 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
   def checkYourAnswersConnectionToPropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
   ) =
-    new CheckYourAnswersConnectionToPropertyController(
+    CheckYourAnswersConnectionToPropertyController(
       stubMessagesControllerComponents(),
       connectedToPropertyNavigator,
       checkYourAnswersConnectionToProperty,

@@ -26,7 +26,7 @@ class IncomeExpenditureSummaryControllerSpec extends TestBaseSpec {
 
   def incomeExpenditureSummaryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new IncomeExpenditureSummaryController(
+  ): IncomeExpenditureSummaryController = IncomeExpenditureSummaryController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     incomeExpenditureSummaryView,

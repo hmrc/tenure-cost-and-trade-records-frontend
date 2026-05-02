@@ -26,7 +26,7 @@ class VariableOperatingExpensesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  val variableOperatingExpensesController = new VariableOperatingExpensesController(
+  val variableOperatingExpensesController: VariableOperatingExpensesController = VariableOperatingExpensesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

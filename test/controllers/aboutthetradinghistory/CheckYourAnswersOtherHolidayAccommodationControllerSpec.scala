@@ -38,7 +38,7 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
 
   private def checkYourAnswersOtherHolidayAccommodationController(
     aboutTheTradingHistoryPartOne: AboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6045
-  ) = new CheckYourAnswersOtherHolidayAccommodationController(
+  ) = CheckYourAnswersOtherHolidayAccommodationController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersOtherHolidayAccommodationView,

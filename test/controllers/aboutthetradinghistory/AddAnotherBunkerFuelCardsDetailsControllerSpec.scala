@@ -37,7 +37,7 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec {
 
   def createAddAnotherBunkerFuelCardsDetailsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory)
-  ) = new AddAnotherBunkerFuelCardsDetailsController(
+  ): AddAnotherBunkerFuelCardsDetailsController = AddAnotherBunkerFuelCardsDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

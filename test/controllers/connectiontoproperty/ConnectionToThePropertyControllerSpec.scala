@@ -36,7 +36,7 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
 
   def connectionToThePropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) = new ConnectionToThePropertyController(
+  ) = ConnectionToThePropertyController(
     stubMessagesControllerComponents(),
     mockAudit,
     connectedToPropertyNavigator,

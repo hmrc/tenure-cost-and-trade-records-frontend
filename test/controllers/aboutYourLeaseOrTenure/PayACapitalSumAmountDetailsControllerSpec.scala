@@ -30,7 +30,7 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec {
   def payACapitalSumAmountDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
-    new PayACapitalSumAmountDetailsController(
+    PayACapitalSumAmountDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
@@ -44,7 +44,7 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartTwoNoPremiumSum
     )
   ) =
-    new PayACapitalSumAmountDetailsController(
+    PayACapitalSumAmountDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

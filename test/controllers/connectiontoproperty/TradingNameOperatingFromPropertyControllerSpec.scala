@@ -39,7 +39,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
     forType: ForType = FOR6010,
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
   ) =
-    new TradingNameOperatingFromPropertyController(
+    TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,

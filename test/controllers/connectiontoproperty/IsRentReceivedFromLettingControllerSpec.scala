@@ -35,7 +35,7 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
   def isRentReceivedFromLettingController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =
-    new IsRentReceivedFromLettingController(
+    IsRentReceivedFromLettingController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,

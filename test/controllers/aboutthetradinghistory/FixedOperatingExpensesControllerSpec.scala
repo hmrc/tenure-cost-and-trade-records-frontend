@@ -26,7 +26,7 @@ class FixedOperatingExpensesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  val fixedOperatingExpensesController = new FixedOperatingExpensesController(
+  val fixedOperatingExpensesController: FixedOperatingExpensesController = FixedOperatingExpensesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

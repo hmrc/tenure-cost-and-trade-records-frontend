@@ -31,7 +31,7 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
   def payACapitalSumDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
-    new PayACapitalSumDetailsController(
+    PayACapitalSumDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

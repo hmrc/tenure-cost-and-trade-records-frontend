@@ -29,7 +29,7 @@ class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec {
 
   def legalOrPlanningRestrictionsDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = new LegalOrPlanningRestrictionsDetailsController(
+  ) = LegalOrPlanningRestrictionsDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

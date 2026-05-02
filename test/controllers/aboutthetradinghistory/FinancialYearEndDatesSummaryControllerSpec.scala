@@ -32,7 +32,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: ForType = FOR6010,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ) = new FinancialYearEndDatesSummaryController(
+  ): FinancialYearEndDatesSummaryController = FinancialYearEndDatesSummaryController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     financialYearEndDatesSummaryView,

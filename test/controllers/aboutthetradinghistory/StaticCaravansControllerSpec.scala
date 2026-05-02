@@ -36,8 +36,8 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
 
   private val nextPageOnNo = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def staticCaravansController =
-    new StaticCaravansController(
+  def staticCaravansController: StaticCaravansController =
+    StaticCaravansController(
       staticCaravansView,
       mockAudit,
       aboutYourTradingHistoryNavigator,

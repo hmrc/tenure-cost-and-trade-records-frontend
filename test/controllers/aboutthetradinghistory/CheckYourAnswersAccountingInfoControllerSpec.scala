@@ -35,7 +35,7 @@ class CheckYourAnswersAccountingInfoControllerSpec extends TestBaseSpec:
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: ForType = FOR6045,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ) = new CheckYourAnswersAccountingInfoController(
+  ): CheckYourAnswersAccountingInfoController = CheckYourAnswersAccountingInfoController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

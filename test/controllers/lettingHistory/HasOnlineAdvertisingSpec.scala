@@ -144,7 +144,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
   ) extends MockRepositoryFixture
     with SessionCapturingFixture:
 
-    val controller = new HasOnlineAdvertisingController(
+    val controller = HasOnlineAdvertisingController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[HasOnlineAdvertisingView],

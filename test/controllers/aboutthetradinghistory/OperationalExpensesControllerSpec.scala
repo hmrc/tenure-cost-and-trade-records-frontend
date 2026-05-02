@@ -27,8 +27,8 @@ class OperationalExpensesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def operationalExpensesController =
-    new OperationalExpensesController(
+  def operationalExpensesController: OperationalExpensesController =
+    OperationalExpensesController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

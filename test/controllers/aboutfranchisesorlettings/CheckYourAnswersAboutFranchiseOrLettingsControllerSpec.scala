@@ -42,8 +42,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
 
   def checkYourAnswersAboutFranchiseOrLettingsController6045(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
@@ -55,8 +55,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
@@ -68,8 +68,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsNo
     )
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
@@ -170,7 +170,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier])).thenReturn(successful(()))
 
     val controller: CheckYourAnswersAboutFranchiseOrLettingsController =
-      new CheckYourAnswersAboutFranchiseOrLettingsController(
+      CheckYourAnswersAboutFranchiseOrLettingsController(
         stubMessagesControllerComponents(),
         aboutFranchisesOrLettingsNavigator,
         checkYourAnswersAboutFranchiseOrLettings,

@@ -36,7 +36,7 @@ class CostsBreakdownControllerSpec extends TestBaseSpec {
 
   def costsBreakdownController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new CostsBreakdownController(
+  ) = CostsBreakdownController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -45,7 +45,7 @@ class CostsBreakdownControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def costsBreakdownControllerNone() = new CostsBreakdownController(
+  def costsBreakdownControllerNone() = CostsBreakdownController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

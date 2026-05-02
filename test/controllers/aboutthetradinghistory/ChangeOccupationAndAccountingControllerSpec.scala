@@ -29,8 +29,8 @@ class ChangeOccupationAndAccountingControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def changeOccupationAndAccountingController =
-    new ChangeOccupationAndAccountingController(
+  def changeOccupationAndAccountingController: ChangeOccupationAndAccountingController =
+    ChangeOccupationAndAccountingController(
       changeOccupationAndAccountingInfoView,
       mockAudit,
       aboutYourTradingHistoryNavigator,

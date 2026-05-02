@@ -32,8 +32,8 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
 
   private val cyaPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def administrativeCosts6048Controller =
-    new AdministrativeCosts6048Controller(
+  def administrativeCosts6048Controller: AdministrativeCosts6048Controller =
+    AdministrativeCosts6048Controller(
       administrativeCosts6048View,
       mockAudit,
       aboutYourTradingHistoryNavigator,

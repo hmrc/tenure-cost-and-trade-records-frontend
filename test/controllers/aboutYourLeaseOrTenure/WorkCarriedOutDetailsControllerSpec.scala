@@ -38,7 +38,7 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) =
-    new WorkCarriedOutDetailsController(
+    WorkCarriedOutDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

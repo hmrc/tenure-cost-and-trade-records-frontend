@@ -33,7 +33,7 @@ class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = new ThroughputAffectsRentController(
+  ) = ThroughputAffectsRentController(
     throughputAffectsRentView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

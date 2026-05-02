@@ -29,7 +29,7 @@ class TotalFuelSoldControllerSpec extends TestBaseSpec {
 
   def totalFuelSoldController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ) = new TotalFuelSoldController(
+  ): TotalFuelSoldController = TotalFuelSoldController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

@@ -38,7 +38,7 @@ class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
-    new LegalOrPlanningRestrictionsController(
+    LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

@@ -29,7 +29,7 @@ class FinancialYearEndDatesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def financialYearEndDatesController(session: Session) = new FinancialYearEndDatesController(
+  def financialYearEndDatesController(session: Session): FinancialYearEndDatesController = FinancialYearEndDatesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

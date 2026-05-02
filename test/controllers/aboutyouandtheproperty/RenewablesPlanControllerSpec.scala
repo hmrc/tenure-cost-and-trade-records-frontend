@@ -38,7 +38,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
 
   def renewablesPlantController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new RenewablesPlantController(
+  ) = RenewablesPlantController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -51,7 +51,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(
       prefilledAboutYouAndThePropertyYes.copy(renewablesPlant = None)
     )
-  ) = new RenewablesPlantController(
+  ) = RenewablesPlantController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

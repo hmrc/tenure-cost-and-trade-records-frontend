@@ -26,8 +26,8 @@ class OtherIncomeControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def otherIncomeController =
-    new OtherIncomeController(
+  def otherIncomeController: OtherIncomeController =
+    OtherIncomeController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

@@ -48,7 +48,7 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
       validFormDataPerYear(1)
 
   private def controller =
-    new AdditionalBarsClubsController(
+    AdditionalBarsClubsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

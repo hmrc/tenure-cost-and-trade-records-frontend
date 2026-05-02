@@ -35,7 +35,7 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  ) = new TentingPitchesOnSiteController(
+  ): TentingPitchesOnSiteController = TentingPitchesOnSiteController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

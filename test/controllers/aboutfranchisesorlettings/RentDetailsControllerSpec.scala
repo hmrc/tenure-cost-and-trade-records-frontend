@@ -33,7 +33,7 @@ class RentDetailsControllerSpec extends TestBaseSpec {
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
-  ) = new RentDetailsController(
+  ): RentDetailsController = RentDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutFranchisesOrLettingsNavigator,

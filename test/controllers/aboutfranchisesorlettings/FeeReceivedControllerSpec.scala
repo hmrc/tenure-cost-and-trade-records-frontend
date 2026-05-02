@@ -93,8 +93,8 @@ class FeeReceivedControllerSpec extends TestBaseSpec:
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
       .thenReturn(successful(()))
 
-    val controller =
-      new FeeReceivedController(
+    val controller: FeeReceivedController =
+      FeeReceivedController(
         stubMessagesControllerComponents(),
         mockAudit,
         aboutFranchisesOrLettingsNavigator,

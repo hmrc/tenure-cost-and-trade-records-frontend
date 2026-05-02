@@ -40,7 +40,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller = new AtmLettingController(
+    val controller: AtmLettingController = AtmLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,

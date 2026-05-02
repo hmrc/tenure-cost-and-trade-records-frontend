@@ -31,8 +31,8 @@ class Income6048ControllerSpec extends TestBaseSpec {
   private val nextPage     = aboutthetradinghistory.routes.FixedCosts6048Controller.show.url
   private val cyaPage      = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def income6048Controller =
-    new Income6048Controller(
+  def income6048Controller: Income6048Controller =
+    Income6048Controller(
       income6048View,
       mockAudit,
       aboutYourTradingHistoryNavigator,

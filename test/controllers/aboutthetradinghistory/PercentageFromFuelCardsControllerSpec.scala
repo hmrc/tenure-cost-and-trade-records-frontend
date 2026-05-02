@@ -29,7 +29,7 @@ class PercentageFromFuelCardsControllerSpec extends TestBaseSpec {
 
   def percentageFromFuelCards(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ) = new PercentageFromFuelCardsController(
+  ): PercentageFromFuelCardsController = PercentageFromFuelCardsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

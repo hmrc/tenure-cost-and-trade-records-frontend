@@ -29,8 +29,8 @@ class SingleCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def singleCaravansOwnedByOperatorController =
-    new SingleCaravansOwnedByOperatorController(
+  def singleCaravansOwnedByOperatorController: SingleCaravansOwnedByOperatorController =
+    SingleCaravansOwnedByOperatorController(
       caravansTrading6045View,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(

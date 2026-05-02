@@ -37,7 +37,7 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec {
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  ) = new OtherHolidayAccommodationController(
+  ): OtherHolidayAccommodationController = OtherHolidayAccommodationController(
     otherHolidayAccommodationView,
     mockAudit,
     aboutYourTradingHistoryNavigator,

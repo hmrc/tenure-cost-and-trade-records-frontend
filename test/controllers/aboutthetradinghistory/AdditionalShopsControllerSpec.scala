@@ -43,7 +43,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
       validFormDataPerYear(2, weeks)
 
   private def controller =
-    new AdditionalShopsController(
+    AdditionalShopsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

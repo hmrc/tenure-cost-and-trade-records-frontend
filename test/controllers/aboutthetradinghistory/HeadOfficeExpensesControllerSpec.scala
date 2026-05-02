@@ -26,8 +26,8 @@ class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def headOfficeExpensesController =
-    new HeadOfficeExpensesController(
+  def headOfficeExpensesController: HeadOfficeExpensesController =
+    HeadOfficeExpensesController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

@@ -35,7 +35,7 @@ class EditAddressControllerSpec extends TestBaseSpec {
 
   def editAddressController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ) = new EditAddressController(
+  ) = EditAddressController(
     stubMessagesControllerComponents(),
     mockAudit,
     connectedToPropertyNavigator,

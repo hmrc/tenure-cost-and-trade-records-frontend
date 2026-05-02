@@ -33,7 +33,7 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = AboutYouAndThePropertyNavigator(audit)
+  val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
 
   "About you and the property navigator for 6048" when {
 

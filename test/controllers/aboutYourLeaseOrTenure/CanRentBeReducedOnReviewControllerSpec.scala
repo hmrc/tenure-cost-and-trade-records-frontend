@@ -37,7 +37,7 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
   def canRentBeReducedOnReviewController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = new CanRentBeReducedOnReviewController(
+  ) = CanRentBeReducedOnReviewController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

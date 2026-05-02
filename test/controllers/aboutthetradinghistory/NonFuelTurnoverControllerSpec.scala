@@ -29,7 +29,7 @@ class NonFuelTurnoverControllerSpec extends TestBaseSpec {
 
   def nonFuelTurnoverController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ) = new NonFuelTurnoverController(
+  ): NonFuelTurnoverController = NonFuelTurnoverController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

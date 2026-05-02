@@ -44,7 +44,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
       validFormDataPerYear(1)
 
   private def controller =
-    new AdditionalAmusementsController(
+    AdditionalAmusementsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

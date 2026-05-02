@@ -33,7 +33,7 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
-    new PaymentWhenLeaseIsGrantedController(
+    PaymentWhenLeaseIsGrantedController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

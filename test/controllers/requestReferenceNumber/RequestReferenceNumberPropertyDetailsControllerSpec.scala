@@ -184,7 +184,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
     val controller: RequestReferenceNumberPropertyDetailsController =
-      new RequestReferenceNumberPropertyDetailsController(
+      RequestReferenceNumberPropertyDetailsController(
         mcc = stubMessagesControllerComponents(),
         navigator = inject[RequestReferenceNumberNavigator],
         theView = inject[RequestReferenceNumberPropertyDetailsView],

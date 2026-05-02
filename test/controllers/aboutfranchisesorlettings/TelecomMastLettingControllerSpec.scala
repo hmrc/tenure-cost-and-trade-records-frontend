@@ -40,7 +40,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller = new TelecomMastLettingController(
+    val controller: TelecomMastLettingController = TelecomMastLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,

@@ -28,8 +28,8 @@ class AcceptLowMarginFuelCardControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def acceptLowMarginFuelCardController =
-    new AcceptLowMarginFuelCardController(
+  def acceptLowMarginFuelCardController: AcceptLowMarginFuelCardController =
+    AcceptLowMarginFuelCardController(
       acceptLowMarginFuelCardView,
       mockAudit,
       aboutYourTradingHistoryNavigator,

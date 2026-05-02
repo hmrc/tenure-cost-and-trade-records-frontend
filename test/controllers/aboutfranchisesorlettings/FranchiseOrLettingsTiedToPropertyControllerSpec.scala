@@ -34,8 +34,8 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
 
   def franchiseOrLettingsTiedToPropertyController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
-  ) =
-    new FranchiseOrLettingsTiedToPropertyController(
+  ): FranchiseOrLettingsTiedToPropertyController =
+    FranchiseOrLettingsTiedToPropertyController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutFranchisesOrLettingsNavigator,

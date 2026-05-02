@@ -28,7 +28,7 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec {
 
   private val nextPage = controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show.url
 
-  def accommodationUnitList6048Controller =
+  def accommodationUnitList6048Controller: AccommodationUnitList6048Controller =
     AccommodationUnitList6048Controller(
       accommodationUnitListView,
       removeLastUnitView,

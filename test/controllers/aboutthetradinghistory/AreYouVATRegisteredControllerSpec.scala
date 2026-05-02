@@ -29,8 +29,8 @@ class AreYouVATRegisteredControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def areYouVATRegisteredController =
-    new AreYouVATRegisteredController(
+  def areYouVATRegisteredController: AreYouVATRegisteredController =
+    AreYouVATRegisteredController(
       areYouVATRegisteredView,
       mockAudit,
       aboutYourTradingHistoryNavigator,

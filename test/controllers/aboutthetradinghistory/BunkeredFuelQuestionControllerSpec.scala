@@ -26,7 +26,7 @@ class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  val bunkeredFuelQuestionController = new BunkeredFuelQuestionController(
+  val bunkeredFuelQuestionController: BunkeredFuelQuestionController = BunkeredFuelQuestionController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

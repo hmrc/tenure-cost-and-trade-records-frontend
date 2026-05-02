@@ -116,7 +116,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
       .thenReturn(successful(()))
 
     val controller: CateringOperationBusinessDetailsController =
-      new CateringOperationBusinessDetailsController(
+      CateringOperationBusinessDetailsController(
         stubMessagesControllerComponents(),
         mockAudit,
         aboutFranchisesOrLettingsNavigator,

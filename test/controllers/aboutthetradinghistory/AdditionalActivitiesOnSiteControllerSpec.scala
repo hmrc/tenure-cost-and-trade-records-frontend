@@ -35,7 +35,7 @@ class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  ) = new AdditionalActivitiesOnSiteController(
+  ): AdditionalActivitiesOnSiteController = AdditionalActivitiesOnSiteController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

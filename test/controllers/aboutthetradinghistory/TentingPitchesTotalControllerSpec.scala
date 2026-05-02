@@ -32,7 +32,7 @@ class TentingPitchesTotalControllerSpec extends TestBaseSpec {
 
   def tentingPitchesTotalController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
-  ) = new TentingPitchesTotalController(
+  ): TentingPitchesTotalController = TentingPitchesTotalController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

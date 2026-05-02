@@ -52,7 +52,7 @@ class AdditionalMiscControllerSpec extends TestBaseSpec {
       validFormDataPerYear(1)
 
   private def controller =
-    new AdditionalMiscController(
+    AdditionalMiscController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

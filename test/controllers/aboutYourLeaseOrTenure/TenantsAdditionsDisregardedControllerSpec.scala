@@ -33,7 +33,7 @@ class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
-    new TenantsAdditionsDisregardedController(
+    TenantsAdditionsDisregardedController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

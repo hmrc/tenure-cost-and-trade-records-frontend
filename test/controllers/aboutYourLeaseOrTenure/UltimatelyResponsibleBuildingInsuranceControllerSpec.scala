@@ -35,7 +35,7 @@ class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec 
 
   def ultimatelyResponsibleBuildingInsuranceController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = new UltimatelyResponsibleBuildingInsuranceController(
+  ) = UltimatelyResponsibleBuildingInsuranceController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

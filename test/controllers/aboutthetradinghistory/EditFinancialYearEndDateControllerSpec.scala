@@ -35,7 +35,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: ForType = FOR6010,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = None
-  ): EditFinancialYearEndDateController = new EditFinancialYearEndDateController(
+  ): EditFinancialYearEndDateController = EditFinancialYearEndDateController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

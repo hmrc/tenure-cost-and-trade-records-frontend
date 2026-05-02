@@ -31,7 +31,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
   private val mockTaskListView = mock[taskList]
   when(mockTaskListView()(using any, any)).thenReturn(HtmlFormat.empty)
 
-  private val checkYourAnswersAboutTradingHistoryController = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController = CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -39,7 +39,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  private val checkYourAnswersAboutTradingHistoryController6015 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6015 = CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -47,7 +47,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  private val checkYourAnswersAboutTradingHistoryController6020 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6020 = CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -55,7 +55,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  private val checkYourAnswersAboutTradingHistoryController6045 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6045 = CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -63,7 +63,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  private val checkYourAnswersAboutTradingHistoryController6048 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6048 = CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
@@ -71,7 +71,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
     mockSessionRepo
   )
 
-  private val checkYourAnswersAboutTradingHistoryController6076 = new CheckYourAnswersAboutTheTradingHistoryController(
+  private val checkYourAnswersAboutTradingHistoryController6076 = CheckYourAnswersAboutTheTradingHistoryController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,

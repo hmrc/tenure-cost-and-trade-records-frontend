@@ -35,8 +35,8 @@ class CalculatingTheRentControllerSpec extends TestBaseSpec {
 
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings60156016)
-  ) =
-    new CalculatingTheRentForController(
+  ): CalculatingTheRentForController =
+    CalculatingTheRentForController(
       stubMessagesControllerComponents(),
       mockAudit,
       mockAboutFranchisesOrLettingsNavigator,

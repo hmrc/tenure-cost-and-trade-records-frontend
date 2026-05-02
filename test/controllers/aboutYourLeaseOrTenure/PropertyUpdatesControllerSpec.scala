@@ -42,7 +42,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) =
-    new PropertyUpdatesController(
+    PropertyUpdatesController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

@@ -40,7 +40,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     )
   ) =
-    new ServicePaidSeparatelyListController(
+    ServicePaidSeparatelyListController(
       stubMessagesControllerComponents(),
       mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],

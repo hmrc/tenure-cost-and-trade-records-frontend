@@ -30,7 +30,7 @@ class OtherCostsControllerSpec extends TestBaseSpec {
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
   private val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
 
-  private val otherCostsController = new OtherCostsController(
+  private val otherCostsController = OtherCostsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

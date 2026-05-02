@@ -36,7 +36,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
   def areYouThirdPartyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =
-    new AreYouThirdPartyController(
+    AreYouThirdPartyController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,

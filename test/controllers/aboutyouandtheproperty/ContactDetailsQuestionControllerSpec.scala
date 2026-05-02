@@ -42,7 +42,7 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
     val controller: ContactDetailsQuestionController =
-      new ContactDetailsQuestionController(
+      ContactDetailsQuestionController(
         stubMessagesControllerComponents(),
         mock[Audit],
         aboutYouAndThePropertyNavigator,

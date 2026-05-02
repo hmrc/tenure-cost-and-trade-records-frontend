@@ -30,7 +30,7 @@ class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
 
   def capitalSumDescriptionController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = new CapitalSumDescriptionController(
+  ) = CapitalSumDescriptionController(
     stubMessagesControllerComponents(),
     mockAudit,
     capitalSumDescriptionView,

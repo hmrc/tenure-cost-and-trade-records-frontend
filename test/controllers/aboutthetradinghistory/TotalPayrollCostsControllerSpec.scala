@@ -26,7 +26,7 @@ class TotalPayrollCostsControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  val aboutYourTradingHistoryController = new TotalPayrollCostsController(
+  val aboutYourTradingHistoryController: TotalPayrollCostsController = TotalPayrollCostsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

@@ -27,8 +27,8 @@ class PremisesCostsControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def premisesCostsController =
-    new PremisesCostsController(
+  def premisesCostsController: PremisesCostsController =
+    PremisesCostsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

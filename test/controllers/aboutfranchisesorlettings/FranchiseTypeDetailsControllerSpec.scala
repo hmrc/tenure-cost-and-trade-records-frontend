@@ -90,7 +90,7 @@ class FranchiseTypeDetailsControllerSpec extends TestBaseSpec with FranchiseType
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller = new FranchiseTypeDetailsController(
+    val controller: FranchiseTypeDetailsController = FranchiseTypeDetailsController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,

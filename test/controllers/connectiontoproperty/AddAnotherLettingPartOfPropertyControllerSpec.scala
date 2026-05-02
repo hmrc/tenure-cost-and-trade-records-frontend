@@ -37,7 +37,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
   def addAnotherLettingPartOfPropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
   ) =
-    new AddAnotherLettingPartOfPropertyController(
+    AddAnotherLettingPartOfPropertyController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,

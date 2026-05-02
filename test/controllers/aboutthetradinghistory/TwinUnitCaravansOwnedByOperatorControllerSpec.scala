@@ -30,8 +30,8 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def twinUnitCaravansOwnedByOperatorController =
-    new TwinUnitCaravansOwnedByOperatorController(
+  def twinUnitCaravansOwnedByOperatorController: TwinUnitCaravansOwnedByOperatorController =
+    TwinUnitCaravansOwnedByOperatorController(
       caravansTrading6045View,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(

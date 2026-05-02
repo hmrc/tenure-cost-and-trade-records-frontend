@@ -37,7 +37,7 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = new WorkCarriedOutConditionController(
+  ) = WorkCarriedOutConditionController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

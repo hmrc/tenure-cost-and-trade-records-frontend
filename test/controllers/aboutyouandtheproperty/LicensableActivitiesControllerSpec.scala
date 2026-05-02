@@ -35,7 +35,7 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
 
   def licensableActivitiesController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new LicensableActivitiesController(
+  ) = LicensableActivitiesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -44,7 +44,7 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def licensableActivitiesControllerNone() = new LicensableActivitiesController(
+  def licensableActivitiesControllerNone() = LicensableActivitiesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
