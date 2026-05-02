@@ -37,7 +37,7 @@ class LegalOrPlanningRestrictions6048ControllerSpec extends TestBaseSpec {
   def legalOrPlanningRestrictionsController(
     forType: ForType = FOR6048,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
+  ): LegalOrPlanningRestrictionsController =
     LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
       mockAudit,

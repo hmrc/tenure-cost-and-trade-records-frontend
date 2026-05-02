@@ -44,7 +44,7 @@ class FormSubmissionController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FrontendController(mcc)
   with Logging
   with I18nSupport {
@@ -80,7 +80,7 @@ class FormSubmissionController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier
+  )(using hc: HeaderCarrier
   ): Future[Unit] = {
     val submission = ConnectedSubmission(session)
     submissionConnector.submitConnected(session.referenceNumber, submission).map(_ => ())

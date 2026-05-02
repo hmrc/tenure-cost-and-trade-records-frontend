@@ -30,7 +30,7 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
 
   def currentRentPayableWithin12MonthsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = CurrentRentPayableWithin12MonthsController(
+  ): CurrentRentPayableWithin12MonthsController = CurrentRentPayableWithin12MonthsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

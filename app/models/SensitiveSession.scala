@@ -85,7 +85,7 @@ case class SensitiveSession(
 
 object SensitiveSession:
 
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveSession] = Json.format
+  implicit def format(using crypto: MongoCrypto): OFormat[SensitiveSession] = Json.format
 
   def apply(session: Session): SensitiveSession = SensitiveSession(
     session.referenceNumber,

@@ -43,7 +43,7 @@ class HighSeasonTariff6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext,
+)(using ec: ExecutionContext,
   dateUtil: DateUtilLocalised
 ) extends FORDataCaptureController(mcc)
   with I18nSupport

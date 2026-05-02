@@ -33,7 +33,7 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
 
   def tenancyLeaseAgreementExpireController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = TenancyLeaseAgreementExpireController(
+  ): TenancyLeaseAgreementExpireController = TenancyLeaseAgreementExpireController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

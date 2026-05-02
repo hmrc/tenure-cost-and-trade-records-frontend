@@ -35,7 +35,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 
   def premisesLicenseController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = PremisesLicenseConditionsController(
+  ): PremisesLicenseConditionsController = PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -46,7 +46,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 
   def premisesLicenseControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = PremisesLicenseConditionsController(
+  ): PremisesLicenseConditionsController = PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -55,7 +55,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def premisesLicenseControllerNone() = PremisesLicenseConditionsController(
+  def premisesLicenseControllerNone(): PremisesLicenseConditionsController = PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

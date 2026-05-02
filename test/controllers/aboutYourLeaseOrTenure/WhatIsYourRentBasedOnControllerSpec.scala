@@ -29,7 +29,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
 
   def whatIsYourRentBasedOnController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
+  ): WhatIsYourRentBasedOnController =
     WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
       mockAudit,
@@ -39,7 +39,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def whatIsYourRentBasedOnControllerNone =
+  def whatIsYourRentBasedOnControllerNone: WhatIsYourRentBasedOnController =
     WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
       mockAudit,

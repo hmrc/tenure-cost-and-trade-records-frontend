@@ -38,7 +38,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
   def tradingNameOperatingFromPropertyController(
     forType: ForType = FOR6010,
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  ) =
+  ): TradingNameOperatingFromPropertyController =
     TradingNameOperatingFromPropertyController(
       stubMessagesControllerComponents(),
       mockAudit,

@@ -40,7 +40,7 @@ class CharityQuestionController @Inject() (
   charityQuestionView: charityQuestion,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 

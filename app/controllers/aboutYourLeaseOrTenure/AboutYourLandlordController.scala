@@ -135,7 +135,7 @@ class AboutYourLandlordController @Inject() (
     }
   }
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
     if (answers.forType == FOR6020)
       controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show().url
     else

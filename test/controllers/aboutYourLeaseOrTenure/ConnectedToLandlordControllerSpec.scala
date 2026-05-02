@@ -35,7 +35,7 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
 
   def connectedToLandlordController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = ConnectedToLandlordController(
+  ): ConnectedToLandlordController = ConnectedToLandlordController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

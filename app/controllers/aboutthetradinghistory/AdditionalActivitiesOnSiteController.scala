@@ -42,7 +42,7 @@ class AdditionalActivitiesOnSiteController @Inject() (
   view: additionalActivitiesOnSite,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -106,7 +106,7 @@ class AdditionalActivitiesOnSiteController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageForAdditionalActivities.url
       case "TL"  => controllers.routes.TaskListController.show.url + "#additional-activities-on-site"

@@ -35,7 +35,7 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
 
   def premisesLicenseGrantedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = PremisesLicenseGrantedController(
+  ): PremisesLicenseGrantedController = PremisesLicenseGrantedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -44,7 +44,7 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def premisesLicenseGrantedControllerNone() = PremisesLicenseGrantedController(
+  def premisesLicenseGrantedControllerNone(): PremisesLicenseGrantedController = PremisesLicenseGrantedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

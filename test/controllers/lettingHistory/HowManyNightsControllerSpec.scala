@@ -113,7 +113,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
   ) extends MockRepositoryFixture
     with SessionCapturingFixture:
 
-    val controller = HowManyNightsController(
+    val controller: HowManyNightsController = HowManyNightsController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[HowManyNightsView],

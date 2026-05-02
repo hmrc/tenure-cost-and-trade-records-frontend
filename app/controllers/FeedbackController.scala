@@ -136,7 +136,7 @@ class FeedbackController @Inject() (
   private def sendFeedback(eventName: String, f: Feedback)(implicit request: Request[?]) =
     audit(eventName, Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
 
-  private def sendFeedback(eventName: String, f: Feedback, session: Session)(implicit request: Request[?]) =
+  private def sendFeedback(eventName: String, f: Feedback, session: Session)(using request: Request[?]) =
     audit(
       eventName,
       Map(

@@ -47,7 +47,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -67,7 +67,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
     submitRequestReferenceNumber()(using hc, request)
   }
 
-  def submitRequestReferenceNumber()(implicit hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] = {
+  def submitRequestReferenceNumber()(using hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] = {
     val auditType      = "NoReferenceSubmission"
     val session        = request.sessionData
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
@@ -98,7 +98,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
 
   private def submitRequestRefNumToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier,
+  )(using hc: HeaderCarrier,
     messages: Messages
   ): Future[Unit] = {
     val sessionRequestRefNum        = session.requestReferenceNumberDetails

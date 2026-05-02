@@ -39,7 +39,7 @@ class CalculatingTheRentForController @Inject() (
   calculatingTheRentForView: calculatingTheRentFor,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with FranchiseAndLettingSupport
   with I18nSupport {

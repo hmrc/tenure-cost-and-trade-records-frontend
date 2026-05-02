@@ -34,7 +34,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec {
 
   def tradingNamePayingRentController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
+  ): TradingNamePayingRentController =
     TradingNamePayingRentController(
       stubMessagesControllerComponents(),
       mockAudit,

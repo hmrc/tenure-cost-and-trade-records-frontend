@@ -36,7 +36,7 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
 
   def generatorCapacityController(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  ) = GeneratorCapacityController(
+  ): GeneratorCapacityController = GeneratorCapacityController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -45,7 +45,7 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def generatorCapacityControllerNone() = GeneratorCapacityController(
+  def generatorCapacityControllerNone(): GeneratorCapacityController = GeneratorCapacityController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

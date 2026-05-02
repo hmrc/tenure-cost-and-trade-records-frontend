@@ -145,7 +145,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
     }
   }
 
-  private def getBackLink(mayBeIndex: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(mayBeIndex: Option[Int])(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url

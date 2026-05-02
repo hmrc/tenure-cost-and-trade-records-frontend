@@ -32,7 +32,7 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
 
   def checkYourAdditionalInformationController(
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
-  ) = CheckYourAnswersAdditionalInformationController(
+  ): CheckYourAnswersAdditionalInformationController = CheckYourAnswersAdditionalInformationController(
     stubMessagesControllerComponents(),
     additionalInformationNavigator,
     checkYourAnswersAdditionalInformationView,
@@ -42,7 +42,7 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
 
   def checkYourAdditionalInformationControllerEmpty(
     additionalInformation: Option[AdditionalInformation] = None
-  ) = CheckYourAnswersAdditionalInformationController(
+  ): CheckYourAnswersAdditionalInformationController = CheckYourAnswersAdditionalInformationController(
     stubMessagesControllerComponents(),
     additionalInformationNavigator,
     checkYourAnswersAdditionalInformationView,

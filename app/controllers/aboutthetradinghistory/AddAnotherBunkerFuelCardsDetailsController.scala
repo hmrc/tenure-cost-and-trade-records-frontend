@@ -47,7 +47,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
   theRemoveView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -63,7 +63,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
   ): Option[AboutTheTradingHistoryPartOne] =
     request.sessionData.aboutTheTradingHistoryPartOne
 
-  private def getCardName(idx: Int)(implicit request: SessionRequest[AnyContent]): Option[String] =
+  private def getCardName(idx: Int)(using request: SessionRequest[AnyContent]): Option[String] =
     aboutTheTradingHistoryData
       .flatMap(_.bunkerFuelCardsDetails.flatMap(_.lift(idx)))
       .map(_.bunkerFuelCardDetails.name)

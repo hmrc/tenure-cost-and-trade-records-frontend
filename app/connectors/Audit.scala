@@ -39,21 +39,21 @@ trait Audit extends AuditConnector {
 
   private val AUDIT_SOURCE = "tenure-cost-and-trade-records-frontend"
 
-  def apply(event: String, detail: Map[String, String])(implicit hc: HeaderCarrier): Future[AuditResult] = {
+  def apply(event: String, detail: Map[String, String])(using hc: HeaderCarrier): Future[AuditResult] = {
     val tags = hc.toAuditTags()
     val de   = DataEvent(auditSource = AUDIT_SOURCE, auditType = event, tags = tags, detail = detail)
     sendEvent(de)
   }
 
-  def sendContinueNextPage(session: Session, url: String)(implicit hc: HeaderCarrier): Unit = {
+  def sendContinueNextPage(session: Session, url: String)(using hc: HeaderCarrier): Unit = {
     val continueNextPageJson = Json.toJson(session).as[JsObject] + ("nextPageURL" -> Json.toJson(url))
     sendExplicitAudit("ContinueNextPage", continueNextPageJson)
   }
 
-  def sendSavedAsDraft(savedAsDraftEvent: SavedAsDraftEvent)(implicit hc: HeaderCarrier): Unit =
+  def sendSavedAsDraft(savedAsDraftEvent: SavedAsDraftEvent)(using hc: HeaderCarrier): Unit =
     sendExplicitAudit("SavedAsDraft", savedAsDraftEvent)
 
-  def sendChangeLink(pageID: String)(implicit request: SessionRequest[AnyContent], hc: HeaderCarrier): Unit =
+  def sendChangeLink(pageID: String)(using request: SessionRequest[AnyContent], hc: HeaderCarrier): Unit =
     if (request.uri.contains("CYA&change=true")) {
       sendExplicitAudit("CyaChangeLink", ChangeLinkAudit(request.sessionData.forType.toString, request.uri, pageID))
     }
@@ -66,7 +66,7 @@ object Audit {
   val formOfReturn    = "forType"
   val language        = "language"
 
-  def languageJson(implicit messages: Messages): JsObject =
+  def languageJson(using messages: Messages): JsObject =
     Json.obj(Audit.language -> messages.lang.language)
 
 }
@@ -76,5 +76,5 @@ class TctrAuditConnector @Inject() (
   val auditingConfig: AuditingConfig,
   val auditChannel: AuditChannel,
   val datastreamMetrics: DatastreamMetrics
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends Audit {}

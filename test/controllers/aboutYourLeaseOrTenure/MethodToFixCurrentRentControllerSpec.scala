@@ -29,7 +29,7 @@ class MethodToFixCurrentRentControllerSpec extends TestBaseSpec {
 
   def methodToFixCurrentRentController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = MethodToFixCurrentRentController(
+  ): MethodToFixCurrentRentController = MethodToFixCurrentRentController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

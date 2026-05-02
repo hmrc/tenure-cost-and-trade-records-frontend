@@ -19,7 +19,7 @@ package config
 import com.google.inject.ImplementedBy
 import connectors.BackendConnector
 import security.LoginToBackend.LoginToBackend
-import uk.gov.hmrc.http._
+import uk.gov.hmrc.http.*
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
@@ -30,14 +30,13 @@ import scala.concurrent.ExecutionContext
   */
 
 @ImplementedBy(classOf[DefaultLoginToBackendAction])
-trait LoginToBackendAction {
-  def apply(implicit hc: HeaderCarrier, ec: ExecutionContext): LoginToBackend
-}
+trait LoginToBackendAction:
+  def apply(using hc: HeaderCarrier, ec: ExecutionContext): LoginToBackend
 
 @Singleton
-class DefaultLoginToBackendAction @Inject() (implicit connector: BackendConnector) extends LoginToBackendAction {
+class DefaultLoginToBackendAction @Inject() (connector: BackendConnector) extends LoginToBackendAction:
 
-  override def apply(implicit hc: HeaderCarrier, ec: ExecutionContext): LoginToBackend = security.LoginToBackend(
-    connector.verifyCredentials
-  )
-}
+  override def apply(using hc: HeaderCarrier, ec: ExecutionContext): LoginToBackend =
+    security.LoginToBackend(
+      connector.verifyCredentials
+    )

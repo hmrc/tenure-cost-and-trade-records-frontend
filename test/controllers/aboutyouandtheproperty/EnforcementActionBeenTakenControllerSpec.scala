@@ -35,7 +35,7 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
 
   def enforcementActionBeenTakenController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = EnforcementActionBeenTakenController(
+  ): EnforcementActionBeenTakenController = EnforcementActionBeenTakenController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -46,7 +46,7 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
 
   def enforcementActionBeenTakenControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = EnforcementActionBeenTakenController(
+  ): EnforcementActionBeenTakenController = EnforcementActionBeenTakenController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -55,7 +55,7 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def enforcementActionBeenTakenControllerNone() = EnforcementActionBeenTakenController(
+  def enforcementActionBeenTakenControllerNone(): EnforcementActionBeenTakenController = EnforcementActionBeenTakenController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

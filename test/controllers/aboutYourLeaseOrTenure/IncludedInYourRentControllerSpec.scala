@@ -34,7 +34,7 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
 
   def includedInYourRentController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = IncludedInYourRentController(
+  ): IncludedInYourRentController = IncludedInYourRentController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

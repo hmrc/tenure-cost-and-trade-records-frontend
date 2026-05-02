@@ -30,7 +30,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = CheckYourAnswersAboutYourLeaseOrTenureController(
+  ): CheckYourAnswersAboutYourLeaseOrTenureController = CheckYourAnswersAboutYourLeaseOrTenureController(
     stubMessagesControllerComponents(),
     aboutYourLeaseOrTenureNavigator,
     checkYourAnswersAboutLeaseAndTenureView,

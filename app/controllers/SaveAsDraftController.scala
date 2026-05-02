@@ -52,7 +52,7 @@ class SaveAsDraftController @Inject() (
   errorHandler: ErrorHandler,
   audit: Audit,
   cc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FrontendController(cc)
   with I18nSupport {
 
@@ -82,7 +82,7 @@ class SaveAsDraftController @Inject() (
       )
   }
 
-  private def expiryDate(implicit messages: Messages): String = dateUtil.formatDate(LocalDate.now.plusDays(saveForDays))
+  private def expiryDate(using messages: Messages): String = dateUtil.formatDate(LocalDate.now.plusDays(saveForDays))
 
   private def saveSubmissionDraft(
     session: Session,

@@ -30,7 +30,7 @@ class RentIncludeTradeServicesControllerSpec extends TestBaseSpec {
 
   def rentIncludeTradeServicesController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = RentIncludeTradeServicesController(
+  ): RentIncludeTradeServicesController = RentIncludeTradeServicesController(
     stubMessagesControllerComponents(),
     mockAudit,
     inject[AboutYourLeaseOrTenureNavigator],

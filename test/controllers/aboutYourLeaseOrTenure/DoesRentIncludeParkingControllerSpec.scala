@@ -34,7 +34,7 @@ class DoesRentIncludeParkingControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = DoesRentIncludeParkingController(
+  ): DoesRentIncludeParkingController = DoesRentIncludeParkingController(
     doesRentIncludeParkingView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

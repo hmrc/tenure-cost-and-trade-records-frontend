@@ -40,7 +40,7 @@ class FinancialYearEndDatesSummaryController @Inject() (
   financialYearEndDateSummaryView: financialYearEndDatesSummary,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -93,7 +93,7 @@ class FinancialYearEndDatesSummaryController @Inject() (
 
   private def isTurnoverSectionStarted(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) =
     request.sessionData.forType match {
       case FOR6020           =>
@@ -117,7 +117,7 @@ class FinancialYearEndDatesSummaryController @Inject() (
       case _                 => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
     }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

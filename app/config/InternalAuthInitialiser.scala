@@ -43,7 +43,7 @@ class NoOpInternalAuthTokenInitialiser @Inject() () extends InternalAuthTokenIni
 class InternalAuthTokenInitialiserImpl @Inject() (
   configuration: Configuration,
   httpClientV2: HttpClientV2
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends InternalAuthTokenInitialiser
   with Logging {
 

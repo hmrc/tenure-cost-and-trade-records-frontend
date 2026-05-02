@@ -42,7 +42,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     ),
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
-  ) =
+  ): PayACapitalSumController =
     PayACapitalSumController(
       stubMessagesControllerComponents(),
       mockAudit,

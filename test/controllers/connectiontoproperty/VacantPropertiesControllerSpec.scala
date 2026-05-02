@@ -30,7 +30,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
 
   def vacantPropertiesController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledVacantProperties)
-  ) =
+  ): VacantPropertiesController =
     VacantPropertiesController(
       stubMessagesControllerComponents(),
       mockAudit,

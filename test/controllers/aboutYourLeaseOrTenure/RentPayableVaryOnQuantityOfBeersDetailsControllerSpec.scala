@@ -29,7 +29,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
 
   def rentPayableVaryOnQuantityOfBeersDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
+  ): RentPayableVaryOnQuantityOfBeersDetailsController =
     RentPayableVaryOnQuantityOfBeersDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,

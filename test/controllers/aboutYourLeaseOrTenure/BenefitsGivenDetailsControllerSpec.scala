@@ -31,7 +31,7 @@ class BenefitsGivenDetailsControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = BenefitsGivenDetailsController(
+  ): BenefitsGivenDetailsController = BenefitsGivenDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     benefitsGivenDetailsView,

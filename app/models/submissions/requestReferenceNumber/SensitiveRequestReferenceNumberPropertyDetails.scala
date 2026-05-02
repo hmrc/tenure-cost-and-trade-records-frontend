@@ -36,7 +36,7 @@ case class SensitiveRequestReferenceNumberPropertyDetails(
 object SensitiveRequestReferenceNumberPropertyDetails {
   import crypto.SensitiveFormats._
 
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRequestReferenceNumberPropertyDetails] =
+  implicit def format(using crypto: MongoCrypto): OFormat[SensitiveRequestReferenceNumberPropertyDetails] =
     Json.format
 
   def apply(noReferenceNumber: RequestReferenceNumberPropertyDetails): SensitiveRequestReferenceNumberPropertyDetails =

@@ -42,7 +42,7 @@ class RentIncludeStructuresBuildingsController @Inject() (
   rentIncludeStructuresBuildingsView: rentIncludeStructuresBuildings,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -77,7 +77,7 @@ class RentIncludeStructuresBuildingsController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match {
       case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show().url
       case _               => controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show().url

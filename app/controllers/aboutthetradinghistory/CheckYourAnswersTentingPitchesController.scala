@@ -40,7 +40,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
   view: checkYourAnswersTentingPitches,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -83,7 +83,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     request.sessionData.aboutTheTradingHistoryPartOne.flatMap(
       _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
     ) match {

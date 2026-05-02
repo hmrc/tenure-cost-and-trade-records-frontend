@@ -35,7 +35,7 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
   def propertyCurrentlyUsedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  ) = PropertyCurrentlyUsedController(
+  ): PropertyCurrentlyUsedController = PropertyCurrentlyUsedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

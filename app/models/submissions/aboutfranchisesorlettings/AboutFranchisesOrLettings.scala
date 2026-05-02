@@ -53,7 +53,7 @@ object AboutFranchisesOrLettings:
 
   def updateAboutFranchisesOrLettings(
     copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings
-  )(implicit sessionRequest: SessionRequest[?]
+  )(using sessionRequest: SessionRequest[?]
   ): Session =
 
     val currentAboutFranchisesOrLettings = sessionRequest.sessionData.aboutFranchisesOrLettings

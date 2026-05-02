@@ -41,7 +41,7 @@ class OtherCostsController @Inject() (
   otherCostsView: otherCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -110,7 +110,7 @@ class OtherCostsController @Inject() (
 
   private def runWithSessionCheckForOtherCosts(
     action: AboutTheTradingHistory => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)

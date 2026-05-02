@@ -29,7 +29,7 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
 
   def tenantsAdditionsDisregardedDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
+  ): TenantsAdditionsDisregardedDetailsController =
     TenantsAdditionsDisregardedDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,

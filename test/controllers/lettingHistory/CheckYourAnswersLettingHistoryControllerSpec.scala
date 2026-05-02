@@ -85,7 +85,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
   ) extends MockRepositoryFixture
     with SessionCapturingFixture:
 
-    val controller = CheckYourAnswersLettingHistoryController(
+    val controller: CheckYourAnswersLettingHistoryController = CheckYourAnswersLettingHistoryController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[CheckYourAnswerLettingHistoryView],

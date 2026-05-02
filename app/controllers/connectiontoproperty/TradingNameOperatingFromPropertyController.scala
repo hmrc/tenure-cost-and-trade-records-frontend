@@ -44,13 +44,13 @@ class TradingNameOperatingFromPropertyController @Inject() (
   theView: TradingNameOperatingFromPropertyVie,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with ReadOnlySupport
   with I18nSupport
   with Logging:
 
-  private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
+  private def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TradingNameOperatingFromProperty")
@@ -128,7 +128,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
     }
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "TL"  =>
         controllers.routes.TaskListController.show.url + "#name-of-operator-from-property"

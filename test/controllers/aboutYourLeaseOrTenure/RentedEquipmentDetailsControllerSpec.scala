@@ -34,7 +34,7 @@ class RentedEquipmentDetailsControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = RentedEquipmentDetailsController(
+  ): RentedEquipmentDetailsController = RentedEquipmentDetailsController(
     rentedEquipmentDetailsView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

@@ -28,14 +28,11 @@ class Application @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
   start: start
-) extends FrontendController(mcc) {
+) extends FrontendController(mcc):
 
   val index: Action[AnyContent] = Action.async { implicit request =>
-    if (appConfig.startPageRedirect) {
+    if appConfig.startPageRedirect then
       Future.successful(Redirect(appConfig.govukStartPage))
-    } else {
+    else
       Future.successful(Ok(start()))
-    }
   }
-
-}

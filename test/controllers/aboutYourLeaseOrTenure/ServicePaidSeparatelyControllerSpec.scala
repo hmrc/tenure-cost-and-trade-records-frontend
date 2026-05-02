@@ -33,7 +33,7 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = ServicePaidSeparatelyController(
+  ): ServicePaidSeparatelyController = ServicePaidSeparatelyController(
     stubMessagesControllerComponents(),
     mockAudit,
     inject[AboutYourLeaseOrTenureNavigator],

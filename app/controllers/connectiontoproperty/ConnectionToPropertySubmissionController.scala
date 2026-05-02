@@ -44,7 +44,7 @@ class ConnectionToPropertySubmissionController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FrontendController(mcc)
   with I18nSupport
   with Logging {
@@ -55,7 +55,7 @@ class ConnectionToPropertySubmissionController @Inject() (
     submit()
   }
 
-  private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
+  private def submit[T]()(using request: SessionRequest[T]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     val auditType                  = "VacantFormSubmission"
     val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
@@ -86,7 +86,7 @@ class ConnectionToPropertySubmissionController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier
+  )(using hc: HeaderCarrier
   ): Future[Unit] = {
 
     val submission = ConnectedSubmission(session)

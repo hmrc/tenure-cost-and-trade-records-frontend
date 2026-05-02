@@ -29,7 +29,7 @@ class RentIncludesVatControllerSpec extends TestBaseSpec {
 
   def rentIncludesVatController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = RentIncludesVatController(
+  ): RentIncludesVatController = RentIncludesVatController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

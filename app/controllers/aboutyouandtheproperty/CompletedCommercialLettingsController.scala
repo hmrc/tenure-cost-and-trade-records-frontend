@@ -39,7 +39,7 @@ class CompletedCommercialLettingsController @Inject() (
   view: completedCommercialLettings,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -76,7 +76,7 @@ class CompletedCommercialLettingsController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show().url

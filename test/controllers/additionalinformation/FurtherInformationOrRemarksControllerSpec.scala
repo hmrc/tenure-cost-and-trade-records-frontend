@@ -29,7 +29,7 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
   def furtherInformationOrRemarksController(
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
-  ) = FurtherInformationOrRemarksController(
+  ): FurtherInformationOrRemarksController = FurtherInformationOrRemarksController(
     stubMessagesControllerComponents(),
     mockAudit,
     additionalInformationNavigator,
@@ -40,7 +40,7 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
   def furtherInformationOrRemarksControllerEmpty(
     additionalInformation: Option[AdditionalInformation] = None
-  ) = FurtherInformationOrRemarksController(
+  ): FurtherInformationOrRemarksController = FurtherInformationOrRemarksController(
     stubMessagesControllerComponents(),
     mockAudit,
     additionalInformationNavigator,

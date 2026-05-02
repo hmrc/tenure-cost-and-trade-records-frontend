@@ -30,7 +30,7 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
 
   def vacantPropertiesStartDateController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
+  ): VacantPropertiesStartDateController =
     VacantPropertiesStartDateController(
       stubMessagesControllerComponents(),
       mockAudit,

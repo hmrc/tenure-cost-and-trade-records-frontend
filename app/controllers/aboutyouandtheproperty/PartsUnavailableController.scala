@@ -41,7 +41,7 @@ class PartsUnavailableController @Inject() (
   view: partsUnavailable,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -82,7 +82,7 @@ class PartsUnavailableController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => s"${controllers.routes.TaskListController.show.url}#family-usage"

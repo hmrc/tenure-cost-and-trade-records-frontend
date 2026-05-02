@@ -37,7 +37,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
 
   def provideContactDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) = ProvideContactDetailsController(
+  ): ProvideContactDetailsController = ProvideContactDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     connectedToPropertyNavigator,

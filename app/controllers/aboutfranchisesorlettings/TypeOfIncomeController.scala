@@ -43,7 +43,7 @@ class TypeOfIncomeController @Inject() (
   view: typeOfIncome,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -123,7 +123,7 @@ class TypeOfIncomeController @Inject() (
     updatedRecords: IndexedSeq[IncomeRecord],
     source: TypeOfIncome,
     updatedIndex: Option[Int]
-  )(implicit request: SessionRequest[AnyContent],
+  )(using request: SessionRequest[AnyContent],
     hc: HeaderCarrier
   ): Future[Result] = {
     val existingFranchisesOrLetting =
@@ -178,9 +178,9 @@ class TypeOfIncomeController @Inject() (
     }
   }
 
-  private def forType(implicit request: SessionRequest[AnyContent]): ForType = request.sessionData.forType
+  private def forType(using request: SessionRequest[AnyContent]): ForType = request.sessionData.forType
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url

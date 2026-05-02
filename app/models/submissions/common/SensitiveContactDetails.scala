@@ -34,7 +34,7 @@ object SensitiveContactDetails {
 
   import crypto.SensitiveFormats._
 
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveContactDetails] = Json.format
+  implicit def format(using crypto: MongoCrypto): OFormat[SensitiveContactDetails] = Json.format
 
   def apply(contactDetails: ContactDetails): SensitiveContactDetails = SensitiveContactDetails(
     SensitiveString(contactDetails.phone),

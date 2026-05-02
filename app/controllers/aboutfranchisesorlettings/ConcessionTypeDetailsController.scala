@@ -40,7 +40,7 @@ class ConcessionTypeDetailsController @Inject() (
   view: concessionTypeDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging:
@@ -100,7 +100,7 @@ class ConcessionTypeDetailsController @Inject() (
     )
   }
 
-  private def calculateBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
+  private def calculateBackLink(idx: Int)(using request: SessionRequest[AnyContent]): String =
     if request.getQueryString("from").contains("CYA") then
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     else controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(Some(idx)).url

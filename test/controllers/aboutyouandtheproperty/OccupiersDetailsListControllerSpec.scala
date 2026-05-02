@@ -38,7 +38,7 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec {
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  ) = OccupiersDetailsListController(
+  ): OccupiersDetailsListController = OccupiersDetailsListController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

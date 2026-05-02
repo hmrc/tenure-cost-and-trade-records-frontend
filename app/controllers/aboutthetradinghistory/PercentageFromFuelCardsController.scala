@@ -41,7 +41,7 @@ class PercentageFromFuelCardsController @Inject() (
   view: percentageFromFuelCards,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -89,7 +89,7 @@ class PercentageFromFuelCardsController @Inject() (
       }
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

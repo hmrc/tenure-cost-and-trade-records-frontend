@@ -37,7 +37,7 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
+  ): WorkCarriedOutDetailsController =
     WorkCarriedOutDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,

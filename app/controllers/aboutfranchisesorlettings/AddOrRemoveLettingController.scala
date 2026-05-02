@@ -43,7 +43,7 @@ class AddOrRemoveLettingController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -53,7 +53,7 @@ class AddOrRemoveLettingController @Inject() (
   ): Option[AboutFranchisesOrLettings] =
     request.sessionData.aboutFranchisesOrLettings
 
-  private def getOperatorName(idx: Int)(implicit request: SessionRequest[AnyContent]): Option[String] =
+  private def getOperatorName(idx: Int)(using request: SessionRequest[AnyContent]): Option[String] =
     franchisesOrLettingsData.flatMap { fr =>
       fr.lettings.flatMap { lettings =>
         lettings.lift(idx).map {

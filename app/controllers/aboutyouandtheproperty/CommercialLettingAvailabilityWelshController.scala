@@ -41,7 +41,7 @@ class CommercialLettingAvailabilityWelshController @Inject() (
   view: commercialLettingAvailabilityWelsh,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -100,7 +100,7 @@ class CommercialLettingAvailabilityWelshController @Inject() (
   private def financialYearEndDates(data: AboutYouAndThePropertyPartTwo): Seq[LocalDate] =
     data.financialEndYearDates.getOrElse(Seq.empty)
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show().url

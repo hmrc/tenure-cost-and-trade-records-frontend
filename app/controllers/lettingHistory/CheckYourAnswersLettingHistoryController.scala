@@ -42,7 +42,7 @@ class CheckYourAnswersLettingHistoryController @Inject() (
   theView: CheckYourAnswersView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging:

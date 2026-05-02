@@ -41,7 +41,7 @@ class IncomeExpenditureSummary6076Controller @Inject() (
   view: incomeExpenditureSummary6076,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -111,7 +111,7 @@ class IncomeExpenditureSummary6076Controller @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6076] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)

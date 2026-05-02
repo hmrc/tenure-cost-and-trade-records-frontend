@@ -38,7 +38,7 @@ class BatteriesCapacityController @Inject() (
   view: batteriesCapacity,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with ReadOnlySupport
   with I18nSupport {

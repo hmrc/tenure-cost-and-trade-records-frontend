@@ -30,7 +30,7 @@ class DownloadPDFController @Inject() (
   mcc: MessagesControllerComponents,
   audit: Audit,
   downloadPDFView: downloadPDF
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FrontendController(mcc) {
 
   def show(forType: String): Action[AnyContent] = Action { implicit request =>

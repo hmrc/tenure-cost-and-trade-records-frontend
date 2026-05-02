@@ -40,7 +40,7 @@ class GrossReceiptsSubLetUnitsController @Inject() (
   view: grossReceiptsSubLetUnits6045,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -96,14 +96,14 @@ class GrossReceiptsSubLetUnitsController @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6045] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6045)
       .filter(_.nonEmpty)
       .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show().url

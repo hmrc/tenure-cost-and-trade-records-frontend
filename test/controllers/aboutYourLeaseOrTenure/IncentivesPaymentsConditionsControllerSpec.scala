@@ -29,7 +29,7 @@ class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
 
   def incentivesPaymentsConditionsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = IncentivesPaymentsConditionsController(
+  ): IncentivesPaymentsConditionsController = IncentivesPaymentsConditionsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

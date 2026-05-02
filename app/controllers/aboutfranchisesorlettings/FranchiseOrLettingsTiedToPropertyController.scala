@@ -42,7 +42,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -104,7 +104,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
     )
   }
 
-  private def calculateBacklink(implicit request: SessionRequest[AnyContent]): String =
+  private def calculateBacklink(using request: SessionRequest[AnyContent]): String =
     if (navigator.from == "CYA") {
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     } else {

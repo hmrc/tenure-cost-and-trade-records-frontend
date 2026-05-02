@@ -37,7 +37,7 @@ class RentIncludeStructuresBuildingsDetailsControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
       prefilledAboutLeaseOrAgreementPartFour
     )
-  ) = RentIncludeStructuresBuildingsDetailsController(
+  ): RentIncludeStructuresBuildingsDetailsController = RentIncludeStructuresBuildingsDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

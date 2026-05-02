@@ -37,7 +37,7 @@ class RequestReferenceNumberContactDetailsController @Inject() (
   requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FrontendController(mcc)
   with I18nSupport {
 

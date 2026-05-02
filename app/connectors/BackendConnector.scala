@@ -130,7 +130,7 @@ class DefaultBackendConnector @Inject() (
 @ImplementedBy(classOf[DefaultBackendConnector])
 trait BackendConnector:
 
-  def verifyCredentials(refNumber: String, postcode: String)(implicit hc: HeaderCarrier): Future[FORLoginResponse]
+  def verifyCredentials(refNumber: String, postcode: String)(using hc: HeaderCarrier): Future[FORLoginResponse]
 
   def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String]
 

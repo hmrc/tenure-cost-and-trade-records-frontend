@@ -39,7 +39,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
+  ): TradeServicesListController =
     TradeServicesListController(
       stubMessagesControllerComponents(),
       mockAudit,
@@ -50,7 +50,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def tradeServicesListControllerNone =
+  def tradeServicesListControllerNone: TradeServicesListController =
     TradeServicesListController(
       stubMessagesControllerComponents(),
       mockAudit,

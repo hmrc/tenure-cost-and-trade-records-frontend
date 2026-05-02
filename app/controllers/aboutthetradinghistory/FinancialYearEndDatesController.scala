@@ -44,7 +44,7 @@ class FinancialYearEndDatesController @Inject() (
   financialYearEndDatesView: financialYearEndDates,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -72,7 +72,7 @@ class FinancialYearEndDatesController @Inject() (
 
   private def isTurnOverNonEmpty(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Boolean =
     request.sessionData.forType match {
       case FOR6030 => aboutTheTradingHistory.turnoverSections6030.nonEmpty
@@ -126,7 +126,7 @@ class FinancialYearEndDatesController @Inject() (
 
   private def isTurnoverSectionStarted(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) =
     request.sessionData.forType match {
       case FOR6030 => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
@@ -137,7 +137,7 @@ class FinancialYearEndDatesController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory,
     data: Seq[LocalDate],
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) = {
     val turnoverSections = (aboutTheTradingHistory.turnoverSections zip data).map { case (turnoverSection, finYearEnd) =>
       turnoverSection.copy(financialYearEnd = finYearEnd)
@@ -165,7 +165,7 @@ class FinancialYearEndDatesController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory,
     data: Seq[LocalDate],
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) = {
     val turnoverSections6030 = (aboutTheTradingHistory.turnoverSections6030 zip data).map { case (turnoverSection6030, finYearEnd) =>
       turnoverSection6030.copy(financialYearEnd = finYearEnd)

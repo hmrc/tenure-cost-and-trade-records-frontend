@@ -29,7 +29,7 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
 
   def rentIncreaseAnnuallyWithRPIController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
+  ): RentIncreaseAnnuallyWithRPIController =
     RentIncreaseAnnuallyWithRPIController(
       stubMessagesControllerComponents(),
       mockAudit,

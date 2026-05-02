@@ -92,7 +92,7 @@ class TradingNamePayingRentController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url

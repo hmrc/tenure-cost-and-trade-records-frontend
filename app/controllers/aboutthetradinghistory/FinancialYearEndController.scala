@@ -185,7 +185,7 @@ class FinancialYearEndController @Inject() (
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean,
     isFinancialYearsListUnchanged: Boolean
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) = {
     val turnoverSections =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {

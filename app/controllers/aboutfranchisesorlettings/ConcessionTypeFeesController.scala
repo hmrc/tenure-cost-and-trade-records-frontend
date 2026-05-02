@@ -41,7 +41,7 @@ class ConcessionTypeFeesController @Inject() (
   view: feeReceived,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -108,7 +108,7 @@ class ConcessionTypeFeesController @Inject() (
     idx: Int
   )(
     action: ConcessionIncomeRecord => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
     if (request.sessionData.aboutTheTradingHistoryPartOne.map(_.turnoverSections6045).exists(_.nonEmpty)) {
       request.sessionData.aboutFranchisesOrLettings
@@ -120,7 +120,7 @@ class ConcessionTypeFeesController @Inject() (
       Redirect(controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show())
     }
 
-  private def initialFeeReceived(implicit request: SessionRequest[AnyContent]): FeeReceived =
+  private def initialFeeReceived(using request: SessionRequest[AnyContent]): FeeReceived =
     FeeReceived(
       request.sessionData.aboutTheTradingHistoryPartOne
         .flatMap(_.turnoverSections6045)
@@ -128,7 +128,7 @@ class ConcessionTypeFeesController @Inject() (
         .map(section => FeeReceivedPerYear(section.financialYearEnd, section.tradingPeriod))
     )
 
-  private def financialYearEndDates(implicit request: SessionRequest[AnyContent]): Seq[LocalDate] =
+  private def financialYearEndDates(using request: SessionRequest[AnyContent]): Seq[LocalDate] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6045)
       .getOrElse(Seq.empty)

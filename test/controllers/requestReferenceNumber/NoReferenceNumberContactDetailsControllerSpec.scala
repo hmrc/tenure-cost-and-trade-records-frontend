@@ -35,7 +35,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
   def requestReferenceNumberContactDetailsController(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
-  ) = RequestReferenceNumberContactDetailsController(
+  ): RequestReferenceNumberContactDetailsController = RequestReferenceNumberContactDetailsController(
     stubMessagesControllerComponents(),
     requestReferenceNumberNavigator,
     requestReferenceNumberContactDetailsView,
@@ -45,7 +45,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
   def requestReferenceNumberContactDetailsControllerBlank(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumBlank)
-  ) = RequestReferenceNumberContactDetailsController(
+  ): RequestReferenceNumberContactDetailsController = RequestReferenceNumberContactDetailsController(
     stubMessagesControllerComponents(),
     requestReferenceNumberNavigator,
     requestReferenceNumberContactDetailsView,

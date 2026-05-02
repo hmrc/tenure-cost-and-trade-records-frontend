@@ -58,7 +58,7 @@ object AboutTheTradingHistory {
 
   def updateAboutTheTradingHistory(
     copy: AboutTheTradingHistory => AboutTheTradingHistory
-  )(implicit sessionRequest: SessionRequest[?]
+  )(using sessionRequest: SessionRequest[?]
   ): Session = {
 
     val currentAboutTheTradingHistory = sessionRequest.sessionData.aboutTheTradingHistory

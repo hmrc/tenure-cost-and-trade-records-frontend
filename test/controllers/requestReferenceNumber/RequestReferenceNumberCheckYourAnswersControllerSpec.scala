@@ -35,7 +35,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
   ):
 
-    val controller = RequestReferenceNumberCheckYourAnswersController(
+    val controller: RequestReferenceNumberCheckYourAnswersController = RequestReferenceNumberCheckYourAnswersController(
       stubMessagesControllerComponents(),
       inject[SubmissionConnector],
       requestReferenceNumberCheckYourAnswersView,
@@ -51,7 +51,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
   ):
     val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
 
-    val controller = RequestReferenceNumberCheckYourAnswersController(
+    val controller: RequestReferenceNumberCheckYourAnswersController = RequestReferenceNumberCheckYourAnswersController(
       stubMessagesControllerComponents(),
       mockSubmissionConnector,
       requestReferenceNumberCheckYourAnswersView,

@@ -31,7 +31,7 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
+  ): TypeOfTenureController =
     TypeOfTenureController(
       stubMessagesControllerComponents(),
       mockAudit,

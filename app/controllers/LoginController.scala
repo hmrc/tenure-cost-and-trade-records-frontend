@@ -93,7 +93,7 @@ class LoginController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   test: testSign // setup proper error page
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FrontendController(mcc)
   with Logging
   with I18nSupport {

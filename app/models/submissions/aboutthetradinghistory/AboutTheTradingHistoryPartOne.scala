@@ -50,7 +50,7 @@ object AboutTheTradingHistoryPartOne {
 
   def updateAboutTheTradingHistoryPartOne(
     copy: AboutTheTradingHistoryPartOne => AboutTheTradingHistoryPartOne
-  )(implicit sessionRequest: SessionRequest[?]
+  )(using sessionRequest: SessionRequest[?]
   ): Session = {
 
     val currentAboutTheTradingHistoryPartOne = sessionRequest.sessionData.aboutTheTradingHistoryPartOne
@@ -65,7 +65,7 @@ object AboutTheTradingHistoryPartOne {
 
   def updateCaravans(
     update: Caravans => Caravans
-  )(implicit sessionRequest: SessionRequest[?]
+  )(using sessionRequest: SessionRequest[?]
   ): Session =
     updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
       val caravans = update(aboutTheTradingHistoryPartOne.caravans getOrElse Caravans())
@@ -74,7 +74,7 @@ object AboutTheTradingHistoryPartOne {
 
   def updateOtherHolidayAccommodation(
     update: OtherHolidayAccommodation => OtherHolidayAccommodation
-  )(implicit sessionRequest: SessionRequest[?]
+  )(using sessionRequest: SessionRequest[?]
   ): Session =
     updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
       val otherHolidayAccommodation =
@@ -84,7 +84,7 @@ object AboutTheTradingHistoryPartOne {
 
   def updateTouringAndTentingPitches(
     update: TouringAndTentingPitches => TouringAndTentingPitches
-  )(implicit sessionRequest: SessionRequest[?]
+  )(using sessionRequest: SessionRequest[?]
   ): Session =
     updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
       val touringAndTentingPitches =
@@ -94,7 +94,7 @@ object AboutTheTradingHistoryPartOne {
 
   def updateAdditionalActivities(
     update: AdditionalActivities => AdditionalActivities
-  )(implicit sessionRequest: SessionRequest[?]
+  )(using sessionRequest: SessionRequest[?]
   ): Session =
     updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
       val additionalActivities =

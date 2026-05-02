@@ -50,14 +50,14 @@ class SessionRepository @Inject() (
       Codecs.playFormatCodec(MongoJavatimeFormats.instantFormat)
     )
   )
-  with SessionRepo {
+  with SessionRepo:
 
-  def start(data: Session)(implicit hc: HeaderCarrier): Future[Unit] =
+  def start(data: Session)(using hc: HeaderCarrier): Future[Unit] =
     saveOrUpdate(data)
 
-  def saveOrUpdate(data: Session)(implicit hc: HeaderCarrier): Future[Unit] =
+  def saveOrUpdate(data: Session)(using hc: HeaderCarrier): Future[Unit] =
     Mdc.preservingMdc {
-      for {
+      for
         sessionId <- getSessionId
         _         <- collection
                        .findOneAndUpdate(
@@ -69,90 +69,78 @@ class SessionRepository @Inject() (
                          options = FindOneAndUpdateOptions().upsert(true)
                        )
                        .toFuture()
-      } yield (
-      )
+      yield ()
     }
 
-  def get(implicit hc: HeaderCarrier): Future[Option[Session]] =
+  def get(using hc: HeaderCarrier): Future[Option[Session]] =
     Mdc.preservingMdc {
-      for {
+      for
         sessionId   <- getSessionId
         maybeOption <- collection.find(Filters.equal("_id", sessionId)).headOption()
-      } yield maybeOption.map(
-        _.data.decryptedValue
-      )
+      yield maybeOption.map(_.data.decryptedValue)
     }
 
-  def findSession(implicit hc: HeaderCarrier): Future[SessionData] =
+  def findSession(using hc: HeaderCarrier): Future[SessionData] =
     Mdc.preservingMdc {
-      for {
+      for
         sessionId <- getSessionId
         session   <- collection.find(Filters.equal("_id", sessionId)).first().toFuture()
-      } yield session.decryptedValue
+      yield session.decryptedValue
     }
 
-  def remove()(implicit hc: HeaderCarrier): Future[Unit] =
+  def remove()(using hc: HeaderCarrier): Future[Unit] =
     Mdc.preservingMdc {
-      for {
+      for
         sessionId <- getSessionId
         _         <- collection.deleteOne(equal("_id", sessionId)).toFuture()
-      } yield ()
+      yield ()
     }
 
-  def removeAll()(implicit hc: HeaderCarrier): Future[Unit] =
+  def removeAll()(using hc: HeaderCarrier): Future[Unit] =
     Mdc.preservingMdc {
-      for {
+      for
         sessionId <- getSessionId
         _         <- collection.deleteMany(equal("_id", sessionId)).toFuture()
-      } yield ()
+      yield ()
     }
 
   private val noSession = Future.failed[String](NoSessionException)
 
-  private def getSessionId(implicit hc: HeaderCarrier): Future[String] =
+  private def getSessionId(using hc: HeaderCarrier): Future[String] =
     hc.sessionId.fold(noSession)(c => Future.successful(c.value))
-
-}
 
 case object NoSessionException extends Exception("Could not find sessionId in HeaderCarrier")
 
 case class SessionData(_id: String, data: Session, createdAt: Instant = Instant.now)
 
-object SessionData {
-
+object SessionData:
   implicit val formatInstant: Format[Instant] = MongoJavatimeFormats.instantFormat
   val format: OFormat[SessionData]            = Json.format
-}
 
-case class SensitiveSessionData(_id: String, data: SensitiveSession, createdAt: Instant = Instant.now) extends Sensitive[SessionData] {
+case class SensitiveSessionData(_id: String, data: SensitiveSession, createdAt: Instant = Instant.now) extends Sensitive[SessionData]:
 
   override def decryptedValue: SessionData = SessionData(
     _id,
     data.decryptedValue,
     createdAt
   )
-}
 
-object SensitiveSessionData {
-
-  implicit val formatInstant: Format[Instant]                                      = MongoJavatimeFormats.instantFormat
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveSessionData] = Json.format
+object SensitiveSessionData:
+  implicit val formatInstant: Format[Instant]                                   = MongoJavatimeFormats.instantFormat
+  implicit def format(using crypto: MongoCrypto): OFormat[SensitiveSessionData] = Json.format
 
   def apply(sessionData: SessionData): SensitiveSessionData = SensitiveSessionData(
     sessionData._id,
     SensitiveSession(sessionData.data),
     sessionData.createdAt
   )
-}
 
-trait SessionRepo {
+trait SessionRepo:
 
-  def start(data: Session)(implicit hc: HeaderCarrier): Future[Unit]
+  def start(data: Session)(using hc: HeaderCarrier): Future[Unit]
 
-  def saveOrUpdate(data: Session)(implicit hc: HeaderCarrier): Future[Unit]
+  def saveOrUpdate(data: Session)(using hc: HeaderCarrier): Future[Unit]
 
-  def get(implicit hc: HeaderCarrier): Future[Option[Session]]
+  def get(using hc: HeaderCarrier): Future[Option[Session]]
 
-  def remove()(implicit hc: HeaderCarrier): Future[Unit]
-
-}
+  def remove()(using hc: HeaderCarrier): Future[Unit]

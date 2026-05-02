@@ -34,7 +34,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
 
   def tradingNameOwnThePropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
+  ): TradingNameOwnThePropertyController =
     TradingNameOwnThePropertyController(
       stubMessagesControllerComponents(),
       mockAudit,

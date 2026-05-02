@@ -32,7 +32,7 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec {
   def paymentWhenLeaseIsGrantedController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
+  ): PaymentWhenLeaseIsGrantedController =
     PaymentWhenLeaseIsGrantedController(
       stubMessagesControllerComponents(),
       mockAudit,

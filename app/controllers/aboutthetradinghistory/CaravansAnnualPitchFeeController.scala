@@ -53,7 +53,7 @@ class CaravansAnnualPitchFeeController @Inject() (
 
   implicit val ec: ExecutionContext = mcc.executionContext
 
-  def savedAnswer(implicit request: SessionRequest[AnyContent]): Option[CaravansAnnualPitchFee] =
+  def savedAnswer(using request: SessionRequest[AnyContent]): Option[CaravansAnnualPitchFee] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.caravans)
       .flatMap(_.annualPitchFee)
@@ -98,7 +98,7 @@ class CaravansAnnualPitchFeeController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.cyaPage
       .filter(_ => navigator.from == "CYA")
       .getOrElse(routes.CaravansPerServiceController.show())

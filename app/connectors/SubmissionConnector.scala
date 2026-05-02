@@ -35,7 +35,7 @@ class HodSubmissionConnector @Inject() (
   config: ServicesConfig,
   appConfig: AppConfig,
   httpClientV2: HttpClientV2
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends SubmissionConnector:
 
   private val serviceUrl        = config.baseUrl("tenure-cost-and-trade-records")

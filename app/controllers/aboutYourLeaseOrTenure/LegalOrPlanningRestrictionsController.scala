@@ -42,7 +42,7 @@ class LegalOrPlanningRestrictionsController @Inject() (
   legalOrPlanningRestrictionsView: legalOrPlanningRestrictions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -82,7 +82,7 @@ class LegalOrPlanningRestrictionsController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
       case FOR6020           =>
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {

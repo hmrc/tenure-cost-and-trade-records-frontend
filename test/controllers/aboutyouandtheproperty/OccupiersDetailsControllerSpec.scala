@@ -37,7 +37,7 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  ) = OccupiersDetailsController(
+  ): OccupiersDetailsController = OccupiersDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -46,7 +46,7 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def aboutYouControllerNone() = OccupiersDetailsController(
+  def aboutYouControllerNone(): OccupiersDetailsController = OccupiersDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

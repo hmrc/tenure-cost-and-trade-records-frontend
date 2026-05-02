@@ -35,7 +35,7 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
 
   def threeYearsConstructedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) =
+  ): ThreeYearsConstructedController =
     ThreeYearsConstructedController(
       stubMessagesControllerComponents(),
       mockAudit,
@@ -49,7 +49,7 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(
       prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = None)
     )
-  ) = ThreeYearsConstructedController(
+  ): ThreeYearsConstructedController = ThreeYearsConstructedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

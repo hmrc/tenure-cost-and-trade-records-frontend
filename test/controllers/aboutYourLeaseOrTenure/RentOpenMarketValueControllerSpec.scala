@@ -32,7 +32,7 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
   def rentOpenMarketValueController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = RentOpenMarketValueController(
+  ): RentOpenMarketValueController = RentOpenMarketValueController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

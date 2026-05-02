@@ -35,7 +35,7 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
 
   def tiedForGoodsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = TiedForGoodsController(
+  ): TiedForGoodsController = TiedForGoodsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -46,7 +46,7 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
 
   def tiedForGoodsControllerNoEnforcement(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = TiedForGoodsController(
+  ): TiedForGoodsController = TiedForGoodsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -55,7 +55,7 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def tiedForGoodsControllerNone() = TiedForGoodsController(
+  def tiedForGoodsControllerNone(): TiedForGoodsController = TiedForGoodsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

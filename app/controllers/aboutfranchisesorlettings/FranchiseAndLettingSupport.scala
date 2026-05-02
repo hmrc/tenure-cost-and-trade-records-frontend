@@ -21,13 +21,13 @@ import models.submissions.aboutfranchisesorlettings.{Concession6015IncomeRecord,
 
 trait FranchiseAndLettingSupport {
 
-  def getIncomeRecord(index: Int)(implicit request: SessionRequest[?]): Option[IncomeRecord] =
+  def getIncomeRecord(index: Int)(using request: SessionRequest[?]): Option[IncomeRecord] =
     for {
       allRecords <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
       record     <- allRecords.lift(index)
     } yield record
 
-  def getOperatorName(index: Int)(implicit request: SessionRequest[?]): String =
+  def getOperatorName(index: Int)(using request: SessionRequest[?]): String =
     getIncomeRecord(index)
       .collect {
         case franchise: FranchiseIncomeRecord       => franchise.businessDetails.fold("")(_.operatorName)

@@ -35,7 +35,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
 
   def rentPayableVaryAccordingToGrossOrNetDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
+  ): RentPayableVaryAccordingToGrossOrNetDetailsController =
     RentPayableVaryAccordingToGrossOrNetDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,

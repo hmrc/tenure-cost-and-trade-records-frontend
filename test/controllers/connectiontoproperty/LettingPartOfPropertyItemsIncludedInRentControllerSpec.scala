@@ -29,7 +29,7 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
 
   def lettingPartOfPropertyItemsIncludedInRentController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
+  ): LettingPartOfPropertyItemsIncludedInRentController =
     LettingPartOfPropertyItemsIncludedInRentController(
       stubMessagesControllerComponents(),
       mockAudit,

@@ -90,7 +90,7 @@ class AreYouStillConnectedController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case "TL"  => controllers.routes.TaskListController.show.url

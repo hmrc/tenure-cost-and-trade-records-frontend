@@ -39,7 +39,7 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = IsParkingRentPaidSeparatelyController(
+  ): IsParkingRentPaidSeparatelyController = IsParkingRentPaidSeparatelyController(
     isParkingRentPaidSeparatelyView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

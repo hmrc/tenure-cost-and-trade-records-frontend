@@ -42,7 +42,7 @@ class PayACapitalSumAmountDetailsController @Inject() (
   payACapitalSumAmountDetailsView: payACapitalSumAmountDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -85,7 +85,7 @@ class PayACapitalSumAmountDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-amount-details"
       case _    =>

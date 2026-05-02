@@ -154,7 +154,7 @@ class LettingTypeDetailsController @Inject() (
       yield Redirect(navigator.nextPage(LettingTypeDetailsId, newSession).apply(newSession))
   }
 
-  private def backLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
+  private def backLink(idx: Int)(using request: SessionRequest[AnyContent]): String =
     request.getQueryString("from") match {
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url

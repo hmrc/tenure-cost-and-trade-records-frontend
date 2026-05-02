@@ -162,7 +162,7 @@ class AtmLettingController @Inject() (
         else Redirect(routes.RentDetailsController.show(idx))
   }
 
-  private def backLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
+  private def backLink(idx: Option[Int])(using request: SessionRequest[AnyContent]): String =
     if navigator.from == "CYA"
     then routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     else routes.TypeOfLettingController.show(idx).url

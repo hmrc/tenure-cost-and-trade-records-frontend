@@ -201,7 +201,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
 
-    val controller = OccupierDetailController(
+    val controller: OccupierDetailController = OccupierDetailController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[OccupierDetailView],

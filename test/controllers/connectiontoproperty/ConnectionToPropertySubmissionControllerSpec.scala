@@ -38,7 +38,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
   // doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
   def connectionToPropertySubmissionController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  ) =
+  ): ConnectionToPropertySubmissionController =
     ConnectionToPropertySubmissionController(
       stubMessagesControllerComponents(),
       submissionConnector,

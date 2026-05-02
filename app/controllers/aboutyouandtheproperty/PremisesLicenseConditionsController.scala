@@ -43,7 +43,7 @@ class PremisesLicenseConditionsController @Inject() (
   premisesLicenseView: premisesLicenseConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {

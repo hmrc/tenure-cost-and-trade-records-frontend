@@ -40,7 +40,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
+  ): PaymentForTradeServicesController =
     PaymentForTradeServicesController(
       stubMessagesControllerComponents(),
       mockAudit,

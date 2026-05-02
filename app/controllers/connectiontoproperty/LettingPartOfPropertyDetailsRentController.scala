@@ -40,7 +40,7 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
   lettingPartOfPropertyRentDetailsView: lettingPartOfPropertyRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -105,7 +105,7 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
     )
   }
 
-  private def calculateBackLink(index: Int)(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(index: Int)(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url

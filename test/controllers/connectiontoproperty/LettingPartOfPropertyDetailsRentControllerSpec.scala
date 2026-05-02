@@ -30,7 +30,7 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
 
   def lettingPartOfPropertyDetailsRentController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
+  ): LettingPartOfPropertyDetailsRentController =
     LettingPartOfPropertyDetailsRentController(
       stubMessagesControllerComponents(),
       mockAudit,

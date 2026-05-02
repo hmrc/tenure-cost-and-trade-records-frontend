@@ -44,7 +44,7 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport:
 

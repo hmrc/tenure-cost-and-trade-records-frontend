@@ -41,7 +41,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
+  ): PropertyUpdatesController =
     PropertyUpdatesController(
       stubMessagesControllerComponents(),
       mockAudit,

@@ -40,7 +40,7 @@ class PlantAndTechnologyController @Inject() (
   view: plantAndTechnology,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with ReadOnlySupport
   with I18nSupport {
@@ -84,7 +84,7 @@ class PlantAndTechnologyController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#how-is-used"

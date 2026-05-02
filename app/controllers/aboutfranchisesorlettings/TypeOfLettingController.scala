@@ -40,7 +40,7 @@ class TypeOfLettingController @Inject() (
   typeOfLettingView: typeOfLetting,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -110,7 +110,7 @@ class TypeOfLettingController @Inject() (
     updatedLettings: IndexedSeq[LettingPartOfProperty],
     lettingType: TypeOfLetting,
     index: Option[Int]
-  )(implicit request: SessionRequest[AnyContent],
+  )(using request: SessionRequest[AnyContent],
     hc: HeaderCarrier
   ): Future[Result] = {
     val existingFranchisesOrLetting =
@@ -142,7 +142,7 @@ class TypeOfLettingController @Inject() (
     }
   }
 
-  private def getBackLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(idx: Option[Int])(using request: SessionRequest[AnyContent]): String =
     if (navigator.from == "CYA") {
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     } else {

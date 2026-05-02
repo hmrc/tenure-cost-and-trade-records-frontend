@@ -39,7 +39,7 @@ class FurtherInformationOrRemarksController @Inject() (
   furtherInformationOrRemarksView: furtherInformationOrRemarks,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 

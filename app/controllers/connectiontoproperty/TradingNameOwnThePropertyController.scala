@@ -101,7 +101,7 @@ class TradingNameOwnThePropertyController @Inject() (
   ): Option[AnswersYesNo] =
     request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty)
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url

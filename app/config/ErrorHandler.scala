@@ -44,7 +44,7 @@ class ErrorHandler @Inject() (
       errorTemplate(pageTitle, heading, message)
     }
 
-  private def render(template: Request[?] => Html)(implicit rh: RequestHeader): Future[Html] =
+  private def render(template: Request[?] => Html)(using rh: RequestHeader): Future[Html] =
     Future.successful(template(Request(rh, "")))
 
 }

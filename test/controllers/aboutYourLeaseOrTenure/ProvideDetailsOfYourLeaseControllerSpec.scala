@@ -37,7 +37,7 @@ class ProvideDetailsOfYourLeaseControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = ProvideDetailsOfYourLeaseController(
+  ): ProvideDetailsOfYourLeaseController = ProvideDetailsOfYourLeaseController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

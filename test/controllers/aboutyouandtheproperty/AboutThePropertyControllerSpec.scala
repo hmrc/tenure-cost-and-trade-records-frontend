@@ -36,7 +36,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
 
   def aboutThePropertyController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = AboutThePropertyController(
+  ): AboutThePropertyController = AboutThePropertyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -47,7 +47,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
 
   def aboutThePropertyControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = AboutThePropertyController(
+  ): AboutThePropertyController = AboutThePropertyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -56,7 +56,7 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def aboutThePropertyControllerNone() = AboutThePropertyController(
+  def aboutThePropertyControllerNone(): AboutThePropertyController = AboutThePropertyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

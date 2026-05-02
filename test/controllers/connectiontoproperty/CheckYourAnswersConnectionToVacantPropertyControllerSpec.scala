@@ -25,7 +25,7 @@ class CheckYourAnswersConnectionToVacantPropertyControllerSpec extends TestBaseS
 
   def checkYourAnswersConnectionToVacantPropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  ) =
+  ): CheckYourAnswersConnectionToVacantPropertyController =
     CheckYourAnswersConnectionToVacantPropertyController(
       stubMessagesControllerComponents(),
       checkYourAnswersConnectionToVacantProperty,

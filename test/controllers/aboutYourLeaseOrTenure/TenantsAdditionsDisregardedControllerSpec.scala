@@ -32,7 +32,7 @@ class TenantsAdditionsDisregardedControllerSpec extends TestBaseSpec {
   def tenantsAdditionsDisregardedController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
+  ): TenantsAdditionsDisregardedController =
     TenantsAdditionsDisregardedController(
       stubMessagesControllerComponents(),
       mockAudit,

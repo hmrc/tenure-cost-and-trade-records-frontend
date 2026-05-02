@@ -29,7 +29,7 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
 
   def doesTheRentPayableController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = DoesTheRentPayableController(
+  ): DoesTheRentPayableController = DoesTheRentPayableController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

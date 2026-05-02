@@ -35,7 +35,7 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
 
   def currentLeaseOrAgreementBeginController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = CurrentLeaseOrAgreementBeginController(
+  ): CurrentLeaseOrAgreementBeginController = CurrentLeaseOrAgreementBeginController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

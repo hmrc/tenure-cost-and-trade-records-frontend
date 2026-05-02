@@ -47,7 +47,7 @@ class StaticCaravansController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -89,7 +89,7 @@ class StaticCaravansController @Inject() (
     .flatMap(_.caravans)
     .flatMap(_.anyStaticLeisureCaravansOnSite)
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         navigator.cyaPage

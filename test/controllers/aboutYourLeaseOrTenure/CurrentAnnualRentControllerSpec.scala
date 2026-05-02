@@ -32,7 +32,7 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec {
   def currentAnnualRentController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = CurrentAnnualRentController(
+  ): CurrentAnnualRentController = CurrentAnnualRentController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

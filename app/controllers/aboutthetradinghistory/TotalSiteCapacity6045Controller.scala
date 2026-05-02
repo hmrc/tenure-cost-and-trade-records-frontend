@@ -42,7 +42,7 @@ class TotalSiteCapacity6045Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -88,7 +88,7 @@ class TotalSiteCapacity6045Controller @Inject() (
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     // TODO update CYA?
     navigator.from match {
       case "TL"  => controllers.routes.TaskListController.show.url

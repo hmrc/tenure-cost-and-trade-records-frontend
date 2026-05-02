@@ -32,7 +32,7 @@ class RentFreePeriodDetailsControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
       prefilledAboutLeaseOrAgreementPartFour
     )
-  ) = RentFreePeriodDetailsController(
+  ): RentFreePeriodDetailsController = RentFreePeriodDetailsController(
     rentFreePeriodDetailsView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

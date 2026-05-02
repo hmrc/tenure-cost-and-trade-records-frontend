@@ -36,7 +36,7 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec {
 
   def batteriesCapacityController(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  ) = BatteriesCapacityController(
+  ): BatteriesCapacityController = BatteriesCapacityController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -45,7 +45,7 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def batteriesCapacityControllerNone() = BatteriesCapacityController(
+  def batteriesCapacityControllerNone(): BatteriesCapacityController = BatteriesCapacityController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

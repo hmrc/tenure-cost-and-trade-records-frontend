@@ -41,7 +41,7 @@ class PropertyCurrentlyUsedController @Inject() (
   view: propertyCurrentlyUsed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -82,7 +82,7 @@ class PropertyCurrentlyUsedController @Inject() (
     )
   }
 
-  private def backLink(implicit request: Request[AnyContent]): String =
+  private def backLink(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL"  => controllers.routes.TaskListController.show.url
       case "CYA" => routes.CheckYourAnswersAboutThePropertyController.show().url

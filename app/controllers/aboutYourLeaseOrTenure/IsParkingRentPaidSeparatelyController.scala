@@ -46,7 +46,7 @@ class IsParkingRentPaidSeparatelyController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -86,7 +86,7 @@ class IsParkingRentPaidSeparatelyController @Inject() (
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url
       case _    =>

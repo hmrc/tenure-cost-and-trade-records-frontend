@@ -40,7 +40,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
   theView: CheckYourAnswersAboutFranchiseOrLettingsView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging:

@@ -115,7 +115,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
     extends MockRepositoryFixture
     with SessionCapturingFixture:
 
-    val controller = IsYearlyAvailableController(
+    val controller: IsYearlyAvailableController = IsYearlyAvailableController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[IsYearlyAvailableView],

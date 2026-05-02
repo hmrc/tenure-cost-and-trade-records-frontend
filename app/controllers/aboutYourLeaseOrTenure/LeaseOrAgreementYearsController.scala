@@ -43,7 +43,7 @@ class LeaseOrAgreementYearsController @Inject() (
   leaseOrAgreementYearsView: leaseOrAgreementYears,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -100,7 +100,7 @@ class LeaseOrAgreementYearsController @Inject() (
     request.sessionData.aboutLeaseOrAgreementPartOne
       .flatMap(_.leaseOrAgreementYearsDetails)
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url + "#lease-or-agreement-details"
       case _    =>

@@ -59,7 +59,7 @@ abstract class CaravansAgeCategoriesController @Inject() (
   val withSessionRefiner: WithSessionRefiner
   val session: SessionRepo
 
-  def savedAnswer(implicit request: SessionRequest[AnyContent]): Option[CaravansAge]
+  def savedAnswer(using request: SessionRequest[AnyContent]): Option[CaravansAge]
 
   def updateAnswer(caravansAge: CaravansAge): Caravans => Caravans
 
@@ -90,7 +90,7 @@ abstract class CaravansAgeCategoriesController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.cyaPage
       .filter(_ => navigator.from == "CYA")
       .getOrElse(

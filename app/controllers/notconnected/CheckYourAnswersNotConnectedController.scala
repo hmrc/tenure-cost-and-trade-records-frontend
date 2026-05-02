@@ -46,7 +46,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -86,7 +86,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier,
+  )(using hc: HeaderCarrier,
     messages: Messages
   ): Future[Unit] = {
     val sessionRemoveConnection = session.removeConnectionDetails.flatMap(_.removeConnectionDetails)
