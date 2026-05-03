@@ -32,13 +32,12 @@ import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future
-import scala.concurrent.Future.successful
 
 class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository: SessionRepo = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(Future.unit)
 
     val controller: OtherLettingController = OtherLettingController(
       stubMessagesControllerComponents(),

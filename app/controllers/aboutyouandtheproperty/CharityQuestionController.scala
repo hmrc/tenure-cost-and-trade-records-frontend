@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.charityQuestion
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CharityQuestionController @Inject() (
@@ -47,17 +47,15 @@ class CharityQuestionController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CharityQuestion")
 
-    Future.successful(
-      Ok(
-        charityQuestionView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
-            case Some(answer) =>
-              charityQuestionForm.fill(answer)
-            case _            => charityQuestionForm
-          },
-          request.sessionData.toSummary,
-          navigator.from
-        )
+    Ok(
+      charityQuestionView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
+          case Some(answer) =>
+            charityQuestionForm.fill(answer)
+          case _            => charityQuestionForm
+        },
+        request.sessionData.toSummary,
+        navigator.from
       )
     )
   }

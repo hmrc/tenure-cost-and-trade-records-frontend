@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.aboutThePropertyString
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class AboutThePropertyStringController @Inject() (
@@ -48,17 +48,15 @@ class AboutThePropertyStringController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AboutThePropertyString")
 
-    Future.successful(
-      Ok(
-        aboutThePropertyStringView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetailsString) match {
-            case Some(propertyDetails) => aboutThePropertyStringForm.fill(propertyDetails)
-            case _                     => aboutThePropertyStringForm
-          },
-          request.sessionData.forType,
-          request.sessionData.toSummary,
-          backLink
-        )
+    Ok(
+      aboutThePropertyStringView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetailsString) match {
+          case Some(propertyDetails) => aboutThePropertyStringForm.fill(propertyDetails)
+          case _                     => aboutThePropertyStringForm
+        },
+        request.sessionData.forType,
+        request.sessionData.toSummary,
+        backLink
       )
     )
   }

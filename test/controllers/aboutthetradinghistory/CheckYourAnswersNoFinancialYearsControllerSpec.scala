@@ -28,13 +28,12 @@ import utils.{JsoupHelpers, TestBaseSpec}
 import views.html.aboutthetradinghistory.checkYourAnswerNoFinancialYears as CheckYourAnswerNoFinancialYearsView
 
 import scala.concurrent.Future
-import scala.concurrent.Future.successful
 
 class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture:
     val repository: SessionRepo = mock[SessionRepo]
-    when(repository.saveOrUpdate(any)(using any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any)(using any)).thenReturn(Future.unit)
 
     def controller(emptyTurnoverSections: Boolean = false): CheckYourAnswersNoFinancialYearsController =
       CheckYourAnswersNoFinancialYearsController(

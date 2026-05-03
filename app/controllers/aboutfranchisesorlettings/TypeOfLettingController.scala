@@ -20,12 +20,12 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfLettingForm.typeOfLettingForm
-import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, TelecomMastLetting, TypeOfLetting}
+import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutfranchisesorlettings.TypeOfLetting.*
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents, Result}
+import play.api.mvc.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.aboutfranchisesorlettings.typeOfLetting
@@ -89,10 +89,9 @@ class TypeOfLettingController @Inject() (
           case Some(idx) if idx >= 0 && idx < existingLettings.length =>
             val existingLetting = existingLettings(idx)
             if (existingLetting.getClass == newLetting.getClass && navigator.from == "CYA") {
-              Future.successful(
-                Redirect(
-                  controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-                )
+
+              Redirect(
+                controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
               )
             } else {
               val updatedLettings = existingLettings.updated(idx, newLetting)

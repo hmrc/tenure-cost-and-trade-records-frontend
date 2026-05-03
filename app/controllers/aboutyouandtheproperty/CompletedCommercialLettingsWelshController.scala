@@ -25,7 +25,7 @@ import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo,
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CompletedCommercialLettingsWelshId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.completedCommercialLettingsWelsh
 
@@ -66,7 +66,7 @@ class CompletedCommercialLettingsWelshController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutYouAndThePropertyPartTwo
       .filter(_.commercialLetDate.isDefined)
-      .fold(Future.successful(Redirect(routes.CommercialLettingQuestionController.show()))) { data =>
+      .fold[Future[Result]](Redirect(routes.CommercialLettingQuestionController.show())) { data =>
         continueOrSaveAsDraft[Seq[CompletedLettings]](
           completedCommercialLettingsWelshForm(years(data)),
           formWithErrors =>

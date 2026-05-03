@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.checkYourAnswersTentingPitches
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersTentingPitchesController @Inject() (
@@ -46,17 +46,15 @@ class CheckYourAnswersTentingPitchesController @Inject() (
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)) match {
-            case Some(checkYourAnswersAboutTheTradingHistory) =>
-              checkYourAnswersTentingPitchesForm.fill(checkYourAnswersAboutTheTradingHistory)
-            case _                                            => checkYourAnswersTentingPitchesForm
-          },
-          calculateBackLink
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)) match {
+          case Some(checkYourAnswersAboutTheTradingHistory) =>
+            checkYourAnswersTentingPitchesForm.fill(checkYourAnswersAboutTheTradingHistory)
+          case _                                            => checkYourAnswersTentingPitchesForm
+        },
+        calculateBackLink
       )
     )
   }

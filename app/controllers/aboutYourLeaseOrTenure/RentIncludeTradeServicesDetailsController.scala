@@ -16,25 +16,23 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.SessionRequest
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsTextAreaForm.rentIncludeTradeServicesDetailsTextAreaForm
 import models.ForType
 import models.ForType.*
-import navigation.AboutYourLeaseOrTenureNavigator
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
+import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentIncludeTradeServicesDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import util.NumberUtil.zeroBigDecimal
-import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetails
-import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetailsTextArea
+import views.html.aboutYourLeaseOrTenure.{rentIncludeTradeServicesDetails, rentIncludeTradeServicesDetailsTextArea}
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext

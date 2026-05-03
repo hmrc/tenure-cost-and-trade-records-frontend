@@ -20,8 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.common.AnswersYesNo.*
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CheckYourAnswersAboutFranchiseOrLettingsId
 import play.api.Logging
@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings as CheckYourAnswersAboutFranchiseOrLettingsView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
@@ -79,9 +79,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
             )
           )
         repo.saveOrUpdate(updatedData).flatMap { _ =>
-          Future.successful(
-            Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
-          )
+          Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
         }
       }
     )

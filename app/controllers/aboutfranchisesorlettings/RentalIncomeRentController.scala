@@ -18,10 +18,10 @@ package controllers.aboutfranchisesorlettings
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, toOpt}
 import form.aboutfranchisesorlettings.IncomeRecordRentForm.incomeRecordRentForm as theForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, FranchiseIncomeRecord, LettingIncomeRecord, PropertyRentDetails}
 import models.submissions.aboutfranchisesorlettings.TypeOfIncome.TypeLetting
+import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, FranchiseIncomeRecord, LettingIncomeRecord, PropertyRentDetails}
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.RentalIncomeRentId
 import play.api.Logging
@@ -32,7 +32,6 @@ import views.html.aboutfranchisesorlettings.rentalIncomeRent
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import controllers.toOpt
 
 @Singleton
 class RentalIncomeRentController @Inject() (

@@ -19,11 +19,11 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersAboutTheTradingHistoryForm.checkYourAnswersAboutTheTradingHistoryForm
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CheckYourAnswersAboutTheTradingHistoryId
 import play.api.Logging
@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.checkYourAnswersAboutTheTradingHistory
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
@@ -48,17 +48,15 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersAboutTheTradingHistoryView(
-          request.sessionData.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory) match {
-            case Some(checkYourAnswersAboutTheTradingHistory) =>
-              checkYourAnswersAboutTheTradingHistoryForm.fill(checkYourAnswersAboutTheTradingHistory)
-            case _                                            => checkYourAnswersAboutTheTradingHistoryForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      checkYourAnswersAboutTheTradingHistoryView(
+        request.sessionData.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory) match {
+          case Some(checkYourAnswersAboutTheTradingHistory) =>
+            checkYourAnswersAboutTheTradingHistoryForm.fill(checkYourAnswersAboutTheTradingHistory)
+          case _                                            => checkYourAnswersAboutTheTradingHistoryForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

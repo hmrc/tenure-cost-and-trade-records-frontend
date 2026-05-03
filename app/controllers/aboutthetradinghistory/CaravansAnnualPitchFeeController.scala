@@ -21,8 +21,8 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CaravansAnnualPitchFeeForm.caravansAnnualPitchFeeForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
-import models.submissions.aboutthetradinghistory.{Caravans, CaravansAnnualPitchFee}
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
+import models.submissions.aboutthetradinghistory.{Caravans, CaravansAnnualPitchFee}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CaravansAnnualPitchFeeId
 import play.api.Logging

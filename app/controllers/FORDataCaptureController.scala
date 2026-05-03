@@ -20,9 +20,9 @@ import actions.SessionRequest
 import play.api.data.Form
 import play.api.mvc.{AnyContent, MessagesControllerComponents, Request, Result}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import scala.language.implicitConversions
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
 /**
   * All controllers that capture data and store it in session must inherit this base class.
@@ -54,7 +54,7 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
     if (isSaveAsDraft) saveAsDraftRedirect else successResult
 
   private def isSaveAsDraft(using request: SessionRequest[AnyContent]) =
-    request.body.asFormUrlEncoded.flatMap(_.get("save_button")).isDefined
+    request.body.asFormUrlEncoded.flatMap(_.get("save-button")).isDefined
 
   private def saveAsDraftRedirect(using request: Request[?]): Result = Redirect(
     controllers.routes.SaveAsDraftController.customPassword(request.uri)

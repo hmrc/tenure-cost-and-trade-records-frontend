@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.occupiersDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class OccupiersDetailsController @Inject() (
@@ -53,14 +53,13 @@ class OccupiersDetailsController @Inject() (
           request.sessionData.aboutYouAndThePropertyPartTwo.map(_.occupiersList)
         requestedData  <- occupiers.lift(requestedIndex)
       } yield requestedData
-    Future.successful(
-      Ok(
-        view(
-          existingDetails.fold(occupiersDetailsForm)(occupiersDetailsForm.fill),
-          index,
-          getBackLink,
-          request.sessionData.toSummary
-        )
+
+    Ok(
+      view(
+        existingDetails.fold(occupiersDetailsForm)(occupiersDetailsForm.fill),
+        index,
+        getBackLink,
+        request.sessionData.toSummary
       )
     )
   }
@@ -69,14 +68,12 @@ class OccupiersDetailsController @Inject() (
     continueOrSaveAsDraft[OccupiersDetails](
       occupiersDetailsForm,
       formWithErrors =>
-        Future.successful(
-          BadRequest(
-            view(
-              formWithErrors,
-              index,
-              getBackLink,
-              request.sessionData.toSummary
-            )
+        BadRequest(
+          view(
+            formWithErrors,
+            index,
+            getBackLink,
+            request.sessionData.toSummary
           )
         ),
       data => {

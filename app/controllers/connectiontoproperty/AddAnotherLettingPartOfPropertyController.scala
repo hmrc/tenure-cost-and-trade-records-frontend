@@ -19,15 +19,15 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
 import form.confirmableActionForm.confirmableActionForm
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
+import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AddAnotherLettingPartOfPropertyPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents, Result}
+import play.api.mvc.*
 import repositories.SessionRepo
 import views.html.connectiontoproperty.addAnotherLettingPartOfProperty as AddAnotherLettingPartOfPropertyView
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
@@ -146,14 +146,13 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
           .flatMap(_.lettingPartOfPropertyDetails.lift(idx))
           .map { lettingSections =>
             val name = lettingSections.tenantDetails.name
-            Future.successful(
-              BadRequest(
-                theConfirmationView(
-                  formWithErrors,
-                  name,
-                  routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
-                  routes.AddAnotherLettingPartOfPropertyController.show(idx)
-                )
+
+            BadRequest(
+              theConfirmationView(
+                formWithErrors,
+                name,
+                routes.AddAnotherLettingPartOfPropertyController.performRemove(idx),
+                routes.AddAnotherLettingPartOfPropertyController.show(idx)
               )
             )
           }

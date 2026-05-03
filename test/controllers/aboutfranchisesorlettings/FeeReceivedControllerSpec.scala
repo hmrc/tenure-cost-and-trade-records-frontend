@@ -29,7 +29,6 @@ import utils.JsoupHelpers.*
 import utils.TestBaseSpec
 
 import scala.concurrent.Future
-import scala.concurrent.Future.successful
 
 class FeeReceivedControllerSpec extends TestBaseSpec:
 
@@ -91,7 +90,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec:
     val repository: SessionRepo       = mock[SessionRepo]
     val data: ArgumentCaptor[Session] = captor[Session]
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
-      .thenReturn(successful(()))
+      .thenReturn(Future.unit)
 
     val controller: FeeReceivedController =
       FeeReceivedController(

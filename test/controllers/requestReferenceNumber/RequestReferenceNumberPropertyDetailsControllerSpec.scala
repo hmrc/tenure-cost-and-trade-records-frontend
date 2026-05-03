@@ -181,7 +181,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
   ) extends MockAddressLookup:
 
     val repository: SessionRepo = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(Future.unit)
 
     val controller: RequestReferenceNumberPropertyDetailsController =
       RequestReferenceNumberPropertyDetailsController(

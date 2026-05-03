@@ -75,9 +75,7 @@ class TypeOfIncomeController @Inject() (
       request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
 
     if (existingIncomeRecords.length >= 5 && index.isEmpty) {
-      Future.successful(
-        Redirect(controllers.routes.MaxOfLettingsReachedController.show(Option("typeOfIncome")))
-      )
+      Redirect(controllers.routes.MaxOfLettingsReachedController.show(Option("typeOfIncome")))
     } else {
       continueOrSaveAsDraft[TypeOfIncome](
         typeOfIncomeForm,
@@ -100,12 +98,11 @@ class TypeOfIncomeController @Inject() (
             case Some(idx) if idx >= 0 && idx < existingIncomeRecords.length =>
               val existingRecord = existingIncomeRecords(idx)
               if (existingRecord.getClass == newIncomeRecord.getClass && navigator.from == "CYA") {
-                Future.successful(
-                  Redirect {
-                    controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
-                      .show()
-                  }
-                )
+
+                Redirect {
+                  controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+                    .show()
+                }
               } else {
                 val updatedRecords = existingIncomeRecords.updated(idx, newIncomeRecord)
                 updateSessionAndRedirect(updatedRecords, data, index)

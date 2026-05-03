@@ -20,9 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.TotalSiteCapacityForm.totalSiteCapacityForm
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateOtherHolidayAccommodation
-import models.submissions.aboutthetradinghistory.TotalSiteCapacity
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistoryPartOne, TotalSiteCapacity}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TotalSiteCapacityId
 import play.api.Logging

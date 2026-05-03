@@ -24,7 +24,7 @@ import form.CustomUserPasswordForm.customUserPasswordForm
 import form.SaveAsDraftLoginForm.saveAsDraftLoginForm
 import models.{Session, SubmissionDraft}
 import play.api.i18n.{I18nSupport, Messages}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request, Result}
+import play.api.mvc.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController

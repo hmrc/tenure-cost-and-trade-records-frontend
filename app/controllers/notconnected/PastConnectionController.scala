@@ -19,8 +19,8 @@ package controllers.notconnected
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.notconnected.PastConnectionForm.pastConnectionForm
-import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
 import models.submissions.common.AnswersYesNo
+import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
 import navigation.RemoveConnectionNavigator
 import navigation.identifiers.PastConnectionId
 import play.api.i18n.I18nSupport

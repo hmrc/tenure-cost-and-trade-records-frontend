@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentalIncomeListForm.theForm
 import form.confirmableActionForm.confirmableActionForm
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, Concession6015IncomeRecord, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
+import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -33,7 +33,6 @@ import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class RentalIncomeListController @Inject() (
@@ -72,12 +71,10 @@ class RentalIncomeListController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors =>
-        successful(
-          BadRequest(
-            theListView(
-              formWithErrors,
-              index
-            )
+        BadRequest(
+          theListView(
+            formWithErrors,
+            index
           )
         ),
       formData =>
@@ -86,7 +83,7 @@ class RentalIncomeListController @Inject() (
           .getOrElse(0)
 
         if formData == AnswerYes && numberOfRentalIncomes >= 5 && navigator.from != "CYA"
-        then successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(src = Some("rentalIncome"))))
+        then Redirect(controllers.routes.MaxOfLettingsReachedController.show(src = Some("rentalIncome")))
         else
           val rentalIncomeData = request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
           rentalIncomeData match
@@ -105,10 +102,9 @@ class RentalIncomeListController @Inject() (
               then Redirect(routes.TypeOfIncomeController.show())
               else Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
             case _                                           =>
-              successful(
-                Redirect(
-                  routes.RentalIncomeListController.show(rentalIncomeData.map(_.size).getOrElse(0))
-                )
+
+              Redirect(
+                routes.RentalIncomeListController.show(rentalIncomeData.map(_.size).getOrElse(0))
               )
     )
   }
@@ -126,16 +122,15 @@ class RentalIncomeListController @Inject() (
   def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Some(getOperatorName(idx))
       .map { operatorName =>
-        successful(
-          Ok(
-            theConfirmationView(
-              confirmableActionForm,
-              operatorName,
-              controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
-              controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
-            )
+        Ok(
+          theConfirmationView(
+            confirmableActionForm,
+            operatorName,
+            controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
+            controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
           )
         )
+
       }
       .getOrElse(Redirect(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)))
   }
@@ -146,14 +141,12 @@ class RentalIncomeListController @Inject() (
       formWithErrors =>
         Some(getOperatorName(idx))
           .map { operatorName =>
-            successful(
-              BadRequest(
-                theConfirmationView(
-                  formWithErrors,
-                  operatorName,
-                  controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
-                  controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
-                )
+            BadRequest(
+              theConfirmationView(
+                formWithErrors,
+                operatorName,
+                controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.performRemove(idx),
+                controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx)
               )
             )
           }
@@ -176,9 +169,8 @@ class RentalIncomeListController @Inject() (
               )
             }
           else
-            successful(
-              Redirect(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0))
-            )
+
+            Redirect(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0))
 
         case AnswerNo =>
           Redirect(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx))

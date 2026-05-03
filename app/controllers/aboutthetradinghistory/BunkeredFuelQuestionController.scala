@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.bunkeredFuelQuestion
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class BunkeredFuelQuestionController @Inject() (
@@ -49,15 +49,13 @@ class BunkeredFuelQuestionController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("BunkeredFuelQuestion")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistory
-            .flatMap(_.bunkeredFuelQuestion)
-            .fold(bunkeredFuelQuestionForm)(bunkeredFuelQuestionForm.fill),
-          calculateBackLink(using request),
-          request.sessionData.toSummary
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistory
+          .flatMap(_.bunkeredFuelQuestion)
+          .fold(bunkeredFuelQuestionForm)(bunkeredFuelQuestionForm.fill),
+        calculateBackLink(using request),
+        request.sessionData.toSummary
       )
     )
   }

@@ -20,10 +20,10 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CurrentAnnualRentForm.currentAnnualRentForm
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.common.AnswersYesNo.*
-import models.Session
-import models.ForType.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CurrentAnnualRentPageId
 import play.api.Logging

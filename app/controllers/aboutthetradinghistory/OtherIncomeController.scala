@@ -18,18 +18,17 @@ package controllers.aboutthetradinghistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
-import controllers.{FORDataCaptureController, aboutthetradinghistory}
+import controllers.{FORDataCaptureController, aboutthetradinghistory, toOpt}
 import form.aboutthetradinghistory.OtherIncomeForm.otherIncomeForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.TurnoverSection6076
+import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.OtherIncomeId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.otherIncome6076
-import controllers.toOpt
-import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -109,7 +108,7 @@ class OtherIncomeController @Inject() (
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
     val intermittentCheck =

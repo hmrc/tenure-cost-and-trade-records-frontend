@@ -20,20 +20,19 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.{AddressLookupSupport, FORDataCaptureController}
+import form.aboutfranchisesorlettings.ATMLettingForm.theForm
+import models.Session
 import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, LettingPartOfProperty}
+import models.submissions.common.Address
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.atmLetting
-import form.aboutfranchisesorlettings.ATMLettingForm.theForm
-import models.Session
-import models.submissions.common.Address
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 class AtmLettingController @Inject() (
   mcc: MessagesControllerComponents,
@@ -78,14 +77,12 @@ class AtmLettingController @Inject() (
     continueOrSaveAsDraft[ATMLetting](
       theForm,
       formWithErrors =>
-        successful(
-          BadRequest(
-            atmLettingView(
-              formWithErrors,
-              index,
-              backLink(index),
-              request.sessionData.toSummary
-            )
+        BadRequest(
+          atmLettingView(
+            formWithErrors,
+            index,
+            backLink(index),
+            request.sessionData.toSummary
           )
         ),
       formData => {
@@ -154,7 +151,7 @@ class AtmLettingController @Inject() (
       for
         confirmedAddress <- getConfirmedAddress(id)
         lettingAddress   <- confirmedAddress.asAddress
-        newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+        newSession       <- newSessionWithLettingAddress(idx, lettingAddress)
         _                <- repository.saveOrUpdate(newSession)
       yield
         if navigator.from == "CYA"

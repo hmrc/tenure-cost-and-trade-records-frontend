@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.tentingPitchesTotal
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TentingPitchesTotalController @Inject() (
@@ -48,17 +48,15 @@ class TentingPitchesTotalController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TentingPitchesTotal")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.touringAndTentingPitches)
-            .flatMap(_.tentingPitchesTotal) match {
-            case Some(answers) => tentingPitchesTotalForm.fill(answers)
-            case None          => tentingPitchesTotalForm
-          },
-          calculateBackLink
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.touringAndTentingPitches)
+          .flatMap(_.tentingPitchesTotal) match {
+          case Some(answers) => tentingPitchesTotalForm.fill(answers)
+          case None          => tentingPitchesTotalForm
+        },
+        calculateBackLink
       )
     )
   }

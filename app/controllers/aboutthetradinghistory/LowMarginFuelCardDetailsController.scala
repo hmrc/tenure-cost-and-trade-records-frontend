@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.lowMarginFuelCardsDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class LowMarginFuelCardDetailsController @Inject() (
@@ -51,14 +51,13 @@ class LowMarginFuelCardDetailsController @Inject() (
         request.sessionData.aboutTheTradingHistory.map(_.lowMarginFuelCardsDetails.getOrElse(IndexedSeq.empty))
       requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
     } yield requestedBFCDetails.lowMarginFuelCardDetail
-    Future.successful(
-      Ok(
-        view(
-          existingLowMarginFuelCardDetails.fold(lowMarginFuelCardDetailsForm)(lowMarginFuelCardDetailsForm.fill),
-          index,
-          getBackLinkUrl(index),
-          request.sessionData.toSummary
-        )
+
+    Ok(
+      view(
+        existingLowMarginFuelCardDetails.fold(lowMarginFuelCardDetailsForm)(lowMarginFuelCardDetailsForm.fill),
+        index,
+        getBackLinkUrl(index),
+        request.sessionData.toSummary
       )
     )
   }

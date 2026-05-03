@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.bunkerFuelCardsDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class BunkerFuelCardDetailsController @Inject() (
@@ -51,14 +51,13 @@ class BunkerFuelCardDetailsController @Inject() (
         request.sessionData.aboutTheTradingHistory.map(_.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty))
       requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
     } yield requestedBFCDetails.bunkerFuelCardDetails
-    Future.successful(
-      Ok(
-        view(
-          existingBunkerFuelCardDetails.fold(bunkerFuelCardDetailsForm)(bunkerFuelCardDetailsForm.fill),
-          index,
-          getBackLinkUrl(index),
-          request.sessionData.toSummary
-        )
+
+    Ok(
+      view(
+        existingBunkerFuelCardDetails.fold(bunkerFuelCardDetailsForm)(bunkerFuelCardDetailsForm.fill),
+        index,
+        getBackLinkUrl(index),
+        request.sessionData.toSummary
       )
     )
   }

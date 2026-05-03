@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.additionalinformation.checkYourAnswersAdditionalInformation
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersAdditionalInformationController @Inject() (
@@ -45,15 +45,13 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersAdditionalInformationView(
-          request.sessionData.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) match {
-            case Some(answer) => checkYourAnswersAdditionalInformationForm.fill(answer)
-            case _            => checkYourAnswersAdditionalInformationForm
-          },
-          request.sessionData
-        )
+    Ok(
+      checkYourAnswersAdditionalInformationView(
+        request.sessionData.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) match {
+          case Some(answer) => checkYourAnswersAdditionalInformationForm.fill(answer)
+          case _            => checkYourAnswersAdditionalInformationForm
+        },
+        request.sessionData
       )
     )
   }
@@ -68,17 +66,14 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
             request.sessionData
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAdditionalInformation(_.copy(checkYourAnswersAdditionalInformation = Some(data)))
           .copy(lastCYAPageUrl =
             Some(controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show().url)
           )
-        session.saveOrUpdate(updatedData).flatMap { _ =>
-          Future.successful(
-            Redirect(navigator.nextPage(CheckYourAnswersAdditionalInformationId, updatedData).apply(updatedData))
-          )
+        session.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(CheckYourAnswersAdditionalInformationId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

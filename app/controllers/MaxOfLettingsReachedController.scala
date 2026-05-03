@@ -20,8 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import form.MaxOfLettingsForm.maxOfLettingsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import navigation.{AboutFranchisesOrLettingsNavigator, ConnectionToPropertyNavigator}
 import navigation.identifiers.{MaxOfLettingsReachedCurrentId, MaxOfLettingsReachedId}
+import navigation.{AboutFranchisesOrLettingsNavigator, ConnectionToPropertyNavigator}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo

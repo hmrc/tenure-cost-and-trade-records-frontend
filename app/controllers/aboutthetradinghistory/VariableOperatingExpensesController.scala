@@ -127,7 +127,7 @@ class VariableOperatingExpensesController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .filter(_.turnoverSections.nonEmpty)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)

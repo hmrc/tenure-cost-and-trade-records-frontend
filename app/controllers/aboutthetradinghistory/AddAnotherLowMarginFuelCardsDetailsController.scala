@@ -82,12 +82,10 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors =>
-        Future.successful(
-          BadRequest(
-            theListView(
-              formWithErrors,
-              index
-            )
+        BadRequest(
+          theListView(
+            formWithErrors,
+            index
           )
         ),
       formData =>
@@ -123,15 +121,13 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
   def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     getCardName(idx)
       .map { cardName =>
-        Future.successful(
-          Ok(
-            theConfirmationView(
-              confirmableActionForm,
-              cardName,
-              controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
-                .performRemove(idx),
-              routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
-            )
+        Ok(
+          theConfirmationView(
+            confirmableActionForm,
+            cardName,
+            controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
+              .performRemove(idx),
+            routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
           )
         )
       }
@@ -146,15 +142,13 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
       formWithErrors =>
         getCardName(idx)
           .map { cardName =>
-            Future.successful(
-              BadRequest(
-                theConfirmationView(
-                  formWithErrors,
-                  cardName,
-                  controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
-                    .performRemove(idx),
-                  routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
-                )
+            BadRequest(
+              theConfirmationView(
+                formWithErrors,
+                cardName,
+                controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
+                  .performRemove(idx),
+                routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
               )
             )
           }

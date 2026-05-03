@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.propertyCurrentlyUsed
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PropertyCurrentlyUsedController @Inject() (
@@ -48,16 +48,15 @@ class PropertyCurrentlyUsedController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PropertyCurrentlyUsed")
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed) match {
-            case Some(propertyDetails) => propertyCurrentlyUsedForm.fill(propertyDetails)
-            case _                     => propertyCurrentlyUsedForm
-          },
-          request.sessionData.toSummary,
-          backLink
-        )
+
+    Ok(
+      view(
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed) match {
+          case Some(propertyDetails) => propertyCurrentlyUsedForm.fill(propertyDetails)
+          case _                     => propertyCurrentlyUsedForm
+        },
+        request.sessionData.toSummary,
+        backLink
       )
     )
   }

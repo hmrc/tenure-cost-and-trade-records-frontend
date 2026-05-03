@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.tradingActivity
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TradingActivityController @Inject() (
@@ -48,15 +48,14 @@ class TradingActivityController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TradingActivity")
-    Future.successful(
-      Ok(
-        tradingActivityView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.tradingActivity) match {
-            case Some(answer) => tradingActivityForm.fill(answer)
-            case _            => tradingActivityForm
-          },
-          request.sessionData.toSummary
-        )
+
+    Ok(
+      tradingActivityView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.tradingActivity) match {
+          case Some(answer) => tradingActivityForm.fill(answer)
+          case _            => tradingActivityForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

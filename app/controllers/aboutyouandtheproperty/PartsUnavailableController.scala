@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.partsUnavailable
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PartsUnavailableController @Inject() (
@@ -48,16 +48,15 @@ class PartsUnavailableController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PartsUnavailable")
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
-            case Some(tiedForGoods) => partsUnavailableForm.fill(tiedForGoods)
-            case _                  => partsUnavailableForm
-          },
-          calculateBackLink,
-          request.sessionData.toSummary
-        )
+
+    Ok(
+      view(
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
+          case Some(tiedForGoods) => partsUnavailableForm.fill(tiedForGoods)
+          case _                  => partsUnavailableForm
+        },
+        calculateBackLink,
+        request.sessionData.toSummary
       )
     )
   }

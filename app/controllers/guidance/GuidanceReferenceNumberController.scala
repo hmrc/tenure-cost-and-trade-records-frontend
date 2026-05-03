@@ -17,6 +17,7 @@
 package controllers.guidance
 
 import connectors.BackendConnector
+import controllers.toFut
 import form.ReferenceNumberForm.theForm
 import models.submissions.ReferenceNumber
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -25,7 +26,6 @@ import views.html.referenceNumber as ReferenceNumberView
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class GuidanceReferenceNumberController @Inject() (
@@ -48,10 +48,7 @@ class GuidanceReferenceNumberController @Inject() (
     theForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          successful(
-            BadRequest(referenceNumberView(formWithErrors, call = routes.GuidanceReferenceNumberController.submit))
-          ),
+        formWithErrors => BadRequest(referenceNumberView(formWithErrors, call = routes.GuidanceReferenceNumberController.submit)),
         referenceNumber =>
           connector
             .retrieveFORType(referenceNumber.value, hc)

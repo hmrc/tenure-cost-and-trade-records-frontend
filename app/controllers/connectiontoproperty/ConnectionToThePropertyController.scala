@@ -23,10 +23,10 @@ import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToTheProp
 import models.Session
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.ConnectionToProperty
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ConnectionToPropertyPageId
 import play.api.Logging
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo

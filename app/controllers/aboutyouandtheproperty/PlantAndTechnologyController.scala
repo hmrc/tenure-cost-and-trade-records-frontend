@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.plantAndTechnology
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PlantAndTechnologyController @Inject() (
@@ -48,17 +48,15 @@ class PlantAndTechnologyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PlantAndTechnology")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology) match {
-            case Some(data) => plantAndTechnologyForm.fill(data)
-            case _          => plantAndTechnologyForm
-          },
-          calculateBackLink,
-          request.sessionData.toSummary,
-          isReadOnly
-        )
+    Ok(
+      view(
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology) match {
+          case Some(data) => plantAndTechnologyForm.fill(data)
+          case _          => plantAndTechnologyForm
+        },
+        calculateBackLink,
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }

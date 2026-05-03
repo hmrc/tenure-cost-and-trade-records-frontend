@@ -20,26 +20,25 @@ import actions.WithSessionRefiner
 import config.LoginToBackendAction
 import connectors.{Audit, BackendConnector}
 import controllers.LoginController.startPage
-import form.PostcodeMapping.customPostcodeMapping
 import form.Errors
+import form.PostcodeMapping.customPostcodeMapping
+import models.ForType.*
 import models.audit.DownloadPDFAudit
 import models.submissions.common.Address
-import models.ForType
-import models.ForType.*
-import models.Session
+import models.{ForType, Session}
 import play.api.Logging
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{Format, Json}
-import play.api.mvc._
+import play.api.mvc.*
 import repositories.SessionRepo
 import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderNames.trueClientIp
 import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, UpstreamErrorResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import util.DateUtil.nowInUK
-import views.html._
+import views.html.*
 
 import java.time.{ZoneOffset, ZonedDateTime}
 import javax.inject.{Inject, Named, Singleton}

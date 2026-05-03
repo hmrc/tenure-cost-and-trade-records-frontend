@@ -104,7 +104,7 @@ class ElectricityGeneratedController @Inject() (
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {

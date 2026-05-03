@@ -27,7 +27,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
 
 import java.time.LocalDate
-import scala.concurrent.Future.successful
+import scala.concurrent.Future
 
 class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
 
@@ -110,7 +110,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
     val repository: SessionRepo       = mock[SessionRepo]
     val data: ArgumentCaptor[Session] = captor[Session]
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
-      .thenReturn(successful(()))
+      .thenReturn(Future.unit)
 
   trait SessionCapturingFixture:
 

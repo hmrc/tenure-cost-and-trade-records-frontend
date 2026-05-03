@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.franchiseOrLettingsTiedToProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class FranchiseOrLettingsTiedToPropertyController @Inject() (
@@ -49,18 +49,16 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("FranchiseOrLettingsTiedToProperty")
 
-    Future.successful(
-      Ok(
-        franchiseOrLettingsTiedToPropertyView(
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
-            case Some(franchisesOrLettingsTiedToProperty) =>
-              franchiseOrLettingsTiedToPropertyForm.fill(franchisesOrLettingsTiedToProperty)
-            case _                                        => franchiseOrLettingsTiedToPropertyForm
-          },
-          request.sessionData.forType,
-          calculateBacklink,
-          request.sessionData.toSummary
-        )
+    Ok(
+      franchiseOrLettingsTiedToPropertyView(
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
+          case Some(franchisesOrLettingsTiedToProperty) =>
+            franchiseOrLettingsTiedToPropertyForm.fill(franchisesOrLettingsTiedToProperty)
+          case _                                        => franchiseOrLettingsTiedToPropertyForm
+        },
+        request.sessionData.forType,
+        calculateBacklink,
+        request.sessionData.toSummary
       )
     )
   }

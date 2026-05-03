@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.financialYearEndDatesSummary
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class FinancialYearEndDatesSummaryController @Inject() (
@@ -72,9 +72,8 @@ class FinancialYearEndDatesSummaryController @Inject() (
           val formWithError = financialYearEndDatesSummaryForm
             .fill(data)
             .withError("isFinancialYearEndDatesCorrect", Messages("error.financialYearEndDates.incorrect"))
-          Future.successful(
-            BadRequest(financialYearEndDateSummaryView(formWithError, getBackLink))
-          )
+
+          BadRequest(financialYearEndDateSummaryView(formWithError, getBackLink))
         } else {
           val updatedData = updateAboutTheTradingHistoryPartOne(_.copy(Some(data)))
           session

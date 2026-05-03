@@ -114,7 +114,7 @@ class OtherCostsController @Inject() (
   ) =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) =
     aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)

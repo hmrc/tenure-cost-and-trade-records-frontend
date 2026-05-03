@@ -20,12 +20,12 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
-import navigation.AboutYourLeaseOrTenureNavigator
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.common.AnswersYesNo
+import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentIncludeTradeServicesPageId
 import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServices
 

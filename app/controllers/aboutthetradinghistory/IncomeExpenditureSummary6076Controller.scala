@@ -51,17 +51,15 @@ class IncomeExpenditureSummary6076Controller @Inject() (
     runWithSessionCheck { turnoverSections6076 =>
       val entries = createEntries(turnoverSections6076)
 
-      Future.successful(
-        Ok(
-          view(
-            request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076) match {
-              case Some(incomeExpenditureConfirmation) =>
-                incomeExpenditureSummary6076Form.fill(incomeExpenditureConfirmation)
-              case _                                   => incomeExpenditureSummary6076Form
-            },
-            request.sessionData.toSummary,
-            entries
-          )
+      Ok(
+        view(
+          request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076) match {
+            case Some(incomeExpenditureConfirmation) =>
+              incomeExpenditureSummary6076Form.fill(incomeExpenditureConfirmation)
+            case _                                   => incomeExpenditureSummary6076Form
+          },
+          request.sessionData.toSummary,
+          entries
         )
       )
     }
@@ -116,7 +114,7 @@ class IncomeExpenditureSummary6076Controller @Inject() (
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def createEntries(
     turnoverSections6076: Seq[TurnoverSection6076]

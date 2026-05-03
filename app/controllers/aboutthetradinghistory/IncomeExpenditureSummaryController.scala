@@ -27,8 +27,8 @@ import navigation.identifiers.IncomeExpenditureSummaryId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.incomeExpenditureSummary
 import util.NumberUtil.zeroBigDecimal
+import views.html.aboutthetradinghistory.incomeExpenditureSummary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext

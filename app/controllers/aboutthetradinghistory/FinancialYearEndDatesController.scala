@@ -27,7 +27,7 @@ import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CostOf
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FinancialYearEndDatesPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import util.AccountingInformationUtil.financialYearsList
 import views.html.aboutthetradinghistory.financialYearEndDates
@@ -83,7 +83,7 @@ class FinancialYearEndDatesController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.currentFinancialYearEnd).isDefined)
       .filter(isTurnOverNonEmpty(_))
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
         continueOrSaveAsDraft[Seq[LocalDate]](
           financialYearEndDatesForm(Some(financialYearsList(occupationAndAccounting))),

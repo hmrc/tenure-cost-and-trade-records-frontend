@@ -19,8 +19,8 @@ package controllers.accommodation
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.accommodation.AvailableRooms6048Form.availableRooms6048Form
-import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit, AvailableRooms}
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
+import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit, AvailableRooms}
 import navigation.AccommodationNavigator
 import navigation.identifiers.AvailableRoomsPageId
 import play.api.Logging

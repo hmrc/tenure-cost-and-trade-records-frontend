@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.premisesLicenseGrantedDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PremisesLicenseGrantedDetailsController @Inject() (
@@ -46,16 +46,14 @@ class PremisesLicenseGrantedDetailsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PremisesLicenseGrantedDetails")
 
-    Future.successful(
-      Ok(
-        premisesLicenseGrantedDetailsView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedInformationDetails) match {
-            case Some(premisesLicenseGrantedInformationDetails) =>
-              premisesLicenseGrantedInformationDetailsForm.fill(premisesLicenseGrantedInformationDetails)
-            case _                                              => premisesLicenseGrantedInformationDetailsForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      premisesLicenseGrantedDetailsView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedInformationDetails) match {
+          case Some(premisesLicenseGrantedInformationDetails) =>
+            premisesLicenseGrantedInformationDetailsForm.fill(premisesLicenseGrantedInformationDetails)
+          case _                                              => premisesLicenseGrantedInformationDetailsForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

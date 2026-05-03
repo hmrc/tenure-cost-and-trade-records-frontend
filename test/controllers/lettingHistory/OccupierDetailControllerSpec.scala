@@ -32,7 +32,6 @@ import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.occupierDetail as OccupierDetailView
 
 import scala.concurrent.Future
-import scala.concurrent.Future.successful
 
 class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
 
@@ -199,7 +198,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
   trait ControllerFixture(completedLettings: List[OccupierDetail] = Nil) extends MockAddressLookup:
 
     val repository: SessionRepo = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(Future.unit)
 
     val controller: OccupierDetailController = OccupierDetailController(
       mcc = stubMessagesControllerComponents(),

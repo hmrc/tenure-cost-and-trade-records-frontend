@@ -35,7 +35,7 @@ import views.html.login
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class LoginControllerSpec extends TestBaseSpec {
+class LoginControllerSpec extends TestBaseSpec:
 
   private val loginToBackend = mock[LoginToBackendAction]
 
@@ -109,6 +109,7 @@ class LoginControllerSpec extends TestBaseSpec {
       content should include("""logout.paragraph""")
       content should include("""logout.loginAgain""")
     }
+
     "show locked out page" in {
       val loginController = LoginController(
         inject[BackendConnector],
@@ -151,20 +152,18 @@ class LoginControllerSpec extends TestBaseSpec {
       val result: Future[Result] = loginController.loginFailed(attemptsRemaining)(fakeRequest)
 
       status(result) shouldBe UNAUTHORIZED
-
     }
 
     "Audit successful login" in {
-
       val audit = mock[Audit]
       doNothing()
         .when(audit)
         .sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-      val loginToBackendFunction = (refNum: RefNumber, _: Postcode) => {
-        assert(refNum.equals("01234567000"))
-        Future.successful(NoExistingDocument("token", "forNum", prefilledAddress, isWelsh = false))
-      }
+      val loginToBackendFunction: (RefNumber, Postcode) => Future[NoExistingDocument] =
+        (refNum: RefNumber, _: Postcode) =>
+          assert(refNum.equals("01234567000"))
+          NoExistingDocument("token", "forNum", prefilledAddress, isWelsh = false)
 
       val loginToBackend = mock[LoginToBackendAction]
       when(loginToBackend.apply(using any[HeaderCarrier], any[ExecutionContext])).thenReturn(loginToBackendFunction)
@@ -184,7 +183,6 @@ class LoginControllerSpec extends TestBaseSpec {
         mock[views.html.testSign]
       )
 
-//      val fakeRequest = FakeRequest()
       val response = loginController.verifyLogin("01234567000", "BN12 1AB")(using fakeRequest)
 
       status(response) shouldBe SEE_OTHER
@@ -200,7 +198,6 @@ class LoginControllerSpec extends TestBaseSpec {
           )
         )
       )(using any[HeaderCarrier], any[ExecutionContext])
-
     }
 
     "Audit logout event" in {
@@ -257,14 +254,7 @@ class LoginControllerSpec extends TestBaseSpec {
             accommodationDetails = None
           )
         )
-      )(
-        using any[HeaderCarrier],
-        any[ExecutionContext],
-        any[Writes[UserData]]
-      )
-
+      )(using any[HeaderCarrier], any[ExecutionContext], any[Writes[UserData]])
     }
 
   }
-
-}

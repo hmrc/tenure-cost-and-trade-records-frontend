@@ -20,12 +20,12 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.LettingPartOfPropertyRentForm.lettingPartOfPropertyRentForm
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.LettingPartOfPropertyRentDetails
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.LettingPartOfPropertyRentDetailsPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.lettingPartOfPropertyRentDetails
 
@@ -83,10 +83,8 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
           )
         ),
       data =>
-        request.sessionData.stillConnectedDetails.fold(
-          Future.successful(
-            Redirect(routes.LettingPartOfPropertyDetailsController.show(Some(index)))
-          )
+        request.sessionData.stillConnectedDetails.fold[Future[Result]](
+          Redirect(routes.LettingPartOfPropertyDetailsController.show(Some(index)))
         ) { stillConnectedDetails =>
           val existingSections = stillConnectedDetails.lettingPartOfPropertyDetails
           val updatedSections  = existingSections
@@ -104,9 +102,8 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
   }
 
   private def calculateBackLink(index: Int)(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url
-    }
 
 }

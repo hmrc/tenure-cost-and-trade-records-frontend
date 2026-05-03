@@ -20,11 +20,11 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
 import models.submissions.common.AnswersYesNo.*
-import models.ForType.*
-import models.Session
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.HowIsCurrentRentFixedId
 import play.api.Logging

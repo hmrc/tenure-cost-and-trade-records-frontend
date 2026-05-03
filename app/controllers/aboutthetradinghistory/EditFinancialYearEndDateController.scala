@@ -20,13 +20,13 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearEndDateForm.financialYearEndDateForm
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, CostOfSales, OccupationalAndAccountingInformation, TotalPayrollCost}
 import models.ForType.*
 import models.Session
+import models.submissions.aboutthetradinghistory.*
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.editFinancialYearEndDate
 
@@ -124,7 +124,7 @@ class EditFinancialYearEndDateController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.currentFinancialYearEnd).isDefined)
       .filter(isTurnOverNonEmpty(_))
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[LocalDate](
           prefilledForm,
           formWithErrors =>

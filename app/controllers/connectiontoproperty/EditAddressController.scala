@@ -21,9 +21,9 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
 import models.submissions.common.Address
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo

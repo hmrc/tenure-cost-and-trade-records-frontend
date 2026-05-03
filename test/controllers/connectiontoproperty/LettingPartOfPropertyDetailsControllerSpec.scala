@@ -28,7 +28,6 @@ import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
 
 import scala.concurrent.Future
-import scala.concurrent.Future.successful
 
 class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with JsoupHelpers:
 
@@ -189,7 +188,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
   ) extends MockAddressLookup:
     val audit: Audit            = mock[Audit]
     val repository: SessionRepo = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(Future.unit)
 
     val controller: LettingPartOfPropertyDetailsController = LettingPartOfPropertyDetailsController(
       stubMessagesControllerComponents(),

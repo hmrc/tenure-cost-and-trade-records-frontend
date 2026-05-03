@@ -29,8 +29,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
-import views.html.requestReferenceNumber.requestReferenceNumberCheckYourAnswers as RequestReferenceNumberCheckYourAnswersView
-import views.html.requestReferenceNumber.requestReferenceNumberConfirmation as RequestReferenceNumberConfirmationView
+import views.html.requestReferenceNumber.{requestReferenceNumberCheckYourAnswers as RequestReferenceNumberCheckYourAnswersView, requestReferenceNumberConfirmation as RequestReferenceNumberConfirmationView}
 
 import java.time.Instant
 import java.util.UUID
@@ -55,10 +54,8 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
   import controllers.FeedbackFormMapper.feedbackForm
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersView(request.sessionData)
-      )
+    Ok(
+      checkYourAnswersView(request.sessionData)
     )
   }
 

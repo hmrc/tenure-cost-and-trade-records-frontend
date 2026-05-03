@@ -24,6 +24,7 @@ import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentPayableVaryAccordingToGrossOrNetId
 import play.api.Logging
@@ -31,7 +32,6 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryAccordingToGrossOrNet
-import models.submissions.common.AnswersYesNo.*
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext

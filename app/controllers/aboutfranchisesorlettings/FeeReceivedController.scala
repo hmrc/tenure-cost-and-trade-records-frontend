@@ -119,7 +119,7 @@ class FeeReceivedController @Inject() (
         .collect[ConcessionIncomeRecord] { case concession: ConcessionIncomeRecord =>
           concession
         }
-        .fold(Future.successful(Redirect(backLink(idx))))(action)
+        .fold[Future[Result]](Redirect(backLink(idx)))(action)
     } else {
       Redirect(routes.WhenDidYouFirstOccupyController.show())
     }

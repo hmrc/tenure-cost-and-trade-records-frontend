@@ -25,7 +25,7 @@ import models.submissions.aboutfranchisesorlettings.{ConcessionIncomeRecord, Fee
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.ConcessionTypeFeesId
 import play.api.i18n.I18nSupport
-import play.api.mvc._
+import play.api.mvc.*
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.feeReceived
 
@@ -115,7 +115,7 @@ class ConcessionTypeFeesController @Inject() (
         .flatMap(_.rentalIncome.flatMap(_.lift(idx)))
         .collect { case record: ConcessionIncomeRecord => record }
         .filter(_ => request.sessionData.aboutTheTradingHistoryPartOne.exists(_.turnoverSections6045.nonEmpty))
-        .fold(Future.successful(Redirect(backLink(idx))))(action)
+        .fold[Future[Result]](Redirect(backLink(idx)))(action)
     } else {
       Redirect(controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show())
     }

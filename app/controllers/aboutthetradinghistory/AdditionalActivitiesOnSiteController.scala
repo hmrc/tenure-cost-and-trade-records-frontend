@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.additionalActivitiesOnSite
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class AdditionalActivitiesOnSiteController @Inject() (
@@ -50,17 +50,15 @@ class AdditionalActivitiesOnSiteController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AdditionalActivitiesOnSite")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.additionalActivities)
-            .flatMap(_.additionalActivitiesOnSite) match {
-            case Some(answers) => additionalActivitiesOnSiteForm.fill(answers)
-            case None          => additionalActivitiesOnSiteForm
-          },
-          calculateBackLink
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.additionalActivities)
+          .flatMap(_.additionalActivitiesOnSite) match {
+          case Some(answers) => additionalActivitiesOnSiteForm.fill(answers)
+          case None          => additionalActivitiesOnSiteForm
+        },
+        calculateBackLink
       )
     )
   }

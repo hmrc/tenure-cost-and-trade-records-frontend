@@ -33,7 +33,6 @@ import views.html.aboutfranchisesorlettings.advertisingRightLetting as Advertisi
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 class AdvertisingRightLettingController @Inject() (
   mcc: MessagesControllerComponents,
@@ -78,14 +77,12 @@ class AdvertisingRightLettingController @Inject() (
     continueOrSaveAsDraft[AdvertisingRightLetting](
       theForm,
       formWithErrors =>
-        successful(
-          BadRequest(
-            theView(
-              formWithErrors,
-              index,
-              backLink(index),
-              request.sessionData.toSummary
-            )
+        BadRequest(
+          theView(
+            formWithErrors,
+            index,
+            backLink(index),
+            request.sessionData.toSummary
           )
         ),
       formData => {
@@ -160,7 +157,7 @@ class AdvertisingRightLettingController @Inject() (
     for
       confirmedAddress <- getConfirmedAddress(id)
       lettingAddress   <- confirmedAddress.asAddress
-      newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+      newSession       <- newSessionWithLettingAddress(idx, lettingAddress)
       _                <- repository.saveOrUpdate(newSession)
     yield
       if navigator.from == "CYA"

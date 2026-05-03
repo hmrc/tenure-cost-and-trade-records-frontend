@@ -21,9 +21,11 @@ import connectors.Audit
 import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.theForm
+import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{IncomeRecord, LettingIncomeRecord, OperatorDetails}
+import models.submissions.common.Address
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingTypeDetailsId
 import play.api.Logging
@@ -31,12 +33,9 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.lettingTypeDetails as LettingTypeDetailsView
-import models.ForType.*
-import models.submissions.common.Address
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class LettingTypeDetailsController @Inject() (
@@ -92,7 +91,7 @@ class LettingTypeDetailsController @Inject() (
         ),
       formData =>
         for
-          (newSession, updatedIndex) <- successful(sessionWithOperatorDetails(formData, idx))
+          (newSession, updatedIndex) <- sessionWithOperatorDetails(formData, idx)
           _                          <- repository.saveOrUpdate(newSession)
           redirectResult             <- redirectToAddressLookupFrontend(
                                           config = AddressLookupConfig(
@@ -149,7 +148,7 @@ class LettingTypeDetailsController @Inject() (
       for
         confirmedAddress <- getConfirmedAddress(id)
         businessAddress   = confirmedAddress.asAddress
-        newSession       <- successful(newSessionWithLettingAddress(idx, businessAddress))
+        newSession       <- newSessionWithLettingAddress(idx, businessAddress)
         _                <- repository.saveOrUpdate(newSession)
       yield Redirect(navigator.nextPage(LettingTypeDetailsId, newSession).apply(newSession))
   }

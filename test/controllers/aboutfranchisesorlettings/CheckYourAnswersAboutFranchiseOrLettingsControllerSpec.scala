@@ -33,7 +33,6 @@ import utils.TestBaseSpec
 
 import java.time.LocalDate
 import scala.concurrent.Future
-import scala.concurrent.Future.successful
 import scala.language.reflectiveCalls
 
 class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec:
@@ -167,7 +166,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
 
   trait ControllerFixture(forType: ForType) extends TestBaseSpec:
     val repository: SessionRepo = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier])).thenReturn(Future.unit)
 
     val controller: CheckYourAnswersAboutFranchiseOrLettingsController =
       CheckYourAnswersAboutFranchiseOrLettingsController(

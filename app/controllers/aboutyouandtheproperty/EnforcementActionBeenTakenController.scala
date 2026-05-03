@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.enforcementActionBeenTaken
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class EnforcementActionBeenTakenController @Inject() (
@@ -51,16 +51,14 @@ class EnforcementActionBeenTakenController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("EnforcementActionBeenTaken")
 
-    Future.successful(
-      Ok(
-        enforcementActionBeenTakenView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementAction) match {
-            case Some(enforcementAction) => enforcementActionForm.fill(enforcementAction)
-            case _                       => enforcementActionForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      enforcementActionBeenTakenView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementAction) match {
+          case Some(enforcementAction) => enforcementActionForm.fill(enforcementAction)
+          case _                       => enforcementActionForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

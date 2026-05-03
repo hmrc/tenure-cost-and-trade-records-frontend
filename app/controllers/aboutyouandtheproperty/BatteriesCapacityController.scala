@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.batteriesCapacity
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class BatteriesCapacityController @Inject() (
   mcc: MessagesControllerComponents,
@@ -46,16 +46,14 @@ class BatteriesCapacityController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("BatteriesCapacity")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.batteriesCapacity) match {
-            case Some(data) => batteriesCapacityForm.fill(data)
-            case _          => batteriesCapacityForm
-          },
-          request.sessionData.toSummary,
-          isReadOnly
-        )
+    Ok(
+      view(
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.batteriesCapacity) match {
+          case Some(data) => batteriesCapacityForm.fill(data)
+          case _          => batteriesCapacityForm
+        },
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }

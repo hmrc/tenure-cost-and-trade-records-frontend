@@ -33,7 +33,6 @@ import views.html.aboutfranchisesorlettings.otherLetting as OtherLettingView
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 class OtherLettingController @Inject() (
   mcc: MessagesControllerComponents,
@@ -78,14 +77,12 @@ class OtherLettingController @Inject() (
     continueOrSaveAsDraft[OtherLetting](
       theForm,
       formWithErrors =>
-        successful(
-          BadRequest(
-            theView(
-              formWithErrors,
-              index,
-              backLink(index),
-              request.sessionData.toSummary
-            )
+        BadRequest(
+          theView(
+            formWithErrors,
+            index,
+            backLink(index),
+            request.sessionData.toSummary
           )
         ),
       formData => {
@@ -161,7 +158,7 @@ class OtherLettingController @Inject() (
       for
         confirmedAddress <- getConfirmedAddress(id)
         lettingAddress   <- confirmedAddress.asAddress
-        newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+        newSession       <- newSessionWithLettingAddress(idx, lettingAddress)
         _                <- repository.saveOrUpdate(newSession)
       yield
         if navigator.from == "CYA"

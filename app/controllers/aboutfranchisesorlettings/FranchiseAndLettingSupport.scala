@@ -17,7 +17,7 @@
 package controllers.aboutfranchisesorlettings
 
 import actions.SessionRequest
-import models.submissions.aboutfranchisesorlettings.{Concession6015IncomeRecord, ConcessionIncomeRecord, FranchiseIncomeRecord, IncomeRecord, LettingIncomeRecord}
+import models.submissions.aboutfranchisesorlettings.*
 
 trait FranchiseAndLettingSupport {
 

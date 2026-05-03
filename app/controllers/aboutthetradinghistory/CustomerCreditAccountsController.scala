@@ -27,7 +27,7 @@ import models.submissions.common.AnswersYesNo.*
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CustomerCreditAccountsId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.customerCreditAccounts
 
@@ -67,7 +67,7 @@ class CustomerCreditAccountsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[Seq[CustomerCreditAccounts]](
           customerCreditAccountsForm(years(aboutTheTradingHistory)),
           formWithErrors =>

@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.checkYourAnswersAboutTheProperty as CheckYourAnswersAboutThePropertyView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersAboutThePropertyController @Inject() (
@@ -83,9 +83,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
         repo
           .saveOrUpdate(updatedData)
           .flatMap(_ =>
-            Future.successful(
-              Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
-            )
+            Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
           )
       }
     )

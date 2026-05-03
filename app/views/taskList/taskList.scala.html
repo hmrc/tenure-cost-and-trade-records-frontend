@@ -95,7 +95,7 @@
 }
 
 @section3Completed = @{
-    section3CompletedInFull.toAnswer
+    Option(section3CompletedInFull.toAnswer)
 }
 
 @section4Completed = @{
@@ -165,7 +165,7 @@
 
 @layout(
     pageHeading = messages("taskList.heading"),
-    backLinkUrl = session.lastCYAPageUrl.orElse(LoginController.startPage.url),
+    backLinkUrl = session.lastCYAPageUrl.getOrElse(LoginController.startPage.url),
     summary = session.toSummary
 ) {
     <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Declaration @declarationStatus</h2>

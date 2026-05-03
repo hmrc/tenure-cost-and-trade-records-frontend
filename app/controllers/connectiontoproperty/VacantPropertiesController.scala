@@ -21,8 +21,8 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertiesForm.theForm
 import models.submissions.common.AnswersYesNo
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.AddressConnectionType.*
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.VacantPropertiesPageId
 import play.api.Logging

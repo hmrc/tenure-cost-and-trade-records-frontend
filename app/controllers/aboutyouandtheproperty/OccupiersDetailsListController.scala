@@ -18,7 +18,7 @@ package controllers.aboutyouandtheproperty
 
 import actions.WithSessionRefiner
 import connectors.Audit
-import controllers.FORDataCaptureController
+import controllers.{FORDataCaptureController, toOpt}
 import form.aboutyouandtheproperty.OccupiersDetailsListForm.theForm
 import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
@@ -27,11 +27,10 @@ import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.OccupiersDetailsListId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.occupiersDetailsList as OccupiersDetailsListView
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
-import controllers.toOpt
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
@@ -51,12 +50,11 @@ class OccupiersDetailsListController @Inject() (
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OccupiersDetailsList")
-    Future.successful(
-      Ok(
-        theListView(
-          theForm,
-          index
-        )
+
+    Ok(
+      theListView(
+        theForm,
+        index
       )
     )
   }
@@ -74,16 +72,14 @@ class OccupiersDetailsListController @Inject() (
       formData =>
         request.sessionData.aboutYouAndThePropertyPartTwo
           .map(_.occupiersList)
-          .fold {
-            Future.successful(
-              if (formData == AnswerYes) {
-                Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
-              } else {
-                Redirect(
-                  navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData)
-                )
-              }
-            )
+          .fold[Future[Result]] {
+            if (formData == AnswerYes) {
+              Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
+            } else {
+              Redirect(
+                navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData)
+              )
+            }
           } { existingEntries =>
             if (existingEntries.isEmpty) {
               Redirect(
@@ -116,14 +112,12 @@ class OccupiersDetailsListController @Inject() (
     request.sessionData.aboutYouAndThePropertyPartTwo
       .flatMap(_.occupiersList.lift(index))
       .map { occupier =>
-        Future.successful(
-          Ok(
-            theConfirmationView(
-              confirmableActionForm,
-              occupier.name,
-              controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.performRemove(index),
-              controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(index)
-            )
+        Ok(
+          theConfirmationView(
+            confirmableActionForm,
+            occupier.name,
+            controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.performRemove(index),
+            controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(index)
           )
         )
       }
@@ -137,14 +131,12 @@ class OccupiersDetailsListController @Inject() (
         request.sessionData.aboutYouAndThePropertyPartTwo
           .flatMap(_.occupiersList.lift(index))
           .map { occupier =>
-            Future.successful(
-              BadRequest(
-                theConfirmationView(
-                  formWithErrors,
-                  occupier.name,
-                  controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.performRemove(index),
-                  controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(index)
-                )
+            BadRequest(
+              theConfirmationView(
+                formWithErrors,
+                occupier.name,
+                controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.performRemove(index),
+                controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(index)
               )
             )
           }

@@ -21,7 +21,7 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
 import form.confirmableActionForm.confirmableActionForm
-import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, TelecomMastLetting}
+import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AboutFranchisesOrLettingsNavigator
@@ -32,7 +32,7 @@ import views.html.aboutfranchisesorlettings.addOrRemoveLetting as AddOrRemoveLet
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class AddOrRemoveLettingController @Inject() (
@@ -72,12 +72,10 @@ class AddOrRemoveLettingController @Inject() (
 
     audit.sendChangeLink("AddOrRemoveLetting")
 
-    Future.successful(
-      Ok(
-        theListView(
-          addAnother.fold(addAnotherLettingForm)(addAnotherLettingForm.fill),
-          index
-        )
+    Ok(
+      theListView(
+        addAnother.fold(addAnotherLettingForm)(addAnotherLettingForm.fill),
+        index
       )
     )
   }
@@ -97,7 +95,7 @@ class AddOrRemoveLettingController @Inject() (
         ),
       formData =>
         if (formData == AnswerYes && numberOfLettings >= 5 && navigator.from != "CYA") {
-          Future.successful(Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("lettings"))))
+          Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("lettings")))
         } else {
           lettingsData match {
             case Some(lettings) if lettings.isDefinedAt(index) =>
@@ -120,10 +118,8 @@ class AddOrRemoveLettingController @Inject() (
                 Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
               }
             case _                                             =>
-              Future.successful(
-                Redirect(
-                  routes.AddOrRemoveLettingController.show(lettingsData.map(_.size).getOrElse(0))
-                )
+              Redirect(
+                routes.AddOrRemoveLettingController.show(lettingsData.map(_.size).getOrElse(0))
               )
           }
         }
@@ -144,14 +140,12 @@ class AddOrRemoveLettingController @Inject() (
   def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     getOperatorName(idx)
       .map { operatorName =>
-        Future.successful(
-          Ok(
-            theConfirmationView(
-              confirmableActionForm,
-              operatorName,
-              controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.performRemove(idx),
-              controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(idx)
-            )
+        Ok(
+          theConfirmationView(
+            confirmableActionForm,
+            operatorName,
+            controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.performRemove(idx),
+            controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(idx)
           )
         )
       }
@@ -164,14 +158,12 @@ class AddOrRemoveLettingController @Inject() (
       formWithErrors =>
         getOperatorName(idx)
           .map { operatorName =>
-            Future.successful(
-              BadRequest(
-                theConfirmationView(
-                  formWithErrors,
-                  operatorName,
-                  controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.performRemove(idx),
-                  controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(idx)
-                )
+            BadRequest(
+              theConfirmationView(
+                formWithErrors,
+                operatorName,
+                controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.performRemove(idx),
+                controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(idx)
               )
             )
           }
@@ -193,9 +185,7 @@ class AddOrRemoveLettingController @Inject() (
               )
             }
           } else {
-            Future.successful(
-              Redirect(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(0))
-            )
+            Redirect(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(0))
           }
         case AnswerNo  =>
           Redirect(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(idx))

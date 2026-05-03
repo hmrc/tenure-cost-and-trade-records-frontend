@@ -16,16 +16,16 @@
 
 package controllers.downloadFORTypeForm
 
-import play.api.Logging
 import connectors.BackendConnector
+import controllers.toFut
 import form.ReferenceNumberForm.theForm
+import play.api.Logging
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.referenceNumber as ReferenceNumberView
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class DownloadPDFReferenceNumberController @Inject() (
@@ -45,9 +45,7 @@ class DownloadPDFReferenceNumberController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors =>
-          successful(
-            BadRequest(referenceNumberView(formWithErrors, call = routes.DownloadPDFReferenceNumberController.submit()))
-          ),
+          BadRequest(referenceNumberView(formWithErrors, call = routes.DownloadPDFReferenceNumberController.submit())),
         referenceNumber =>
           connector
             .retrieveFORType(referenceNumber.value, hc)

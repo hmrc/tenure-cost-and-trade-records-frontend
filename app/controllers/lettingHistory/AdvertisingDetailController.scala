@@ -20,8 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.AdvertisingDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfOnlineAdvertising, byAddingOrUpdatingOnlineAdvertising, hasBeenAlreadyEntered}
 import models.submissions.lettingHistory.AdvertisingDetail
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfOnlineAdvertising, byAddingOrUpdatingOnlineAdvertising, hasBeenAlreadyEntered}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.AdvertisingDetailPageId
 import play.api.data.Form
