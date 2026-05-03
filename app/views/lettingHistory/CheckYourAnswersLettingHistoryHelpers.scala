@@ -17,6 +17,7 @@
 package views.lettingHistory
 
 import actions.SessionRequest
+import controllers.*
 import controllers.lettingHistory.routes
 import models.submissions.lettingHistory.{IntendedLettings, LettingHistory}
 import play.api.i18n.Messages
@@ -45,7 +46,7 @@ object CheckYourAnswersLettingHistoryHelpers:
           CardEntry(
             label = messages("lettingHistory.checkYourAnswers.permanentResidents.cardKey1"),
             value = List(resident.name, resident.address.replace("\n", "<br>")).mkString("<br>"),
-            changeAction = Some(routes.ResidentDetailController.show(Some(index)).withFromCheckYourAnswer(fragment))
+            changeAction = routes.ResidentDetailController.show(index).withFromCheckYourAnswer(fragment)
           )
         )
       )
@@ -68,7 +69,7 @@ object CheckYourAnswersLettingHistoryHelpers:
               Some(occupier.name),
               occupier.address.map(_.multiLine)
             ).filter(_.isDefined).map(_.get).mkString("<br>"),
-            changeAction = Some(routes.OccupierDetailController.show(Some(index)).withFromCheckYourAnswer(fragment))
+            changeAction = routes.OccupierDetailController.show(index).withFromCheckYourAnswer(fragment)
           )
         )
       )
@@ -88,7 +89,7 @@ object CheckYourAnswersLettingHistoryHelpers:
           CardEntry(
             label = messages("lettingHistory.checkYourAnswers.onlineAdvertising.cardKey1"),
             value = List(advertising.websiteAddress, advertising.propertyReferenceNumber).mkString("<br>"),
-            changeAction = Some(routes.AdvertisingDetailController.show(Some(index)).withFromCheckYourAnswer(fragment))
+            changeAction = routes.AdvertisingDetailController.show(index).withFromCheckYourAnswer(fragment)
           )
         )
       )

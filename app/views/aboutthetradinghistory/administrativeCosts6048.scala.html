@@ -52,15 +52,15 @@
 @turnoverRow(formField: String, labelKey: String, hintKey: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
+            content = HtmlContent(rowLabel(labelKey, hintKey.filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(
                 govukInput(
                     Input(
-                        prefix = Some(PrefixOrSuffix(
-                            content = Text("£")
-                        )),
+                        prefix = PrefixOrSuffix(
+                            content = Text("£"
+                            )),
                         attributes = Map(
                             "maxlength" -> "13",
                             "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
@@ -83,7 +83,7 @@
 @layout(
     pageHeading = messages("turnover.6048.administrativeCosts.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,

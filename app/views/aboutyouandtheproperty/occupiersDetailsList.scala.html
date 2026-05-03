@@ -15,22 +15,12 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
-@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Actions, Fieldset, Legend, RadioItem, Radios, SummaryList}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Key, SummaryListRow}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -42,7 +32,9 @@
 @(theForm: Form[?], index: Int)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@pluralSuffix = @{ if (occupiersDetails.sizeIs > 1) "s" else "" }
+@pluralSuffix = @{
+    if(occupiersDetails.sizeIs > 1) "s" else ""
+}
 
 @occupiersDetails = @{
     request.sessionData.aboutYouAndThePropertyPartTwo.fold(Seq.empty[String]) {
@@ -51,9 +43,9 @@
 }
 
 @layout(
-    pageHeading = messages(if  (occupiersDetails.isEmpty)  "occupiersDetailsList.zeroDetails.heading" else "occupiersDetailsList.heading",occupiersDetails.size, pluralSuffix),
+    pageHeading = messages(if(occupiersDetails.isEmpty) "occupiersDetailsList.zeroDetails.heading" else "occupiersDetailsList.heading", occupiersDetails.size, pluralSuffix),
     showSection = true,
-    summary = Option(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = None,
     theForm = theForm
@@ -87,7 +79,7 @@
         @govukRadios(
             Radios(
                 name = s"occupiersDetailsList",
-                idPrefix = Option("occupiersDetailsList"),
+                idPrefix = "occupiersDetailsList",
                 classes = "govuk-radios--inline",
                 items = Seq(
                     "yes" -> messages("label.yes"),
@@ -95,20 +87,18 @@
                 ).map(radioItem => RadioItem(
                     content = Text(radioItem._2),
                     checked = radioItem._1.equals(theForm("occupiersDetailsList").value.getOrElse("")),
-                    value = Option(radioItem._1)
+                    value = radioItem._1
                 )
                 ),
-                errorMessage =  theForm.errors.asTextErrorMessageForField("occupiersDetailsList"),
-                fieldset = Option(
+                errorMessage = theForm.errors.asTextErrorMessageForField("occupiersDetailsList"),
+                fieldset =
                     Fieldset(
-                        legend = Option(
+                        legend =
                             Legend(
                                 content = Text(messages("occupiersDetailsList.label")),
                                 classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
                             )
-                        )
                     )
-                )
             )
         )
 

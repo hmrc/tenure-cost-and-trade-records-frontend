@@ -14,8 +14,8 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout)
 
@@ -31,12 +31,12 @@
     backLinkUrl = controllers.routes.LoginController.show.url
 ) {
 
-    @if(remainingAttempts == 1){
+    @if(remainingAttempts == 1) {
         <p class="govuk-body">@messages("error.login.failed")</p>
         <p class="govuk-body">@HtmlContent(messages("error.login.warning")).asHtml</p>
         <p class="govuk-body">@HtmlContent(messages("error.login.attemptsleftSubheading")).asHtml</p>
 
-    <a href="@routes.LoginController.show" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
+        <a href="@routes.LoginController.show" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>
 
     } else {
         <p class="govuk-body">@messages("error.login.failed") @warningMessage</p>

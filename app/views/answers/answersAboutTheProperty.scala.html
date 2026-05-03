@@ -40,11 +40,13 @@
     SectionAnswersRowBuilder(request.sessionData.aboutYouAndThePropertyPartTwo)
 }
 
-@forType = @{request.sessionData.forType}
+@forType = @{
+    request.sessionData.forType
+}
 
 @checkboxOther = @{
-        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed).flatMap(_.propertyCurrentlyUsed.contains("other"))
-    }
+    request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed).flatMap(_.propertyCurrentlyUsed.contains("other"))
+}
 
 @websiteComponent = @{
     sectionAnswers.optionalRow(
@@ -59,7 +61,7 @@
 }
 
 @answers6020 = {
-<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
 @govukSummaryList(SummaryList(rows =
 
     sectionAnswers.row(
@@ -74,18 +76,18 @@
 }
 
 @answers6045 = {
-<h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
 @govukSummaryList(SummaryList(rows =
     sectionAnswersPartTwo.optionalRow(
         "checkYourAnswersAboutTheProperty.propertyUsage",
         _.propertyCurrentlyUsed.map(r =>
             r.propertyCurrentlyUsed.map(item => messages(s"label.propertyCurrentlyUsed.$item"))
-            ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>"
-            + sectionAnswersPartTwo.answers.filter(_ => checkboxOther.get).flatMap(
-        _.propertyCurrentlyUsed.flatMap(_.anotherUseDetails)).fold("")(v => s"<p class=\"govuk-body\">$v</p>"))),
+        ).map(_.mkString("""<p class="govuk-body">""", """</p> <p class="govuk-body">""", "</p>"
+                + sectionAnswersPartTwo.answers.filter(_ => checkboxOther.get).flatMap(
+            _.propertyCurrentlyUsed.flatMap(_.anotherUseDetails)).fold("")(v => s"<p class=\"govuk-body\">$v</p>"))),
         controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show(), "propertyCurrentlyUsed",
         ("valueAsHtml", _ => None)) ++
-    websiteComponent))
+            websiteComponent))
 }
 
 <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutYou.heading")</h2>
@@ -97,82 +99,83 @@
         controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
         "fullName",
         ("valueAsHtml", _ => None)) ++
-    sectionAnswers.row(
-        "checkYourAnswersAboutTheProperty.alternative.address",
-        _.altDetailsQuestion.map(v => if(v.contains(AnswerYes)) messages(s"label.yes.hoffwn") else messages(s"label.no.na.hoffwn")),
-        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
-        "contactDetailsQuestion"
+            sectionAnswers.row(
+                "checkYourAnswersAboutTheProperty.alternative.address",
+                _.altDetailsQuestion.map(v => if(v.contains(AnswerYes)) messages(s"label.yes.hoffwn") else messages(s"label.no.na.hoffwn")),
+                controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
+                "contactDetailsQuestion"
             ) ++
-    sectionAnswers.conditionRow(
-        _.altDetailsQuestion.contains(AnswerYes),
-        "checkYourAnswersAboutTheProperty.alternative.correspondence.address",
-        _.alternativeContactAddress.map(_.escapedHtml),
-        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
-        "",
-        ("valueAsHtml", _ => None)
-        )
+            sectionAnswers.conditionRow(
+                _.altDetailsQuestion.contains(AnswerYes),
+                "checkYourAnswersAboutTheProperty.alternative.correspondence.address",
+                _.alternativeContactAddress.map(_.escapedHtml),
+                controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show(),
+                "",
+                ("valueAsHtml", _ => None)
+            )
 ))
 
 @answersDefault = {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.aboutProperty.heading")</h2>
-    @govukSummaryList(SummaryList(rows =
-        sectionAnswers.row(
-           "checkYourAnswersAboutTheProperty.propertyUsage",
-           _.propertyDetails.map(usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed}")}"
-               + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField.map(_.escapedHtml))).fold("")(v => s"<p class=\"govuk-body\">$v")
-               ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
-           controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
-           ("valueAsHtml", _ => None)) ++
-        websiteComponent
-    ))
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row(
+        "checkYourAnswersAboutTheProperty.propertyUsage",
+        _.propertyDetails.map(usage => s"${messages(s"propertyCurrentlyUsed.${usage.propertyCurrentlyUsed}")}"
+                + sectionAnswers.answers.filter(_ => usage.currentlyUsedOtherField.isDefined).flatMap(_.propertyDetails.flatMap(_.currentlyUsedOtherField.map(_.escapedHtml))).fold("")(v => s"<p class=\"govuk-body\">$v")
+        ).mkString("""<p class="govuk-body">""", """</p><p class="govuk-body">""", "</p>"),
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show(), "propertyCurrentlyUsed",
+        ("valueAsHtml", _ => None)) ++
+            websiteComponent
+))
 }
 
 @{
     forType match {
-        case FOR6020            => answers6020
-        case FOR6030            => answers6030()
-        case FOR6045 | FOR6046  => answers6045
-        case FOR6048            => answers6048()
-        case FOR6076            => answers6076()
-        case _                  => answersDefault
+        case FOR6020 => answers6020
+        case FOR6030 => answers6030()
+        case FOR6045 | FOR6046 => answers6045
+        case FOR6048 => answers6048()
+        case FOR6076 => answers6076()
+        case _ => answersDefault
     }
 }
 
-    @if(sectionAnswers.answers.flatMap(p => p.premisesLicenseGrantedDetail.orElse(p.licensableActivities).orElse(p.premisesLicenseConditions)).isDefined) {
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.license.heading")</h2>
+@if(sectionAnswers.answers.flatMap(p => p.premisesLicenseGrantedDetail.orElse(p.licensableActivities).orElse(p.premisesLicenseConditions)).isDefined) {
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersAboutTheProperty.license.heading")</h2>
 
-        @govukSummaryList(SummaryList(rows = sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail", _.premisesLicenseGrantedDetail.map(yesNo => messages(s"label.$yesNo")), controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show(), "premisesLicenseGranted") ++
-                sectionAnswers.conditionRow(_.premisesLicenseGrantedDetail.contains(AnswerYes),
-                    "checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails",
-                    _.premisesLicenseGrantedInformationDetails,
-                    controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(), "premisesLicenseGrantedInformation") ++
-                sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.licensableActivities",
-                    _.licensableActivities.map(yesNo => messages(s"label.$yesNo")),
-                    controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(), "licensableActivities") ++
-                sectionAnswers.conditionRow(_.licensableActivities.contains(AnswerYes),
-                    "checkYourAnswersAboutTheProperty.licensableActivitiesDetails",
-                    _.licensableActivitiesInformationDetails,
-                    controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(), "licensableActivitiesDetails") ++
-                sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseConditions",
-                    _.premisesLicenseConditions.map(yesNo => messages(s"label.$yesNo")),
-                    controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show(), "premisesLicenseConditions") ++
-                sectionAnswers.conditionRow(_.premisesLicenseConditions.contains(AnswerYes),
-                    "checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails",
-                    _.premisesLicenseConditionsDetails,
-                    controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(), "premisesLicenseConditionsDetails") ++
-                sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.enforcementAction",
-                    _.enforcementAction.map(yesNo => messages(s"label.$yesNo")),
-                    controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show(), "enforcementActionBeenTaken") ++
-                sectionAnswers.conditionRow(_.enforcementAction.contains(AnswerYes),
-                    "checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails",
-                    _.enforcementActionHasBeenTakenInformationDetails,
-                    controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show(), "enforcementActionHasBeenTakenDetails") ++
-                sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.tiedForGoods",
-                    _.tiedForGoods.map(yesNo => messages(s"label.$yesNo")),
-                    controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show(), "tiedForGoods") ++
-                sectionAnswers.conditionRow(_.tiedForGoods.contains(AnswerYes),
-                    "checkYourAnswersAboutTheProperty.tiedForGoodsDetails",
-                    _.tiedForGoodsDetails.map(_.tiedGoodsDetails).map(details => s"tiedForGoodsDetails.$details"),
-                    controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show(), "tiedForGoodsDetails",
-                    ("tiedForGoodsDetails.partialTie", _.tiedForGoodsDetails.flatMap(_.partialTieConditional)))
-        ))}
+    @govukSummaryList(SummaryList(rows = sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseGrantedDetail", _.premisesLicenseGrantedDetail.map(yesNo => messages(s"label.$yesNo")), controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show(), "premisesLicenseGranted") ++
+            sectionAnswers.conditionRow(_.premisesLicenseGrantedDetail.contains(AnswerYes),
+                "checkYourAnswersAboutTheProperty.premisesLicenseGrantedInformationDetails",
+                _.premisesLicenseGrantedInformationDetails,
+                controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show(), "premisesLicenseGrantedInformation") ++
+            sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.licensableActivities",
+                _.licensableActivities.map(yesNo => messages(s"label.$yesNo")),
+                controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(), "licensableActivities") ++
+            sectionAnswers.conditionRow(_.licensableActivities.contains(AnswerYes),
+                "checkYourAnswersAboutTheProperty.licensableActivitiesDetails",
+                _.licensableActivitiesInformationDetails,
+                controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show(), "licensableActivitiesDetails") ++
+            sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.premisesLicenseConditions",
+                _.premisesLicenseConditions.map(yesNo => messages(s"label.$yesNo")),
+                controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show(), "premisesLicenseConditions") ++
+            sectionAnswers.conditionRow(_.premisesLicenseConditions.contains(AnswerYes),
+                "checkYourAnswersAboutTheProperty.premisesLicenseConditionsDetails",
+                _.premisesLicenseConditionsDetails,
+                controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show(), "premisesLicenseConditionsDetails") ++
+            sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.enforcementAction",
+                _.enforcementAction.map(yesNo => messages(s"label.$yesNo")),
+                controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show(), "enforcementActionBeenTaken") ++
+            sectionAnswers.conditionRow(_.enforcementAction.contains(AnswerYes),
+                "checkYourAnswersAboutTheProperty.enforcementActionHasBeenTakenInformationDetails",
+                _.enforcementActionHasBeenTakenInformationDetails,
+                controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show(), "enforcementActionHasBeenTakenDetails") ++
+            sectionAnswers.optionalRow("checkYourAnswersAboutTheProperty.tiedForGoods",
+                _.tiedForGoods.map(yesNo => messages(s"label.$yesNo")),
+                controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show(), "tiedForGoods") ++
+            sectionAnswers.conditionRow(_.tiedForGoods.contains(AnswerYes),
+                "checkYourAnswersAboutTheProperty.tiedForGoodsDetails",
+                _.tiedForGoodsDetails.map(_.tiedGoodsDetails).map(details => s"tiedForGoodsDetails.$details"),
+                controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show(), "tiedForGoodsDetails",
+                ("tiedForGoodsDetails.partialTie", _.tiedForGoodsDetails.flatMap(_.partialTieConditional)))
+    ))
+}

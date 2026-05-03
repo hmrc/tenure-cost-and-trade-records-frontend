@@ -34,7 +34,7 @@
 @layout(
     pageHeading = messages("checkYourAnswersConnectionToVacantProperty.heading"),
     backLinkUrl = backLink,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     fullWidth = true,
     sectionName = messages("label.section.connectionToTheProperty")
 ) {

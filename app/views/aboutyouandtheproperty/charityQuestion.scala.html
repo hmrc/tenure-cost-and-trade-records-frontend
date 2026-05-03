@@ -14,10 +14,10 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import models.submissions.common.AnswersYesNo
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -26,31 +26,32 @@
 )
 
 
-@(theForm: Form[AnswersYesNo], summary: Summary, fromLocation:String = "")(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], summary: Summary, fromLocation: String = "")(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("charityQuestion.heading"),
- showSection = true,
- showH1= false,
- summary = Some(summary),
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl = { fromLocation match {
-  case "TL" => controllers.routes.TaskListController.show.url+"#charity-question"
-  case _ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
- }
- },
- theForm = theForm
+    pageHeading = messages("charityQuestion.heading"),
+    showSection = true,
+    showH1 = false,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = {
+        fromLocation match {
+            case "TL" => controllers.routes.TaskListController.show.url + "#charity-question"
+            case _ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
+        }
+    },
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CharityQuestionController.submit()) {
-  @includes.radioButtonsYesNo(
-   govukRadios,
-   theForm,
-   "charityQuestion",
-   "charityQuestion.heading",
-   classes = "govuk-fieldset__legend--l",
-   isHeading = true
-  )
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CharityQuestionController.submit()) {
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "charityQuestion",
+            "charityQuestion.heading",
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true
+        )
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

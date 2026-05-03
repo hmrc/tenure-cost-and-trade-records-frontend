@@ -20,8 +20,8 @@
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.{CharacterCount, HmrcCharacterCount}
-@import util.{AccessibilityUtil, DateUtilLocalised}
 @import util.NumberUtil.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
 @import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
@@ -35,7 +35,7 @@
         accessibilityUtil: AccessibilityUtil
 )
 
-@(form: Form[VariableOperatingExpensesSections], fromLocation:String = "")(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[VariableOperatingExpensesSections], fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
 
 @columns = @{
     request.sessionData.financialYearEndDates.size
@@ -95,12 +95,12 @@
 @layout(
     pageHeading = messages("variableOperatingExpenses.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = fromLocation match {
         case "TL" => s"${controllers.routes.TaskListController.show.url}#turnover"
         case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
-        case _ =>controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show().url
+        case _ => controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show().url
     },
     theForm = form
 ) {
@@ -131,12 +131,12 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
-                                                content = Text("£")
-                                            )),
+                                            prefix = PrefixOrSuffix(
+                                                content = Text("£"
+                                                )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
-                                                "aria-label" ->accessibilityUtil.ariaBuilder("variableOperatingExpenses.energyAndUtilities", finYearEnd)
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.energyAndUtilities", finYearEnd)
                                             ),
                                         ).withFormField(form(s"variableOperatingExpenses.year[$idx].energy-and-utilities")))
                                     )
@@ -147,9 +147,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
+                                            prefix = PrefixOrSuffix(
                                                 content = Text("£")
-                                            )),
+                                            ),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.cleaningAndLaundry", finYearEnd)
@@ -163,9 +163,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
+                                            prefix = PrefixOrSuffix(
                                                 content = Text("£")
-                                            )),
+                                            ),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.buildingMaintenanceAndRepairs", finYearEnd)
@@ -179,9 +179,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
+                                            prefix = PrefixOrSuffix(
                                                 content = Text("£")
-                                            )),
+                                            ),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.fixturesFittingsAndEquipment", finYearEnd)),
@@ -194,9 +194,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
+                                            prefix = PrefixOrSuffix(
                                                 content = Text("£")
-                                            )),
+                                            ),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.advertisingAndPromotions", finYearEnd)
@@ -210,9 +210,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
+                                            prefix = PrefixOrSuffix(
                                                 content = Text("£")
-                                            )),
+                                            ),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.administrationAndSundries", finYearEnd)
@@ -226,9 +226,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
+                                            prefix = PrefixOrSuffix(
                                                 content = Text("£")
-                                            )),
+                                            ),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.entertainment", finYearEnd)
@@ -245,9 +245,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
+                                            prefix = PrefixOrSuffix(
                                                 content = Text("£")
-                                            )),
+                                            ),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("variableOperatingExpenses.other", finYearEnd)

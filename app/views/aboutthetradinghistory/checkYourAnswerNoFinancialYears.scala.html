@@ -37,14 +37,16 @@
     aboutTheTradingHistory.occupationAndAccountingInformation.get
 }
 
-@vatRegistered = @{request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.areYouVATRegistered)}
+@vatRegistered = @{
+    request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.areYouVATRegistered)
+}
 
 @layout(
-  pageHeading = messages("checkYourAnswersAboutTheTradingHistory.heading"),
-  summary = Some(request.sessionData.toSummary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  fullWidth = true,
-  backLinkUrl = backLinkUrl
+    pageHeading = messages("checkYourAnswersAboutTheTradingHistory.heading"),
+    summary = request.sessionData.toSummary,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    fullWidth = true,
+    backLinkUrl = backLinkUrl
 ) {
 
     <h2 class="govuk-heading-m">@messages("aboutYourTradingHistory.heading")</h2>
@@ -52,8 +54,8 @@
         Seq(
             vatRegistered.map { vatRegistered =>
                 summaryListRow(
-                    keyText    = messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered"),
-                    valueText  = messages(s"label.$vatRegistered"),
+                    keyText = messages("checkYourAnswersAboutTheTradingHistory.areYouVATRegistered"),
+                    valueText = messages(s"label.$vatRegistered"),
                     changeCall = controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show,
                     noBorder = true
                 )
@@ -69,7 +71,7 @@
                 valueText = occupationAndAccountingInformation.currentFinancialYearEnd.map(_.toMonthDay).map(dateUtil.formatMonthDay).getOrElse(""),
                 changeCall = routes.FinancialYearEndController.show()
             ))
-        ).flatten*
+        ).flatten *
     )
 
     @govukWarningText(WarningText(
@@ -88,8 +90,7 @@
 }
 
 
-@* ----------------------------------------------------------------------------- *@
-
+    @* ----------------------------------------------------------------------------- *@
 @summaryList(rows: SummaryListRow*) = @{
     govukSummaryList(SummaryList(rows))
 }
@@ -103,7 +104,7 @@
         value = Value(
             Text(valueText)
         ),
-        actions = Some(Actions(
+        actions = Actions(
             items = Seq(
                 ActionItem(
                     href = changeCall.url,
@@ -113,8 +114,8 @@
                     )
                 )
             )
-        )),
-        classes = if (noBorder) "govuk-summary-list__row--no-border" else ""
+        ),
+        classes = if(noBorder) "govuk-summary-list__row--no-border" else ""
     )
 }
 
@@ -124,14 +125,14 @@
             name = name,
             items = Seq(
                 CheckboxItem(
-                    id = Some(name),
-                    name = Some(name),
+                    id = name,
+                    name = name,
                     value = "true",
                     content = Text(label),
                     checked = theForm(name).value.contains("true"),
                 )
             ),
-            errorMessage =  theForm.errors.asTextErrorMessageForField(name)
+            errorMessage = theForm.errors.asTextErrorMessageForField(name)
         )
     )
 }

@@ -28,27 +28,27 @@
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("connectedToLandlordDetails.heading"),
-  showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url,
- theForm = theForm
+    pageHeading = messages("connectedToLandlordDetails.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.submit()) {
 
-  @includes.textInputHMRCCharCount(
-   hmrcCharacterCount,
-   theForm,
-   "connectedToLandlordDetails",
-   "connectedToLandlordDetails.heading",
-   classes = "govuk-label--l",
-   isPageHeading = true,
-   charCount = 2000
-  )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "connectedToLandlordDetails",
+            "connectedToLandlordDetails.heading",
+            classes = "govuk-label--l",
+            isPageHeading = true,
+            charCount = 2000
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

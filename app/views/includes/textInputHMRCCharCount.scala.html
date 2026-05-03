@@ -22,30 +22,30 @@
 @import uk.gov.hmrc.hmrcfrontend.views.viewmodels.charactercount.CharacterCount
 
 @(hmrcCharacterCount: HmrcCharacterCount,
-  theForm: Form[?],
-  name: String,
-  labelContent: String = "",
-  classes: String = "",
-  isPageHeading: Boolean = false,
-  hint: String = "",
-  charCount: Int
+        theForm: Form[?],
+        name: String,
+        labelContent: String = "",
+        classes: String = "",
+        isPageHeading: Boolean = false,
+        hint: String = "",
+        charCount: Int
 )(implicit messages: Messages)
 
 @hmrcCharacterCount(
-  CharacterCount(
-    id = name,
-    name = name,
-    classes = if (theForm(name).hasErrors) "govuk-input--error" else "" ,
-    value = theForm(name).value,
-    attributes = Map("autocomplete" -> "on"),
-    hint = Some(Hint(content = Text(messages(hint)))),
-    label = Label(
-      content = Text(messages(labelContent)),
-      classes = classes,
-      isPageHeading = isPageHeading
-    ),
-    rows = 4,
-    maxLength = charCount,
-    errorMessage = theForm.errors.asTextErrorMessageForField(name)
-  )
+    CharacterCount(
+        id = name,
+        name = name,
+        classes = if(theForm(name).hasErrors) "govuk-input--error" else "",
+        value = theForm(name).value,
+        attributes = Map("autocomplete" -> "on"),
+        hint = Hint(content = Text(messages(hint))),
+        label = Label(
+            content = Text(messages(labelContent)),
+            classes = classes,
+            isPageHeading = isPageHeading
+        ),
+        rows = 4,
+        maxLength = charCount,
+        errorMessage = theForm.errors.asTextErrorMessageForField(name)
+    )
 )

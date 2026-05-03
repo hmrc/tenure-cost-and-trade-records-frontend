@@ -29,36 +29,36 @@
 @(theForm: Form[String], summary: Summary, backlink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @forType = @{
- request.sessionData.forType
+    request.sessionData.forType
 }
 
 @pageHeaderMsg = @{
- forType match {
-  case FOR6010 | FOR6011 | FOR6015 | FOR6016 => "aboutYourLandlord6010.heading"
-  case _                                     => "aboutYourLandlord.heading"
- }
+    forType match {
+        case FOR6010 | FOR6011 | FOR6015 | FOR6016 => "aboutYourLandlord6010.heading"
+        case _ => "aboutYourLandlord.heading"
+    }
 }
 
 @landlordFullNameLabel = @{
- forType match {
-  case FOR6010 | FOR6011 | FOR6015 | FOR6016 => "landlordFullName6010"
-  case _                                     => "landlordFullName"
- }
+    forType match {
+        case FOR6010 | FOR6011 | FOR6015 | FOR6016 => "landlordFullName6010"
+        case _ => "landlordFullName"
+    }
 }
 
 @layout(
- pageHeading = messages(pageHeaderMsg),
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backlink,
- theForm = theForm
+    pageHeading = messages(pageHeaderMsg),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backlink,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.submit()) {
 
-  @includes.textInput(govukInput, theForm, "landlordFullName", "govuk-input--width-20", landlordFullNameLabel, labelClasses = "govuk-!-font-weight-bold")
+        @includes.textInput(govukInput, theForm, "landlordFullName", "govuk-input--width-20", landlordFullNameLabel, labelClasses = "govuk-!-font-weight-bold")
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

@@ -38,11 +38,13 @@
 
 @(form: Form[String], summary: Summary, entries: Seq[IncomeExpenditure6076Entry])(implicit request: SessionRequest[?], messages: Messages)
 
-@classes = @{"govuk-!-padding-bottom-3 govuk-!-padding-top-3"}
+@classes = @{
+    "govuk-!-padding-bottom-3 govuk-!-padding-top-3"
+}
 
-    @intermittentChoice = @{
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant)
-    }
+@intermittentChoice = @{
+    request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant)
+}
 
 @rowWithLink(msgkey: String, entryValue: IncomeExpenditure6076Entry => BigDecimal, url: IncomeExpenditure6076Entry => String) = @{
     val headerRow = TableRow(content = Text(messages(s"incomeExpenditureSummary6076.$msgkey")), classes = classes)
@@ -64,12 +66,12 @@
     showSection = true,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show().url,
-    summary = Some(summary),
+    summary = summary,
     theForm = form,
     fullWidth = true
 ) {
 
-  <div class="govuk-!-padding-bottom-4 govuk-!-padding-top-4"></div>
+    <div class="govuk-!-padding-bottom-4 govuk-!-padding-top-4"></div>
 
     @defining(entries.map(_.financialYearEnd).distinct) { financialYears =>
         @govukTable(Table(
@@ -78,45 +80,44 @@
                         financialYears.map(year => TableRow(
                             content = Text(dateUtil.formatDayMonthAbbrYear(LocalDate.parse(year))),
                             classes = "govuk-!-font-weight-bold")) ++ Seq(TableRow(content = Empty))) ++
-                Seq(
-                    rowWithLink("totalGross", _.totalGrossReceipts, _.grossReceiptsUrl),
-                    rowWithLink("totalBaseload", _.totalBaseLoadReceipts, _.baseLoadReceiptsUrl),
-                    rowWithLink("totalOther", _.totalOtherIncome, _.otherIncomeUrl),
-                    if(intermittentChoice.contains(Intermittent)){
-                        rowWithLink("totalCoS", _.totalCostOfSalesIntermittent, _.costOfSalesIntermittentUrl)
-                    } else {
-                        rowWithLink("totalCoS", _.totalCostOfSales, _.costOfSalesUrl)
-                    },
-                    rowWithLink("totalStaff", _.totalStaffCosts, _.staffCostsUrl),
-                    rowWithLink("totalPremises", _.totalPremisesCosts, _.premisesCostsUrl),
-                    rowWithLink("totalOperational", _.totalOperationalExpenses, _.operationalExpensesUrl),
-                    rowWithLink("headOffice", _.headOfficeExpenses, _.headOfficeExpensesUrl),
-                    Seq(TableRow(content = Text(messages("incomeExpenditureSummary6076.profitOrLoss")))) ++
-                            entries.map(entry => TableRow(content = Text(entry.netProfitOrLoss.asMoney)))++
-                            Seq(TableRow(content = Empty))
-            ),
+                    Seq(
+                        rowWithLink("totalGross", _.totalGrossReceipts, _.grossReceiptsUrl),
+                        rowWithLink("totalBaseload", _.totalBaseLoadReceipts, _.baseLoadReceiptsUrl),
+                        rowWithLink("totalOther", _.totalOtherIncome, _.otherIncomeUrl),
+                        if(intermittentChoice.contains(Intermittent)) {
+                            rowWithLink("totalCoS", _.totalCostOfSalesIntermittent, _.costOfSalesIntermittentUrl)
+                        } else {
+                            rowWithLink("totalCoS", _.totalCostOfSales, _.costOfSalesUrl)
+                        },
+                        rowWithLink("totalStaff", _.totalStaffCosts, _.staffCostsUrl),
+                        rowWithLink("totalPremises", _.totalPremisesCosts, _.premisesCostsUrl),
+                        rowWithLink("totalOperational", _.totalOperationalExpenses, _.operationalExpensesUrl),
+                        rowWithLink("headOffice", _.headOfficeExpenses, _.headOfficeExpensesUrl),
+                        Seq(TableRow(content = Text(messages("incomeExpenditureSummary6076.profitOrLoss")))) ++
+                                entries.map(entry => TableRow(content = Text(entry.netProfitOrLoss.asMoney))) ++
+                                Seq(TableRow(content = Empty))
+                    ),
             firstCellIsHeader = true,
             classes = "govuk-table"
         ))
     }
 
-
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.submit()) {
         @govukCheckboxes(
             Checkboxes(
-                fieldset = Some(Fieldset(
-                    legend = Some(Legend(
+                fieldset = Fieldset(
+                    legend = Legend(
                         classes = "govuk-label--l",
                         isPageHeading = false
-                    ))
-                )),
+                    )
+                ),
                 name = "incomeExpenditureSummary6076",
                 items = Seq(
                     CheckboxItem(
                         content = Text(messages("incomeExpenditureSummary6076.label")),
                         value = "confirmed",
                         checked = form("incomeExpenditureSummary6076").value.contains("confirmed"),
-                        label = Some(Label(classes = "govuk-body govuk-!-font-weight-bold"))
+                        label = Label(classes = "govuk-body govuk-!-font-weight-bold")
                     )
                 )
             ).withFormField(form("incomeExpenditureSummary6076")))

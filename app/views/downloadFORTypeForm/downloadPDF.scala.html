@@ -24,20 +24,24 @@
 
 @(forTypeStr: String, referenceNumber: String)(implicit request: Request[?], messages: Messages)
 
-@forWithoutPrefix = @{StringOps(forTypeStr).filter(_.isDigit)}
+@forWithoutPrefix = @{
+    StringOps(forTypeStr).filter(_.isDigit)
+}
 
 @findForType = @{
-  ForType.find(forTypeStr)
+    ForType.find(forTypeStr)
 }
 
 @layout(
-  pageHeading = messages("downloadPdf.heading"),
-  showH1 = false,
-  backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
+    pageHeading = messages("downloadPdf.heading"),
+    showH1 = false,
+    backLinkUrl = controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
 ) {
 
     @findForType.fold {
-        <h2 class="govuk-heading-l">@{messages("downloadPdf.subheading")}</h2>
+        <h2 class="govuk-heading-l">@{
+            messages("downloadPdf.subheading")
+        }</h2>
         <p class="govuk-body">@messages("downloadPdf.no.download")</p>
         <p class="govuk-body">@HtmlContent(messages("downloadPdf.retry")).asHtml</p>
         <a href="@controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show()" class="govuk-button" data-module="govuk-button" >@messages("label.retryLogin")</a>

@@ -17,8 +17,8 @@
 package views.answers
 
 import actions.SessionRequest
-import controllers.aboutfranchisesorlettings.routes
 import controllers.*
+import controllers.aboutfranchisesorlettings.routes
 import models.ForType.FOR6030
 import models.submissions.aboutfranchisesorlettings.*
 import play.api.i18n.Messages

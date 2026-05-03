@@ -15,8 +15,8 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.common.AnswersYesNo
 @import models.ForType.*
+@import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.vo.service.model.button.SubmitButton
 @import views.html.components.PrimaryLayout
@@ -52,7 +52,7 @@
     pageHeading = messages("genericRemoveConfirmation.heading", name),
     showSection = true,
     showH1 = false,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = sectionName,
     backLinkUrl = cancelAction.url,
     theForm = theForm

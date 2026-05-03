@@ -25,11 +25,11 @@
 @import java.time.LocalDate
 
 @this(layout: PrimaryLayout,
-    govukButton: GovukButton,
-    formWithCSRF: FormWithCSRF,
-    govukSummaryList: GovukSummaryList,
-    govukCheckboxes: GovukCheckboxes,
-    dateUtil: DateUtilLocalised
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukSummaryList: GovukSummaryList,
+        govukCheckboxes: GovukCheckboxes,
+        dateUtil: DateUtilLocalised
 )
 
 
@@ -54,21 +54,21 @@
 @layout(
     pageHeading = messages("financialYearEndDatesSummary.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = Some(backLink),
+    backLinkUrl = backLink,
     theForm = theForm
 ) {
 
     <p class="govuk-body"> @messages("financialYearEndDatesSummary.p1") </p>
-  @for((financialYearEnd,index) <- financialYearEndData(sectionAnswers.answers.get)) {
-      @govukSummaryList(SummaryList(rows =
-          sectionAnswers.nonCYArow(financialYearEnd,
-              _ => None,
-              controllers.aboutthetradinghistory.routes.EditFinancialYearEndDateController.show(index), "operatorName",
-              ("valueAsHtml", _ => None))
-      ))
-  }
+    @for((financialYearEnd, index) <- financialYearEndData(sectionAnswers.answers.get)) {
+        @govukSummaryList(SummaryList(rows =
+            sectionAnswers.nonCYArow(financialYearEnd,
+                _ => None,
+                controllers.aboutthetradinghistory.routes.EditFinancialYearEndDateController.show(index), "operatorName",
+                ("valueAsHtml", _ => None))
+        ))
+    }
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.submit()) {
         @govukCheckboxes(

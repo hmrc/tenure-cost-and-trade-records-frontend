@@ -41,11 +41,11 @@
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
 }
 @tableRow(values: Seq[String]) = {
-          @values.map {value =>
-               <div class="hmrc-turnover-table-column">
-                      @value
-                </div>
-                      }
+@values.map { value =>
+    <div class="hmrc-turnover-table-column">
+        @value
+    </div>
+}
 }
 @answer(valueLabelKey: String, getAnswer: TurnoverSection6045 => String) = @{
 
@@ -59,7 +59,7 @@
 }
 
 @financialYearEndDates(implicit request: SessionRequest[?]) = @{
-            request.sessionData.financialYearEndDates6045.map(_._1)
+    request.sessionData.financialYearEndDates6045.map(_._1)
 }
 @financialYearEndRow(pageHeadingKey: String, editPage: Call) = @{
     SummaryListRow(
@@ -69,50 +69,50 @@
                 financialYearEndDates.map(dateUtil.formatDayMonthAbbrYear)
             ).body
         )),
-        actions = Some(
+        actions =
             Actions(items =
                 Seq(
                     ActionItem(
                         href = s"$editPage?from=CYA",
                         content = Text(messages("label.change")),
-                        visuallyHiddenText = Some(messages(pageHeadingKey)),
+                        visuallyHiddenText = messages(pageHeadingKey),
                         attributes = Map(
                             "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
                         )
                     )
                 )
             )
-        ),
+        ,
         classes = "no-border-bottom"
     )
 }
 @pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
 
-  <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
-            @govukSummaryList(SummaryList(rows =
-                    financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
-                ))
+    <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+@govukSummaryList(SummaryList(rows =
+    financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
+))
 }
 
 @layout(
     pageHeading = messages("cYa.touringAndTentingPitches.heading"),
     backLinkUrl = backLink,
-    fullWidth   = true,
-    summary     = Some(request.sessionData.toSummary),
+    fullWidth = true,
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     theForm = theForm
 ) {
 
 
-        <h2 class="govuk-heading-m">@messages("cYa.touringAndTentingPitches.pitches.heading")</h2>
-        @govukSummaryList(SummaryList(rows =
+    <h2 class="govuk-heading-m">@messages("cYa.touringAndTentingPitches.pitches.heading")</h2>
+    @govukSummaryList(SummaryList(rows =
 
-            tradingHistoryOne.row(
-                "cYa.touringAndTentingPitches.pitches.label",
-                _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
-                controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
-                "tentingPitchesOnSite")
-        ))
+        tradingHistoryOne.row(
+            "cYa.touringAndTentingPitches.pitches.label",
+            _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite.flatMap(x => if(x == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy"))),
+            controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
+            "tentingPitchesOnSite")
+    ))
 
     @if(tradingHistoryOne.answers.flatMap(_.touringAndTentingPitches).flatMap(_.tentingPitchesOnSite).contains(AnswerYes)) {
 
@@ -121,35 +121,35 @@
             controllers.aboutthetradinghistory.routes.PitchesForCaravansController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.pitchesForCaravans.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
-            answer("tentingPitches.common.grossReceipts",   _.pitchesForCaravans.flatMap(_.grossReceipts)),
+            answer("tentingPitches.common.grossReceipts", _.pitchesForCaravans.flatMap(_.grossReceipts)),
             answer("tentingPitches.common.numberOfPitches", _.pitchesForCaravans.flatMap(_.numberOfPitches)),
         )
         @pageAnswers("cya.pitchesForGlamping.heading",
             controllers.aboutthetradinghistory.routes.PitchesForGlampingController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.pitchesForCaravans.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
-            answer("tentingPitches.common.grossReceipts",   _.pitchesForGlamping.flatMap(_.grossReceipts)),
+            answer("tentingPitches.common.grossReceipts", _.pitchesForGlamping.flatMap(_.grossReceipts)),
             answer("tentingPitches.common.numberOfPitches", _.pitchesForGlamping.flatMap(_.numberOfPitches)),
         )
         @pageAnswers("cya.rallyAreas.heading",
             controllers.aboutthetradinghistory.routes.RallyAreasController.show(),
             answer("checkYourAnswersAboutTheTradingHistory.tradingPeriod",
                 t => s"${t.pitchesForCaravans.map(_.tradingPeriod).getOrElse("")} ${messages("turnover.weeks")}"),
-            answer("tentingPitches.common.grossReceipts",   _.rallyAreas.flatMap(_.grossReceipts)),
+            answer("tentingPitches.common.grossReceipts", _.rallyAreas.flatMap(_.grossReceipts)),
             answer("tentingPitches.common.areaInHectares", _.rallyAreas.flatMap(_.areaInHectares).map(_.toString())),
         )
         @govukSummaryList(SummaryList(rows =
 
-        tradingHistoryOne.row(
-            "cya.touringAndTentingPitches.total.label",
-            _.touringAndTentingPitches.flatMap(_.tentingPitchesTotal).map(_.toString).getOrElse(""),
-            controllers.aboutthetradinghistory.routes.TentingPitchesTotalController.show(),
-            "tentingPitchesTotal") ++
-        tradingHistoryOne.row(
-            "cya.touringAndTentingPitches.certificated.label",
-            _.touringAndTentingPitches.flatMap(_.tentingPitchesCertificated).flatMap(yesNo => messages(s"label.$yesNo")).orElse(""),
-            controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show(),
-            "tentingPitchesCertificated")
+            tradingHistoryOne.row(
+                "cya.touringAndTentingPitches.total.label",
+                _.touringAndTentingPitches.flatMap(_.tentingPitchesTotal).map(_.toString).getOrElse(""),
+                controllers.aboutthetradinghistory.routes.TentingPitchesTotalController.show(),
+                "tentingPitchesTotal") ++
+                    tradingHistoryOne.row(
+                        "cya.touringAndTentingPitches.certificated.label",
+                        _.touringAndTentingPitches.flatMap(_.tentingPitchesCertificated).flatMap(yesNo => messages(s"label.$yesNo")).orElse(""),
+                        controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show(),
+                        "tentingPitchesCertificated")
         ))
 
     }

@@ -41,11 +41,11 @@
 @rowLabel(labelKey: String, explanationMsg: Option[String]) = {
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold ">@messages(labelKey)</span>
-        <span>@explanationMsg.map {explanationMsg => @messages(explanationMsg)}</span>
+        <span>@explanationMsg.map { explanationMsg => @messages(explanationMsg) }</span>
     </p>
 }
 
-@turnoverRow(formField: String,  labelKey: String, classes: String, prefix: PrefixOrSuffix, explanationMsg: String, finYearEnd: LocalDate) = @{
+@turnoverRow(formField: String, labelKey: String, classes: String, prefix: PrefixOrSuffix, explanationMsg: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
             content = HtmlContent(rowLabel(labelKey, explanationMsg)),
@@ -66,11 +66,10 @@
 }
 
 
-
 @layout(
     pageHeading = messages("additionalAmusements.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,

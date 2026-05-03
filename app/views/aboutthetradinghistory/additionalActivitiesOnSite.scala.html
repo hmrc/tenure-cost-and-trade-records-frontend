@@ -31,7 +31,7 @@
 @layout(
     pageHeading = messages("additionalActivitiesOnSite.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     backLinkUrl = backLink,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     theForm = theForm,
@@ -40,7 +40,7 @@
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.submit()) {
 
-      <p class="govuk-body"></p>
+        <p class="govuk-body"></p>
 
         @includes.radioButtonsYesNo(
             govukRadios,

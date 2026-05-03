@@ -28,26 +28,26 @@
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("rentPayableVaryOnQuantityOfBeersDetails.heading"),
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url,
- theForm = theForm
+    pageHeading = messages("rentPayableVaryOnQuantityOfBeersDetails.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.submit()) {
 
-  @includes.textInputHMRCCharCount(
-   hmrcCharacterCount,
-   theForm,
-   "rentPayableVaryOnQuantityOfBeersDetails",
-   classes = "govuk-label--l",
-    hint = "hint.rentPayableVaryOnQuantityOfBeersDetails",
-   isPageHeading = true,
-   charCount = 2000
-  )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "rentPayableVaryOnQuantityOfBeersDetails",
+            classes = "govuk-label--l",
+            hint = "hint.rentPayableVaryOnQuantityOfBeersDetails",
+            isPageHeading = true,
+            charCount = 2000
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

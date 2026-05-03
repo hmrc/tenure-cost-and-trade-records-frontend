@@ -15,18 +15,13 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.Checkboxes
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.CheckboxItem
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.ExclusiveCheckbox
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.ForType.*
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes.{CheckboxItem, Checkboxes, ExclusiveCheckbox}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout,
@@ -46,7 +41,7 @@
     forType match {
         case FOR6015 | FOR6016 => messages("label.section.aboutConcessionsOrLettings")
         case FOR6045 | FOR6046 => messages("label.section.aboutConcessionsFranchisesOrLettings")
-        case _                 => messages("label.section.aboutFranchisesOrLettings")
+        case _ => messages("label.section.aboutFranchisesOrLettings")
     }
 }
 
@@ -70,39 +65,39 @@
         @govukCheckboxes(
             Checkboxes(
                 name = "itemsInRent[]",
-                fieldset = Some(Fieldset(
-                    legend = Some(Legend(
+                fieldset = Fieldset(
+                    legend = Legend(
                         classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
                         isPageHeading = true
-                    ))
-                )),
+
+                    )),
                 items = Seq(
                     CheckboxItem(
                         value = "rates",
-                        id= "rates",
+                        id = "rates",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.rates"))
                     ),
                     CheckboxItem(
                         value = "propertyInsurance",
-                        id= "propertyInsurance",
+                        id = "propertyInsurance",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.propertyInsurance"))
                     ),
                     CheckboxItem(
                         value = "outsideRepairs",
-                        id= "outsideRepairs",
+                        id = "outsideRepairs",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.outsideRepairs"))
                     ),
                     CheckboxItem(
                         value = "insideRepairs",
-                        id= "insideRepairs",
+                        id = "insideRepairs",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.insideRepairs"))
                     ),
                     CheckboxItem(
-                        divider = Some(messages("checkbox.divider"))
+                        divider = messages("checkbox.divider")
                     ),
                     CheckboxItem(
                         behaviour = ExclusiveCheckbox,
-                        id= "noneOfThese",
+                        id = "noneOfThese",
                         value = "noneOfThese",
                         content = Text(messages("checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese"))
                     )

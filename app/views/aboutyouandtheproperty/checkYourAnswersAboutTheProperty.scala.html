@@ -15,13 +15,13 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
 @import models.ForType.FOR6076
 @import models.pages.Summary
 @import models.submissions.common.CheckYourAnswersAndConfirm
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import views.html.answers.answersAboutTheProperty
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -34,46 +34,46 @@
 
 @(theForm: Form[CheckYourAnswersAndConfirm], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
-    @layout(
-        pageHeading = messages("checkYourAnswersAboutTheProperty.heading"),
-        backLinkUrl = backLink,
-        fullWidth = true,
-        summary = Some(summary),
-        sectionName = messages("label.section.aboutTheProperty"),
-        theForm = theForm
-    ) {
+@layout(
+    pageHeading = messages("checkYourAnswersAboutTheProperty.heading"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    theForm = theForm
+) {
 
-        @answersSectionAboutTheProperty()
+    @answersSectionAboutTheProperty()
 
-        @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.submit()) {
 
-            @if(request.sessionData.forType == FOR6076) {
-                @govukWarningText(WarningText(
-                    content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
-                ))
-                @govukCheckboxes(
-                    Checkboxes(
-                        items = Seq(
-                            CheckboxItem(
-                                id = "answersConfirmed",
-                                name = "answersConfirmed",
-                                content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
-                                value = "true",
-                                checked = theForm("answersConfirmed").value.contains("true")
-                            )
+        @if(request.sessionData.forType == FOR6076) {
+            @govukWarningText(WarningText(
+                content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
+            ))
+            @govukCheckboxes(
+                Checkboxes(
+                    items = Seq(
+                        CheckboxItem(
+                            id = "answersConfirmed",
+                            name = "answersConfirmed",
+                            content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
+                            value = "true",
+                            checked = theForm("answersConfirmed").value.contains("true")
                         )
-                    ).withFormField(theForm("answersConfirmed"))
-                )
-                @includes.checkYourAnswersRadioButtons(
-                    govukRadios,
-                    theForm,
-                    "answersChecked"
-                )
-            } else {
-                <input type="hidden" name="answersConfirmed" value="true" />
-                <input type="hidden" name="answersChecked" value="yes" />
-            }
-
-            @includes.continueSaveAsDraftButtons(govukButton)
+                    )
+                ).withFormField(theForm("answersConfirmed"))
+            )
+            @includes.checkYourAnswersRadioButtons(
+                govukRadios,
+                theForm,
+                "answersChecked"
+            )
+        } else {
+            <input type="hidden" name="answersConfirmed" value="true" />
+            <input type="hidden" name="answersChecked" value="yes" />
         }
+
+        @includes.continueSaveAsDraftButtons(govukButton)
     }
+}

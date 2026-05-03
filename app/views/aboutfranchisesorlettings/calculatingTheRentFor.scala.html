@@ -14,12 +14,10 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput}
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -29,20 +27,20 @@
 )
 
 
-@(theForm: Form[?], index: Int,  operatorName: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], index: Int, operatorName: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("calculating.the.rent.for.heading", operatorName),
     showSection = true,
     showH1 = false,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutConcessionsOrLettings"),
     backLinkUrl = controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(index).url,
     theForm = theForm
 ) {
     @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.submit(index)) {
 
-            <h1 class="govuk-heading-l">@messages("calculating.the.rent.for.heading", operatorName)</h1>
+        <h1 class="govuk-heading-l">@messages("calculating.the.rent.for.heading", operatorName)</h1>
 
         @includes.textInputHMRCCharCount(
             hmrcCharacterCount,

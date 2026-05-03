@@ -44,10 +44,10 @@
 @layout(
     pageHeading = messages("bunkeredFuelSold.heading"),
     showSection = true,
-    showH1  = false ,
-    summary = Some(request.sessionData.toSummary),
+    showH1 = false,
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = Some(backLink),
+    backLinkUrl = backLink,
     fullWidth = true,
     theForm = form
 ) {
@@ -55,11 +55,11 @@
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.BunkeredFuelSoldController.submit()) {
 
-      <h1 class="govuk-heading-l govuk-!-width-three-quarters">@messages("bunkeredFuelSold.heading")</h1>
+        <h1 class="govuk-heading-l govuk-!-width-three-quarters">@messages("bunkeredFuelSold.heading")</h1>
 
-      @govukInsetText(InsetText(
-          content = Text(messages("common6020.inset"))
-      ))
+        @govukInsetText(InsetText(
+            content = Text(messages("common6020.inset"))
+        ))
 
         <table class="hmrc-responsive-table govuk-!-font-weight-regular govuk-!-width-three-quarters">
             <tbody>
@@ -92,9 +92,9 @@
                                             attributes = Map(
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("bunkeredFuelSold.bunkeredFuel.label", finYearEnd)
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.litres"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("label.litres")
+                                                ))
                                         ).withFormField(form(s"bunkeredFuelSold-$idx")))
                                     )
                                 )

@@ -49,20 +49,20 @@
     SummaryListRow(
         key = Key(Text(messages("checkYourAnswersAboutTheProperty.yearEndingWelsh.label"))),
         value = Value(HtmlContent(tableRow(financialYears).body)),
-        actions = Some(
+        actions =
             Actions(items =
                 Seq(
                     ActionItem(
                         href = s"$url?from=CYA",
                         content = Text(messages("label.change")),
-                        visuallyHiddenText = Some(heading),
+                        visuallyHiddenText = heading,
                         attributes = Map(
                             "aria-label" -> s"${messages("label.change")} $heading"
                         )
                     )
                 )
             )
-        ),
+        ,
         classes = "no-border-bottom"
     )
 }

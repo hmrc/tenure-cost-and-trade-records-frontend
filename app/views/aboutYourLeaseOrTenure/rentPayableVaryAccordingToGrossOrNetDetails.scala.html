@@ -28,28 +28,26 @@
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("rentPayableVaryAccordingToGrossOrNetDetails.heading"),
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url,
- theForm = theForm
+    pageHeading = messages("rentPayableVaryAccordingToGrossOrNetDetails.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.submit()) {
 
-  @includes.textInputHMRCCharCount(
-   hmrcCharacterCount,
-   theForm,
-   "rentPayableVaryAccordingToGrossOrNetDetails",
-   classes = "govuk-label--l",
-   isPageHeading = true,
-    hint = "rentPayableVaryAccordingToGrossOrNetDetails.hint",
-   charCount = 2000
-  )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "rentPayableVaryAccordingToGrossOrNetDetails",
+            classes = "govuk-label--l",
+            isPageHeading = true,
+            hint = "rentPayableVaryAccordingToGrossOrNetDetails.hint",
+            charCount = 2000
+        )
 
-
-
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

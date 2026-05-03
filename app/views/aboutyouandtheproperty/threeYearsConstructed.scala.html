@@ -14,10 +14,10 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -25,34 +25,34 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo],from: String, summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], from: String, summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("threeYearsConstructed.heading"),
- showSection = true,
- showH1 = false,
- summary = Some(summary),
- sectionName = messages("label.section.aboutTheProperty"),
- backLinkUrl =  from match {
-  case "TL"  => controllers.routes.TaskListController.show.url+"#site-construction-details"
-  case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-  case _     => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show().url
- },
- theForm = theForm,
- readOnly = readOnly
+    pageHeading = messages("threeYearsConstructed.heading"),
+    showSection = true,
+    showH1 = false,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = from match {
+        case "TL" => controllers.routes.TaskListController.show.url + "#site-construction-details"
+        case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+        case _ => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show().url
+    },
+    theForm = theForm,
+    readOnly = readOnly
 ) {
 
- @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.submit()) {
 
-  @includes.radioButtonsYesNo(
-   govukRadios,
-   theForm,
-   "threeYearsConstructed",
-   "threeYearsConstructed.heading",
-   classes = "govuk-fieldset__legend--l",
-   isHeading = true
-  )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "threeYearsConstructed",
+            "threeYearsConstructed.heading",
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

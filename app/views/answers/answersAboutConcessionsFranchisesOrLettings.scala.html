@@ -26,19 +26,27 @@
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
-@forType = @{ request.sessionData.forType }
+@forType = @{
+    request.sessionData.forType
+}
 
-@aboutFranchiseOrLetting = @{ request.sessionData.aboutFranchisesOrLettings }
-@franchisesOrLettingsTiedToProperty = @{ aboutFranchiseOrLetting.flatMap(_.franchisesOrLettingsTiedToProperty) }
-@rentalIncome = @{ aboutFranchiseOrLetting.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty) }
+@aboutFranchiseOrLetting = @{
+    request.sessionData.aboutFranchisesOrLettings
+}
+@franchisesOrLettingsTiedToProperty = @{
+    aboutFranchiseOrLetting.flatMap(_.franchisesOrLettingsTiedToProperty)
+}
+@rentalIncome = @{
+    aboutFranchiseOrLetting.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
+}
 
 <h2 class="govuk-heading-m ">@messages("checkYourAnswersAboutConcessionsFranchiseOrLettings.rentalIncome.heading")</h2>
 
 @includes.cards.header(
     govukSummaryList,
     messageKey = {
-      if(forType == FOR6015 || forType == FOR6016) "checkYourAnswersAboutConcessionsOrLettings.rentalIncome"
-      else "checkYourAnswersAboutFranchiseOrLettings.rentalIncome"
+        if(forType == FOR6015 || forType == FOR6016) "checkYourAnswersAboutConcessionsOrLettings.rentalIncome"
+        else "checkYourAnswersAboutFranchiseOrLettings.rentalIncome"
     },
     valueAsBoolean = franchisesOrLettingsTiedToProperty.exists(_.toBoolean),
     changeAction = routes.FranchiseOrLettingsTiedToPropertyController.show().asChangeLink("rentReceived")

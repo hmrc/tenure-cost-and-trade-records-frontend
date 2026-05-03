@@ -42,7 +42,7 @@
             classes = formGroupClasses,
         ),
         label = if(optional) Label(content = Text(s"${messages(s"label.$labelContent")} ${messages("hintText.optional")}"), classes = labelClasses)
-                else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
-        hint = Option(hintMsg).filterNot(_.trim.isEmpty).map(key => Hint(content = Text(messages(s"hint.$key"))))
+        else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
+        hint = hintMsg.filterNot(_.trim.isEmpty).map(key => Hint(content = Text(messages(s"hint.$key"))))
     ).withFormField(theForm(id))
 )

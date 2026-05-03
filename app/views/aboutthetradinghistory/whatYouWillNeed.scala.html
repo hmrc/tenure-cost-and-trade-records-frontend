@@ -27,25 +27,27 @@
 
 @(theForm: Form[String], summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
-@forType = @{ request.sessionData.forType }
+@forType = @{
+    request.sessionData.forType
+}
 
-    @forTypeList = @{
-        forType match {
-            case FOR6010 | FOR6011 => includes.whatYouWillNeedContent.whatYouWillNeed60106011()
-            case FOR6015 => includes.whatYouWillNeedContent.whatYouWillNeed6015()
-            case FOR6016 => includes.whatYouWillNeedContent.whatYouWillNeed6016()
-            case FOR6020 => includes.whatYouWillNeedContent.whatYouWillNeed6020()
-            case FOR6030 => includes.whatYouWillNeedContent.whatYouWillNeed6030()
-            case FOR6045 | FOR6046 => includes.whatYouWillNeedContent.whatYouWillNeed60456046()
-            case FOR6048 => includes.whatYouWillNeedContent.whatYouWillNeed6048()
-            case FOR6076 => includes.whatYouWillNeedContent.whatYouWillNeed6076()
-        }
+@forTypeList = @{
+    forType match {
+        case FOR6010 | FOR6011 => includes.whatYouWillNeedContent.whatYouWillNeed60106011()
+        case FOR6015 => includes.whatYouWillNeedContent.whatYouWillNeed6015()
+        case FOR6016 => includes.whatYouWillNeedContent.whatYouWillNeed6016()
+        case FOR6020 => includes.whatYouWillNeedContent.whatYouWillNeed6020()
+        case FOR6030 => includes.whatYouWillNeedContent.whatYouWillNeed6030()
+        case FOR6045 | FOR6046 => includes.whatYouWillNeedContent.whatYouWillNeed60456046()
+        case FOR6048 => includes.whatYouWillNeedContent.whatYouWillNeed6048()
+        case FOR6076 => includes.whatYouWillNeedContent.whatYouWillNeed6076()
     }
+}
 
 @layout(
     pageHeading = messages("whatYouWillNeed.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = controllers.routes.TaskListController.show.url,
     theForm = theForm
@@ -66,12 +68,14 @@
 
         <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
 
-            @forTypeList
+        @forTypeList
 
         </ul>
 
         <h2 class="govuk-heading-m">@messages("whatYouWillNeed.subheading2")</h2>
-        <p class="govuk-body">@{HtmlContent(messages("whatYouWillNeed.p10")).asHtml}</p>
+        <p class="govuk-body">@{
+            HtmlContent(messages("whatYouWillNeed.p10")).asHtml
+        }</p>
 
         @includes.continueSaveAsDraftButtons(govukButton)
 

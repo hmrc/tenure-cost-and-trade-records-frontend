@@ -16,8 +16,8 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.Caravans.CaravanHireType.*
-@import models.submissions.aboutthetradinghistory.Caravans.{CaravanHireType, CaravanUnitType}
 @import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.*
+@import models.submissions.aboutthetradinghistory.Caravans.{CaravanHireType, CaravanUnitType}
 @import models.submissions.aboutthetradinghistory.CaravansAge
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
@@ -90,7 +90,7 @@
 @layout(
     pageHeading = messages(s"turnover.6045.${caravansUnitType}CaravansAgeCategories.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLinkUrl,
     fullWidth = true,

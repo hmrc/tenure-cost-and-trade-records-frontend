@@ -18,8 +18,8 @@
 @import models.submissions.aboutthetradinghistory.Income6048
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import util.{AccessibilityUtil, DateUtilLocalised}
 @import util.NumberUtil.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
 @import views.html.components.PrimaryLayout
 
 @import java.time.LocalDate
@@ -54,15 +54,15 @@
 @turnoverRow(formField: String, labelKey: String, hintKey: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, excludingVAT = true, Option(hintKey).filterNot(_.isEmpty)))
+            content = HtmlContent(rowLabel(labelKey, excludingVAT = true, hintKey.filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(
                 govukInput(
                     Input(
-                        prefix = Some(PrefixOrSuffix(
+                        prefix = PrefixOrSuffix(
                             content = Text("£")
-                        )),
+                        ),
                         attributes = Map(
                             "maxlength" -> "13",
                             "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
@@ -87,9 +87,9 @@
                         "maxlength" -> maxLength.toString,
                         "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                     ),
-                    suffix = Some(PrefixOrSuffix(
-                        content = Text(messages(suffixKey))
-                    ))
+                    suffix = PrefixOrSuffix(
+                        content = Text(messages(suffixKey)
+                        ))
                 ).withFormField(form(formField)))
             )
         )
@@ -107,7 +107,7 @@
 @layout(
     pageHeading = messages("turnover.6048.income.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,

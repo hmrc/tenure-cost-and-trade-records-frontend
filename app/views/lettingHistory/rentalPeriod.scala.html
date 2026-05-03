@@ -26,14 +26,14 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages("lettingHistory.rentalPeriod.heading", occupierDetailName),
     backLinkUrl = backLink,
     showSection = true,
     sectionName = messages("label.section.lettingHistory")
 ) {
 
-    @formWithCSRF(action = routes.RentalPeriodController.submit(Some(index))) {
+    @formWithCSRF(action = routes.RentalPeriodController.submit(index)) {
         @includes.dateFields(
             govukDate = govukDateInput,
             form = theForm,

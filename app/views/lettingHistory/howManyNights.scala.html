@@ -18,8 +18,8 @@
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.LocalPeriod
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Hint, Text}
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.{Input, PrefixOrSuffix}
 @import util.DateUtilLocalised
 @import views.html.components.PrimaryLayout
@@ -30,7 +30,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages(
         "lettingHistory.intendedLettings.nights.heading",
         dateUtil.formatDate(fiscalPeriod.fromDate),
@@ -46,17 +46,17 @@
             Input(
                 id = "nights",
                 name = "nights",
-                hint = Some(Hint(
+                hint = Hint(
                     content = Text(
-                        messages("lettingHistory.intendedLettings.nights.hint")
-                    )
-                )),
+                        messages("lettingHistory.intendedLettings.nights.hint"
+                        )
+                    )),
                 value = theForm.data.get("nights"),
                 classes = "govuk-input--width-2",
-                spellcheck = Some(false),
-                suffix = Some(PrefixOrSuffix(
-                    content = Text("nights")
-                )),
+                spellcheck = false,
+                suffix = PrefixOrSuffix(
+                    content = Text("nights"
+                    )),
                 errorMessage = theForm.errors.asTextErrorMessageForField("nights")
             )
         )

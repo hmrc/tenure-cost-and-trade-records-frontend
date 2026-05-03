@@ -20,18 +20,18 @@
 @import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-    govukButton: GovukButton,
-    formWithCSRF: FormWithCSRF,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
         hmrcCharacterCount: HmrcCharacterCount,
 )
 
 
-@(theForm: Form[?], index: Option[Int], backLink: String,   summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], index: Option[Int], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("servicePaidSeparately.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLink,
     theForm = theForm

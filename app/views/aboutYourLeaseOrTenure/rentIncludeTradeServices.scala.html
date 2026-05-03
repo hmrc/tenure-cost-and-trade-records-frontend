@@ -29,35 +29,35 @@
 @(theForm: Form[AnswersYesNo], forType: ForType, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @hint = @{
- forType match {
-  case FOR6020 | FOR6030 => messages("hint.rentIncludeTradeServices.for6030")
-  case _ => messages("hint.rentIncludeTradeServices")
- }
+    forType match {
+        case FOR6020 | FOR6030 => messages("hint.rentIncludeTradeServices.for6030")
+        case _ => messages("hint.rentIncludeTradeServices")
+    }
 }
 @layout(
- pageHeading = messages("rentIncludeTradeServices.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url,
- theForm = theForm
+    pageHeading = messages("rentIncludeTradeServices.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.submit()) {
 
-    @includes.radioButtonsYesNo(
-     govukRadios,
-     theForm,
-     "rentIncludeTradeServices",
-     "rentIncludeTradeServices.heading",
-     messages("label.yes.ydy"),
-     messages("label.no.nac.ydy"),
-     classes = "govuk-fieldset__legend--l",
-     hint = hint,
-     isHeading = true
-    )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "rentIncludeTradeServices",
+            "rentIncludeTradeServices.heading",
+            messages("label.yes.ydy"),
+            messages("label.no.nac.ydy"),
+            classes = "govuk-fieldset__legend--l",
+            hint = hint,
+            isHeading = true
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

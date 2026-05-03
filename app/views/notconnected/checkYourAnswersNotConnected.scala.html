@@ -33,7 +33,7 @@
 
 @layout(
     pageHeading = messages("checkYourAnswersNotConnected.heading"),
-    summary = Some(session.toSummary),
+    summary = session.toSummary,
     fullWidth = true,
     backLinkUrl = controllers.notconnected.routes.RemoveConnectionController.show().url
 ) {

@@ -16,8 +16,8 @@
 
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Input, Label, PrefixOrSuffix}
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import views.html.components.PrimaryLayout
 
@@ -31,36 +31,36 @@
 
 
 @layout(
- pageHeading = messages("rentIncludeFixturesAndFittingsDetails.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url,
- theForm = theForm
+    pageHeading = messages("rentIncludeFixturesAndFittingsDetails.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.submit()) {
 
-  <h1 class="govuk-heading-l">@messages("rentIncludeFixturesAndFittingsDetails.heading")</h1>
+        <h1 class="govuk-heading-l">@messages("rentIncludeFixturesAndFittingsDetails.heading")</h1>
 
-  <p class="govuk-body">@messages("rentIncludeFixturesAndFittingsDetails.hint")</p>
+        <p class="govuk-body">@messages("rentIncludeFixturesAndFittingsDetails.hint")</p>
 
-  @govukInput(Input(
-   id = "rentIncludeFixturesAndFittingsDetails",
-   name = "rentIncludeFixturesAndFittingsDetails",
-   value = theForm("rentIncludeFixturesAndFittingsDetails").value,
-   classes = "govuk-input--width-10 total-annual-rent",
-   label = Label(
-    classes = "govuk-label--l",
-    isPageHeading = false
-   ),
-   prefix = Some(PrefixOrSuffix(
-    content = Text(messages("label.pound"))
-   )),
-   autocomplete = Some("off"),
-  ).withFormField(theForm("rentIncludeFixturesAndFittingsDetails")))
+        @govukInput(Input(
+            id = "rentIncludeFixturesAndFittingsDetails",
+            name = "rentIncludeFixturesAndFittingsDetails",
+            value = theForm("rentIncludeFixturesAndFittingsDetails").value,
+            classes = "govuk-input--width-10 total-annual-rent",
+            label = Label(
+                classes = "govuk-label--l",
+                isPageHeading = false
+            ),
+            prefix = PrefixOrSuffix(
+                content = Text(messages("label.pound")
+                )),
+            autocomplete = "off",
+        ).withFormField(theForm("rentIncludeFixturesAndFittingsDetails")))
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

@@ -15,18 +15,11 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{CheckboxItem, Checkboxes, Input, Label, PrefixOrSuffix}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukInput: GovukInput,
@@ -39,10 +32,10 @@
 @(theForm: Form[?], index: Int, operatorName: String, backLinkUrl: Option[String])(implicit request: SessionRequest[AnyContent], messages: Messages)
 
 @layout(
-    pageHeading = messages("rent.received.from.heading", operatorName) ,
+    pageHeading = messages("rent.received.from.heading", operatorName),
     showSection = true,
     showH1 = false,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutConcessionsOrLettings"),
     backLinkUrl = backLinkUrl,
     theForm = theForm
@@ -60,10 +53,10 @@
                 content = Text(messages("rent.received.from.excluding.VAT")),
                 classes = "govuk-!-font-weight-bold"
             ),
-            prefix = Some(PrefixOrSuffix(
-                content = Text(messages("label.pound"))
-            )),
-            autocomplete = Some("off"),
+            prefix = PrefixOrSuffix(
+                content = Text(messages("label.pound")
+                )),
+            autocomplete = "off",
         ).withFormField(theForm("annualRent")))
 
         <br>

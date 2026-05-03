@@ -18,8 +18,8 @@
 @import models.submissions.aboutthetradinghistory.FixedOperatingExpenses
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import util.{AccessibilityUtil, DateUtilLocalised}
 @import util.NumberUtil.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
 @import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
@@ -46,7 +46,7 @@
 @layout(
     pageHeading = messages("fixedOperatingExpenses.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = fromLocation match {
         case "TL" => controllers.routes.TaskListController.show.url + "#turnover"
@@ -80,9 +80,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
-                                                content = Text("£")
-                                            )),
+                                            prefix = PrefixOrSuffix(
+                                                content = Text("£"
+                                                )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.rent", finYearEnd)
@@ -96,9 +96,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
-                                                content = Text("£")
-                                            )),
+                                            prefix = PrefixOrSuffix(
+                                                content = Text("£"
+                                                )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.businessRates", finYearEnd)
@@ -112,9 +112,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
-                                                content = Text("£")
-                                            )),
+                                            prefix = PrefixOrSuffix(
+                                                content = Text("£"
+                                                )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.insurance", finYearEnd)
@@ -128,9 +128,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
-                                                content = Text("£")
-                                            )),
+                                            prefix = PrefixOrSuffix(
+                                                content = Text("£"
+                                                )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.loanInterest", finYearEnd)),
@@ -143,9 +143,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
-                                                content = Text("£")
-                                            )),
+                                            prefix = PrefixOrSuffix(
+                                                content = Text("£"
+                                                )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("fixedOperatingExpenses.depreciation", finYearEnd)

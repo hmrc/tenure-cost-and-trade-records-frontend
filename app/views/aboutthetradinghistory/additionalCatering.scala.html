@@ -64,22 +64,19 @@
 @layout(
     pageHeading = messages("catering.additionalActivitiesOnSite.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
     theForm = form
 ) {
 
-        <p class="govuk-body">@messages("catering.additionalActivitiesOnSite.p1")</p>
-        <p class="govuk-body ">@messages("catering.additionalActivitiesOnSite.p2")</p>
+    <p class="govuk-body">@messages("catering.additionalActivitiesOnSite.p1")</p>
+    <p class="govuk-body ">@messages("catering.additionalActivitiesOnSite.p2")</p>
 
-        @govukInsetText(InsetText(content = Text(messages("additionalActivities.common.inset"))))
+    @govukInsetText(InsetText(content = Text(messages("additionalActivities.common.inset"))))
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalCateringController.submit()) {
-
-
-
 
 
         <table class="hmrc-responsive-table govuk-!-width-full">

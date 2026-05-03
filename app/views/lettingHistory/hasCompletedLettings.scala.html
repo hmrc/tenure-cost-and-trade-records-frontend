@@ -29,7 +29,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages("lettingHistory.hasCompletedLettings.heading"),
     backLinkUrl = backLink,
     showSection = true,
@@ -53,11 +53,11 @@
             legendKey = "", // see legend instead
             classes = "govuk-fieldset__legend--m",
             isHeading = true,
-            legend = Some(messages(
+            legend = messages(
                 "lettingHistory.hasCompletedLettings.legend",
                 dateUtil.formatDate(fiscalPeriod.fromDate),
                 dateUtil.formatDate(fiscalPeriod.toDate)
-            )),
+            ),
         )
         @includes.continueSaveAsDraftButtons(govukButton)
     }

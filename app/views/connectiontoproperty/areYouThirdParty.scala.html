@@ -21,9 +21,9 @@
 @import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[AnswersYesNo], backLink: String, tradingName: String, summary: Summary, readOnly: Boolean)(implicit request: SessionRequest[?], messages: Messages)
@@ -32,42 +32,52 @@
 @layout(
     pageHeading = messages("areYouThirdParty6076.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.connectionToTheProperty"),
     backLinkUrl = backLink,
     theForm = theForm,
     readOnly = readOnly
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit()) {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.AreYouThirdPartyController.submit()) {
 
 
-          <p class="govuk-body">@{
-              messages("areYouThirdParty6076.p1", tradingName)
-          }</p>
+        <p class="govuk-body">@{
+            messages("areYouThirdParty6076.p1", tradingName)
+        }</p>
 
-          <p class="govuk-body">@{HtmlContent(messages("areYouThirdParty6076.yes", tradingName)).asHtml}</p>
+        <p class="govuk-body">@{
+            HtmlContent(messages("areYouThirdParty6076.yes", tradingName)).asHtml
+        }</p>
 
-          <ul class="govuk-list govuk-list--bullet">
-              <li>@{messages("areYouThirdParty6076.l1")}</li>
-              <li>@{messages("areYouThirdParty6076.l2")}</li>
-              <li>@{messages("areYouThirdParty6076.l3")}</li>
-              <li>@{messages("areYouThirdParty6076.l4")}</li>
-          </ul>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@{
+                messages("areYouThirdParty6076.l1")
+            }</li>
+            <li>@{
+                messages("areYouThirdParty6076.l2")
+            }</li>
+            <li>@{
+                messages("areYouThirdParty6076.l3")
+            }</li>
+            <li>@{
+                messages("areYouThirdParty6076.l4")
+            }</li>
+        </ul>
 
-              <p class="govuk-body">@{HtmlContent(messages("areYouThirdParty6076.no", tradingName)).asHtml}</p>
+        <p class="govuk-body">@{
+            HtmlContent(messages("areYouThirdParty6076.no", tradingName)).asHtml
+        }</p>
 
 
-          @includes.radioButtonsYesNo(
-              govukRadios,
-              theForm,
-              "areYouThirdParty",
-              messages("areYouThirdParty.label", tradingName),
-              classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
-          )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "areYouThirdParty",
+            messages("areYouThirdParty.label", tradingName),
+            classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
+        )
 
-
-
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

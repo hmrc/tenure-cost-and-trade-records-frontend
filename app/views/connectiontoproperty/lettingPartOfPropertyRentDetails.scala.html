@@ -16,8 +16,8 @@
 
 @import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Input, Label, PrefixOrSuffix}
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import views.html.components.PrimaryLayout
 
@@ -31,13 +31,13 @@
 @(theForm: Form[?], index: Int, tenantName: String, backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("lettingPartOfPropertyRentDetails.heading"),
- showSection = true,
+    pageHeading = messages("lettingPartOfPropertyRentDetails.heading"),
+    showSection = true,
     showH1 = false,
- summary = Some(summary),
- sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = backLink,
- theForm = theForm
+    summary = summary,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
     @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.submit(index)) {
 
@@ -52,10 +52,10 @@
                 content = Text(messages("label.annualRent")),
                 classes = "govuk-!-font-weight-bold"
             ),
-            prefix = Some(PrefixOrSuffix(
-                content = Text(messages("label.pound"))
-            )),
-            autocomplete = Some("off"),
+            prefix = PrefixOrSuffix(
+                content = Text(messages("label.pound")
+                )),
+            autocomplete = "off",
         ).withFormField(theForm("annualRent")))
 
         @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)

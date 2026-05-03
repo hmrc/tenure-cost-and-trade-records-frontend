@@ -17,8 +17,8 @@
 @import actions.SessionRequest
 @import models.submissions.connectiontoproperty.TenantDetails
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Actions, Fieldset, Legend, RadioItem, Radios, SummaryList}
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{HtmlContent, Text}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Key, SummaryListRow, Value}
 @import views.html.components.PrimaryLayout
@@ -32,91 +32,95 @@
 
 @(theForm: Form[?], index: Int)(implicit request: SessionRequest[?], messages: Messages)
 
-@session = @{ request.sessionData }
+@session = @{
+    request.sessionData
+}
 
 @formAction = @{
-  controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.submit(index)
+    controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.submit(index)
 }
 
 @tenantDetails = @{
- session.stillConnectedDetails.fold(Seq.empty[String]){
-   fr => fr.lettingPartOfPropertyDetails.map(_.tenantDetails)
- }
+    session.stillConnectedDetails.fold(Seq.empty[String]) {
+        fr => fr.lettingPartOfPropertyDetails.map(_.tenantDetails)
+    }
 }
 
-@pluralSuffix = @{ if (tenantDetails.size > 1) "s" else "" }
+@pluralSuffix = @{
+    if(tenantDetails.size > 1) "s" else ""
+}
 
-@headingMessage = @{ tenantDetails match {
- case Nil         => "addAnotherLettingPartOfProperty.heading.removed"
- case _           => "addAnotherLettingPartOfProperty.heading"
-}}
+@headingMessage = @{
+    tenantDetails match {
+        case Nil => "addAnotherLettingPartOfProperty.heading.removed"
+        case _ => "addAnotherLettingPartOfProperty.heading"
+    }
+}
 
 @layout(
- pageHeading = messages(headingMessage, tenantDetails.size) + pluralSuffix,
- showSection = true,
- summary = Some(session.toSummary),
- sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = None,
- theForm = theForm
+    pageHeading = messages(headingMessage, tenantDetails.size) + pluralSuffix,
+    showSection = true,
+    summary = session.toSummary,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = None,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = formAction) {
+    @formWithCSRF(action = formAction) {
 
-  @govukSummaryList(
-   SummaryList(
-    rows = tenantDetails.zipWithIndex.map {
-     case (TenantDetails(name, descriptionOfLetting, address), idx) =>
-         SummaryListRow(
-          key = Key(Text(s"$name, $descriptionOfLetting"), classes = "govuk-!-font-weight-regular"),
-          value = Value(HtmlContent(address.get.multiLine)),
-          actions = Actions(
-           items = Seq(
-            ActionItem(
-              controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(idx).url,
-              content = Text(messages("label.change"))
-            ),
-            ActionItem(
-              controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url,
-              content = Text(messages("label.remove")))
-            ),
-            classes = "hmrc-summary-list__actions"
-          )
-         )
-     case _ => SummaryListRow()
-    },
-    classes = "hmrc-list-with-actions"
-   )
-  )
+        @govukSummaryList(
+            SummaryList(
+                rows = tenantDetails.zipWithIndex.map {
+                    case (TenantDetails(name, descriptionOfLetting, address), idx) =>
+                        SummaryListRow(
+                            key = Key(Text(s"$name, $descriptionOfLetting"), classes = "govuk-!-font-weight-regular"),
+                            value = Value(HtmlContent(address.get.multiLine)),
+                            actions = Actions(
+                                items = Seq(
+                                    ActionItem(
+                                        controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(idx).url,
+                                        content = Text(messages("label.change"))
+                                    ),
+                                    ActionItem(
+                                        controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.remove(idx).url,
+                                        content = Text(messages("label.remove")))
+                                ),
+                                classes = "hmrc-summary-list__actions"
+                            )
+                        )
+                    case _ => SummaryListRow()
+                },
+                classes = "hmrc-list-with-actions"
+            )
+        )
 
-  @govukRadios(
-   Radios(
-    name = "addAnotherLettingPartOfProperty",
-    idPrefix = Option("addAnotherLettingPartOfProperty"),
-    classes = "govuk-radios--inline",
-    items = Seq(
-     "yes" -> messages("label.yes.oes"),
-     "no" -> messages("label.no.nac.oes")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("addAnotherLettingPartOfProperty").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("addAnotherLettingPartOfProperty"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages(s"label.addAnotherLettingPartOfProperty")),
-        classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
-       )
-      )
-     )
-    )
-   )
-  )
+        @govukRadios(
+            Radios(
+                name = "addAnotherLettingPartOfProperty",
+                idPrefix = "addAnotherLettingPartOfProperty",
+                classes = "govuk-radios--inline",
+                items = Seq(
+                    "yes" -> messages("label.yes.oes"),
+                    "no" -> messages("label.no.nac.oes")
+                ).map(radioItem => RadioItem(
+                    content = Text(radioItem._2),
+                    checked = radioItem._1.equals(theForm("addAnotherLettingPartOfProperty").value.getOrElse("")),
+                    value = radioItem._1
+                )
+                ),
+                errorMessage = theForm.errors.asTextErrorMessageForField("addAnotherLettingPartOfProperty"),
+                fieldset =
+                    Fieldset(
+                        legend =
+                            Legend(
+                                content = Text(messages(s"label.addAnotherLettingPartOfProperty")),
+                                classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
+                            )
+                    )
+            )
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 
 }

@@ -14,13 +14,11 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutyouandtheproperty.OccupiersDetails
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import models.pages.Summary
+@import models.submissions.aboutyouandtheproperty.OccupiersDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -36,7 +34,7 @@
     pageHeading = messages("aboutYou.occupiersDetails.heading"),
     backLinkUrl = backLink,
     showSection = true,
-    summary = Option(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutTheProperty"),
     theForm = theForm
 ) {
@@ -62,7 +60,6 @@
             hint = "aboutYou.occupiersDetails.address.hint",
             charCount = 2000
         )
-
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

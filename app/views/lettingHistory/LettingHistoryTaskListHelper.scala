@@ -52,12 +52,9 @@ object LettingHistoryTaskListHelper:
             _                 <- intendedLettingsNights(data)
             isYearlyAvailable <- intendedLettingsIsYearlyAvailable(data)
           yield
-            if isYearlyAvailable
+            if isYearlyAvailable || intendedLettingsTradingPeriod(data).isDefined
             then AnswerYes
-            else
-              intendedLettingsTradingPeriod(data) match
-                case Some(_) => AnswerYes
-                case None    => AnswerNo
+            else AnswerNo
         ).getOrElse(AnswerNo)
 
       case "online-advertising" =>

@@ -17,8 +17,8 @@
 @import models.pages.Summary
 @import models.submissions.common.AnswersYesNo
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend, RadioItem, Radios}
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import views.html.components.PrimaryLayout
 
@@ -31,45 +31,43 @@
 @(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("rentIncreasedAnnuallyWithRPIs.heading"),
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backLink,
- theForm = theForm
+    pageHeading = messages("rentIncreasedAnnuallyWithRPIs.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.submit()) {
 
-  <p class="govuk-body">@messages("rentIncreasedAnnuallyWithRPIs.p1")</p>
+        <p class="govuk-body">@messages("rentIncreasedAnnuallyWithRPIs.p1")</p>
 
-  @govukRadios(
-   Radios(
-    name = "rentIncreasedAnnuallyWithRPIs",
-    idPrefix = Option("rentIncreaseAnnuallyWithRPI"),
-    items = Seq(
-     "yes" -> messages("label.yes.ydy"),
-     "no" -> messages("label.no.nac.ydy")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("rentIncreasedAnnuallyWithRPIs").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    classes = "govuk-radios--inline",
-    errorMessage = theForm.errors.asTextErrorMessageForField("rentIncreasedAnnuallyWithRPIs"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("rentIncreasedAnnuallyWithRPIs.subheading")),
-        classes = "govuk-fieldset__legend--m"
-       )
-      )
-     )
-    )
-   )
-  )
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @govukRadios(
+            Radios(
+                name = "rentIncreasedAnnuallyWithRPIs",
+                idPrefix = "rentIncreaseAnnuallyWithRPI",
+                items = Seq(
+                    "yes" -> messages("label.yes.ydy"),
+                    "no" -> messages("label.no.nac.ydy")
+                ).map(radioItem => RadioItem(
+                    content = Text(radioItem._2),
+                    checked = radioItem._1.equals(theForm("rentIncreasedAnnuallyWithRPIs").value.getOrElse("")),
+                    value = radioItem._1
+                )
+                ),
+                classes = "govuk-radios--inline",
+                errorMessage = theForm.errors.asTextErrorMessageForField("rentIncreasedAnnuallyWithRPIs"),
+                fieldset =
+                    Fieldset(
+                        legend =
+                            Legend(
+                                content = Text(messages("rentIncreasedAnnuallyWithRPIs.subheading")),
+                                classes = "govuk-fieldset__legend--m"
+                            )
+                    )
+            )
+        )
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

@@ -31,32 +31,38 @@
 
 @(theForm: Form[UnusualCircumstances], forType: ForType, backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
-@heading = @{if(forType.equals(FOR6030)) { messages("unusualCircumstancesReceipts.heading") } else { messages("unusualCircumstances.heading") }}
+@heading = @{
+    if(forType.equals(FOR6030)) {
+        messages("unusualCircumstancesReceipts.heading")
+    } else {
+        messages("unusualCircumstances.heading")
+    }
+}
 
 @layout(
     theForm = theForm,
     pageHeading = heading,
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = backLink
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink
 ) {
 
     <p class="govuk-body">@messages("unusualCircumstances.explain")</p>
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.UnusualCircumstancesController.submit()) {
 
-      @includes.textInputHMRCCharCount(
-          hmrcCharacterCount,
-          theForm,
-          "unusualCircumstances",
-          classes = "govuk-label--l",
-          isPageHeading = true,
-          charCount = 2000
-      )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "unusualCircumstances",
+            classes = "govuk-label--l",
+            isPageHeading = true,
+            charCount = 2000
+        )
 
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

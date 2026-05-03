@@ -29,47 +29,47 @@
 @(theForm: Form[?], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("connectionToTheProperty.heading"),
-  showH1 = false,
-  summary = Some(summary),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("connectionToTheProperty.heading"),
+    showH1 = false,
+    summary = summary,
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.submit()) {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.ConnectionToThePropertyController.submit()) {
 
-    @includes.radioButtons(
-      govukRadios,
-      theForm,
-      "connectionToTheProperty",
-      messages("connectionToTheProperty.heading"),
-      "govuk-fieldset__legend--l",
-      isHeading = true,
-      items = Seq(
-        RadioItem(
-          content = Text(messages("label.occupierTrustee")),
-          value = Some("occupierTrustee"),
-          hint = Some(Hint(content = Text(messages("hint.occupierTrustee")))),
-        ),
-        RadioItem(
-          content = Text(messages("label.ownerTrustee")),
-          value = Some("ownerTrustee"),
-          hint = Some(Hint(content = Text(messages("hint.ownerTrustee")))),
-        ),
-        RadioItem(
-          content = Text(messages("label.occupierAgent")),
-          value = Some("occupierAgent")
-        ),
-        RadioItem(
-          content = Text(messages("label.ownerAgent")),
-          value = Some("ownerAgent")
+        @includes.radioButtons(
+            govukRadios,
+            theForm,
+            "connectionToTheProperty",
+            messages("connectionToTheProperty.heading"),
+            "govuk-fieldset__legend--l",
+            isHeading = true,
+            items = Seq(
+                RadioItem(
+                    content = Text(messages("label.occupierTrustee")),
+                    value = "occupierTrustee",
+                    hint = Hint(content = Text(messages("hint.occupierTrustee"))),
+                ),
+                RadioItem(
+                    content = Text(messages("label.ownerTrustee")),
+                    value = "ownerTrustee",
+                    hint = Hint(content = Text(messages("hint.ownerTrustee"))),
+                ),
+                RadioItem(
+                    content = Text(messages("label.occupierAgent")),
+                    value = "occupierAgent"
+                ),
+                RadioItem(
+                    content = Text(messages("label.ownerAgent")),
+                    value = "ownerAgent"
+                )
+            ),
+            inline = false
         )
-      ),
-      inline = false
-    )
 
-    @includes.continueButton(govukButton)
-  }
+        @includes.continueButton(govukButton)
+    }
 }
 
 

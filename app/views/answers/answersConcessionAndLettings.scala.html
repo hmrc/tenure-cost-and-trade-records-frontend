@@ -38,23 +38,27 @@
     SectionAnswersRowBuilder(request.sessionData.aboutFranchisesOrLettings)
 }
 
-@numberOfIncomeRecords = @{request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).length}
+@numberOfIncomeRecords = @{
+    request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).length
+}
 
 @addRentalIncomeMessage(itemsCount: Int) = @{
-    if (request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).length == 1) {
+    if(request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).length == 1) {
         messages("cya.rentalIncomeList.heading", itemsCount)
     } else {
         messages("cya.rentalIncomeList.plural.heading", itemsCount)
     }
 }
 
-@tableRow(values: Seq[String]) = {@values.map { value => <div class="hmrc-turnover-table-column"> @value </div> }}
+@tableRow(values: Seq[String]) = {
+@values.map { value => <div class="hmrc-turnover-table-column"> @value </div> }
+}
 
 @recordIndex(rentalIncome: IndexedSeq[IncomeRecord], currentIdx: Int, recordType: Class[? <: IncomeRecord]) = @{
     rentalIncome.take(currentIdx).count(recordType.isInstance) + 1
 }
 
-@franchiseEntry(franchise :FranchiseIncomeRecord, index: Int) = {
+@franchiseEntry(franchise: FranchiseIncomeRecord, index: Int) = {
     <h2 class="govuk-heading-m govuk-!-margin-bottom-0" id="rental-income-entry-@index">@messages(
         "checkYourAnswersAboutFranchiseOrLettings.operatorCount",
         recordIndex(
@@ -62,25 +66,25 @@
             index,
             classOf[FranchiseIncomeRecord]
         ))
-        </h2>
-        @govukSummaryList(SummaryList(rows =
-            sectionAnswers.row(
-                "checkYourAnswersAboutFranchiseOrLettings.businessOperatorName",
-                _ => Option(
-                    franchise.businessDetails.fold("")(_.operatorName)).mkString("""<p class="govuk-body">""", "", "</p>") +
+    </h2>
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row(
+        "checkYourAnswersAboutFranchiseOrLettings.businessOperatorName",
+        _ =>
+            franchise.businessDetails.fold("")(_.operatorName).mkString("""<p class="govuk-body">""", "", "</p>") +
                     franchise.businessDetails.fold("")(_.typeOfBusiness).mkString("""<p class="govuk-body">""", "", "</p>") +
                     franchise.businessDetails.fold("")(_.cateringAddress.map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>")),
-                controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index),
-                "franchiseOperatorName",
-                ("valueAsHtml", _ => None)) ++
+        controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index),
+        "franchiseOperatorName",
+        ("valueAsHtml", _ => None)) ++
             sectionAnswers.row(
                 "checkYourAnswersAboutFranchiseOrLettings.annualRent",
-                 _ => Seq(
+                _ => Seq(
                     franchise.rent.flatMap(_.annualRent.asMoney).getOrElse(""),
                     franchise.rent.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
-                                    dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse(""),
+                        dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse(""),
                     messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover"))
-                        .map("""<p class="govuk-body">""" + _ + "</p>").mkString,
+                .map("""<p class="govuk-body">""" + _ + "</p>").mkString,
                 controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(index),
                 "annualRent",
                 ("valueAsHtml", _ => None)) ++
@@ -92,10 +96,10 @@
                 controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
                 "itemsInRent",
                 ("valueAsHtml", _ => None))
-        ))
-    }
+))
+}
 
-@concession6015Entry(concession :Concession6015IncomeRecord, index: Int) = {
+@concession6015Entry(concession: Concession6015IncomeRecord, index: Int) = {
     <h2 class="govuk-heading-m govuk-!-margin-bottom-0" id="rental-income-entry-@index">@messages(
         "checkYourAnswersAboutFranchiseOrLettings.operatorCount",
         recordIndex(
@@ -103,43 +107,43 @@
             index,
             classOf[Concession6015IncomeRecord]
         ))
-        </h2>
-        @govukSummaryList(SummaryList(rows =
+    </h2>
+@govukSummaryList(SummaryList(rows =
+    sectionAnswers.row(
+        "checkYourAnswersAboutFranchiseOrLettings.businessOperatorName",
+        _ =>
+            concession.businessDetails.fold("")(_.operatorName).mkString("""<p class="govuk-body">""", "", "</p>") +
+                    concession.businessDetails.fold("")(_.typeOfBusiness).mkString("""<p class="govuk-body">""", "", "</p>") +
+                    concession.businessDetails.fold("")(_.cateringAddress.map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>")),
+        controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index),
+        "franchiseOperatorName",
+        ("valueAsHtml", _ => None)) ++
             sectionAnswers.row(
-                "checkYourAnswersAboutFranchiseOrLettings.businessOperatorName",
-                _ => Option(
-                    concession.businessDetails.fold("")(_.operatorName)).mkString("""<p class="govuk-body">""", "", "</p>") +
-                        concession.businessDetails.fold("")(_.typeOfBusiness).mkString("""<p class="govuk-body">""", "", "</p>") +
-                        concession.businessDetails.fold("")(_.cateringAddress.map(_.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>")),
-                controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index),
-                "franchiseOperatorName",
+                "checkYourAnswersAboutFranchiseOrLettings.annualRent",
+                _ => Seq(concession.rent.map(_.annualRent.asMoney).getOrElse(""),
+                    messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover")).map("""<p class="govuk-body">""" + _ + "</p>").mkString,
+                controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(index),
+                "annualRent",
                 ("valueAsHtml", _ => None)) ++
             sectionAnswers.row(
-                 "checkYourAnswersAboutFranchiseOrLettings.annualRent",
-                 _ => Seq(concession.rent.map(_.annualRent.asMoney).getOrElse(""),
-                 messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover")).map("""<p class="govuk-body">""" + _ + "</p>").mkString,
-                 controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(index),
-                 "annualRent",
-                 ("valueAsHtml", _ => None)) ++
+                "checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated",
+                _ => concession.calculatingTheRent.map(_.description.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
+                        concession.calculatingTheRent.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
+                            dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>"),
+                controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(index), "rentDetails",
+                ("valueAsHtml", _ => None)) ++
             sectionAnswers.row(
-                  "checkYourAnswersAboutFranchiseOrLettings.howRentWasCalculated",
-                  _ => concession.calculatingTheRent.map(_.description.escapedHtml).mkString("""<p class="govuk-body">""", "", "</p>") +
-                  concession.calculatingTheRent.map(x => messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
-                  dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse("").mkString("""<p class="govuk-body">""", "", "</p>"),
-                  controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(index), "rentDetails",
-                  ("valueAsHtml", _ => None)) ++
-            sectionAnswers.row(
-                  "checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
-                  _ => concession.itemsIncluded.map(_.filterNot(_ == "noneOfThese")).filter(_.nonEmpty).getOrElse(List.empty)
-                    .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
-                    .mkString("""<p class="govuk-body">""", "<br/>", "</p>"),
-                   controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
-                   "itemsInRent",
-                   ("valueAsHtml", _ => None))
-        ))
-    }
+                "checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
+                _ => concession.itemsIncluded.map(_.filterNot(_ == "noneOfThese")).filter(_.nonEmpty).getOrElse(List.empty)
+                .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
+                .mkString("""<p class="govuk-body">""", "<br/>", "</p>"),
+                controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
+                "itemsInRent",
+                ("valueAsHtml", _ => None))
+))
+}
 
-@concessionEntry(concession:ConcessionIncomeRecord, index: Int) = {
+@concessionEntry(concession: ConcessionIncomeRecord, index: Int) = {
 
     <h2 class="govuk-heading-m" id="rental-income-entry-@index">@messages(
         "cya.concessionOrFranchise.operatorNumber",
@@ -151,20 +155,20 @@
     </h2>
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("cya.concessionOrFranchise.operatorDetails",
-        _ => Option(concession.businessDetails.flatMap(_.operatorName).getOrElse(""))
+        _ => concession.businessDetails.flatMap(_.operatorName.getOrElse(""))
         .mkString("""<p class="govuk-body">""", "", "</p>") +
                 concession.businessDetails.flatMap(_.typeOfBusiness).getOrElse("")
                 .mkString("""<p class="govuk-body">""", "", "</p>") +
                 concession.businessDetails.flatMap(_.howBusinessPropertyIsUsed).getOrElse("")
                 .mkString("""<p class="govuk-body">""", "", "</p>"),
-                if (forType == FOR6030) controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(index)
-                else controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index),
+        if(forType == FOR6030) controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(index)
+        else controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index),
         "operatorName",
         ("valueAsHtml", _ => None))
 ))
 
 @for((feesSection, idx) <- sectionAnswers.answers.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).zipWithIndex.flatMap {
-    case (concession: ConcessionIncomeRecord, idx) => Some((concession, idx))
+    case (concession: ConcessionIncomeRecord, idx) => (concession, idx)
     case _ => None
 }) {
     @if(idx == index) {
@@ -176,21 +180,23 @@
                 SummaryListRow(
                     key = Key(Text(messages("turnover.financialYearEnd"))),
                     value = Value(HtmlContent(tableRow(feesSection.feeReceived.fold(Seq.empty[String])(_.feeReceivedPerYear.map(r => dateUtil.formatDayMonthAbbrYear(r.financialYearEnd)))).body)),
-                    actions = Some(
+                    actions =
                         Actions(items =
                             Seq(
                                 ActionItem(
-                                    href = s"${if (forType == FOR6030) controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(index).url
-                                    else controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(index).url}&from=CYA",
+                                    href = s"${
+                                        if(forType == FOR6030) controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(index).url
+                                        else controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(index).url
+                                    }&from=CYA",
                                     content = Text(messages("label.change")),
-                                    visuallyHiddenText = Some(messages("checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading")),
+                                    visuallyHiddenText = messages("checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading"),
                                     attributes = Map(
                                         "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutFranchiseOrLettings.feeReceived.concessionOrFranchiseFee.heading")}"
                                     )
                                 )
                             )
                         )
-                    ),
+                    ,
                     classes = "no-border-bottom"
                 ),
                 SummaryListRow(
@@ -211,7 +217,7 @@
     }
 }
 }
-@lettingEntry(letting :LettingIncomeRecord, index: Int) = {
+@lettingEntry(letting: LettingIncomeRecord, index: Int) = {
     <h2 class="govuk-heading-m govuk-!-margin-bottom-0" id="rental-income-entry-@index">@messages(
         "checkYourAnswersAboutFranchiseOrLettings.lettingOperatorNumber",
         recordIndex(
@@ -219,47 +225,47 @@
             index,
             classOf[LettingIncomeRecord]
         ))
-        </h2>
+    </h2>
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.lettingOperatorName",
-        _ => Option(
-            letting.operatorDetails.flatMap(_.operatorName).getOrElse(""))
+        _ =>
+            letting.operatorDetails.flatMap(_.operatorName.getOrElse(""))
             .mkString("""<p class="govuk-body">""", "", "</p>") +
-            letting.operatorDetails.flatMap(_.typeOfBusiness).getOrElse("")
-            .mkString("""<p class="govuk-body">""", "", "</p>") +
-            letting.operatorDetails.flatMap(_.lettingAddress.map(_.escapedHtml)).getOrElse("")
-            .mkString("""<p class="govuk-body">""", "", "</p>"),
+                    letting.operatorDetails.flatMap(_.typeOfBusiness).getOrElse("")
+                    .mkString("""<p class="govuk-body">""", "", "</p>") +
+                    letting.operatorDetails.flatMap(_.lettingAddress.map(_.escapedHtml)).getOrElse("")
+                    .mkString("""<p class="govuk-body">""", "", "</p>"),
         controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index),
         "lettingOperatorName",
         ("valueAsHtml", _ => None)) ++
-    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
-        _ => Seq(
-            letting.rent.flatMap(_.annualRent.asMoney).getOrElse(""),
-            letting.rent.map(x =>
-                messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
-                dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse(""),
-                messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover"))
+            sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.annualRent",
+                _ => Seq(
+                    letting.rent.flatMap(_.annualRent.asMoney).getOrElse(""),
+                    letting.rent.map(x =>
+                        messages(s"checkYourAnswersAboutFranchiseOrLettings.dateSumFixed",
+                            dateUtil.formatDayMonthAbbrYear(x.dateInput))).getOrElse(""),
+                    messages("checkYourAnswersAboutFranchiseOrLettings.rentIncludedInTurnover"))
                 .map("""<p class="govuk-body">""" + _ + "</p>").mkString,
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(index),
-        "annualRent",
-        ("valueAsHtml", _ => None)) ++
-    sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
-          _ => letting.itemsIncluded.map(_.filterNot(_ == "noneOfThese")).filter(_.nonEmpty).getOrElse(List.empty)
-               .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
-               .mkString("""<p class="govuk-body">""", "<br/>", "</p>"),
-          controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
-          "itemsInRent",
-          ("valueAsHtml", _ => None))
+                controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(index),
+                "annualRent",
+                ("valueAsHtml", _ => None)) ++
+            sectionAnswers.row("checkYourAnswersAboutFranchiseOrLettings.itemsInRent",
+                _ => letting.itemsIncluded.map(_.filterNot(_ == "noneOfThese")).filter(_.nonEmpty).getOrElse(List.empty)
+                .map(item => messages(s"checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.$item"))
+                .mkString("""<p class="govuk-body">""", "<br/>", "</p>"),
+                controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(index),
+                "itemsInRent",
+                ("valueAsHtml", _ => None))
 ))
 }
 
 
 @rowForIncomeRecord(record: IncomeRecord, index: Int) = @{
     record match {
-        case franchise: FranchiseIncomeRecord           => franchiseEntry     (franchise, index)
+        case franchise: FranchiseIncomeRecord => franchiseEntry(franchise, index)
         case concession6015: Concession6015IncomeRecord => concession6015Entry(concession6015, index)
-        case concession: ConcessionIncomeRecord         => concessionEntry    (concession, index)
-        case letting: LettingIncomeRecord               => lettingEntry       (letting, index)
+        case concession: ConcessionIncomeRecord => concessionEntry(concession, index)
+        case letting: LettingIncomeRecord => lettingEntry(letting, index)
     }
 }
 <h2 class="govuk-heading-m ">@messages("checkYourAnswersAboutFranchiseOrLettings.franchiseLettings.heading")</h2>
@@ -280,8 +286,8 @@
                 List(
                     SummaryListRow(
                         Key(Text(messages(addRentalIncomeMessage(request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty).length))), classes = "govuk-heading-m govuk-!-width-three-quarters"),
-                        actions = Some(Actions(items = List(ActionItem(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(if(numberOfIncomeRecords > 0) numberOfIncomeRecords - 1 else numberOfIncomeRecords).url + "&from=CYA",
-                            Text(messages("checkYourAnswersAboutFranchiseOrLettings.addRemove")), attributes = Map("id" -> "add-remove-rental-income"))), classes = "govuk-!-width-one-third"))),
+                        actions = Actions(items = List(ActionItem(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(if(numberOfIncomeRecords > 0) numberOfIncomeRecords - 1 else numberOfIncomeRecords).url + "&from=CYA",
+                            Text(messages("checkYourAnswersAboutFranchiseOrLettings.addRemove")), attributes = Map("id" -> "add-remove-rental-income"))), classes = "govuk-!-width-one-third")),
                 )
         )
         )

@@ -15,10 +15,8 @@
  *@
 
 @import models.submissions.ReferenceNumber
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(layout: PrimaryLayout, govukButton: GovukButton, govukInput: GovukInput, formWithCSRF: FormWithCSRF)
 
@@ -30,7 +28,9 @@
     theForm = theForm
 ) {
 
-    <p class="govuk-body">@{messages("referenceNumber.paragraph")}</p>
+    <p class="govuk-body">@{
+        messages("referenceNumber.paragraph")
+    }</p>
 
     @formWithCSRF(action = call) {
         @includes.textInput(
@@ -46,7 +46,7 @@
 
     <p class="govuk-body">
         <a class="govuk-link" href=@controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController.startWithSession()>
-            @messages("label.requestReference")
+        @messages("label.requestReference")
         </a>
     </p>
 }

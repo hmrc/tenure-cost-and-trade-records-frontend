@@ -26,12 +26,12 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[LowMarginFuelCardDetail],index: Option[Int], backlinkUrl: String, summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[LowMarginFuelCardDetail], index: Option[Int], backlinkUrl: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("lowMarginFuelCardDetails.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backlinkUrl,
     theForm = theForm,
@@ -39,24 +39,24 @@
     <p class="govuk-body">@messages("hint.lowMarginFuelCardDetails")</p>
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.LowMarginFuelCardDetailsController.submit(index)) {
 
-        @includes.textInput(govukInput, theForm, "name", "govuk-input--width-20",labelContent = "lowMarginFuelCardName", labelClasses = "govuk-!-font-weight-bold")
+        @includes.textInput(govukInput, theForm, "name", "govuk-input--width-20", labelContent = "lowMarginFuelCardName", labelClasses = "govuk-!-font-weight-bold")
 
         @govukInput(Input(
-        id = s"handlingFee",
-        name = s"handlingFee",
-        value = theForm(s"handlingFee").value,
-        classes = "govuk-input--width-2",
-        attributes = Map(
-        "maxlength" -> "15",
-        "aria-label" -> messages("lowMarginFuelCardDetails.handlingFee")
-        ),
-        label = Label(
-            content = Text(Messages("lowMarginFuelCardDetails.handlingFee")),
-            classes = "govuk-!-font-weight-bold"
-        ),
-        suffix = Some(PrefixOrSuffix(
-        content = Text(messages("lowMarginFuelCardDetails.handlingFee.unit"))
-        ))
+            id = s"handlingFee",
+            name = s"handlingFee",
+            value = theForm(s"handlingFee").value,
+            classes = "govuk-input--width-2",
+            attributes = Map(
+                "maxlength" -> "15",
+                "aria-label" -> messages("lowMarginFuelCardDetails.handlingFee")
+            ),
+            label = Label(
+                content = Text(Messages("lowMarginFuelCardDetails.handlingFee")),
+                classes = "govuk-!-font-weight-bold"
+            ),
+            suffix = PrefixOrSuffix(
+                content = Text(messages("lowMarginFuelCardDetails.handlingFee.unit")
+                ))
         ).withFormField(theForm(s"handlingFee")))
 
         @includes.continueSaveAsDraftButtons(govukButton)

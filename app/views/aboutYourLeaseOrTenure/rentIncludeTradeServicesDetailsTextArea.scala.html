@@ -28,29 +28,29 @@
 @(theForm: Form[String])(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
- pageHeading = messages("describeServicesTextArea.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(request.sessionData.toSummary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url,
- theForm = theForm
+    pageHeading = messages("describeServicesTextArea.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = request.sessionData.toSummary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.submit()) {
 
-  @includes.textInputHMRCCharCount(
-   hmrcCharacterCount,
-   theForm,
-   "describeServicesTextArea",
-   "label.describeServicesTextArea",
-   hint = "rentIncludeTradeServicesDetailsTextBoxArea.hint",
-   classes = "govuk-label--l",
-   isPageHeading = true,
-   charCount = 2000
-  )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "describeServicesTextArea",
+            "label.describeServicesTextArea",
+            hint = "rentIncludeTradeServicesDetailsTextBoxArea.hint",
+            classes = "govuk-label--l",
+            isPageHeading = true,
+            charCount = 2000
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 
 }

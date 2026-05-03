@@ -16,8 +16,8 @@
 
 package views.answers
 
-import controllers.aboutyouandtheproperty.routes
 import controllers.*
+import controllers.aboutyouandtheproperty.routes
 import models.submissions.aboutyouandtheproperty.OccupiersDetails
 import play.api.i18n.Messages
 import views.CheckYourAnswersHelpers.*

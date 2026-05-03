@@ -17,73 +17,75 @@
 @import models.pages.Summary
 @import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Label, Legend, RadioItem, Radios}
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput, GovukRadios}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput, GovukRadios}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  govukInput: GovukInput,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[ElectricVehicleChargingPoints], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @conditionalHTML = {
-  @govukInput(
+@govukInput(
     Input(
-      id = "spacesOrBays",
-      name = "spacesOrBays",
-      classes = "govuk-input--width-3",
-      value = theForm("spacesOrBays").value,
-      label = Label(
-        content = Text(messages("spacesOrBays.textbox")),
-      )
+        id = "spacesOrBays",
+        name = "spacesOrBays",
+        classes = "govuk-input--width-3",
+        value = theForm("spacesOrBays").value,
+        label = Label(
+            content = Text(messages("spacesOrBays.textbox")),
+        )
     )
-  )
+)
 }
 
 @layout(
-  pageHeading = messages("electricVehicleChargingPoints.heading"),
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("electricVehicleChargingPoints.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.submit()) {
 
-      <p class="govuk-body">@{messages("electricVehicleChargingPoints.p1")}</p>
-      <p class="govuk-body">@{messages("electricVehicleChargingPoints.p2")}</p>
+        <p class="govuk-body">@{
+            messages("electricVehicleChargingPoints.p1")
+        }</p>
+        <p class="govuk-body">@{
+            messages("electricVehicleChargingPoints.p2")
+        }</p>
 
-    @govukRadios(Radios(
-      fieldset = Some(Fieldset(
-        legend = Some(Legend(
-          content = Text(messages("label.electricVehicleChargingPoints")), isPageHeading = false,
-          classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
-        ))
-      )),
-      name = "electricVehicleChargingPoints",
-      items = Seq(
-        RadioItem(
-          content = Text(messages("label.yes.ydw")),
-          value = Some("yes"),
-          conditionalHtml = Some(conditionalHTML)
-        ),
-        RadioItem(
-          content = Text(messages("label.no.nac.ydw")),
-          value = Some("no")
-        )
-      ),
-      errorMessage = theForm.errors.asTextErrorMessageForField("electricVehicleChargingPoints")
-    ).withFormField(theForm("electricVehicleChargingPoints")))
+        @govukRadios(Radios(
+            fieldset = Fieldset(
+                legend = Legend(
+                    content = Text(messages("label.electricVehicleChargingPoints")), isPageHeading = false,
+                    classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
+                )
+            ),
+            name = "electricVehicleChargingPoints",
+            items = Seq(
+                RadioItem(
+                    content = Text(messages("label.yes.ydw")),
+                    value = "yes",
+                    conditionalHtml = conditionalHTML
+                ),
+                RadioItem(
+                    content = Text(messages("label.no.nac.ydw")),
+                    value = "no"
+                )
+            ),
+            errorMessage = theForm.errors.asTextErrorMessageForField("electricVehicleChargingPoints")
+        ).withFormField(theForm("electricVehicleChargingPoints")))
 
-
-
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

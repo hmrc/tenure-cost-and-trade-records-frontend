@@ -36,12 +36,12 @@
 @layout(
     pageHeading = messages("percentageFromFuelCards.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     theForm = form,
     fullWidth = true,
-    showH1  = false
+    showH1 = false
 ) {
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.submit()) {
@@ -82,9 +82,9 @@
                                             attributes = Map(
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("percentageFromFuelCards.label", finYearEnd)
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.percent"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("label.percent")
+                                                ))
                                         ).withFormField(form(s"percentageFromFuelCards-$idx")))
                                     )
                                 )

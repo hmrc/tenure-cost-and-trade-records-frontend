@@ -22,147 +22,152 @@
 
 @(forType: ForType, isLeaseHolder: Boolean, section1Completed: Option[AnswersYesNo], section2Completed: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
-@session = @{ request.sessionData }
-@readOnlySection1 = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).flatMap(_.answersChecked).contains(AnswerYes) }
-@readOnlySection2 = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty).flatMap(_.answersChecked).contains(AnswerYes) }
+@session = @{
+    request.sessionData
+}
+@readOnlySection1 = @{
+    session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty).flatMap(_.answersChecked).contains(AnswerYes)
+}
+@readOnlySection2 = @{
+    session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty).flatMap(_.answersChecked).contains(AnswerYes)
+}
 
 <li>
- <h2 id="connectionToTheProperty" class="app-task-list__section">
-  <span class="app-task-list__section-number">1. </span> @messages("label.section.connectionToTheProperty")
- </h2>
+    <h2 id="connectionToTheProperty" class="app-task-list__section">
+        <span class="app-task-list__section-number">1. </span> @messages("label.section.connectionToTheProperty")
+    </h2>
 
- <ul class="app-task-list__items">
-  @includes.taskListItem("are-you-still-connected", "checkYourAnswersConnectionToProperty.connectionStatus.heading",
-   controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(),
-   section1Completed,
-   pageAnswer = session.stillConnectedDetails.flatMap(_.addressConnectionType),
-   cannotStartYet = false,
-   readOnlySection1,
-  )
+    <ul class="app-task-list__items">
+        @includes.taskListItem("are-you-still-connected", "checkYourAnswersConnectionToProperty.connectionStatus.heading",
+            controllers.connectiontoproperty.routes.AreYouStillConnectedController.show(),
+            section1Completed,
+            pageAnswer = session.stillConnectedDetails.flatMap(_.addressConnectionType),
+            cannotStartYet = false,
+            readOnlySection1,
+        )
 
-  @if(forType != FOR6076) {
+        @if(forType != FOR6076) {
 
-   @includes.taskListItem("vacant-properties", "checkYourAnswersConnectionToProperty.vacancyStatus.heading",
-    controllers.connectiontoproperty.routes.VacantPropertiesController.show(),
-    section1Completed,
-    pageAnswer = session.stillConnectedDetails.flatMap(_.isPropertyVacant),
-    cannotStartYet = session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty,
-    readOnlySection1,
-   )
-  }
+            @includes.taskListItem("vacant-properties", "checkYourAnswersConnectionToProperty.vacancyStatus.heading",
+                controllers.connectiontoproperty.routes.VacantPropertiesController.show(),
+                section1Completed,
+                pageAnswer = session.stillConnectedDetails.flatMap(_.isPropertyVacant),
+                cannotStartYet = session.stillConnectedDetails.flatMap(_.addressConnectionType).isEmpty,
+                readOnlySection1,
+            )
+        }
 
-  @includes.taskListItem("name-of-operator-from-property", "checkYourAnswersConnectionToProperty.occupierDetails.heading",
-   controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(),
-   section1Completed,
-   pageAnswer = session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
-   cannotStartYet = session.stillConnectedDetails.flatMap(_.isPropertyVacant).isEmpty,
-   readOnlySection1
-  )
- </ul>
+        @includes.taskListItem("name-of-operator-from-property", "checkYourAnswersConnectionToProperty.occupierDetails.heading",
+            controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show(),
+            section1Completed,
+            pageAnswer = session.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty),
+            cannotStartYet = session.stillConnectedDetails.flatMap(_.isPropertyVacant).isEmpty,
+            readOnlySection1
+        )
+    </ul>
 </li>
 
 <li>
- <h2 id="aboutTheProperty" class="app-task-list__section">
-  <span class="app-task-list__section-number">2. </span> @messages("label.section.aboutTheProperty")
- </h2>
+    <h2 id="aboutTheProperty" class="app-task-list__section">
+        <span class="app-task-list__section-number">2. </span> @messages("label.section.aboutTheProperty")
+    </h2>
 
- <ul class="app-task-list__items">
-  @includes.taskListItem("about-you", "checkYourAnswersAboutTheProperty.aboutYou.heading",
-   controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
-   section2Completed,
-   pageAnswer = session.aboutYouAndTheProperty.flatMap(_.customerDetails),
-   cannotStartYet = section1Completed.isEmpty,
-   readOnly = forType == FOR6076 && readOnlySection2
-  )
+    <ul class="app-task-list__items">
+        @includes.taskListItem("about-you", "checkYourAnswersAboutTheProperty.aboutYou.heading",
+            controllers.aboutyouandtheproperty.routes.AboutYouController.show(),
+            section2Completed,
+            pageAnswer = session.aboutYouAndTheProperty.flatMap(_.customerDetails),
+            cannotStartYet = section1Completed.isEmpty,
+            readOnly = forType == FOR6076 && readOnlySection2
+        )
 
-  @if(forType == FOR6048) {
-   @includes.taskListItem("technology-type", "taskList.lettingAvailability",
-    controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show(),
-    section2Completed,
-    pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate),
-    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
-   )
-   @includes.taskListItem("family-use", "taskList.familyUse",
-    controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show(),
-    section2Completed,
-    pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable),
-    cannotStartYet = session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate).isEmpty
-   )
-  }
+        @if(forType == FOR6048) {
+            @includes.taskListItem("technology-type", "taskList.lettingAvailability",
+                controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show(),
+                section2Completed,
+                pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate),
+                cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+            )
+            @includes.taskListItem("family-use", "taskList.familyUse",
+                controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show(),
+                section2Completed,
+                pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable),
+                cannotStartYet = session.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate).isEmpty
+            )
+        }
 
-  @if(forType == FOR6076) {
-   @includes.taskListItem("technology-type", "taskList.technologyType",
-    controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
-    section2Completed,
-    pageAnswer = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
-    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty,
-    readOnlySection2
-   )
-   @includes.taskListItem("site-construction-details", "taskList.siteConstructionDetails",
-    controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
-    section2Completed,
-    pageAnswer = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
-    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty,
-    readOnlySection2
-   )
-   @includes.taskListItem("how-is-used", "taskList.howIsUsed",
-    controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
-    section2Completed,
-    pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
-    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty,
-    readOnlySection2
-   )
-  } else {
+        @if(forType == FOR6076) {
+            @includes.taskListItem("technology-type", "taskList.technologyType",
+                controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show(),
+                section2Completed,
+                pageAnswer = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant),
+                cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty,
+                readOnlySection2
+            )
+            @includes.taskListItem("site-construction-details", "taskList.siteConstructionDetails",
+                controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show(),
+                section2Completed,
+                pageAnswer = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed),
+                cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.renewablesPlant).isEmpty,
+                readOnlySection2
+            )
+            @includes.taskListItem("how-is-used", "taskList.howIsUsed",
+                controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show(),
+                section2Completed,
+                pageAnswer = session.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology),
+                cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed).isEmpty,
+                readOnlySection2
+            )
+        } else {
 
-   @if(forType != FOR6030) {
-    @if(forType != FOR6048) {
-     @includes.taskListItem("about-the-property", "taskList.howIsUsed",
-      if(forType == FOR6045 || forType == FOR6046) {
-       controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
-      }
-      else {
-       controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-      },
-      section2Completed,
-      pageAnswer = session.aboutYouAndTheProperty.flatMap(_.propertyDetails).flatMap(_.propertyCurrentlyUsed),
-      cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
-     )
-    }
-   } else {
-    @includes.taskListItem("about-the-property", "taskList.howIsUsed",
-     controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
-     section2Completed,
-     pageAnswer = session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
-     cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
-    )
-   }
+            @if(forType != FOR6030) {
+                @if(forType != FOR6048) {
+                    @includes.taskListItem("about-the-property", "taskList.howIsUsed",
+                        if(forType == FOR6045 || forType == FOR6046) {
+                            controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
+                        }
+                        else {
+                            controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+                        },
+                        section2Completed,
+                        pageAnswer = session.aboutYouAndTheProperty.flatMap(_.propertyDetails).flatMap(_.propertyCurrentlyUsed),
+                        cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+                    )
+                }
+            } else {
+                @includes.taskListItem("about-the-property", "taskList.howIsUsed",
+                    controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show(),
+                    section2Completed,
+                    pageAnswer = session.aboutYouAndTheProperty.flatMap(_.propertyDetails),
+                    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.customerDetails).isEmpty
+                )
+            }
 
+            @if(forType == FOR6030 && !isLeaseHolder) {
+                @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
+                    controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
+                    section2Completed,
+                    pageAnswer = session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
+                    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+                )
+            }
 
-   @if(forType == FOR6030 && !isLeaseHolder) {
-    @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
-     controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show(),
-     section2Completed,
-     pageAnswer = session.aboutYouAndTheProperty.flatMap(_.licensableActivities),
-     cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
-    )
-   }
-
-   @if(!(Seq(FOR6020, FOR6030, FOR6045, FOR6046, FOR6048) contains forType)) {
-    @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
-     if(forType == FOR6015 || forType == FOR6016) {
-      controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
-     } else {
-      controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
-     },
-     section2Completed,
-     pageAnswer = if(forType == FOR6015 || forType == FOR6016) {
-      session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
-     } else {
-      session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
-     },
-     cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
-    )
-   }
-  }
- </ul>
+            @if(!(Seq(FOR6020, FOR6030, FOR6045, FOR6046, FOR6048) contains forType)) {
+                @includes.taskListItem("licensable-activities", "checkYourAnswersAboutTheProperty.license.heading",
+                    if(forType == FOR6015 || forType == FOR6016) {
+                        controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
+                    } else {
+                        controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
+                    },
+                    section2Completed,
+                    pageAnswer = if(forType == FOR6015 || forType == FOR6016) {
+                        session.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail)
+                    } else {
+                        session.aboutYouAndTheProperty.flatMap(_.licensableActivities)
+                    },
+                    cannotStartYet = session.aboutYouAndTheProperty.flatMap(_.propertyDetails).isEmpty
+                )
+            }
+        }
+    </ul>
 </li>

@@ -14,11 +14,9 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -33,7 +31,7 @@
 @layout(
     pageHeading = messages("concessionTypeDetails.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutConcessionsFranchisesOrLettings"),
     backLinkUrl = backLink,
     theForm = theForm
@@ -44,8 +42,6 @@
         @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness",
             labelClasses = "govuk-!-font-weight-bold", hintMsg = "concessionTypeDetails.describeType")
         @includes.textInput(govukInput, theForm, "howIsUsed", "govuk-input--width-20", "howBusinessPropertyIsUsed", labelClasses = "govuk-!-font-weight-bold")
-
-
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

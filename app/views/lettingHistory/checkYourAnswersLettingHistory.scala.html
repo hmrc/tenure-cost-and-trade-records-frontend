@@ -30,7 +30,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages("lettingHistory.checkYourAnswers.heading"),
     backLinkUrl = backLink,
     fullWidth = true,

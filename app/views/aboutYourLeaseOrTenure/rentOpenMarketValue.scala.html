@@ -31,33 +31,33 @@
 @(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("rentOpenMarketValue.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backLink,
- theForm = theForm
+    pageHeading = messages("rentOpenMarketValue.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.submit()) {
 
-    @includes.radioButtonsYesNo(
-     govukRadios,
-     theForm,
-     "rentOpenMarketValue",
-     "rentOpenMarketValue.heading",
-     messages("label.yes.oedd"),
-     messages("label.no.nac.oedd"),
-     classes = "govuk-fieldset__legend--l",
-     isHeading = true)
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "rentOpenMarketValue",
+            "rentOpenMarketValue.heading",
+            messages("label.yes.oedd"),
+            messages("label.no.nac.oedd"),
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true)
 
-   @govukDetails(Details(
-    summary = Text(messages("help.rentOpenMarketValue.title")),
-    content = HtmlContent(
-             s"<p>${messages("help.rentOpenMarketValue.p1")}</p>"
-    )))
+        @govukDetails(Details(
+            summary = Text(messages("help.rentOpenMarketValue.title")),
+            content = HtmlContent(
+                s"<p>${messages("help.rentOpenMarketValue.p1")}</p>"
+            )))
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

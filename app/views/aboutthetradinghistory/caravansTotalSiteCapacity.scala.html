@@ -74,7 +74,7 @@
 @layout(
     pageHeading = messages(s"turnover.6045.caravansTotalSiteCapacity.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLinkUrl,
     theForm = form

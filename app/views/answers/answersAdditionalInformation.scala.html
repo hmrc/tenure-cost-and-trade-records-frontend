@@ -32,6 +32,6 @@
 
 @govukSummaryList(SummaryList(rows =
     sectionAnswers.row("label.furtherInformation",
-        _.furtherInformationOrRemarksDetails.filter(_.trim != "").orElse(Some(messages(s"label.no"))),
+        _.furtherInformationOrRemarksDetails.filter(_.trim != "").orElse(messages(s"label.no")),
         controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(), "furtherInformationOrRemarks")
 ))

@@ -28,35 +28,41 @@
 @(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("tenantsAdditionsDisregarded.heading"),
- showSection = true,
-    summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backLink,
- theForm = theForm
+    pageHeading = messages("tenantsAdditionsDisregarded.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-      <p class="govuk-body">@messages("tenantsAdditionsDisregarded.p1")</p>
+    <p class="govuk-body">@messages("tenantsAdditionsDisregarded.p1")</p>
 
-      <p class="govuk-body">@messages("tenantsAdditionsDisregarded.p2")</p>
+    <p class="govuk-body">@messages("tenantsAdditionsDisregarded.p2")</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-          <li>@{messages("tenantsAdditionsDisregarded.list1")}</li>
-          <li>@{messages("tenantsAdditionsDisregarded.list2")}</li>
-          <li>@{messages("tenantsAdditionsDisregarded.list3")}</li>
-      </ul>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@{
+            messages("tenantsAdditionsDisregarded.list1")
+        }</li>
+        <li>@{
+            messages("tenantsAdditionsDisregarded.list2")
+        }</li>
+        <li>@{
+            messages("tenantsAdditionsDisregarded.list3")
+        }</li>
+    </ul>
 
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.submit()) {
-      @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "tenantsAdditionsDisregarded",
-      "tenantsAdditionsDisregarded.subheading",
-          messages("label.yes.do"),
-          messages("label.no.naddo"),
-      classes = "govuk-fieldset__legend--m"
-    )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "tenantsAdditionsDisregarded",
+            "tenantsAdditionsDisregarded.subheading",
+            messages("label.yes.do"),
+            messages("label.no.naddo"),
+            classes = "govuk-fieldset__legend--m"
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

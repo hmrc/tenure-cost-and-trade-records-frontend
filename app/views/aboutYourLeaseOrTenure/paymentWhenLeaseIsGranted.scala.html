@@ -31,42 +31,42 @@
 @(theForm: Form[AnswersYesNo], getBackLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("receivePaymentWhenLeaseGranted.heading"),
-  showH1 = false,
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = getBackLink,
-  theForm = theForm
+    pageHeading = messages("receivePaymentWhenLeaseGranted.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = getBackLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.submit()) {
 
-      <h1 class="govuk-heading-l">@messages("receivePaymentWhenLeaseGranted.heading")</h1>
+        <h1 class="govuk-heading-l">@messages("receivePaymentWhenLeaseGranted.heading")</h1>
 
-      <p class="govuk-body">@messages("hint.receivePaymentWhenLeaseGranted")</p>
+        <p class="govuk-body">@messages("hint.receivePaymentWhenLeaseGranted")</p>
 
-      @govukRadios(Radios(
-          fieldset = Some(Fieldset(
-              legend = Some(Legend(
-                  classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
-              ))
-          )),
-          classes = "govuk-radios--inline",
-          name = "receivePaymentWhenLeaseGranted",
-          items = Seq(
-              RadioItem(
-                  content = Text(messages("label.yes.ydw")),
-                  value = Some("yes")
-              ),
-              RadioItem(
-                  content = Text(messages("label.no.nac.ydw")),
-                  value = Some("no")
-              )
-          ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("receivePaymentWhenLeaseGranted")
-      ).withFormField(theForm("receivePaymentWhenLeaseGranted")))
+        @govukRadios(Radios(
+            fieldset = Fieldset(
+                legend = Legend(
+                    classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+                )),
+            classes = "govuk-radios--inline",
+            name = "receivePaymentWhenLeaseGranted",
+            items = Seq(
+                RadioItem(
+                    content = Text(messages("label.yes.ydw")),
+                    value = "yes"
+                ),
+                RadioItem(
+                    content = Text(messages("label.no.nac.ydw")),
+                    value = "no"
+                )
+            ),
+            errorMessage = theForm.errors.asTextErrorMessageForField("receivePaymentWhenLeaseGranted")
+        ).withFormField(theForm("receivePaymentWhenLeaseGranted")))
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

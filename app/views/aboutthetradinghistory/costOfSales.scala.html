@@ -18,8 +18,8 @@
 @import models.submissions.aboutthetradinghistory.CostOfSales
 @import uk.gov.hmrc.govukfrontend.views.Implicits.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import util.{AccessibilityUtil, DateUtilLocalised}
 @import util.NumberUtil.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
 @import views.html.components.PrimaryLayout
 
 
@@ -35,7 +35,7 @@
 )
 
 
-@(form: Form[Seq[CostOfSales]],fromLocation:String = "")(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[CostOfSales]], fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
 
 
 @accommodationHeading = {
@@ -78,7 +78,7 @@
     pageHeading = messages("costOfSales.heading"),
     showSection = true,
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     backLinkUrl = fromLocation match {
         case "TL" => controllers.routes.TaskListController.show.url + "#turnover"
         case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
@@ -128,9 +128,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("costOfSales.accommodation", finYearEnd)
@@ -148,9 +148,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("costOfSales.food", finYearEnd)
@@ -168,9 +168,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("costOfSales.drinks", finYearEnd)
@@ -188,9 +188,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("costOfSales.otherSales", finYearEnd)

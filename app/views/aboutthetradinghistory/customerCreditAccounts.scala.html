@@ -37,7 +37,7 @@
 @layout(
     pageHeading = messages("customerCreditAcc.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backlink,
     theForm = form,
@@ -46,15 +46,15 @@
 ) {
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.submit()) {
 
-      <div class = "govuk-body govuk-!-width-two-thirds">
-      <p>@messages("customerCreditAcc.declare")</p>
-      <p>@messages("customerCreditAcc.notInclude")</p>
-      </div>
+        <div class = "govuk-body govuk-!-width-two-thirds">
+            <p>@messages("customerCreditAcc.declare")</p>
+            <p>@messages("customerCreditAcc.notInclude")</p>
+        </div>
         @govukInsetText(InsetText(
             content = Text(messages("common6020.inset"))
         ))
 
-      <h2 class= "govuk-heading-m govuk-!-width-two-thirds ">@messages("customerCreditAcc.percentage")</h2>
+        <h2 class= "govuk-heading-m govuk-!-width-two-thirds ">@messages("customerCreditAcc.percentage")</h2>
 
         <table class="hmrc-responsive-table govuk-!-width-three-quarters">
             <tbody>
@@ -90,9 +90,9 @@
                                             attributes = Map(
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("customerCreditAcc.label", finYearEnd)
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.percent"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("label.percent")
+                                                ))
                                         ).withFormField(form(s"customerCreditAccounts-$idx")))
                                     )
                                 )

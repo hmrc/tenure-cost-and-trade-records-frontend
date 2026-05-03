@@ -27,30 +27,30 @@
 
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
-    @layout(
-        pageHeading = messages("workCarriedOutDetails.heading"),
-        showSection = true,
-        showH1 = false,
-        summary = Some(summary),
-        sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-        backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url,
-        theForm = theForm
+@layout(
+    pageHeading = messages("workCarriedOutDetails.heading"),
+    showSection = true,
+    showH1 = false,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url,
+    theForm = theForm
+) {
+
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.submit()
     ) {
 
-        @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.submit()
-        ) {
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "workCarriedOutDetails",
+            "workCarriedOutDetails.heading",
+            hint = "workCarriedOutDetails.hint",
+            classes = "govuk-label--l",
+            isPageHeading = true,
+            charCount = 2000
+        )
 
-            @includes.textInputHMRCCharCount(
-                hmrcCharacterCount,
-                theForm,
-                "workCarriedOutDetails",
-                "workCarriedOutDetails.heading",
-                hint = "workCarriedOutDetails.hint",
-                classes = "govuk-label--l",
-                isPageHeading = true,
-                charCount = 2000
-            )
-
-            @includes.continueSaveAsDraftButtons(govukButton)
-        }
+        @includes.continueSaveAsDraftButtons(govukButton)
     }
+}

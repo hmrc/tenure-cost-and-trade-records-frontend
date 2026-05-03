@@ -35,22 +35,22 @@
 @layout(
     pageHeading = messages("pitchesForCaravans.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
     theForm = form
 ) {
 
-  <p class="govuk-body">
-      @messages("tentingPitches.common.VAT")&nbsp<span>
-      @messages("tentingPitches.common.stateTheNumber")
-  </span>
-  </p>
+    <p class="govuk-body">
+        @messages("tentingPitches.common.VAT")&nbsp<span>
+    @messages("tentingPitches.common.stateTheNumber")
+    </span>
+    </p>
 
-  @govukInsetText(InsetText(content = Text(messages("tentingPitches.common.inset"))))
+    @govukInsetText(InsetText(content = Text(messages("tentingPitches.common.inset"))))
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.PitchesForCaravansController.submit()) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.PitchesForCaravansController.submit()) {
 
         @dataTable(form)
         @includes.continueSaveAsDraftButtons(govukButton)

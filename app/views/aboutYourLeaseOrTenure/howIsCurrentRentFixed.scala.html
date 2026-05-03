@@ -41,7 +41,7 @@
 @layout(
     pageHeading = messages("howIsCurrentRentFixed.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLink,
     theForm = theForm
@@ -65,7 +65,7 @@
             ).map(radioItem => RadioItem(
                 content = Text(radioItem._2),
                 checked = radioItem._1.equals(theForm("howIsCurrentRentFixed").value.getOrElse("")),
-                value = Option(radioItem._1)
+                value = radioItem._1
             )),
             inline = false
         )

@@ -28,30 +28,36 @@
 
 @(theForm: Form[String], backlink: String, readOnly: Boolean)(implicit request: SessionRequest[?], messages: Messages)
 
-@forType = @{request.sessionData.forType}
+@forType = @{
+    request.sessionData.forType
+}
 
 @heading = @{
- if(forType == FOR6048){
-  messages("tradingNameFromProperty4068.heading")
- } else {
-  messages("tradingNameFromProperty.heading")
- }
+    if(forType == FOR6048) {
+        messages("tradingNameFromProperty4068.heading")
+    } else {
+        messages("tradingNameFromProperty.heading")
+    }
 }
 
 @layout(
     pageHeading = heading,
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.connectionToTheProperty"),
     backLinkUrl = backlink,
     theForm = theForm,
     readOnly = readOnly
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {
-    <fieldset class="govuk-fieldset">
-      @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", if(forType == FOR6048) {"tradingNameFromPropertyHeadingLabel6048"} else {"tradingNameFromPropertyHeadingLabel"})
-    </fieldset>
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.submit()) {
+        <fieldset class="govuk-fieldset">
+        @includes.textInput(govukInput, theForm, "tradingNameFromProperty", "govuk-input--width-20", if(forType == FOR6048) {
+            "tradingNameFromPropertyHeadingLabel6048"
+        } else {
+            "tradingNameFromPropertyHeadingLabel"
+        })
+        </fieldset>
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

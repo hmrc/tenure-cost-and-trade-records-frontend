@@ -17,8 +17,8 @@
 @import models.pages.Summary
 @import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumInformationDetails
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Hint, Input, Label, PrefixOrSuffix}
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import views.html.components.PrimaryLayout
 
@@ -33,41 +33,41 @@
 @(theForm: Form[PayACapitalSumInformationDetails], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("capitalSumPaidDetails.heading"),
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("capitalSumPaidDetails.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
     <p class="govuk-body">@messages("capitalSumPaidDetails.p1")</p>
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.submit()) {
 
-      @govukInput(Input(
-          id = "capitalSumPaidDetails",
-          name = "capitalSumPaidDetails",
-          value = theForm("capitalSumPaidDetails").value,
-          classes = "govuk-input--width-10",
-          label = Label(
-              content = Text(messages("label.capitalSumPaidDetails")),
-              classes = "govuk-!-font-weight-bold"
-          ),
-          prefix = Some(PrefixOrSuffix(
-              content = Text(messages("label.pound"))
-          )),
-          hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
-          autocomplete = Some("off"),
-      ).withFormField(theForm("capitalSumPaidDetails")))
+        @govukInput(Input(
+            id = "capitalSumPaidDetails",
+            name = "capitalSumPaidDetails",
+            value = theForm("capitalSumPaidDetails").value,
+            classes = "govuk-input--width-10",
+            label = Label(
+                content = Text(messages("label.capitalSumPaidDetails")),
+                classes = "govuk-!-font-weight-bold"
+            ),
+            prefix = PrefixOrSuffix(
+                content = Text(messages("label.pound")
+                )),
+            hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
+            autocomplete = "off",
+        ).withFormField(theForm("capitalSumPaidDetails")))
 
-      @includes.dateFields(
-          form = theForm,
-          field = "capitalSumPaidDetailsDateInput",
-          govukDate = govukDateInput,
-          showDays = true)
+        @includes.dateFields(
+            form = theForm,
+            field = "capitalSumPaidDetailsDateInput",
+            govukDate = govukDateInput,
+            showDays = true)
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

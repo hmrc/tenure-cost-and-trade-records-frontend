@@ -31,14 +31,14 @@
 @layout(
     pageHeading = messages("propertyUpdates.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLink,
     theForm = theForm
 ) {
 
-<p class="govuk-body">@messages("propertyUpdates.declare")</p>
-<p class="govuk-body">@messages("propertyUpdates.assign") </p>
+    <p class="govuk-body">@messages("propertyUpdates.declare")</p>
+    <p class="govuk-body">@messages("propertyUpdates.assign") </p>
 
     @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.submit()) {
 

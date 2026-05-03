@@ -57,7 +57,7 @@
                 "aria-label" -> messages(labelKey)
             ),
             errorMessage = {
-                if (form.errors.exists(_.message == "error.accommodation.singleBedrooms.zero")) {
+                if(form.errors.exists(_.message == "error.accommodation.singleBedrooms.zero")) {
                     ErrorMessage(content = Text(messages("error.accommodation.singleBedrooms.zero")))
                 } else {
                     form.errors.asTextErrorMessageForField(formField)

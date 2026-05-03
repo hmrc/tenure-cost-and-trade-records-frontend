@@ -28,28 +28,28 @@
 @(theForm: Form[AnswersYesNo], backLinkUrl: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
- pageHeading = messages("canRentBeReducedOnReview.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(request.sessionData.toSummary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backLinkUrl,
- theForm = theForm
+    pageHeading = messages("canRentBeReducedOnReview.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = request.sessionData.toSummary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLinkUrl,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.submit()) {
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "canRentBeReducedOnReview",
-      "canRentBeReducedOnReview.heading",
-        messages("label.yes.oes"),
-        messages("label.no.nac.oes"),
-      classes = "govuk-fieldset__legend--l",
-      isHeading = true
-    )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "canRentBeReducedOnReview",
+            "canRentBeReducedOnReview.heading",
+            messages("label.yes.oes"),
+            messages("label.no.nac.oes"),
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

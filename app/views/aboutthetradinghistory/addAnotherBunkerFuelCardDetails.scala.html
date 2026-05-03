@@ -17,8 +17,8 @@
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.BunkerFuelCardDetails
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{Actions, Fieldset, Legend, RadioItem, Radios, SummaryList}
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Key, SummaryListRow, Value}
 @import views.html.components.PrimaryLayout
@@ -34,86 +34,96 @@
 @(theForm: Form[?], index: Int)(implicit request: SessionRequest[?], messages: Messages)
 
 
-@session = @{ request.sessionData }
-
-@label =  @{messages("label.section.aboutYourTradingHistory")}
-
-@formLabel =@{messages(s"label.addAnotherBunkerFuelCardDetails")}
-
-@cardDetails = @{
-  session.aboutTheTradingHistory.fold(Seq.empty[BunkerFuelCardDetails]) {
-   fr =>fr.bunkerFuelCardsDetails.fold(IndexedSeq.empty[BunkerFuelCardDetails])(_.map(_.bunkerFuelCardDetails))
-  }
+@session = @{
+    request.sessionData
 }
 
-@pluralSuffix = @{ if (cardDetails.size > 1) "s" else "" }
+@label = @{
+    messages("label.section.aboutYourTradingHistory")
+}
 
-@pageHeading = @{messages(if (cardDetails.isEmpty) s"addAnotherBunkerFuelCardDetails.zeroDetails.heading" else s"addAnotherBunkerFuelCardDetails.heading",cardDetails.size)+ pluralSuffix}
+@formLabel = @{
+    messages(s"label.addAnotherBunkerFuelCardDetails")
+}
 
-@formAction = @{controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.submit(index)}
+@cardDetails = @{
+    session.aboutTheTradingHistory.fold(Seq.empty[BunkerFuelCardDetails]) {
+        fr => fr.bunkerFuelCardsDetails.fold(IndexedSeq.empty[BunkerFuelCardDetails])(_.map(_.bunkerFuelCardDetails))
+    }
+}
+
+@pluralSuffix = @{
+    if(cardDetails.size > 1) "s" else ""
+}
+
+@pageHeading = @{
+    messages(if(cardDetails.isEmpty) s"addAnotherBunkerFuelCardDetails.zeroDetails.heading" else s"addAnotherBunkerFuelCardDetails.heading", cardDetails.size) + pluralSuffix
+}
+
+@formAction = @{
+    controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.submit(index)
+}
 
 @layout(
- pageHeading = pageHeading,
- showSection = true,
- summary = Some(session.toSummary),
- sectionName = label,
- backLinkUrl = None,
- theForm = theForm
+    pageHeading = pageHeading,
+    showSection = true,
+    summary = session.toSummary,
+    sectionName = label,
+    backLinkUrl = None,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = formAction) {
+    @formWithCSRF(action = formAction) {
 
-  @govukSummaryList(
-    SummaryList(
-     rows = cardDetails.zipWithIndex.map { case (cardDetails, idx) =>
-      SummaryListRow(
-       key = Key(Text(cardDetails.name), classes = "govuk-!-font-weight-regular"),
-       value = Value(Text(cardDetails.handlingFee.toString + " pence/litre")),
-       actions = Actions(
-        items = Seq(
-         ActionItem(
-          href = controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(idx).url,
-          content = Text("Change")),
-         ActionItem(
-          controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.remove(idx).url,
-          content = Text("Remove"))
-        ),
-        classes = "govuk-!-width-one-third"
-       )
-      )
-     }
-    )
-  )
+        @govukSummaryList(
+            SummaryList(
+                rows = cardDetails.zipWithIndex.map { case (cardDetails, idx) =>
+                    SummaryListRow(
+                        key = Key(Text(cardDetails.name), classes = "govuk-!-font-weight-regular"),
+                        value = Value(Text(cardDetails.handlingFee.toString + " pence/litre")),
+                        actions = Actions(
+                            items = Seq(
+                                ActionItem(
+                                    href = controllers.aboutthetradinghistory.routes.BunkerFuelCardDetailsController.show(idx).url,
+                                    content = Text("Change")),
+                                ActionItem(
+                                    controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.remove(idx).url,
+                                    content = Text("Remove"))
+                            ),
+                            classes = "govuk-!-width-one-third"
+                        )
+                    )
+                }
+            )
+        )
 
-  @govukRadios(
-   Radios(
-    name = s"addAnotherBunkerFuelCardsDetails",
-    idPrefix = Option(s"addAnotherBunkerFuelCardsDetails"),
-    classes = "govuk-radios--inline",
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm(s"addAnotherBunkerFuelCardsDetails").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField(s"addAnotherBunkerFuelCardsDetails"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(formLabel),
-        classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
-       )
-      )
-     )
-    )
-   )
-  )
+        @govukRadios(
+            Radios(
+                name = s"addAnotherBunkerFuelCardsDetails",
+                idPrefix = s"addAnotherBunkerFuelCardsDetails",
+                classes = "govuk-radios--inline",
+                items = Seq(
+                    "yes" -> messages("label.yes"),
+                    "no" -> messages("label.no")
+                ).map(radioItem => RadioItem(
+                    content = Text(radioItem._2),
+                    checked = radioItem._1.equals(theForm(s"addAnotherBunkerFuelCardsDetails").value.getOrElse("")),
+                    value = radioItem._1
+                )
+                ),
+                errorMessage = theForm.errors.asTextErrorMessageForField(s"addAnotherBunkerFuelCardsDetails"),
+                fieldset =
+                    Fieldset(
+                        legend =
+                            Legend(
+                                content = Text(formLabel),
+                                classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
+                            )
+                    )
+            )
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 
 }

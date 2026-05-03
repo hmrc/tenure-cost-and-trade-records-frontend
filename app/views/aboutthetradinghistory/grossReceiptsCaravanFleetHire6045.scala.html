@@ -54,9 +54,9 @@
             content = HtmlContent(
                 govukInput(
                     Input(
-                        prefix = Some(PrefixOrSuffix(
-                            content = Text("£")
-                        )),
+                        prefix = PrefixOrSuffix(
+                            content = Text("£"
+                            )),
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
@@ -72,7 +72,7 @@
 @layout(
     pageHeading = messages("turnover.6045.caravanFleetHire.grossReceipts.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
@@ -111,9 +111,9 @@
                                                 "maxlength" -> "2",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("turnover.tradingPeriod", finYearEnd)
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("turnover.weeks"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("turnover.weeks")
+                                                ))
                                         ).withFormField(form(s"turnover[$idx].weeks")))
                                     )
                                 )

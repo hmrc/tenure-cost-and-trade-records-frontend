@@ -28,7 +28,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages(s"lettingHistory.intendedLettings.isYearlyAvailable.$keyFragment.heading"),
     backLinkUrl = backLink,
     showSection = true,
@@ -37,7 +37,9 @@
 
     @formWithCSRF(action = routes.IsYearlyAvailableController.submit) {
 
-        <p class="govuk-body">@{messages("lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.p1")}</p>
+        <p class="govuk-body">@{
+            messages("lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.p1")
+        }</p>
 
         <p class="govuk-body">@HtmlContent(messages("lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.p2")).asHtml</p>
 

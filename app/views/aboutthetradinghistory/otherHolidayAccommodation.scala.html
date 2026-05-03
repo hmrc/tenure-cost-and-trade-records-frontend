@@ -31,7 +31,7 @@
 @layout(
     pageHeading = messages("otherHolidayAccommodation.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLinkUrl,
     theForm = form
@@ -52,7 +52,7 @@
         @govukDetails(Details(
             summary = Text(messages("help.otherHolidayAccommodation.title")),
             content = HtmlContent(
-                        s"<p>${messages("help.otherHolidayAccommodation.p1")}</p>" +
+                s"<p>${messages("help.otherHolidayAccommodation.p1")}</p>" +
                         s"<ul class='govuk-list--bullet'>" +
                         s"<li>${messages("help.otherHolidayAccommodation.list1.p1")}</li>" +
                         s"<li>${messages("help.otherHolidayAccommodation.list1.p2")}</li>" +

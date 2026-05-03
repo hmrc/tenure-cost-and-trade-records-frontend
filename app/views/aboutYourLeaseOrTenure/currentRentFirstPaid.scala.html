@@ -31,48 +31,48 @@
 @(theForm: Form[LocalDate], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("currentRentFirstPaid.heading"),
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backLink,
- theForm = theForm
+    pageHeading = messages("currentRentFirstPaid.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.submit()) {
 
-  <p class="govuk-body">@messages("label.currentRentFirstPaid.p1")</p>
+        <p class="govuk-body">@messages("label.currentRentFirstPaid.p1")</p>
 
-  <p class="govuk-body">@messages("label.currentRentFirstPaid.p2")</p>
+        <p class="govuk-body">@messages("label.currentRentFirstPaid.p2")</p>
 
-  <ul class="govuk-list govuk-list--bullet">
-   <li><span class="govuk-body">@messages("currentRentFirstPaid.list1")</span></li>
-   <li><span class="govuk-body">@messages("currentRentFirstPaid.list2")</span></li>
-   <li><span class="govuk-body">@messages("currentRentFirstPaid.list3")</span></li>
-  </ul>
+        <ul class="govuk-list govuk-list--bullet">
+            <li><span class="govuk-body">@messages("currentRentFirstPaid.list1")</span></li>
+            <li><span class="govuk-body">@messages("currentRentFirstPaid.list2")</span></li>
+            <li><span class="govuk-body">@messages("currentRentFirstPaid.list3")</span></li>
+        </ul>
 
-  <p class="govuk-body">@messages("label.currentRentFirstPaid.p3")</p>
+        <p class="govuk-body">@messages("label.currentRentFirstPaid.p3")</p>
 
-  <p class="govuk-body">@messages("label.currentRentFirstPaid.p4")</p>
+        <p class="govuk-body">@messages("label.currentRentFirstPaid.p4")</p>
 
-  <ul class="govuk-list govuk-list--bullet">
-   <li><span class="govuk-body">@messages("currentRentFirstPaid.list4")</span></li>
-   <li><span class="govuk-body">@messages("currentRentFirstPaid.list5")</span></li>
-  </ul>
+        <ul class="govuk-list govuk-list--bullet">
+            <li><span class="govuk-body">@messages("currentRentFirstPaid.list4")</span></li>
+            <li><span class="govuk-body">@messages("currentRentFirstPaid.list5")</span></li>
+        </ul>
 
-  <h2 class="govuk-heading-m">@messages("label.currentRentFirstPaid.p5")</h2>
+        <h2 class="govuk-heading-m">@messages("label.currentRentFirstPaid.p5")</h2>
 
-   <p class="govuk-body">@messages("label.currentRentFirstPaid.help")</p>
+        <p class="govuk-body">@messages("label.currentRentFirstPaid.help")</p>
 
-  @includes.dateFields(
-   form = theForm,
-   field = "currentRentFirstPaid",
-   govukDate = govukDateInput,
-   showFieldSet = false,
-   helpText = "",
-   showDays = true
-  )
+        @includes.dateFields(
+            form = theForm,
+            field = "currentRentFirstPaid",
+            govukDate = govukDateInput,
+            showFieldSet = false,
+            helpText = "",
+            showDays = true
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

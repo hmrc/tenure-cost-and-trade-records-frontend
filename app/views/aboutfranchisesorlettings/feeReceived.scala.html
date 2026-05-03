@@ -16,13 +16,12 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.{CharacterCount, HmrcCharacterCount}
 @import util.DateUtilLocalised
+@import views.html.components.PrimaryLayout
 
 @this(
         layout: PrimaryLayout,
@@ -37,24 +36,26 @@
 
 @(form: Form[?], idx: Int, operatorName: String, backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
-@forType = @{request.sessionData.forType}
+@forType = @{
+    request.sessionData.forType
+}
 
 @dataForType = @{
-  request.sessionData.forType match {
-      case FOR6046 | FOR6045 => request.sessionData.financialYearEndDates6045
-      case _                                   => request.sessionData.financialYearEndDates6030
-  }
+    request.sessionData.forType match {
+        case FOR6046 | FOR6045 => request.sessionData.financialYearEndDates6045
+        case _ => request.sessionData.financialYearEndDates6030
+    }
 }
 
 @controllerForType = @{
     request.sessionData.forType match {
         case FOR6046 | FOR6045 => controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.submit(idx)
-        case _                                   => controllers.aboutfranchisesorlettings.routes.FeeReceivedController.submit(idx)
+        case _ => controllers.aboutfranchisesorlettings.routes.FeeReceivedController.submit(idx)
     }
 }
 
-@label =@{
-    if(forType == FOR6045) messages("label.section.aboutConcessionsFranchisesOrLettings")  else {
+@label = @{
+    if(forType == FOR6045) messages("label.section.aboutConcessionsFranchisesOrLettings") else {
         messages("label.section.aboutFranchisesOrLettings")
     }
 }
@@ -62,7 +63,7 @@
 @layout(
     pageHeading = messages("feeReceived.heading", operatorName),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = label,
     backLinkUrl = backLink,
     fullWidth = true,
@@ -98,9 +99,9 @@
                                                 "maxlength" -> "2",
                                                 "aria-label" -> messages("turnover.tradingPeriod")
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("turnover.weeks"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("turnover.weeks")
+                                                ))
                                         ).withFormField(form(s"feeReceivedPerYear.year[$idx].tradingPeriod")))
                                     )
                                 )
@@ -110,9 +111,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
-                                                content = Text("£")
-                                            )),
+                                            prefix = PrefixOrSuffix(
+                                                content = Text("£"
+                                                )),
                                             classes = "govuk-input--width-5",
                                             attributes = Map(
                                                 "maxlength" -> "8",
@@ -130,20 +131,20 @@
             </tbody>
         </table>
 
-@if(request.sessionData.forType == FOR6030) {
+        @if(request.sessionData.forType == FOR6030) {
 
-    @hmrcCharacterCount(
-        CharacterCount(
-            rows = 3,
-            maxLength = 2000,
-            classes = "govuk-!-width-two-thirds",
-            label = Label(
-                content = Text(messages("feeReceived.feeCalculationDetails")),
-                classes = "govuk-!-font-weight-bold"
+            @hmrcCharacterCount(
+                CharacterCount(
+                    rows = 3,
+                    maxLength = 2000,
+                    classes = "govuk-!-width-two-thirds",
+                    label = Label(
+                        content = Text(messages("feeReceived.feeCalculationDetails")),
+                        classes = "govuk-!-font-weight-bold"
+                    )
+                ).withFormField(form("feeCalculationDetails"))
             )
-        ).withFormField(form("feeCalculationDetails"))
-    )
-}
+        }
         @includes.continueSaveAsDraftButtons(govukButton)
     }
 

@@ -26,7 +26,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages("lettingHistory.intendedLettings.tradingSeason.heading"),
     backLinkUrl = backLink,
     showSection = true,

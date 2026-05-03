@@ -22,258 +22,271 @@
 
 @(forType: ForType, tradingHistoryNumber: Int, section2Completed: Option[AnswersYesNo], section3Completed: Option[AnswersYesNo], section4AccommodationCompleted: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
-@session = @{ request.sessionData }
-@** TODO isReadOnly = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).contains(AnswerYes) } **@
-@isReadOnly = @{ false }
-@hasZeroTurnoverSections = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).contains(AnswerYes) && session.financialYearEndDates.isEmpty }
+@session = @{
+    request.sessionData
+}
+    @** TODO isReadOnly = @{ session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).contains(AnswerYes) } **@
+@isReadOnly = @{
+    false
+}
+@hasZeroTurnoverSections = @{
+    session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).contains(AnswerYes) && session.financialYearEndDates.isEmpty
+}
 
 <li>
- <h2 id="tradingHistory" class="app-task-list__section">
-  <span class="app-task-list__section-number">@tradingHistoryNumber. </span> @messages("label.section.aboutYourTradingHistory")
- </h2>
- <ul class="app-task-list__items">
-  @includes.taskListItem("about-your-trading-history",
-   if(forType == FOR6048) "aboutYourTradingHistory.6048.heading" else "aboutYourTradingHistory.heading",
-   if(forType == FOR6010 || forType == FOR6011 || forType == FOR6015 || forType == FOR6016 || forType == FOR6020 || forType == FOR6030 || forType == FOR6045 || forType == FOR6046 || forType == FOR6048 || forType == FOR6076) {
-    controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show()
-   } else { controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show() },
-   section3Completed,
-   pageAnswer = {
-       if(forType == FOR6048) { session.aboutTheTradingHistoryPartOne.flatMap(_.areYouVATRegistered)}
-       else {session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation)}
-   },
-   cannotStartYet = {
-    if(forType == FOR6048) {
-     section4AccommodationCompleted.isEmpty
-    } else {
-     section2Completed.isEmpty
-    }
-   },
-   isReadOnly
+    <h2 id="tradingHistory" class="app-task-list__section">
+        <span class="app-task-list__section-number">@tradingHistoryNumber
+            . </span> @messages("label.section.aboutYourTradingHistory")
+    </h2>
+    <ul class="app-task-list__items">
+        @includes.taskListItem("about-your-trading-history",
+            if(forType == FOR6048) "aboutYourTradingHistory.6048.heading" else "aboutYourTradingHistory.heading",
+            if(forType == FOR6010 || forType == FOR6011 || forType == FOR6015 || forType == FOR6016 || forType == FOR6020 || forType == FOR6030 || forType == FOR6045 || forType == FOR6046 || forType == FOR6048 || forType == FOR6076) {
+                controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show()
+            } else {
+                controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show()
+            },
+            section3Completed,
+            pageAnswer = {
+                if(forType == FOR6048) {
+                    session.aboutTheTradingHistoryPartOne.flatMap(_.areYouVATRegistered)
+                }
+                else {
+                    session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation)
+                }
+            },
+            cannotStartYet = {
+                if(forType == FOR6048) {
+                    section4AccommodationCompleted.isEmpty
+                } else {
+                    section2Completed.isEmpty
+                }
+            },
+            isReadOnly
 
-  )
+        )
 
-  @if(!(Seq(FOR6020, FOR6076, FOR6045, FOR6046, FOR6048) contains forType)) {
+        @if(!(Seq(FOR6020, FOR6076, FOR6045, FOR6046, FOR6048) contains forType)) {
 
-   @includes.taskListItem("turnover", "turnover.heading",
-    if(forType == FOR6030) {
-     controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
-    } else {
-     controllers.aboutthetradinghistory.routes.TurnoverController.show()
-    },
-    section3Completed,
-    pageAnswer = {
-     if(forType == FOR6030) session.aboutTheTradingHistory.flatMap(_.turnoverSections6030)
-     else session.aboutTheTradingHistory.flatMap(_.turnoverSections)
-    }.flatMap { seq => if(seq.isEmpty) None else Some(seq) }
-    ,
-    cannotStartYet = {
-     val info = session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation)
-     val turnovers = if(forType == FOR6030) session.aboutTheTradingHistory.flatMap(_.turnoverSections6030) else session.aboutTheTradingHistory.flatMap(_.turnoverSections)
-     info.isEmpty || turnovers.contains(Seq.empty)
-    }
-   )
-  }
+            @includes.taskListItem("turnover", "turnover.heading",
+                if(forType == FOR6030) {
+                    controllers.aboutthetradinghistory.routes.Turnover6030Controller.show()
+                } else {
+                    controllers.aboutthetradinghistory.routes.TurnoverController.show()
+                },
+                section3Completed,
+                pageAnswer = {
+                    if(forType == FOR6030) session.aboutTheTradingHistory.flatMap(_.turnoverSections6030)
+                    else session.aboutTheTradingHistory.flatMap(_.turnoverSections)
+                }.flatMap { seq => if(seq.isEmpty) None else seq }
+                ,
+                cannotStartYet = {
+                    val info = session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation)
+                    val turnovers = if(forType == FOR6030) session.aboutTheTradingHistory.flatMap(_.turnoverSections6030) else session.aboutTheTradingHistory.flatMap(_.turnoverSections)
+                    info.isEmpty || turnovers.contains(Seq.empty)
+                }
+            )
+        }
 
-  @if(forType == FOR6048) {
-   @includes.taskListItem("income", "turnover.6048.income.heading",
-    controllers.aboutthetradinghistory.routes.Income6048Controller.show,
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.income),
-    cannotStartYet = session.aboutTheTradingHistoryPartOne.flatMap(_.isFinancialYearsCorrect).isEmpty
-   )
-   @includes.taskListItem("fixed-costs", "turnover.6048.fixedCosts.heading",
-    controllers.aboutthetradinghistory.routes.FixedCosts6048Controller.show,
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.fixedCosts),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.income).isEmpty
-   )
-   @includes.taskListItem("accounting-costs", "turnover.6048.accountingCosts.heading",
-    controllers.aboutthetradinghistory.routes.AccountingCosts6048Controller.show,
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.accountingCosts),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.fixedCosts).isEmpty
-   )
-   @includes.taskListItem("administrative-costs", "turnover.6048.administrativeCosts.heading",
-    controllers.aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show,
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.administrativeCosts),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.accountingCosts).isEmpty
-   )
-   @includes.taskListItem("operational-costs", "turnover.6048.operationalCosts.heading",
-    controllers.aboutthetradinghistory.routes.OperationalCosts6048Controller.show,
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.operationalCosts),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.administrativeCosts).isEmpty
-   )
-  }
+        @if(forType == FOR6048) {
+            @includes.taskListItem("income", "turnover.6048.income.heading",
+                controllers.aboutthetradinghistory.routes.Income6048Controller.show,
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.income),
+                cannotStartYet = session.aboutTheTradingHistoryPartOne.flatMap(_.isFinancialYearsCorrect).isEmpty
+            )
+            @includes.taskListItem("fixed-costs", "turnover.6048.fixedCosts.heading",
+                controllers.aboutthetradinghistory.routes.FixedCosts6048Controller.show,
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.fixedCosts),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.income).isEmpty
+            )
+            @includes.taskListItem("accounting-costs", "turnover.6048.accountingCosts.heading",
+                controllers.aboutthetradinghistory.routes.AccountingCosts6048Controller.show,
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.accountingCosts),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.fixedCosts).isEmpty
+            )
+            @includes.taskListItem("administrative-costs", "turnover.6048.administrativeCosts.heading",
+                controllers.aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show,
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.administrativeCosts),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.accountingCosts).isEmpty
+            )
+            @includes.taskListItem("operational-costs", "turnover.6048.operationalCosts.heading",
+                controllers.aboutthetradinghistory.routes.OperationalCosts6048Controller.show,
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.operationalCosts),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).flatMap(_.headOption).flatMap(_.administrativeCosts).isEmpty
+            )
+        }
 
-  @if(forType == FOR6076) {
-   @includes.taskListItem("electricity-generated", "taskList.6076.powerGenerated",
-    controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.electricityGenerated),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).flatMap(_.currentFinancialYearEnd).isEmpty
-   )
-   @includes.taskListItem("gross-receipts", "taskList.6076.grossReceipts",
-    controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.grossReceiptsExcludingVAT),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.electricityGenerated).isEmpty
-   )
-   @includes.taskListItem("other-income", "turnover.6076.otherIncome",
-    controllers.aboutthetradinghistory.routes.OtherIncomeController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.otherIncome),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.grossReceiptsExcludingVAT).isEmpty
-   )
-   @includes.taskListItem("cost-of-sales", "costOfSales6076.heading",
-    controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.costOfSales6076Sum),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.otherIncome).isEmpty
-   )
-   @includes.taskListItem("staff-costs", "staffCosts.heading",
-    controllers.aboutthetradinghistory.routes.StaffCostsController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.staffCosts),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.costOfSales6076Sum).isEmpty
-   )
-   @includes.taskListItem("premises-costs", "premisesCosts.heading",
-    controllers.aboutthetradinghistory.routes.PremisesCostsController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.staffCosts).isEmpty
-   )
-   @includes.taskListItem("operational-expenses", "taskList.6076.operationalExpenses",
-    controllers.aboutthetradinghistory.routes.OperationalExpensesController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.operationalExpenses),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts).isEmpty
-   )
-   @includes.taskListItem("head-office-expenses", "turnover.6076.headOfficeExpenses.heading",
-    controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.headOfficeExpenses),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.operationalExpenses).isEmpty
-   )
-   @includes.taskListItem("income-and-expenditure", "incomeExpenditureSummary6076.heading",
-    controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.headOfficeExpenses).isEmpty
-   )
-  }
+        @if(forType == FOR6076) {
+            @includes.taskListItem("electricity-generated", "taskList.6076.powerGenerated",
+                controllers.aboutthetradinghistory.routes.ElectricityGeneratedController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.electricityGenerated),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).flatMap(_.currentFinancialYearEnd).isEmpty
+            )
+            @includes.taskListItem("gross-receipts", "taskList.6076.grossReceipts",
+                controllers.aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.grossReceiptsExcludingVAT),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.electricityGenerated).isEmpty
+            )
+            @includes.taskListItem("other-income", "turnover.6076.otherIncome",
+                controllers.aboutthetradinghistory.routes.OtherIncomeController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.otherIncome),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.grossReceiptsExcludingVAT).isEmpty
+            )
+            @includes.taskListItem("cost-of-sales", "costOfSales6076.heading",
+                controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.costOfSales6076Sum),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.otherIncome).isEmpty
+            )
+            @includes.taskListItem("staff-costs", "staffCosts.heading",
+                controllers.aboutthetradinghistory.routes.StaffCostsController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.staffCosts),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.costOfSales6076Sum).isEmpty
+            )
+            @includes.taskListItem("premises-costs", "premisesCosts.heading",
+                controllers.aboutthetradinghistory.routes.PremisesCostsController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.staffCosts).isEmpty
+            )
+            @includes.taskListItem("operational-expenses", "taskList.6076.operationalExpenses",
+                controllers.aboutthetradinghistory.routes.OperationalExpensesController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.operationalExpenses),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.premisesCosts).isEmpty
+            )
+            @includes.taskListItem("head-office-expenses", "turnover.6076.headOfficeExpenses.heading",
+                controllers.aboutthetradinghistory.routes.HeadOfficeExpensesController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.headOfficeExpenses),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.operationalExpenses).isEmpty
+            )
+            @includes.taskListItem("income-and-expenditure", "incomeExpenditureSummary6076.heading",
+                controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).flatMap(_.headOption).flatMap(_.headOfficeExpenses).isEmpty
+            )
+        }
 
-  @if(forType == FOR6020) {
+        @if(forType == FOR6020) {
 
-   @includes.taskListItem("fuel-sales", "taskList.fuelSales",
-    controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.totalFuelSold),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).flatMap(_.currentFinancialYearEnd).isEmpty
-   )
-   @includes.taskListItem("bunkered-fuel", "taskList.bunkerdFuel",
-    controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.totalFuelSold).isEmpty
-   )
-   @includes.taskListItem("customer-credit-accounts", "taskList.customerCreditAccounts",
-    controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).isEmpty
-   )
-   @includes.taskListItem("low-margin-fuel-cards", "taskList.lowMarginCards",
-    controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.doYouAcceptLowMarginFuelCard),
-    cannotStartYet = hasZeroTurnoverSections ||  session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts).isEmpty
-   )
-   @includes.taskListItem("non-fuel-turnover", "turnover.6020.heading",
-    controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).flatMap(seq => if (seq.isEmpty) None else Some(seq)).flatMap(seq => if (seq.exists(_.shop.isEmpty)) None else Some(seq)),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).isEmpty
-   )
-   @includes.taskListItem("ev-charging-point", "taskList.EVChargingPoints",
-    controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).flatMap(seq => seq.isEmpty || !seq.exists(_.shop.isDefined)).getOrElse(true),
-   )
+            @includes.taskListItem("fuel-sales", "taskList.fuelSales",
+                controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.totalFuelSold),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation).flatMap(_.currentFinancialYearEnd).isEmpty
+            )
+            @includes.taskListItem("bunkered-fuel", "taskList.bunkerdFuel",
+                controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.totalFuelSold).isEmpty
+            )
+            @includes.taskListItem("customer-credit-accounts", "taskList.customerCreditAccounts",
+                controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion).isEmpty
+            )
+            @includes.taskListItem("low-margin-fuel-cards", "taskList.lowMarginCards",
+                controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.doYouAcceptLowMarginFuelCard),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.customerCreditAccounts).isEmpty
+            )
+            @includes.taskListItem("non-fuel-turnover", "turnover.6020.heading",
+                controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).flatMap(seq => if(seq.isEmpty) None else seq).flatMap(seq => if(seq.exists(_.shop.isEmpty)) None else seq),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails).isEmpty
+            )
+            @includes.taskListItem("ev-charging-point", "taskList.EVChargingPoints",
+                controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.turnoverSections6020).flatMap(seq => seq.isEmpty || !seq.exists(_.shop.isDefined)).getOrElse(true),
+            )
 
-  }
-  @if(forType == FOR6015) {
-   @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
-    controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).flatMap(seq => if (seq.isEmpty) None else Some(seq)),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.turnoverSections).flatMap(_.isEmpty)
-   )
+        }
+        @if(forType == FOR6015) {
+            @includes.taskListItem("total-payroll-costs", "taskList.payrollCosts",
+                controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).flatMap(seq => if(seq.isEmpty) None else seq),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.turnoverSections).flatMap(_.isEmpty)
+            )
 
-   @includes.taskListItem("variable-operating-expenses", "taskList.variableOperatingExpense",
-    controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).flatMap(_.isEmpty)
-   )
+            @includes.taskListItem("variable-operating-expenses", "taskList.variableOperatingExpense",
+                controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.totalPayrollCostSections).flatMap(_.isEmpty)
+            )
 
-   @includes.taskListItem("fixed-operating-expenses", "taskList.fixedOperatingExpenses",
-    controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).flatMap(seq => if (seq.isEmpty) None else Some(seq)),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses).isEmpty
-   )
+            @includes.taskListItem("fixed-operating-expenses", "taskList.fixedOperatingExpenses",
+                controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).flatMap(seq => if(seq.isEmpty) None else seq),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.variableOperatingExpenses).isEmpty
+            )
 
-   @includes.taskListItem("other-costs", "taskList.otherCosts",
-    controllers.aboutthetradinghistory.routes.OtherCostsController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.otherCosts),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).flatMap(_.isEmpty)
-   )
+            @includes.taskListItem("other-costs", "taskList.otherCosts",
+                controllers.aboutthetradinghistory.routes.OtherCostsController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.otherCosts),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.fixedOperatingExpensesSections).flatMap(_.isEmpty)
+            )
 
-   @includes.taskListItem("income-expenditure-summary", "taskList.profitSummary",
-    controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.otherCosts).isEmpty,
-    isReadOnly
-   )
-  }
-  @if(forType == FOR6045  || forType == FOR6046) {
-   @includes.taskListItem("caravans", "taskList.caravans",
-    controllers.aboutthetradinghistory.routes.StaticCaravansController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite),
-    cannotStartYet = hasZeroTurnoverSections || !session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).exists(_.nonEmpty),
-    isReadOnly
-   )
+            @includes.taskListItem("income-expenditure-summary", "taskList.profitSummary",
+                controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistory.flatMap(_.otherCosts).isEmpty,
+                isReadOnly
+            )
+        }
+        @if(forType == FOR6045 || forType == FOR6046) {
+            @includes.taskListItem("caravans", "taskList.caravans",
+                controllers.aboutthetradinghistory.routes.StaticCaravansController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite),
+                cannotStartYet = hasZeroTurnoverSections || !session.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).exists(_.nonEmpty),
+                isReadOnly
+            )
 
-   @includes.taskListItem("other-holiday-accommodation", "taskList.otherHolidayAccommodation",
-    controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite).isEmpty,
-    isReadOnly
-   )
+            @includes.taskListItem("other-holiday-accommodation", "taskList.otherHolidayAccommodation",
+                controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation.flatMap(_.otherHolidayAccommodation)),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite).isEmpty,
+                isReadOnly
+            )
 
-   @includes.taskListItem("tenting-pitches-on-site", "taskList.touringAndTentingPitches",
-    controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation.flatMap(_.checkYourAnswersOtherHolidayAccommodation)).isEmpty,
-    isReadOnly
-   )
+            @includes.taskListItem("tenting-pitches-on-site", "taskList.touringAndTentingPitches",
+                controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation.flatMap(_.checkYourAnswersOtherHolidayAccommodation)).isEmpty,
+                isReadOnly
+            )
 
-   @includes.taskListItem("additional-activities-on-site", "taskList.additionalActivities",
-    controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(),
-    section3Completed,
-    pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities.flatMap(_.additionalActivitiesOnSite)),
-    cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)).isEmpty,
-    isReadOnly
-   )
-  }
- </ul>
+            @includes.taskListItem("additional-activities-on-site", "taskList.additionalActivities",
+                controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show(),
+                section3Completed,
+                pageAnswer = session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities.flatMap(_.additionalActivitiesOnSite)),
+                cannotStartYet = hasZeroTurnoverSections || session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)).isEmpty,
+                isReadOnly
+            )
+        }
+    </ul>
 </li>

@@ -14,15 +14,12 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import models.pages.Summary
 @import models.submissions.aboutyouandtheproperty.RenewablesPlantType
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Hint, RadioItem}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -37,7 +34,7 @@
     pageHeading = messages("renewablesPlant.heading"),
     showH1 = false,
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = backLink,
     theForm = theForm,
@@ -55,14 +52,14 @@
             items = Seq(
                 RadioItem(
                     content = Text(messages("renewablesPlant.intermittent.label")),
-                    value = Some("intermittent"),
-                    hint = Some(Hint(content = Text(messages("renewablesPlant.intermittent.hint"))))
+                    value = "intermittent",
+                    hint = Hint(content = Text(messages("renewablesPlant.intermittent.hint")))
 
                 ),
                 RadioItem(
                     content = Text(messages("renewablesPlant.baseload.label")),
-                    value = Some("baseload"),
-                    hint = Some(Hint(content = Text(messages("renewablesPlant.baseload.hint"))))
+                    value = "baseload",
+                    hint = Hint(content = Text(messages("renewablesPlant.baseload.hint")))
                 )),
             isHeading = true,
             inline = false

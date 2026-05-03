@@ -16,10 +16,8 @@
 
 @import actions.SessionRequest
 @import models.submissions.Form6010.MonthsYearDuration
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput}
 @import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -32,13 +30,13 @@
 @layout(
     pageHeading = messages("commercialLettingQuestion.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = backLink,
     theForm = theForm
 ) {
-  <p class="govuk-body">@messages("commercialLettingQuestion.p")</p>
-  
+    <p class="govuk-body">@messages("commercialLettingQuestion.p")</p>
+
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.submit()) {
 
         @includes.dateFields(

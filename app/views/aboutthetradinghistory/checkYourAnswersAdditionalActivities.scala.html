@@ -70,20 +70,20 @@
                 financialYearEndDates.map(dateUtil.formatDayMonthAbbrYear)
             ).body
         )),
-        actions = Some(
+        actions =
             Actions(items =
                 Seq(
                     ActionItem(
                         href = s"$editPage?from=CYA",
                         content = Text(messages("label.change")),
-                        visuallyHiddenText = Some(messages(pageHeadingKey)),
+                        visuallyHiddenText = messages(pageHeadingKey),
                         attributes = Map(
                             "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
                         )
                     )
                 )
             )
-        ),
+        ,
         classes = "no-border-bottom"
     )
 }
@@ -98,7 +98,7 @@
     pageHeading = messages("cYa.additionalActivities.heading"),
     backLinkUrl = backLink,
     fullWidth = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     theForm = theForm
 ) {

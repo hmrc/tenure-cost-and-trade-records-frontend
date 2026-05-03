@@ -14,17 +14,14 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
+@import models.ForType.*
 @import models.pages.Summary
 @import models.submissions.aboutfranchisesorlettings.TypeOfIncome
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import models.ForType._
 @import models.submissions.aboutfranchisesorlettings.TypeOfIncome.*
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Hint, RadioItem}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -35,23 +32,23 @@
 @(theForm: Form[TypeOfIncome], index: Option[Int] = None, summary: Summary, backLink: String, forType: ForType)(implicit request: Request[?], messages: Messages)
 
 @sectionName = @{
-  forType match {
-      case FOR6015 | FOR6016 => messages("label.section.aboutConcessionsOrLettings")
-      case FOR6045 | FOR6046 => messages("label.section.aboutConcessionsFranchisesOrLettings")
-      case _                 => messages("label.section.aboutFranchisesOrLettings")
+    forType match {
+        case FOR6015 | FOR6016 => messages("label.section.aboutConcessionsOrLettings")
+        case FOR6045 | FOR6046 => messages("label.section.aboutConcessionsFranchisesOrLettings")
+        case _ => messages("label.section.aboutFranchisesOrLettings")
     }
 }
 
 @concessionLabel = @{
-  forType match {
-      case FOR6010 | FOR6011 => messages("typeOfIncome.6010.concession.label")
-      case FOR6015 | FOR6016 => messages("typeOfIncome.6015.concession.label")
-      case FOR6045 | FOR6046 => messages("typeOfIncome.6015.concession.label")
-      case _                 => messages("typeOfIncome.concession.label")
-  }
+    forType match {
+        case FOR6010 | FOR6011 => messages("typeOfIncome.6010.concession.label")
+        case FOR6015 | FOR6016 => messages("typeOfIncome.6015.concession.label")
+        case FOR6045 | FOR6046 => messages("typeOfIncome.6015.concession.label")
+        case _ => messages("typeOfIncome.concession.label")
+    }
 }
 
-@concessionHint= @{
+@concessionHint = @{
     forType match {
         case FOR6015 | FOR6016 => messages("typeOfIncome.concession.6015.hint")
         case FOR6030 => messages("typeOfIncome.concession.6030.hint")
@@ -60,41 +57,41 @@
 }
 @concessionOrfranchise = @{
     forType match {
-        case FOR6010 | FOR6011  => TypeFranchise.toString
-        case FOR6015 | FOR6016  => TypeConcession6015.toString
-        case _                  => TypeConcession.toString
+        case FOR6010 | FOR6011 => TypeFranchise.toString
+        case FOR6015 | FOR6016 => TypeConcession6015.toString
+        case _ => TypeConcession.toString
     }
 }
 
-    @layout(
-        pageHeading = messages("typeOfIncome.heading"),
-        showSection = true,
-        summary = Some(summary),
-        sectionName = sectionName,
-        backLinkUrl = backLink,
-        theForm = theForm
-    ) {
+@layout(
+    pageHeading = messages("typeOfIncome.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = sectionName,
+    backLinkUrl = backLink,
+    theForm = theForm
+) {
 
-        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.submit(index)) {
-            <p class="govuk-body">@messages("typeOfIncome.p")</p>
-            @includes.radioButtons(
-                govukRadios,
-                theForm,
-                "typeOfIncome",
-                items = Seq(
-                    RadioItem(
-                        content = Text(concessionLabel),
-                        value   = Option(concessionOrfranchise),
-                        hint    = Option(Hint(content = Text(concessionHint)))
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.submit(index)) {
+        <p class="govuk-body">@messages("typeOfIncome.p")</p>
+        @includes.radioButtons(
+            govukRadios,
+            theForm,
+            "typeOfIncome",
+            items = Seq(
+                RadioItem(
+                    content = Text(concessionLabel),
+                    value = concessionOrfranchise,
+                    hint = Hint(content = Text(concessionHint))
 
-                    ),
-                    RadioItem(
-                        content = Text(messages("typeOfIncome.letting.label")),
-                        value = Some("typeLetting"),
-                        hint = Some(Hint(content = Text(messages("typeOfIncome.letting.hint"))))
-                    )),
-                inline = false
-            )
-            @includes.continueSaveAsDraftButtons(govukButton)
-        }
+                ),
+                RadioItem(
+                    content = Text(messages("typeOfIncome.letting.label")),
+                    value = "typeLetting",
+                    hint = Hint(content = Text(messages("typeOfIncome.letting.hint")))
+                )),
+            inline = false
+        )
+        @includes.continueSaveAsDraftButtons(govukButton)
     }
+}

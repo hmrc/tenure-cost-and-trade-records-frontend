@@ -18,8 +18,8 @@
 @import models.submissions.aboutthetradinghistory.GrossReceiptsExcludingVAT
 @import uk.gov.hmrc.govukfrontend.views.Implicits.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import util.{AccessibilityUtil, DateUtilLocalised}
 @import util.NumberUtil.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
 @import views.html.components.PrimaryLayout
 
 @this(
@@ -33,7 +33,7 @@
 )
 
 
-@(form: Form[Seq[GrossReceiptsExcludingVAT]],fromLocation:String = "")(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[GrossReceiptsExcludingVAT]], fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
 
 @electricitySalesHeading = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("grossReceipts.electricitySales")</span></p>
@@ -83,7 +83,7 @@
     pageHeading = messages("grossReceipts.heading"),
     showSection = true,
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     backLinkUrl = fromLocation match {
         case "TL" => controllers.routes.TaskListController.show.url + "#turnover"
         case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
@@ -120,9 +120,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.electricitySales", finYearEnd)
@@ -140,9 +140,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.feedInTariff", finYearEnd)
@@ -160,9 +160,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.rocBuyout", finYearEnd)
@@ -180,9 +180,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.rocRecycle", finYearEnd)
@@ -200,9 +200,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.contractForDifference", finYearEnd)
@@ -220,9 +220,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.capacityMarket", finYearEnd)
@@ -240,9 +240,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.balancingServices", finYearEnd)
@@ -260,9 +260,9 @@
                                     content = HtmlContent(
                                         govukInput(
                                             Input(
-                                                prefix = Some(PrefixOrSuffix(
-                                                    content = Text("£")
-                                                )),
+                                                prefix = PrefixOrSuffix(
+                                                    content = Text("£"
+                                                    )),
                                                 attributes = Map(
                                                     "maxlength" -> "13",
                                                     "aria-label" -> accessibilityUtil.ariaBuilder("grossReceipts.embeddedBenefits", finYearEnd)

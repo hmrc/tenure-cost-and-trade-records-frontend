@@ -28,25 +28,29 @@
 
 @(theForm: Form[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
-@advertisingList = @{onlineAdvertising(request.sessionData)}
+@advertisingList = @{
+    onlineAdvertising(request.sessionData)
+}
 
 @fromPage = @{
     request.session.get("from").flatMap(_.asPageIdentifier)
 }
 
-@advertisingCount = @{ advertisingList.length }
+@advertisingCount = @{
+    advertisingList.length
+}
 
 @pageHeadingMessageKey = @{
     (advertisingCount, fromPage) match {
-        case (0, Some(ResidentRemovePageId)) => "lettingHistory.advertisingList.heading.removedAll"
-        case (1, _)                          => "lettingHistory.advertisingList.heading.singular"
-        case _                               => "lettingHistory.advertisingList.heading.plural"
+        case (0, ResidentRemovePageId) => "lettingHistory.advertisingList.heading.removedAll"
+        case (1, _) => "lettingHistory.advertisingList.heading.singular"
+        case _ => "lettingHistory.advertisingList.heading.plural"
     }
 }
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages(pageHeadingMessageKey, advertisingCount),
     backLinkUrl = None,
     showSection = true,
@@ -64,7 +68,7 @@
                     content = Text(entry.propertyReferenceNumber),
                     classes = "govuk-!-font-size-14",
                 ),
-                actions = Some(Actions(
+                actions = Actions(
                     items = Seq(
                         ActionItem(
                             href = routes.AdvertisingDetailController.show(index).url,
@@ -76,7 +80,7 @@
                         )
                     ),
                     classes = "govuk-!-font-size-14"
-                ))
+                )
             )
         }
     ))

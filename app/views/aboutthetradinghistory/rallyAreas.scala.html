@@ -62,11 +62,10 @@
 }
 
 
-
 @layout(
     pageHeading = messages("rallyAreas.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
@@ -74,15 +73,12 @@
 ) {
 
     <p class="govuk-body">
-        @messages("tentingPitches.common.VAT")
+    @messages("tentingPitches.common.VAT")
     </p>
 
     @govukInsetText(InsetText(content = Text(messages("tentingPitches.common.inset"))))
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.RallyAreasController.submit()) {
-
-
-
 
 
         <table class="hmrc-responsive-table govuk-!-width-full">

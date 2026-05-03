@@ -48,9 +48,9 @@
                         "maxlength" -> maxLength.toString,
                         "aria-label" -> messages(labelKey)
                     ),
-                    suffix = Some(PrefixOrSuffix(
-                        content = Text(messages(suffixKey))
-                    ))
+                    suffix = PrefixOrSuffix(
+                        content = Text(messages(suffixKey)
+                        ))
                 ).withFormField(form(formField)))
             )
         )

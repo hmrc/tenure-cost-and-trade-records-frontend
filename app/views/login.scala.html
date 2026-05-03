@@ -49,7 +49,7 @@
                     classes = "govuk-!-font-weight-bold"
                 ),
                 errorMessage = theForm.errors.asTextErrorMessageForField("referenceNumber"),
-                hint = Some(Hint(content = Text(messages("hint.referenceNumber")))),
+                hint = Hint(content = Text(messages("hint.referenceNumber"))),
             )
         )
 
@@ -64,7 +64,7 @@
                     classes = "govuk-!-font-weight-bold"
                 ),
                 errorMessage = theForm.errors.asTextErrorMessageForField("postcode"),
-                hint = Some(Hint(content = Text(messages("hint.postcode")))),
+                hint = Hint(content = Text(messages("hint.postcode"))),
             )
         )
 

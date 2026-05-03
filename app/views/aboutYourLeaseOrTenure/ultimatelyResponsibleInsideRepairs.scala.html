@@ -17,8 +17,8 @@
 @import models.pages.Summary
 @import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
 @import uk.gov.hmrc.govukfrontend.views.Aliases.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukTextarea}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukTextarea}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.textarea.Textarea
@@ -34,68 +34,65 @@
 
 @(theForm: Form[UltimatelyResponsibleInsideRepairs], summary: Summary)(implicit request: Request[?], messages: Messages)
 
-    @conditionalHTML = {
-    @govukTextarea(
-        Textarea(
-            id = "sharedResponsibilitiesIR",
-            name = "sharedResponsibilitiesIR",
-            value = theForm("sharedResponsibilitiesIR").value,
-            label = Label(
-                content = Text(messages("label.sharedResponsibilitiesIR"))
-            ),
-            hint = Hint(
-                content = Text(messages("hint.sharedResponsibilities"))
-            ),
-            errorMessage =  theForm.errors.asTextErrorMessageForField("sharedResponsibilitiesIR")
-        )
+@conditionalHTML = {
+@govukTextarea(
+    Textarea(
+        id = "sharedResponsibilitiesIR",
+        name = "sharedResponsibilitiesIR",
+        value = theForm("sharedResponsibilitiesIR").value,
+        label = Label(
+            content = Text(messages("label.sharedResponsibilitiesIR"))
+        ),
+        hint = Hint(
+            content = Text(messages("hint.sharedResponsibilities"))
+        ),
+        errorMessage = theForm.errors.asTextErrorMessageForField("sharedResponsibilitiesIR")
     )
-    }
+)
+}
 
 @layout(
- pageHeading = messages("ultimatelyResponsibleIR.heading"),
- showSection = true,
+    pageHeading = messages("ultimatelyResponsibleIR.heading"),
+    showSection = true,
     showH1 = false,
-    summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show().url,
- theForm = theForm
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show().url,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleInsideRepairsController.submit()) {
 
-    <h1 class="govuk-heading-l">@messages("ultimatelyResponsibleIR.heading")</h1>
-    <h2 class="govuk-body">@messages("ultimatelyResponsibleIR.subheading")</h2>
+        <h1 class="govuk-heading-l">@messages("ultimatelyResponsibleIR.heading")</h1>
+        <h2 class="govuk-body">@messages("ultimatelyResponsibleIR.subheading")</h2>
 
-      @govukRadios(Radios(
-          fieldset = Some(Fieldset(
-              legend = Some(Legend(
-                  classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
-              ))
-          )),
-          name = "insideRepairs",
-          items = Seq(
-              RadioItem(
-                  content = Text(messages("label.landlord")),
-                  value = Some("landlord")
-              ),
-              RadioItem(
-                  content = Text(messages("label.tenant")),
-                  value = Some("tenant")
-              ),
-              RadioItem(
-                  content = Text(messages("label.both")),
-                  value = Some("both"),
-                  conditionalHtml = Some(conditionalHTML)
-              )
-          ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("insideRepairs")
-      ).withFormField(theForm("insideRepairs")))
+        @govukRadios(Radios(
+            fieldset = Fieldset(
+                legend = Legend(
+                    classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
 
+                )),
+            name = "insideRepairs",
+            items = Seq(
+                RadioItem(
+                    content = Text(messages("label.landlord")),
+                    value = "landlord"
+                ),
+                RadioItem(
+                    content = Text(messages("label.tenant")),
+                    value = "tenant"
+                ),
+                RadioItem(
+                    content = Text(messages("label.both")),
+                    value = "both",
+                    conditionalHtml = conditionalHTML
+                )
+            ),
+            errorMessage = theForm.errors.asTextErrorMessageForField("insideRepairs")
+        ).withFormField(theForm("insideRepairs")))
 
-
-
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

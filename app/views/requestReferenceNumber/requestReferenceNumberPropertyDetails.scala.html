@@ -14,9 +14,9 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -27,35 +27,35 @@
 @(theForm: Form[String])(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("requestReferenceNumber.heading"),
- showSection = true,
- sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = controllers.routes.LoginController.show.url,
- theForm = theForm
+    pageHeading = messages("requestReferenceNumber.heading"),
+    showSection = true,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = controllers.routes.LoginController.show.url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController.submit()) {
+    @formWithCSRF(action = controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController.submit()) {
 
-  <p class="govuk-body">
-   <b>@messages("requestReferenceNumber.subheading")</b>
-  </p>
+        <p class="govuk-body">
+            <b>@messages("requestReferenceNumber.subheading")</b>
+        </p>
 
-  <p class="govuk-body">@messages("requestReferenceNumber.p1")</p>
+        <p class="govuk-body">@messages("requestReferenceNumber.p1")</p>
 
-  <p class="govuk-body">
-   <b>@messages("requestReferenceNumber.subheading2")</b>
-  </p>
+        <p class="govuk-body">
+            <b>@messages("requestReferenceNumber.subheading2")</b>
+        </p>
 
-  <p class="govuk-body">@messages("requestReferenceNumber.p2")</p>
+        <p class="govuk-body">@messages("requestReferenceNumber.p2")</p>
 
-  <p class="govuk-body">@HtmlContent(messages("requestReferenceNumber.p3")).asHtml</p>
+        <p class="govuk-body">@HtmlContent(messages("requestReferenceNumber.p3")).asHtml</p>
 
-  <h2 class="govuk-heading-m">@messages("requestReferenceNumber.subheading3")</h2>
+        <h2 class="govuk-heading-m">@messages("requestReferenceNumber.subheading3")</h2>
 
-  @includes.textInput(govukInput, theForm, "businessTradingName", "govuk-input--width-20", "requestReferenceNumberBusinessTradingName")
+        @includes.textInput(govukInput, theForm, "businessTradingName", "govuk-input--width-20", "requestReferenceNumberBusinessTradingName")
 
-  @includes.continueButton(govukButton)
- }
+        @includes.continueButton(govukButton)
+    }
 }
 
 

@@ -44,7 +44,7 @@
             classes = formGroupClasses,
         ),
         label = if(optional) Label(content = Text(s"${messages(s"label.$labelContent")} ${messages("hintText.optional")}"), classes = labelClasses)
-                else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
-        hint = Some(Hint(content = Text(messages(hintMsg)))),
+        else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
+        hint = Hint(content = Text(messages(hintMsg))),
     ).withFormField(theForm(id))
 )

@@ -40,17 +40,19 @@
                     value = Value(
                         content = HtmlContent(entry.value)
                     ),
-                    actions = entry.changeAction.map {call => Actions(
-                        items = Seq(
-                            ActionItem(
-                                href = call.toString.getOrElse("#"),
-                                content = Text(messages("label.change")),
-                                attributes = Map(
-                                    "aria-label" -> (messages("label.change") + s" ${entry.label}")
+                    actions = entry.changeAction.map { call =>
+                        Actions(
+                            items = Seq(
+                                ActionItem(
+                                    href = call.toString.getOrElse("#"),
+                                    content = Text(messages("label.change")),
+                                    attributes = Map(
+                                        "aria-label" -> (messages("label.change") + s" ${entry.label}")
+                                    )
                                 )
                             )
                         )
-                    )},
+                    },
                     classes = entry.classes
                 )
             }

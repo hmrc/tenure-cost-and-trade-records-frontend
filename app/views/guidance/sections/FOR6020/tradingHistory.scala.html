@@ -18,7 +18,9 @@
 
 @()(implicit messages: Messages)
 
-@htmlOf(text: String) = @{ HtmlContent(text).asHtml }
+@htmlOf(text: String) = @{
+    HtmlContent(text).asHtml
+}
 
 <h2 id="trading-history" class="govuk-heading-m">@messages("label.section.aboutYourTradingHistory")</h2>
 
@@ -28,25 +30,47 @@
 
 <h3 class="govuk-heading-s">@messages("guidance.sentence.whatYouWillNeed")</h3>
 
-<p class="govuk-body-s">@{ htmlOf(messages("guidance.sections.FOR6048.tradingHistory.p1")) }</p>
+<p class="govuk-body-s">@{
+    htmlOf(messages("guidance.sections.FOR6048.tradingHistory.p1"))
+}</p>
 
-<p class="govuk-body-s">@{ htmlOf(messages("guidance.sections.FOR6048.tradingHistory.p2")) }</p>
+<p class="govuk-body-s">@{
+    htmlOf(messages("guidance.sections.FOR6048.tradingHistory.p2"))
+}</p>
 
 <p class="govuk-body-s">@messages("guidance.sections.FOR6048.tradingHistory.p3")</p>
 
 <ul class="govuk-body-s govuk-list govuk-list--bullet">
-    <li>@{ htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li3")) }</li>
-    <li>@{ htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li4")) }</li>
-    <li>@{ htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li5")) }</li>
-    <li>@{ htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li6")) }</li>
-    <li>@{ htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li7")) }</li>
-    <li>@{ htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li8")) }</li>
-    <li>@{ htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li9")) }</li>
+    <li>@{
+        htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li3"))
+    }</li>
+    <li>@{
+        htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li4"))
+    }</li>
+    <li>@{
+        htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li5"))
+    }</li>
+    <li>@{
+        htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li6"))
+    }</li>
+    <li>@{
+        htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li7"))
+    }</li>
+    <li>@{
+        htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li8"))
+    }</li>
+    <li>@{
+        htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li9"))
+    }</li>
 </ul>
 
 <h3 class="govuk-heading-s">@messages("guidance.sentence.importantDates")</h3>
 <p class="govuk-body-s">@messages("guidance.sections.FOR6020.tradingHistory.p4")</p>
 <ul class="govuk-body-s govuk-list govuk-list--bullet">
-    <li>@{ htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li10")) }</li>
-    <li>@{ htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li11")) }</li>
+    <li>@{
+        htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li10"))
+    }</li>
+    <li>@{
+        htmlOf(messages("guidance.sections.FOR6020.tradingHistory.li11"))
+    }</li>
 </ul>

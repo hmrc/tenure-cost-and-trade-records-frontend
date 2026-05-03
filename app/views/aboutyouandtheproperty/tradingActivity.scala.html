@@ -14,21 +14,14 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutyouandtheproperty.TradingActivity
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import models.pages.Summary
+@import models.submissions.aboutyouandtheproperty.TradingActivity
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Label, Legend, RadioItem, Radios}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput, GovukRadios}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -58,35 +51,35 @@
 @layout(
     pageHeading = messages("tradingActivity.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = controllers.aboutyouandtheproperty.routes.CharityQuestionController.show().url,
     theForm = theForm
 ) {
 
     <p class="govuk-body govuk-!-margin-left-0">
-        @messages("tradingActivity.declare")
+    @messages("tradingActivity.declare")
     </p>
 
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.TradingActivityController.submit()) {
 
         @govukRadios(Radios(
-            fieldset = Some(Fieldset(
-                legend = Some(Legend(
+            fieldset = Fieldset(
+                legend = Legend(
                     content = Text(messages("tradingActivity.question")), isPageHeading = false,
                     classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
-                ))
-            )),
+                )
+            ),
             name = "tradingActivityQuestion",
             items = Seq(
                 RadioItem(
                     content = Text(messages("label.yes")),
-                    value = Some("yes"),
-                    conditionalHtml = Some(conditionalHTML)
+                    value = "yes",
+                    conditionalHtml = conditionalHTML
                 ),
                 RadioItem(
                     content = Text(messages("label.no")),
-                    value = Some("no")
+                    value = "no"
                 )
             ),
             errorMessage = theForm.errors.asTextErrorMessageForField("tradingActivityQuestion")

@@ -14,10 +14,10 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
 @import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -31,11 +31,12 @@
 @layout(
     pageHeading = messages("contactDetailsQuestion.heading"),
     showSection = true,
-    showH1= false,
-    summary = Some(summary),
+    showH1 = false,
+    summary = summary,
     sectionName = messages("label.section.aboutTheProperty"),
-    backLinkUrl = { fromLocation match {
-            case "TL" => controllers.routes.TaskListController.show.url+"#contact-details-question"
+    backLinkUrl = {
+        fromLocation match {
+            case "TL" => controllers.routes.TaskListController.show.url + "#contact-details-question"
             case _ => controllers.aboutyouandtheproperty.routes.AboutYouController.show().url
         }
     },

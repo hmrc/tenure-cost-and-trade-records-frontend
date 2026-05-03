@@ -14,79 +14,72 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
 @import models.pages.Summary
+@import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Label, Legend, RadioItem, Radios}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput, GovukRadios}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  govukInput: GovukInput,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukInput: GovukInput,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[WebsiteForPropertyDetails], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @conditionalHTML = {
-  @govukInput(
+@govukInput(
     Input(
-      id = "websiteAddressForProperty",
-      name = "websiteAddressForProperty",
-      classes = "govuk-input--width-20",
-      value = theForm("websiteAddressForProperty").value,
-      label = Label(
-        content = Text(messages("websiteAddressForProperty.textbox")),
-      )
+        id = "websiteAddressForProperty",
+        name = "websiteAddressForProperty",
+        classes = "govuk-input--width-20",
+        value = theForm("websiteAddressForProperty").value,
+        label = Label(
+            content = Text(messages("websiteAddressForProperty.textbox")),
+        )
     )
-  )
+)
 }
 
 @layout(
-  pageHeading = messages("buildingOperatingHaveAWebsite.heading"),
-  showH1 = false,
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("buildingOperatingHaveAWebsite.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.submit()) {
 
-    @govukRadios(Radios(
-      fieldset = Some(Fieldset(
-        legend = Some(Legend(
-          content = Text(messages("buildingOperatingHaveAWebsite.heading")), isPageHeading = true,
-          classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
-        ))
-      )),
-      name = "buildingOperatingHaveAWebsite",
-      items = Seq(
-        RadioItem(
-          content = Text(messages("label.yes")),
-          value = Some("yes"),
-          conditionalHtml = Some(conditionalHTML)
-        ),
-        RadioItem(
-          content = Text(messages("label.no")),
-          value = Some("no")
-        )
-      ),
-      errorMessage = theForm.errors.asTextErrorMessageForField("buildingOperatingHaveAWebsite")
-    ).withFormField(theForm("buildingOperatingHaveAWebsite")))
+        @govukRadios(Radios(
+            fieldset = Fieldset(
+                legend = Legend(
+                    content = Text(messages("buildingOperatingHaveAWebsite.heading")), isPageHeading = true,
+                    classes = "govuk-fieldset__legend govuk-fieldset__legend--l",
+                )
+            ),
+            name = "buildingOperatingHaveAWebsite",
+            items = Seq(
+                RadioItem(
+                    content = Text(messages("label.yes")),
+                    value = "yes",
+                    conditionalHtml = conditionalHTML
+                ),
+                RadioItem(
+                    content = Text(messages("label.no")),
+                    value = "no"
+                )
+            ),
+            errorMessage = theForm.errors.asTextErrorMessageForField("buildingOperatingHaveAWebsite")
+        ).withFormField(theForm("buildingOperatingHaveAWebsite")))
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

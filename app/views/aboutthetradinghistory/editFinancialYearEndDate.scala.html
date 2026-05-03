@@ -26,7 +26,7 @@
         govukDateInput: GovukDateInput,
 )
 
-@(form: Form[LocalDate], index: Int )(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[LocalDate], index: Int)(implicit request: SessionRequest[?], messages: Messages)
 
 @getYear = @{
     form.value.map(_.getYear).fold("")(_.toString)
@@ -41,27 +41,27 @@
 }
 
 @layout(
-  pageHeading = messages("financialYearEndDates.heading", getDay, getMonth, getYear),
-  showSection = true,
-  summary = Some(request.sessionData.toSummary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = controllers.aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url,
-  fullWidth = true,
-  theForm = form
+    pageHeading = messages("financialYearEndDates.heading", getDay, getMonth, getYear),
+    showSection = true,
+    summary = request.sessionData.toSummary,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = controllers.aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url,
+    fullWidth = true,
+    theForm = form
 ) {
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.EditFinancialYearEndDateController.submit(index)) {
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.EditFinancialYearEndDateController.submit(index)) {
 
-      @includes.dateFields(
-          form = form,
-          field = "financialYearEnd",
-          govukDate = govukDateInput,
-          showFieldSet = false,
-          helpText = messages("financialYearEndDates.hint"),
-          showDays = true,
-      )
+        @includes.dateFields(
+            form = form,
+            field = "financialYearEnd",
+            govukDate = govukDateInput,
+            showFieldSet = false,
+            helpText = messages("financialYearEndDates.hint"),
+            showDays = true,
+        )
 
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 
 }

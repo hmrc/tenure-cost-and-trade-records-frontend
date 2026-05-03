@@ -18,8 +18,8 @@
 @import models.submissions.aboutthetradinghistory.AccountingCosts6048
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.NumberUtil.*
 @import util.{AccessibilityUtil, DateUtilLocalised}
-@import util.NumberUtil.{*, given}
 @import views.html.components.PrimaryLayout
 
 @import java.time.LocalDate
@@ -43,23 +43,23 @@
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
-@if(hintKey.nonEmpty) {
-    <span class="govuk-caption-m">@messages(hintKey)</span>
+@hintKey.map { hint =>
+    <span class="govuk-caption-m">@messages(hint)</span>
 }
 }
 
 @turnoverRow(formField: String, labelKey: String, hintKey: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
+            content = HtmlContent(rowLabel(labelKey, hintKey.filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(
                 govukInput(
                     Input(
-                        prefix = Some(PrefixOrSuffix(
-                            content = Text("£")
-                        )),
+                        prefix = PrefixOrSuffix(
+                            content = Text("£"
+                            )),
                         attributes = Map(
                             "maxlength" -> "13",
                             "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
@@ -82,7 +82,7 @@
 @layout(
     pageHeading = messages("turnover.6048.accountingCosts.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,

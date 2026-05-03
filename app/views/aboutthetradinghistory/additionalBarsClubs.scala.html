@@ -43,13 +43,13 @@
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
-    @hint.map { hint => <p class="govuk-hint">@messages(hint)</p> }
+@hint.map { hint => <p class="govuk-hint">@messages(hint)</p> }
 }
 
 @turnoverRow(formField: String, labelKey: String, hint: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, Option(hint).filterNot(_.isEmpty)))
+            content = HtmlContent(rowLabel(labelKey, hint.filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(
@@ -67,7 +67,7 @@
 @layout(
     pageHeading = messages("additionalBarsClubs.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,

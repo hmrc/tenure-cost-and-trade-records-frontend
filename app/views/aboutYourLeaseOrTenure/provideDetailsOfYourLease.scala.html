@@ -29,39 +29,39 @@
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("provideDetailsOfYourLease.heading"),
-  showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url,
- theForm = theForm
+    pageHeading = messages("provideDetailsOfYourLease.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.submit()) {
 
-  <h1 class="govuk-heading-l">@messages("provideDetailsOfYourLease.heading")</h1>
+        <h1 class="govuk-heading-l">@messages("provideDetailsOfYourLease.heading")</h1>
 
-  <p class="govuk-body">@messages("provideDetailsOfYourLease.p1")</p>
+        <p class="govuk-body">@messages("provideDetailsOfYourLease.p1")</p>
 
-  <ul class="govuk-list govuk-list--bullet">
-   <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list1")</span></li>
-   <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list2")</span></li>
-   <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list3")</span></li>
-   <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list4")</span></li>
-  </ul>
+        <ul class="govuk-list govuk-list--bullet">
+            <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list1")</span></li>
+            <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list2")</span></li>
+            <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list3")</span></li>
+            <li><span class="govuk-body">@messages("provideDetailsOfYourLease.list4")</span></li>
+        </ul>
 
-  @includes.textInputHMRCCharCount(
-   hmrcCharacterCount,
-   theForm,
-   "provideDetailsOfYourLease",
-   classes = "govuk-label--l",
-   isPageHeading = true,
-   charCount = 2000
-  )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "provideDetailsOfYourLease",
+            classes = "govuk-label--l",
+            isPageHeading = true,
+            charCount = 2000
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 
