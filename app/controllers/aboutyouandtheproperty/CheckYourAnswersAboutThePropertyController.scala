@@ -82,7 +82,7 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
           )
         repo
           .saveOrUpdate(updatedData)
-          .flatMap(_ =>
+          .map(_ =>
             Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
           )
       }

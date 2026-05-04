@@ -77,7 +77,7 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url)
           )
-        repo.saveOrUpdate(updatedData).flatMap { _ =>
+        repo.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
         }
       }

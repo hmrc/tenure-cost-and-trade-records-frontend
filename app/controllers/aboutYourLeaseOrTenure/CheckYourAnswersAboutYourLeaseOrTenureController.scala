@@ -87,7 +87,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
                 controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
               )
             )
-        session.saveOrUpdate(updatedData).flatMap { _ =>
+        session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData))
         }
       }

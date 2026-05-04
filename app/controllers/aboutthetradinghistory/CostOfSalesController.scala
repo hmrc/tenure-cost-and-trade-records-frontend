@@ -60,7 +60,7 @@ class CostOfSalesController @Inject() (
       val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
       session
         .saveOrUpdate(updatedData)
-        .flatMap(_ =>
+        .map(_ =>
           Ok(costOfSalesView(costOfSalesForm(years(aboutTheTradingHistory)).fill(costOfSales), navigator.from))
         )
     }

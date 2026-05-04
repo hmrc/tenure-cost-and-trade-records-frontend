@@ -78,7 +78,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
               controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
             )
           )
-        repo.saveOrUpdate(updatedData).flatMap { _ =>
+        repo.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
         }
       }
