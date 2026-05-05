@@ -29,20 +29,20 @@ trait ViewSpecBase extends TestBaseSpec {
   def assertEqualsMessage(doc: Document, cssSelector: String, expectedMessageKey: String): Assertion =
     assertEqualsValue(doc, cssSelector, messages(expectedMessageKey))
 
-  def assertEqualsValue(doc: Document, cssSelector: String, expectedValue: String): Assertion = {
+  def assertEqualsValue(doc: Document, cssSelector: String, expectedValue: String): Assertion = 
     val elements = doc.select(cssSelector)
 
     if (elements.isEmpty) throw IllegalArgumentException(s"CSS Selector $cssSelector wasn't rendered.")
 
     // <p> HTML elements are rendered out with a carriage return on some pages, so discount for comparison
     assert(elements.first().html().replace("\n", "") == expectedValue)
-  }
+  
 
-  def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*): Assertion = {
+  def assertPageTitleEqualsMessage(doc: Document, expectedMessageKey: String, args: Any*): Assertion = 
     val headers = doc.getElementsByTag("h1")
     headers.size                                 shouldBe 1
     headers.first.text.replaceAll("\u00a0", " ") shouldBe messages(expectedMessageKey, args*).replaceAll("&nbsp;", " ")
-  }
+  
 
   def assertContainsText(doc: Document, text: String): Assertion =
     assert(doc.toString.contains(text), "\n\ntext " + text + " was not rendered on the page.\n")
@@ -62,11 +62,10 @@ trait ViewSpecBase extends TestBaseSpec {
   def assertNotRenderedByCssSelector(doc: Document, cssSelector: String): Assertion =
     assert(doc.select(cssSelector).isEmpty, "\n\nElement " + cssSelector + " was rendered on the page.\n")
 
-  def assertContainsLabel(doc: Document, forElement: String, expectedText: String): Assertion = {
+  def assertContainsLabel(doc: Document, forElement: String, expectedText: String): Assertion = 
     val labels = doc.getElementsByAttributeValue("for", forElement)
     assert(labels.size == 1, s"\n\nLabel for $forElement was not rendered on the page.")
     assert(labels.first.text() == expectedText, s"\n\nLabel for $forElement was not $expectedText")
-  }
 
   def assertElementHasClass(doc: Document, id: String, expectedClass: String): Assertion =
     assert(doc.getElementById(id).hasClass(expectedClass), s"\n\nElement $id does not have class $expectedClass")
@@ -80,7 +79,7 @@ trait ViewSpecBase extends TestBaseSpec {
       assert(radio.attr("checked") == "checked" || radio.hasAttr("checked"), s"\n\nElement $id is not checked")
     else assert(!radio.hasAttr("checked") && radio.attr("checked") != "checked", s"\n\nElement $id is checked")
 
-  def assertContainsCheckBox(doc: Document, id: String, name: String, value: String, isChecked: Boolean): Assertion = {
+  def assertContainsCheckBox(doc: Document, id: String, name: String, value: String, isChecked: Boolean): Assertion = 
     assertRenderedById(doc, id)
     val checkbox = doc.getElementById(id)
     assert(checkbox.attr("name") == name, s"\n\nElement $id does not have name $name")
@@ -90,5 +89,4 @@ trait ViewSpecBase extends TestBaseSpec {
     } else {
       assert(!checkbox.hasAttr("checked"), s"\n\nElement $id is checked")
     }
-  }
 }

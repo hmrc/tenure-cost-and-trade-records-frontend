@@ -44,15 +44,14 @@ case class StubBackendConnector() extends BackendConnector {
     referenceNumber: String,
     submissionDraft: SubmissionDraft,
     hc: HeaderCarrier
-  ): Future[Unit] = {
+  ): Future[Unit] = 
     draft = Some(referenceNumber -> submissionDraft)
     Future.unit
-  }
 
   override def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]] =
     Future.successful(draft.filter(_._1 == referenceNumber).map(_._2))
 
-  override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] = {
+  override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] = 
     val deletedCount = draft match {
       case Some((`referenceNumber`, _)) =>
         draft = None
@@ -60,6 +59,4 @@ case class StubBackendConnector() extends BackendConnector {
       case _                            => 0
     }
     Future.successful(deletedCount)
-  }
-
 }

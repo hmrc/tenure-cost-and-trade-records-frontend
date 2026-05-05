@@ -22,7 +22,7 @@ import play.api.data.Form
 
 object FormBindingTestAssertions extends should.Matchers {
 
-  def doesNotContainErrors[T](f: Form[T]): Unit = {
+  def doesNotContainErrors[T](f: Form[T]): Unit = 
     if (f.hasErrors) {
       fail(s"Form incorrectly has errors: ${f.errors}. ${boundObject(f)}")
     }
@@ -31,27 +31,23 @@ object FormBindingTestAssertions extends should.Matchers {
       fail("Form did not bind")
     }
 
-  }
-
   def mustContainRequiredErrorFor[T](field: String, f: Form[T]): Unit = mustContainError(field, Errors.required, f)
 
   def mustContainInvalidCurrencyErrorFor[T](field: String, f: Form[T]): Unit =
     mustContainError(field, Errors.invalidCurrency, f)
 
-  def mustOnlyContainRequiredErrorFor[T](field: String, f: Form[T]): Unit = {
+  def mustOnlyContainRequiredErrorFor[T](field: String, f: Form[T]): Unit = 
     mustContainError(field, Errors.required, f)
     if (f.errors.length > 1) {
       fail(s"Did not contain only required error for $field. Errors: ${f.errors}")
     }
-  }
 
-  def mustOnlyContainRequiredErrorsFor[T](fields: Seq[String], f: Form[T]): Unit = {
+  def mustOnlyContainRequiredErrorsFor[T](fields: Seq[String], f: Form[T]): Unit = 
     fields.foreach(mustContainRequiredErrorFor(_, f))
     val otherErrors = f.errors.filterNot(e => fields.contains(e.key))
     if (otherErrors.length > 1) {
       fail(s"Form contained unexpected errors: $otherErrors. Expected only errors for $fields")
     }
-  }
 
   def mustContainPrefixedRequiredErrorFor[T](field: String, f: Form[T]): Unit =
     mustContainError(field, s"$field.${Errors.required}", f)
@@ -59,12 +55,11 @@ object FormBindingTestAssertions extends should.Matchers {
   def mustContainBooleanRequiredErrorFor[T](field: String, f: Form[T]): Unit =
     mustContainError(field, Errors.booleanMissing, f)
 
-  def mustOnlyContainBooleanRequiredErrorFor[T](field: String, f: Form[T]): Unit = {
+  def mustOnlyContainBooleanRequiredErrorFor[T](field: String, f: Form[T]): Unit = 
     mustContainError(field, Errors.booleanMissing, f)
     if (f.errors.length > 1) {
       fail(s"Did not contain only boolean required error for $field. Errors: ${f.errors}")
     }
-  }
 
   def mustContainNegativeDecimalErrorFor[T](field: String, f: Form[T]): Unit =
     mustContainError(field, Errors.bigDecimalNegative, f)
@@ -74,19 +69,17 @@ object FormBindingTestAssertions extends should.Matchers {
 
   def mustContainMaxLengthErrorFor[T](field: String, f: Form[T]): Unit = mustContainError(field, Errors.maxLength, f)
 
-  def mustOnlyContainError[T](field: String, error: String, f: Form[T]): Unit = {
+  def mustOnlyContainError[T](field: String, error: String, f: Form[T]): Unit = 
     mustContainError(field, error, f)
     if (f.errors.length > 1) {
       fail(s"Form contained too many errors. Expected only: $field - $error. ${f.errors}")
     }
-  }
 
-  def mustContainError[T](field: String, error: String, f: Form[T]): Unit = {
+  def mustContainError[T](field: String, error: String, f: Form[T]): Unit = 
     val errorsForField = f.errors(field)
     if (errorsForField.isEmpty || !errorsForField.exists(_.message == error)) {
       fail(s"Form does not contain the $error for $field. Errors: ${f.errors}. \n${boundObject(f)}. \n${f.data}")
     }
-  }
 
   def mustNotContainErrorFor[T](field: String, f: Form[T]): Unit =
     if (f.errors.exists(_.key == field)) {
@@ -96,9 +89,8 @@ object FormBindingTestAssertions extends should.Matchers {
   private def boundObject[T](f: Form[T]): String =
     f.value.map(x => s"Bound to object: ${x.toString}").getOrElse("Form did not bind to any object")
 
-  def mustBind[T](form: Form[T])(checks: T => Unit): Unit = {
+  def mustBind[T](form: Form[T])(checks: T => Unit): Unit = 
     form.value.map(v => checks(v)) getOrElse fail(s"Form did not bind. \nErrors: ${form.errors} \nData: ${form.data}")
     assert(form.errors.isEmpty, s"Form unexpectedly contained errors. \nErrors: ${form.errors} \nData: ${form.data}")
-  }
 
 }
