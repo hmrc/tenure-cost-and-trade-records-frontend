@@ -31,6 +31,7 @@ case class OperationalExpenses(
   interest: Option[BigDecimal],
   other: Option[BigDecimal]
 ):
+
   def total: BigDecimal = Seq(
     advertising,
     administration,

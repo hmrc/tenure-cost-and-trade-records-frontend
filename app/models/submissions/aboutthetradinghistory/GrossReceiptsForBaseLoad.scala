@@ -25,6 +25,7 @@ case class GrossReceiptsForBaseLoad(
   hotWaterHeatOrSteamSales: Option[BigDecimal],
   gateIncomeFromWaste: Option[BigDecimal]
 ):
+
   def total: BigDecimal = Seq(
     renewableHeatIncentiveBioMethane,
     renewableHeatIncentiveBioMass,

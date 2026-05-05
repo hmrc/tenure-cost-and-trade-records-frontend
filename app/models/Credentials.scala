@@ -26,8 +26,6 @@ case class Credentials(
   postcode: String
 )
 
-object Credentials {
+object Credentials:
 
   implicit def format: OFormat[Credentials] = Json.format
-
-}

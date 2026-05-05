@@ -29,6 +29,7 @@ case class OperationalCosts6048(
   travellingAndMotorExpenses: Option[BigDecimal] = None,
   other: Option[BigDecimal] = None // other details in AboutTheTradingHistoryPartOne.otherOperationalExpensesDetails
 ):
+
   def total: BigDecimal = Seq(
     energyBills,
     laundryCleaning,

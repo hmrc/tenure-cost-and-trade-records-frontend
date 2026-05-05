@@ -22,8 +22,7 @@ case class SummaryEntry(
   key: String,
   maybeValue: Option[String],
   changeAction: Call
-) {
+):
 
   def hasValue: Boolean =
     maybeValue.isDefined
-}

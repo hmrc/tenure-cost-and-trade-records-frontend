@@ -27,7 +27,7 @@ case class SensitiveLettingPartOfPropertyDetails(
   itemsIncludedInRent: List[String] = List.empty,
   addAnotherLettingToProperty: Option[AnswersYesNo] = None,
   maxOfLettings: Option[Boolean] = None
-) extends Sensitive[LettingPartOfPropertyDetails] {
+) extends Sensitive[LettingPartOfPropertyDetails]:
 
   override def decryptedValue: LettingPartOfPropertyDetails = LettingPartOfPropertyDetails(
     tenantDetails.decryptedValue,
@@ -36,9 +36,8 @@ case class SensitiveLettingPartOfPropertyDetails(
     addAnotherLettingToProperty,
     maxOfLettings
   )
-}
 
-object SensitiveLettingPartOfPropertyDetails {
+object SensitiveLettingPartOfPropertyDetails:
 
   implicit def format(using crypto: MongoCrypto): OFormat[SensitiveLettingPartOfPropertyDetails] = Json.format
 
@@ -50,4 +49,3 @@ object SensitiveLettingPartOfPropertyDetails {
       lettingDetails.addAnotherLettingToProperty,
       lettingDetails.maxOfLettings
     )
-}

@@ -23,7 +23,7 @@ import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(audit) {
+class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(audit):
 
   override def cyaPage: Option[Call] =
     Some(controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show())
@@ -35,4 +35,3 @@ class AdditionalInformationNavigator @Inject() (audit: Audit) extends Navigator(
       ),
     CheckYourAnswersAdditionalInformationId -> (_ => controllers.routes.TaskListController.show)
   )
-}

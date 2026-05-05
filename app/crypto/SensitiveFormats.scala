@@ -20,9 +20,7 @@ import play.api.libs.json.Format
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import uk.gov.hmrc.crypto.json.JsonEncryption
 
-object SensitiveFormats {
+object SensitiveFormats:
 
   implicit def sensitiveStringFormat(using crypto: MongoCrypto): Format[SensitiveString] =
     JsonEncryption.sensitiveEncrypterDecrypter(SensitiveString.apply)
-
-}

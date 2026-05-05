@@ -22,7 +22,6 @@ case class ReferenceNumber(
   value: String
 )
 
-object ReferenceNumber {
+object ReferenceNumber:
   def unapply(obj: ReferenceNumber): Option[String] = Some(obj.value)
   given Format[ReferenceNumber]                     = Json.format
-}

@@ -21,7 +21,7 @@ import models.submissions.common.Address
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object LoginToBackend {
+object LoginToBackend:
   type RefNumber         = String
   type Postcode          = String
   type SessionID         = String
@@ -46,7 +46,6 @@ object LoginToBackend {
     )
 
   private def ned = NoExistingDocument.apply
-}
 
 sealed trait LoginResult
 

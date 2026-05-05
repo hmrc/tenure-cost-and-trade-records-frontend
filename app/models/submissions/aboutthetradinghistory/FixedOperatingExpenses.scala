@@ -28,6 +28,7 @@ case class FixedOperatingExpenses(
   loanInterest: Option[BigDecimal],
   depreciation: Option[BigDecimal]
 ):
+
   def total: BigDecimal =
     Seq(
       rent,

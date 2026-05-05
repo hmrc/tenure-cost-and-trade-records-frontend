@@ -29,6 +29,7 @@ case class CaravansTotalSiteCapacity(
   charitablePurposes: Int = 0,
   seasonalStaff: Int = 0
 ):
+
   def total: Int = ownedByOperatorForFleetHire + privatelyOwnedForOwnerAndFamily + subletByOperator +
     subletByPrivateOwners + charitablePurposes + seasonalStaff
 

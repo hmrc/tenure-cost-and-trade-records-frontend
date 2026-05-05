@@ -25,18 +25,16 @@ import models.submissions.common.SensitiveContactDetails
 case class SensitiveCustomerDetails(
   fullName: SensitiveString,
   contactDetails: SensitiveContactDetails
-) extends Sensitive[CustomerDetails] {
+) extends Sensitive[CustomerDetails]:
 
   override def decryptedValue: CustomerDetails = CustomerDetails(
     fullName.decryptedValue,
     contactDetails.decryptedValue
   )
 
-}
+object SensitiveCustomerDetails:
 
-object SensitiveCustomerDetails {
-
-  import crypto.SensitiveFormats._
+  import crypto.SensitiveFormats.*
 
   implicit def format(using crypto: MongoCrypto): OFormat[SensitiveCustomerDetails] = Json.format
 
@@ -44,4 +42,3 @@ object SensitiveCustomerDetails {
     SensitiveString(customerDetails.fullName),
     SensitiveContactDetails(customerDetails.contactDetails)
   )
-}

@@ -21,18 +21,16 @@ import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import crypto.MongoCrypto
 
-case class SensitiveContactDetails(phone: SensitiveString, email: SensitiveString) extends Sensitive[ContactDetails] {
+case class SensitiveContactDetails(phone: SensitiveString, email: SensitiveString) extends Sensitive[ContactDetails]:
 
   override def decryptedValue: ContactDetails = ContactDetails(
     phone.decryptedValue,
     email.decryptedValue
   )
 
-}
+object SensitiveContactDetails:
 
-object SensitiveContactDetails {
-
-  import crypto.SensitiveFormats._
+  import crypto.SensitiveFormats.*
 
   implicit def format(using crypto: MongoCrypto): OFormat[SensitiveContactDetails] = Json.format
 
@@ -40,4 +38,3 @@ object SensitiveContactDetails {
     SensitiveString(contactDetails.phone),
     SensitiveString(contactDetails.email)
   )
-}

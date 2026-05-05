@@ -31,6 +31,7 @@ case class VariableOperatingExpenses(
   entertainment: Option[BigDecimal],
   other: Option[BigDecimal]
 ):
+
   def total: BigDecimal =
     Seq(
       energyAndUtilities,

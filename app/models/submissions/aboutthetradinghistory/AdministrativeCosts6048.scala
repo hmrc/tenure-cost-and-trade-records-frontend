@@ -28,6 +28,7 @@ case class AdministrativeCosts6048(
   advertising: Option[BigDecimal] = None,
   printing: Option[BigDecimal] = None
 ):
+
   def total: BigDecimal = Seq(
     subscriptionsAndFees,
     telephoneBroadbandStationeryPostage,

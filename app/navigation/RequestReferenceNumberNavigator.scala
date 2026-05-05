@@ -24,7 +24,7 @@ import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class RequestReferenceNumberNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+class RequestReferenceNumberNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
   override def cyaPage: Option[Call] =
     Some(controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show())
@@ -43,5 +43,3 @@ class RequestReferenceNumberNavigator @Inject() (audit: Audit) extends Navigator
         controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation()
       )
   )
-
-}
