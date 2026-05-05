@@ -51,7 +51,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
   with I18nSupport {
 
   private def aboutTheTradingHistoryData(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistory] =
     request.sessionData.aboutTheTradingHistory

@@ -83,7 +83,7 @@ class StaticCaravansController @Inject() (
   }
 
   private def savedAnswer(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AnswersYesNo] = request.sessionData.aboutTheTradingHistoryPartOne
     .flatMap(_.caravans)

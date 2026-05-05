@@ -52,13 +52,13 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
   with I18nSupport {
 
   private def aboutTheTradingHistoryData(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistory] =
     request.sessionData.aboutTheTradingHistory
 
   private def aboutTheTradingHistoryDataPartOne(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistoryPartOne] =
     request.sessionData.aboutTheTradingHistoryPartOne

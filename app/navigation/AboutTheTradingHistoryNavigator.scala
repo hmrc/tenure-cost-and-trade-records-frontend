@@ -46,7 +46,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     id: Identifier,
     session: Session,
     call: Call
-  )(implicit
+  )(using
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
@@ -59,7 +59,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   override def nextPage(
     id: Identifier,
     session: Session
-  )(implicit
+  )(using
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =

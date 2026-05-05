@@ -125,7 +125,7 @@ class RentDetailsController @Inject() (
   private def getBackLink(
     existingDetails: Option[LettingPartOfProperty],
     idx: Option[Int]
-  )(implicit
+  )(using
     request: SessionRequest[AnyContent]
   ): String =
     if (navigator.from == "CYA") {

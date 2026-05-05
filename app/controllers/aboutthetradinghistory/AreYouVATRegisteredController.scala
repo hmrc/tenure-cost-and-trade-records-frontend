@@ -79,7 +79,7 @@ class AreYouVATRegisteredController @Inject() (
   }
 
   private def tradingHistoryPartOne(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
 

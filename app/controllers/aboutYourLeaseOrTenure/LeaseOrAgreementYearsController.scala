@@ -92,7 +92,7 @@ class LeaseOrAgreementYearsController @Inject() (
       .forall(_ == AnswerNo)
 
   private def leaseOrAgreementDetailsInSession(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[LeaseOrAgreementYearsDetails] =
     request.sessionData.aboutLeaseOrAgreementPartOne

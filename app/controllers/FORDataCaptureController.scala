@@ -48,7 +48,7 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
 
   def continueOrSaveAsDraft(
     successResult: Future[Result]
-  )(implicit
+  )(using
     request: SessionRequest[AnyContent]
   ): Future[Result] =
     if (isSaveAsDraft) saveAsDraftRedirect else successResult

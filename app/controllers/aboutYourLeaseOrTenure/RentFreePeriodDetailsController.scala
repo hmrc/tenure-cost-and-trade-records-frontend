@@ -44,7 +44,7 @@ class RentFreePeriodDetailsController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -76,7 +76,7 @@ class RentFreePeriodDetailsController @Inject() (
   }
 
   private def leaseOrAgreementPartFour(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartFour] = request.sessionData.aboutLeaseOrAgreementPartFour
 

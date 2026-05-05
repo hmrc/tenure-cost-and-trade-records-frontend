@@ -69,7 +69,7 @@ object SensitiveFormatsSpec {
   object SensitiveTestEntity {
     import crypto.SensitiveFormats.*
 
-    implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveTestEntity] = Json.format
+    implicit def format(using crypto: MongoCrypto): OFormat[SensitiveTestEntity] = Json.format
   }
 
 }

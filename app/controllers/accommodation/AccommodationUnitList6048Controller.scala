@@ -104,7 +104,7 @@ class AccommodationUnitList6048Controller @Inject() (
 
   private def performRemove(
     removeLastAllowed: Boolean = false
-  )(implicit
+  )(using
     request: SessionRequest[AnyContent]
   ): Future[Result] =
     val updatedData = updateAccommodationDetails(accommodationDetails =>
@@ -127,25 +127,25 @@ class AccommodationUnitList6048Controller @Inject() (
       }
 
   private def accommodationDetails(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 
   private def accommodationUnits(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): List[AccommodationUnit] =
     accommodationDetails.fold(List.empty)(_.accommodationUnits)
 
   private def selectedUnit(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationUnit] =
     accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
   private def selectedUnitName(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): String =
     selectedUnit.fold("")(_.unitName)

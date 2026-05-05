@@ -83,7 +83,7 @@ class AccommodationUnit6048Controller @Inject() (
   }
 
   private def accommodationDetails(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 

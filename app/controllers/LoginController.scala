@@ -142,7 +142,7 @@ class LoginController @Inject() (
   def verifyLogin(
     referenceNumber: String,
     postcode: String
-  )(implicit
+  )(using
     r: MessagesRequest[AnyContent]
   ): Future[Result] = {
 
@@ -201,7 +201,7 @@ class LoginController @Inject() (
     returnUser: Boolean,
     address: Address,
     formOfReturn: String
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Unit = {
     val json = Json.obj(
@@ -218,7 +218,7 @@ class LoginController @Inject() (
     postcode: String,
     postcodeCleaned: String,
     lockedIP: String
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Unit = {
     val detailJson = Json.obj(

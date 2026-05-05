@@ -86,12 +86,12 @@ class AccommodationDetailsCYA6048Controller @Inject() (
   }
 
   private def accommodationDetails(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 
   private def accommodationUnits(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): List[AccommodationUnit] =
     accommodationDetails.fold(List.empty)(_.accommodationUnits)

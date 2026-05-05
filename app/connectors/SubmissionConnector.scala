@@ -53,7 +53,7 @@ class HodSubmissionConnector @Inject() (
 
   override def submitRequestReferenceNumber(
     submission: RequestReferenceNumberSubmission
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Future[HttpResponse] =
     sendSubmission(requestRefNumURL, submission)
@@ -61,7 +61,7 @@ class HodSubmissionConnector @Inject() (
   override def submitNotConnected(
     refNumber: String,
     submission: NotConnectedSubmission
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Future[HttpResponse] =
     sendSubmission(notConnectedSubmissionURL(refNumber), submission)
@@ -69,7 +69,7 @@ class HodSubmissionConnector @Inject() (
   override def submitConnected(
     refNumber: String,
     submission: ConnectedSubmission
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Future[HttpResponse] =
     sendSubmission(connectedSubmissionURL(refNumber), submission)
@@ -77,7 +77,7 @@ class HodSubmissionConnector @Inject() (
   private def sendSubmission[T](
     url: URL,
     submission: T
-  )(implicit
+  )(using
     tjs: Writes[T],
     hc: HeaderCarrier
   ): Future[HttpResponse] =
@@ -100,20 +100,20 @@ trait SubmissionConnector:
 
   def submitRequestReferenceNumber(
     submission: RequestReferenceNumberSubmission
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Future[HttpResponse]
 
   def submitNotConnected(
     refNumber: String,
     submission: NotConnectedSubmission
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Future[HttpResponse]
 
   def submitConnected(
     refNumber: String,
     submission: ConnectedSubmission
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Future[HttpResponse]

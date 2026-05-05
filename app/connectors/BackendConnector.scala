@@ -35,7 +35,7 @@ class DefaultBackendConnector @Inject() (
   servicesConfig: ServicesConfig,
   appConfig: AppConfig,
   httpClientV2: HttpClientV2
-)(implicit
+)(using
   ec: ExecutionContext
 ) extends BackendConnector:
 
@@ -54,7 +54,7 @@ class DefaultBackendConnector @Inject() (
   override def verifyCredentials(
     refNumber: String,
     postcode: String
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Future[FORLoginResponse] =
     val credentials = Credentials(cleanedRefNumber(refNumber), postcode)

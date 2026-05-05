@@ -83,7 +83,7 @@ class TotalSiteCapacity6045Controller @Inject() (
   }
 
   private def aboutTheTradingHistoryPartOne(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
 

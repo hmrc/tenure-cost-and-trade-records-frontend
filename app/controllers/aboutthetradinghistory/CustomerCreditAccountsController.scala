@@ -43,7 +43,7 @@ class CustomerCreditAccountsController @Inject() (
   view: customerCreditAccounts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -91,7 +91,7 @@ class CustomerCreditAccountsController @Inject() (
       }
   }
 
-  private def backLink(answers: Session)(implicit request: SessionRequest[AnyContent]): String =
+  private def backLink(answers: Session)(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

@@ -77,6 +77,6 @@ class IsRentReviewPlannedController @Inject() (
   }
 
   private def leaseOrAgreementPartTwo(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartTwo] = request.sessionData.aboutLeaseOrAgreementPartTwo

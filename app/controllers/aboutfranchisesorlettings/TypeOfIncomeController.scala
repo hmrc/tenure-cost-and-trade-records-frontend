@@ -160,7 +160,7 @@ class TypeOfIncomeController @Inject() (
   private def toSpecificController(
     typeOfLetting: TypeOfIncome,
     index: Option[Int]
-  )(implicit
+  )(using
     request: SessionRequest[AnyContent]
   ): Call = {
     val targetIndex = index.getOrElse(0)

@@ -44,7 +44,7 @@ class TwinUnitCaravansAgeCategoriesController @Inject() (
 ) extends CaravansAgeCategoriesController(TwinCaravansAgeCategoriesId, Twin, mcc, audit) {
 
   def savedAnswer(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[CaravansAge] = request.sessionData.aboutTheTradingHistoryPartOne
     .flatMap(_.caravans)

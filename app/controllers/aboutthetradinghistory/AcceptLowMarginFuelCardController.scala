@@ -90,7 +90,7 @@ class AcceptLowMarginFuelCardController @Inject() (
   }
 
   private def tradingHistory(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistory] = request.sessionData.aboutTheTradingHistory
 

@@ -80,28 +80,16 @@ class AvailableRooms6048Controller @Inject() (
     )
   }
 
-  private def accommodationDetails(
-    implicit
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 
-  private def currentUnit(
-    implicit
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationUnit] =
+  private def currentUnit(using request: SessionRequest[AnyContent]): Option[AccommodationUnit] =
     accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
-  private def currentUnitName(
-    implicit
-    request: SessionRequest[AnyContent]
-  ): String =
+  private def currentUnitName(using request: SessionRequest[AnyContent]): String =
     currentUnit.fold("")(_.unitName)
 
-  private def backLink(
-    implicit
-    request: SessionRequest[AnyContent]
-  ): String =
+  private def backLink(using request: SessionRequest[AnyContent]): String =
     s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=${navigator.idx}"
 
 }

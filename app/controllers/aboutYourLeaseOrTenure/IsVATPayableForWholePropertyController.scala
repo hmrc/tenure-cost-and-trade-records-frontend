@@ -78,7 +78,7 @@ class IsVATPayableForWholePropertyController @Inject() (
   }
 
   private def leaseOrAgreementPartThree(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 

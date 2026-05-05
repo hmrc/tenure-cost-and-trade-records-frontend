@@ -48,7 +48,7 @@ class AddOrRemoveLettingController @Inject() (
   with I18nSupport {
 
   private def franchisesOrLettingsData(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutFranchisesOrLettings] =
     request.sessionData.aboutFranchisesOrLettings

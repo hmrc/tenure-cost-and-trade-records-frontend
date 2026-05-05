@@ -28,7 +28,7 @@ class RefNumRequest[A](val refNum: String, request: Request[A], messagesApi: Mes
 class RefNumAction @Inject() (
   bodyParser: BodyParser[AnyContent],
   messagesApi: MessagesApi
-)(implicit
+)(using
   val executionContext: ExecutionContext
 ) extends ActionBuilder[RefNumRequest, AnyContent]
   with ActionRefiner[Request, RefNumRequest]

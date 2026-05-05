@@ -76,7 +76,7 @@ class IsGivenRentFreePeriodController @Inject() (
   }
 
   private def leaseOrAgreementPartFour(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartFour] = request.sessionData.aboutLeaseOrAgreementPartFour
 

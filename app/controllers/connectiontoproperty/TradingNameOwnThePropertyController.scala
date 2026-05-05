@@ -96,7 +96,7 @@ class TradingNameOwnThePropertyController @Inject() (
   }
 
   private def ownThePropertyInSession(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AnswersYesNo] =
     request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty)

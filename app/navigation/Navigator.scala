@@ -66,7 +66,7 @@ abstract class Navigator @Inject() (audit: Audit):
   def nextPage(
     id: Identifier,
     session: Session
-  )(implicit
+  )(using
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
@@ -79,7 +79,7 @@ abstract class Navigator @Inject() (audit: Audit):
     id: Identifier,
     session: Session,
     paramAndValue: String
-  )(implicit
+  )(using
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Call =
