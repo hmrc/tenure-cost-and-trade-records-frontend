@@ -23,7 +23,7 @@ import play.api.i18n.Messages
 
 import java.time.LocalDate
 
-object FinancialYearEndDateForm {
+object FinancialYearEndDateForm:
 
   def financialYearEndDateForm(using messages: Messages): Form[LocalDate] =
     Form(
@@ -35,5 +35,3 @@ object FinancialYearEndDateForm {
         )
       )
     )
-
-}

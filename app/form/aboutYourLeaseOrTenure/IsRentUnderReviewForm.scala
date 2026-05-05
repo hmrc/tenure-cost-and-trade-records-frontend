@@ -24,7 +24,7 @@ import play.api.data.Forms.single
 /**
   * @author Yuriy Tumakha
   */
-object IsRentUnderReviewForm {
+object IsRentUnderReviewForm:
 
   val isRentUnderReviewForm: Form[AnswersYesNo] =
     Form(
@@ -32,5 +32,3 @@ object IsRentUnderReviewForm {
         "isRentUnderReview" -> createYesNoType("error.isRentUnderReview.required")
       )
     )
-
-}

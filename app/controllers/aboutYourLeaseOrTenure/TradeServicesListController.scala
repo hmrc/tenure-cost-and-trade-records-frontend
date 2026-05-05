@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.TradeServicesListForm.theForm
-import form.confirmableActionForm.confirmableActionForm
+import form.ConfirmableActionForm.confirmableActionForm
 import models.pages.ListPageConfig.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.AnswersYesNo
@@ -47,7 +47,7 @@ class TradeServicesListController @Inject() (
   @Named("session") repository: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection =
@@ -57,10 +57,10 @@ class TradeServicesListController @Inject() (
 
     Ok(
       theListView(
-        existingSection.flatMap(_.addAnotherService) match {
+        existingSection.flatMap(_.addAnotherService) match
           case Some(answer) => theForm.fill(answer)
           case _            => theForm
-        },
+        ,
         index
       )
     )
@@ -169,4 +169,3 @@ class TradeServicesListController @Inject() (
       }
     )
   }
-}

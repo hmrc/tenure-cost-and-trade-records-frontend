@@ -45,7 +45,7 @@ class RentalIncomeRentController @Inject() (
 ) extends FORDataCaptureController(mcc)
   with FranchiseAndLettingSupport
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails = getIncomeRecord(index).collect {
@@ -109,7 +109,7 @@ class RentalIncomeRentController @Inject() (
   }
 
   private def calculateBackLink(idx: Int)(using request: SessionRequest[AnyContent]) =
-    request.getQueryString("from") match {
+    request.getQueryString("from") match
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       case _           =>
@@ -117,5 +117,3 @@ class RentalIncomeRentController @Inject() (
           case Some(TypeLetting) =>
             controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(idx).url
           case _                 => controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(idx).url
-    }
-}

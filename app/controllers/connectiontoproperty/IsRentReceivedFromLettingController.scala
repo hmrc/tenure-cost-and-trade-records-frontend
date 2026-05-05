@@ -46,17 +46,17 @@ class IsRentReceivedFromLettingController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsRentReceivedFromLetting")
 
     Ok(
       isRentReceivedFromLettingView(
-        request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+        request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match
           case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
           case _                       => isRentReceivedFromLettingForm
-        },
+        ,
         getBackLink,
         request.sessionData.toSummary
       )
@@ -96,9 +96,6 @@ class IsRentReceivedFromLettingController @Inject() (
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+    navigator.from match
+      case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       case _     => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
-    }
-}

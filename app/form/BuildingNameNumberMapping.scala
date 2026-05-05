@@ -19,14 +19,13 @@ package form
 import play.api.data.Forms.text
 import play.api.data.Mapping
 
-object BuildingNameNumberMapping {
+object BuildingNameNumberMapping:
 
-  def validateBuildingNameNumber: Mapping[String] = {
+  private val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
 
-    val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
+  private def validBuildingNameNumberLength(bNN: String) = bNN.length <= 50
 
-    def validBuildingNameNumberLength(bNN: String) = bNN.length <= 50
-
+  def validateBuildingNameNumber: Mapping[String] =
     text
       .verifying(Errors.addressBuildingNameNumberRequired, bNN => bNN.nonEmpty)
       .verifying(Errors.buildingMaxLength, bNN => if bNN.nonEmpty then validBuildingNameNumberLength(bNN) else true)
@@ -34,6 +33,3 @@ object BuildingNameNumberMapping {
         Errors.invalidCharAddress1,
         bNN => if bNN.nonEmpty && validBuildingNameNumberLength(bNN) then bNN.matches(invalidCharRegex) else true
       )
-  }
-
-}

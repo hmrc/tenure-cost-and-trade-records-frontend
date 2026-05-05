@@ -47,7 +47,7 @@ class RentedSeparatelyParkingSpacesController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentedSeparatelyParkingSpaces")
@@ -83,9 +83,6 @@ class RentedSeparatelyParkingSpacesController @Inject() (
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url
       case _    => controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
-    }
-
-}

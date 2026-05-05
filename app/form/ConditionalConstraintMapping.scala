@@ -28,7 +28,7 @@ case class ConditionalConstraintMapping[T](
   conditionalMapping: Mapping[T],
   defaultMapping: Mapping[T],
   constraints: Seq[Constraint[T]] = Seq.empty
-) extends Mapping[T] {
+) extends Mapping[T]:
 
   override val format: Option[(String, Seq[Any])] = defaultMapping.format
 
@@ -39,11 +39,8 @@ case class ConditionalConstraintMapping[T](
 
   def bind(data: Map[String, String]): Either[Seq[FormError], T] =
     (
-      if (condition(data)) {
-        conditionalMapping.bind(data)
-      } else {
-        defaultMapping.bind(data)
-      }
+      if condition(data) then conditionalMapping.bind(data)
+      else defaultMapping.bind(data)
     ).flatMap(applyConstraints)
 
   def unbind(value: T): Map[String, String] = defaultMapping.unbind(value)
@@ -54,5 +51,3 @@ case class ConditionalConstraintMapping[T](
     copy(conditionalMapping = conditionalMapping.withPrefix(prefix), defaultMapping = defaultMapping.withPrefix(prefix))
 
   val mappings: Seq[Mapping[?]] = (conditionalMapping.mappings ++ defaultMapping.mappings) :+ this
-
-}

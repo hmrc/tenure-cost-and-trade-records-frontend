@@ -45,7 +45,7 @@ class OtherHolidayAccommodationController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OtherHolidayAccommodation")
@@ -85,9 +85,6 @@ class OtherHolidayAccommodationController @Inject() (
   ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    // TODO update CYA?
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url
       case _    => controllers.routes.TaskListController.show.url
-    }
-}

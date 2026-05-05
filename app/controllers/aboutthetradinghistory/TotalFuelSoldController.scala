@@ -43,7 +43,7 @@ class TotalFuelSoldController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TotalFuelSold")
@@ -58,7 +58,6 @@ class TotalFuelSoldController @Inject() (
           )
         )
       }
-
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -74,7 +73,7 @@ class TotalFuelSoldController @Inject() (
                 calculateBackLink(using request)
               )
             ),
-          success => {
+          success =>
             val totalFuelSold = (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (totalFuelSold, finYearEnd) =>
               totalFuelSold.copy(financialYearEnd = finYearEnd)
             }
@@ -83,22 +82,18 @@ class TotalFuelSoldController @Inject() (
             session
               .saveOrUpdate(updatedData)
               .map(_ => Redirect(navigator.nextPage(TotalFuelSoldId, updatedData).apply(updatedData)))
-          }
         )
       }
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#fuel-sales"
       case _     => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-    }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
 
   private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
     financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)
-}

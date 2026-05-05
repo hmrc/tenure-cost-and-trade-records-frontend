@@ -21,14 +21,13 @@ import models.submissions.aboutthetradinghistory.TotalSiteCapacity
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object TotalSiteCapacityForm {
+object TotalSiteCapacityForm:
 
-  val totalSiteCapacityForm: Form[TotalSiteCapacity] = Form {
-    mapping(
-      "availableForLetting"     -> nonNegativeNumber("availableForLetting"),
-      "occupiedBySeasonalStuff" -> nonNegativeNumber("occupiedBySeasonalStuff"),
-      "privatelyOwned"          -> nonNegativeNumber("privatelyOwned")
-    )(TotalSiteCapacity.apply)(o => Some(Tuple.fromProductTyped(o)))
-  }
-
-}
+  val totalSiteCapacityForm: Form[TotalSiteCapacity] =
+    Form(
+      mapping(
+        "availableForLetting"     -> nonNegativeNumber("availableForLetting"),
+        "occupiedBySeasonalStuff" -> nonNegativeNumber("occupiedBySeasonalStuff"),
+        "privatelyOwned"          -> nonNegativeNumber("privatelyOwned")
+      )(TotalSiteCapacity.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

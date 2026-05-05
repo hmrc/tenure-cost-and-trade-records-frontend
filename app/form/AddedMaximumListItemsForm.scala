@@ -26,7 +26,7 @@ import play.api.i18n.Messages
 object AddedMaximumListItemsForm:
 
   def addedMaximumListItemsForm(itemsInPluralKey: String)(using messages: Messages): Form[Option[Boolean]] =
-    Form {
+    Form(
       single(
         "exceededMaxListItems" -> optional(boolean)
           .verifying(
@@ -34,4 +34,4 @@ object AddedMaximumListItemsForm:
             _.contains(true)
           )
       )
-    }
+    )

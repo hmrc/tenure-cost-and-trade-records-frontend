@@ -19,13 +19,10 @@ package navigation
 /**
   * @author Yuriy Tumakha
   */
-object UrlHelpers {
+object UrlHelpers:
 
   def urlPlusParamPrefix(url: String): String =
-    if (url.indexOf("?") == -1) {
+    if url.indexOf("?") == -1 then
       url + "?"
-    } else {
+    else
       url + "&"
-    }
-
-}

@@ -29,7 +29,7 @@ import play.api.Logging
 
 import javax.inject.Inject
 
-class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
   override def cyaPage: Option[Call] =
     Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show())
@@ -41,13 +41,12 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     Some(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
 
   def cyaPageDependsOnSession(session: Session): Option[Call] =
-    if (isNotConnectedPropertySubmission(session)) {
+    if isNotConnectedPropertySubmission(session) then
       cyaPageNotConnected
-    } else if (isVacantPropertySubmission(session)) {
+    else if isVacantPropertySubmission(session) then
       cyaPageVacant
-    } else {
+    else
       cyaPage
-    }
 
   def isVacantPropertySubmission(session: Session): Boolean =
     session.stillConnectedDetails
@@ -192,4 +191,3 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     MaxOfLettingsReachedId                         -> (_ => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()),
     CheckYourAnswersConnectionToPropertyId         -> (_ => controllers.routes.TaskListController.show)
   )
-}

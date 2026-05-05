@@ -42,7 +42,7 @@ class ServicePaidSeparatelyController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[String] = for {
@@ -107,9 +107,6 @@ class ServicePaidSeparatelyController @Inject() (
   }
 
   def getBackLink(request: SessionRequest[AnyContent], index: Int): String =
-    request.getQueryString("from") match {
-      case Some("Change") =>
-        controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
+    request.getQueryString("from") match
+      case Some("Change") => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
       case _              => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
-    }
-}

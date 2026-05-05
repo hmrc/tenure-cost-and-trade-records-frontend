@@ -47,17 +47,17 @@ class PropertyUpdatesController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PropertyUpdates")
 
     Ok(
       view(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match {
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match
           case Some(data) => propertyUpdatesForm.fill(data)
           case _          => propertyUpdatesForm
-        },
+        ,
         request.sessionData.toSummary,
         backLink(request.sessionData)
       )
@@ -78,14 +78,10 @@ class PropertyUpdatesController @Inject() (
   }
 
   private def backLink(answers: Session): String =
-    answers.forType match {
+    answers.forType match
       case FOR6045 | FOR6046 =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match
           case Some(AnswerYes) =>
             controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-        }
       case _                 => controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
-    }
-
-}

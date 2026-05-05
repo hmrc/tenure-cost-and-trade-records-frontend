@@ -57,10 +57,9 @@ class OtherLettingController @Inject() (
         lettings                  <- aboutFranchisesOrLettings.lettings
         requestedIndex            <- index
         requestedLetting          <- lettings.lift(requestedIndex)
-        letting                   <- requestedLetting match {
+        letting                   <- requestedLetting match
                                        case letting: OtherLetting => Some(letting)
                                        case _                     => None
-                                     }
       yield theForm.fill(letting)
 
     Ok(

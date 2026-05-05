@@ -43,7 +43,7 @@ class StaffCostsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("StaffCosts")
@@ -104,23 +104,19 @@ class StaffCostsController @Inject() (
 
     intermittentCheck match
       case Some(Intermittent) =>
-        navigator.from match {
+        navigator.from match
           case "CYA" =>
             aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
           case "IES" =>
             controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
           case _     =>
             aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show().url
-        }
       case Some(Baseload)     =>
-        navigator.from match {
+        navigator.from match
           case "CYA" =>
             aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
           case "IES" =>
             controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
           case _     =>
             aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
-        }
       case _                  => controllers.routes.TaskListController.show.url
-
-}

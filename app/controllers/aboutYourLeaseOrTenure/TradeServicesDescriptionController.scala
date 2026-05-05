@@ -42,7 +42,7 @@ class TradeServicesDescriptionController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[String] = for {
@@ -107,8 +107,6 @@ class TradeServicesDescriptionController @Inject() (
   }
 
   def getBackLink(request: SessionRequest[AnyContent], index: Int): String =
-    request.getQueryString("from") match {
+    request.getQueryString("from") match
       case Some("Change") => controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index).url
       case _              => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
-    }
-}

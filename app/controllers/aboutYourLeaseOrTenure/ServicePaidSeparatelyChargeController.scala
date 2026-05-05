@@ -41,7 +41,7 @@ class ServicePaidSeparatelyChargeController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("ServicePaidSeparatelyCharge")
@@ -86,5 +86,3 @@ class ServicePaidSeparatelyChargeController @Inject() (
         }
     )
   }
-
-}

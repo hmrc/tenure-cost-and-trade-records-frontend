@@ -51,8 +51,10 @@ case class SensitiveLettingHistory(
     )
 
 object SensitiveLettingHistory:
+
   import crypto.MongoCrypto
   import play.api.libs.json.{Format, Json}
+
   implicit def format(using crypto: MongoCrypto): Format[SensitiveLettingHistory] = Json.format
 
   // encryption method

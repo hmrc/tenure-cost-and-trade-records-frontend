@@ -30,11 +30,10 @@ object AvailableRooms6048Form:
 
   private val singleDoubleZero: Constraint[AvailableRooms] =
     Constraint("constraint.anotherUseDetailsRequired") { x =>
-      if (x.singleBedrooms == 0 && x.doubleBedrooms == 0) {
+      if x.singleBedrooms == 0 && x.doubleBedrooms == 0 then
         Invalid(Seq(ValidationError("error.accommodation.singleBedrooms.zero")))
-      } else {
+      else
         Valid
-      }
     }
 
   private val availableRooms6048Mapping: Mapping[AvailableRooms] =

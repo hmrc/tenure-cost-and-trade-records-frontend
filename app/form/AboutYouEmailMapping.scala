@@ -19,7 +19,7 @@ package form
 import play.api.data.Forms.text
 import play.api.data.Mapping
 
-object AboutYouEmailMapping {
+object AboutYouEmailMapping:
 
   // Valid formats: test@test.com | test.test@hotmail.com | test.account@digital.gov.uk |
 
@@ -32,5 +32,3 @@ object AboutYouEmailMapping {
         Errors.emailFormat,
         eA => if eA.nonEmpty then eA.matches(invalidEmailRegex) else true
       )
-
-}

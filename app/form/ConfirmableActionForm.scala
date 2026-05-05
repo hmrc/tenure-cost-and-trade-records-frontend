@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 
-object confirmableActionForm {
+object ConfirmableActionForm:
 
   private val confirmableActionMapping = mapping(
     "genericRemoveConfirmation" -> optional(
@@ -32,5 +32,3 @@ object confirmableActionForm {
   )(x => x)(b => Some(b))
 
   val confirmableActionForm: Form[AnswersYesNo] = Form(confirmableActionMapping)
-
-}

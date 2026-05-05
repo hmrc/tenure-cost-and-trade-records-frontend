@@ -48,7 +48,7 @@ class ThroughputAffectsRentController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ThroughputAffectsRent")
@@ -85,5 +85,3 @@ class ThroughputAffectsRentController @Inject() (
 
   private def getBackLink: String =
     controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
-
-}

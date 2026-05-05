@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object ConcessionTypeDetailsForm {
+object ConcessionTypeDetailsForm:
 
   val concessionTypeDetailsForm: Form[ConcessionBusinessDetails] = Form(
     mapping(
@@ -39,4 +39,3 @@ object ConcessionTypeDetailsForm {
       )
     )(ConcessionBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

@@ -24,7 +24,7 @@ import play.api.data.Forms.single
 /**
   * @author Yuriy Tumakha
   */
-object IsParkingRentPaidSeparatelyForm {
+object IsParkingRentPaidSeparatelyForm:
 
   val isParkingRentPaidSeparatelyForm: Form[AnswersYesNo] =
     Form(
@@ -32,5 +32,3 @@ object IsParkingRentPaidSeparatelyForm {
         "isParkingRentPaidSeparately" -> createYesNoType("error.isParkingRentPaidSeparately.required")
       )
     )
-
-}

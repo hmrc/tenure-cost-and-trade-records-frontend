@@ -25,12 +25,12 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 import scala.util.Try
 
-object TotalFuelSoldForm {
+object TotalFuelSoldForm:
 
   def totalFuelSoldForm(years: Seq[String])(using messages: Messages): Form[Seq[TotalFuelSold]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => "" -> totalFuelSoldMapping(year, idx))
-    }
+    )
 
   private def totalFuelSoldMapping(year: String, idx: Int)(using messages: Messages): Mapping[TotalFuelSold] =
     mapping(
@@ -45,5 +45,3 @@ object TotalFuelSoldForm {
           .verifying(messages("error.totalFuelSold.range", year), _ >= 0)
       ).verifying(messages("error.totalFuelSold.required", year), _.isDefined)
     )(TotalFuelSold.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-}

@@ -26,7 +26,7 @@ import java.time.{LocalDate, MonthDay, YearMonth}
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class DateUtilLocalised @Inject() (langUtil: LanguageUtils) {
+class DateUtilLocalised @Inject() (langUtil: LanguageUtils):
 
   private val ibmTimeZone: TimeZone = TimeZone.getTimeZone(defaultTimeZoneId)
 
@@ -87,5 +87,3 @@ class DateUtilLocalised @Inject() (langUtil: LanguageUtils) {
   def formatDayMonthAbbrYear(date: LocalDate)(using messages: Messages): String =
     dayMonthAbbrYearFormat(messages.lang.code)
       .format(date.toEpochMilli)
-
-}

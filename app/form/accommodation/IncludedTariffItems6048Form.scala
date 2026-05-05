@@ -28,7 +28,7 @@ import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingSeq
 object IncludedTariffItems6048Form:
 
   val includedTariffItems6048Form: Form[Seq[AccommodationTariffItem]] =
-    Form {
+    Form(
       single(
         "includedTariffItems" -> enumMappingSeq(AccommodationTariffItem)
           .verifying(
@@ -39,4 +39,4 @@ object IncludedTariffItems6048Form:
             )
           )
       )
-    }
+    )

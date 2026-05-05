@@ -41,7 +41,7 @@ class RentDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[LettingPartOfProperty] = for {
@@ -134,12 +134,9 @@ class RentDetailsController @Inject() (
     }
 
   private def getUrlByType(existingDetails: Option[LettingPartOfProperty], idx: Option[Int]) =
-    existingDetails match {
+    existingDetails match
       case Some(_: ATMLetting)              => routes.AtmLettingController.show(idx).url
       case Some(_: TelecomMastLetting)      => routes.TelecomMastLettingController.show(idx).url
       case Some(_: AdvertisingRightLetting) => routes.AdvertisingRightLettingController.show(idx).url
       case Some(_: OtherLetting)            => routes.OtherLettingController.show(idx).url
       case _                                => routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    }
-
-}

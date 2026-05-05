@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmationForm
+import form.ConfirmableActionForm.confirmableActionForm as theRemoveConfirmationForm
 import form.lettingHistory.ResidentListForm.theForm as theListForm
 import models.Session
 import models.submissions.common.AnswersYesNo

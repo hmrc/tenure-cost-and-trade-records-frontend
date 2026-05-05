@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Forms.{mapping, optional}
 import play.api.data.{Form, Mapping}
 
-object ServicePaidSeparatelyListForm {
+object ServicePaidSeparatelyListForm:
 
   val addServicePaidSeparatelyMapping: Mapping[AnswersYesNo] = mapping(
     "servicePaidSeparatelyList" -> optional(createYesNoType("error.servicePaidSeparatelyList.required"))
@@ -30,4 +30,3 @@ object ServicePaidSeparatelyListForm {
   )(x => x)(b => Some(b))
 
   val addServicePaidSeparatelyForm: Form[AnswersYesNo] = Form(addServicePaidSeparatelyMapping)
-}

@@ -24,7 +24,7 @@ import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object CostOfSales6076IntermittentForm {
+object CostOfSales6076IntermittentForm:
 
   private def sumIntermittentMapping(
     year: String
@@ -49,7 +49,7 @@ object CostOfSales6076IntermittentForm {
     years: Seq[String]
   )(using messages: Messages
   ): Form[(Seq[CostOfSales6076IntermittentSum], String)] =
-    Form {
+    Form(
       tuple(
         "costOfSales6076"   -> costOfSales6076IntermittentMapping(years),
         "otherSalesDetails" -> mandatoryStringIfNonZeroSum(
@@ -59,6 +59,4 @@ object CostOfSales6076IntermittentForm {
           maxLength(2000, "error.costOfSales6076Intermittent.otherSalesDetails.maxLength")
         )
       )
-    }
-
-}
+    )

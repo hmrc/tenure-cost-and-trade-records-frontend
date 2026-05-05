@@ -70,10 +70,9 @@ object AboutLeaseOrAgreementPartThree:
     update: CarParking => CarParking
   )(using sessionRequest: SessionRequest[?]
   ): Session =
-    updateAboutLeaseOrAgreementPartThree { aboutLeaseOrAgreementPartThree =>
+    updateAboutLeaseOrAgreementPartThree: aboutLeaseOrAgreementPartThree =>
       val carParking = update(aboutLeaseOrAgreementPartThree.carParking getOrElse CarParking())
       aboutLeaseOrAgreementPartThree.copy(carParking = Some(carParking))
-    }
 
   def updateThroughputAffectsRent(
     update: ThroughputAffectsRent => ThroughputAffectsRent

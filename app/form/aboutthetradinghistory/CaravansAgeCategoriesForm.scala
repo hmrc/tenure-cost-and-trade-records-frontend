@@ -26,17 +26,17 @@ import play.api.data.Forms.mapping
 /**
   * @author Yuriy Tumakha
   */
-object CaravansAgeCategoriesForm {
+object CaravansAgeCategoriesForm:
 
   def caravansAgeCategoriesForm(caravanUnitType: CaravanUnitType): Form[CaravansAge] =
-    Form {
+    Form(
       mapping(
         caravansPerAgeCategoryMapping(caravanUnitType, FleetHire),
         caravansPerAgeCategoryMapping(caravanUnitType, PrivateSublet)
       )(CaravansAge.apply)(o => Some(Tuple.fromProductTyped(o)))
-    }
+    )
 
-  private def caravansPerAgeCategoryMapping(unitType: CaravanUnitType, hireType: CaravanHireType) = {
+  private def caravansPerAgeCategoryMapping(unitType: CaravanUnitType, hireType: CaravanHireType) =
 
     def caravansAmountMapping(ageCategory: String) =
       ageCategory -> nonNegativeNumber(s"caravans.$unitType.$hireType.$ageCategory")
@@ -47,6 +47,3 @@ object CaravansAgeCategoriesForm {
       caravansAmountMapping("years11_15"),
       caravansAmountMapping("years15plus")
     )(CaravansPerAgeCategory.apply)(o => Some(Tuple.fromProductTyped(o)))
-  }
-
-}

@@ -27,7 +27,7 @@ import java.time.LocalDate
 /**
   * @author Yuriy Tumakha
   */
-object CarParkingAnnualRentForm {
+object CarParkingAnnualRentForm:
 
   def carParkingAnnualRentForm(using messages: Messages): Form[(BigDecimal, LocalDate)] =
     Form(
@@ -36,5 +36,3 @@ object CarParkingAnnualRentForm {
         "fixedRentFrom" -> requiredDateMapping("carParkingFixedRentDate", allowPastDates = true)
       )
     )
-
-}

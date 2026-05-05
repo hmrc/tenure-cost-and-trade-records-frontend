@@ -43,18 +43,18 @@ class WhatIsYourRentBasedOnController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("WhatIsYourRentBasedOn")
 
     Ok(
       whatIsYourRentBasedOnView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.whatIsYourCurrentRentBasedOnDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.whatIsYourCurrentRentBasedOnDetails) match
           case Some(whatIsYourCurrentRentBasedOnDetails) =>
             whatIsYourCurrentRentBasedOnForm.fill(whatIsYourCurrentRentBasedOnDetails)
           case None                                      => whatIsYourCurrentRentBasedOnForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -64,22 +64,18 @@ class WhatIsYourRentBasedOnController @Inject() (
     continueOrSaveAsDraft[WhatIsYourCurrentRentBasedOnDetails](
       whatIsYourCurrentRentBasedOnForm,
       formWithErrors => BadRequest(whatIsYourRentBasedOnView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val currentRentBasedOnValue = request.body.asFormUrlEncoded.get("currentRentBasedOn").headOption.getOrElse("")
         val isOther                 = currentRentBasedOnValue == CurrentRentBasedOnOther.toString
-        if (isOther && data.describe.isEmpty) {
+        if isOther && data.describe.isEmpty then
           val formWithCustomError = whatIsYourCurrentRentBasedOnForm
             .fillAndValidate(data)
             .withError("whatIsYourRentBasedOn", "error.whatIsYourRentBasedOn.required")
           BadRequest(whatIsYourRentBasedOnView(formWithCustomError, request.sessionData.toSummary))
-        } else {
+        else
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(whatIsYourCurrentRentBasedOnDetails = Some(data)))
           session
             .saveOrUpdate(updatedData)
             .map(_ => Redirect(navigator.nextPage(WhatRentBasedOnPageId, updatedData).apply(updatedData)))
-
-        }
-      }
     )
   }
-}

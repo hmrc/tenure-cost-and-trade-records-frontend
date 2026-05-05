@@ -36,7 +36,7 @@ class LocalDateFormatter(
   allowFutureDates: Boolean,
   years: Option[Seq[Int]] = None
 )(using messages: Messages
-) extends Formatter[LocalDate] {
+) extends Formatter[LocalDate]:
 
   require(
     allowPastDates || allowFutureDates,
@@ -132,5 +132,3 @@ class LocalDateFormatter(
         else if !allowFutureDates && date.isAfter(todayUKDate) then Left("error.date.mustBeInPast")
         else Right(date)
       }
-
-}

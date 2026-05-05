@@ -19,7 +19,7 @@ package form
 import play.api.data.Forms.text
 import play.api.data.Mapping
 
-object WebsiteMapping {
+object WebsiteMapping:
 
   // Valid formats: test@test.com | test.test@hotmail.com | test.account@digital.gov.uk |
   //                 https://www.test@test.com | http://www.test@test.com | www.test@test.com
@@ -35,5 +35,3 @@ object WebsiteMapping {
         Errors.webaddressFormat,
         wA => if wA.nonEmpty then wA.matches(validWebAddressRegex) else true
       )
-
-}

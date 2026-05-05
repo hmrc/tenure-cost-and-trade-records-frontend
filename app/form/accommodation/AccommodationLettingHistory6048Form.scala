@@ -30,7 +30,7 @@ import java.time.LocalDate
 /**
   * @author Yuriy Tumakha
   */
-object AccommodationLettingHistory6048Form {
+object AccommodationLettingHistory6048Form:
 
   private def columnMapping(
     year: String
@@ -60,8 +60,6 @@ object AccommodationLettingHistory6048Form {
   )(using request: SessionRequest[AnyContent],
     messages: Messages
   ): Form[Seq[AccommodationLettingHistory]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"lettingHistory[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

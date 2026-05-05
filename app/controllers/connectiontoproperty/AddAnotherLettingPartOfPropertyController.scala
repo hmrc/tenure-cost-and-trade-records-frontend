@@ -19,7 +19,7 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.confirmableActionForm.confirmableActionForm
+import form.ConfirmableActionForm.confirmableActionForm
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*

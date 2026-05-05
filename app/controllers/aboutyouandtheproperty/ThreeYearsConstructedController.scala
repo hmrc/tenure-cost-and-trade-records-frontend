@@ -51,10 +51,10 @@ class ThreeYearsConstructedController @Inject() (
     audit.sendChangeLink("ThreeYearsConstructed")
     Ok(
       theView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match
           case Some(tiedForGoods) => theForm.fill(tiedForGoods)
           case _                  => theForm
-        },
+        ,
         navigator.from,
         request.sessionData.toSummary,
         isReadOnly
@@ -74,11 +74,10 @@ class ThreeYearsConstructedController @Inject() (
             isReadOnly
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(threeYearsConstructed = Some(data)))
         repo
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(ThreeYearsConstructedPageId, updatedData).apply(updatedData)))
-      }
     )
   }

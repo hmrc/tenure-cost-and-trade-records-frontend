@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
 import play.api.i18n.Messages
 
-object CalculatingTheRentForm {
+object CalculatingTheRentForm:
 
   def calculatingTheRentForm(using messages: Messages): Form[CalculatingTheRent] =
     Form(
@@ -33,5 +33,3 @@ object CalculatingTheRentForm {
         "dateInput"   -> requiredDateMapping("cateringOrLettingFixedRentDate", allowPastDates = true)
       )(CalculatingTheRent.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
-
-}

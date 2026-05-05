@@ -41,7 +41,7 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("LettingPartOfPropertyItemsIncludedInRent")
@@ -101,11 +101,8 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
   }
 
   private def calculateBackLink(index: Int)(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(index).url
-    }
 
   private def startRedirect: Result = Redirect(routes.LettingPartOfPropertyDetailsController.show(None))
-
-}

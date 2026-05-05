@@ -24,7 +24,7 @@ import play.api.data.Forms.{mapping, text}
 import play.api.data.validation.Constraints.maxLength
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
-object TradingActivityForm {
+object TradingActivityForm:
 
   val tradingActivityForm: Form[TradingActivity] = Form(
     mapping(
@@ -38,4 +38,3 @@ object TradingActivityForm {
       )
     )(TradingActivity.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

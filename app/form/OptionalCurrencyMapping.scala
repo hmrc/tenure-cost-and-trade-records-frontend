@@ -23,7 +23,7 @@ import util.NumberUtil.*
 
 import scala.util.{Failure, Success, Try}
 
-object OptionalCurrencyMapping {
+object OptionalCurrencyMapping:
 
   def partOfAnnualRent(
     errorTitle: String,
@@ -35,10 +35,9 @@ object OptionalCurrencyMapping {
     ).verifying(
       Constraint[Option[String]]("partOfAnnualRent") {
         _.fold[ValidationResult](Valid)(value =>
-          Try(BigDecimal(value)) match {
+          Try(BigDecimal(value)) match
             case Success(amount) => validate(amount, otherIncludedPartsSum, annualRent, errorTitle)
             case Failure(_)      => Invalid(ValidationError("error.optCurrency.invalid", errorTitle))
-          }
         )
       }
     ).transform[Option[BigDecimal]](
@@ -61,4 +60,3 @@ object OptionalCurrencyMapping {
     else if includedPartsSum > rent then
       Invalid(ValidationError("error.includedPartsSum.graterThanAnnualRent", includedPartsSum.asMoney, rent.asMoney))
     else Valid
-}

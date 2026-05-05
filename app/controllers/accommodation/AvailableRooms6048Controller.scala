@@ -45,7 +45,7 @@ class AvailableRooms6048Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -91,5 +91,3 @@ class AvailableRooms6048Controller @Inject() (
 
   private def backLink(using request: SessionRequest[AnyContent]): String =
     s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=${navigator.idx}"
-
-}

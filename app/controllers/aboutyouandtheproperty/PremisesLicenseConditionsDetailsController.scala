@@ -41,18 +41,18 @@ class PremisesLicenseConditionsDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PremisesLicenseConditionsDetails")
 
     Ok(
       premisesLicenseConditionsView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditionsDetails) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditionsDetails) match
           case Some(premisesLicenseInformation) =>
             premisesLicenceDetailsForm.fill(premisesLicenseInformation)
           case _                                => premisesLicenceDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -78,5 +78,3 @@ class PremisesLicenseConditionsDetailsController @Inject() (
       }
     )
   }
-
-}

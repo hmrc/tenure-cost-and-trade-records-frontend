@@ -42,17 +42,17 @@ class DoesTheRentPayableController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("DoesTheRentPayable")
 
     Ok(
       doesTheRentPayableView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match
           case Some(doesTheRentPayable) => doesTheRentPayableForm.fill(doesTheRentPayable)
           case _                        => doesTheRentPayableForm
-        },
+        ,
         request.sessionData.forType,
         request.sessionData.toSummary
       )
@@ -73,5 +73,3 @@ class DoesTheRentPayableController @Inject() (
       }
     )
   }
-
-}

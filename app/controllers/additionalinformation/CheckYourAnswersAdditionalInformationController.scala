@@ -42,15 +42,15 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       checkYourAnswersAdditionalInformationView(
-        request.sessionData.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) match {
+        request.sessionData.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) match
           case Some(answer) => checkYourAnswersAdditionalInformationForm.fill(answer)
           case _            => checkYourAnswersAdditionalInformationForm
-        },
+        ,
         request.sessionData
       )
     )
@@ -76,5 +76,3 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
         }
     )
   }
-
-}

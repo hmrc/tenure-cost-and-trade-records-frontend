@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object TenantDetailsForm {
+object TenantDetailsForm:
 
   val theForm: Form[TenantDetails] = Form[TenantDetails](
     mapping(
@@ -37,4 +37,3 @@ object TenantDetailsForm {
       Some((detail.name, detail.descriptionOfLetting))
     }
   )
-}

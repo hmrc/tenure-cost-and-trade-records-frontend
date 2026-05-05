@@ -26,7 +26,6 @@ object OccupierDetailForm:
   val theForm: Form[OccupierDetail] = Form(
     mapping(
       "name" -> nonEmptyText(errorMessage = "lettingHistory.occupierDetail.name.required")
-    )(name => OccupierDetail(name, address = None, rentalPeriod = None)) { obj =>
+    )(name => OccupierDetail(name, address = None, rentalPeriod = None)): obj =>
       OccupierDetail.unapply(obj).map(_._1)
-    }
   )

@@ -44,7 +44,7 @@ class EditFinancialYearEndDateController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("EditFinancialYearEndDate")
@@ -54,7 +54,7 @@ class EditFinancialYearEndDateController @Inject() (
       .filter(isTurnOverNonEmpty(_))
       .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val financialYearEnd: Seq[LocalDate] =
-          request.sessionData.forType match {
+          request.sessionData.forType match
             case FOR6020           =>
               aboutTheTradingHistory.turnoverSections6020.fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
             case FOR6030           => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
@@ -71,7 +71,6 @@ class EditFinancialYearEndDateController @Inject() (
                 .flatMap(_.turnoverSections6076)
                 .fold(Seq.empty[LocalDate])(_.map(_.financialYearEnd))
             case _                 => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
-          }
         val prefilledForm                    = financialYearEnd.lift(index).fold(financialYearEndDateForm)(financialYearEndDateForm.fill)
         Ok(
           editFinancialYearEndDateView(
@@ -349,5 +348,3 @@ class EditFinancialYearEndDateController @Inject() (
           .copy(turnoverSections6076 = Some(updatedTurnoverSections))
       )
     )
-
-}

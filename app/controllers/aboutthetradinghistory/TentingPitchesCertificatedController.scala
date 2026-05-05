@@ -44,7 +44,7 @@ class TentingPitchesCertificatedController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TentingPitchesCertificated")
@@ -53,10 +53,10 @@ class TentingPitchesCertificatedController @Inject() (
       view(
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.touringAndTentingPitches)
-          .flatMap(_.tentingPitchesCertificated) match {
+          .flatMap(_.tentingPitchesCertificated) match
           case Some(answers) => tentingPitchesCertificatedForm.fill(answers)
           case None          => tentingPitchesCertificatedForm
-        },
+        ,
         calculateBackLink
       )
     )
@@ -96,9 +96,6 @@ class TentingPitchesCertificatedController @Inject() (
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageForTentingPitches.url
       case _     => controllers.aboutthetradinghistory.routes.TentingPitchesTotalController.show().url
-
-    }
-}

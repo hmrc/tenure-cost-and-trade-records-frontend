@@ -43,7 +43,7 @@ class IncomeExpenditureSummary6076Controller @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IncomeExpenditureSummary6076")
@@ -53,11 +53,11 @@ class IncomeExpenditureSummary6076Controller @Inject() (
 
       Ok(
         view(
-          request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076) match {
+          request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076) match
             case Some(incomeExpenditureConfirmation) =>
               incomeExpenditureSummary6076Form.fill(incomeExpenditureConfirmation)
             case _                                   => incomeExpenditureSummary6076Form
-          },
+          ,
           request.sessionData.toSummary,
           entries
         )
@@ -72,7 +72,7 @@ class IncomeExpenditureSummary6076Controller @Inject() (
       continueOrSaveAsDraft[String](
         incomeExpenditureSummary6076Form,
         formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, entries)),
-        data => {
+        data =>
           val updatedSections = (entries zip turnoverSections6076).map { case (entry, previousSection) =>
             previousSection.copy(
               incomeAndExpenditureSummary = Some(
@@ -102,7 +102,6 @@ class IncomeExpenditureSummary6076Controller @Inject() (
           session
             .saveOrUpdate(updatedData)
             .map(_ => Redirect(navigator.nextPage(IncomeExpenditureSummary6076Id, updatedData).apply(updatedData)))
-        }
       )
     }
   }
@@ -156,5 +155,3 @@ class IncomeExpenditureSummary6076Controller @Inject() (
         netProfitOrLoss = netProfitOrLoss
       )
     }
-
-}

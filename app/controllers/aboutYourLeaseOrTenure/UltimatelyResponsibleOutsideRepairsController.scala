@@ -45,17 +45,17 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("UltimatelyResponsibleOutsideRepairs")
 
     Ok(
       ultimatelyResponsibleORView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleOutsideRepairs) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleOutsideRepairs) match
           case Some(ultimatelyResponsible) => ultimatelyResponsibleOutsideRepairsForm.fill(ultimatelyResponsible)
           case _                           => ultimatelyResponsibleOutsideRepairsForm
-        },
+        ,
         getBackLink
       )
     )
@@ -78,24 +78,17 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6020           =>
-        if (
-          request.sessionData.aboutLeaseOrAgreementPartOne
+        if request.sessionData.aboutLeaseOrAgreementPartOne
             .flatMap(_.includedInYourRentDetails)
             .exists(_.includedInYourRent contains IncludedInYourRentInformationVat)
-        ) {
+        then
           controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show().url
-        } else {
+        else
           controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
-        }
       case FOR6045 | FOR6046 =>
-        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildings) match {
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show().url
+        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildings) match
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show().url
-        }
       case _                 => controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController.show().url
-    }
-
-}

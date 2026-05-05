@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, list, mapping, text}
 import play.api.data.validation.Constraints.maxLength
 
-object DoesTheRentPayableForm {
+object DoesTheRentPayableForm:
 
   val doesTheRentPayableForm: Form[DoesTheRentPayable] = Form(
     mapping(
@@ -39,4 +39,3 @@ object DoesTheRentPayableForm {
         )
     )(DoesTheRentPayable.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

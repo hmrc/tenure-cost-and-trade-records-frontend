@@ -25,7 +25,7 @@ import util.AlphanumericPasswordGenerator
 /**
   * @author Yuriy Tumakha
   */
-object CustomUserPasswordForm {
+object CustomUserPasswordForm:
 
   private val passwordMinLength = AlphanumericPasswordGenerator.passwordLength
 
@@ -42,5 +42,3 @@ object CustomUserPasswordForm {
     )(CustomUserPassword.apply)(o => Some(Tuple.fromProductTyped(o)))
       .verifying("saveAsDraft.error.passwordsDontMatch", data => data.confirmPassword == data.password)
   )
-
-}

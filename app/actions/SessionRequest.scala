@@ -22,7 +22,7 @@ import play.api.mvc.{AnyContent, Request, WrappedRequest}
 case class SessionRequest[A](
   sessionData: Session,
   request: Request[A]
-) extends WrappedRequest[A](request) {}
+) extends WrappedRequest[A](request)
 
 object SessionRequest:
 

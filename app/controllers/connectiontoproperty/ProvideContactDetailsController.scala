@@ -45,17 +45,17 @@ class ProvideContactDetailsController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ProvideContactDetails")
 
     Ok(
       provideContactDetailsView(
-        request.sessionData.stillConnectedDetails.flatMap(_.provideContactDetails) match {
+        request.sessionData.stillConnectedDetails.flatMap(_.provideContactDetails) match
           case Some(customerDetails) => provideContactDetailsForm.fill(customerDetails)
           case _                     => provideContactDetailsForm
-        },
+        ,
         getBackLink,
         request.sessionData.toSummary
       )
@@ -86,21 +86,17 @@ class ProvideContactDetailsController @Inject() (
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" =>
         navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     =>
-        request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+        request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match
           case Some(AnswerYes) =>
-            if (request.sessionData.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty) {
+            if request.sessionData.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty then
               controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url
-            } else {
+            else
               controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController
                 .show(request.sessionData.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex)
                 .url
-            }
           case Some(AnswerNo)  => controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
           case _               => "Unknown connection to property back link"
-        }
-    }
-}

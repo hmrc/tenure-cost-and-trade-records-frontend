@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object AdvertisingRightLettingForm {
+object AdvertisingRightLettingForm:
 
   val theForm: Form[AdvertisingRightLetting] = Form(
     mapping(
@@ -44,4 +44,3 @@ object AdvertisingRightLettingForm {
       )
     )
   )
-}

@@ -44,7 +44,7 @@ class ProvideDetailsOfYourLeaseController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ProvideDetailsOfYourLease")
@@ -77,5 +77,3 @@ class ProvideDetailsOfYourLeaseController @Inject() (
     using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
-
-}

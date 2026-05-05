@@ -24,7 +24,7 @@ import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object AdditionalMiscForm {
+object AdditionalMiscForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[AdditionalMisc] =
     mapping(
@@ -43,7 +43,7 @@ object AdditionalMiscForm {
     years: Seq[String]
   )(using messages: Messages
   ): Form[(Seq[AdditionalMisc], AdditionalMiscDetails)] =
-    Form {
+    Form(
       tuple(
         "additionalMisc" -> additionalMiscMapping(years),
         "details"        -> mapping(
@@ -61,6 +61,4 @@ object AdditionalMiscForm {
           ).transform[Option[String]](Some(_), _.getOrElse(""))
         )(AdditionalMiscDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
       )
-    }
-
-}
+    )

@@ -60,14 +60,13 @@ class FinancialYearEndController @Inject() (
 
         Ok(
           financialYearEndView(
-            aboutTheTradingHistory.occupationAndAccountingInformation.flatMap(_.currentFinancialYearEnd) match {
+            aboutTheTradingHistory.occupationAndAccountingInformation.flatMap(_.currentFinancialYearEnd) match
               case Some(financialYear) =>
                 val yearEndChanged = aboutTheTradingHistory.occupationAndAccountingInformation
                   .flatMap(_.financialYearEndHasChanged)
                   .getOrElse(false)
                 accountingInformationForm.fill((financialYear, yearEndChanged))
               case _                   => accountingInformationForm
-            }
           )
         )
       }
@@ -94,7 +93,7 @@ class FinancialYearEndController @Inject() (
               oldOccupationAndAccountingInfo.currentFinancialYearEnd.contains(newCurrentFinancialYearEnd)
             val financialYearsUnchanged        = financialYearEndDates.map(_.getYear) == previousFinancialYears
 
-            val updatedData: Session = request.sessionData.forType match {
+            val updatedData: Session = request.sessionData.forType match
               case FOR6020           =>
                 buildUpdateData6020(
                   aboutTheTradingHistory,
@@ -136,7 +135,7 @@ class FinancialYearEndController @Inject() (
                   newFinancialYearEndSameAsOld,
                   financialYearsUnchanged
                 )
-            }
+
             repository
               .saveOrUpdate(updatedData)
               .map(_ =>

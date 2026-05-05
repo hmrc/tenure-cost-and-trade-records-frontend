@@ -50,10 +50,9 @@ class ConcessionTypeDetailsController @Inject() (
       requestedIndex   <- Some(index)
       allRecords       <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
       existingRecord   <- allRecords.lift(requestedIndex)
-      concessionRecord <- existingRecord match {
+      concessionRecord <- existingRecord match
                             case concession: ConcessionIncomeRecord => concession.businessDetails
                             case _                                  => None
-                          }
     } yield concessionRecord
 
     audit.sendChangeLink("ConcessionTypeDetails")

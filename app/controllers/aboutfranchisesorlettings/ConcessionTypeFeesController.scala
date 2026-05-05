@@ -43,7 +43,7 @@ class ConcessionTypeFeesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck(idx) { concession =>
@@ -136,5 +136,3 @@ class ConcessionTypeFeesController @Inject() (
 
   private def backLink(idx: Int): Call =
     controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(idx)
-
-}

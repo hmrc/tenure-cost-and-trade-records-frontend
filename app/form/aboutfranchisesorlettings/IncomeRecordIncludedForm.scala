@@ -23,7 +23,7 @@ import play.api.data.Forms.{list, single, text}
 /**
   * @author Yuriy Tumakha
   */
-object IncomeRecordIncludedForm {
+object IncomeRecordIncludedForm:
 
   val incomeRecordIncludedForm: Form[List[String]] = Form(
     single(
@@ -36,5 +36,3 @@ object IncomeRecordIncludedForm {
       )
     )
   )
-
-}

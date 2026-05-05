@@ -21,7 +21,7 @@ import play.api.data.Forms.*
 import play.api.data.format.Formats.*
 import play.api.i18n.Messages
 
-object MaxOfLettingsForm {
+object MaxOfLettingsForm:
 
   def maxOfLettingsForm(using messages: Messages): Form[Boolean] =
     Form(
@@ -31,4 +31,3 @@ object MaxOfLettingsForm {
             .verifying(messages("maxOf5Lettings.error"), value => value)
       )(x => x)(b => Some(b))
     )
-}

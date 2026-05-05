@@ -22,7 +22,7 @@ import play.api.data.*
 import play.api.data.Forms.*
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
-object TypeOfTenureForm {
+object TypeOfTenureForm:
 
   val typeOfTenureDetailsRequired: Constraint[TypeOfTenure] = Constraint("constraint.typeOfTenureDetailsRequired") {
     tot =>
@@ -42,4 +42,3 @@ object TypeOfTenureForm {
   val typeOfTenureForm: Form[TypeOfTenure] = Form(
     typeOfTenureMapping.verifying(typeOfTenureDetailsRequired)
   )
-}

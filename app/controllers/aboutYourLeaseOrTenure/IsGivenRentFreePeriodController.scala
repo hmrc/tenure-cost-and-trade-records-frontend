@@ -48,7 +48,7 @@ class IsGivenRentFreePeriodController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsGivenRentFreePeriod")
@@ -65,13 +65,12 @@ class IsGivenRentFreePeriodController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       isGivenRentFreePeriodForm,
       formWithErrors => BadRequest(isGivenRentFreePeriodView(formWithErrors)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartFour(_.copy(isGivenRentFreePeriod = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(IsGivenRentFreePeriodId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
@@ -79,5 +78,3 @@ class IsGivenRentFreePeriodController @Inject() (
     using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartFour] = request.sessionData.aboutLeaseOrAgreementPartFour
-
-}

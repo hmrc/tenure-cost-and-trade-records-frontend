@@ -48,7 +48,7 @@ class AreYouVATRegisteredController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AreYouVATRegistered")
@@ -81,6 +81,5 @@ class AreYouVATRegisteredController @Inject() (
   private def tradingHistoryPartOne(
     using
     request: SessionRequest[AnyContent]
-  ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
-
-}
+  ): Option[AboutTheTradingHistoryPartOne] =
+    request.sessionData.aboutTheTradingHistoryPartOne

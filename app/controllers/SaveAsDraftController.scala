@@ -54,18 +54,17 @@ class SaveAsDraftController @Inject() (
   cc: MessagesControllerComponents
 )(using ec: ExecutionContext
 ) extends FrontendController(cc)
-  with I18nSupport {
+  with I18nSupport:
 
   private val saveForDays = 90
 
   def customPassword(exitPath: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
     implicit request =>
       val session = request.sessionData
-      if (session.saveAsDraftPassword.isDefined) {
+      if session.saveAsDraftPassword.isDefined then
         saveSubmissionDraft(session, exitPath)
-      } else {
+      else
         Ok(customPasswordSaveAsDraftView(customUserPasswordForm, expiryDate, exitPath, request.sessionData.toSummary))
-      }
   }
 
   def saveAsDraft(exitPath: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -154,5 +153,3 @@ class SaveAsDraftController @Inject() (
     val generatedPassword = request.session.get("generatedPassword").getOrElse("")
     Ok(sessionTimeoutView(generatedPassword, expiryDate))
   }
-
-}

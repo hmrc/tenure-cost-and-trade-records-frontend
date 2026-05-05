@@ -39,15 +39,15 @@ class WhatYouWillNeedController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       whatYouWillNeedView(
-        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.whatYouWillNeed) match {
+        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.whatYouWillNeed) match
           case Some(whatYouWillNeed) => whatYouWillNeedForm.fill(whatYouWillNeed)
           case _                     => whatYouWillNeedForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -63,12 +63,10 @@ class WhatYouWillNeedController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistoryPartOne(_.copy(whatYouWillNeed = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(WhatYouWillNeedPageId, updatedData).apply(updatedData))
         }
-      }
     )
   }
-}

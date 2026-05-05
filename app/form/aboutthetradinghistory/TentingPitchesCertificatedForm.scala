@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object TentingPitchesCertificatedForm {
+object TentingPitchesCertificatedForm:
 
   val tentingPitchesCertificatedForm: Form[AnswersYesNo] =
     Form(
@@ -29,4 +29,3 @@ object TentingPitchesCertificatedForm {
         "tentingPitchesCertificated" -> createYesNoType("error.tentingPitchesCertificated.missing")
       )
     )
-}

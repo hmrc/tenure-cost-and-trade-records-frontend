@@ -36,9 +36,9 @@ object LoginToBackend:
     pc: Postcode
   )(using ec: ExecutionContext
   ): Future[LoginResult] =
-    for {
+    for
       lr <- v(rn, pc)
-    } yield ned(
+    yield ned(
       lr.forAuthToken,
       lr.forType,
       lr.address,

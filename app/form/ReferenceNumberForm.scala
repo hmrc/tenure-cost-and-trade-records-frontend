@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 
-object ReferenceNumberForm {
+object ReferenceNumberForm:
 
   val theForm: Form[ReferenceNumber] = Form[ReferenceNumber](
     mapping(
@@ -31,4 +31,3 @@ object ReferenceNumberForm {
         )
     )(ReferenceNumber.apply)(ReferenceNumber.unapply)
   )
-}

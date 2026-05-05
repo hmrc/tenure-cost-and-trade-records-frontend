@@ -45,18 +45,18 @@ class RentIncludeStructuresBuildingsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeStructuresBuildings")
 
     Ok(
       rentIncludeStructuresBuildingsView(
-        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildings) match {
+        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildings) match
           case Some(rentIncludeStructuresBuildings) =>
             rentIncludeStructuresBuildingsForm.fill(rentIncludeStructuresBuildings)
           case _                                    => rentIncludeStructuresBuildingsForm
-        },
+        ,
         getBackLink
       )
     )
@@ -76,9 +76,6 @@ class RentIncludeStructuresBuildingsController @Inject() (
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match {
+    request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match
       case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show().url
       case _               => controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController.show().url
-    }
-
-}

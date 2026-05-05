@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 
-object AddAnotherLowMarginFuelCardsDetailsForm {
+object AddAnotherLowMarginFuelCardsDetailsForm:
 
   val theForm: Form[AnswersYesNo] = Form(
     mapping(
@@ -32,4 +32,3 @@ object AddAnotherLowMarginFuelCardsDetailsForm {
         .transform[AnswersYesNo](_.get, Some(_))
     )(x => x)(b => Some(b))
   )
-}

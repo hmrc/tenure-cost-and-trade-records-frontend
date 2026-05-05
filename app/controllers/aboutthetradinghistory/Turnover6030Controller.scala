@@ -42,7 +42,7 @@ class Turnover6030Controller @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("Turnover6030")
@@ -95,4 +95,3 @@ class Turnover6030Controller @Inject() (
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) =
     aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
-}

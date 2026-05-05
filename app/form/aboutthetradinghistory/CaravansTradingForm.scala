@@ -28,7 +28,7 @@ import play.api.i18n.Messages
   *
   * @author Yuriy Tumakha
   */
-object CaravansTradingForm {
+object CaravansTradingForm:
 
   def caravansTradingForm(
     years: Seq[String],
@@ -36,9 +36,9 @@ object CaravansTradingForm {
     lettingType: CaravanLettingType
   )(using messages: Messages
   ): Form[Seq[CaravansTrading6045]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year, s"caravans.$unitType.$lettingType"))
-    }
+    )
 
   private def columnMapping(
     year: String,
@@ -50,5 +50,3 @@ object CaravansTradingForm {
       "grossReceipts" -> turnoverSalesMappingWithYear(s"turnover.6045.$combinedKey.grossReceipts", year),
       "vans"          -> nonNegativeNumberWithYear(s"$combinedKey.vans", year)
     )(CaravansTrading6045.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-}

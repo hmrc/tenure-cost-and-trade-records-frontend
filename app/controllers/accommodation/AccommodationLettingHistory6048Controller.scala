@@ -47,7 +47,7 @@ class AccommodationLettingHistory6048Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val yearEndDates = finYearEndDates
@@ -127,5 +127,3 @@ class AccommodationLettingHistory6048Controller @Inject() (
     request: SessionRequest[AnyContent]
   ): String =
     s"${controllers.accommodation.routes.AvailableRooms6048Controller.show.url}?idx=${navigator.idx}"
-
-}

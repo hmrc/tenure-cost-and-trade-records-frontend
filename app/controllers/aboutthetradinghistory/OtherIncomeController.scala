@@ -48,7 +48,7 @@ class OtherIncomeController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OtherIncome")
@@ -116,22 +116,19 @@ class OtherIncomeController @Inject() (
 
     intermittentCheck match
       case Some(Intermittent) =>
-        navigator.from match {
+        navigator.from match
           case "CYA" =>
             controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
           case "IES" =>
             controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
           case _     =>
             aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show().url
-        }
       case Some(Baseload)     =>
-        navigator.from match {
+        navigator.from match
           case "CYA" =>
             controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
           case "IES" =>
             controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
           case _     =>
             aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
-        }
       case _                  => controllers.routes.TaskListController.show.url
-}

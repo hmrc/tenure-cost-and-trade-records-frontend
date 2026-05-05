@@ -43,17 +43,17 @@ class PlantAndTechnologyController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with ReadOnlySupport
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PlantAndTechnology")
 
     Ok(
       view(
-        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology) match {
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology) match
           case Some(data) => plantAndTechnologyForm.fill(data)
           case _          => plantAndTechnologyForm
-        },
+        ,
         calculateBackLink,
         request.sessionData.toSummary,
         isReadOnly
@@ -83,17 +83,14 @@ class PlantAndTechnologyController @Inject() (
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#how-is-used"
       case _     =>
         request.sessionData.aboutYouAndTheProperty
-          .flatMap(_.threeYearsConstructed) match {
+          .flatMap(_.threeYearsConstructed) match
           case Some(AnswerYes) =>
             controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show().url
           case Some(AnswerNo)  =>
             controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
           case _               => controllers.routes.TaskListController.show.url
-        }
-    }
-}

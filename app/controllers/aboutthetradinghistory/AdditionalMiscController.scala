@@ -42,7 +42,7 @@ class AdditionalMiscController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AdditionalMisc")
@@ -113,11 +113,8 @@ class AdditionalMiscController @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show().url
       case _     =>
         aboutthetradinghistory.routes.AdditionalAmusementsController.show().url
-    }
-
-}

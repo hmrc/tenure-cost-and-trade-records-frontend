@@ -28,7 +28,7 @@ import scala.concurrent.{ExecutionContext, Future}
 case class WithSessionRefiner @Inject() (
   @Named("session") sessionRepository: SessionRepo
 )(using override val executionContext: ExecutionContext
-) extends ActionRefiner[Request, SessionRequest] {
+) extends ActionRefiner[Request, SessionRequest]:
 
   implicit def hc(using request: Request[?]): HeaderCarrier =
     HeaderCarrierConverter.fromRequestAndSession(request, request.session)
@@ -37,6 +37,5 @@ case class WithSessionRefiner @Inject() (
     sessionRepository.get(using hc(using request)).map {
       case Some(s) => Right(actions.SessionRequest(sessionData = s, request = request))
       case None    => Left(TemporaryRedirect(controllers.routes.LoginController.show.url))
-    }
 
-}
+    }

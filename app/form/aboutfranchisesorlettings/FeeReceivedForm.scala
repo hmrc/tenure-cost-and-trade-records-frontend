@@ -27,7 +27,7 @@ import java.time.LocalDate
 /**
   * @author Yuriy Tumakha
   */
-object FeeReceivedForm {
+object FeeReceivedForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[FeeReceivedPerYear] = mapping(
     "financialYearEnd"         -> ignored(LocalDate.EPOCH),
@@ -45,12 +45,10 @@ object FeeReceivedForm {
     years: Seq[String]
   )(using messages: Messages
   ): Form[FeeReceived] =
-    Form {
+    Form(
       mapping(
         "feeReceivedPerYear"    -> feeReceivedPerYearSeq(years),
         "feeCalculationDetails" -> optional(text(maxLength = 2000))
         // .verifying(messages("error.feeReceived.feeCalculationDetails.required"), _.nonEmpty)
       )(FeeReceived.apply)(o => Some(Tuple.fromProductTyped(o)))
-    }
-
-}
+    )

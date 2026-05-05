@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 import java.time.LocalDate
 
-object TotalPayrollCostForm {
+object TotalPayrollCostForm:
 
   private def totalPayrollCostMapping(year: String)(using messages: Messages): Mapping[TotalPayrollCost] = mapping(
     "financial-year-end"     -> ignored(LocalDate.EPOCH),
@@ -33,8 +33,6 @@ object TotalPayrollCostForm {
   )(TotalPayrollCost.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def totalPayrollCostForm(years: Seq[String])(using messages: Messages): Form[Seq[TotalPayrollCost]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"totalPayrollCosts[$idx]" -> totalPayrollCostMapping(year))
-    }
-
-}
+    )

@@ -26,7 +26,7 @@ import play.api.data.Forms.single
   *
   * @author Yuriy Tumakha
   */
-object StaticCaravansForm {
+object StaticCaravansForm:
 
   val staticCaravansForm: Form[AnswersYesNo] =
     Form(
@@ -36,5 +36,3 @@ object StaticCaravansForm {
         )
       )
     )
-
-}

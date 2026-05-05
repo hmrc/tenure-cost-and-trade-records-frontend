@@ -43,17 +43,17 @@ class LeaseSurrenderedEarlyController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("LeaseSurrenderedEarly")
 
     Ok(
       view(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.leaseSurrenderedEarly) match {
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.leaseSurrenderedEarly) match
           case Some(data) => leaseSurrenderedEarlyForm.fill(data)
           case _          => leaseSurrenderedEarlyForm
-        },
+        ,
         calculateBackLink(using request),
         request.sessionData.toSummary
       )
@@ -76,10 +76,6 @@ class LeaseSurrenderedEarlyController @Inject() (
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
-      case Some(AnswerYes) =>
-        controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
+    request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
       case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-    }
-
-}

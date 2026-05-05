@@ -22,7 +22,7 @@ import uk.gov.hmrc.crypto.{Crypted, Decrypter, Encrypter, PlainBytes, PlainConte
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class MongoCrypto @Inject() (configuration: Configuration) extends Encrypter with Decrypter {
+class MongoCrypto @Inject() (configuration: Configuration) extends Encrypter with Decrypter:
 
   private val symmetricCrypto: Encrypter & Decrypter =
     SymmetricCryptoFactory.aesGcmCryptoFromConfig("crypto", configuration.underlying)
@@ -33,4 +33,3 @@ class MongoCrypto @Inject() (configuration: Configuration) extends Encrypter wit
 
   override def decryptAsBytes(reversiblyEncrypted: Crypted): PlainBytes =
     symmetricCrypto.decryptAsBytes(reversiblyEncrypted)
-}

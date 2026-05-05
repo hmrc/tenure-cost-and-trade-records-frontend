@@ -24,7 +24,7 @@ import play.api.data.Forms.mapping
 /**
   * @author Yuriy Tumakha
   */
-object RentedSeparatelyParkingSpacesForm {
+object RentedSeparatelyParkingSpacesForm:
 
   val rentedSeparatelyParkingSpacesForm: Form[CarParkingSpaces] =
     Form(
@@ -34,5 +34,3 @@ object RentedSeparatelyParkingSpacesForm {
         "garages"       -> nonNegativeNumber("rentedSeparately.garages", "0")
       )(CarParkingSpaces.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
-
-}

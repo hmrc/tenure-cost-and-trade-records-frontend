@@ -71,10 +71,9 @@ class MaxNumberReachedController @Inject() (
 
   private def hasEvenMoreEntries(kind: String)(using request: SessionRequest[AnyContent]): Option[Boolean] =
     request.sessionData.lettingHistory.flatMap { lettingHistory =>
-      kind match {
+      kind match
         case "permanentResidents" => lettingHistory.mayHaveMorePermanentResidents
         case "completedLettings"  => lettingHistory.mayHaveMoreCompletedLettings
         case "onlineAdvertising"  => lettingHistory.mayHaveMoreOnlineAdvertising
         case _                    => None
-      }
     }

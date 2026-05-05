@@ -42,17 +42,17 @@ class UltimatelyResponsibleInsideRepairsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("UltimatelyResponsibleInsideRepairs")
 
     Ok(
       ultimatelyResponsibleIRView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleInsideRepairs) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleInsideRepairs) match
           case Some(ultimatelyResponsibleIR) => ultimatelyResponsibleInsideRepairsForm.fill(ultimatelyResponsibleIR)
           case _                             => ultimatelyResponsibleInsideRepairsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -62,16 +62,12 @@ class UltimatelyResponsibleInsideRepairsController @Inject() (
     continueOrSaveAsDraft[UltimatelyResponsibleInsideRepairs](
       ultimatelyResponsibleInsideRepairsForm,
       formWithErrors => BadRequest(ultimatelyResponsibleIRView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleInsideRepairs = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ =>
             Redirect(navigator.nextPage(UltimatelyResponsibleInsideRepairsPageId, updatedData).apply(updatedData))
           )
-
-      }
     )
   }
-
-}

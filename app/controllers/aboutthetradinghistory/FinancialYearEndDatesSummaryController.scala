@@ -43,15 +43,15 @@ class FinancialYearEndDatesSummaryController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     Ok(
       financialYearEndDateSummaryView(
-        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.isFinancialYearEndDatesCorrect) match {
+        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.isFinancialYearEndDatesCorrect) match
           case Some(x) => financialYearEndDatesSummaryForm.fill(x)
           case _       => financialYearEndDatesSummaryForm
-        },
+        ,
         getBackLink
       )
     )
@@ -117,9 +117,6 @@ class FinancialYearEndDatesSummaryController @Inject() (
     }
 
   private def getBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     => controllers.aboutthetradinghistory.routes.FinancialYearEndController.show().url
-    }
-}

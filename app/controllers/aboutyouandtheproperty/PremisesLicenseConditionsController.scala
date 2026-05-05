@@ -46,17 +46,17 @@ class PremisesLicenseConditionsController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PremisesLicenseConditions")
 
     Ok(
       premisesLicenseView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match
           case Some(premisesLicense) => premisesLicenseConditionsForm.fill(premisesLicense)
           case _                     => premisesLicenseConditionsForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -84,9 +84,6 @@ class PremisesLicenseConditionsController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutYouAndTheProperty.flatMap(_.licensableActivities) match {
+    answers.aboutYouAndTheProperty.flatMap(_.licensableActivities) match
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show().url
       case _               => controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
-    }
-
-}

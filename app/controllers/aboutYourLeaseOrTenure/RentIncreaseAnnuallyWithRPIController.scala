@@ -46,18 +46,18 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncreaseAnnuallyWithRPI")
 
     Ok(
       rentIncreaseAnnuallyWithRPIView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncreasedAnnuallyWithRPIDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncreasedAnnuallyWithRPIDetails) match
           case Some(rentIncreasedAnnuallyWithRPIDetails) =>
             rentIncreasedAnnuallyWithRPIDetailsForm.fill(rentIncreasedAnnuallyWithRPIDetails)
           case None                                      => rentIncreasedAnnuallyWithRPIDetailsForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -86,8 +86,6 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match
       case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
       case _               => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
-    }
-}

@@ -49,7 +49,7 @@ class CaravansAnnualPitchFeeController @Inject() (
   mcc: MessagesControllerComponents
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   implicit val ec: ExecutionContext = mcc.executionContext
 
@@ -103,5 +103,3 @@ class CaravansAnnualPitchFeeController @Inject() (
       .filter(_ => navigator.from == "CYA")
       .getOrElse(routes.CaravansPerServiceController.show())
       .url
-
-}

@@ -46,15 +46,15 @@ class TypeOfIncomeController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingIncomeRecords                 =
+    val existingIncomeRecords =
       request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
-    val updatedIndex                          = index match {
+    val updatedIndex          = index match
       case Some(idx) => idx
       case None      => existingIncomeRecords.length
-    }
+
     val existingDetails: Option[TypeOfIncome] =
       existingIncomeRecords.lift(updatedIndex).map(_.sourceType)
     audit.sendChangeLink("TypeOfIncome")
@@ -176,9 +176,6 @@ class TypeOfIncomeController @Inject() (
   private def forType(using request: SessionRequest[AnyContent]): ForType = request.sessionData.forType
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
+    navigator.from match
+      case "CYA" => controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       case _     => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
-    }
-}

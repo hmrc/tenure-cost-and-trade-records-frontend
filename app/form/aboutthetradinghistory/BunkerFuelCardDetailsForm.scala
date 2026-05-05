@@ -24,7 +24,7 @@ import play.api.data.{Form, Mapping}
 
 import scala.util.Try
 
-object BunkerFuelCardDetailsForm {
+object BunkerFuelCardDetailsForm:
 
   private val positiveBigDecimal: Constraint[BigDecimal] = Constraint("constraint.positive") { value =>
     if value >= 0 then Valid else Invalid("error.handlingFee.mustBeNonNegative")
@@ -45,4 +45,3 @@ object BunkerFuelCardDetailsForm {
         .verifying(positiveBigDecimal)
     )(BunkerFuelCardDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

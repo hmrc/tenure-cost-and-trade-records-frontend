@@ -46,7 +46,7 @@ class FinancialYearEndDatesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("FinancialYearEndDates")
@@ -57,10 +57,9 @@ class FinancialYearEndDatesController @Inject() (
       .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val occupationAndAccounting          = aboutTheTradingHistory.occupationAndAccountingInformation.get
         val financialYearEnd: Seq[LocalDate] =
-          request.sessionData.forType match {
+          request.sessionData.forType match
             case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
             case _       => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
-          }
         Ok(
           financialYearEndDatesView(
             financialYearEndDatesForm().fill(financialYearEnd),
@@ -177,5 +176,3 @@ class FinancialYearEndDatesController @Inject() (
       )
     )
     updatedData
-
-}

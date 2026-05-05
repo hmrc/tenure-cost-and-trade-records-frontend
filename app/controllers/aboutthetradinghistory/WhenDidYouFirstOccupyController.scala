@@ -48,17 +48,17 @@ class WhenDidYouFirstOccupyController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("AboutYourTradingHistory")
     Ok(
       theView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation) match {
+        request.sessionData.aboutTheTradingHistory.flatMap(_.occupationAndAccountingInformation) match
           case Some(occupationAccounting) =>
             occupationalInformationForm.fill(occupationAccounting.firstOccupy)
           case _                          => occupationalInformationForm
-        },
+        ,
         getBackLink(request.sessionData)
       )
     )
@@ -99,10 +99,7 @@ class WhenDidYouFirstOccupyController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.forType match {
+    answers.forType match
       case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6045 | FOR6046 | FOR6076 =>
         controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url
       case FOR6048                                                                                 => controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url
-    }
-
-}

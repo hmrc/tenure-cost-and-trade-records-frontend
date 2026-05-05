@@ -25,7 +25,7 @@ import play.api.i18n.Messages
 /**
   * @author Yuriy Tumakha
   */
-object Income6048Form {
+object Income6048Form:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[(Int, Income6048)] =
     tuple(
@@ -41,8 +41,6 @@ object Income6048Form {
     years: Seq[String]
   )(using messages: Messages
   ): Form[Seq[(Int, Income6048)]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

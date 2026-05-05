@@ -26,7 +26,7 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 import scala.util.Try
 
-object TurnoverForm6030 {
+object TurnoverForm6030:
 
   def turnoverForm6030(
     expectedNumberOfFinancialYears: Int,
@@ -84,11 +84,9 @@ object TurnoverForm6030 {
   private def nonNegativeNumberConstraint(year: String): Constraint[Option[String]] =
     Constraint("constraints.nonNegative") {
       case Some(text) =>
-        Try(text.toDouble).toOption match {
+        Try(text.toDouble).toOption match
           case Some(num) if num >= 0 => Valid
           case Some(_)               => Invalid(ValidationError("error.totalVisitorNumber.negative", year))
           case None                  => Invalid(ValidationError("error.totalVisitorNumber.nonNumeric", year))
-        }
       case None       => Invalid(ValidationError("error.totalVisitorNumber.required", year))
     }
-}

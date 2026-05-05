@@ -43,7 +43,7 @@ class TypeOfLettingController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[TypeOfLetting] = for {
@@ -140,17 +140,13 @@ class TypeOfLettingController @Inject() (
     }
 
   private def getBackLink(idx: Option[Int])(using request: SessionRequest[AnyContent]): String =
-    if (navigator.from == "CYA") {
+    if navigator.from == "CYA" then
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    } else {
-      idx match {
+    else
+      idx match
         case Some(index) =>
-          if (index > 0)
+          if index > 0 then
             controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(index - 1).url
-          else {
+          else
             controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
-          }
         case _           => controllers.routes.TaskListController.show.url
-      }
-    }
-}

@@ -47,15 +47,13 @@ object MappingSupport:
 
   extension [A](seq: Seq[A])
 
-    def toTuple2: Option[(A, A)] = seq match {
+    def toTuple2: Option[(A, A)] = seq match
       case Seq(a, b) => Some((a, b))
       case _         => None
-    }
 
-    def toTuple3: Option[(A, A, A)] = seq match {
+    def toTuple3: Option[(A, A, A)] = seq match
       case Seq(a, b, c) => Some((a, b, c))
       case _            => None
-    }
 
   val typeOfLettingMapping: Mapping[TypeOfLetting] = enumMappingRequired(TypeOfLetting, Errors.typeOfLetting)
   val typeOfIncomeMapping: Mapping[TypeOfIncome]   = enumMappingRequired(TypeOfIncome, Errors.typeOfIncome)
@@ -318,9 +316,8 @@ object MappingSupport:
   ): Mapping[Seq[T]] =
     val yearsMapping: Seq[(String, Mapping[T])] = financialYears.take(3).zipWithIndex.map(mappingPerYearAndIdx.tupled)
 
-    yearsMapping match {
+    yearsMapping match
       case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
       case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
       case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
       case _            => throw IllegalArgumentException("Financial years sequence is empty")
-    }

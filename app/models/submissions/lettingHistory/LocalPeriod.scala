@@ -25,11 +25,10 @@ case class LocalPeriod(
   toDate: LocalDate
 ):
 
-  override def equals(that: Any): Boolean = that match {
+  override def equals(that: Any): Boolean = that match
     case LocalPeriod(fromDate, toDate) =>
       this.fromDate == fromDate && this.toDate == toDate
     case _                             => false
-  }
 
   def overlapsWith(that: LocalPeriod): Boolean =
     this.fromDate.isBefore(that.toDate) && this.toDate.isAfter(that.fromDate)

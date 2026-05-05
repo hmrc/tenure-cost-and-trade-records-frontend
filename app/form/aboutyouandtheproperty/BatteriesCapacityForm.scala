@@ -20,7 +20,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.nonEmpty
 
-object BatteriesCapacityForm {
+object BatteriesCapacityForm:
 
   val batteriesCapacityForm: Form[String] = Form(
     single(
@@ -29,4 +29,3 @@ object BatteriesCapacityForm {
       )
     )
   )
-}

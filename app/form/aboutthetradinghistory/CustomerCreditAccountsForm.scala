@@ -25,12 +25,12 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 import scala.util.Try
 
-object CustomerCreditAccountsForm {
+object CustomerCreditAccountsForm:
 
   def customerCreditAccountsForm(years: Seq[String])(using messages: Messages): Form[Seq[CustomerCreditAccounts]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => "" -> customerCreditAccountsMapping(year, idx))
-    }
+    )
 
   private def customerCreditAccountsMapping(
     year: String,
@@ -51,4 +51,3 @@ object CustomerCreditAccountsForm {
           .verifying(messages("error.percentage", year), _ <= 100)
       ).verifying(messages("error.customerCreditAcc.required", year), _.isDefined)
     )(CustomerCreditAccounts.apply)(o => Some(Tuple.fromProductTyped(o)))
-}

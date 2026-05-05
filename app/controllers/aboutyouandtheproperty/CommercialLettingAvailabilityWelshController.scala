@@ -43,7 +43,7 @@ class CommercialLettingAvailabilityWelshController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CommercialLettingAvailabilityWelsh")
@@ -53,11 +53,11 @@ class CommercialLettingAvailabilityWelshController @Inject() (
       .fold(Redirect(routes.CommercialLettingQuestionController.show())) { data =>
         Ok(
           view(
-            request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetAvailabilityWelsh) match {
+            request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetAvailabilityWelsh) match
               case Some(lettingAvailability) =>
                 commercialLettingAvailabilityWelshForm(years(data)).fill(lettingAvailability)
               case _                         => commercialLettingAvailabilityWelshForm(years(data))
-            },
+            ,
             calculateBackLink
           )
         )
@@ -101,9 +101,6 @@ class CommercialLettingAvailabilityWelshController @Inject() (
     data.financialEndYearDates.getOrElse(Seq.empty)
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show().url
-    }
-
-}

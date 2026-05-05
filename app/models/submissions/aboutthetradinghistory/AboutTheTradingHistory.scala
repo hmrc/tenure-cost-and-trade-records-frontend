@@ -52,7 +52,7 @@ case class AboutTheTradingHistory(
   checkYourAnswersAboutTheTradingHistory: Option[AnswersYesNo] = None
 )
 
-object AboutTheTradingHistory {
+object AboutTheTradingHistory:
 
   implicit val format: OFormat[AboutTheTradingHistory] = Json.format
 
@@ -62,10 +62,9 @@ object AboutTheTradingHistory {
   ): Session =
     val currentAboutTheTradingHistory = sessionRequest.sessionData.aboutTheTradingHistory
 
-    val updateAboutTheTradingHistory = currentAboutTheTradingHistory match {
+    val updateAboutTheTradingHistory = currentAboutTheTradingHistory match
       case Some(_) => sessionRequest.sessionData.aboutTheTradingHistory.map(copy)
       case _       => Some(copy(AboutTheTradingHistory()))
-    }
 
     sessionRequest.sessionData.copy(aboutTheTradingHistory = updateAboutTheTradingHistory)
 
@@ -73,7 +72,7 @@ object AboutTheTradingHistory {
     TurnoverSection6020 | TurnoverSection6030 | TurnoverSection6045 | TurnoverSection6048 | TurnoverSection6076 |
       TurnoverSection
 
-  class WrappedTurnoverSection(wrapped: TurnoverSectionUnion) {
+  class WrappedTurnoverSection(wrapped: TurnoverSectionUnion):
 
     def financialYearEnd: LocalDate = wrapped match
       case TurnoverSection6020(financialYearEnd, _, _, _, _, _, _)                               => financialYearEnd
@@ -82,5 +81,3 @@ object AboutTheTradingHistory {
       case TurnoverSection6048(financialYearEnd, _, _, _, _, _, _)                               => financialYearEnd
       case TurnoverSection6076(financialYearEnd, _, _, _, _, _, _, _, _, _, _, _, _)             => financialYearEnd
       case TurnoverSection(financialYearEnd, _, _, _, _, _, _)                                   => financialYearEnd
-  }
-}

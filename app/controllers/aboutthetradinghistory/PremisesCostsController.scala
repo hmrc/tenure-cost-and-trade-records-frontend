@@ -42,7 +42,7 @@ class PremisesCostsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PremisesCosts")
@@ -98,13 +98,10 @@ class PremisesCostsController @Inject() (
       }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" =>
         aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "IES" =>
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       case _     =>
         aboutthetradinghistory.routes.StaffCostsController.show().url
-    }
-
-}

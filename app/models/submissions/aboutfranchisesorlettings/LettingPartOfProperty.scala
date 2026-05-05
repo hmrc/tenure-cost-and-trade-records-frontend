@@ -29,13 +29,12 @@ sealed trait LettingPartOfProperty:
 
 object LettingPartOfProperty:
 
-  implicit val lettingReads: Reads[LettingPartOfProperty] = (__ \ "type").read[String].flatMap {
+  implicit val lettingReads: Reads[LettingPartOfProperty] = (__ \ "type").read[String].flatMap:
     case "ATMLetting"              => summon[Reads[ATMLetting]].map(identity)
     case "TelecomMastLetting"      => summon[Reads[TelecomMastLetting]].map(identity)
     case "AdvertisingRightLetting" => summon[Reads[AdvertisingRightLetting]].map(identity)
     case "OtherLetting"            => summon[Reads[OtherLetting]].map(identity)
     case other                     => Reads(_ => JsError(s"Unknown type: $other"))
-  }
 
   implicit val lettingWrites: Writes[LettingPartOfProperty] = Writes {
     case atmLetting: ATMLetting                           =>

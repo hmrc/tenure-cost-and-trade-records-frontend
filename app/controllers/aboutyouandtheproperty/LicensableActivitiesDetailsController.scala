@@ -41,18 +41,18 @@ class LicensableActivitiesDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("LicensableActivitiesDetails")
 
     Ok(
       licensableActivitiesDetailsView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.licensableActivitiesInformationDetails) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.licensableActivitiesInformationDetails) match
           case Some(licensableActivitiesInformation) =>
             licensableActivitiesDetailsForm.fill(licensableActivitiesInformation)
           case _                                     => licensableActivitiesDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -68,14 +68,10 @@ class LicensableActivitiesDetailsController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(licensableActivitiesInformationDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(LicensableActivityDetailsPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

@@ -45,7 +45,7 @@ class TentingPitchesOnSiteController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TentingPitchesOnSite")
@@ -54,10 +54,10 @@ class TentingPitchesOnSiteController @Inject() (
       view(
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.touringAndTentingPitches)
-          .flatMap(_.tentingPitchesOnSite) match {
+          .flatMap(_.tentingPitchesOnSite) match
           case Some(answers) => tentingPitchesOnSiteForm.fill(answers)
           case None          => tentingPitchesOnSiteForm
-        },
+        ,
         calculateBackLink
       )
     )
@@ -73,7 +73,7 @@ class TentingPitchesOnSiteController @Inject() (
             calculateBackLink
           )
         ),
-      data => {
+      data =>
         val previousAnswer = request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.touringAndTentingPitches)
           .flatMap(_.tentingPitchesOnSite)
@@ -83,7 +83,7 @@ class TentingPitchesOnSiteController @Inject() (
         }
 
         session.saveOrUpdate(updatedSession).map { _ =>
-          val nextPage = (previousAnswer, data, navigator.from) match {
+          val nextPage = (previousAnswer, data, navigator.from) match
             case (Some(AnswerYes), AnswerYes, "CYA") =>
               controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show()
             case (Some(AnswerNo), AnswerYes, _)      =>
@@ -96,19 +96,14 @@ class TentingPitchesOnSiteController @Inject() (
                   navigator.cyaPageForTentingPitches
                 )
                 .apply(updatedSession)
-          }
 
           Redirect(nextPage)
         }
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageForTentingPitches.url
       case "TL"  => controllers.routes.TaskListController.show.url + "#tenting-pitches-on-site"
       case _     => controllers.routes.TaskListController.show.url
-
-    }
-}

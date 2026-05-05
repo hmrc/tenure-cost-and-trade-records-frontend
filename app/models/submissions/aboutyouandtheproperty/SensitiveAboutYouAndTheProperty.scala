@@ -44,7 +44,7 @@ case class SensitiveAboutYouAndTheProperty(
   renewablesPlant: Option[RenewablesPlantType] = None,
   threeYearsConstructed: Option[AnswersYesNo] = None,
   costsBreakDown: Option[String] = None
-) extends Sensitive[AboutYouAndTheProperty] {
+) extends Sensitive[AboutYouAndTheProperty]:
 
   override def decryptedValue: AboutYouAndTheProperty = AboutYouAndTheProperty(
     customerDetails.map(_.decryptedValue),
@@ -70,9 +70,8 @@ case class SensitiveAboutYouAndTheProperty(
     threeYearsConstructed,
     costsBreakDown
   )
-}
 
-object SensitiveAboutYouAndTheProperty {
+object SensitiveAboutYouAndTheProperty:
 
   implicit def format(using crypto: MongoCrypto): OFormat[SensitiveAboutYouAndTheProperty] = Json.format
 
@@ -101,4 +100,3 @@ object SensitiveAboutYouAndTheProperty {
       aboutYouAndTheProperty.threeYearsConstructed,
       aboutYouAndTheProperty.costsBreakdown
     )
-}

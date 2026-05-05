@@ -42,15 +42,16 @@ class BunkerFuelCardDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingBunkerFuelCardDetails: Option[BunkerFuelCardDetails] = for {
-      requestedIndex      <- index
-      existingBFCDetails  <-
-        request.sessionData.aboutTheTradingHistory.map(_.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty))
-      requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
-    } yield requestedBFCDetails.bunkerFuelCardDetails
+    val existingBunkerFuelCardDetails: Option[BunkerFuelCardDetails] =
+      for
+        requestedIndex      <- index
+        existingBFCDetails  <-
+          request.sessionData.aboutTheTradingHistory.map(_.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty))
+        requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
+      yield requestedBFCDetails.bunkerFuelCardDetails
 
     Ok(
       view(
@@ -96,14 +97,10 @@ class BunkerFuelCardDetailsController @Inject() (
   }
 
   private def getBackLinkUrl(maybeIndex: Option[Int]) =
-    maybeIndex match {
+    maybeIndex match
       case Some(idx) =>
-        if (idx > 0) {
+        if idx > 0 then
           controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(idx - 1).url
-        } else {
+        else
           controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
-        }
       case _         => controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
-    }
-
-}

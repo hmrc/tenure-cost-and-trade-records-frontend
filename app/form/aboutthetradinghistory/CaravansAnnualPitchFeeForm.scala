@@ -30,7 +30,7 @@ import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingSeq
   *
   * @author Yuriy Tumakha
   */
-object CaravansAnnualPitchFeeForm {
+object CaravansAnnualPitchFeeForm:
 
   val caravansAnnualPitchFeeForm: Form[CaravansAnnualPitchFee] =
     Form(
@@ -69,5 +69,3 @@ object CaravansAnnualPitchFeeForm {
         )
       )(CaravansAnnualPitchFee.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
-
-}

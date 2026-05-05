@@ -38,6 +38,7 @@ case class SensitiveAddress(
   )
 
 object SensitiveAddress:
+
   import crypto.MongoCrypto
   import crypto.SensitiveFormats.sensitiveStringFormat
   import play.api.libs.json.{Format, Json}

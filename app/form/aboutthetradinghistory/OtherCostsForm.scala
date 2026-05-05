@@ -24,7 +24,7 @@ import play.api.data.{Form, Mapping}
 
 import java.time.LocalDate
 
-object OtherCostsForm {
+object OtherCostsForm:
 
   val otherCostDetailsRequired: Constraint[OtherCosts] = Constraint("constraints.otherCostDetailsRequired") {
     otherCosts =>
@@ -47,5 +47,3 @@ object OtherCostsForm {
   val form: Form[OtherCosts] = Form(
     otherCostsMapping.verifying(otherCostDetailsRequired)
   )
-
-}

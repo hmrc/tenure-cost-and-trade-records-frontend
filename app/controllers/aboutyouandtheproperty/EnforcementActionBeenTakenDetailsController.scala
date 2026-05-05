@@ -41,18 +41,18 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("EnforcementActionBeenTakenDetails")
 
     Ok(
       enforcementActionBeenTakenDetailsView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match
           case Some(enforcementActionInformation) =>
             enforcementActionDetailsForm.fill(enforcementActionInformation)
           case _                                  => enforcementActionDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -68,7 +68,7 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData =
           updateAboutYouAndTheProperty(_.copy(enforcementActionHasBeenTakenInformationDetails = Some(data)))
         session
@@ -76,8 +76,5 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
           .map(_ =>
             Redirect(navigator.nextPage(EnforcementActionBeenTakenDetailsPageId, updatedData).apply(updatedData))
           )
-      }
     )
   }
-
-}

@@ -42,7 +42,7 @@ class GrossReceiptsExcludingVATController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("GrossReceiptsExcludingVAT")
@@ -100,5 +100,3 @@ class GrossReceiptsExcludingVATController @Inject() (
 
   private def years(turnoverSections6076: Seq[TurnoverSection6076]): Seq[String] =
     turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
-
-}

@@ -24,7 +24,7 @@ import play.api.data.Forms.single
 /**
   * @author Yuriy Tumakha
   */
-object IsVATPayableForWholePropertyForm {
+object IsVATPayableForWholePropertyForm:
 
   val isVATPayableForWholePropertyForm: Form[AnswersYesNo] =
     Form(
@@ -32,5 +32,3 @@ object IsVATPayableForWholePropertyForm {
         "isVatPayableForWholeProperty" -> createYesNoType("error.isVATPayableForWholeProperty.required")
       )
     )
-
-}

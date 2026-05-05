@@ -43,7 +43,7 @@ class TentingPitchesTotalController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TentingPitchesTotal")
@@ -52,10 +52,10 @@ class TentingPitchesTotalController @Inject() (
       view(
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.touringAndTentingPitches)
-          .flatMap(_.tentingPitchesTotal) match {
+          .flatMap(_.tentingPitchesTotal) match
           case Some(answers) => tentingPitchesTotalForm.fill(answers)
           case None          => tentingPitchesTotalForm
-        },
+        ,
         calculateBackLink
       )
     )
@@ -71,8 +71,7 @@ class TentingPitchesTotalController @Inject() (
             calculateBackLink
           )
         ),
-      data => {
-
+      data =>
         val updatedSession = AboutTheTradingHistoryPartOne.updateTouringAndTentingPitches { touringAndTentingPitches =>
           touringAndTentingPitches.copy(tentingPitchesTotal = Some(data))
         }
@@ -85,14 +84,10 @@ class TentingPitchesTotalController @Inject() (
                 .apply(updatedSession)
             )
           )
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageForTentingPitches.url
       case _     => controllers.aboutthetradinghistory.routes.RallyAreasController.show().url
-
-    }
-}

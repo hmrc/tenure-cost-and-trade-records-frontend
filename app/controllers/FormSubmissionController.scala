@@ -47,7 +47,7 @@ class FormSubmissionController @Inject() (
 )(using ec: ExecutionContext
 ) extends FrontendController(mcc)
   with Logging
-  with I18nSupport {
+  with I18nSupport:
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
@@ -84,4 +84,3 @@ class FormSubmissionController @Inject() (
   ): Future[Unit] =
     val submission = ConnectedSubmission(session)
     submissionConnector.submitConnected(session.referenceNumber, submission).map(_ => ())
-}

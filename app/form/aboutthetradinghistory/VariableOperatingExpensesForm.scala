@@ -25,7 +25,7 @@ import play.api.i18n.Messages
 
 import java.time.LocalDate
 
-object VariableOperatingExpensesForm {
+object VariableOperatingExpensesForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[VariableOperatingExpenses] = mapping(
     "financial-year-end"               -> ignored(LocalDate.EPOCH),
@@ -62,12 +62,10 @@ object VariableOperatingExpensesForm {
     years: Seq[String]
   )(using messages: Messages
   ): Form[VariableOperatingExpensesSections] =
-    Form {
+    Form(
       mapping(
         "variableOperatingExpenses" -> variableOperatingExpensesSeq(years),
         "otherExpensesDetails"      -> optional(text(maxLength = 2000))
       )(VariableOperatingExpensesSections.apply)(o => Some(Tuple.fromProductTyped(o)))
         .verifying(otherExpensesDetailsRequired)
-    }
-
-}
+    )

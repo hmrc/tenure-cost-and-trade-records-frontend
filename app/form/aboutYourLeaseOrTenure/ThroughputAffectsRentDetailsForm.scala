@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 /**
   * @author Yuriy Tumakha
   */
-object ThroughputAffectsRentDetailsForm {
+object ThroughputAffectsRentDetailsForm:
 
   val throughputAffectsRentDetailsForm: Form[String] =
     Form(
@@ -35,5 +35,3 @@ object ThroughputAffectsRentDetailsForm {
           )
       )
     )
-
-}

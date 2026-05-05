@@ -43,17 +43,17 @@ class CommercialLettingAvailabilityController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CommercialLettingAvailability")
 
     Ok(
       view(
-        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetAvailability) match {
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetAvailability) match
           case Some(data) => commercialLettingAvailabilityForm.fill(data)
           case _          => commercialLettingAvailabilityForm
-        },
+        ,
         calculateBackLink,
         request.sessionData.toSummary
       )
@@ -74,9 +74,6 @@ class CommercialLettingAvailabilityController @Inject() (
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show().url
-
-    }
-}

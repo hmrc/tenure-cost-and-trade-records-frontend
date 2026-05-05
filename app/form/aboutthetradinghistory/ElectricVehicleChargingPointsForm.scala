@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
-object ElectricVehicleChargingPointsForm {
+object ElectricVehicleChargingPointsForm:
 
   val electricVehicleChargingPointsForm: Form[ElectricVehicleChargingPoints] = Form(
     mapping(
@@ -36,4 +36,3 @@ object ElectricVehicleChargingPointsForm {
       )
     )(ElectricVehicleChargingPoints.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

@@ -19,7 +19,7 @@ package form.aboutthetradinghistory
 import play.api.data.Form
 import play.api.data.Forms.*
 
-object TentingPitchesTotalForm {
+object TentingPitchesTotalForm:
 
   val tentingPitchesTotalForm: Form[Int] = Form(
     single(
@@ -31,4 +31,3 @@ object TentingPitchesTotalForm {
           .verifying("error.tentingPitchesTotal.range", n => n >= 0)
     )
   )
-}

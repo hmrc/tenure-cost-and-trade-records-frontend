@@ -23,7 +23,7 @@ import play.api.i18n.Messages
 
 import java.time.LocalDate
 
-object FinancialYearEndDatesForm {
+object FinancialYearEndDatesForm:
 
   private def dateMapping(years: Option[Seq[Int]])(using messages: Messages): Mapping[LocalDate] =
     single(
@@ -41,5 +41,3 @@ object FinancialYearEndDatesForm {
         "financialYearEnd" -> seq(dateMapping(years))
       )
     )
-
-}

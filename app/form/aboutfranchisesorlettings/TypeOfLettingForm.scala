@@ -20,10 +20,8 @@ import form.MappingSupport.typeOfLettingMapping
 import models.submissions.aboutfranchisesorlettings.*
 import play.api.data.Form
 
-object TypeOfLettingForm {
+object TypeOfLettingForm:
 
   val typeOfLettingForm: Form[TypeOfLetting] = Form(
     "typeOfLetting" -> typeOfLettingMapping
   )
-
-}

@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.{FORDataCaptureController, toOpt}
 import form.aboutyouandtheproperty.OccupiersDetailsListForm.theForm
-import form.confirmableActionForm.confirmableActionForm
+import form.ConfirmableActionForm.confirmableActionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
@@ -46,7 +46,7 @@ class OccupiersDetailsListController @Inject() (
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OccupiersDetailsList")
@@ -157,4 +157,3 @@ class OccupiersDetailsListController @Inject() (
       }
     )
   }
-}

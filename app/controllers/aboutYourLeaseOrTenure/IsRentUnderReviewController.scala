@@ -49,7 +49,7 @@ class IsRentUnderReviewController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsRentUnderReview")
@@ -84,9 +84,6 @@ class IsRentUnderReviewController @Inject() (
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6045 | FOR6046 => routes.MethodToFixCurrentRentController.show().url
       case _                 => routes.IntervalsOfRentReviewController.show().url
-    }
-
-}

@@ -43,17 +43,17 @@ class UnusualCircumstancesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("UnusualCircumstances")
 
     Ok(
       unusualCircumstancesView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.unusualCircumstances) match {
+        request.sessionData.aboutTheTradingHistory.flatMap(_.unusualCircumstances) match
           case Some(unusualCircumstances) => unusualCircumstancesForm.fill(unusualCircumstances)
           case _                          => unusualCircumstancesForm
-        },
+        ,
         request.sessionData.forType,
         getBackLink,
         request.sessionData.toSummary
@@ -73,19 +73,16 @@ class UnusualCircumstancesController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistory(_.copy(unusualCircumstances = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(UnusualCircumstancesId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
   private def getBackLink(using answers: SessionRequest[AnyContent]): String =
-    answers.sessionData.forType match {
+    answers.sessionData.forType match
       case FOR6015 => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
       case FOR6030 => controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url
       case _       => controllers.routes.TaskListController.show.url
-    }
-}

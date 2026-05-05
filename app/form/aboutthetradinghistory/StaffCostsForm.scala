@@ -22,7 +22,7 @@ import play.api.data.Forms.{mapping, single}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object StaffCostsForm {
+object StaffCostsForm:
 
   private def sumMapping(year: String)(using messages: Messages): Mapping[StaffCosts] =
     mapping(
@@ -33,9 +33,8 @@ object StaffCostsForm {
     )(StaffCosts.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def staffCostsForm(years: Seq[String])(using messages: Messages): Form[Seq[StaffCosts]] =
-    Form {
+    Form(
       single(
         "staffCosts" -> mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
       )
-    }
-}
+    )

@@ -42,17 +42,17 @@ class BenefitsGivenDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("BenefitsGivenDetails")
 
     Ok(
       view(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGivenDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGivenDetails) match
           case Some(data) => benefitsGivenDetailsForm.fill(data)
           case _          => benefitsGivenDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -62,12 +62,10 @@ class BenefitsGivenDetailsController @Inject() (
     continueOrSaveAsDraft[String](
       benefitsGivenDetailsForm,
       formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(benefitsGivenDetails = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(BenefitsGivenDetailsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
-}

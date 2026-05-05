@@ -42,17 +42,17 @@ class IncomeExpenditureSummaryController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val entries = request.sessionData.aboutTheTradingHistory.map(createIncomeExpenditureEntries).getOrElse(Seq.empty)
 
     Ok(
       incomeExpenditureSummaryView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary) match {
+        request.sessionData.aboutTheTradingHistory.flatMap(_.incomeExpenditureSummary) match
           case Some(incomeExpenditureSummary) => incomeExpenditureSummaryForm.fill(incomeExpenditureSummary)
           case _                              => incomeExpenditureSummaryForm
-        },
+        ,
         request.sessionData.toSummary,
         entries
       )
@@ -62,12 +62,11 @@ class IncomeExpenditureSummaryController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       incomeExpenditureSummaryForm,
-      formWithErrors => {
-        val entries =
-          request.sessionData.aboutTheTradingHistory.map(createIncomeExpenditureEntries).getOrElse(Seq.empty)
+      formWithErrors =>
+        val entries = request.sessionData.aboutTheTradingHistory.map(createIncomeExpenditureEntries).getOrElse(Seq.empty)
         BadRequest(incomeExpenditureSummaryView(formWithErrors, request.sessionData.toSummary, entries))
-      },
-      data => {
+      ,
+      data =>
         val tradingHistoryData =
           request.sessionData.aboutTheTradingHistory.map(createIncomeExpenditureEntries).getOrElse(Seq.empty)
 
@@ -96,7 +95,6 @@ class IncomeExpenditureSummaryController @Inject() (
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(IncomeExpenditureSummaryId, updatedData).apply(updatedData)))
-      }
     )
   }
 
@@ -148,4 +146,3 @@ class IncomeExpenditureSummaryController @Inject() (
         profitMargin = profitMargin
       )
     }
-}

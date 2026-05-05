@@ -33,7 +33,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @ImplementedBy(classOf[TctrAuditConnector])
-trait Audit extends AuditConnector {
+trait Audit extends AuditConnector:
 
   implicit def ec: ExecutionContext
 
@@ -52,13 +52,10 @@ trait Audit extends AuditConnector {
     sendExplicitAudit("SavedAsDraft", savedAsDraftEvent)
 
   def sendChangeLink(pageID: String)(using request: SessionRequest[AnyContent], hc: HeaderCarrier): Unit =
-    if (request.uri.contains("CYA&change=true")) {
+    if request.uri.contains("CYA&change=true") then
       sendExplicitAudit("CyaChangeLink", ChangeLinkAudit(request.sessionData.forType.toString, request.uri, pageID))
-    }
 
-}
-
-object Audit {
+object Audit:
   val referenceNumber = "referenceNumber"
   val address         = "address"
   val formOfReturn    = "forType"
@@ -67,12 +64,10 @@ object Audit {
   def languageJson(using messages: Messages): JsObject =
     Json.obj(Audit.language -> messages.lang.language)
 
-}
-
 @Singleton
 class TctrAuditConnector @Inject() (
   val auditingConfig: AuditingConfig,
   val auditChannel: AuditChannel,
   val datastreamMetrics: DatastreamMetrics
 )(using val ec: ExecutionContext
-) extends Audit {}
+) extends Audit

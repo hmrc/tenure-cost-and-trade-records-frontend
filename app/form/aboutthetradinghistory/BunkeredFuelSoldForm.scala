@@ -25,12 +25,12 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 import scala.util.Try
 
-object BunkeredFuelSoldForm {
+object BunkeredFuelSoldForm:
 
   def bunkeredFuelSoldForm(years: Seq[String])(using messages: Messages): Form[Seq[BunkeredFuelSold]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => "" -> bunkeredFuelSoldMapping(year, idx))
-    }
+    )
 
   private def bunkeredFuelSoldMapping(year: String, idx: Int)(using messages: Messages): Mapping[BunkeredFuelSold] =
     mapping(
@@ -45,5 +45,3 @@ object BunkeredFuelSoldForm {
           .verifying(messages("error.bunkeredFuelSold.range", year), _ >= 0)
       ).verifying(messages("error.bunkeredFuelSold.required", year), _.isDefined)
     )(BunkeredFuelSold.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-}

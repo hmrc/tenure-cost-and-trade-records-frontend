@@ -47,7 +47,7 @@ class ConnectionToPropertySubmissionController @Inject() (
 )(using ec: ExecutionContext
 ) extends FrontendController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   import FeedbackFormMapper.feedbackForm
 
@@ -88,5 +88,3 @@ class ConnectionToPropertySubmissionController @Inject() (
     val submission = ConnectedSubmission(session)
 
     submissionConnector.submitConnected(session.referenceNumber, submission).map(_ => ())
-
-}

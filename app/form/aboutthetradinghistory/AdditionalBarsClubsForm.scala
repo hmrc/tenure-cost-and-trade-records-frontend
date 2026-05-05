@@ -22,7 +22,7 @@ import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object AdditionalBarsClubsForm {
+object AdditionalBarsClubsForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[AdditionalBarsClubs] =
     mapping(
@@ -37,8 +37,6 @@ object AdditionalBarsClubsForm {
     years: Seq[String]
   )(using messages: Messages
   ): Form[Seq[AdditionalBarsClubs]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"additionalBarsClubs[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

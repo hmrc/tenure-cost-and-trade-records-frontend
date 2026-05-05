@@ -42,17 +42,17 @@ class IncentivesPaymentsConditionsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IncentivesPaymentsConditions")
 
     Ok(
       incentivesPaymentsConditionsView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match
           case Some(data) => incentivesPaymentsConditionsForm.fill(data)
           case _          => incentivesPaymentsConditionsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -71,5 +71,3 @@ class IncentivesPaymentsConditionsController @Inject() (
       }
     )
   }
-
-}

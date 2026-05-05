@@ -40,7 +40,7 @@ class MaxOfLettingsReachedController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(src: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val (backLink, form) = getDetails(src, request)
@@ -101,7 +101,7 @@ class MaxOfLettingsReachedController @Inject() (
     source: Option[String],
     request: SessionRequest[AnyContent]
   ): (String, Option[Boolean]) =
-    source match {
+    source match
       case Some("connection")   =>
         (
           controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
@@ -127,5 +127,3 @@ class MaxOfLettingsReachedController @Inject() (
           routes.TaskListController.show.url,
           None
         )
-    }
-}

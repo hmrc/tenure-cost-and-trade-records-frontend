@@ -37,7 +37,7 @@ class MonthYearFormatter(
   allowPastDates: Boolean,
   allowFutureDates: Boolean
 )(using messages: Messages
-) extends Formatter[MonthsYearDuration] {
+) extends Formatter[MonthsYearDuration]:
 
   require(
     allowPastDates || allowFutureDates,
@@ -119,4 +119,3 @@ class MonthYearFormatter(
           else if !allowFutureDates && date.isAfter(startOfMonth) then Left("error.date.mustBeInPast")
           else Right(MonthsYearDuration(date.getMonthValue, date.getYear))
         }
-}

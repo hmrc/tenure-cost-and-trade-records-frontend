@@ -40,16 +40,15 @@ class RequestReferenceNumberContactDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FrontendController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       requestReferenceNumberContactDetailsView(
-        request.sessionData.requestReferenceNumberDetails.flatMap(_.contactDetails) match {
+        request.sessionData.requestReferenceNumberDetails.flatMap(_.contactDetails) match
           case Some(requestReferenceContactDetails) =>
             theForm.fill(requestReferenceContactDetails)
           case _                                    => theForm
-        }
       )
     )
   }
@@ -68,5 +67,3 @@ class RequestReferenceNumberContactDetailsController @Inject() (
             )
       )
   }
-
-}

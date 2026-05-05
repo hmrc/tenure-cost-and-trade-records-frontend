@@ -43,17 +43,17 @@ class CheckYourAnswersTentingPitchesController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       view(
         request.sessionData.aboutTheTradingHistoryPartOne
-          .flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)) match {
+          .flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)) match
           case Some(checkYourAnswersAboutTheTradingHistory) =>
             checkYourAnswersTentingPitchesForm.fill(checkYourAnswersAboutTheTradingHistory)
           case _                                            => checkYourAnswersTentingPitchesForm
-        },
+        ,
         calculateBackLink
       )
     )
@@ -84,10 +84,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     request.sessionData.aboutTheTradingHistoryPartOne.flatMap(
       _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
-    ) match {
+    ) match
       case Some(AnswerYes) => controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show().url
       case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
       case _               => controllers.routes.TaskListController.show.url
-    }
-
-}

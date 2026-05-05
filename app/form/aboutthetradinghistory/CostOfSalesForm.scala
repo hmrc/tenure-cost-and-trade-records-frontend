@@ -24,7 +24,7 @@ import play.api.i18n.Messages
 
 import java.time.LocalDate
 
-object CostOfSalesForm {
+object CostOfSalesForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[CostOfSales] = mapping(
     "financial-year-end" -> ignored(LocalDate.EPOCH),
@@ -35,8 +35,6 @@ object CostOfSalesForm {
   )(CostOfSales.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def costOfSalesForm(years: Seq[String])(using messages: Messages): Form[Seq[CostOfSales]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"costOfSales[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

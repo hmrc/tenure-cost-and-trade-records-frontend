@@ -27,7 +27,7 @@ import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
   override def cyaPage: Option[Call] =
     Some(aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
@@ -107,4 +107,3 @@ class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Naviga
         controllers.routes.TaskListController.show.withFragment("franchiseAndLettings")
       )
   )
-}

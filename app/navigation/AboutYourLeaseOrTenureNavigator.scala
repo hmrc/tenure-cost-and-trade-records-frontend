@@ -45,7 +45,7 @@ import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
   override def cyaPage: Option[Call] =
     Some(aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
@@ -82,12 +82,11 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
   ).map(_.url)
 
   private def aboutYourLandlordRouting: Session => Call = answers =>
-    answers.forType match {
+    answers.forType match
       case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 | FOR6076 =>
         controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
       case _                                                         =>
         controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
-    }
 
   def connectedToLandlordRouting: Session => Call = answers =>
     answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
@@ -610,4 +609,3 @@ class AboutYourLeaseOrTenureNavigator @Inject() (audit: Audit) extends Navigator
         controllers.routes.TaskListController.show.withFragment("leaseOrAgreement")
       )
   )
-}

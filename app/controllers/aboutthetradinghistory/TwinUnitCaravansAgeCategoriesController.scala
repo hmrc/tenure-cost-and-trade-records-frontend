@@ -41,7 +41,7 @@ class TwinUnitCaravansAgeCategoriesController @Inject() (
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents,
   audit: Audit
-) extends CaravansAgeCategoriesController(TwinCaravansAgeCategoriesId, Twin, mcc, audit) {
+) extends CaravansAgeCategoriesController(TwinCaravansAgeCategoriesId, Twin, mcc, audit):
 
   def savedAnswer(
     using
@@ -52,5 +52,3 @@ class TwinUnitCaravansAgeCategoriesController @Inject() (
 
   def updateAnswer(caravansAge: CaravansAge): Caravans => Caravans =
     _.copy(twinUnitCaravansAge = Some(caravansAge))
-
-}

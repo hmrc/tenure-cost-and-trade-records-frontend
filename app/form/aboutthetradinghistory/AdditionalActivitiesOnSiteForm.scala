@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object AdditionalActivitiesOnSiteForm {
+object AdditionalActivitiesOnSiteForm:
 
   val additionalActivitiesOnSiteForm: Form[AnswersYesNo] =
     Form(
@@ -29,5 +29,3 @@ object AdditionalActivitiesOnSiteForm {
         "additionalActivitiesOnSite" -> createYesNoType("error.additionalActivitiesOnSite.missing")
       )
     )
-
-}

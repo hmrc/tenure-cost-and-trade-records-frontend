@@ -47,7 +47,7 @@ class AddedMaximumListItemsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show(list: ListPageConfig): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -77,13 +77,12 @@ class AddedMaximumListItemsController @Inject() (
   private def forType(using request: SessionRequest[AnyContent]): ForType = sessionData.forType
 
   private def readAnswer(list: ListPageConfig)(using request: SessionRequest[AnyContent]): Option[Boolean] =
-    list match {
+    list match
       case AccommodationUnits     => sessionData.accommodationDetails.flatMap(_.exceededMaxUnits)
       case TradeServices          => sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.exceededMaxTradeServices)
       case ServicesPaidSeparately => sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.exceededMaxServicesPaid)
       case BunkerFuelCards        => sessionData.aboutTheTradingHistory.flatMap(_.exceededMaxBunkerFuelCards)
       case LowMarginFuelCards     => sessionData.aboutTheTradingHistory.flatMap(_.exceededMaxLowMarginFuelCards)
-    }
 
   private def saveAnswer(
     list: ListPageConfig,
@@ -91,7 +90,7 @@ class AddedMaximumListItemsController @Inject() (
   )(using
     request: SessionRequest[AnyContent]
   ): Session =
-    list match {
+    list match
       case AccommodationUnits     =>
         updateAccommodationDetails(
           _.copy(exceededMaxUnits = data)
@@ -112,10 +111,9 @@ class AddedMaximumListItemsController @Inject() (
         updateAboutTheTradingHistory(
           _.copy(exceededMaxLowMarginFuelCards = data)
         )
-    }
 
   private def nextPage(list: ListPageConfig)(using request: SessionRequest[AnyContent]): Call =
-    list match {
+    list match
       case AccommodationUnits     => controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show
       case TradeServices          => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
       case ServicesPaidSeparately =>
@@ -125,6 +123,3 @@ class AddedMaximumListItemsController @Inject() (
         }
       case BunkerFuelCards        => controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show()
       case LowMarginFuelCards     => controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show()
-    }
-
-}

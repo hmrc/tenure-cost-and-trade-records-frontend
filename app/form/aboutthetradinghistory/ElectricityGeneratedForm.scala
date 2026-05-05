@@ -28,16 +28,16 @@ import scala.util.Try
   *
   * @author Yuriy Tumakha
   */
-object ElectricityGeneratedForm {
+object ElectricityGeneratedForm:
 
   private def weeksMapping(year: String, minWeeks: Int = 0)(using messages: Messages): Mapping[Option[Int]] =
     text
       .transform[Option[Int]](
-        str => {
+        str =>
           val weeks = str.trim
           if (weeks.isEmpty) None
           else Try(Some(weeks.toInt)).getOrElse(None)
-        },
+        ,
         optInt => optInt.map(_.toString).getOrElse("")
       )
       .verifying(messages("error.weeksMapping.blank", year), optInt => optInt.isDefined)
@@ -53,8 +53,6 @@ object ElectricityGeneratedForm {
   )
 
   def electricityGeneratedForm(years: Seq[String])(using messages: Messages): Form[Seq[(Option[Int], String)]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

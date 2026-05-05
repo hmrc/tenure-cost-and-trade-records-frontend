@@ -32,15 +32,12 @@ class RefNumAction @Inject() (
   val executionContext: ExecutionContext
 ) extends ActionBuilder[RefNumRequest, AnyContent]
   with ActionRefiner[Request, RefNumRequest]
-  with MessagesActionBuilder {
+  with MessagesActionBuilder:
 
   override def refine[A](request: Request[A]): Future[Either[Result, RefNumRequest[A]]] = Future.successful {
-
-    request.session.get("refNum") match {
+    request.session.get("refNum") match
       case Some(refNum) => Right(RefNumRequest(refNum, request, messagesApi))
       case None         => Left(Redirect(controllers.routes.LoginController.show))
-    }
   }
 
   override def parser: BodyParser[AnyContent] = bodyParser
-}

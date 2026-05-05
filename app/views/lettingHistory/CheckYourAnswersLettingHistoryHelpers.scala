@@ -37,7 +37,7 @@ object CheckYourAnswersLettingHistoryHelpers:
   )(using request: SessionRequest[AnyContent],
     messages: Messages
   ): Seq[CardData] =
-    LettingHistory.permanentResidents(request.sessionData).zipWithIndex.map { (resident, index) =>
+    LettingHistory.permanentResidents(request.sessionData).zipWithIndex.map: (resident, index) =>
       CardData(
         index = index,
         label = messages("lettingHistory.checkYourAnswers.permanentResidents.cardsType"),
@@ -50,7 +50,6 @@ object CheckYourAnswersLettingHistoryHelpers:
           )
         )
       )
-    }
 
   def completedLettingsCardsData(
     fragment: String

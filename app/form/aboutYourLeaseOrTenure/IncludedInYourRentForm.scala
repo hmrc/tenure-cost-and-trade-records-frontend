@@ -58,11 +58,10 @@ object IncludedInYourRentForm:
       .verifying(
         "error.includedInYourRent.vatValue.required",
         fields =>
-          fields match {
+          fields match
             case IncludedInYourRentDetails(includedInYourRent, vatValue) =>
               !((forType == FOR6045 || forType == FOR6046) && includedInYourRent.contains(
                 IncludedInYourRentInformationVat
               ) && vatValue.isEmpty)
-          }
       )
   )

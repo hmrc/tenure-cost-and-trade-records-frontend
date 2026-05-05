@@ -22,7 +22,7 @@ import play.api.data.Forms.{mapping, single}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object GrossReceiptsForBaseLoadForm {
+object GrossReceiptsForBaseLoadForm:
 
   private def sumMapping(year: String)(using messages: Messages): Mapping[GrossReceiptsForBaseLoad] =
     mapping(
@@ -46,9 +46,8 @@ object GrossReceiptsForBaseLoadForm {
     years: Seq[String]
   )(using messages: Messages
   ): Form[Seq[GrossReceiptsForBaseLoad]] =
-    Form {
+    Form(
       single(
         "grossReceiptsForBaseLoad" -> mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
       )
-    }
-}
+    )

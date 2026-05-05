@@ -43,17 +43,17 @@ class WorkCarriedOutConditionController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("WorkCarriedOutCondition")
 
     Ok(
       view(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.workCarriedOut) match {
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.workCarriedOut) match
           case Some(data) => workCarriedOutConditionForm.fill(data)
           case _          => workCarriedOutConditionForm
-        },
+        ,
         calculateBackLink,
         request.sessionData.toSummary
       )
@@ -78,11 +78,8 @@ class WorkCarriedOutConditionController @Inject() (
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match {
+    request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
       case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url
       case _               => controllers.routes.TaskListController.show.url
-    }
-
-}

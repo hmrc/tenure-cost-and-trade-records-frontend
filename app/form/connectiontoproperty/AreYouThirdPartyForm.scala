@@ -21,12 +21,10 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
-object AreYouThirdPartyForm {
+object AreYouThirdPartyForm:
 
   private val areYouThirdPartyMapping = mapping(
     "areYouThirdParty" -> createYesNoType("error.areYouThirdParty.missing")
   )(x => x)(b => Some(b))
 
   val theForm: Form[AnswersYesNo] = Form(areYouThirdPartyMapping)
-
-}

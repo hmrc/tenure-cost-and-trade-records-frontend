@@ -27,8 +27,8 @@ import play.api.data.Forms.single
 object AccommodationUnitList6048Form:
 
   val accommodationUnitList6048Form: Form[AnswersYesNo] =
-    Form {
+    Form(
       single(
         "addMoreAccommodationUnits" -> createYesNoType("error.accommodation.addMoreAccommodationUnits.required")
       )
-    }
+    )

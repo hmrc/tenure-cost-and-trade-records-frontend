@@ -48,7 +48,7 @@ class CaravansPerServiceController @Inject() (
   mcc: MessagesControllerComponents
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   implicit val ec: ExecutionContext = mcc.executionContext
 
@@ -91,5 +91,3 @@ class CaravansPerServiceController @Inject() (
       .filter(_ => navigator.from == "CYA")
       .getOrElse(routes.CaravansTotalSiteCapacityController.show())
       .url
-
-}

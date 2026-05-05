@@ -34,7 +34,7 @@ class CyaTradingHistorySupport @Inject() (
   val govukSummaryList: GovukSummaryList,
   val dateUtil: DateUtilLocalised,
   val accessibilityUtil: AccessibilityUtil
-) {
+):
 
   def tradingPeriodWithWeeks(tradingPeriod: Int)(using messages: Messages): String =
     val weeksSuffix = if tradingPeriod == 1 then "turnover.week" else "turnover.weeks"
@@ -385,4 +385,3 @@ class CyaTradingHistorySupport @Inject() (
           )
       )
     )
-}

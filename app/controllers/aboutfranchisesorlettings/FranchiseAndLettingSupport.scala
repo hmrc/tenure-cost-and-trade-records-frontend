@@ -19,13 +19,13 @@ package controllers.aboutfranchisesorlettings
 import actions.SessionRequest
 import models.submissions.aboutfranchisesorlettings.*
 
-trait FranchiseAndLettingSupport {
+trait FranchiseAndLettingSupport:
 
   def getIncomeRecord(index: Int)(using request: SessionRequest[?]): Option[IncomeRecord] =
-    for {
+    for
       allRecords <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
       record     <- allRecords.lift(index)
-    } yield record
+    yield record
 
   def getOperatorName(index: Int)(using request: SessionRequest[?]): String =
     getIncomeRecord(index)
@@ -36,4 +36,3 @@ trait FranchiseAndLettingSupport {
         case concession: ConcessionIncomeRecord     => concession.businessDetails.fold("")(_.operatorName)
       }
       .getOrElse("")
-}

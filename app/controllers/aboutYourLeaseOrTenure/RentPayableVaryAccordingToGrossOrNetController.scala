@@ -47,7 +47,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryAccordingToGrossOrNet")
@@ -55,11 +55,11 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
     Ok(
       rentPayableVaryAccordingToGrossOrNetView(
         request.sessionData.aboutLeaseOrAgreementPartTwo
-          .flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
+          .flatMap(_.rentPayableVaryAccordingToGrossOrNet) match
           case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
             rentPayableVaryAccordingToGrossOrNetForm.fill(rentPayableVaryAccordingToGrossOrNetDetails)
           case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -91,13 +91,10 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match
       case Some(AnswerNo) =>
-        answers.forType match {
+        answers.forType match
           case FOR6010 | FOR6015 | FOR6016 | FOR6030 | FOR6076 =>
             controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
           case _                                               => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
-        }
       case _              => controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
-    }
-}

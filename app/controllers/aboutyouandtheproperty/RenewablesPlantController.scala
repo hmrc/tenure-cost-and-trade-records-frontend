@@ -43,16 +43,16 @@ class RenewablesPlantController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with ReadOnlySupport
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("RenewablesPlant")
     Ok(
       theView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant) match
           case Some(data) => theForm.fill(data)
           case _          => theForm
-        },
+        ,
         calculateBackLink(using request),
         request.sessionData.toSummary,
         isReadOnly
@@ -67,19 +67,16 @@ class RenewablesPlantController @Inject() (
         BadRequest(
           theView(formWithErrors, calculateBackLink(using request), request.sessionData.toSummary, isReadOnly)
         ),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(renewablesPlant = Some(data)))
         repo
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RenewablesPlantPageId, updatedData).apply(updatedData)))
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#technology-type"
       case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-    }
-}

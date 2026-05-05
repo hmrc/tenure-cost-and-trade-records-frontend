@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object OtherHolidayAccommodationForm {
+object OtherHolidayAccommodationForm:
 
   val otherHolidayAccommodationForm: Form[AnswersYesNo] =
     Form(
@@ -29,4 +29,3 @@ object OtherHolidayAccommodationForm {
         "otherHolidayAccommodation" -> createYesNoType("error.otherHolidayAccommodation.required")
       )
     )
-}

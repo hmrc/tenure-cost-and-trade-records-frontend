@@ -42,15 +42,16 @@ class LowMarginFuelCardDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingLowMarginFuelCardDetails: Option[LowMarginFuelCardDetail] = for {
-      requestedIndex      <- index
-      existingBFCDetails  <-
-        request.sessionData.aboutTheTradingHistory.map(_.lowMarginFuelCardsDetails.getOrElse(IndexedSeq.empty))
-      requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
-    } yield requestedBFCDetails.lowMarginFuelCardDetail
+    val existingLowMarginFuelCardDetails: Option[LowMarginFuelCardDetail] =
+      for
+        requestedIndex      <- index
+        existingBFCDetails  <-
+          request.sessionData.aboutTheTradingHistory.map(_.lowMarginFuelCardsDetails.getOrElse(IndexedSeq.empty))
+        requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
+      yield requestedBFCDetails.lowMarginFuelCardDetail
 
     Ok(
       view(
@@ -96,14 +97,10 @@ class LowMarginFuelCardDetailsController @Inject() (
   }
 
   private def getBackLinkUrl(maybeIndex: Option[Int]) =
-    maybeIndex match {
+    maybeIndex match
       case Some(idx) =>
-        if (idx > 0) {
+        if idx > 0 then
           controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx - 1).url
-        } else {
+        else
           controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show().url
-        }
       case _         => controllers.aboutthetradinghistory.routes.PercentageFromFuelCardsController.show().url
-    }
-
-}

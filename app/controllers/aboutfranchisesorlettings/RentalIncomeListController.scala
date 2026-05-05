@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentalIncomeListForm.theForm
-import form.confirmableActionForm.confirmableActionForm
+import form.ConfirmableActionForm.confirmableActionForm
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*

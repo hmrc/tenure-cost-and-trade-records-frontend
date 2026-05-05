@@ -26,7 +26,7 @@ import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
   override def cyaPage: Option[Call] =
     Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show())
@@ -45,13 +45,13 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show()
     else controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show()
 
-  private def aboutThePropertyDescriptionRouting: Session => Call = answers => {
-    val answersForType = answers.forType
-    if (answersForType.equals(FOR6020)) {
-      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    } else
-      controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
-  }
+  private def aboutThePropertyDescriptionRouting: Session => Call =
+    answers =>
+      val answersForType = answers.forType
+      if answersForType.equals(FOR6020) then
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      else
+        controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
 
   private def websiteForPropertyRouting: Session => Call = answers =>
     answers.forType match {
@@ -208,4 +208,3 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       ),
     CheckYourAnswersAboutThePropertyPageId  -> (_ => controllers.routes.TaskListController.show)
   )
-}

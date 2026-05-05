@@ -22,15 +22,14 @@ import play.api.data.*
 import play.api.data.Forms.*
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
-object PropertyCurrentlyUsedForm {
+object PropertyCurrentlyUsedForm:
 
   private val anotherUseDetailsRequired: Constraint[PropertyCurrentlyUsed] =
     Constraint("constraint.anotherUseDetailsRequired") { pcu =>
-      if (pcu.propertyCurrentlyUsed.contains("other") && pcu.anotherUseDetails.forall(_.trim.isEmpty)) {
+      if pcu.propertyCurrentlyUsed.contains("other") && pcu.anotherUseDetails.forall(_.trim.isEmpty) then
         Invalid(Seq(ValidationError("error.anotherUseDetails.required")))
-      } else {
+      else
         Valid
-      }
     }
 
   private val propertyCurrentlyUsedMapping: Mapping[PropertyCurrentlyUsed] = mapping(
@@ -44,4 +43,3 @@ object PropertyCurrentlyUsedForm {
   val propertyCurrentlyUsedForm: Form[PropertyCurrentlyUsed] = Form(
     propertyCurrentlyUsedMapping.verifying(anotherUseDetailsRequired)
   )
-}

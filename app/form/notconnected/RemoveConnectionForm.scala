@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, optional, text}
 import play.api.data.validation.Constraints.nonEmpty
 
-object RemoveConnectionForm {
+object RemoveConnectionForm:
 
   val removeConnectionForm: Form[RemoveConnectionsDetails] = Form(
     mapping(
@@ -34,4 +34,3 @@ object RemoveConnectionForm {
         .verifying("error.removeConnectionAdditionalInfo.maxLength", it => it.forall(_.length <= 2000))
     )(RemoveConnectionsDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

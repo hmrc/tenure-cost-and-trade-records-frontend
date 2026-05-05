@@ -42,17 +42,16 @@ class CapitalSumDescriptionController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CapitalSumDescription")
 
     Ok(
       view(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.capitalSumDescription) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.capitalSumDescription) match
           case Some(data) => capitalSumDescriptionForm.fill(data)
           case _          => capitalSumDescriptionForm
-        }
       )
     )
   }
@@ -61,14 +60,11 @@ class CapitalSumDescriptionController @Inject() (
     continueOrSaveAsDraft[String](
       capitalSumDescriptionForm,
       formWithErrors => BadRequest(view(formWithErrors)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(capitalSumDescription = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CapitalSumDescriptionId, updatedData).apply(updatedData))
         }
-      }
     )
   }
-
-}

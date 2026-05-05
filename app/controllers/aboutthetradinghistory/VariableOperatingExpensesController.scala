@@ -43,7 +43,7 @@ class VariableOperatingExpensesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("VariableOperatingExpenses")
@@ -99,7 +99,7 @@ class VariableOperatingExpensesController @Inject() (
           val updatedFormWithErrors = formWithErrors.copy(errors = updatedErrors)
           BadRequest(variableOperativeExpensesView(updatedFormWithErrors, navigator.from))
         },
-        data => {
+        data =>
           val voeSeq = (data.variableOperatingExpenses zip yearEndDates).map { case (voe, finYearEnd) =>
             voe.copy(financialYearEnd = finYearEnd)
           }
@@ -115,7 +115,6 @@ class VariableOperatingExpensesController @Inject() (
                 .getOrElse(navigator.nextPage(VariableOperatingExpensesId, updatedData).apply(updatedData))
             )
             .map(Redirect)
-        }
       )
     }
   }
@@ -131,5 +130,3 @@ class VariableOperatingExpensesController @Inject() (
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
-
-}

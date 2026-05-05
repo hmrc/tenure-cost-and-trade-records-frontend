@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 
-object AddAnotherBunkerFuelCardsDetailsForm {
+object AddAnotherBunkerFuelCardsDetailsForm:
 
   val theForm: Form[AnswersYesNo] = Form(
     mapping(
@@ -30,4 +30,3 @@ object AddAnotherBunkerFuelCardsDetailsForm {
         .transform[AnswersYesNo](_.get, Some(_))
     )(x => x)(b => Some(b))
   )
-}

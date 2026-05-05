@@ -45,17 +45,17 @@ class PayACapitalSumAmountDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PayACapitalSumAmountDetails")
 
     Ok(
       payACapitalSumAmountDetailsView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumAmount) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumAmount) match
           case Some(data) => payACapitalSumAmountDetailsForm.fill(data)
           case _          => payACapitalSumAmountDetailsForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -84,13 +84,9 @@ class PayACapitalSumAmountDetailsController @Inject() (
   }
 
   private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-amount-details"
       case _    =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-        }
-    }
-
-}

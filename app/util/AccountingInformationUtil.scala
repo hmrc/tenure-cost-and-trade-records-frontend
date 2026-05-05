@@ -33,7 +33,7 @@ import java.time.{LocalDate, YearMonth}
 /**
   * @author Yuriy Tumakha
   */
-object AccountingInformationUtil {
+object AccountingInformationUtil:
 
   private def yearNow                 = YearMonth.now.getYear
   private def monthNow                = YearMonth.now.getMonthValue
@@ -260,7 +260,7 @@ object AccountingInformationUtil {
     navigator: AboutTheTradingHistoryNavigator
   )(using request: SessionRequest[AnyContent]
   ): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" =>
         navigator.cyaPage
           .getOrElse(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
@@ -268,10 +268,6 @@ object AccountingInformationUtil {
       case _     =>
         request.sessionData.aboutTheTradingHistory
           .flatMap(_.occupationAndAccountingInformation)
-          .flatMap(_.financialYearEndHasChanged) match {
+          .flatMap(_.financialYearEndHasChanged) match
           case Some(true) => aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
           case _          => aboutthetradinghistory.routes.FinancialYearEndController.show().url
-        }
-    }
-
-}

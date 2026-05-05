@@ -23,11 +23,10 @@ case class ResidentDetail(
   address: String
 ):
 
-  override def equals(that: Any): Boolean = that match {
+  override def equals(that: Any): Boolean = that match
     case ResidentDetail(name, address) => /* this.name.trim.equalsIgnoreCase(name.trim) && */
       this.address.trim.equalsIgnoreCase(address.trim)
     case _                             => false
-  }
 
 object ResidentDetail:
   def unapply(obj: ResidentDetail): Option[(String, String)] = Some(obj.name, obj.address)

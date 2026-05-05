@@ -24,7 +24,7 @@ import play.api.data.Forms.single
 /**
   * @author Yuriy Tumakha
   */
-object ThroughputAffectsRentForm {
+object ThroughputAffectsRentForm:
 
   val doesRentVaryToThroughputForm: Form[AnswersYesNo] =
     Form(
@@ -32,5 +32,3 @@ object ThroughputAffectsRentForm {
         "throughputAffectsRent" -> createYesNoType("error.doesRentVaryToThroughput.required")
       )
     )
-
-}

@@ -47,7 +47,7 @@ class AccommodationDetailsCYA6048Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -95,5 +95,3 @@ class AccommodationDetailsCYA6048Controller @Inject() (
     request: SessionRequest[AnyContent]
   ): List[AccommodationUnit] =
     accommodationDetails.fold(List.empty)(_.accommodationUnits)
-
-}

@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.{optional, text, tuple}
 import play.api.i18n.Messages
 
-object AccountingInformationForm {
+object AccountingInformationForm:
 
   def accountingInformationForm(using messages: Messages): Form[(DayMonthsDuration, Boolean)] = Form(
     tuple(
@@ -31,5 +31,3 @@ object AccountingInformationForm {
         .transform[Boolean](_.contains("true"), b => Some(b.toString))
     )
   )
-
-}

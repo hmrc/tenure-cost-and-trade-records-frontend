@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.{mapping, optional}
 
-object AddAnotherLettingPartOfPropertyForm {
+object AddAnotherLettingPartOfPropertyForm:
 
   val theForm: Form[AnswersYesNo] = Form(
     mapping(
@@ -30,4 +30,3 @@ object AddAnotherLettingPartOfPropertyForm {
         .transform[AnswersYesNo](_.get, Some(_))
     )(x => x)(b => Some(b))
   )
-}

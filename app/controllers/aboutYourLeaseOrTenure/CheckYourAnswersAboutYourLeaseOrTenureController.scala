@@ -45,15 +45,15 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       checkYourAnswersAboutYourLeaseOrTenureView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match
           case Some(answer) => checkYourAnswersAboutYourLeaseOrTenureForm.fill(answer)
           case _            => checkYourAnswersAboutYourLeaseOrTenureForm
-        },
+        ,
         navigator.from match {
           case "CYA" =>
             controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
@@ -95,7 +95,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match {
+    answers.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show().url
       case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
@@ -110,11 +110,11 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
           answers.aboutLeaseOrAgreementPartOne.flatMap(
             _.leaseOrAgreementYearsDetails.map(_.rentUnderReviewNegotiated)
           )
-        ) match {
+        ) match
           case (Some(AnswerNo), Some(AnswerNo), Some(AnswerNo)) =>
             controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show().url
           case _                                                =>
-            answers.forType match {
+            answers.forType match
               case FOR6010 =>
                 controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show().url
               case FOR6011 =>
@@ -124,8 +124,3 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
               case _       =>
                 logger.warn("Navigation for CYA about lease without correct selection of conditions by controller")
                 throw RuntimeException("Invalid option exception for CYA about lease back link")
-            }
-        }
-    }
-
-}

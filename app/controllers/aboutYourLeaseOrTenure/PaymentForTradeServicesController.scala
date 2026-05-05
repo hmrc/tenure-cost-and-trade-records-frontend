@@ -46,17 +46,17 @@ class PaymentForTradeServicesController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PaymentForTradeServices")
 
     Ok(
       paymentView(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match {
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match
           case Some(answers) => paymentForTradeServicesForm.fill(answers)
           case _             => paymentForTradeServicesForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -74,31 +74,25 @@ class PaymentForTradeServicesController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(paymentForTradeServices = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PaymentForTradeServicesId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url + "#payment-for-trade-services"
       case _    =>
         answers.aboutLeaseOrAgreementPartThree.flatMap { aboutYourLeaseOrAgreement =>
           aboutYourLeaseOrAgreement.tradeServices.lastOption.map(_ => aboutYourLeaseOrAgreement.tradeServices.size - 1)
-        } match {
+        } match
           case Some(index) =>
             controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index).url
           case None        =>
-            answers.forType match {
+            answers.forType match
               case FOR6030 =>
                 controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
               case _       => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
-            }
-        }
-    }
-}

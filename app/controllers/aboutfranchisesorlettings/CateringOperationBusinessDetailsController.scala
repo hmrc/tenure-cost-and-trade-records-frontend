@@ -42,7 +42,7 @@ class CateringOperationBusinessDetailsController @Inject() ( // 6030 only
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails: Option[ConcessionBusinessDetails] = for {
@@ -103,5 +103,3 @@ class CateringOperationBusinessDetailsController @Inject() ( // 6030 only
 
   private def getBackLink(index: Option[Int]): String =
     controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(index).url
-
-}

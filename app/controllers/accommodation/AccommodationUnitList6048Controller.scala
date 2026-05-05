@@ -50,7 +50,7 @@ class AccommodationUnitList6048Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -148,5 +148,3 @@ class AccommodationUnitList6048Controller @Inject() (
     request: SessionRequest[AnyContent]
   ): String =
     selectedUnit.fold("")(_.unitName)
-
-}

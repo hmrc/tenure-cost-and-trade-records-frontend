@@ -49,7 +49,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   import controllers.FeedbackFormMapper.feedbackForm
 
@@ -113,5 +113,3 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
     )
 
     submissionConnector.submitRequestReferenceNumber(submission).map(_ => ())
-
-}

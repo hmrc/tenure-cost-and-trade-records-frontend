@@ -49,7 +49,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   import FeedbackFormMapper.feedbackForm
 
@@ -105,5 +105,3 @@ class CheckYourAnswersNotConnectedController @Inject() (
     )
 
     submissionConnector.submitNotConnected(session.referenceNumber, submission).map(_ => ())
-
-}

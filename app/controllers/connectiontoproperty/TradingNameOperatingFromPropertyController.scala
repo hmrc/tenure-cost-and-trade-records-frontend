@@ -58,10 +58,10 @@ class TradingNameOperatingFromPropertyController @Inject() (
     if (forType == FOR6048) {
       Ok(
         theView(
-          request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
+          request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match
             case Some(vacantProperties) => tradingNameOperatingFromProperty6048Form.fill(vacantProperties)
             case _                      => tradingNameOperatingFromProperty6048Form
-          },
+          ,
           calculateBackLink,
           isReadOnly
         )
@@ -129,22 +129,17 @@ class TradingNameOperatingFromPropertyController @Inject() (
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "TL"  =>
-        controllers.routes.TaskListController.show.url + "#name-of-operator-from-property"
+    navigator.from match
+      case "TL"  => controllers.routes.TaskListController.show.url + "#name-of-operator-from-property"
       case "CYA" => routes.CheckYourAnswersConnectionToPropertyController.show().url
       case _     =>
-        request.sessionData.forType match {
+        request.sessionData.forType match
           case FOR6076 =>
-            request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+            request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match
               case Some(AddressConnectionTypeYes)              =>
                 routes.AreYouStillConnectedController.show().url
               case Some(AddressConnectionTypeYesChangeAddress) =>
                 routes.EditAddressController.show().url
               case _                                           =>
                 controllers.routes.TaskListController.show.url
-            }
           case _       => routes.VacantPropertiesController.show().url
-        }
-
-    }

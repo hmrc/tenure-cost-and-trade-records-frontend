@@ -35,7 +35,7 @@ class DayMonthFormatter(
   fieldNameKey: String,
   allow29February: Boolean
 )(using messages: Messages
-) extends Formatter[DayMonthsDuration] {
+) extends Formatter[DayMonthsDuration]:
 
   private val dayMonthFields = Seq("day", "month")
   private val validationYear = if allow29February then 2020 else 2021
@@ -103,5 +103,3 @@ class DayMonthFormatter(
     Try(LocalDate.of(validationYear, month, day)).toEither.left
       .map(_ => "error.date.invalid")
       .map(_ => DayMonthsDuration(day, month))
-
-}

@@ -61,10 +61,9 @@ class LettingTypeDetailsController @Inject() (
         aboutFranchisesOrLettings <- request.sessionData.aboutFranchisesOrLettings
         rentalIncome              <- aboutFranchisesOrLettings.rentalIncome
         incomeRecord              <- rentalIncome.lift(index)
-        operatorDetails           <- incomeRecord match {
+        operatorDetails           <- incomeRecord match
                                        case letting: LettingIncomeRecord => letting.operatorDetails
                                        case _                            => None
-                                     }
       yield theForm.fill(operatorDetails)
 
     Ok(

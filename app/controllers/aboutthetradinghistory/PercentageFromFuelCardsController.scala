@@ -43,7 +43,7 @@ class PercentageFromFuelCardsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("PercentageFromFuelCards")
@@ -75,7 +75,7 @@ class PercentageFromFuelCardsController @Inject() (
                 getBackLink
               )
             ),
-          success => {
+          success =>
             val cards = (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (card, finYearEnd) =>
               card.copy(financialYearEnd = finYearEnd)
             }
@@ -84,22 +84,19 @@ class PercentageFromFuelCardsController @Inject() (
             session
               .saveOrUpdate(updatedData)
               .map(_ => Redirect(navigator.nextPage(PercentageFromFuelCardsId, updatedData).apply(updatedData)))
-          }
         )
       }
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#low-margin-fuel-cards"
       case _     => controllers.aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show().url
-    }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
 
   private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
     financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)
-}

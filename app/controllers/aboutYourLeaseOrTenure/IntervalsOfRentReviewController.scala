@@ -60,12 +60,10 @@ class IntervalsOfRentReviewController @Inject() (
     continueOrSaveAsDraft[IntervalsOfRentReview](
       intervalsOfRentReviewForm,
       formWithErrors => BadRequest(intervalsOfRentReviewView(formWithErrors)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(intervalsOfRentReview = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(IntervalsOfRentReviewId, updatedData).apply(updatedData)))
-
-      }
     )
   }

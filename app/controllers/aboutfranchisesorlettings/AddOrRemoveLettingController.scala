@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
-import form.confirmableActionForm.confirmableActionForm
+import form.ConfirmableActionForm.confirmableActionForm
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
@@ -45,7 +45,7 @@ class AddOrRemoveLettingController @Inject() (
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   private def franchisesOrLettingsData(
     using
@@ -192,4 +192,3 @@ class AddOrRemoveLettingController @Inject() (
       }
     )
   }
-}

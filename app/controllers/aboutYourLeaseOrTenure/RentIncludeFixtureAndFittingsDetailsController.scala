@@ -47,7 +47,7 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   private def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
@@ -58,11 +58,11 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
       Ok(
         rentIncludeFixtureAndFittingsDetailsTextAreaView(
           request.sessionData.aboutLeaseOrAgreementPartThree
-            .flatMap(_.rentIncludeFixtureAndFittingsDetailsTextArea) match {
+            .flatMap(_.rentIncludeFixtureAndFittingsDetailsTextArea) match
             case Some(rentIncludeFixtureAndFittingsDetailsTextArea) =>
               rentIncludeFixtureAndFittingsDetailsTextAreaForm.fill(rentIncludeFixtureAndFittingsDetailsTextArea)
             case _                                                  => rentIncludeFixtureAndFittingsDetailsTextAreaForm
-          },
+          ,
           request.sessionData.toSummary
         )
       )
@@ -113,5 +113,3 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
       )
     }
   }
-
-}

@@ -29,7 +29,7 @@ case class AboutLeaseOrAgreementPartFour(
   rentFreePeriodDetails: Option[String] = None
 )
 
-object AboutLeaseOrAgreementPartFour {
+object AboutLeaseOrAgreementPartFour:
   implicit val format: OFormat[AboutLeaseOrAgreementPartFour] = Json.format
 
   def updateAboutLeaseOrAgreementPartFour(
@@ -44,4 +44,3 @@ object AboutLeaseOrAgreementPartFour {
     }
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartFour = updatedAboutLeaseOrAgreementPartFour)
-}

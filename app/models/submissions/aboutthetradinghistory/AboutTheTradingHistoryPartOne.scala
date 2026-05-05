@@ -45,7 +45,7 @@ case class AboutTheTradingHistoryPartOne(
   areYouVATRegistered: Option[AnswersYesNo] = None
 )
 
-object AboutTheTradingHistoryPartOne {
+object AboutTheTradingHistoryPartOne:
   implicit val format: OFormat[AboutTheTradingHistoryPartOne] = Json.format
 
   def updateAboutTheTradingHistoryPartOne(
@@ -54,10 +54,9 @@ object AboutTheTradingHistoryPartOne {
   ): Session =
     val currentAboutTheTradingHistoryPartOne = sessionRequest.sessionData.aboutTheTradingHistoryPartOne
 
-    val updateAboutTheTradingHistoryPartOne = currentAboutTheTradingHistoryPartOne match {
+    val updateAboutTheTradingHistoryPartOne = currentAboutTheTradingHistoryPartOne match
       case Some(_) => sessionRequest.sessionData.aboutTheTradingHistoryPartOne.map(copy)
       case _       => Some(copy(AboutTheTradingHistoryPartOne()))
-    }
 
     sessionRequest.sessionData.copy(aboutTheTradingHistoryPartOne = updateAboutTheTradingHistoryPartOne)
 
@@ -99,4 +98,3 @@ object AboutTheTradingHistoryPartOne {
         update(aboutTheTradingHistoryPartOne.additionalActivities.getOrElse(AdditionalActivities()))
       aboutTheTradingHistoryPartOne.copy(additionalActivities = Some(additionalActivities))
     }
-}

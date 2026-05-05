@@ -70,11 +70,10 @@ class AboutYouController @Inject() (
         BadRequest(
           theView(formWithErrors, request.sessionData.toSummary, isReadOnly)
         ),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
         repo
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(AboutYouPageId, updatedData).apply(updatedData)))
-      }
     )
   }

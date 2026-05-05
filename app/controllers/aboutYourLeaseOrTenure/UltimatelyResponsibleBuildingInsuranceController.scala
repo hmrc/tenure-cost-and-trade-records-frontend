@@ -42,18 +42,18 @@ class UltimatelyResponsibleBuildingInsuranceController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("UltimatelyResponsibleBuildingInsurance")
 
     Ok(
       ultimatelyResponsibleBIView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleBuildingInsurance) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleBuildingInsurance) match
           case Some(ultimatelyResponsibleBI) =>
             ultimatelyResponsibleBuildingInsuranceForm.fill(ultimatelyResponsibleBI)
           case _                             => ultimatelyResponsibleBuildingInsuranceForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -63,7 +63,7 @@ class UltimatelyResponsibleBuildingInsuranceController @Inject() (
     continueOrSaveAsDraft[UltimatelyResponsibleBuildingInsurance](
       ultimatelyResponsibleBuildingInsuranceForm,
       formWithErrors => BadRequest(ultimatelyResponsibleBIView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData =
           updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleBuildingInsurance = Some(data)))
         session
@@ -71,9 +71,5 @@ class UltimatelyResponsibleBuildingInsuranceController @Inject() (
           .map(_ =>
             Redirect(navigator.nextPage(UltimatelyResponsibleBusinessInsurancePageId, updatedData).apply(updatedData))
           )
-
-      }
     )
   }
-
-}

@@ -43,17 +43,17 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryOnQuantityOfBeers")
 
     Ok(
       rentPayableVaryOnQuantityOfBeersView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match
           case Some(answer) => rentPayableVaryOnQuantityOfBeersForm.fill(answer)
           case _            => rentPayableVaryOnQuantityOfBeersForm
-        },
+        ,
         getBackLink
       )
     )
@@ -74,11 +74,8 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
+    request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNet) match
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
       case _               =>
         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
-    }
-
-}

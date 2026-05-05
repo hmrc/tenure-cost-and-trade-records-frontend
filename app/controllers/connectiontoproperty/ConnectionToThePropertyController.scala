@@ -46,17 +46,17 @@ class ConnectionToThePropertyController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ConnectionToTheProperty")
 
     Ok(
       connectionToThePropertyView(
-        request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match {
+        request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match
           case Some(connectionToProperty) => connectionToThePropertyForm.fill(connectionToProperty)
           case _                          => connectionToThePropertyForm
-        },
+        ,
         getBackLink(request.sessionData) match {
           case Right(link) => link
           case Left(msg)   =>
@@ -90,11 +90,9 @@ class ConnectionToThePropertyController @Inject() (
   }
 
   private def getBackLink(answers: Session): Either[String, String] =
-    answers.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType) match
       case Some(AddressConnectionTypeYesChangeAddress) =>
         Right(controllers.connectiontoproperty.routes.EditAddressController.show().url)
       case Some(AddressConnectionTypeYes)              =>
         Right(controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url)
       case _                                           => Left("Unknown connection to property back link")
-    }
-}

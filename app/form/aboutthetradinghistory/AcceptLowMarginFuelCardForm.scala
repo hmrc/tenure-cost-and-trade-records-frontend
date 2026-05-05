@@ -24,7 +24,7 @@ import play.api.data.Forms.single
 /**
   * @author Yuriy Tumakha
   */
-object AcceptLowMarginFuelCardForm {
+object AcceptLowMarginFuelCardForm:
 
   val acceptLowMarginFuelCardForm: Form[AnswersYesNo] =
     Form(
@@ -32,5 +32,3 @@ object AcceptLowMarginFuelCardForm {
         "acceptLowMarginFuelCard" -> createYesNoType("error.acceptLowMarginFuelCard.required")
       )
     )
-
-}

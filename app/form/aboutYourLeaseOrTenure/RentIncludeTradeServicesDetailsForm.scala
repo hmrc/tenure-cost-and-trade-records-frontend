@@ -23,7 +23,7 @@ import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.i18n.Messages
 
-object RentIncludeTradeServicesDetailsForm {
+object RentIncludeTradeServicesDetailsForm:
 
   def rentIncludeTradeServicesDetailsForm(
     annualRent: Option[BigDecimal] = None,
@@ -40,5 +40,3 @@ object RentIncludeTradeServicesDetailsForm {
         )
     )(RentIncludeTradeServicesInformationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-
-}

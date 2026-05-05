@@ -20,7 +20,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object CostsBreakdownForm {
+object CostsBreakdownForm:
 
   val costsBreakdownForm: Form[String] =
     Form(
@@ -31,4 +31,3 @@ object CostsBreakdownForm {
         )
       )
     )
-}

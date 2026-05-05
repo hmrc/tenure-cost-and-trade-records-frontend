@@ -44,18 +44,18 @@ class ElectricVehicleChargingPointsController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ElectricVehicleChargingPoints")
 
     Ok(
       electricVehicleChargingPointsView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints) match {
+        request.sessionData.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints) match
           case Some(electricVehicleChargingPoints) =>
             electricVehicleChargingPointsForm.fill(electricVehicleChargingPoints)
           case _                                   => electricVehicleChargingPointsForm
-        },
+        ,
         request.sessionData.toSummary,
         getBackLink
       )
@@ -83,11 +83,7 @@ class ElectricVehicleChargingPointsController @Inject() (
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#ev-charging-point"
       case _     => controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show().url
-    }
-
-}

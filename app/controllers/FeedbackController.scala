@@ -41,7 +41,7 @@ class FeedbackController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   audit: Audit
 ) extends FrontendController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   import FeedbackFormMapper.feedbackForm
 
@@ -132,9 +132,7 @@ class FeedbackController @Inject() (
       )
     )
 
-}
-
-object FeedbackFormMapper {
+object FeedbackFormMapper:
 
   val feedbackForm: Form[Feedback] = Form(
     mapping(
@@ -142,4 +140,3 @@ object FeedbackFormMapper {
       "feedback-comments" -> optional(text).verifying("feedback.comments.maxLength", it => it.forall(_.length <= 2000))
     )(Feedback.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-}

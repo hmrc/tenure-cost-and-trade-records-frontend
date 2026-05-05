@@ -42,18 +42,18 @@ class TenancyLeaseAgreementExpireController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TenancyLeaseAgreementExpire")
 
     Ok(
       tenancyLeaseAgreementExpireView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenancyLeaseAgreementExpire) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenancyLeaseAgreementExpire) match
           case Some(tenancyLeaseAgreementExpire) =>
             tenancyLeaseAgreementExpireForm.fill(tenancyLeaseAgreementExpire)
           case _                                 => tenancyLeaseAgreementExpireForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -76,5 +76,3 @@ class TenancyLeaseAgreementExpireController @Inject() (
       }
     )
   }
-
-}

@@ -19,7 +19,7 @@ package form
 import play.api.data.Forms.text
 import play.api.data.Mapping
 
-object PhoneNumberMapping {
+object PhoneNumberMapping:
 
   // Valid formats: 1234567890 | +44 1234567890 | +44 0123 456 789 | +441234567890 | 0123 456 7890 | 0123-456-7890 | +44 123-456-7890
 
@@ -36,6 +36,5 @@ object PhoneNumberMapping {
         Errors.invalidPhone,
         pN => if pN.nonEmpty && validPNLength(pN) then pN.matches(phoneNumberRegex) else true
       )
-  }
 
-}
+  }

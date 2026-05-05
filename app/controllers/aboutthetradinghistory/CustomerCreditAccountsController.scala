@@ -45,7 +45,7 @@ class CustomerCreditAccountsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CustomerCreditAccounts")
@@ -92,21 +92,16 @@ class CustomerCreditAccountsController @Inject() (
   }
 
   private def backLink(answers: Session)(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#customer-credit-accounts"
       case _     =>
-        answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion) match {
-          case Some(AnswerYes) =>
-            routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
+        answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion) match
+          case Some(AnswerYes) => routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
           case _               => routes.BunkeredFuelQuestionController.show().url
-        }
-    }
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
 
   private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
     financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)
-}

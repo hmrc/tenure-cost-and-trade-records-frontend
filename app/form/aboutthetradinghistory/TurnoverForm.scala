@@ -25,15 +25,14 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 import scala.util.Try
 
-object TurnoverForm {
+object TurnoverForm:
 
   def turnoverForm(
     expectedNumberOfFinancialYears: Int,
     financialYearEndDates: Seq[LocalDate]
   )(using
     messages: Messages
-  ): Form[Seq[TurnoverSection]] = {
-
+  ): Form[Seq[TurnoverSection]] =
     def averageOccupancyRateMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = optional(
       text
         .transform[BigDecimal](
@@ -59,7 +58,7 @@ object TurnoverForm {
     val yearMappings = financialYearEndDates.map(date => columnMapping(date.getYear.toString))
 
     Form {
-      expectedNumberOfFinancialYears match {
+      expectedNumberOfFinancialYears match
         case 0 =>
           mapping("" -> optional(text))(_ => Seq.empty[TurnoverSection])(_ => Some(None))
 
@@ -89,8 +88,4 @@ object TurnoverForm {
 
         case _ =>
           throw IllegalArgumentException(s"Unexpected number of financial years: $expectedNumberOfFinancialYears")
-      }
     }
-  }
-
-}

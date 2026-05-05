@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object ATMLettingForm {
+object ATMLettingForm:
 
   val theForm: Form[ATMLetting] = Form(
     mapping(
@@ -33,4 +33,3 @@ object ATMLettingForm {
       Some(atmLetting.bankOrCompany.getOrElse(""))
     )
   )
-}

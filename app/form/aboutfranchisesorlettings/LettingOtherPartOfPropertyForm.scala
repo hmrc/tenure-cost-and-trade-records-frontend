@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object LettingOtherPartOfPropertyForm {
+object LettingOtherPartOfPropertyForm:
 
   val theForm: Form[OperatorDetails] = Form[OperatorDetails](
     mapping(
@@ -37,4 +37,3 @@ object LettingOtherPartOfPropertyForm {
       Some(obj.operatorName, obj.typeOfBusiness)
     }
   )
-}

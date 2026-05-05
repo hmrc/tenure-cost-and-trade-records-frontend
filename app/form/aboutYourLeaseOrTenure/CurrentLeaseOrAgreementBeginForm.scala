@@ -23,7 +23,7 @@ import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 import play.api.i18n.Messages
 
-object CurrentLeaseOrAgreementBeginForm {
+object CurrentLeaseOrAgreementBeginForm:
 
   def currentLeaseOrAgreementBeginForm(using messages: Messages): Form[CurrentLeaseOrAgreementBegin] = Form(
     mapping(
@@ -33,5 +33,3 @@ object CurrentLeaseOrAgreementBeginForm {
       )
     )(CurrentLeaseOrAgreementBegin.apply)(o => Some(Tuple.fromProductTyped(o)))
   )
-
-}

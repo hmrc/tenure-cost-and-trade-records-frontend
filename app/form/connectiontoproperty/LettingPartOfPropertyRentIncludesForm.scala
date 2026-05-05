@@ -20,7 +20,7 @@ import form.MappingSupport.{nonEmptyList, noneCantBeSelectedWithOther}
 import play.api.data.Form
 import play.api.data.Forms.{list, single, text}
 
-object LettingPartOfPropertyRentIncludesForm {
+object LettingPartOfPropertyRentIncludesForm:
 
   val lettingPartOfPropertyRentIncludesForm: Form[List[String]] = Form(
     single(
@@ -33,5 +33,3 @@ object LettingPartOfPropertyRentIncludesForm {
       )
     )
   )
-
-}

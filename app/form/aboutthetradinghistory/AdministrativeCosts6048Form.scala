@@ -25,7 +25,7 @@ import play.api.i18n.Messages
 /**
   * @author Yuriy Tumakha
   */
-object AdministrativeCosts6048Form {
+object AdministrativeCosts6048Form:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[AdministrativeCosts6048] =
     mapping(
@@ -46,8 +46,6 @@ object AdministrativeCosts6048Form {
     years: Seq[String]
   )(using messages: Messages
   ): Form[Seq[AdministrativeCosts6048]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

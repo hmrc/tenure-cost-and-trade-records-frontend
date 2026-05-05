@@ -46,17 +46,17 @@ class LeaseOrAgreementYearsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("LeaseOrAgreementYears")
 
     Ok(
       leaseOrAgreementYearsView(
-        leaseOrAgreementDetailsInSession match {
+        leaseOrAgreementDetailsInSession match
           case Some(leaseOrAgreementYearsDetails) => leaseOrAgreementYearsForm.fill(leaseOrAgreementYearsDetails)
           case _                                  => leaseOrAgreementYearsForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -99,15 +99,9 @@ class LeaseOrAgreementYearsController @Inject() (
       .flatMap(_.leaseOrAgreementYearsDetails)
 
   private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url + "#lease-or-agreement-details"
       case _    =>
-        answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
-          case _               =>
-            controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
-        }
-    }
-
-}
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url

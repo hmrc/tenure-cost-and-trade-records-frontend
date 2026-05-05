@@ -21,7 +21,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.maxLength
 
-object UnusualCircumstancesForm {
+object UnusualCircumstancesForm:
 
   val unusualCircumstancesForm: Form[UnusualCircumstances] = Form(
     mapping(
@@ -30,4 +30,3 @@ object UnusualCircumstancesForm {
       )
     )(UnusualCircumstances.apply)(o => Some(o.unusualCircumstances))
   )
-}

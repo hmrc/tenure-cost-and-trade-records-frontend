@@ -40,17 +40,17 @@ class CostsBreakdownController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CostsBreakdown")
 
     Ok(
       view(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.costsBreakdown) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.costsBreakdown) match
           case Some(data) => costsBreakdownForm.fill(data)
           case _          => costsBreakdownForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -66,12 +66,10 @@ class CostsBreakdownController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(costsBreakdown = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CostsBreakdownId, updatedData).apply(updatedData)))
-      }
     )
   }
-}

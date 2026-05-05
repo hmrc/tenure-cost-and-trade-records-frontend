@@ -16,7 +16,7 @@
 
 package form
 
-object Errors {
+object Errors:
 
   // annual rent
   val annualRentExcludingVAT         = "error.required.annualRentExcludingVat"
@@ -150,5 +150,3 @@ object Errors {
   val invalidDurationDays   = "error.duration.days"
   val invalidDurationMonths = "error.duration.months"
   val invalidDurationYears  = "error.duration.years"
-
-}

@@ -51,10 +51,10 @@ class TradingNameOwnThePropertyController @Inject() (
     audit.sendChangeLink("TradingNameOwnTheProperty")
     Ok(
       theView(
-        ownThePropertyInSession match {
+        ownThePropertyInSession match
           case Some(ownTheProperty) => theForm.fill(ownTheProperty)
           case _                    => theForm
-        },
+        ,
         getBackLink,
         request.sessionData.stillConnectedDetails
           .flatMap(_.tradingNameOperatingFromProperty)
@@ -102,8 +102,6 @@ class TradingNameOwnThePropertyController @Inject() (
     request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty)
 
   private def getBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+    navigator.from match
+      case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       case _     => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
-    }

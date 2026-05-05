@@ -19,13 +19,13 @@ package form.lettingHistory
 import play.api.data.Form
 import play.api.data.Forms.{boolean, single}
 
-object MaxNumberReachedForm {
+object MaxNumberReachedForm:
 
-  val theForm: Form[Boolean] = Form[Boolean] {
-    single(
-      "understood" ->
-        boolean
-          .verifying("lettingHistory.maxNumberReached.understanding.required", understand => understand)
+  val theForm: Form[Boolean] =
+    Form[Boolean](
+      single(
+        "understood" ->
+          boolean
+            .verifying("lettingHistory.maxNumberReached.understanding.required", understand => understand)
+      )
     )
-  }
-}

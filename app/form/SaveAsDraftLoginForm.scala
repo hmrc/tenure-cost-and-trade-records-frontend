@@ -24,7 +24,7 @@ import util.AlphanumericPasswordGenerator.passwordLength
 /**
   * @author Yuriy Tumakha
   */
-object SaveAsDraftLoginForm {
+object SaveAsDraftLoginForm:
 
   val saveAsDraftLoginForm: Form[String] = Form(
     single(
@@ -35,5 +35,3 @@ object SaveAsDraftLoginForm {
           )
     )
   )
-
-}

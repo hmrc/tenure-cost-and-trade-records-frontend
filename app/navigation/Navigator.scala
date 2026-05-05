@@ -90,7 +90,7 @@ abstract class Navigator @Inject() (audit: Audit):
     call
 
   private def possibleCYARedirect(session: Session)(nextCall: Call)(using request: Request[AnyContent]): Call =
-    if (from == "CYA") {
+    if from == "CYA" then
       overrideRedirectIfFromCYA
         .find(entry => nextCall.url.contains(entry._1))
         .map(_._2(session))
@@ -101,9 +101,8 @@ abstract class Navigator @Inject() (audit: Audit):
         )
         .orElse(cyaPage)
         .getOrElse(nextCall)
-    } else {
+    else
       nextCall
-    }
 
   def idx(using request: Request[AnyContent]): Int =
     request

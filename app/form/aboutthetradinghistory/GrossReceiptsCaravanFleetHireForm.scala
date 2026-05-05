@@ -27,7 +27,7 @@ import play.api.i18n.Messages
   *
   * @author Yuriy Tumakha
   */
-object GrossReceiptsCaravanFleetHireForm {
+object GrossReceiptsCaravanFleetHireForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[GrossReceiptsCaravanFleetHire] =
     mapping(
@@ -39,8 +39,6 @@ object GrossReceiptsCaravanFleetHireForm {
     years: Seq[String]
   )(using messages: Messages
   ): Form[Seq[GrossReceiptsCaravanFleetHire]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

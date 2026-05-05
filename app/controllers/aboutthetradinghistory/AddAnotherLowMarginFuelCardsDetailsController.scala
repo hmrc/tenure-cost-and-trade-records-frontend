@@ -20,7 +20,7 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.theForm
-import form.confirmableActionForm.confirmableActionForm
+import form.ConfirmableActionForm.confirmableActionForm
 import models.pages.ListPageConfig.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
@@ -48,7 +48,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   private def aboutTheTradingHistoryData(
     using
@@ -171,5 +171,3 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
       }
     )
   }
-
-}

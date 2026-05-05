@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
-import form.confirmableActionForm.confirmableActionForm
+import form.ConfirmableActionForm.confirmableActionForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.AnswersYesNo
@@ -45,7 +45,7 @@ class ServicePaidSeparatelyListController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingSection =
@@ -55,10 +55,10 @@ class ServicePaidSeparatelyListController @Inject() (
 
     Ok(
       theListView(
-        existingSection.flatMap(_.addAnotherPaidService) match {
+        existingSection.flatMap(_.addAnotherPaidService) match
           case Some(answer) => addServicePaidSeparatelyForm.fill(answer)
           case _            => addServicePaidSeparatelyForm
-        },
+        ,
         index
       )
     )
@@ -160,4 +160,3 @@ class ServicePaidSeparatelyListController @Inject() (
 
   private def toServicePaidSeparatelyList(index: Int): Call =
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index)
-}

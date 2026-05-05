@@ -44,7 +44,7 @@ abstract class CaravansTrading6045Controller(
   mcc: MessagesControllerComponents,
   audit: Audit
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   val pageId: Identifier              = tradingPage.pageId
   val unitType: CaravanUnitType       = tradingPage.unitType
@@ -131,16 +131,12 @@ abstract class CaravansTrading6045Controller(
     }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    (navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
+    (navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()
       case _     =>
-        tradingPage match {
+        tradingPage match
           case SingleCaravansOwnedByOperator => routes.GrossReceiptsCaravanFleetHireController.show()
           case SingleCaravansSublet          => routes.SingleCaravansOwnedByOperatorController.show()
           case TwinCaravansOwnedByOperator   => routes.SingleCaravansAgeCategoriesController.show()
           case TwinCaravansSublet            => routes.TwinUnitCaravansOwnedByOperatorController.show()
-        }
-    }).url
-
-}
+    ).url

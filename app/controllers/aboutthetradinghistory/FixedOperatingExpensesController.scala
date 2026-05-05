@@ -43,7 +43,7 @@ class FixedOperatingExpensesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("FixedOperatingExpenses")
@@ -53,13 +53,12 @@ class FixedOperatingExpensesController @Inject() (
       val years        = yearEndDates.map(_.getYear.toString)
 
       val fixedOperatingExpenses =
-        if (tradingHistory.fixedOperatingExpensesSections.size == tradingHistory.turnoverSections.size) {
+        if tradingHistory.fixedOperatingExpensesSections.size == tradingHistory.turnoverSections.size then
           (tradingHistory.fixedOperatingExpensesSections zip yearEndDates).map { case (foe, finYearEnd) =>
             foe.copy(financialYearEnd = finYearEnd)
           }
-        } else {
+        else
           yearEndDates.map(FixedOperatingExpenses(_, None, None, None, None, None))
-        }
 
       val updatedData = updateAboutTheTradingHistory(_.copy(fixedOperatingExpensesSections = fixedOperatingExpenses))
       session
@@ -83,7 +82,7 @@ class FixedOperatingExpensesController @Inject() (
       continueOrSaveAsDraft[Seq[FixedOperatingExpenses]](
         fixedOperatingExpensesForm(years),
         formWithErrors => BadRequest(fixedOperatingExpensesView(formWithErrors, navigator.from)),
-        data => {
+        data =>
           val fixedOperatingExpenses = (data zip yearEndDates).map { case (foe, finYearEnd) =>
             foe.copy(financialYearEnd = finYearEnd)
           }
@@ -98,7 +97,6 @@ class FixedOperatingExpensesController @Inject() (
                 .getOrElse(navigator.nextPage(FixedOperatingExpensesId, updatedData).apply(updatedData))
             )
             .map(Redirect)
-        }
       )
     }
   }
@@ -114,5 +112,3 @@ class FixedOperatingExpensesController @Inject() (
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
-
-}

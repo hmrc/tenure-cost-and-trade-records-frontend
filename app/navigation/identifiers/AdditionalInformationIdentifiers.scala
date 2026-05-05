@@ -16,8 +16,8 @@
 
 package navigation.identifiers
 
-case object FurtherInformationId extends Identifier { override def toString: String = "furtherInformationPage" }
+case object FurtherInformationId extends Identifier:
+  override def toString: String = "furtherInformationPage"
 
-case object CheckYourAnswersAdditionalInformationId extends Identifier {
+case object CheckYourAnswersAdditionalInformationId extends Identifier:
   override def toString: String = "checkYourAnswersAdditionalInformationPage"
-}
