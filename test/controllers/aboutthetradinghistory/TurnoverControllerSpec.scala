@@ -30,7 +30,7 @@ class TurnoverControllerSpec extends TestBaseSpec {
 
   def turnoverController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new TurnoverController(
+  ): TurnoverController = TurnoverController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

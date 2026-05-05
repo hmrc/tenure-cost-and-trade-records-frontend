@@ -31,7 +31,7 @@ object RemoveConnectionDetails:
 
   def updateRemoveConnectionDetails(
     copy: RemoveConnectionDetails => RemoveConnectionDetails
-  )(implicit sessionRequest: SessionRequest[?]
+  )(using sessionRequest: SessionRequest[?]
   ): Session =
     val currentRemoveConnectionDetails = sessionRequest.sessionData.removeConnectionDetails
 

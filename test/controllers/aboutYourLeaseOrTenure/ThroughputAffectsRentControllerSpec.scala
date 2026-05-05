@@ -18,9 +18,9 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import utils.TestBaseSpec
 import play.api.test.*
 import play.api.test.Helpers.*
+import utils.TestBaseSpec
 
 /**
   * @author Yuriy Tumakha
@@ -33,7 +33,7 @@ class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = new ThroughputAffectsRentController(
+  ): ThroughputAffectsRentController = ThroughputAffectsRentController(
     throughputAffectsRentView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

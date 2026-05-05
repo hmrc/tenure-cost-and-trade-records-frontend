@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.bunkerFuelCardsDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class BunkerFuelCardDetailsController @Inject() (
@@ -39,7 +39,7 @@ class BunkerFuelCardDetailsController @Inject() (
   view: bunkerFuelCardsDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -51,19 +51,18 @@ class BunkerFuelCardDetailsController @Inject() (
         request.sessionData.aboutTheTradingHistory.map(_.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty))
       requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
     } yield requestedBFCDetails.bunkerFuelCardDetails
-    Future.successful(
-      Ok(
-        view(
-          existingBunkerFuelCardDetails.fold(bunkerFuelCardDetailsForm)(bunkerFuelCardDetailsForm.fill),
-          index,
-          getBackLinkUrl(index),
-          request.sessionData.toSummary
-        )
+
+    Ok(
+      view(
+        existingBunkerFuelCardDetails.fold(bunkerFuelCardDetailsForm)(bunkerFuelCardDetailsForm.fill),
+        index,
+        getBackLinkUrl(index),
+        request.sessionData.toSummary
       )
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[BunkerFuelCardDetails](
       bunkerFuelCardDetailsForm,
       formWithErrors => BadRequest(view(formWithErrors, index, getBackLinkUrl(index), request.sessionData.toSummary)),

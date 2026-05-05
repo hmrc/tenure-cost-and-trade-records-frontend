@@ -15,12 +15,10 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import models.submissions.aboutfranchisesorlettings.OperatorDetails
 @import models.ForType.*
+@import models.submissions.aboutfranchisesorlettings.OperatorDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -31,37 +29,39 @@
 
 @(theForm: Form[OperatorDetails], index: Int, backLink: String)(implicit request: SessionRequest[AnyContent], messages: Messages)
 
-@forType = @{ request.sessionData.forType }
+@forType = @{
+    request.sessionData.forType
+}
 
 @sectionName = @{
     forType match {
         case FOR6015 | FOR6016 => messages("label.section.aboutConcessionsOrLettings")
         case FOR6045 | FOR6046 => messages("label.section.aboutConcessionsFranchisesOrLettings")
-        case _                 => messages("label.section.aboutFranchisesOrLettings")
+        case _ => messages("label.section.aboutFranchisesOrLettings")
     }
 }
 
 @labelTypeOfBusiness = @{
     forType match {
-        case FOR6010 | FOR6011  => "lettingTypeOfBusiness"
-        case _                  => "typeOfBusiness"
+        case FOR6010 | FOR6011 => "lettingTypeOfBusiness"
+        case _ => "typeOfBusiness"
     }
 }
 
 @hintTypeOfBusiness = @{
     forType match {
-        case FOR6010 | FOR6011  => "descriptionOfLetting"
-        case FOR6015 | FOR6016  => "lettingTypeOfBusiness6015"
-        case _                  => "lettingTypeDetails"
+        case FOR6010 | FOR6011 => "descriptionOfLetting"
+        case FOR6015 | FOR6016 => "lettingTypeOfBusiness6015"
+        case _ => "lettingTypeDetails"
     }
 }
 
 @pageHeading = @{
     forType match {
         case FOR6010 => messages("lettingOtherPartOfPropertyDetailsTenants.heading")
-        case FOR6015 | FOR6016  => messages("lettingDetails.heading")
-        case FOR6030 | FOR6045 | FOR6046  => messages("tenantDetails.headings")
-        case _                  => messages("lettingOtherPartOfPropertyDetails.heading")
+        case FOR6015 | FOR6016 => messages("lettingDetails.heading")
+        case FOR6030 | FOR6045 | FOR6046 => messages("tenantDetails.headings")
+        case _ => messages("lettingOtherPartOfPropertyDetails.heading")
     }
 }
 
@@ -76,11 +76,11 @@
     fullWidth = true
 ) {
 
-        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.submit(index)) {
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.submit(index)) {
 
-            @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "operatorName", labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", labelTypeOfBusiness, labelClasses = "govuk-!-font-weight-bold", hintMsg = hintTypeOfBusiness)
+        @includes.textInput(govukInput, theForm, "lettingOperatorName", "govuk-input--width-20", "operatorName", labelClasses = "govuk-!-font-weight-bold")
+        @includes.textInput(govukInput, theForm, "lettingTypeOfBusiness", "govuk-input--width-20", labelTypeOfBusiness, labelClasses = "govuk-!-font-weight-bold", hintMsg = hintTypeOfBusiness)
 
-            @includes.continueSaveAsDraftButtons(govukButton)
-        }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

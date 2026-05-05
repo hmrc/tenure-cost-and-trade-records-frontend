@@ -19,16 +19,16 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
+import form.connectiontoproperty.TradingNameOwnThePropertyForm.theForm
 import models.submissions.common.AnswersYesNo
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
+import navigation.identifiers.TradingNameOwnThePropertyPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.tradingNameOwnTheProperty as TradingNameOwnThePropertyView
-import form.connectiontoproperty.TradingNameOwnThePropertyForm.theForm
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import navigation.identifiers.TradingNameOwnThePropertyPageId
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -96,12 +96,12 @@ class TradingNameOwnThePropertyController @Inject() (
   }
 
   private def ownThePropertyInSession(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AnswersYesNo] =
     request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty)
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url

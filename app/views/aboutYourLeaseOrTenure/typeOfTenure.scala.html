@@ -14,17 +14,15 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.TypeOfTenure
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
-@import uk.gov.hmrc.govukfrontend.views.Aliases._
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import models.submissions.aboutYourLeaseOrTenure.TypeOfTenure
+@import uk.gov.hmrc.govukfrontend.views.Aliases.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 
 
@@ -35,71 +33,72 @@
         formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[TypeOfTenure], summary: Summary, fromLocation:String = "")(implicit request: Request[?], messages: Messages)
+@(theForm: Form[TypeOfTenure], summary: Summary, fromLocation: String = "")(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("typeOfTenure.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = { fromLocation match {
-   case "TL" => controllers.routes.TaskListController.show.url+"#type-of-tenure"
-   case _ => controllers.routes.TaskListController.show.url
-  }
- },
- theForm = theForm
+    pageHeading = messages("typeOfTenure.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = {
+        fromLocation match {
+            case "TL" => controllers.routes.TaskListController.show.url + "#type-of-tenure"
+            case _ => controllers.routes.TaskListController.show.url
+        }
+    },
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.submit()) {
 
-   @govukCheckboxes(
-    Checkboxes(
-     fieldset = Fieldset(
-      legend = Legend(
-       content = Text(Messages("typeOfTenure.heading")),
-       classes = "govuk-label--l govuk-fieldset__legend--l",
-       isPageHeading = true
-      )
-     ),
-     name = "typeOfTenure[]",
-     items = Seq(
-      CheckboxItem(
-       id = "leasehold",
-       content = Text(messages("label.typeOfTenure.leasehold")),
-       value = "leasehold"
-      ),
-      CheckboxItem(
-       id = "license",
-       content = Text(messages("label.typeOfTenure.license")),
-       value = "license"
-      ),
-      CheckboxItem(
-       id = "tenancy",
-       content = Text(messages("label.typeOfTenure.tenancy")),
-       value = "tenancy"
-      ),
-      CheckboxItem(
-      id = "longLeasehold",
-      content = Text(messages("label.typeOfTenure.long.leasehold")),
-      value = "longLeasehold"
-      )
-     ),
-     hint = Hint(content = HtmlContent(messages("hint.all.apply")))
-    ).withFormField(theForm("typeOfTenure"))
-   )
+        @govukCheckboxes(
+            Checkboxes(
+                fieldset = Fieldset(
+                    legend = Legend(
+                        content = Text(Messages("typeOfTenure.heading")),
+                        classes = "govuk-label--l govuk-fieldset__legend--l",
+                        isPageHeading = true
+                    )
+                ),
+                name = "typeOfTenure[]",
+                items = Seq(
+                    CheckboxItem(
+                        id = "leasehold",
+                        content = Text(messages("label.typeOfTenure.leasehold")),
+                        value = "leasehold"
+                    ),
+                    CheckboxItem(
+                        id = "license",
+                        content = Text(messages("label.typeOfTenure.license")),
+                        value = "license"
+                    ),
+                    CheckboxItem(
+                        id = "tenancy",
+                        content = Text(messages("label.typeOfTenure.tenancy")),
+                        value = "tenancy"
+                    ),
+                    CheckboxItem(
+                        id = "longLeasehold",
+                        content = Text(messages("label.typeOfTenure.long.leasehold")),
+                        value = "longLeasehold"
+                    )
+                ),
+                hint = Hint(content = HtmlContent(messages("hint.all.apply")))
+            ).withFormField(theForm("typeOfTenure"))
+        )
 
-   @includes.textInputHMRCCharCountTypeOfTenure(
-    hmrcCharacterCount,
-    theForm,
-    "typeOfTenureDetails",
-    "label.typeOfTenureDetails",
-    classes = "govuk-!-font-weight-bold",
-    charCount = 2000
-   )
+        @includes.textInputHMRCCharCountTypeOfTenure(
+            hmrcCharacterCount,
+            theForm,
+            "typeOfTenureDetails",
+            "label.typeOfTenureDetails",
+            classes = "govuk-!-font-weight-bold",
+            charCount = 2000
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

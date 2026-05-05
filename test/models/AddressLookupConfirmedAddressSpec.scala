@@ -17,8 +17,8 @@
 package models
 
 import connectors.addressLookup.*
-import utils.TestBaseSpec
 import play.api.libs.json.{JsValue, Json}
+import utils.TestBaseSpec
 
 class AddressLookupConfirmedAddressSpec extends TestBaseSpec {
 

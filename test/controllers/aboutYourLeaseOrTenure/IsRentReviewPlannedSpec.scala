@@ -36,7 +36,7 @@ class IsRentReviewPlannedSpec extends TestBaseSpec:
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
       prefilledAboutLeaseOrAgreementPartTwo
     )
-  ) = new IsRentReviewPlannedController(
+  ): IsRentReviewPlannedController = IsRentReviewPlannedController(
     isRentReviewPlannedView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

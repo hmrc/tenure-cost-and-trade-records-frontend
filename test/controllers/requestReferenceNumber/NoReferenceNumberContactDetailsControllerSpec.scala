@@ -21,8 +21,9 @@ import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.theF
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
@@ -34,7 +35,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
   def requestReferenceNumberContactDetailsController(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
-  ) = new RequestReferenceNumberContactDetailsController(
+  ): RequestReferenceNumberContactDetailsController = RequestReferenceNumberContactDetailsController(
     stubMessagesControllerComponents(),
     requestReferenceNumberNavigator,
     requestReferenceNumberContactDetailsView,
@@ -44,7 +45,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
   def requestReferenceNumberContactDetailsControllerBlank(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumBlank)
-  ) = new RequestReferenceNumberContactDetailsController(
+  ): RequestReferenceNumberContactDetailsController = RequestReferenceNumberContactDetailsController(
     stubMessagesControllerComponents(),
     requestReferenceNumberNavigator,
     requestReferenceNumberContactDetailsView,

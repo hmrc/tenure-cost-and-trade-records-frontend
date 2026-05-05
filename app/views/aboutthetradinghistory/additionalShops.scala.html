@@ -16,11 +16,11 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.AdditionalShops
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.AccessibilityUtil
-@import util.DateUtilLocalised
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
+
 @import java.time.LocalDate
 
 @this(
@@ -61,11 +61,10 @@
 }
 
 
-
 @layout(
     pageHeading = messages("shops.additionalActivitiesOnSite.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
@@ -76,9 +75,6 @@
     @govukInsetText(InsetText(content = Text(messages("additionalActivities.common.inset"))))
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.AdditionalShopsController.submit()) {
-
-
-
 
 
         <table class="hmrc-responsive-table govuk-!-width-full">
@@ -105,9 +101,9 @@
                                                 "maxlength" -> "2",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("additionalActivities.common.tradingPeriod", finYearEnd)
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.weeks"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("label.weeks")
+                                                ))
                                         ).withFormField(form(s"additionalShops[$idx].weeks")))
                                     )
                                 )

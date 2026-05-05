@@ -21,7 +21,7 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
@@ -30,8 +30,8 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
 
   def vacantPropertiesStartDateController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
-    new VacantPropertiesStartDateController(
+  ): VacantPropertiesStartDateController =
+    VacantPropertiesStartDateController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,

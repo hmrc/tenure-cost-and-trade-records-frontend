@@ -14,26 +14,17 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
 
-@(govukButton: GovukButton, isSend: Boolean = false)(implicit request: Request[?], messages: Messages)
+@(govukButton: GovukButton)(implicit request: Request[?], messages: Messages)
 
-    @from = @{
-        request.queryString.get("from").flatMap(_.headOption)
-        .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)))
-        .getOrElse("")
-    }
+@from = @{
+    request.queryString.get("from").flatMap(_.headOption)
+    .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)))
+    .getOrElse("")
+}
 
-    <input type="hidden" name="from" value="@from" />
+<input type="hidden" name="from" value="@from" />
 
-    @govukButton(
-        Button(
-            attributes = Map("id" -> "continue"),
-            content = if (isSend) Text(messages("button.label.send")) else Text(messages("button.label.continue")),
-            name = Some("continue_button"),
-            value = Some("continue_button"),
-            inputType = Some("submit")
-        )
-    )
+@govukButton(SubmitButton("continue"))

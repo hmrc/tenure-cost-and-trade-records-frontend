@@ -18,11 +18,9 @@
 @import controllers.lettingHistory.routes
 @import models.submissions.common.AnswersYesNo
 @import models.submissions.lettingHistory.LocalPeriod
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 @import util.DateUtilLocalised
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
@@ -31,7 +29,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages("lettingHistory.hasCompletedLettings.heading"),
     backLinkUrl = backLink,
     showSection = true,
@@ -55,11 +53,11 @@
             legendKey = "", // see legend instead
             classes = "govuk-fieldset__legend--m",
             isHeading = true,
-            legend = Some(messages(
+            legend = messages(
                 "lettingHistory.hasCompletedLettings.legend",
                 dateUtil.formatDate(fiscalPeriod.fromDate),
                 dateUtil.formatDate(fiscalPeriod.toDate)
-            )),
+            ),
         )
         @includes.continueSaveAsDraftButtons(govukButton)
     }

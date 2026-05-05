@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, CompletedLettings, LettingAvailability}
 import models.submissions.common.AnswersYesNo.*
-import navigation.identifiers.{CommercialLettingAvailabilityId, CommercialLettingAvailabilityWelshId, CommercialLettingQuestionId, CompletedCommercialLettingsId, CompletedCommercialLettingsWelshId, ContactDetailsQuestionId, OccupiersDetailsId, PartsUnavailableId}
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -33,7 +33,7 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYouAndThePropertyNavigator(audit)
+  val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
 
   "About you and the property navigator for 6048" when {
 

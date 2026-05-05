@@ -20,13 +20,13 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.FinancialYearEndDateForm.financialYearEndDateForm
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, CostOfSales, OccupationalAndAccountingInformation, TotalPayrollCost}
 import models.ForType.*
 import models.Session
+import models.submissions.aboutthetradinghistory.*
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.editFinancialYearEndDate
 
@@ -42,7 +42,7 @@ class EditFinancialYearEndDateController @Inject() (
   editFinancialYearEndDateView: editFinancialYearEndDate,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -84,7 +84,7 @@ class EditFinancialYearEndDateController @Inject() (
 
   private def isTurnOverNonEmpty(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Boolean =
     request.sessionData.forType match {
       case FOR6020           => aboutTheTradingHistory.turnoverSections6020.exists(_.nonEmpty)
@@ -124,7 +124,7 @@ class EditFinancialYearEndDateController @Inject() (
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.map(_.currentFinancialYearEnd).isDefined)
       .filter(isTurnOverNonEmpty(_))
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[LocalDate](
           prefilledForm,
           formWithErrors =>
@@ -172,7 +172,7 @@ class EditFinancialYearEndDateController @Inject() (
 
   private def isTurnoverSectionStarted(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) =
     request.sessionData.forType match {
       case FOR6020           =>
@@ -201,7 +201,7 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Session = {
     val turnoverSections =
       aboutTheTradingHistory.turnoverSections
@@ -239,7 +239,7 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Session = {
     val turnoverSections6020    = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty)
     val updatedTurnoverSections = turnoverSections6020.updated(
@@ -260,7 +260,7 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Session = {
     val turnoverSections6030       = aboutTheTradingHistory.turnoverSections6030
     val updatedTurnoverSection6030 =
@@ -279,7 +279,7 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Session = {
     val turnoverSections6045    =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).getOrElse(Seq.empty)
@@ -306,7 +306,7 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Session = {
     val turnoverSections6048    =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).getOrElse(Seq.empty)
@@ -333,7 +333,7 @@ class EditFinancialYearEndDateController @Inject() (
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Session = {
     val turnoverSections6076    =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)

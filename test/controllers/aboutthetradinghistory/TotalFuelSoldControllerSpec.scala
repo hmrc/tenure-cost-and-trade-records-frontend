@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
@@ -29,7 +29,7 @@ class TotalFuelSoldControllerSpec extends TestBaseSpec {
 
   def totalFuelSoldController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ) = new TotalFuelSoldController(
+  ): TotalFuelSoldController = TotalFuelSoldController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

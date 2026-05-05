@@ -20,12 +20,12 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.LettingPartOfPropertyRentForm.lettingPartOfPropertyRentForm
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.LettingPartOfPropertyRentDetails
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.LettingPartOfPropertyRentDetailsPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.lettingPartOfPropertyRentDetails
 
@@ -40,7 +40,7 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
   lettingPartOfPropertyRentDetailsView: lettingPartOfPropertyRentDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -73,22 +73,18 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
     continueOrSaveAsDraft[LettingPartOfPropertyRentDetails](
       lettingPartOfPropertyRentForm,
       formWithErrors =>
-        Future.successful(
-          BadRequest(
-            lettingPartOfPropertyRentDetailsView(
-              formWithErrors,
-              index,
-              existingSection.tenantDetails.name,
-              calculateBackLink(index),
-              request.sessionData.toSummary
-            )
+        BadRequest(
+          lettingPartOfPropertyRentDetailsView(
+            formWithErrors,
+            index,
+            existingSection.tenantDetails.name,
+            calculateBackLink(index),
+            request.sessionData.toSummary
           )
         ),
       data =>
-        request.sessionData.stillConnectedDetails.fold(
-          Future.successful(
-            Redirect(routes.LettingPartOfPropertyDetailsController.show(Some(index)))
-          )
+        request.sessionData.stillConnectedDetails.fold[Future[Result]](
+          Redirect(routes.LettingPartOfPropertyDetailsController.show(Some(index)))
         ) { stillConnectedDetails =>
           val existingSections = stillConnectedDetails.lettingPartOfPropertyDetails
           val updatedSections  = existingSections
@@ -105,10 +101,9 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
     )
   }
 
-  private def calculateBackLink(index: Int)(implicit request: SessionRequest[AnyContent]) =
-    navigator.from match {
+  private def calculateBackLink(index: Int)(using request: SessionRequest[AnyContent]) =
+    navigator.from match
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url
-    }
 
 }

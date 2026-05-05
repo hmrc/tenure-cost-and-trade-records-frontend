@@ -41,7 +41,7 @@ class WorkCarriedOutConditionController @Inject() (
   view: workCarriedOutCondition,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -77,7 +77,7 @@ class WorkCarriedOutConditionController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match {
       case Some(AnswerYes) =>
         controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url

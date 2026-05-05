@@ -19,8 +19,8 @@ package views.aboutYourLeaseOrTenure
 import actions.SessionRequest
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm
 import models.pages.Summary
-import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
+import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
 import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
@@ -72,9 +72,9 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
     "contain radio buttons for how is rent fixed with the value agreement" in {
@@ -151,8 +151,8 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
 
     "contain get help section" in {

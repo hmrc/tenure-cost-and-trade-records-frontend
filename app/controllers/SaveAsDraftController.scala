@@ -24,7 +24,7 @@ import form.CustomUserPasswordForm.customUserPasswordForm
 import form.SaveAsDraftLoginForm.saveAsDraftLoginForm
 import models.{Session, SubmissionDraft}
 import play.api.i18n.{I18nSupport, Messages}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request, Result}
+import play.api.mvc.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -52,7 +52,7 @@ class SaveAsDraftController @Inject() (
   errorHandler: ErrorHandler,
   audit: Audit,
   cc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FrontendController(cc)
   with I18nSupport {
 
@@ -82,12 +82,12 @@ class SaveAsDraftController @Inject() (
       )
   }
 
-  private def expiryDate(implicit messages: Messages): String = dateUtil.formatDate(LocalDate.now.plusDays(saveForDays))
+  private def expiryDate(using messages: Messages): String = dateUtil.formatDate(LocalDate.now.plusDays(saveForDays))
 
   private def saveSubmissionDraft(
     session: Session,
     exitPath: String
-  )(implicit
+  )(using
     hc: HeaderCarrier,
     request: Request[?]
   ): Future[Result] = {

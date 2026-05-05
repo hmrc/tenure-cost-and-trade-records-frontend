@@ -29,8 +29,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
-import views.html.requestReferenceNumber.requestReferenceNumberCheckYourAnswers as RequestReferenceNumberCheckYourAnswersView
-import views.html.requestReferenceNumber.requestReferenceNumberConfirmation as RequestReferenceNumberConfirmationView
+import views.html.requestReferenceNumber.{requestReferenceNumberCheckYourAnswers as RequestReferenceNumberCheckYourAnswersView, requestReferenceNumberConfirmation as RequestReferenceNumberConfirmationView}
 
 import java.time.Instant
 import java.util.UUID
@@ -47,21 +46,16 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   import controllers.FeedbackFormMapper.feedbackForm
 
-  lazy val confirmationUrl: String =
-    controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation().url
-
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersView(request.sessionData)
-      )
+    Ok(
+      checkYourAnswersView(request.sessionData)
     )
   }
 
@@ -70,7 +64,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
     submitRequestReferenceNumber()(using hc, request)
   }
 
-  def submitRequestReferenceNumber()(implicit hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] = {
+  def submitRequestReferenceNumber()(using hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] = {
     val auditType      = "NoReferenceSubmission"
     val session        = request.sessionData
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
@@ -81,7 +75,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
         auditType,
         submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome)
       )
-      Redirect(confirmationUrl)
+      Redirect(controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation().url)
     } recoverWith { case e: Exception =>
       val failureReason = s"Could not send request reference number data to HOD - ${hc.sessionId.getOrElse("")}"
       logger.error(failureReason, e)
@@ -101,7 +95,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
 
   private def submitRequestRefNumToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier,
+  )(using hc: HeaderCarrier,
     messages: Messages
   ): Future[Unit] = {
     val sessionRequestRefNum        = session.requestReferenceNumberDetails

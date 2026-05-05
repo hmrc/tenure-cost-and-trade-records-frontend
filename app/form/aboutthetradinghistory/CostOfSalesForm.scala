@@ -16,9 +16,9 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport._
+import form.MappingSupport.*
 import models.submissions.aboutthetradinghistory.CostOfSales
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 

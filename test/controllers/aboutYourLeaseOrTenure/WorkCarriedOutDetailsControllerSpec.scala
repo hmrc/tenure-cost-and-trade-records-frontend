@@ -20,12 +20,12 @@ import connectors.Audit
 import form.aboutYourLeaseOrTenure.WorkCarriedOutDetailsForm.workCarriedOutDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
+import play.api.test.*
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
-import play.api.test.*
-import play.api.test.Helpers.*
 
 class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
 
@@ -37,8 +37,8 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
-    new WorkCarriedOutDetailsController(
+  ): WorkCarriedOutDetailsController =
+    WorkCarriedOutDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

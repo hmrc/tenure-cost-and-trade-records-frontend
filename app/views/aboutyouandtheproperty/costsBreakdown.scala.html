@@ -15,9 +15,9 @@
  *@
 
 @import models.pages.Summary
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -30,7 +30,7 @@
 @layout(
     pageHeading = messages("costsBreakdown.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url,
     theForm = theForm

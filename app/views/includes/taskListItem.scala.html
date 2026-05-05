@@ -26,18 +26,18 @@
 
 @completedOrDeclared = @{
     if(sectionCompletedAnswerYes && readOnly) {
-      messages("taskList.status.declared")
-  } else {
-      messages("taskList.status.completed")
-  }
-  }
+        messages("taskList.status.declared")
+    } else {
+        messages("taskList.status.completed")
+    }
+}
 
 @statusText = @{
-    if (sectionCompleted.contains(AnswerYes)) {
+    if(sectionCompleted.contains(AnswerYes)) {
         completedOrDeclared
-    } else if (pageAnswer.isDefined) {
+    } else if(pageAnswer.isDefined) {
         messages("taskList.status.inProgress")
-    } else if (cannotStartYet) {
+    } else if(cannotStartYet) {
         messages("taskList.status.cannotStart")
     } else {
         messages("taskList.status.notStarted")
@@ -45,7 +45,7 @@
 }
 
 @itemTagClass = @{
-    if (pageAnswer.isDefined) {
+    if(pageAnswer.isDefined) {
         "govuk-tag govuk-tag--blue app-task-list__tag"
     } else {
         "govuk-tag govuk-tag--grey app-task-list__tag"
@@ -53,7 +53,7 @@
 }
 
 @itemTagClassClear = @{
-        "app-task-list__tag"
+    "app-task-list__tag"
 }
 
 
@@ -62,10 +62,12 @@
     @if(readOnly || (cannotStartYet && pageAnswer.isEmpty)) {
         @messages(taskNameKey)
     } else {
-        <a href="@{urlPlusParamPrefix(taskPage.url)}from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
+        <a href="@{
+            urlPlusParamPrefix(taskPage.url)
+        }from=TL" aria-describedby="@taskId">@messages(taskNameKey)</a>
     }
     </span>
-    @if(sectionCompleted.contains(AnswerYes)){
+    @if(sectionCompleted.contains(AnswerYes)) {
         <p class="@itemTagClassClear" id="@taskId">@statusText</p>
     } else {
         <strong class="@itemTagClass" id="@taskId">@statusText</strong>

@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentDevelopedLandDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentDevelopedLandDetailsController @Inject() (
@@ -40,7 +40,7 @@ class RentDevelopedLandDetailsController @Inject() (
   rentDevelopedLandDetailsView: rentDevelopedLandDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -48,21 +48,19 @@ class RentDevelopedLandDetailsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentDevelopedLandDetails")
 
-    Future.successful(
-      Ok(
-        rentDevelopedLandDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLandDetails) match {
-            case Some(rentDevelopedLandDetails) =>
-              rentDevelopedLandDetailsForm.fill(rentDevelopedLandDetails)
-            case _                              => rentDevelopedLandDetailsForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentDevelopedLandDetailsView(
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLandDetails) match {
+          case Some(rentDevelopedLandDetails) =>
+            rentDevelopedLandDetailsForm.fill(rentDevelopedLandDetails)
+          case _                              => rentDevelopedLandDetailsForm
+        },
+        request.sessionData.toSummary
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       rentDevelopedLandDetailsForm,
       formWithErrors => BadRequest(rentDevelopedLandDetailsView(formWithErrors, request.sessionData.toSummary)),

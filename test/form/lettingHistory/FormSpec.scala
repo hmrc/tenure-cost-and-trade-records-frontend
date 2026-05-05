@@ -17,8 +17,8 @@
 package form.lettingHistory
 
 import actions.SessionRequest
-import models.Session
 import models.ForType.FOR6048
+import models.Session
 import models.submissions.common.Address
 import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
@@ -35,7 +35,7 @@ import util.DateUtilLocalised
 class FormSpec extends AnyFlatSpec with Matchers with OptionValues with GuiceOneAppPerSuite with Injecting:
 
   override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
+    GuiceApplicationBuilder()
       .configure(
         "metrics.jvm"                         -> false,
         "metrics.enabled"                     -> false,
@@ -47,7 +47,7 @@ class FormSpec extends AnyFlatSpec with Matchers with OptionValues with GuiceOne
   given Messages          = inject[MessagesApi].preferred(Seq(defaultLang))
   given DateUtilLocalised = inject[DateUtilLocalised]
 
-  def sessionRequest(isWelsh: Boolean) =
+  def sessionRequest(isWelsh: Boolean): SessionRequest[AnyContent] =
     SessionRequest[AnyContent](
       Session(
         referenceNumber = "99996010004",

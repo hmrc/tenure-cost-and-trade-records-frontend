@@ -48,9 +48,9 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText.contains(messages("label.section.aboutYourTradingHistory")))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").first.html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {
@@ -61,8 +61,8 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
   }
 

@@ -38,7 +38,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  ) = new CommercialLettingQuestionController(
+  ): CommercialLettingQuestionController = CommercialLettingQuestionController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

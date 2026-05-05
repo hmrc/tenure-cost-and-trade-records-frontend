@@ -18,12 +18,12 @@ package controllers.aboutyouandtheproperty
 
 import connectors.Audit
 import form.Errors
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import form.aboutyouandtheproperty.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import utils.FormBindingTestAssertions._
+import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -36,7 +36,7 @@ class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
 
   def tiedForGoodsDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new TiedForGoodsDetailsController(
+  ): TiedForGoodsDetailsController = TiedForGoodsDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -45,7 +45,7 @@ class TiedForGoodsDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def tiedForGoodsDetailsControllerNone() = new TiedForGoodsDetailsController(
+  def tiedForGoodsDetailsControllerNone(): TiedForGoodsDetailsController = TiedForGoodsDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

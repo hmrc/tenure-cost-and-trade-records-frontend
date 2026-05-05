@@ -44,7 +44,7 @@ class ConnectionToPropertySubmissionController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FrontendController(mcc)
   with I18nSupport
   with Logging {
@@ -55,17 +55,15 @@ class ConnectionToPropertySubmissionController @Inject() (
     submit()
   }
 
-  private def submit[T]()(implicit request: SessionRequest[T]): Future[Result] = {
+  private def submit[T]()(using request: SessionRequest[T]): Future[Result] = {
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     val auditType                  = "VacantFormSubmission"
     val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
     val session                    = request.sessionData
-    submitToBackend(session).flatMap { _ =>
+    submitToBackend(session).map { _ =>
       val outcome = Json.obj("isSuccessful" -> true)
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
-      Future.successful(
-        Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
-      )
+      Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
     } recoverWith { case e: Exception =>
       val failureReason =
         s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")} - ${e.getMessage}"
@@ -86,7 +84,7 @@ class ConnectionToPropertySubmissionController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier
+  )(using hc: HeaderCarrier
   ): Future[Unit] = {
 
     val submission = ConnectedSubmission(session)

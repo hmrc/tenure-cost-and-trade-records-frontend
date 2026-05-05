@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object FranchiseTypeDetailsForm {
 
-  val theForm = Form[BusinessDetails](
+  val theForm: Form[BusinessDetails] = Form[BusinessDetails](
     mapping(
       "operatorName"   -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatorName.required"),

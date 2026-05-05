@@ -15,10 +15,10 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.{CharacterCount, HmrcCharacterCount}
+@import views.html.components.PrimaryLayout
 
 @this(
         layout: PrimaryLayout,
@@ -32,7 +32,7 @@
 @layout(
     pageHeading = messages("throughputAffectsRentDetails.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLinkUrl,
     theForm = form

@@ -16,11 +16,11 @@
 
 package controllers.additionalinformation
 
-import models.submissions.additionalinformation.AdditionalInformation
 import connectors.Audit
+import models.submissions.additionalinformation.AdditionalInformation
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
@@ -29,7 +29,7 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
   def furtherInformationOrRemarksController(
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
-  ) = new FurtherInformationOrRemarksController(
+  ): FurtherInformationOrRemarksController = FurtherInformationOrRemarksController(
     stubMessagesControllerComponents(),
     mockAudit,
     additionalInformationNavigator,
@@ -40,7 +40,7 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
 
   def furtherInformationOrRemarksControllerEmpty(
     additionalInformation: Option[AdditionalInformation] = None
-  ) = new FurtherInformationOrRemarksController(
+  ): FurtherInformationOrRemarksController = FurtherInformationOrRemarksController(
     stubMessagesControllerComponents(),
     mockAudit,
     additionalInformationNavigator,

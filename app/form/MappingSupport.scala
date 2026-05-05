@@ -25,7 +25,6 @@ import form.EmailMapping.validateEmail
 import form.Form6010.ConditionalMapping.nonEmptyTextOr
 import form.PhoneNumberMapping.validatePhoneNumber
 import form.TownMapping.validateTown
-import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingRequired
 import models.submissions.*
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutfranchisesorlettings.*
@@ -34,10 +33,11 @@ import models.submissions.common.*
 import models.submissions.common.ResponsibilityParty.*
 import models.submissions.connectiontoproperty.*
 import play.api.data.Forms.*
+import play.api.data.Mapping
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
-import play.api.data.Mapping
 import play.api.i18n.Messages
+import uk.gov.hmrc.vo.service.form.Scala3EnumFieldMapping.enumMappingRequired
 import util.NumberUtil.zeroBigDecimal
 
 import scala.util.Try
@@ -322,6 +322,6 @@ object MappingSupport:
       case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
       case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
       case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
-      case _            => throw new IllegalArgumentException("Financial years sequence is empty")
+      case _            => throw IllegalArgumentException("Financial years sequence is empty")
     }
   }

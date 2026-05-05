@@ -16,10 +16,10 @@
 
 package form
 
-import play.api.data.{FormError, Forms, Mapping}
 import play.api.data.format.Formatter
+import play.api.data.{FormError, Forms, Mapping}
 
-object PostcodeMapping {
+object PostcodeMapping:
 
   def postcode(
     requiredError: String = Errors.postcodeRequired,
@@ -35,33 +35,30 @@ object PostcodeMapping {
   ): Mapping[String] =
     Forms.of[String](using postcodeFormatter(requiredError, maxLengthError, formatError))
 
-  def isValid(postcode: String): Boolean = {
+  def isValid(postcode: String): Boolean =
     val cleanedPostcode = postcode.replaceAll("\\s", "").toUpperCase
     val postcodeRegex   =
       """^(GIR0AA|[A-Za-z][0-9]{1,2}|[A-Za-z][A-HJ-Y][0-9]{1,2}|[A-Za-z][0-9][A-Za-z]|[A-Za-z][A-HJ-Y][0-9][A-Za-z])[0-9][A-Za-z]{2}$"""
     cleanedPostcode.matches(postcodeRegex)
-  }
 
   private def postcodeFormatter(
     requiredError: String,
     maxLengthError: String,
     formatError: String
-  ): Formatter[String] = new Formatter[String] {
+  ): Formatter[String] =
+    new Formatter[String]:
+      override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] =
+        data.get(key).filter(_.trim.nonEmpty) match
+          case None              => Left(Seq(FormError(key, requiredError)))
+          case Some(rawPostcode) =>
+            val cleanedPostcode = rawPostcode.replaceAll("[^A-Za-z0-9]", "").toUpperCase
+            if cleanedPostcode.length > 8 then Left(Seq(FormError(key, maxLengthError)))
+            else if !isValid(cleanedPostcode) then Left(Seq(FormError(key, formatError)))
+            else Right(cleanedPostcode.substring(0, cleanedPostcode.length - 3) + " " + cleanedPostcode.takeRight(3))
 
-    override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], String] =
-      data.get(key).filter(_.trim.nonEmpty) match {
-        case None              => Left(Seq(FormError(key, requiredError)))
-        case Some(rawPostcode) =>
-          val cleanedPostcode = rawPostcode.replaceAll("[^A-Za-z0-9]", "").toUpperCase
-          if cleanedPostcode.length > 8 then Left(Seq(FormError(key, maxLengthError)))
-          else if !isValid(cleanedPostcode) then Left(Seq(FormError(key, formatError)))
-          else Right(cleanedPostcode.substring(0, cleanedPostcode.length - 3) + " " + cleanedPostcode.takeRight(3))
-      }
+      override def unbind(key: String, value: String): Map[String, String] = Map(key -> value)
 
-    override def unbind(key: String, value: String): Map[String, String] = Map(key -> value)
-  }
-
-  val customPostcodeMapping: Mapping[String] = PostcodeMapping.postcode(
-    formatError = Errors.invalidPostcodeOnLetter
-  )
-}
+  val customPostcodeMapping: Mapping[String] =
+    PostcodeMapping.postcode(
+      formatError = Errors.invalidPostcodeOnLetter
+    )

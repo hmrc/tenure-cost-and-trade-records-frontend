@@ -14,18 +14,13 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.ForType.*
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend, RadioItem, Radios}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -36,26 +31,26 @@
 @(theForm: Form[?], forType: ForType, backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @label = @{
-  forType match {
-      case FOR6015 | FOR6016          => messages("label.section.aboutConcessionsOrLettings")
-      case FOR6020                    => messages("label.section.aboutLettings")
-      case FOR6045 | FOR6046          => messages("label.section.aboutConcessionsFranchisesOrLettings")
-      case _                          => messages("label.section.aboutFranchisesOrLettings")
-  }
+    forType match {
+        case FOR6015 | FOR6016 => messages("label.section.aboutConcessionsOrLettings")
+        case FOR6020 => messages("label.section.aboutLettings")
+        case FOR6045 | FOR6046 => messages("label.section.aboutConcessionsFranchisesOrLettings")
+        case _ => messages("label.section.aboutFranchisesOrLettings")
+    }
 }
 
 @heading = @{
     forType match {
-        case FOR6020                    => messages("franchiseLettings.6020.heading")
-        case FOR6030                    => messages("franchiseLettings.6030.heading")
-        case FOR6045 | FOR6046          => messages("franchiseLettings.6045.heading")
-        case _                          => messages("franchiseLettings.heading")
+        case FOR6020 => messages("franchiseLettings.6020.heading")
+        case FOR6030 => messages("franchiseLettings.6030.heading")
+        case FOR6045 | FOR6046 => messages("franchiseLettings.6045.heading")
+        case _ => messages("franchiseLettings.heading")
     }
 }
 @layout(
     pageHeading = heading,
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = label,
     backLinkUrl = backLink,
     theForm = theForm
@@ -102,7 +97,7 @@
         @govukRadios(
             Radios(
                 name = "franchiseOrLettingsTiedToProperty",
-                idPrefix = Option("franchiseOrLettingsTiedToProperty"),
+                idPrefix = "franchiseOrLettingsTiedToProperty",
                 items =
                     if(forType == FOR6046 || forType == FOR6045) {
                         Seq(
@@ -111,7 +106,7 @@
                         ).map(radioItem => RadioItem(
                             content = Text(radioItem._2),
                             checked = radioItem._1.equals(theForm("franchiseOrLettingsTiedToProperty").value.getOrElse("")),
-                            value = Option(radioItem._1)
+                            value = radioItem._1
                         ))
                     } else {
                         Seq(
@@ -120,21 +115,20 @@
                         ).map(radioItem => RadioItem(
                             content = Text(radioItem._2),
                             checked = radioItem._1.equals(theForm("franchiseOrLettingsTiedToProperty").value.getOrElse("")),
-                            value = Option(radioItem._1)
+                            value = radioItem._1
                         ))
                     },
                 classes = "govuk-radios--inline",
-                errorMessage =  theForm.errors.asTextErrorMessageForField("franchiseOrLettingsTiedToProperty"),
-                fieldset = Option(
+                errorMessage = theForm.errors.asTextErrorMessageForField("franchiseOrLettingsTiedToProperty"),
+                fieldset =
                     Fieldset(
-                        legend = Option(
+                        legend =
                             Legend(
                                 classes = "govuk-!-font-weight-bold"
-                            ))
-                    )
-                )
-            ))
 
+                            )
+                    )
+            ))
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

@@ -21,7 +21,7 @@ import form.Errors
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -36,7 +36,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
 
   def aboutYouController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new AboutYouController(
+  ): AboutYouController = AboutYouController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -45,7 +45,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def aboutYouControllerNone() = new AboutYouController(
+  def aboutYouControllerNone(): AboutYouController = AboutYouController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

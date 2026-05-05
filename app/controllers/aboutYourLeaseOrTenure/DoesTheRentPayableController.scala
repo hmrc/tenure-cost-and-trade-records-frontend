@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.doesTheRentPayable
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class DoesTheRentPayableController @Inject() (
@@ -40,28 +40,26 @@ class DoesTheRentPayableController @Inject() (
   doesTheRentPayableView: doesTheRentPayable,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("DoesTheRentPayable")
 
-    Future.successful(
-      Ok(
-        doesTheRentPayableView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match {
-            case Some(doesTheRentPayable) => doesTheRentPayableForm.fill(doesTheRentPayable)
-            case _                        => doesTheRentPayableForm
-          },
-          request.sessionData.forType,
-          request.sessionData.toSummary
-        )
+    Ok(
+      doesTheRentPayableView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.doesTheRentPayable) match {
+          case Some(doesTheRentPayable) => doesTheRentPayableForm.fill(doesTheRentPayable)
+          case _                        => doesTheRentPayableForm
+        },
+        request.sessionData.forType,
+        request.sessionData.toSummary
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[DoesTheRentPayable](
       doesTheRentPayableForm,
       formWithErrors =>

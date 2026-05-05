@@ -22,16 +22,16 @@ import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.ElectricVehicleChargingPointsForm.electricVehicleChargingPointsForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.ElectricVehicleChargingPoints
-import views.html.aboutthetradinghistory.electricVehicleChargingPoints
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.ElectricVehicleChargingPointsId
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
+import views.html.aboutthetradinghistory.electricVehicleChargingPoints
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ElectricVehicleChargingPointsController @Inject() (
@@ -41,7 +41,7 @@ class ElectricVehicleChargingPointsController @Inject() (
   electricVehicleChargingPointsView: electricVehicleChargingPoints,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -49,17 +49,15 @@ class ElectricVehicleChargingPointsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ElectricVehicleChargingPoints")
 
-    Future.successful(
-      Ok(
-        electricVehicleChargingPointsView(
-          request.sessionData.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints) match {
-            case Some(electricVehicleChargingPoints) =>
-              electricVehicleChargingPointsForm.fill(electricVehicleChargingPoints)
-            case _                                   => electricVehicleChargingPointsForm
-          },
-          request.sessionData.toSummary,
-          getBackLink
-        )
+    Ok(
+      electricVehicleChargingPointsView(
+        request.sessionData.aboutTheTradingHistory.flatMap(_.electricVehicleChargingPoints) match {
+          case Some(electricVehicleChargingPoints) =>
+            electricVehicleChargingPointsForm.fill(electricVehicleChargingPoints)
+          case _                                   => electricVehicleChargingPointsForm
+        },
+        request.sessionData.toSummary,
+        getBackLink
       )
     )
   }
@@ -84,7 +82,7 @@ class ElectricVehicleChargingPointsController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

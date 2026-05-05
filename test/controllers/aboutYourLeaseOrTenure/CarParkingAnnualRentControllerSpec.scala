@@ -34,8 +34,8 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
-    new CarParkingAnnualRentController(
+  ): CarParkingAnnualRentController =
+    CarParkingAnnualRentController(
       mockAudit,
       carParkingAnnualRentView,
       aboutYourLeaseOrTenureNavigator,

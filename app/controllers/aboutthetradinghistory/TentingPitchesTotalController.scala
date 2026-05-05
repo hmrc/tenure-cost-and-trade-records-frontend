@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.tentingPitchesTotal
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TentingPitchesTotalController @Inject() (
@@ -40,7 +40,7 @@ class TentingPitchesTotalController @Inject() (
   view: tentingPitchesTotal,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -48,17 +48,15 @@ class TentingPitchesTotalController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TentingPitchesTotal")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.touringAndTentingPitches)
-            .flatMap(_.tentingPitchesTotal) match {
-            case Some(answers) => tentingPitchesTotalForm.fill(answers)
-            case None          => tentingPitchesTotalForm
-          },
-          calculateBackLink
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.touringAndTentingPitches)
+          .flatMap(_.tentingPitchesTotal) match {
+          case Some(answers) => tentingPitchesTotalForm.fill(answers)
+          case None          => tentingPitchesTotalForm
+        },
+        calculateBackLink
       )
     )
   }
@@ -91,7 +89,7 @@ class TentingPitchesTotalController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageForTentingPitches.url
       case _     => controllers.aboutthetradinghistory.routes.RallyAreasController.show().url

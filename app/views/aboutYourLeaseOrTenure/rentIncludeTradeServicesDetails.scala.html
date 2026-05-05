@@ -14,19 +14,13 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-
 @import models.pages.Summary
+@import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Hint, Input, PrefixOrSuffix, Text}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukInput: GovukInput,
@@ -38,46 +32,46 @@
 @(theForm: Form[RentIncludeTradeServicesInformationDetails], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("rentIncludeTradeServicesDetails.heading"),
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url,
- theForm = theForm
+    pageHeading = messages("rentIncludeTradeServicesDetails.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.submit()) {
 
-  <p class="govuk-heading-m">@messages("rentIncludeTradeServicesDetails.title")</p>
+        <p class="govuk-heading-m">@messages("rentIncludeTradeServicesDetails.title")</p>
 
 
-  @govukInput(Input(
-   id = "sumIncludedInRent",
-   name = "sumIncludedInRent",
-   value = theForm("sumIncludedInRent").value,
-   classes = "govuk-input--width-10 total-annual-rent",
-   attributes = Map(
-    "aria-label" -> messages("rentIncludeTradeServicesDetails.title")
-   ),
-   prefix = Some(PrefixOrSuffix(
-    content = Text(messages("label.pound"))
-   )),
-   hint = Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint"))),
-   autocomplete = Some("off"),
-  ).withFormField(theForm("capitalSumPaidDetails")))
+        @govukInput(Input(
+            id = "sumIncludedInRent",
+            name = "sumIncludedInRent",
+            value = theForm("sumIncludedInRent").value,
+            classes = "govuk-input--width-10 total-annual-rent",
+            attributes = Map(
+                "aria-label" -> messages("rentIncludeTradeServicesDetails.title")
+            ),
+            prefix = PrefixOrSuffix(
+                content = Text(messages("label.pound")
+                )),
+            hint = Hint(content = Text(messages("rentIncludeTradeServicesDetails.hint"))),
+            autocomplete = "off",
+        ).withFormField(theForm("capitalSumPaidDetails")))
 
-<div class="govuk-!-margin-top-8">
- @includes.textInputHMRCCharCount(
-  hmrcCharacterCount,
-  theForm,
-  "describeServices",
-  "label.describeServices",
-  classes = "govuk-label--m",
-  hint = "rentIncludeTradeServicesDetails.hint2",
-  charCount = 2000
- )
-</div>
+        <div class="govuk-!-margin-top-8">
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "describeServices",
+            "label.describeServices",
+            classes = "govuk-label--m",
+            hint = "rentIncludeTradeServicesDetails.hint2",
+            charCount = 2000
+        )
+        </div>
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

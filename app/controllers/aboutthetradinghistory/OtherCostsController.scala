@@ -20,8 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.OtherCostsForm.form
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OtherCost, OtherCosts}
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
+import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, OtherCost, OtherCosts}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.OtherCostsId
 import play.api.i18n.I18nSupport
@@ -41,7 +41,7 @@ class OtherCostsController @Inject() (
   otherCostsView: otherCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -66,7 +66,7 @@ class OtherCostsController @Inject() (
     }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheckForOtherCosts { aboutTheTradingHistory =>
       continueOrSaveAsDraft[OtherCosts](
         form,
@@ -110,11 +110,11 @@ class OtherCostsController @Inject() (
 
   private def runWithSessionCheckForOtherCosts(
     action: AboutTheTradingHistory => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory) =
     aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)

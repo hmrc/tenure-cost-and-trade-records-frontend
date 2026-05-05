@@ -16,10 +16,8 @@
 
 @import actions.SessionRequest
 @import models.submissions.Form6010.MonthsYearDuration
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput}
 @import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -32,7 +30,7 @@
 @layout(
     pageHeading = messages("firstOccupy.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     theForm = theForm

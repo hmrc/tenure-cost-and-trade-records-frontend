@@ -21,7 +21,7 @@ import connectors.Audit
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutthetradinghistory.costOfSales
@@ -37,7 +37,7 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
   private val mockCostOfSalesView      = mock[costOfSales]
   when(mockCostOfSalesView.apply(any, any)(using any, any)).thenReturn(HtmlFormat.empty)
 
-  private val costOfSalesController = new CostOfSalesController(
+  private val costOfSalesController = CostOfSalesController(
     stubMessagesControllerComponents(),
     mockAudit,
     mockCostOfSalesNavigator,

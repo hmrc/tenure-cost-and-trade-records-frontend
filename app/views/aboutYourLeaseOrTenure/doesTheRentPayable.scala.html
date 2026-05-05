@@ -15,21 +15,14 @@
  *@
 
 @import models.ForType.*
-@import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukCheckboxes
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Checkboxes
-@import uk.gov.hmrc.govukfrontend.views.Aliases.CheckboxItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.ExclusiveCheckbox
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-
 @import models.pages.Summary
+@import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{CheckboxItem, Checkboxes, ExclusiveCheckbox, Fieldset, Legend}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -43,8 +36,8 @@
 
 @pageHeader = @{
     val headerMsg = forType match {
-        case FOR6045 | FOR6046 | FOR6048    => "rentPayable6045.heading"
-        case _                              => "rentPayable.heading"
+        case FOR6045 | FOR6046 | FOR6048 => "rentPayable6045.heading"
+        case _ => "rentPayable.heading"
     }
     messages(headerMsg)
 }
@@ -93,7 +86,7 @@
                             value = "onlyLand"
                         ),
                         CheckboxItem(
-                            divider = Some(messages("checkbox.divider"))
+                            divider = messages("checkbox.divider")
                         ),
                         CheckboxItem(
                             id = "none",
@@ -147,7 +140,7 @@
                                 value = "parkingSpaceGarage"
                             ),
                             CheckboxItem(
-                                divider = Some(messages("checkbox.divider"))
+                                divider = messages("checkbox.divider")
                             ),
                             CheckboxItem(
                                 id = "none",
@@ -198,12 +191,12 @@
                                 value = "shellUnit"
                             ),
                             CheckboxItem(
-                                divider = Some(messages("checkbox.divider"))
+                                divider = messages("checkbox.divider")
                             ),
                             CheckboxItem(
                                 id = "none",
                                 content =
-                                    if(forType == FOR6030){
+                                    if(forType == FOR6030) {
                                         Text(messages("checkbox.rentPayable.noneOfThese6045"))
                                     } else {
                                         Text(messages("checkbox.rentPayable.noneOfThese"))
@@ -225,7 +218,6 @@
                 hint = "hint.detailsToQuestions",
                 charCount = 2000
             )
-
 
             @includes.continueSaveAsDraftButtons(govukButton)
         }

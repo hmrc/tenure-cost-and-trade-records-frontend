@@ -17,7 +17,7 @@
 package form.aboutyouandtheproperty
 
 import form.MappingSupport.currentPropertyUsedMapping
-import models.submissions.aboutyouandtheproperty._
+import models.submissions.aboutyouandtheproperty.*
 import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, optional, text}

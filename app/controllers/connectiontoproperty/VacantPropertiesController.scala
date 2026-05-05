@@ -21,8 +21,8 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.VacantPropertiesForm.theForm
 import models.submissions.common.AnswersYesNo
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.connectiontoproperty.AddressConnectionType.*
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.VacantPropertiesPageId
 import play.api.Logging
@@ -99,7 +99,7 @@ class VacantPropertiesController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case "TL"  => controllers.routes.TaskListController.show.url + "#vacant-properties"

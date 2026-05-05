@@ -17,11 +17,9 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukRadios: GovukRadios, govukButton: GovukButton)
 
@@ -30,7 +28,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages(s"lettingHistory.intendedLettings.isYearlyAvailable.$keyFragment.heading"),
     backLinkUrl = backLink,
     showSection = true,
@@ -39,7 +37,9 @@
 
     @formWithCSRF(action = routes.IsYearlyAvailableController.submit) {
 
-        <p class="govuk-body">@{messages("lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.p1")}</p>
+        <p class="govuk-body">@{
+            messages("lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.p1")
+        }</p>
 
         <p class="govuk-body">@HtmlContent(messages("lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.p2")).asHtml</p>
 

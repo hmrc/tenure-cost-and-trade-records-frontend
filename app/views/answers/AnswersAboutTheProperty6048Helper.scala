@@ -16,11 +16,12 @@
 
 package views.answers
 
+import controllers.*
+import controllers.aboutyouandtheproperty.routes
 import models.submissions.aboutyouandtheproperty.OccupiersDetails
 import play.api.i18n.Messages
 import views.CheckYourAnswersHelpers.*
 import views.includes.cards.{CardData, CardEntry}
-import controllers.aboutyouandtheproperty.routes
 
 object AnswersAboutTheProperty6048Helper:
 
@@ -39,7 +40,7 @@ object AnswersAboutTheProperty6048Helper:
                        |${occupier.address}
                        |</p>
                        |""".stripMargin,
-            changeAction = Some(routes.OccupiersDetailsController.show(Some(index)).asChangeLink("partsUnavailable"))
+            changeAction = routes.OccupiersDetailsController.show(index).asChangeLink("partsUnavailable")
           )
         )
       )

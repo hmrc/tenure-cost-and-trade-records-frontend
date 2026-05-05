@@ -17,7 +17,7 @@
 package form.aboutthetradinghistory
 
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 
 object TentingPitchesTotalForm {
 

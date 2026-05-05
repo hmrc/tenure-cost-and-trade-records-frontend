@@ -57,7 +57,7 @@ abstract class Navigator @Inject() (audit: Audit):
   /**
     * Get next page ignoring redirect back to CYA.
     */
-  def nextWithoutRedirectToCYA(id: Identifier, session: Session)(implicit hc: HeaderCarrier): Session => Call =
+  def nextWithoutRedirectToCYA(id: Identifier, session: Session)(using hc: HeaderCarrier): Session => Call =
     routeMap.getOrElse(id, defaultPage) andThen auditNextUrl(session)
 
   /**
@@ -66,7 +66,7 @@ abstract class Navigator @Inject() (audit: Audit):
   def nextPage(
     id: Identifier,
     session: Session
-  )(implicit
+  )(using
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Session => Call =
@@ -79,18 +79,18 @@ abstract class Navigator @Inject() (audit: Audit):
     id: Identifier,
     session: Session,
     paramAndValue: String
-  )(implicit
+  )(using
     hc: HeaderCarrier,
     request: Request[AnyContent]
   ): Call =
     nextPage(id, session).apply(session).callWithParam(paramAndValue)
 
-  protected def auditNextUrl(session: Session)(call: Call)(implicit hc: HeaderCarrier): Call = {
+  protected def auditNextUrl(session: Session)(call: Call)(using hc: HeaderCarrier): Call = {
     audit.sendContinueNextPage(session, call.url)
     call
   }
 
-  private def possibleCYARedirect(session: Session)(nextCall: Call)(implicit request: Request[AnyContent]): Call =
+  private def possibleCYARedirect(session: Session)(nextCall: Call)(using request: Request[AnyContent]): Call =
     if (from == "CYA") {
       overrideRedirectIfFromCYA
         .find(entry => nextCall.url.contains(entry._1))
@@ -106,13 +106,13 @@ abstract class Navigator @Inject() (audit: Audit):
       nextCall
     }
 
-  def idx(implicit request: Request[AnyContent]): Int =
+  def idx(using request: Request[AnyContent]): Int =
     request
       .getQueryString("idx")
       .orElse(request.body.asFormUrlEncoded.flatMap(_.get("idx").flatMap(_.headOption)))
       .fold(0)(_.toInt)
 
-  def from(implicit request: Request[AnyContent]): String =
+  def from(using request: Request[AnyContent]): String =
     request
       .getQueryString("from")
       .getOrElse(request.body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)).getOrElse(""))

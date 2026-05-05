@@ -43,7 +43,7 @@ class TypeOfIncomeController @Inject() (
   view: typeOfIncome,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -75,9 +75,7 @@ class TypeOfIncomeController @Inject() (
       request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).getOrElse(IndexedSeq.empty)
 
     if (existingIncomeRecords.length >= 5 && index.isEmpty) {
-      Future.successful(
-        Redirect(controllers.routes.MaxOfLettingsReachedController.show(Option("typeOfIncome")))
-      )
+      Redirect(controllers.routes.MaxOfLettingsReachedController.show(Option("typeOfIncome")))
     } else {
       continueOrSaveAsDraft[TypeOfIncome](
         typeOfIncomeForm,
@@ -100,12 +98,11 @@ class TypeOfIncomeController @Inject() (
             case Some(idx) if idx >= 0 && idx < existingIncomeRecords.length =>
               val existingRecord = existingIncomeRecords(idx)
               if (existingRecord.getClass == newIncomeRecord.getClass && navigator.from == "CYA") {
-                Future.successful(
-                  Redirect {
-                    controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
-                      .show()
-                  }
-                )
+
+                Redirect {
+                  controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
+                    .show()
+                }
               } else {
                 val updatedRecords = existingIncomeRecords.updated(idx, newIncomeRecord)
                 updateSessionAndRedirect(updatedRecords, data, index)
@@ -123,7 +120,7 @@ class TypeOfIncomeController @Inject() (
     updatedRecords: IndexedSeq[IncomeRecord],
     source: TypeOfIncome,
     updatedIndex: Option[Int]
-  )(implicit request: SessionRequest[AnyContent],
+  )(using request: SessionRequest[AnyContent],
     hc: HeaderCarrier
   ): Future[Result] = {
     val existingFranchisesOrLetting =
@@ -163,7 +160,7 @@ class TypeOfIncomeController @Inject() (
   private def toSpecificController(
     typeOfLetting: TypeOfIncome,
     index: Option[Int]
-  )(implicit
+  )(using
     request: SessionRequest[AnyContent]
   ): Call = {
     val targetIndex = index.getOrElse(0)
@@ -178,9 +175,9 @@ class TypeOfIncomeController @Inject() (
     }
   }
 
-  private def forType(implicit request: SessionRequest[AnyContent]): ForType = request.sessionData.forType
+  private def forType(using request: SessionRequest[AnyContent]): ForType = request.sessionData.forType
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url

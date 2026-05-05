@@ -33,7 +33,6 @@ import views.html.aboutfranchisesorlettings.advertisingRightLetting as Advertisi
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 class AdvertisingRightLettingController @Inject() (
   mcc: MessagesControllerComponents,
@@ -74,18 +73,16 @@ class AdvertisingRightLettingController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AdvertisingRightLetting](
       theForm,
       formWithErrors =>
-        successful(
-          BadRequest(
-            theView(
-              formWithErrors,
-              index,
-              backLink(index),
-              request.sessionData.toSummary
-            )
+        BadRequest(
+          theView(
+            formWithErrors,
+            index,
+            backLink(index),
+            request.sessionData.toSummary
           )
         ),
       formData => {
@@ -150,17 +147,17 @@ class AdvertisingRightLettingController @Inject() (
     (updatedLetting, updatedIndex)
   }
 
-  private def backLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
+  private def backLink(idx: Option[Int])(using request: SessionRequest[AnyContent]): String =
     if navigator.from == "CYA"
     then routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     else routes.TypeOfLettingController.show(idx).url
 
-  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)
       lettingAddress   <- confirmedAddress.asAddress
-      newSession       <- successful(newSessionWithLettingAddress(idx, lettingAddress))
+      newSession       <- newSessionWithLettingAddress(idx, lettingAddress)
       _                <- repository.saveOrUpdate(newSession)
     yield
       if navigator.from == "CYA"

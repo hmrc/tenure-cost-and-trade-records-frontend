@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.financialYearEndDatesSummary
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class FinancialYearEndDatesSummaryController @Inject() (
@@ -40,7 +40,7 @@ class FinancialYearEndDatesSummaryController @Inject() (
   financialYearEndDateSummaryView: financialYearEndDatesSummary,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -72,9 +72,8 @@ class FinancialYearEndDatesSummaryController @Inject() (
           val formWithError = financialYearEndDatesSummaryForm
             .fill(data)
             .withError("isFinancialYearEndDatesCorrect", Messages("error.financialYearEndDates.incorrect"))
-          Future.successful(
-            BadRequest(financialYearEndDateSummaryView(formWithError, getBackLink))
-          )
+
+          BadRequest(financialYearEndDateSummaryView(formWithError, getBackLink))
         } else {
           val updatedData = updateAboutTheTradingHistoryPartOne(_.copy(Some(data)))
           session
@@ -93,7 +92,7 @@ class FinancialYearEndDatesSummaryController @Inject() (
 
   private def isTurnoverSectionStarted(
     aboutTheTradingHistory: AboutTheTradingHistory
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) =
     request.sessionData.forType match {
       case FOR6020           =>
@@ -117,7 +116,7 @@ class FinancialYearEndDatesSummaryController @Inject() (
       case _                 => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
     }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

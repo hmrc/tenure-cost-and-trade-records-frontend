@@ -14,55 +14,55 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  hmrcCharacterCount: HmrcCharacterCount,
-  govukDetails: GovukDetails,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        hmrcCharacterCount: HmrcCharacterCount,
+        govukDetails: GovukDetails,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("licensableActivitiesDetails.heading"),
-  showH1 = false,
-  showSection = true,
-  sectionName = messages("label.section.aboutTheProperty"),
-    summary = Some(summary),
-  backLinkUrl = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url,
-  theForm = theForm
+    pageHeading = messages("licensableActivitiesDetails.heading"),
+    showH1 = false,
+    showSection = true,
+    sectionName = messages("label.section.aboutTheProperty"),
+    summary = summary,
+    backLinkUrl = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.submit()) {
 
-      @includes.textInputHMRCCharCount(
-          hmrcCharacterCount,
-          theForm,
-          "licensableActivitiesDetails",
-          "licensableActivitiesDetails.heading",
-          classes = "govuk-label--l",
-          isPageHeading = true,
-          charCount = 2000
-      )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "licensableActivitiesDetails",
+            "licensableActivitiesDetails.heading",
+            classes = "govuk-label--l",
+            isPageHeading = true,
+            charCount = 2000
+        )
 
-    @govukDetails(Details(
-      summary = Text(messages("help.licensableActivitiesDetails.title")),
-      content = HtmlContent(
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.licensableActivitiesDetails.heading")}</p>" +
-        s"<p>${messages("help.licensableActivitiesDetails.p1")}</p>" +
-        s"<ul class='govuk-list--bullet'>" +
-          s"<li>${messages("help.licensableActivitiesDetails.list.p1")}</li>" +
-          s"<li>${messages("help.licensableActivitiesDetails.list.p2")}</li>" +
-          s"<li>${messages("help.licensableActivitiesDetails.list.p3")}</li>" +
-        s"</ul>")
-    ))
+        @govukDetails(Details(
+            summary = Text(messages("help.licensableActivitiesDetails.title")),
+            content = HtmlContent(
+                s"<p class='govuk-!-font-weight-bold'>${messages("help.licensableActivitiesDetails.heading")}</p>" +
+                        s"<p>${messages("help.licensableActivitiesDetails.p1")}</p>" +
+                        s"<ul class='govuk-list--bullet'>" +
+                        s"<li>${messages("help.licensableActivitiesDetails.list.p1")}</li>" +
+                        s"<li>${messages("help.licensableActivitiesDetails.list.p2")}</li>" +
+                        s"<li>${messages("help.licensableActivitiesDetails.list.p3")}</li>" +
+                        s"</ul>")
+        ))
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

@@ -24,6 +24,7 @@ import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentPayableVaryAccordingToGrossOrNetId
 import play.api.Logging
@@ -31,10 +32,9 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryAccordingToGrossOrNet
-import models.submissions.common.AnswersYesNo.*
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetController @Inject() (
@@ -44,7 +44,7 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   rentPayableVaryAccordingToGrossOrNetView: rentPayableVaryAccordingToGrossOrNet,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -52,18 +52,16 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryAccordingToGrossOrNet")
 
-    Future.successful(
-      Ok(
-        rentPayableVaryAccordingToGrossOrNetView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo
-            .flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
-            case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
-              rentPayableVaryAccordingToGrossOrNetForm.fill(rentPayableVaryAccordingToGrossOrNetDetails)
-            case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentPayableVaryAccordingToGrossOrNetView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo
+          .flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
+          case Some(rentPayableVaryAccordingToGrossOrNetDetails) =>
+            rentPayableVaryAccordingToGrossOrNetForm.fill(rentPayableVaryAccordingToGrossOrNetDetails)
+          case _                                                 => rentPayableVaryAccordingToGrossOrNetForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

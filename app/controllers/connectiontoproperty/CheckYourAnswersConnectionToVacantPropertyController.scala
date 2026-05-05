@@ -25,7 +25,6 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.checkYourAnswersConnectionToVacantProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class CheckYourAnswersConnectionToVacantPropertyController @Inject() (
@@ -38,10 +37,8 @@ class CheckYourAnswersConnectionToVacantPropertyController @Inject() (
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersConnectionToVacantPropertyView(getBackLink)
-      )
+    Ok(
+      checkYourAnswersConnectionToVacantPropertyView(getBackLink)
     )
   }
 

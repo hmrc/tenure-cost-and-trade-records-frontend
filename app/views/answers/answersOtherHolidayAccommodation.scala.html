@@ -15,13 +15,11 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import util.SectionAnswersRowBuilder
+@import models.submissions.aboutthetradinghistory.{TotalSiteCapacity, TurnoverSection6045}
 @import models.submissions.common.AnswersYesNo.*
-@import models.submissions.aboutthetradinghistory.TurnoverSection6045
-@import models.submissions.aboutthetradinghistory.TotalSiteCapacity
-@import util.DateUtilLocalised
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.NumberUtil.given
+@import util.{DateUtilLocalised, SectionAnswersRowBuilder}
 
 @import scala.language.implicitConversions
 
@@ -29,129 +27,128 @@
 
 
 @()(implicit request: SessionRequest[?], messages: Messages)
-    @tableRow(values: Seq[String]) = {
-        @values.map { value =>
-            <div class="hmrc-turnover-table-column">
-            @value
-            </div>
-        }
-    }
-    @singleTableRow(value: String) = {
-        <div class="hmrc-turnover-table-column">
-            @value
-        </div>
-    }
-    @action(pageHeadingKey:String, editPage:Call) = @{
-        Some(
+@tableRow(values: Seq[String]) = {
+@values.map { value =>
+    <div class="hmrc-turnover-table-column">
+        @value
+    </div>
+}
+}
+@singleTableRow(value: String) = {
+    <div class="hmrc-turnover-table-column">
+    @value
+    </div>
+}
+@action(pageHeadingKey: String, editPage: Call) = @{
+
+    Actions(items =
+        Seq(
+            ActionItem(
+                href = s"$editPage?from=CYA",
+                content = Text(messages("label.change")),
+                visuallyHiddenText = messages(pageHeadingKey),
+                attributes = Map(
+                    "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
+                )
+            )
+        )
+    )
+}
+
+@pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
+    <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+
+@govukSummaryList(SummaryList(rows =
+    financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
+))
+}
+@pageAnswersTotalSiteCapacity(pageHeadingKey: String, answerRows: SummaryListRow*) = {
+    <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+@govukSummaryList(SummaryList(rows =
+    answerRows.init :+ answerRows.last.copy(classes = "")
+))
+}
+
+@answer(valueLabelKey: String, values: Seq[String]) = @{
+    SummaryListRow(
+        key = Key(Text(messages(valueLabelKey))),
+        value = Value(HtmlContent(
+            tableRow(values).body
+        )),
+        classes = "no-border-bottom",
+    )
+}
+@singleAnswer(valueLabelKey: String, values: String, givenActions: Option[Actions], canAction: Boolean) = @{
+    SummaryListRow(
+        key = Key(Text(messages(valueLabelKey))),
+        value = Value(HtmlContent(
+            singleTableRow(values).body
+        )),
+        classes = "no-border-bottom",
+        actions = if(canAction) givenActions else None
+    )
+}
+@answer6045(valueLabelKey: String, getAnswer: TurnoverSection6045 => String) = @{
+    answer(valueLabelKey, sectionAnswers1.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer))
+}
+
+@answerTotalSiteCapacity(valueLabelKey: String, getAnswer: TotalSiteCapacity => String, action: Option[Actions] = None, canAction: Boolean = false) = @{
+    singleAnswer(valueLabelKey,
+        sectionOtherHolidayAccommodation.answers.flatMap(s => s.totalSiteCapacity).map(getAnswer),
+        action, canAction
+    )
+}
+
+@financialYearEndRow(pageHeadingKey: String, editPage: Call) = @{
+    SummaryListRow(
+        key = Key(Text(messages("turnover.financialYearEnd"))),
+        value = Value(HtmlContent(
+            tableRow(
+                financialYearEndDates.map(dateUtil.formatDayMonthAbbrYear)
+            ).body
+        )),
+        actions =
             Actions(items =
                 Seq(
                     ActionItem(
                         href = s"$editPage?from=CYA",
                         content = Text(messages("label.change")),
-                        visuallyHiddenText = Some(messages(pageHeadingKey)),
+                        visuallyHiddenText = messages(pageHeadingKey),
                         attributes = Map(
                             "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
                         )
                     )
                 )
             )
-        )
-    }
+        ,
+        classes = "no-border-bottom"
+    )
+}
 
-    @pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*) = {
-        <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
+@financialYearEndDates(implicit request: SessionRequest[?]) = @{
+    request.sessionData.financialYearEndDates6076.map(_._1)
+}
+@sectionAnswers1 = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
+}
+@sectionOtherHolidayAccommodation = @{
+    SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation))
+}
 
-    @govukSummaryList(SummaryList(rows =
-        financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
-    ))
-    }
-    @pageAnswersTotalSiteCapacity(pageHeadingKey: String, answerRows: SummaryListRow*) = {
-        <h2 class="govuk-heading-m">@messages(pageHeadingKey)</h2>
-    @govukSummaryList(SummaryList(rows =
-         answerRows.init :+ answerRows.last.copy(classes = "")
-    ))
-    }
-
-    @answer(valueLabelKey: String, values: Seq[String]) = @{
-        SummaryListRow(
-            key = Key(Text(messages(valueLabelKey))),
-            value = Value(HtmlContent(
-                tableRow(values).body
-            )),
-            classes = "no-border-bottom",
-        )
-    }
-    @singleAnswer(valueLabelKey: String, values: String, givenActions: Option[Actions], canAction: Boolean) = @{
-        SummaryListRow(
-            key = Key(Text(messages(valueLabelKey))),
-            value = Value(HtmlContent(
-                singleTableRow(values).body
-            )),
-            classes = "no-border-bottom",
-            actions = if (canAction) givenActions else None
-        )
-    }
-    @answer6045(valueLabelKey: String, getAnswer: TurnoverSection6045 => String) = @{
-        answer(valueLabelKey, sectionAnswers1.answers.flatMap(_.turnoverSections6045).getOrElse(Seq.empty).map(getAnswer))
-    }
-
-    @answerTotalSiteCapacity(valueLabelKey: String, getAnswer: TotalSiteCapacity => String, action: Option[Actions] = None, canAction: Boolean = false) = @{
-        singleAnswer(valueLabelKey,
-            sectionOtherHolidayAccommodation.answers.flatMap(s => s.totalSiteCapacity).map(getAnswer),
-            action, canAction
-        )
-    }
-
-    @financialYearEndRow(pageHeadingKey: String, editPage: Call) = @{
-        SummaryListRow(
-            key = Key(Text(messages("turnover.financialYearEnd"))),
-            value = Value(HtmlContent(
-                tableRow(
-                    financialYearEndDates.map(dateUtil.formatDayMonthAbbrYear)
-                ).body
-            )),
-            actions = Some(
-                Actions(items =
-                    Seq(
-                        ActionItem(
-                            href = s"$editPage?from=CYA",
-                            content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages(pageHeadingKey)),
-                            attributes = Map(
-                                "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
-                            )
-                        )
-                    )
-                )
-            ),
-            classes = "no-border-bottom"
-        )
-    }
-
-    @financialYearEndDates(implicit request: SessionRequest[?]) = @{
-            request.sessionData.financialYearEndDates6076.map(_._1)
-    }
-    @sectionAnswers1 = @{
-        SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
-    }
-    @sectionOtherHolidayAccommodation = @{
-      SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation))
-    }
-
-    @if(sectionOtherHolidayAccommodation.answers.flatMap(_.otherHolidayAccommodation).contains(AnswerNo)){
+@if(sectionOtherHolidayAccommodation.answers.flatMap(_.otherHolidayAccommodation).contains(AnswerNo)) {
     <h2 class="govuk-heading-m">@messages("checkYourAnswersOtherHolidayAccommodation.h2")</h2>
     @govukSummaryList(SummaryList(rows =
         sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.onSite",
             _.otherHolidayAccommodation.map(yesNo => messages(s"label.$yesNo")),
             controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation")
     ))
-    }else{
-        <h2 class="govuk-heading-m">@messages("checkYourAnswersOtherHolidayAccommodation.h2")</h2>
-        @govukSummaryList(SummaryList(rows =
-            sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.onSite",
-                _.otherHolidayAccommodation.map(yesNo => messages(s"label.$yesNo")),
-                controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation")
-        ))
+} else {
+    <h2 class="govuk-heading-m">@messages("checkYourAnswersOtherHolidayAccommodation.h2")</h2>
+    @govukSummaryList(SummaryList(rows =
+        sectionOtherHolidayAccommodation.row("checkYourAnswersOtherHolidayAccommodation.onSite",
+            _.otherHolidayAccommodation.map(yesNo => messages(s"label.$yesNo")),
+            controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show(), "otherHolidayAccommodation")
+    ))
     @pageAnswers("turnover.6045.lettingUnits.grossReceipts.heading",
         controllers.aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show(),
         answer6045("checkYourAnswersAboutTheTradingHistory.tradingPeriod", t => s"${t.grossReceiptsLettingUnits.flatMap(_.tradingPeriod).getOrElse(0)} ${messages("turnover.weeks")}"),
@@ -170,8 +167,8 @@
             action("checkYourAnswersOtherHolidayAccommodation.totalSiteCapacity.heading", controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show()),
             canAction = true
         ),
-        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForStaff",t=>  s"${t.occupiedBySeasonalStuff}"),
-        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.privatelyOwned", t=>  s"${t.privatelyOwned}"),
-        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.totalLettingUnits", t=>  s"${t.total}")
+        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.ownedByOperatorForStaff", t => s"${t.occupiedBySeasonalStuff}"),
+        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.privatelyOwned", t => s"${t.privatelyOwned}"),
+        answerTotalSiteCapacity("checkYourAnswersOtherHolidayAccommodation.totalLettingUnits", t => s"${t.total}")
     )
-    }
+}

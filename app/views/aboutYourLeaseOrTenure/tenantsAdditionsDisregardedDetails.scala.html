@@ -14,10 +14,10 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
+@import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import models.pages.Summary
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -28,30 +28,30 @@
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("tenantsAdditionsDisregardedDetails.heading"),
-  showSection = true,
-  showH1 = false,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url,
-  theForm = theForm
+    pageHeading = messages("tenantsAdditionsDisregardedDetails.heading"),
+    showSection = true,
+    showH1 = false,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.submit()
-  ) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.submit()
+    ) {
 
-      <h1 class="govuk-heading-l">@messages("tenantsAdditionsDisregardedDetails.heading")</h1>
+        <h1 class="govuk-heading-l">@messages("tenantsAdditionsDisregardedDetails.heading")</h1>
 
-      <p class="govuk-body">@messages("hint.tenantsAdditionsDisregardedDetails")</p>
+        <p class="govuk-body">@messages("hint.tenantsAdditionsDisregardedDetails")</p>
 
-      @includes.textInputHMRCCharCount(
-          hmrcCharacterCount,
-          theForm,
-          "tenantsAdditionsDisregardedDetails",
-          classes = "govuk-label--l",
-          charCount = 2000
-      )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "tenantsAdditionsDisregardedDetails",
+            classes = "govuk-label--l",
+            charCount = 2000
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

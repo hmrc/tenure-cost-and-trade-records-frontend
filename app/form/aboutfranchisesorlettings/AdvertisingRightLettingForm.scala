@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object AdvertisingRightLettingForm {
 
-  val theForm = Form(
+  val theForm: Form[AdvertisingRightLetting] = Form(
     mapping(
       "descriptionOfSpace"     -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.descriptionOfSpace.required"),

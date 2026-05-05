@@ -20,15 +20,15 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.AreYouStillConnectedForm.theForm
+import models.submissions.connectiontoproperty.AddressConnectionType
+import models.submissions.connectiontoproperty.AddressConnectionType.*
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.AreYouStillConnectedPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc._
+import play.api.mvc.*
 import repositories.SessionRepo
 import views.html.connectiontoproperty.areYouStillConnected as AreYouStillConnectedView
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import models.submissions.connectiontoproperty.AddressConnectionType
-import models.submissions.connectiontoproperty.AddressConnectionType.*
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -90,7 +90,7 @@ class AreYouStillConnectedController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case "TL"  => controllers.routes.TaskListController.show.url

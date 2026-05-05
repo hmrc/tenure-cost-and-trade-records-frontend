@@ -21,53 +21,55 @@
 
 @(forType: ForType, section3Completed: Option[AnswersYesNo], section4Completed: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
-@session = @{ request.sessionData }
+@session = @{
+    request.sessionData
+}
 
 @if(!(Seq(FOR6048, FOR6076) contains forType)) {
- <li>
-  <h2 id="franchiseAndLettings" class="app-task-list__section">
-   <span class="app-task-list__section-number">4.</span>
-   @if(forType == FOR6010 || forType == FOR6011 || forType == FOR6030) {
-    @messages("label.section.aboutFranchisesOrLettings")
-   }
-   @if(forType == FOR6015 || forType == FOR6016) {
-    @messages("label.section.aboutConcessionsOrLettings")
-   }
-   @if(forType == FOR6020) {
-    @messages("label.section.aboutLettings")
-   }
-   @if(forType == FOR6045 || forType == FOR6046) {
-    @messages("label.section.aboutConcessionsFranchisesOrLettings")
-   }
-  </h2>
-  <ul class="app-task-list__items">
-  @if(forType == FOR6045 || forType == FOR6046) {
-   @includes.taskListItem(
-    "franchise-or-lettings-tied-to-property",
-    "taskList.rentalIncomeStatus",
-    controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
-    section4Completed,
-    pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-    cannotStartYet = !section3Completed.exists(_.toBoolean)
-   )
-  } else {
-   @if(!(Seq(FOR6020) contains forType)) {
-    @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
-     controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
-     section4Completed,
-     pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-     cannotStartYet = !section3Completed.exists(_.toBoolean)
-    )
-   }
-   @if(forType == FOR6020) {
-     @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
-      controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
-      section4Completed,
-      pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
-      cannotStartYet = !section3Completed.exists(_.toBoolean)
-     )
-    }
-   }
-  </ul>
- </li>
+    <li>
+        <h2 id="franchiseAndLettings" class="app-task-list__section">
+            <span class="app-task-list__section-number">4.</span>
+            @if(forType == FOR6010 || forType == FOR6011 || forType == FOR6030) {
+                @messages("label.section.aboutFranchisesOrLettings")
+            }
+            @if(forType == FOR6015 || forType == FOR6016) {
+                @messages("label.section.aboutConcessionsOrLettings")
+            }
+            @if(forType == FOR6020) {
+                @messages("label.section.aboutLettings")
+            }
+            @if(forType == FOR6045 || forType == FOR6046) {
+                @messages("label.section.aboutConcessionsFranchisesOrLettings")
+            }
+        </h2>
+        <ul class="app-task-list__items">
+        @if(forType == FOR6045 || forType == FOR6046) {
+            @includes.taskListItem(
+                "franchise-or-lettings-tied-to-property",
+                "taskList.rentalIncomeStatus",
+                controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+                section4Completed,
+                pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+                cannotStartYet = !section3Completed.exists(_.toBoolean)
+            )
+        } else {
+            @if(!(Seq(FOR6020) contains forType)) {
+                @includes.taskListItem("franchise-or-lettings-tied-to-property", "taskList.rentalIncomeStatus",
+                    controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+                    section4Completed,
+                    pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+                    cannotStartYet = !section3Completed.exists(_.toBoolean)
+                )
+            }
+            @if(forType == FOR6020) {
+                @includes.taskListItem("franchise-or-lettings-tied-to-property", "checkYourAnswersAboutFranchiseOrLettings.lettingsOtherPartOfProperties.heading",
+                    controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show(),
+                    section4Completed,
+                    pageAnswer = session.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty),
+                    cannotStartYet = !section3Completed.exists(_.toBoolean)
+                )
+            }
+        }
+        </ul>
+    </li>
 }

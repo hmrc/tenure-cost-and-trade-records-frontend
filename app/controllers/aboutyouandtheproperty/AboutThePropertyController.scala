@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.aboutTheProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class AboutThePropertyController @Inject() (
@@ -41,7 +41,7 @@ class AboutThePropertyController @Inject() (
   aboutThePropertyView: aboutTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -49,17 +49,15 @@ class AboutThePropertyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AboutTheProperty")
 
-    Future.successful(
-      Ok(
-        aboutThePropertyView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetails) match {
-            case Some(propertyDetails) => aboutThePropertyForm.fill(propertyDetails)
-            case _                     => aboutThePropertyForm
-          },
-          request.sessionData.forType,
-          request.sessionData.toSummary,
-          backLink
-        )
+    Ok(
+      aboutThePropertyView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetails) match {
+          case Some(propertyDetails) => aboutThePropertyForm.fill(propertyDetails)
+          case _                     => aboutThePropertyForm
+        },
+        request.sessionData.forType,
+        request.sessionData.toSummary,
+        backLink
       )
     )
   }
@@ -85,7 +83,7 @@ class AboutThePropertyController @Inject() (
     )
   }
 
-  private def backLink(implicit request: Request[AnyContent]): String =
+  private def backLink(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url + "#about-the-property"
       case _    => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url

@@ -30,8 +30,8 @@ class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
 
   private val nextPage = controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show().url
 
-  def grossReceiptsSubLetUnitsController =
-    new GrossReceiptsSubLetUnitsController(
+  def grossReceiptsSubLetUnitsController: GrossReceiptsSubLetUnitsController =
+    GrossReceiptsSubLetUnitsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

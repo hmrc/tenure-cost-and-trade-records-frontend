@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.ultimatelyResponsibleBuildingInsurance
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class UltimatelyResponsibleBuildingInsuranceController @Inject() (
@@ -40,28 +40,26 @@ class UltimatelyResponsibleBuildingInsuranceController @Inject() (
   ultimatelyResponsibleBIView: ultimatelyResponsibleBuildingInsurance,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("UltimatelyResponsibleBuildingInsurance")
 
-    Future.successful(
-      Ok(
-        ultimatelyResponsibleBIView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleBuildingInsurance) match {
-            case Some(ultimatelyResponsibleBI) =>
-              ultimatelyResponsibleBuildingInsuranceForm.fill(ultimatelyResponsibleBI)
-            case _                             => ultimatelyResponsibleBuildingInsuranceForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      ultimatelyResponsibleBIView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleBuildingInsurance) match {
+          case Some(ultimatelyResponsibleBI) =>
+            ultimatelyResponsibleBuildingInsuranceForm.fill(ultimatelyResponsibleBI)
+          case _                             => ultimatelyResponsibleBuildingInsuranceForm
+        },
+        request.sessionData.toSummary
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[UltimatelyResponsibleBuildingInsurance](
       ultimatelyResponsibleBuildingInsuranceForm,
       formWithErrors => BadRequest(ultimatelyResponsibleBIView(formWithErrors, request.sessionData.toSummary)),

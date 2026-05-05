@@ -34,7 +34,7 @@ object LoginToBackend {
   )(
     rn: RefNumber,
     pc: Postcode
-  )(implicit ec: ExecutionContext
+  )(using ec: ExecutionContext
   ): Future[LoginResult] =
     for {
       lr <- v(rn, pc)

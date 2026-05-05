@@ -23,14 +23,14 @@ import form.aboutthetradinghistory.AccountingInformationForm.accountingInformati
 import models.ForType.*
 import models.Session
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
+import models.submissions.aboutthetradinghistory.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, CostOfSales, OccupationalAndAccountingInformation, TotalPayrollCost, TurnoverSection, TurnoverSection6020, TurnoverSection6030}
 import models.submissions.common.AnswersYesNo
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.FinancialYearEndPageId
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import util.AccountingInformationUtil.*
 import views.html.aboutthetradinghistory.financialYearEnd
@@ -76,7 +76,7 @@ class FinancialYearEndController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[(DayMonthsDuration, Boolean)](
           accountingInformationForm,
           formWithErrors => BadRequest(financialYearEndView(formWithErrors)),
@@ -185,7 +185,7 @@ class FinancialYearEndController @Inject() (
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean,
     isFinancialYearsListUnchanged: Boolean
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ) = {
     val turnoverSections =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {

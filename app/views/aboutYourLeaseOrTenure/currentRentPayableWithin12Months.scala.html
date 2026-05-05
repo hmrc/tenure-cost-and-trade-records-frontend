@@ -14,19 +14,13 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.CurrentRentPayableWithin12Months
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.pages.Summary
+@import models.submissions.aboutYourLeaseOrTenure.CurrentRentPayableWithin12Months
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend, RadioItem, Radios}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput, GovukRadios}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout,
@@ -39,58 +33,56 @@
 @(theForm: Form[CurrentRentPayableWithin12Months], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("currentRentPayableWithin12Months.heading"),
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url,
- theForm = theForm
+    pageHeading = messages("currentRentPayableWithin12Months.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.submit()) {
 
-  <p class="govuk-body">@messages("currentRentPayableWithin12Months.p1")</p>
+        <p class="govuk-body">@messages("currentRentPayableWithin12Months.p1")</p>
 
-  <p class="govuk-body">@messages("currentRentPayableWithin12Months.p2")</p>
+        <p class="govuk-body">@messages("currentRentPayableWithin12Months.p2")</p>
 
-  @govukRadios(
-   Radios(
-    name = "rentPayable",
-    idPrefix = Option("currentRentPayableWithin12Months"),
-    items = Seq(
-     "yes" -> messages("label.yes.oes"),
-     "no" -> messages("label.no.nac.oes")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("rentPayable").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    classes = "govuk-radios--inline",
-    errorMessage = theForm.errors.asTextErrorMessageForField("rentPayable"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("currentRentPayableWithin12Months.subheading")),
-        classes = "govuk-fieldset__legend--m"
-       )
-      )
-     )
-    )
-   )
-  )
+        @govukRadios(
+            Radios(
+                name = "rentPayable",
+                idPrefix = "currentRentPayableWithin12Months",
+                items = Seq(
+                    "yes" -> messages("label.yes.oes"),
+                    "no" -> messages("label.no.nac.oes")
+                ).map(radioItem => RadioItem(
+                    content = Text(radioItem._2),
+                    checked = radioItem._1.equals(theForm("rentPayable").value.getOrElse("")),
+                    value = radioItem._1
+                )
+                ),
+                classes = "govuk-radios--inline",
+                errorMessage = theForm.errors.asTextErrorMessageForField("rentPayable"),
+                fieldset =
+                    Fieldset(
+                        legend =
+                            Legend(
+                                content = Text(messages("currentRentPayableWithin12Months.subheading")),
+                                classes = "govuk-fieldset__legend--m"
+                            )
+                    )
+            )
+        )
 
-  @includes.dateFields(
-   form = theForm,
-   field = "dateReview",
-   govukDate = govukDateInput,
-   helpText = messages("label.currentRentPayableWithin12Months.help"),
-   showDays = true,
-   customClass = "govuk-fieldset__legend--m")
+        @includes.dateFields(
+            form = theForm,
+            field = "dateReview",
+            govukDate = govukDateInput,
+            helpText = messages("label.currentRentPayableWithin12Months.help"),
+            showDays = true,
+            customClass = "govuk-fieldset__legend--m")
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

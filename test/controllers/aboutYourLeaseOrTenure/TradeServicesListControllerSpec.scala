@@ -31,7 +31,7 @@ import scala.language.reflectiveCalls
 
 class TradeServicesListControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,8 +39,8 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
-    new TradeServicesListController(
+  ): TradeServicesListController =
+    TradeServicesListController(
       stubMessagesControllerComponents(),
       mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],
@@ -50,8 +50,8 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def tradeServicesListControllerNone =
-    new TradeServicesListController(
+  def tradeServicesListControllerNone: TradeServicesListController =
+    TradeServicesListController(
       stubMessagesControllerComponents(),
       mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],

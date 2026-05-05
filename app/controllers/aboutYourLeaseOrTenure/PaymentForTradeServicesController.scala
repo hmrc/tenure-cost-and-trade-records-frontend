@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.paymentForTradeServices
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PaymentForTradeServicesController @Inject() (
@@ -43,7 +43,7 @@ class PaymentForTradeServicesController @Inject() (
   paymentView: paymentForTradeServices,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -51,16 +51,14 @@ class PaymentForTradeServicesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PaymentForTradeServices")
 
-    Future.successful(
-      Ok(
-        paymentView(
-          request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match {
-            case Some(answers) => paymentForTradeServicesForm.fill(answers)
-            case _             => paymentForTradeServicesForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      paymentView(
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match {
+          case Some(answers) => paymentForTradeServicesForm.fill(answers)
+          case _             => paymentForTradeServicesForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }
@@ -86,7 +84,7 @@ class PaymentForTradeServicesController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url + "#payment-for-trade-services"
       case _    =>

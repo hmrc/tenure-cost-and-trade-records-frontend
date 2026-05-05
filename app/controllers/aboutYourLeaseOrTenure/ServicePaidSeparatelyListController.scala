@@ -34,7 +34,6 @@ import views.html.aboutYourLeaseOrTenure.servicePaidSeparatelyList
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class ServicePaidSeparatelyListController @Inject() (
@@ -54,15 +53,13 @@ class ServicePaidSeparatelyListController @Inject() (
 
     audit.sendChangeLink("ServicePaidSeparatelyList")
 
-    Future.successful(
-      Ok(
-        theListView(
-          existingSection.flatMap(_.addAnotherPaidService) match {
-            case Some(answer) => addServicePaidSeparatelyForm.fill(answer)
-            case _            => addServicePaidSeparatelyForm
-          },
-          index
-        )
+    Ok(
+      theListView(
+        existingSection.flatMap(_.addAnotherPaidService) match {
+          case Some(answer) => addServicePaidSeparatelyForm.fill(answer)
+          case _            => addServicePaidSeparatelyForm
+        },
+        index
       )
     )
   }
@@ -114,14 +111,12 @@ class ServicePaidSeparatelyListController @Inject() (
       .flatMap(_.servicesPaid.lift(index))
       .map { servicesPaid =>
         val service = servicesPaid.details
-        Future.successful(
-          Ok(
-            theConfirmationView(
-              confirmableActionForm,
-              service,
-              controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.performRemove(index),
-              navigator.callBackToCYAor(toServicePaidSeparatelyList(index))
-            )
+        Ok(
+          theConfirmationView(
+            confirmableActionForm,
+            service,
+            controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.performRemove(index),
+            navigator.callBackToCYAor(toServicePaidSeparatelyList(index))
           )
         )
       }
@@ -136,14 +131,12 @@ class ServicePaidSeparatelyListController @Inject() (
           .flatMap(_.tradeServices.lift(index))
           .map { services =>
             val description = services.details
-            Future.successful(
-              BadRequest(
-                theConfirmationView(
-                  formWithErrors,
-                  description,
-                  controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.performRemove(index),
-                  navigator.callBackToCYAor(toServicePaidSeparatelyList(index))
-                )
+            BadRequest(
+              theConfirmationView(
+                formWithErrors,
+                description,
+                controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.performRemove(index),
+                navigator.callBackToCYAor(toServicePaidSeparatelyList(index))
               )
             )
           }

@@ -16,10 +16,10 @@
 
 @import models.pages.Summary
 @import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -30,37 +30,37 @@
 @(theForm: Form[MethodToFixCurrentRent], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("methodUsedToFixCurrentRent.heading"),
- showH1 = false,
- showSection = true,
-    summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show().url,
- theForm = theForm
+    pageHeading = messages("methodUsedToFixCurrentRent.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController.show().url,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.submit()) {
 
-    @includes.radioButtons(
-      govukRadios,
-      theForm,
-      "methodUsedToFixCurrentRent",
-      "methodUsedToFixCurrentRent.heading",
-      "govuk-fieldset__legend--l",
-      items = Seq(
-        "agreement" -> messages("label.methodUsedToFixCurrentRent.agreement"),
-        "arbitration" -> messages("label.methodUsedToFixCurrentRent.arbitration"),
-        "independentExpert" -> messages("label.methodUsedToFixCurrentRent.independentExpert"),
-        "aCourt" -> messages("label.methodUsedToFixCurrentRent.aCourt")
-      ).map(radioItem => RadioItem(
-        content = Text(radioItem._2),
-        checked = radioItem._1.equals(theForm("methodUsedToFixCurrentRent").value.getOrElse("")),
-        value = Option(radioItem._1)
-      )),
-      isHeading = true,
-      inline = false
-    )
+        @includes.radioButtons(
+            govukRadios,
+            theForm,
+            "methodUsedToFixCurrentRent",
+            "methodUsedToFixCurrentRent.heading",
+            "govuk-fieldset__legend--l",
+            items = Seq(
+                "agreement" -> messages("label.methodUsedToFixCurrentRent.agreement"),
+                "arbitration" -> messages("label.methodUsedToFixCurrentRent.arbitration"),
+                "independentExpert" -> messages("label.methodUsedToFixCurrentRent.independentExpert"),
+                "aCourt" -> messages("label.methodUsedToFixCurrentRent.aCourt")
+            ).map(radioItem => RadioItem(
+                content = Text(radioItem._2),
+                checked = radioItem._1.equals(theForm("methodUsedToFixCurrentRent").value.getOrElse("")),
+                value = radioItem._1
+            )),
+            isHeading = true,
+            inline = false
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

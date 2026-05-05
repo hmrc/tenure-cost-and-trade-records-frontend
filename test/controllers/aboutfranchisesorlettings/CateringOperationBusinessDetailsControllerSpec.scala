@@ -19,26 +19,28 @@ package controllers.aboutfranchisesorlettings
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutfranchisesorlettings.ConcessionIncomeRecord
+import models.submissions.aboutfranchisesorlettings.{ConcessionBusinessDetails, ConcessionIncomeRecord}
+import org.jsoup.nodes.Document
 import org.mockito.ArgumentCaptor
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.JsoupHelpers.*
 import utils.TestBaseSpec
 
-import scala.concurrent.Future.successful
+import scala.concurrent.Future
 
 class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
 
   "the CateringOperationBusinessDetails controller" when {
     "handling GET / requests"  should {
       "reply 200 with a fresh HTML form and expected backLink" in new ControllerFixture {
-        val result = controller.show(index = None)(fakeGetRequest)
+        val result: Future[Result] = controller.show(index = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val html = contentAsJsoup(result)
+        val html: Document = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()    shouldBe "concessionTypeDetails.heading"
         html.getElementById("operatorName6030").value shouldBe ""
         html.getElementById("typeOfBusiness").value   shouldBe ""
@@ -46,11 +48,11 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
       }
 
       "reply 200 with a pre-filled HTML form and expected backLink" in new ControllerFixture {
-        val result = controller.show(index = Some(2))(fakeGetRequest)
+        val result: Future[Result] = controller.show(index = Some(2))(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val html = contentAsJsoup(result)
+        val html: Document = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()    shouldBe "concessionTypeDetails.heading"
         html.getElementById("operatorName6030").value shouldBe ""
         html.getElementById("typeOfBusiness").value   shouldBe ""
@@ -59,8 +61,8 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
     }
     "handling POST / requests" should {
       "reply 400 and error messages when the form is submitted with invalid data" in new ControllerFixture {
-        val result  = controller.submit(index = None)(fakePostRequest)
-        val content = contentAsString(result)
+        val result: Future[Result] = controller.submit(index = None)(fakePostRequest)
+        val content: String        = contentAsString(result)
         status(result) shouldBe BAD_REQUEST
         content          should include("error.operatorName6030.required")
         content          should include("error.typeOfBusiness.required")
@@ -69,7 +71,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
       }
 
       "reply 303 when the form is submitted with good data and index=0" in new ControllerFixture {
-        val result = controller.submit(index = Some(0))(
+        val result: Future[Result] = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "operatorName6030"          -> "Another Operator",
             "typeOfBusiness"            -> "Different Business",
@@ -83,7 +85,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
       }
 
       "reply 303 when the 6030 form is submitted with good data missing index" in new ControllerFixture {
-        val result = controller.submit(index = None)(
+        val result: Future[Result] = controller.submit(index = None)(
           fakePostRequest.withFormUrlEncodedBody(
             "operatorName6030"          -> "Another Operator",
             "typeOfBusiness"            -> "Different Business",
@@ -93,7 +95,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.FeeReceivedController.show(0).url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        val updatedCateringOperationDetails = data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
+        val updatedCateringOperationDetails: ConcessionBusinessDetails = data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
           .asInstanceOf[ConcessionIncomeRecord]
           .businessDetails
           .value
@@ -110,10 +112,10 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
     val repository: SessionRepo       = mock[SessionRepo]
     val data: ArgumentCaptor[Session] = captor[Session]
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
-      .thenReturn(successful(()))
+      .thenReturn(Future.unit)
 
     val controller: CateringOperationBusinessDetailsController =
-      new CateringOperationBusinessDetailsController(
+      CateringOperationBusinessDetailsController(
         stubMessagesControllerComponents(),
         mockAudit,
         aboutFranchisesOrLettingsNavigator,

@@ -23,9 +23,8 @@ import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutyouandtheproperty.ContactDetailsQuestionForm.theForm
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import models.submissions.common.Address
-import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
+import models.submissions.common.{Address, AnswersYesNo}
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.ContactDetailsQuestionId
 import play.api.i18n.I18nSupport
@@ -34,7 +33,6 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.contactDetailsQuestion as ContactDetailsQuestionView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -69,12 +67,7 @@ class ContactDetailsQuestionController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      formWithErrors =>
-        successful(
-          BadRequest(
-            theView(formWithErrors, request.sessionData.toSummary, isReadOnly)
-          )
-        ),
+      formWithErrors => BadRequest(theView(formWithErrors, request.sessionData.toSummary, isReadOnly)),
       formData =>
         given Session  = request.sessionData
         val newSession = sessionWithFormData(formData)
@@ -93,7 +86,7 @@ class ContactDetailsQuestionController @Inject() (
               )
             else
               // AnswerNo  =>  skip address lookup
-              successful(Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession)))
+              Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession))
           }
     )
   }
@@ -104,7 +97,7 @@ class ContactDetailsQuestionController @Inject() (
       for
         confirmedAddress  <- getConfirmedAddress(id)
         alternativeAddress = confirmedAddress.asAddress
-        newSession        <- successful(sessionWithAlternativeAddress(alternativeAddress))
+        newSession        <- sessionWithAlternativeAddress(alternativeAddress)
         _                 <- repository.saveOrUpdate(newSession)
       yield Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession))
   }

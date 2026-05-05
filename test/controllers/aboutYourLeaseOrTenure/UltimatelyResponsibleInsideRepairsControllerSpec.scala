@@ -20,22 +20,22 @@ import connectors.Audit
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
+import play.api.test.*
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
-import play.api.test.*
-import play.api.test.Helpers.*
 
 class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def ultimatelyResponsibleInsideRepairsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = new UltimatelyResponsibleInsideRepairsController(
+  ): UltimatelyResponsibleInsideRepairsController = UltimatelyResponsibleInsideRepairsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

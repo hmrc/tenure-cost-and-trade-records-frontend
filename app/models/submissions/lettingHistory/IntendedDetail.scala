@@ -16,8 +16,9 @@
 
 package models.submissions.lettingHistory
 
-import java.time.LocalDate
 import play.api.libs.json.{Format, Json}
+
+import java.time.LocalDate
 
 case class IntendedDetail(
   nights: Option[Int] = None,
@@ -30,5 +31,5 @@ case class IntendedDetail(
 object IntendedDetail:
   given Format[IntendedDetail] = Json.format
 
-  def unapply(obj: IntendedDetail) =
+  def unapply(obj: IntendedDetail): Some[(Option[Int], Option[Boolean], Option[LocalDate], Option[Boolean], Option[LocalPeriod])] =
     Some(obj.nights, obj.hasStopped, obj.whenWasLastLet, obj.isYearlyAvailable, obj.tradingSeason)

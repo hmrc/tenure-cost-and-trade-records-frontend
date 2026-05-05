@@ -18,11 +18,11 @@
 @import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType
 @import models.submissions.aboutthetradinghistory.Caravans.CaravanUnitType.{Single, Twin}
 @import models.submissions.aboutthetradinghistory.CaravansTrading6045
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtilLocalised
-@import util.AccessibilityUtil
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
+
 @import java.time.LocalDate
 
 
@@ -45,23 +45,23 @@
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
-    @hintKey.map { msgKey =>
-        <span class="govuk-caption-m">@messages(msgKey)</span>
-    }
+@hintKey.map { msgKey =>
+    <span class="govuk-caption-m">@messages(msgKey)</span>
+}
 }
 
-@turnoverRow(formField: String, labelKey: String, hintKey: String,finYearEnd: LocalDate) = @{
+@turnoverRow(formField: String, labelKey: String, hintKey: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
+            content = HtmlContent(rowLabel(labelKey, hintKey.filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(
                 govukInput(
                     Input(
-                        prefix = Some(PrefixOrSuffix(
-                            content = Text("£")
-                        )),
+                        prefix = PrefixOrSuffix(
+                            content = Text("£"
+                            )),
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
@@ -87,9 +87,9 @@
                         "maxlength" -> maxLength.toString,
                         "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
                     ),
-                    suffix = Some(PrefixOrSuffix(
-                        content = Text(messages(suffixKey))
-                    ))
+                    suffix = PrefixOrSuffix(
+                        content = Text(messages(suffixKey)
+                        ))
                 ).withFormField(form(formField)))
             )
         )
@@ -101,8 +101,8 @@
 }
 
 @twoParagraphs(messageKeyP1: String, messageKeyP2: String) = {
-    @paragraph(messageKeyP1)
-    @paragraph(messageKeyP2)
+@paragraph(messageKeyP1)
+@paragraph(messageKeyP2)
 }
 
 @helpContent = @{
@@ -116,7 +116,7 @@
 @layout(
     pageHeading = messages(s"$messageKeyPrefix.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,

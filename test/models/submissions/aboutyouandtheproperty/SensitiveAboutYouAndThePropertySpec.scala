@@ -16,11 +16,11 @@
 
 package models.submissions.aboutyouandtheproperty
 
-import org.scalatest.wordspec.AnyWordSpecLike
-import org.scalatest.matchers.should.Matchers
-import play.api.Configuration
-import models.submissions.common._
 import crypto.MongoCrypto
+import models.submissions.common.*
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import play.api.Configuration
 import utils.SensitiveTestHelper
 
 class SensitiveAboutYouAndThePropertySpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {

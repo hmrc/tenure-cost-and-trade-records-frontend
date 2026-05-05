@@ -46,7 +46,7 @@ object StillConnectedDetails:
 
   def updateStillConnectedDetails(
     copy: StillConnectedDetails => StillConnectedDetails
-  )(implicit sessionRequest: SessionRequest[?]
+  )(using sessionRequest: SessionRequest[?]
   ): Session =
     val currentStillConnectedDetails = sessionRequest.sessionData.stillConnectedDetails
 

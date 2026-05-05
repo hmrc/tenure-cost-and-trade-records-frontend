@@ -19,8 +19,8 @@ package views.aboutYourLeaseOrTenure
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm
 import models.pages.Summary
 import models.submissions.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairs
-import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
+import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
@@ -55,9 +55,9 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
     "contain radio buttons for inside repair with the value landlord" in {
@@ -134,8 +134,8 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
   }
 }

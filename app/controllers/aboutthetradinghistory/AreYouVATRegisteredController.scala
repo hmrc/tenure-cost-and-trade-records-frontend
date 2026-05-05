@@ -20,8 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.AreYouVATRegisteredForm.areYouVATRegisteredForm
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateAboutTheTradingHistoryPartOne
 import models.submissions.common.AnswersYesNo
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AreYouVATRegisteredId
@@ -45,7 +45,7 @@ class AreYouVATRegisteredController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -79,7 +79,7 @@ class AreYouVATRegisteredController @Inject() (
   }
 
   private def tradingHistoryPartOne(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
 

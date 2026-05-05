@@ -17,7 +17,7 @@
 package form
 
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import utils.TestBaseSpec
 
 class OptionalCurrencyMappingSpec extends TestBaseSpec {

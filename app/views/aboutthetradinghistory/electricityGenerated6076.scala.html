@@ -15,11 +15,11 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtilLocalised
-@import util.AccessibilityUtil
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
+
 @import java.time.LocalDate
 
 
@@ -41,15 +41,15 @@
     <p class="govuk-body">
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
     </p>
-    @hintKey.map { msgKey =>
-        <span class="govuk-caption-m">@messages(msgKey)</span>
-    }
+@hintKey.map { msgKey =>
+    <span class="govuk-caption-m">@messages(msgKey)</span>
+}
 }
 
 @turnoverRow(formField: String, labelKey: String, hintKey: String, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
+            content = HtmlContent(rowLabel(labelKey, hintKey.filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(
@@ -70,7 +70,7 @@
 @layout(
     pageHeading = messages("turnover.6076.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
@@ -104,9 +104,9 @@
                                                 "maxlength" -> "2",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("turnover.6076.weeks", finYearEnd)
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("turnover.weeks"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("turnover.weeks")
+                                                ))
                                         ).withFormField(form(s"turnover[$idx].weeks")))
                                     )
                                 )

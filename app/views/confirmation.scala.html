@@ -15,20 +15,18 @@
  *@
 
 @import actions.SessionRequest
+@import form.Feedback
 @import models.submissions.common.AnswersYesNo.*
 @import models.submissions.connectiontoproperty.AddressConnectionType.*
-@import views.html.answers.answersAllSectionsTable
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.Radios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
+@import views.html.answers.answersAllSectionsTable
+@import views.html.components.PrimaryLayout
 
-
-@import form.Feedback
 
 @this(
         layout: PrimaryLayout,
@@ -51,7 +49,7 @@
 
 @layout(
     pageHeading = messages("confirmation.heading"),
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     showH1 = false
 ) {
 
@@ -71,7 +69,7 @@
     </ul>
 
     <div class="print-only">
-        @answersAllSections()
+    @answersAllSections()
     </div>
 
     @if(isVacant || needsBusinessRateBill) {
@@ -100,37 +98,36 @@
 
         @formWithCSRF(
             action = routes.FeedbackController.feedbackSharedSubmit,
-            args = Symbol("novalidate") -> "novalidate" ) {
+            args = Symbol("novalidate") -> "novalidate") {
 
             <hr>
             <p>
-            <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">@messages("confirmation.feedback.subheading")</legend>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">@messages("confirmation.feedback.subheading")</legend>
 
-                    @govukRadios(
-                        Radios(
-                            name = "feedback-rating",
-                            items =
-                                Seq(
-                                    "5" -> messages("feedback.rating.5"),
-                                    "4" -> messages("feedback.rating.4"),
-                                    "3" -> messages("feedback.rating.3"),
-                                    "2" -> messages("feedback.rating.2"),
-                                    "1" -> messages("feedback.rating.1")
-                                ).map(radioItem =>
-                                    RadioItem(
-                                        content = Text(radioItem._2),
-                                        checked = radioItem._1.equals(theForm("feedback-rating").value.getOrElse("")),
-                                        value = Option(radioItem._1)
-                                    )
-                                ),
-                            errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating"),
-                        )
+                @govukRadios(
+                    Radios(
+                        name = "feedback-rating",
+                        items =
+                            Seq(
+                                "5" -> messages("feedback.rating.5"),
+                                "4" -> messages("feedback.rating.4"),
+                                "3" -> messages("feedback.rating.3"),
+                                "2" -> messages("feedback.rating.2"),
+                                "1" -> messages("feedback.rating.1")
+                            ).map(radioItem =>
+                                RadioItem(
+                                    content = Text(radioItem._2),
+                                    checked = radioItem._1.equals(theForm("feedback-rating").value.getOrElse("")),
+                                    value = radioItem._1
+                                )
+                            ),
+                        errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating"),
                     )
-                </fieldset>
-            </div>
-
+                )
+            </fieldset>
+        </div>
 
             @includes.textInputHMRCCharCount(
                 hmrcCharacterCount,
@@ -142,16 +139,7 @@
                 charCount = 2000
             )
 
-
-            @govukButton(
-                Button(
-                    attributes = Map("id" -> "send"),
-                    content = Text(messages("button.label.sendYourFeedback")),
-                    name = Some("send"),
-                    value = Some("send"),
-                    inputType = Some("submit")
-                )
-            )
+            @govukButton(SubmitButton("sendYourFeedback"))
         }
 
         <p class="govuk-body govuk-!-display-none-print">
@@ -159,5 +147,4 @@
         </p>
 
     </div>
-
 }

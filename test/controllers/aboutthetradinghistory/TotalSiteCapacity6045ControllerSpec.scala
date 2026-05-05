@@ -31,7 +31,7 @@ class TotalSiteCapacity6045ControllerSpec extends TestBaseSpec {
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  ) = new TotalSiteCapacity6045Controller(
+  ): TotalSiteCapacity6045Controller = TotalSiteCapacity6045Controller(
     totalSiteCapacity6045View,
     mockAudit,
     aboutYourTradingHistoryNavigator,

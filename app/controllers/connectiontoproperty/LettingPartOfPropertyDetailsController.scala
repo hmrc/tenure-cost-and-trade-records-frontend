@@ -34,7 +34,6 @@ import views.html.connectiontoproperty.tenantDetails as TenantDetailsView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class LettingPartOfPropertyDetailsController @Inject() (
@@ -70,18 +69,16 @@ class LettingPartOfPropertyDetailsController @Inject() (
     )
   }
 
-  def submit(index: Option[Int]) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TenantDetails](
       theForm,
       formWithErrors =>
-        successful(
-          BadRequest(
-            theView(
-              formWithErrors,
-              index,
-              getBackLink(index),
-              request.sessionData.toSummary
-            )
+        BadRequest(
+          theView(
+            formWithErrors,
+            index,
+            getBackLink(index),
+            request.sessionData.toSummary
           )
         ),
       formData => {
@@ -130,12 +127,12 @@ class LettingPartOfPropertyDetailsController @Inject() (
     )
   }
 
-  def addressLookupCallback(idx: Int, id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+  def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
       confirmedAddress     <- getConfirmedAddress(id)
       correspondenceAddress = confirmedAddress.asAddress
-      newSession           <- successful(sessionWithCorrespondenceAddress(idx, correspondenceAddress))
+      newSession           <- sessionWithCorrespondenceAddress(idx, correspondenceAddress)
       _                    <- repository.saveOrUpdate(newSession)
     yield {
       val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(using request) == "CYA")
@@ -145,7 +142,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
     }
   }
 
-  private def getBackLink(mayBeIndex: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(mayBeIndex: Option[Int])(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url

@@ -17,8 +17,8 @@
 @import actions.SessionRequest
 @import models.submissions.accommodation.AccommodationUnit
 @import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -58,7 +58,7 @@
                     content = Text(accommodationUnit.unitName),
                     classes = "govuk-!-font-weight-regular"
                 ),
-                actions = Some(Actions(
+                actions = Actions(
                     items = Seq(
                         ActionItem(
                             href = s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=$index",
@@ -76,7 +76,7 @@
                         )
                     ),
                     classes = "hmrc-summary-list__actions"
-                ))
+                )
             )
         },
         classes = "hmrc-list-with-actions hmrc-list-with-actions--short govuk-!-width-two-thirds"

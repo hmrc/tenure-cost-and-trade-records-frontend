@@ -14,18 +14,12 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
-
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Hint, Input, Label, PrefixOrSuffix}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukInput: GovukInput,
@@ -37,36 +31,36 @@
 @(theForm: Form[BigDecimal], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("currentAnnualRent.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backLink,
- theForm = theForm
+    pageHeading = messages("currentAnnualRent.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.submit()) {
 
 
-  @govukInput(Input(
-   id = "currentAnnualRent",
-   name = "currentAnnualRent",
-   value = theForm("currentAnnualRent").value,
-   classes = "govuk-input--width-10 total-annual-rent",
-   label = Label(
-    content = Text(messages("currentAnnualRent.heading")),
-    classes = "govuk-label--l",
-    isPageHeading = true
-   ),
-   prefix = Some(PrefixOrSuffix(
-    content = Text(messages("label.pound"))
-   )),
-   hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
-   autocomplete = Some("off"),
-  ).withFormField(theForm(s"currentAnnualRent")))
+        @govukInput(Input(
+            id = "currentAnnualRent",
+            name = "currentAnnualRent",
+            value = theForm("currentAnnualRent").value,
+            classes = "govuk-input--width-10 total-annual-rent",
+            label = Label(
+                content = Text(messages("currentAnnualRent.heading")),
+                classes = "govuk-label--l",
+                isPageHeading = true
+            ),
+            prefix = PrefixOrSuffix(
+                content = Text(messages("label.pound")
+                )),
+            hint = Hint(content = Text(messages("hint.currentAnnualRent"))),
+            autocomplete = "off",
+        ).withFormField(theForm(s"currentAnnualRent")))
 
-  @includes.continueSaveAsDraftButtons(govukButton)
+        @includes.continueSaveAsDraftButtons(govukButton)
 
- }
+    }
 }

@@ -16,11 +16,11 @@
 
 package models.submissions.aboutYourLeaseOrTenure
 
-import org.scalatest.wordspec.AnyWordSpecLike
-import org.scalatest.matchers.should.Matchers
-import play.api.Configuration
 import crypto.MongoCrypto
 import models.submissions.common.{Address, AnswersYesNo}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import play.api.Configuration
 import utils.SensitiveTestHelper
 
 class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {

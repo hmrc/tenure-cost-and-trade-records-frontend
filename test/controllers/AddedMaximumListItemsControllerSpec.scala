@@ -41,8 +41,8 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
   private val nextPageLowMarginFuelCards =
     controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show().url
 
-  def addedMaximumListItemsController =
-    new AddedMaximumListItemsController(
+  def addedMaximumListItemsController: AddedMaximumListItemsController =
+    AddedMaximumListItemsController(
       addedMaximumListItemsView,
       preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
       mockSessionRepo,

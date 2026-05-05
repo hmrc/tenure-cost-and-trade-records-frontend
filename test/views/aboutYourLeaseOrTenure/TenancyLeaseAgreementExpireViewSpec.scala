@@ -50,9 +50,9 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDa
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutYourLeaseOrTenure"))
+      val doc  = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
     "contain date format hint for tenancyLeaseAgreementExpire-hint" in {
@@ -81,8 +81,8 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDa
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
   }
 }

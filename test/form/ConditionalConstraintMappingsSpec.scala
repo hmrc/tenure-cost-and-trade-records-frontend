@@ -19,9 +19,9 @@ package form
 import form.ConditionalConstraintMappings.mandatoryStringIfExists
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
-import play.api.data.{Form, FormError}
 import play.api.data.Forms.{list, mapping, text}
 import play.api.data.validation.Constraints.maxLength
+import play.api.data.{Form, FormError}
 
 import scala.collection.immutable.ArraySeq
 

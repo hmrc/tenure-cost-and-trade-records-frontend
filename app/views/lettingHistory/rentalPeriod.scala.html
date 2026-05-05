@@ -17,8 +17,8 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.LocalPeriod
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukDateInput: GovukDateInput, govukButton: GovukButton)
 
@@ -26,14 +26,14 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages("lettingHistory.rentalPeriod.heading", occupierDetailName),
     backLinkUrl = backLink,
     showSection = true,
     sectionName = messages("label.section.lettingHistory")
 ) {
 
-    @formWithCSRF(action = routes.RentalPeriodController.submit(Some(index))) {
+    @formWithCSRF(action = routes.RentalPeriodController.submit(index)) {
         @includes.dateFields(
             govukDate = govukDateInput,
             form = theForm,

@@ -16,11 +16,11 @@
 
 package form.aboutthetradinghistory
 
-import models.submissions.aboutthetradinghistory.{OtherCost, OtherCosts}
 import form.MappingSupport.otherCostValueMapping
-import play.api.data.{Form, Mapping}
-import play.api.data.Forms._
+import models.submissions.aboutthetradinghistory.{OtherCost, OtherCosts}
+import play.api.data.Forms.*
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
+import play.api.data.{Form, Mapping}
 
 import java.time.LocalDate
 

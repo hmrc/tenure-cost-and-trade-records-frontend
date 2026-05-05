@@ -23,7 +23,7 @@ import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
 import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import models.submissions.common.AnswersYesNo.*
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -36,7 +36,7 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec {
   private val audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  private val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+  private val navigator = AboutYourLeaseOrTenureNavigator(audit)
 
   private val session6016 =
     Session("99996016004", FOR6016, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)

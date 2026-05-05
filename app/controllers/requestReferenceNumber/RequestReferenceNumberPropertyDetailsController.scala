@@ -18,7 +18,7 @@ package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
 import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
-import controllers.AddressLookupSupport
+import controllers.{AddressLookupSupport, toFut}
 import form.requestReferenceNumber.RequestReferenceNumberPropertyDetailsForm.theForm
 import models.ForType.*
 import models.Session
@@ -33,8 +33,8 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.requestReferenceNumber.requestReferenceNumberPropertyDetails as RequestReferenceNumberPropertyDetailsView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future.successful
 
 @Singleton
 class RequestReferenceNumberPropertyDetailsController @Inject() (
@@ -51,7 +51,7 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
 
   def startWithSession: Action[AnyContent] = Action.async { implicit request =>
     repository.start(Session("", FOR6010, Address("", None, "", None, ""), "", isWelsh = false))
-    successful(Redirect(routes.RequestReferenceNumberPropertyDetailsController.show()))
+    Redirect(routes.RequestReferenceNumberPropertyDetailsController.show())
   }
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -62,10 +62,8 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
         address <- details.propertyDetails
       yield freshForm.fill(address.businessTradingName)
 
-    successful(
-      Ok(
-        theView(filledForm.getOrElse(freshForm))
-      )
+    Ok(
+      theView(filledForm.getOrElse(freshForm))
     )
   }
 
@@ -73,13 +71,8 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
     theForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          successful(
-            BadRequest(
-              theView(formWithErrors)
-            )
-          ),
-        formData => {
+        formWithErrors => BadRequest(theView(formWithErrors)),
+        formData =>
           given Session = request.sessionData
           for
             newSession     <- successful(sessionWithBusinessTradingName(formData))
@@ -94,7 +87,6 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
                                 )
                               )
           yield redirectResult
-        }
       )
   }
 

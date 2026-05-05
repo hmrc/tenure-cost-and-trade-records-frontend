@@ -15,9 +15,9 @@
  *@
 
 @import models.pages.Summary
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -25,12 +25,12 @@
         hmrcCharacterCount: HmrcCharacterCount,
 )
 
-@(theForm: Form[String], index: Option[Int], backLink: String,  summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], index: Option[Int], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("tradeServiceDescription.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLink,
     theForm = theForm
@@ -48,9 +48,6 @@
             classes = "govuk-label--m gov govuk-!-margin-bottom-6",
             charCount = 2000
         )
-
-
-
 
         @includes.continueSaveAsDraftButtons(govukButton)
     }

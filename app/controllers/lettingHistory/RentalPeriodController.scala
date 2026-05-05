@@ -33,7 +33,6 @@ import util.DateUtilLocalised
 import views.html.lettingHistory.rentalPeriod as RentalPeriodView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -61,7 +60,7 @@ class RentalPeriodController @Inject (
       yield theForm.fill(rentalPeriod)
 
     withOccupierAt(maybeIndex) { (thePartiallyAppliedView, _, _) =>
-      successful(Ok(thePartiallyAppliedView.apply(filledForm.getOrElse(freshForm))))
+      Ok(thePartiallyAppliedView.apply(filledForm.getOrElse(freshForm)))
     }
   }
 
@@ -82,7 +81,7 @@ class RentalPeriodController @Inject (
             )
           else
             for
-              newSession   <- successful(byUpdatingOccupierRentalPeriod(index, rental))
+              newSession   <- byUpdatingOccupierRentalPeriod(index, rental)
               savedSession <- repository.saveOrUpdateSession(newSession)
             yield navigator.redirect(currentPage = RentalPeriodPageId, savedSession)
       )
@@ -105,7 +104,7 @@ class RentalPeriodController @Inject (
         generateResult.apply(thePartiallyAppliedView, occupierDetail, index)
       }
 
-    result.getOrElse(successful(Redirect(routes.OccupierListController.show)))
+    result.getOrElse(Redirect(routes.OccupierListController.show))
   }
 
   private def backLinkUrl(index: Int)(using request: SessionRequest[AnyContent]): Option[String] =
@@ -113,10 +112,8 @@ class RentalPeriodController @Inject (
     navigator.backLinkUrl(ofPage = RentalPeriodPageId, navigationData)
 
   private def badRequestWith(thePartiallyAppliedView: PartiallyAppliedView, theFormWithErrors: Form[LocalPeriod]) =
-    successful(
-      BadRequest(
-        thePartiallyAppliedView.apply(
-          theFormWithErrors
-        )
+    BadRequest(
+      thePartiallyAppliedView.apply(
+        theFormWithErrors
       )
     )

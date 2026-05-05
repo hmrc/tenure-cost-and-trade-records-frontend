@@ -20,8 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.lettingHistory.AdvertisingDetailForm.theForm
 import models.Session
-import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfOnlineAdvertising, byAddingOrUpdatingOnlineAdvertising, hasBeenAlreadyEntered}
 import models.submissions.lettingHistory.AdvertisingDetail
+import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfOnlineAdvertising, byAddingOrUpdatingOnlineAdvertising, hasBeenAlreadyEntered}
 import navigation.LettingHistoryNavigator
 import navigation.identifiers.AdvertisingDetailPageId
 import play.api.data.Form
@@ -32,7 +32,6 @@ import views.html.lettingHistory.advertisingDetail as OnlineAdvertisingDetailVie
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class AdvertisingDetailController @Inject() (
@@ -81,7 +80,7 @@ class AdvertisingDetailController @Inject() (
           )
         else
           for
-            newSession   <- successful(byAddingOrUpdatingOnlineAdvertising(maybeIndex, advertising))
+            newSession   <- byAddingOrUpdatingOnlineAdvertising(maybeIndex, advertising)
             savedSession <- repository.saveOrUpdateSession(newSession)
           yield navigator.redirect(currentPage = AdvertisingDetailPageId, savedSession)
     )
@@ -96,4 +95,4 @@ class AdvertisingDetailController @Inject() (
     maybeIndex: Option[Int]
   )(using request: SessionRequest[AnyContent]
   ) =
-    successful(BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex)))
+    BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex))

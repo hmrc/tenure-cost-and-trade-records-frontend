@@ -32,7 +32,6 @@ import views.html.lettingHistory.hasOnlineAdvertising as HasOnlineAdvertisingVie
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class HasOnlineAdvertisingController @Inject() (
@@ -58,11 +57,11 @@ class HasOnlineAdvertisingController @Inject() (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, backLinkUrl)),
       answer =>
         given Session = request.sessionData
         for
-          newSession   <- successful(withHasOnlineAdvertising(answer.toBoolean))
+          newSession   <- withHasOnlineAdvertising(answer.toBoolean)
           savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = HasOnlineAdvertisingPageId, savedSession)
     )

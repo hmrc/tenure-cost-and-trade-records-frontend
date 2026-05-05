@@ -31,7 +31,6 @@ import repositories.SessionRepo
 import views.html.lettingHistory.residentDetail as ResidentDetailView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -82,7 +81,7 @@ class ResidentDetailController @Inject() (
           )
         else
           for
-            newSession   <- successful(byAddingOrUpdatingPermanentResident(resident, maybeIndex))
+            newSession   <- byAddingOrUpdatingPermanentResident(resident, maybeIndex)
             savedSession <- repository.saveOrUpdateSession(newSession)
           yield navigator.redirect(currentPage = ResidentDetailPageId, savedSession)
     )
@@ -98,4 +97,4 @@ class ResidentDetailController @Inject() (
   )(using
     request: SessionRequest[AnyContent]
   ) =
-    successful(BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex)))
+    BadRequest(theView(theFormWithErrors, backLinkUrl, maybeIndex))

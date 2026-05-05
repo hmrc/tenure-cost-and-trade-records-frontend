@@ -24,7 +24,7 @@ import play.api.data.validation.Constraints.maxLength
 
 object WhatIsYourCurrentRentBasedOnForm {
 
-  val whatIsYourCurrentRentBasedOnForm = Form(
+  val whatIsYourCurrentRentBasedOnForm: Form[WhatIsYourCurrentRentBasedOnDetails] = Form(
     mapping(
       "currentRentBasedOn"    -> whatIsYourRentBasedOnType,
       "whatIsYourRentBasedOn" -> optional(

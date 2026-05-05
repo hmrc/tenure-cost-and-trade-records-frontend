@@ -19,8 +19,8 @@ package controllers.connectiontoproperty
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.CheckYourAnswersAndConfirmForm.theForm
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import models.submissions.common.CheckYourAnswersAndConfirm
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.CheckYourAnswersConnectionToPropertyId
 import play.api.Logging
@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.checkYourAnswersConnectionToProperty as CheckYourAnswersConnectionToPropertyView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersConnectionToPropertyController @Inject() (
@@ -77,10 +77,8 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
           .copy(lastCYAPageUrl =
             Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url)
           )
-        repo.saveOrUpdate(updatedData).flatMap { _ =>
-          Future.successful(
-            Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
-          )
+        repo.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
         }
       }
     )

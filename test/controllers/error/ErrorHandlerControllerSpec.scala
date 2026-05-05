@@ -17,13 +17,13 @@
 package controllers.error
 
 import play.api.http.Status
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class ErrorHandlerControllerSpec extends TestBaseSpec {
 
-  val errorHandlerController =
-    new ErrorHandlerController(preFilledSession, jsonErrorView = jsonErrorView, cc = stubMessagesControllerComponents())
+  val errorHandlerController: ErrorHandlerController =
+    ErrorHandlerController(preFilledSession, jsonErrorView = jsonErrorView, cc = stubMessagesControllerComponents())
 
   "ErrorHandlerController GET /" should {
 

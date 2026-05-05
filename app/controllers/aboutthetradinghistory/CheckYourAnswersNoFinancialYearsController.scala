@@ -31,7 +31,6 @@ import views.html.aboutthetradinghistory.checkYourAnswerNoFinancialYears as Chec
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 class CheckYourAnswersNoFinancialYearsController @Inject (
   mcc: MessagesControllerComponents,
@@ -50,7 +49,7 @@ class CheckYourAnswersNoFinancialYearsController @Inject (
   def submit(): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      formWithErrors => successful(BadRequest(theView(formWithErrors, backLinkUrl))),
+      formWithErrors => BadRequest(theView(formWithErrors, backLinkUrl)),
       formData =>
         val currentSession = request.sessionData
 

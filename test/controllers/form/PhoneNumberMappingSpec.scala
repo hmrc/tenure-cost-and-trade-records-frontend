@@ -18,7 +18,7 @@ package controllers.form
 
 import form.PhoneNumberMapping.validatePhoneNumber
 import org.scalatest.matchers.should
-import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
 import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
@@ -26,13 +26,13 @@ import play.api.data.Forms.single
 class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
 
   trait Setup {
-    val form = Form(single("phone" -> validatePhoneNumber))
+    val form: Form[String] = Form(single("phone" -> validatePhoneNumber))
   }
 
   "phone number validation" should {
 
     "catch invalid length error" in new Setup {
-      val lengths = Table(
+      val lengths: TableFor2[String, Boolean] = Table(
         ("phone number", "validity"),
         ("1", false),
         ("12", false),
@@ -74,7 +74,7 @@ class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with T
     }
 
     "catch mandatory condition" in new Setup {
-      val isNumber = Table(
+      val isNumber: TableFor2[String, Boolean] = Table(
         ("phone number", "validity"),
         ("01234567890", true),
         ("", false)

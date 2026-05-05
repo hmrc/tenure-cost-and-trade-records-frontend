@@ -56,9 +56,9 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutConcessionsOrLettings"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutConcessionsOrLettings")}"""
     }
 
     "contain text box " in {
@@ -99,14 +99,14 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
 
     "contain continue button with the value Continue" in {
       val doc            = asDocument(createViewUsingForm(form))
-      val continueButton = doc.getElementById("continue").text()
-      assert(continueButton == messages("button.label.continue"))
+      val continueButton = doc.getElementById("continue-button").text()
+      assert(continueButton == messages("button.continue.label"))
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("save").text()
-      assert(loginButton == messages("button.label.save"))
+      val loginButton = doc.getElementById("save-button").text()
+      assert(loginButton == messages("button.save.label"))
     }
   }
 }

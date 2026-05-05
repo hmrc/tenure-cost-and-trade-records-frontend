@@ -46,18 +46,15 @@ class CheckYourAnswersNotConnectedController @Inject() (
   audit: Audit,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   import FeedbackFormMapper.feedbackForm
 
-  lazy val confirmationUrl: String =
-    controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url
-
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(Ok(checkYourAnswersNotConnectedView(request.sessionData)))
+    Ok(checkYourAnswersNotConnectedView(request.sessionData))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -69,7 +66,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
     submitToBackend(session).map { _ =>
       val outcome = Json.obj("isSuccessful" -> true)
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
-      Found(confirmationUrl)
+      Found(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.confirmation().url)
     } recoverWith { case e: Exception =>
       val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - $sessionId"
       logger.error(failureReason, e)
@@ -89,7 +86,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 
   private def submitToBackend(
     session: Session
-  )(implicit hc: HeaderCarrier,
+  )(using hc: HeaderCarrier,
     messages: Messages
   ): Future[Unit] = {
     val sessionRemoveConnection = session.removeConnectionDetails.flatMap(_.removeConnectionDetails)

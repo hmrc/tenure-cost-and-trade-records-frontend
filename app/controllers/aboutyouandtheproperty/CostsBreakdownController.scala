@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.costsBreakdown
 
 import javax.inject.{Inject, Named}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 class CostsBreakdownController @Inject() (
   mcc: MessagesControllerComponents,
@@ -38,21 +38,20 @@ class CostsBreakdownController @Inject() (
   view: costsBreakdown,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CostsBreakdown")
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.costsBreakdown) match {
-            case Some(data) => costsBreakdownForm.fill(data)
-            case _          => costsBreakdownForm
-          },
-          request.sessionData.toSummary
-        )
+
+    Ok(
+      view(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.costsBreakdown) match {
+          case Some(data) => costsBreakdownForm.fill(data)
+          case _          => costsBreakdownForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

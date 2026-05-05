@@ -28,7 +28,7 @@ import views.behaviours.QuestionViewBehaviours
 class FranchiseOrLettingsTiedToPropertyView6030Spec extends QuestionViewBehaviours[AnswersYesNo] {
 
   val messageKeyPrefix = "franchiseLettings.6030"
-  val backLink         = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
+  val backLink: String = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
 
   override val form: Form[AnswersYesNo] = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 
@@ -51,9 +51,9 @@ class FranchiseOrLettingsTiedToPropertyView6030Spec extends QuestionViewBehaviou
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutFranchisesOrLettings"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutFranchisesOrLettings")}"""
     }
 
     "Hint text is visible" in {
@@ -89,14 +89,14 @@ class FranchiseOrLettingsTiedToPropertyView6030Spec extends QuestionViewBehaviou
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("save").text()
-      assert(loginButton == messages("button.label.save"))
+      val loginButton = doc.getElementById("save-button").text()
+      assert(loginButton == messages("button.save.label"))
     }
   }
 }

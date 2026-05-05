@@ -21,7 +21,7 @@ import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsFo
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -35,8 +35,8 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
 
   def rentPayableVaryAccordingToGrossOrNetDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new RentPayableVaryAccordingToGrossOrNetDetailsController(
+  ): RentPayableVaryAccordingToGrossOrNetDetailsController =
+    RentPayableVaryAccordingToGrossOrNetDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

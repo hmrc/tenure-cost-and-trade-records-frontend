@@ -19,11 +19,11 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
-import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
-import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
+import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.CheckYourAnswersAboutYourLeaseOrTenureId
 import play.api.Logging
@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.checkYourAnswersAboutYourLeaseOrTenure
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
@@ -42,26 +42,24 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
   checkYourAnswersAboutYourLeaseOrTenureView: checkYourAnswersAboutYourLeaseOrTenure,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersAboutYourLeaseOrTenureView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match {
-            case Some(answer) => checkYourAnswersAboutYourLeaseOrTenureForm.fill(answer)
-            case _            => checkYourAnswersAboutYourLeaseOrTenureForm
-          },
-          navigator.from match {
-            case "CYA" =>
-              controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
-            case _     => getBackLink(request.sessionData)
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      checkYourAnswersAboutYourLeaseOrTenureView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) match {
+          case Some(answer) => checkYourAnswersAboutYourLeaseOrTenureForm.fill(answer)
+          case _            => checkYourAnswersAboutYourLeaseOrTenureForm
+        },
+        navigator.from match {
+          case "CYA" =>
+            controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
+          case _     => getBackLink(request.sessionData)
+        },
+        request.sessionData.toSummary
       )
     )
   }
@@ -89,10 +87,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
                 controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
               )
             )
-        session.saveOrUpdate(updatedData).flatMap { _ =>
-          Future.successful(
-            Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData))
-          )
+        session.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData))
         }
       }
     )
@@ -127,7 +123,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
                 controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show().url
               case _       =>
                 logger.warn("Navigation for CYA about lease without correct selection of conditions by controller")
-                throw new RuntimeException("Invalid option exception for CYA about lease back link")
+                throw RuntimeException("Invalid option exception for CYA about lease back link")
             }
         }
     }

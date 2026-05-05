@@ -20,22 +20,22 @@ import connectors.Audit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
 class TiedForGoodsControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.aboutyouandtheproperty.TiedForGoodsForm._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import form.aboutyouandtheproperty.TiedForGoodsForm.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def tiedForGoodsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new TiedForGoodsController(
+  ): TiedForGoodsController = TiedForGoodsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -46,7 +46,7 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
 
   def tiedForGoodsControllerNoEnforcement(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = new TiedForGoodsController(
+  ): TiedForGoodsController = TiedForGoodsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -55,7 +55,7 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def tiedForGoodsControllerNone() = new TiedForGoodsController(
+  def tiedForGoodsControllerNone(): TiedForGoodsController = TiedForGoodsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

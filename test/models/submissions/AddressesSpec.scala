@@ -21,7 +21,7 @@ import utils.TestBaseSpec
 
 class AddressesSpec extends TestBaseSpec {
   // Test Address
-  val address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
+  val address: Address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
 
   "Address" should {
     "return the address as a single line" in {

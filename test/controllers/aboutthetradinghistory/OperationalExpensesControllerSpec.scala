@@ -20,15 +20,15 @@ import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class OperationalExpensesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def operationalExpensesController =
-    new OperationalExpensesController(
+  def operationalExpensesController: OperationalExpensesController =
+    OperationalExpensesController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

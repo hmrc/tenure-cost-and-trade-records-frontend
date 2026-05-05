@@ -21,21 +21,21 @@ import form.aboutyouandtheproperty.PropertyCurrentlyUsedForm.propertyCurrentlyUs
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
-import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
 class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def propertyCurrentlyUsedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  ) = new PropertyCurrentlyUsedController(
+  ): PropertyCurrentlyUsedController = PropertyCurrentlyUsedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

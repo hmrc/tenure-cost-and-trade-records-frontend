@@ -50,10 +50,10 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
     }
 
     "Section heading is visible" in {
-      val form1    = CostOfSalesForm.costOfSalesForm(Seq("2025"))(using messages)
-      val doc      = asDocument(createViewUsingForm(form1))
-      val captions = doc.getElementsByClass("govuk-caption-m").eachText()
-      assert(captions.contains(messages("label.section.aboutYourTradingHistory")))
+      val form1 = CostOfSalesForm.costOfSalesForm(Seq("2025"))(using messages)
+      val doc   = asDocument(createViewUsingForm(form1))
+      val html  = doc.getElementsByClass("govuk-caption-m").first.html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {
@@ -71,8 +71,8 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
     "contain continue button with the value Continue" in {
       val form2       = CostOfSalesForm.costOfSalesForm(Seq("2025", "2024"))(using messages)
       val doc         = asDocument(createViewUsingForm(form2))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
   }
 

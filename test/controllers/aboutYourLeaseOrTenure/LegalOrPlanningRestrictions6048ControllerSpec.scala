@@ -17,28 +17,28 @@
 package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
+import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import models.ForType
 import models.ForType.*
-import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanningRestrictionsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
 class LegalOrPlanningRestrictions6048ControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
   val mockAudit: Audit = mock[Audit]
 
   def legalOrPlanningRestrictionsController(
     forType: ForType = FOR6048,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new LegalOrPlanningRestrictionsController(
+  ): LegalOrPlanningRestrictionsController =
+    LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

@@ -16,12 +16,12 @@
 
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
-@import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfPermanentResidents, MaxNumberOfOnlineAdvertising}
-@import views.html.components.PrimaryLayout
+@import models.submissions.lettingHistory.LettingHistory.{MaxNumberOfCompletedLettings, MaxNumberOfOnlineAdvertising, MaxNumberOfPermanentResidents}
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{CheckboxItem, Checkboxes}
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukCheckboxes}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukCheckboxes: GovukCheckboxes, govukButton: GovukButton)
@@ -33,7 +33,7 @@
     kind match {
         case "permanentResidents" => MaxNumberOfPermanentResidents
         case "completedLettings" => MaxNumberOfCompletedLettings
-        case "onlineAdvertising"  => MaxNumberOfOnlineAdvertising
+        case "onlineAdvertising" => MaxNumberOfOnlineAdvertising
         case _ => 0
     }
 }
@@ -42,16 +42,16 @@
     kind match {
         case "permanentResidents" => routes.ResidentListController.show
         case "completedLettings" => routes.OccupierListController.show
-        case "onlineAdvertising"  => routes.AdvertisingListController.show
+        case "onlineAdvertising" => routes.AdvertisingListController.show
         case _ => Call("POST", "/unknown")
     }
 }
 
 @checkBoxMessage = @{
-  kind match {
-       case "onlineAdvertising"  => messages("lettingHistory.maxNumberReached.onlineAdvertising.understanding")
-       case _                    => messages("lettingHistory.maxNumberReached.understanding")
-  }
+    kind match {
+        case "onlineAdvertising" => messages("lettingHistory.maxNumberReached.onlineAdvertising.understanding")
+        case _ => messages("lettingHistory.maxNumberReached.understanding")
+    }
 }
 
 @headingMessage = @{
@@ -63,7 +63,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = headingMessage,
     backLinkUrl = backLink,
     showSection = true,
@@ -71,10 +71,10 @@
 ) {
 
     <p class="govuk-body">
-        @messages(
-            s"lettingHistory.maxNumberReached.$kind.paragraph.1",
-            s"${maxNumberOfEntries + 1}"
-        )
+    @messages(
+        s"lettingHistory.maxNumberReached.$kind.paragraph.1",
+        s"${maxNumberOfEntries + 1}"
+    )
     </p>
 
     @formWithCSRF(action = routes.MaxNumberReachedController.submit(kind)) {
@@ -96,10 +96,10 @@
 
         <p class="govuk-body govuk-!-margin-bottom-8">
             <a href="@checkOrUpdateCall.url">
-                @messages(
-                    s"lettingHistory.maxNumberReached.$kind.link.1",
-                    maxNumberOfEntries.toString
-                )
+            @messages(
+                s"lettingHistory.maxNumberReached.$kind.link.1",
+                maxNumberOfEntries.toString
+            )
             </a>
         </p>
 

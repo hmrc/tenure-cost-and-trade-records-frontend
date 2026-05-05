@@ -16,11 +16,10 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.*
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.{CharacterCount, HmrcCharacterCount}
+@import views.html.components.PrimaryLayout
 
 @this(
         layout: PrimaryLayout,
@@ -34,35 +33,35 @@
 
 
 @heading = @{
- request.sessionData.forType match {
-  case FOR6045 | FOR6046 => "capitalSumDescription6045.heading"
-  case _                => "capitalSumDescription.heading"
- }
+    request.sessionData.forType match {
+        case FOR6045 | FOR6046 => "capitalSumDescription6045.heading"
+        case _ => "capitalSumDescription.heading"
+    }
 }
 
 
 @layout(
- pageHeading = messages(heading),
- showSection = true,
- summary = Some(request.sessionData.toSummary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url,
- theForm = form
+    pageHeading = messages(heading),
+    showSection = true,
+    summary = request.sessionData.toSummary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url,
+    theForm = form
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.submit()) {
 
-  @hmrcCharacterCount(
-   CharacterCount(
-    rows = 5,
-    maxLength = 2000,
-    hint = Hint(
-     content = Text(messages("capitalSumDescription.hint"))
-    )
-   ).withFormField(form("capitalSumDescription"))
-  )
+        @hmrcCharacterCount(
+            CharacterCount(
+                rows = 5,
+                maxLength = 2000,
+                hint = Hint(
+                    content = Text(messages("capitalSumDescription.hint"))
+                )
+            ).withFormField(form("capitalSumDescription"))
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 
 }

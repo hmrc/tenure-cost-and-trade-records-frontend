@@ -21,7 +21,7 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
@@ -30,7 +30,7 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
 
   def currentRentPayableWithin12MonthsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = new CurrentRentPayableWithin12MonthsController(
+  ): CurrentRentPayableWithin12MonthsController = CurrentRentPayableWithin12MonthsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

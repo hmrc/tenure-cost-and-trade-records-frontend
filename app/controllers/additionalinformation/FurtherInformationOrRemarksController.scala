@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.additionalinformation.furtherInformationOrRemarks
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class FurtherInformationOrRemarksController @Inject() (
@@ -39,23 +39,21 @@ class FurtherInformationOrRemarksController @Inject() (
   furtherInformationOrRemarksView: furtherInformationOrRemarks,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("FurtherInformationOrRemarks")
 
-    Future.successful(
-      Ok(
-        furtherInformationOrRemarksView(
-          request.sessionData.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails) match {
-            case Some(furtherInformationOrRemarksDetails) =>
-              furtherInformationOrRemarksForm.fill(furtherInformationOrRemarksDetails)
-            case _                                        => furtherInformationOrRemarksForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      furtherInformationOrRemarksView(
+        request.sessionData.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails) match {
+          case Some(furtherInformationOrRemarksDetails) =>
+            furtherInformationOrRemarksForm.fill(furtherInformationOrRemarksDetails)
+          case _                                        => furtherInformationOrRemarksForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

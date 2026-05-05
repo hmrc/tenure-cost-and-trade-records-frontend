@@ -14,10 +14,10 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.ForType.*
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -28,31 +28,31 @@
 @(theForm: Form[?], summary: Summary, forType: ForType)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("connectedToLandlord.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url,
- theForm = theForm
+    pageHeading = messages("connectedToLandlord.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.AboutYourLandlordController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.submit()) {
 
-  @includes.radioButtonsYesNo(
-   govukRadios,
-   theForm,
-   "connectedToLandlord",
-   if (forType == FOR6020) "connectedToLandlord.heading.6020" else "connectedToLandlord.heading",
-   messages("label.yes.ydw"),
-   messages("label.no.nac.ydw"),
-   classes = "govuk-fieldset__legend--l",
-   isHeading = true,
-   hint = if (forType == FOR6020) "hint.connectedToLandlord.6020" else ""
-  )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "connectedToLandlord",
+            if(forType == FOR6020) "connectedToLandlord.heading.6020" else "connectedToLandlord.heading",
+            messages("label.yes.ydw"),
+            messages("label.no.nac.ydw"),
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true,
+            hint = if(forType == FOR6020) "hint.connectedToLandlord.6020" else ""
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

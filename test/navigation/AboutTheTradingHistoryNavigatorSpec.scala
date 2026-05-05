@@ -19,7 +19,7 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
-import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne, AdditionalActivities, BunkerFuelCardDetails, BunkerFuelCardsDetails, LowMarginFuelCardDetail, LowMarginFuelCardsDetails, OtherHolidayAccommodation, TouringAndTentingPitches}
+import models.submissions.aboutthetradinghistory.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
 import models.submissions.common.AnswersYesNo.*
@@ -39,7 +39,7 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
   private val audit: Audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  private val navigator = new AboutTheTradingHistoryNavigator(audit)
+  private val navigator = AboutTheTradingHistoryNavigator(audit)
 
   private val stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(
     StillConnectedDetails(Some(AddressConnectionTypeYes))

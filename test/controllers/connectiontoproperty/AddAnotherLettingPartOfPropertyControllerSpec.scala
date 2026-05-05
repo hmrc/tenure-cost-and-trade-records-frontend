@@ -16,28 +16,28 @@
 
 package controllers.connectiontoproperty
 
+import actions.SessionRequest
+import connectors.Audit
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-import actions.SessionRequest
-import connectors.Audit
 
 import scala.language.reflectiveCalls
 
 class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 
   def addAnotherLettingPartOfPropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
-    new AddAnotherLettingPartOfPropertyController(
+  ): AddAnotherLettingPartOfPropertyController =
+    AddAnotherLettingPartOfPropertyController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,

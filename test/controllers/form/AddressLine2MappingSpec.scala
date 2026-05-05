@@ -17,22 +17,22 @@
 package controllers.form
 
 import form.AddressLine2Mapping.validateAddressLineTwo
-import org.scalatest.prop.TableDrivenPropertyChecks
-import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
+import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
 
 class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDrivenPropertyChecks {
 
   trait Setup {
-    val form = Form(single("line2" -> validateAddressLineTwo))
+    val form: Form[String] = Form(single("line2" -> validateAddressLineTwo))
   }
 
   "address line 2 mapping" should {
 
     "catch invalid length error" in new Setup {
-      val lengths = Table(
+      val lengths: TableFor2[String, Boolean] = Table(
         ("address", "validity"),
         ("TooLongAddressLineTwoThatExceedsMaximumLengthOf50Characters1", false), // 51
         ("Valid Address Line Two", true),
@@ -51,7 +51,7 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
     }
 
     "catch invalid format error" in new Setup {
-      val validFormat = Table(
+      val validFormat: TableFor2[String, Boolean] = Table(
         ("address", "validity"),
         ("T£$%^^%$", false),
         ("Valid Address Line Two", true)
@@ -69,7 +69,7 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
     }
 
     "catch mandatory condition" in new Setup {
-      val isInput = Table(
+      val isInput: TableFor2[String, Boolean] = Table(
         ("line2", "validity"),
         ("Valid Address Line Two", true),
         ("", false)

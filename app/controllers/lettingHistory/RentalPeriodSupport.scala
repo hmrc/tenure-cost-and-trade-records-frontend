@@ -25,13 +25,13 @@ import java.time.Month.{APRIL, MARCH}
 
 trait RentalPeriodSupport extends FiscalYearSupport:
 
-  def previousRentalPeriod(using request: SessionRequest[AnyContent]) =
+  def previousRentalPeriod(using request: SessionRequest[AnyContent]): LocalPeriod =
     LocalPeriod(
       fromDate = LocalDate.of(previousFiscalYearEnd - numberOfYearsBack, APRIL, 1),
       toDate = LocalDate.of(previousFiscalYearEnd, MARCH, 31)
     )
 
-  def currentRentalPeriod(using request: SessionRequest[AnyContent]) =
+  def currentRentalPeriod(using request: SessionRequest[AnyContent]): LocalPeriod =
     LocalPeriod(
       fromDate = LocalDate.of(currentFiscalYearEnd - numberOfYearsBack, APRIL, 1),
       toDate = LocalDate.of(currentFiscalYearEnd, MARCH, 31)

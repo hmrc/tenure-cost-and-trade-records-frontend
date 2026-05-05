@@ -27,7 +27,7 @@ import models.submissions.common.AnswersYesNo.*
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CustomerCreditAccountsId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.customerCreditAccounts
 
@@ -43,7 +43,7 @@ class CustomerCreditAccountsController @Inject() (
   view: customerCreditAccounts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -67,7 +67,7 @@ class CustomerCreditAccountsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[Seq[CustomerCreditAccounts]](
           customerCreditAccountsForm(years(aboutTheTradingHistory)),
           formWithErrors =>
@@ -91,7 +91,7 @@ class CustomerCreditAccountsController @Inject() (
       }
   }
 
-  private def backLink(answers: Session)(implicit request: SessionRequest[AnyContent]): String =
+  private def backLink(answers: Session)(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

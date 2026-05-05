@@ -30,15 +30,15 @@ import scala.language.reflectiveCalls
 
 class LegalOrPlanningRestrictionsControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
   val mockAudit: Audit = mock[Audit]
 
   def legalOrPlanningRestrictionsController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) =
-    new LegalOrPlanningRestrictionsController(
+  ): LegalOrPlanningRestrictionsController =
+    LegalOrPlanningRestrictionsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

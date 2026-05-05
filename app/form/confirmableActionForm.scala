@@ -31,6 +31,6 @@ object confirmableActionForm {
       .transform[AnswersYesNo](_.get, Some(_))
   )(x => x)(b => Some(b))
 
-  val confirmableActionForm = Form(confirmableActionMapping)
+  val confirmableActionForm: Form[AnswersYesNo] = Form(confirmableActionMapping)
 
 }

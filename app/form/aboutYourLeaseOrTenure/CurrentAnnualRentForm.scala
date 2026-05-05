@@ -17,7 +17,6 @@
 package form.aboutYourLeaseOrTenure
 
 import form.MappingSupport.currencyMapping
-
 import play.api.data.Form
 import play.api.data.Forms.single
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}

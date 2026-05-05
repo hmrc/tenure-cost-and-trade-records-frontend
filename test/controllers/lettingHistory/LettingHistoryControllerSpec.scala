@@ -17,7 +17,7 @@
 package controllers.lettingHistory
 
 import models.Session
-import models.submissions.lettingHistory.{AdvertisingDetail, LocalPeriod, OccupierAddress, OccupierDetail, ResidentDetail}
+import models.submissions.lettingHistory.*
 import org.mockito.ArgumentCaptor
 import play.api.mvc.AnyContent
 import play.api.mvc.request.RequestTarget
@@ -27,33 +27,33 @@ import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
 
 import java.time.LocalDate
-import scala.concurrent.Future.successful
+import scala.concurrent.Future
 
 class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
 
-  val residentDetails = ResidentDetail(name = "Mr. One", address = "Address One")
+  val residentDetails: ResidentDetail = ResidentDetail(name = "Mr. One", address = "Address One")
 
-  val occupierDetails = OccupierDetail(
+  val occupierDetails: OccupierDetail = OccupierDetail(
     name = "Mr. One",
     address = None,
     rentalPeriod = None
   )
 
-  val oneResident = List(
+  val oneResident: List[ResidentDetail] = List(
     ResidentDetail(name = "Mr. One", address = "Address One")
   )
 
-  val twoResidents = oneResident ++ List(
+  val twoResidents: List[ResidentDetail] = oneResident ++ List(
     ResidentDetail(name = "Mr. Two", address = "Address Two")
   )
 
-  val fiveResidents = twoResidents ++ List(
+  val fiveResidents: List[ResidentDetail] = twoResidents ++ List(
     ResidentDetail(name = "Miss Three", address = "Address Three"),
     ResidentDetail(name = "Mr. Four", address = "Address Four"),
     ResidentDetail(name = "Mrs. Five", address = "Address Five")
   )
 
-  val oneOccupier = List(
+  val oneOccupier: List[OccupierDetail] = List(
     OccupierDetail(
       name = "Mr. One",
       address = Some(OccupierAddress("Address One", None, "Neverland", None, "BN124AX")),
@@ -61,7 +61,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
     )
   )
 
-  val twoOccupiers = oneOccupier ++ List(
+  val twoOccupiers: List[OccupierDetail] = oneOccupier ++ List(
     OccupierDetail(
       name = "Mr. Two",
       address = None,
@@ -74,7 +74,7 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
     )
   )
 
-  val fiveOccupiers = twoOccupiers ++ List(
+  val fiveOccupiers: List[OccupierDetail] = twoOccupiers ++ List(
     OccupierDetail(
       name = "Miss. Three",
       address = None,
@@ -92,25 +92,25 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
     )
   )
 
-  val oneAdvertising = List(
+  val oneAdvertising: List[AdvertisingDetail] = List(
     AdvertisingDetail(websiteAddress = "123.com", propertyReferenceNumber = "aaa123")
   )
 
-  val twoAdvertisings = oneAdvertising ++ List(
+  val twoAdvertisings: List[AdvertisingDetail] = oneAdvertising ++ List(
     AdvertisingDetail(websiteAddress = "456.com", propertyReferenceNumber = "aaa456")
   )
 
-  val fiveAdvertisings = twoAdvertisings ++ List(
+  val fiveAdvertisings: List[AdvertisingDetail] = twoAdvertisings ++ List(
     AdvertisingDetail(websiteAddress = "789.com", propertyReferenceNumber = "aaa789"),
     AdvertisingDetail(websiteAddress = "111.com", propertyReferenceNumber = "aaa111"),
     AdvertisingDetail(websiteAddress = "112.com", propertyReferenceNumber = "aaa112")
   )
 
   trait MockRepositoryFixture:
-    val repository = mock[SessionRepo]
-    val data       = captor[Session]
+    val repository: SessionRepo       = mock[SessionRepo]
+    val data: ArgumentCaptor[Session] = captor[Session]
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
-      .thenReturn(successful(()))
+      .thenReturn(Future.unit)
 
   trait SessionCapturingFixture:
 

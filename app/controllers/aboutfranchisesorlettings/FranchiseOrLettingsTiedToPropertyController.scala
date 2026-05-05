@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.franchiseOrLettingsTiedToProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class FranchiseOrLettingsTiedToPropertyController @Inject() (
@@ -42,30 +42,28 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   franchiseOrLettingsTiedToPropertyView: franchiseOrLettingsTiedToProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("FranchiseOrLettingsTiedToProperty")
 
-    Future.successful(
-      Ok(
-        franchiseOrLettingsTiedToPropertyView(
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
-            case Some(franchisesOrLettingsTiedToProperty) =>
-              franchiseOrLettingsTiedToPropertyForm.fill(franchisesOrLettingsTiedToProperty)
-            case _                                        => franchiseOrLettingsTiedToPropertyForm
-          },
-          request.sessionData.forType,
-          calculateBacklink,
-          request.sessionData.toSummary
-        )
+    Ok(
+      franchiseOrLettingsTiedToPropertyView(
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
+          case Some(franchisesOrLettingsTiedToProperty) =>
+            franchiseOrLettingsTiedToPropertyForm.fill(franchisesOrLettingsTiedToProperty)
+          case _                                        => franchiseOrLettingsTiedToPropertyForm
+        },
+        request.sessionData.forType,
+        calculateBacklink,
+        request.sessionData.toSummary
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       franchiseOrLettingsTiedToPropertyForm,
       formWithErrors =>
@@ -104,7 +102,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
     )
   }
 
-  private def calculateBacklink(implicit request: SessionRequest[AnyContent]): String =
+  private def calculateBacklink(using request: SessionRequest[AnyContent]): String =
     if (navigator.from == "CYA") {
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     } else {

@@ -20,22 +20,22 @@ import connectors.Audit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
 class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.aboutyouandtheproperty.PremisesLicenseConditionsForm._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import form.aboutyouandtheproperty.PremisesLicenseConditionsForm.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def premisesLicenseController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new PremisesLicenseConditionsController(
+  ): PremisesLicenseConditionsController = PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -46,7 +46,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
 
   def premisesLicenseControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ) = new PremisesLicenseConditionsController(
+  ): PremisesLicenseConditionsController = PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -55,7 +55,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def premisesLicenseControllerNone() = new PremisesLicenseConditionsController(
+  def premisesLicenseControllerNone(): PremisesLicenseConditionsController = PremisesLicenseConditionsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

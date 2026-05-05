@@ -14,13 +14,13 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
+@import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
-@import models.pages.Summary
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
+@import views.html.components.PrimaryLayout
 
 @this(
         layout: PrimaryLayout,
@@ -34,13 +34,13 @@
 @layout(
     pageHeading = messages("saveAsDraft.retrieveYourDraft"),
     theForm = form,
-    summary = Some(summary),
+    summary = summary,
     backLinkUrl = controllers.routes.LoginController.show.url
 ) {
-
     <p class="govuk-body">@messages("saveAsDraft.passwordReminder")</p>
 
     @formWithCSRF(action = routes.SaveAsDraftController.resume) {
+
         @govukInput(
             Input(
                 inputType = "password",
@@ -59,13 +59,8 @@
                 hint = None
             ).withFormField(form("password"))
         )
-        @govukButton(
-            Button(
-                name = "continue",
-                inputType = "submit",
-                content = Text(messages("label.continue"))
-            )
-        )
+
+        @govukButton(SubmitButton("continue"))
     }
 
     <p class="govuk-body">
@@ -75,5 +70,4 @@
     <p class="govuk-body">@messages("saveAsDraft.forgotPassword")</p>
 
     <script src="@routes.Assets.versioned("javascripts/toggle-password.js")"></script>
-
 }

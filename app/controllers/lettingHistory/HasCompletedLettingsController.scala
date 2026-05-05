@@ -31,7 +31,6 @@ import repositories.SessionRepo
 import views.html.lettingHistory.hasCompletedLettings as HasCompletedLettingsView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -60,7 +59,7 @@ class HasCompletedLettingsController @Inject (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, effectiveRentalPeriod, backLinkUrl))),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, effectiveRentalPeriod, backLinkUrl)),
       answer =>
         given Session = request.sessionData
         for

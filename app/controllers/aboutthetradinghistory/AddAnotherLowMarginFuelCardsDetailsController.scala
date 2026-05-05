@@ -46,17 +46,17 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   private def aboutTheTradingHistoryData(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistory] =
     request.sessionData.aboutTheTradingHistory
 
-  private def getCardName(idx: Int)(implicit request: SessionRequest[AnyContent]): Option[String] =
+  private def getCardName(idx: Int)(using request: SessionRequest[AnyContent]): Option[String] =
     aboutTheTradingHistoryData
       .flatMap(_.lowMarginFuelCardsDetails.flatMap(_.lift(idx)))
       .map(_.lowMarginFuelCardDetail.name)
@@ -70,12 +70,10 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
         .flatMap(_.addAnotherLowMarginFuelCardDetails)
         .orElse(Option.when(navigator.from == "CYA")(AnswerNo))
 
-    Future.successful(
-      Ok(
-        theListView(
-          addAnother.fold(theForm)(theForm.fill),
-          index
-        )
+    Ok(
+      theListView(
+        addAnother.fold(theForm)(theForm.fill),
+        index
       )
     )
   }
@@ -84,12 +82,10 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
       formWithErrors =>
-        Future.successful(
-          BadRequest(
-            theListView(
-              formWithErrors,
-              index
-            )
+        BadRequest(
+          theListView(
+            formWithErrors,
+            index
           )
         ),
       formData =>
@@ -125,15 +121,13 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
   def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     getCardName(idx)
       .map { cardName =>
-        Future.successful(
-          Ok(
-            theConfirmationView(
-              confirmableActionForm,
-              cardName,
-              controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
-                .performRemove(idx),
-              routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
-            )
+        Ok(
+          theConfirmationView(
+            confirmableActionForm,
+            cardName,
+            controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
+              .performRemove(idx),
+            routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
           )
         )
       }
@@ -148,15 +142,13 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
       formWithErrors =>
         getCardName(idx)
           .map { cardName =>
-            Future.successful(
-              BadRequest(
-                theConfirmationView(
-                  formWithErrors,
-                  cardName,
-                  controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
-                    .performRemove(idx),
-                  routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
-                )
+            BadRequest(
+              theConfirmationView(
+                formWithErrors,
+                cardName,
+                controllers.aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController
+                  .performRemove(idx),
+                routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
               )
             )
           }

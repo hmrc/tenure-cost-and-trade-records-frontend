@@ -20,12 +20,12 @@ import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.TypeOfLettingForm.typeOfLettingForm
-import models.submissions.aboutfranchisesorlettings.{ATMLetting, AboutFranchisesOrLettings, AdvertisingRightLetting, LettingPartOfProperty, OtherLetting, TelecomMastLetting, TypeOfLetting}
+import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutfranchisesorlettings.TypeOfLetting.*
 import navigation.AboutFranchisesOrLettingsNavigator
 import play.api.Logging
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents, Result}
+import play.api.mvc.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.aboutfranchisesorlettings.typeOfLetting
@@ -40,7 +40,7 @@ class TypeOfLettingController @Inject() (
   typeOfLettingView: typeOfLetting,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -89,10 +89,9 @@ class TypeOfLettingController @Inject() (
           case Some(idx) if idx >= 0 && idx < existingLettings.length =>
             val existingLetting = existingLettings(idx)
             if (existingLetting.getClass == newLetting.getClass && navigator.from == "CYA") {
-              Future.successful(
-                Redirect(
-                  controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-                )
+
+              Redirect(
+                controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
               )
             } else {
               val updatedLettings = existingLettings.updated(idx, newLetting)
@@ -110,7 +109,7 @@ class TypeOfLettingController @Inject() (
     updatedLettings: IndexedSeq[LettingPartOfProperty],
     lettingType: TypeOfLetting,
     index: Option[Int]
-  )(implicit request: SessionRequest[AnyContent],
+  )(using request: SessionRequest[AnyContent],
     hc: HeaderCarrier
   ): Future[Result] = {
     val existingFranchisesOrLetting =
@@ -142,7 +141,7 @@ class TypeOfLettingController @Inject() (
     }
   }
 
-  private def getBackLink(idx: Option[Int])(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(idx: Option[Int])(using request: SessionRequest[AnyContent]): String =
     if (navigator.from == "CYA") {
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     } else {

@@ -16,9 +16,9 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.TotalSiteCapacity
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 
 @this(
@@ -42,14 +42,14 @@
     data-total-is-money="false"
     data-total-prefix=""
     data-total-items="availableForLetting,occupiedBySeasonalStuff,privatelyOwned">
-        @form.value.fold("")(_.total)
+    @form.value.fold("")(_.total)
     </span>
 }
 
 @layout(
     pageHeading = messages("totalSiteCapacity.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
@@ -65,7 +65,7 @@
         <table class="hmrc-responsive-table">
             <tbody>
                 <tr>
-                <td>
+                    <td>
                     @govukTable(Table(
                         head = Seq(
                             HeadCell(content = Text(messages("totalSiteCapacity.category"))),
@@ -85,45 +85,45 @@
                                                 "maxlength" -> "5",
                                                 "aria-label" -> messages("totalSiteCapacity.availableForLetting")
                                             )
-                                            ).withFormField(form(s"availableForLetting")))
-                                    )
-                                )
-                            ),
-                            Seq(
-                                    TableRow(
-                                        content = Text(messages("totalSiteCapacity.occupiedBySeasonalStuff"))
-                                    ),
-                                    TableRow(
-                                        content = HtmlContent(
-                                            govukInput(Input(
-                                                classes = "govuk-input--width-2",
-                                                attributes = Map(
-                                                    "maxlength" -> "5",
-                                                    "aria-label" -> messages("totalSiteCapacity.occupiedBySeasonalStuff")
-                                                )
-                                            ).withFormField(form(s"occupiedBySeasonalStuff")))
-                                    )
-                                )
-                            ),
-                            Seq(
-                                    TableRow(
-                                        content = Text(messages("totalSiteCapacity.privatelyOwned"))
-                                    ),
-                                    TableRow(
-                                        content = HtmlContent(
-                                            govukInput(Input(
-                                                classes = "govuk-input--width-2",
-                                                attributes = Map(
-                                                    "maxlength" -> "5",
-                                                    "aria-label" -> messages("totalSiteCapacity.privatelyOwned")
-                                                )
-                                            ).withFormField(form(s"privatelyOwned")))
+                                        ).withFormField(form(s"availableForLetting")))
                                     )
                                 )
                             ),
                             Seq(
                                 TableRow(
-                                    content =  HtmlContent(totalHeading)
+                                    content = Text(messages("totalSiteCapacity.occupiedBySeasonalStuff"))
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "5",
+                                                "aria-label" -> messages("totalSiteCapacity.occupiedBySeasonalStuff")
+                                            )
+                                        ).withFormField(form(s"occupiedBySeasonalStuff")))
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = Text(messages("totalSiteCapacity.privatelyOwned"))
+                                ),
+                                TableRow(
+                                    content = HtmlContent(
+                                        govukInput(Input(
+                                            classes = "govuk-input--width-2",
+                                            attributes = Map(
+                                                "maxlength" -> "5",
+                                                "aria-label" -> messages("totalSiteCapacity.privatelyOwned")
+                                            )
+                                        ).withFormField(form(s"privatelyOwned")))
+                                    )
+                                )
+                            ),
+                            Seq(
+                                TableRow(
+                                    content = HtmlContent(totalHeading)
                                 ),
                                 TableRow(
                                     content = HtmlContent(totalContent)
@@ -131,7 +131,7 @@
                             )
                         )
                     ))
-                </td>
+                    </td>
                 </tr>
             </tbody>
         </table>

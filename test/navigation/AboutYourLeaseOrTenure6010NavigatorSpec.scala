@@ -19,9 +19,9 @@ package navigation
 import connectors.Audit
 import models.ForType.*
 import models.Session
+import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.aboutYourLeaseOrTenure.CurrentRentFixed.*
 import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
-import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
@@ -38,7 +38,7 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
   private val audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  private val navigator = new AboutYourLeaseOrTenureNavigator(audit)
+  private val navigator = AboutYourLeaseOrTenureNavigator(audit)
 
   private val session6010 = Session(
     "99996010004",

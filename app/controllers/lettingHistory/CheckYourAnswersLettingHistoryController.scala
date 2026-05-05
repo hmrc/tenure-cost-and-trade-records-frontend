@@ -32,7 +32,6 @@ import repositories.SessionRepo
 import views.html.lettingHistory.checkYourAnswersLettingHistory as CheckYourAnswersView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -42,7 +41,7 @@ class CheckYourAnswersLettingHistoryController @Inject() (
   theView: CheckYourAnswersView,
   sessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging:
@@ -60,11 +59,11 @@ class CheckYourAnswersLettingHistoryController @Inject() (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, backLinkUrl)),
       answer =>
         given Session = request.sessionData
         for
-          newSession   <- successful(withSectionCompleted(answer.toBoolean))
+          newSession   <- withSectionCompleted(answer.toBoolean)
           savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = CheckYourAnswersPageId, savedSession)
     )

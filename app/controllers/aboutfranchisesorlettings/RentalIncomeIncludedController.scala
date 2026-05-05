@@ -40,7 +40,7 @@ class RentalIncomeIncludedController @Inject() (
   view: rentalIncomeIncluded,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with FranchiseAndLettingSupport
@@ -89,7 +89,7 @@ class RentalIncomeIncludedController @Inject() (
                   case franchise: FranchiseIncomeRecord       => franchise.copy(itemsIncluded = Some(data))
                   case concession: Concession6015IncomeRecord => concession.copy(itemsIncluded = Some(data))
                   case letting: LettingIncomeRecord           => letting.copy(itemsIncluded = Some(data))
-                  case _                                      => throw new IllegalStateException("Unknown income record type")
+                  case _                                      => throw IllegalStateException("Unknown income record type")
                 }
               )
             }
@@ -105,7 +105,7 @@ class RentalIncomeIncludedController @Inject() (
     )
   }
 
-  private def calculateBackLink(idx: Int)(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(idx: Int)(using request: SessionRequest[AnyContent]) =
     request.getQueryString("from") match {
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url

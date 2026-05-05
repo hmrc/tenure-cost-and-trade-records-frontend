@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
@@ -28,7 +28,7 @@ class BunkeredFuelSoldControllerSpec extends TestBaseSpec {
 
   def bunkeredFuelSoldController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ) = new BunkeredFuelSoldController(
+  ): BunkeredFuelSoldController = BunkeredFuelSoldController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

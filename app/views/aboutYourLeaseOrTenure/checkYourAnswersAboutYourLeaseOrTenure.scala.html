@@ -15,12 +15,12 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.common.AnswersYesNo
-@import models.pages.Summary
-@import views.html.answers.{answersAboutYourLeaseOrTenure, answersAboutYourLease6020, answersAboutYourLease6030}
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.ForType.{FOR6020, FOR6030}
+@import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.answers.{answersAboutYourLease6020, answersAboutYourLease6030, answersAboutYourLeaseOrTenure}
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout,
@@ -41,7 +41,7 @@
     pageHeading = messages("checkYourAnswersAboutYourLeaseOrTenure.heading"),
     backLinkUrl = backLink,
     fullWidth = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     theForm = theForm
 ) {

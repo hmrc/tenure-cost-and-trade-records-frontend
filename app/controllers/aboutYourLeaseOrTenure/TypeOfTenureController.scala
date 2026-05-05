@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.typeOfTenure
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TypeOfTenureController @Inject() (
@@ -41,23 +41,21 @@ class TypeOfTenureController @Inject() (
   typeOfTenureView: typeOfTenure,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TypeOfTenure")
-    Future.successful(
-      Ok(
-        typeOfTenureView(
-          request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.typeOfTenure) match {
-            case Some(typeOfTenure) => typeOfTenureForm.fill(typeOfTenure)
-            case _                  => typeOfTenureForm
-          },
-          request.sessionData.toSummary,
-          navigator.from
-        )
+    Ok(
+      typeOfTenureView(
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.typeOfTenure) match {
+          case Some(typeOfTenure) => typeOfTenureForm.fill(typeOfTenure)
+          case _                  => typeOfTenureForm
+        },
+        request.sessionData.toSummary,
+        navigator.from
       )
     )
   }

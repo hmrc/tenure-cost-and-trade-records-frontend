@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.checkYourAnswersAdditionalActivities
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersAdditionalActivitiesController @Inject() (
@@ -40,28 +40,26 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
   view: checkYourAnswersAdditionalActivities,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.additionalActivities.flatMap(_.checkYourAnswersAdditionalActivities)) match {
-            case Some(cYaAnswer) =>
-              checkYourAnswersAdditionalActivitiesForm.fill(cYaAnswer)
-            case _               => checkYourAnswersAdditionalActivitiesForm
-          },
-          calculateBackLink
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.additionalActivities.flatMap(_.checkYourAnswersAdditionalActivities)) match {
+          case Some(cYaAnswer) =>
+            checkYourAnswersAdditionalActivitiesForm.fill(cYaAnswer)
+          case _               => checkYourAnswersAdditionalActivitiesForm
+        },
+        calculateBackLink
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersAdditionalActivitiesForm,
       formWithErrors =>
@@ -93,7 +91,7 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     request.sessionData.aboutTheTradingHistoryPartOne.flatMap(
       _.additionalActivities.flatMap(_.additionalActivitiesOnSite)
     ) match {

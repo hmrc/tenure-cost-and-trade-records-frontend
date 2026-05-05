@@ -20,16 +20,16 @@ import actions.SessionRequest
 import play.api.data.Form
 import play.api.mvc.{AnyContent, MessagesControllerComponents, Request, Result}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import scala.language.implicitConversions
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 
 /**
   * All controllers that capture data and store it in session must inherit this base class.
   *
   * @author Yuriy Tumakha
   */
-abstract class FORDataCaptureController(cc: MessagesControllerComponents) extends FrontendController(cc) {
+abstract class FORDataCaptureController(cc: MessagesControllerComponents) extends FrontendController(cc):
 
   implicit def toFut[A](a: A): Future[A] = Future.successful(a)
 
@@ -37,7 +37,7 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
     form: Form[T],
     hasErrors: Form[T] => Future[Result],
     success: T => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
     form
       .bindFromRequest()
@@ -48,16 +48,14 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
 
   def continueOrSaveAsDraft(
     successResult: Future[Result]
-  )(implicit
+  )(using
     request: SessionRequest[AnyContent]
   ): Future[Result] =
     if (isSaveAsDraft) saveAsDraftRedirect else successResult
 
-  private def isSaveAsDraft(implicit request: SessionRequest[AnyContent]) =
-    request.body.asFormUrlEncoded.flatMap(_.get("save_button")).isDefined
+  private def isSaveAsDraft(using request: SessionRequest[AnyContent]) =
+    request.body.asFormUrlEncoded.flatMap(_.get("save-button")).isDefined
 
-  private def saveAsDraftRedirect(implicit request: Request[?]): Result = Redirect(
+  private def saveAsDraftRedirect(using request: Request[?]): Result = Redirect(
     controllers.routes.SaveAsDraftController.customPassword(request.uri)
   )
-
-}

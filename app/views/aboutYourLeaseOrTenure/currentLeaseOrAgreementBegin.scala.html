@@ -14,18 +14,14 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 @import models.pages.Summary
+@import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Input, Label}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput, GovukInput}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -38,41 +34,41 @@
 @(theForm: Form[CurrentLeaseOrAgreementBegin], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("currentLeaseOrAgreementBegin.heading"),
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url,
- theForm = theForm
+    pageHeading = messages("currentLeaseOrAgreementBegin.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController.submit()) {
 
-  <p class="govuk-heading-m">@messages("currentLeaseOrAgreementBegin.subheading")</p>
-  <p class="govuk-body">@messages("label.currentLeaseOrAgreementBegin")</p>
+        <p class="govuk-heading-m">@messages("currentLeaseOrAgreementBegin.subheading")</p>
+        <p class="govuk-body">@messages("label.currentLeaseOrAgreementBegin")</p>
 
-  @includes.dateFields(
-   form = theForm,
-   field = "leaseBegin",
-   govukDate = govukDateInput,
-   showFieldSet = false,
-   helpText = messages("label.currentLeaseOrAgreementBegin.help")
-  )
+        @includes.dateFields(
+            form = theForm,
+            field = "leaseBegin",
+            govukDate = govukDateInput,
+            showFieldSet = false,
+            helpText = messages("label.currentLeaseOrAgreementBegin.help")
+        )
 
-  @govukInput(Input(
-   id = "grantedFor",
-   name = "grantedFor",
-   value = theForm("grantedFor").value,
-   errorMessage = theForm.errors.asTextErrorMessageForField("grantedFor"),
-   label = Label(
-    classes = "govuk-label--m",
-    content = Text(messages("label.grantedFor"))
-   ),
-   hint = Some(Hint(content = Text(messages("hint.currentLeaseOrAgreementBegin"))))
-  ))
+        @govukInput(Input(
+            id = "grantedFor",
+            name = "grantedFor",
+            value = theForm("grantedFor").value,
+            errorMessage = theForm.errors.asTextErrorMessageForField("grantedFor"),
+            label = Label(
+                classes = "govuk-label--m",
+                content = Text(messages("label.grantedFor"))
+            ),
+            hint = Hint(content = Text(messages("hint.currentLeaseOrAgreementBegin")))
+        ))
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

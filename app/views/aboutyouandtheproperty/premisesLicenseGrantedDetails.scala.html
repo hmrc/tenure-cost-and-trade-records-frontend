@@ -14,26 +14,26 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
+@import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import models.pages.Summary
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  hmrcCharacterCount: HmrcCharacterCount,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        hmrcCharacterCount: HmrcCharacterCount,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("premisesLicenseGrantedInformation.heading"),
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url,
-  theForm = theForm
+    pageHeading = messages("premisesLicenseGrantedInformation.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url,
+    theForm = theForm
 ) {
 
     <p class="govuk-body">@messages("premisesLicenseGrantedInformation.p1")</p>
@@ -45,17 +45,17 @@
     </ul>
     <p class="govuk-body">@messages("premisesLicenseGrantedInformation.p3")</p>
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.submit()) {
 
-      @includes.textInputHMRCCharCount(
-          hmrcCharacterCount,
-          theForm,
-          "premisesLicenseGrantedInformation",
-          "premisesLicenseGrantedInformation.label",
-          classes = "govuk-label--m",
-          charCount = 2000
-      )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "premisesLicenseGrantedInformation",
+            "premisesLicenseGrantedInformation.label",
+            classes = "govuk-label--m",
+            charCount = 2000
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

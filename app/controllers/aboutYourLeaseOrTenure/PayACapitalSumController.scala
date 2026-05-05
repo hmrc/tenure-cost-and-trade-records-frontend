@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.payACapitalSum
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PayACapitalSumController @Inject() (
@@ -44,7 +44,7 @@ class PayACapitalSumController @Inject() (
   payACapitalSumView: payACapitalSum,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -52,17 +52,15 @@ class PayACapitalSumController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PayACapitalSum")
 
-    Future.successful(
-      Ok(
-        payACapitalSumView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
-            case Some(data) => payACapitalSumForm.fill(data)
-            case _          => payACapitalSumForm
-          },
-          request.sessionData.forType,
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      payACapitalSumView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
+          case Some(data) => payACapitalSumForm.fill(data)
+          case _          => payACapitalSumForm
+        },
+        request.sessionData.forType,
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }
@@ -89,7 +87,7 @@ class PayACapitalSumController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum"
       case _    =>

@@ -14,11 +14,9 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout, govukButton: GovukButton, govukInput: GovukInput, formWithCSRF: FormWithCSRF)
 
@@ -28,18 +26,18 @@
 @layout(
     pageHeading = messages(s"$cateringOrLetting.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutFranchisesOrLettings"),
     backLinkUrl = backLink,
     theForm = theForm
 ) {
 
 
-        @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.submit(index)) {
-            @includes.textInput(govukInput, theForm, "operatorName6030", "govuk-input--width-20", "operatorName", labelClasses = "govuk-!-font-weight-bold")
-            @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "describeBusiness")
-            @includes.textInput(govukInput, theForm, "howBusinessPropertyIsUsed", "govuk-input--width-20", "howBusinessPropertyIsUsed", labelClasses = "govuk-!-font-weight-bold")
-            @includes.continueSaveAsDraftButtons(govukButton)
+    @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.submit(index)) {
+        @includes.textInput(govukInput, theForm, "operatorName6030", "govuk-input--width-20", "operatorName", labelClasses = "govuk-!-font-weight-bold")
+        @includes.textInput(govukInput, theForm, "typeOfBusiness", "govuk-input--width-20", "typeOfBusiness", labelClasses = "govuk-!-font-weight-bold", hintMsg = "describeBusiness")
+        @includes.textInput(govukInput, theForm, "howBusinessPropertyIsUsed", "govuk-input--width-20", "howBusinessPropertyIsUsed", labelClasses = "govuk-!-font-weight-bold")
+        @includes.continueSaveAsDraftButtons(govukButton)
 
-        }
+    }
 }

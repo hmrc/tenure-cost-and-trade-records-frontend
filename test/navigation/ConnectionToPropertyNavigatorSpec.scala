@@ -17,13 +17,13 @@
 package navigation
 
 import connectors.Audit
+import controllers.connectiontoproperty.routes
+import models.submissions.common.AnswersYesNo.*
+import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, LettingPartOfPropertyRentDetails, TenantDetails}
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
-import controllers.connectiontoproperty.routes
-import models.submissions.common.AnswersYesNo.*
-import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, LettingPartOfPropertyRentDetails, TenantDetails}
 
 import scala.concurrent.ExecutionContext
 
@@ -33,7 +33,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  private val navigator = new ConnectionToPropertyNavigator(audit)
+  private val navigator = ConnectionToPropertyNavigator(audit)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

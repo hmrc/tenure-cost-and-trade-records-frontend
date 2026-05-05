@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.enforcementActionBeenTakenDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class EnforcementActionBeenTakenDetailsController @Inject() (
@@ -39,23 +39,21 @@ class EnforcementActionBeenTakenDetailsController @Inject() (
   enforcementActionBeenTakenDetailsView: enforcementActionBeenTakenDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("EnforcementActionBeenTakenDetails")
 
-    Future.successful(
-      Ok(
-        enforcementActionBeenTakenDetailsView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
-            case Some(enforcementActionInformation) =>
-              enforcementActionDetailsForm.fill(enforcementActionInformation)
-            case _                                  => enforcementActionDetailsForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      enforcementActionBeenTakenDetailsView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementActionHasBeenTakenInformationDetails) match {
+          case Some(enforcementActionInformation) =>
+            enforcementActionDetailsForm.fill(enforcementActionInformation)
+          case _                                  => enforcementActionDetailsForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

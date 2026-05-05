@@ -15,11 +15,11 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
 @import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import views.html.answers.answersOtherHolidayAccommodation
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -35,7 +35,7 @@
     pageHeading = messages("checkYourAnswersOtherHolidayAccommodation.heading"),
     backLinkUrl = backLink,
     fullWidth = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     theForm = theForm
 ) {

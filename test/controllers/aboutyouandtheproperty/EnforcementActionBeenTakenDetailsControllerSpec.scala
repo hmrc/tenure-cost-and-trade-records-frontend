@@ -17,13 +17,13 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
+import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
@@ -35,7 +35,7 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
 
   def enforcementActionBeenTakenDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new EnforcementActionBeenTakenDetailsController(
+  ): EnforcementActionBeenTakenDetailsController = EnforcementActionBeenTakenDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -44,7 +44,7 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def enforcementActionBeenTakenDetailsControllerNone() = new EnforcementActionBeenTakenDetailsController(
+  def enforcementActionBeenTakenDetailsControllerNone(): EnforcementActionBeenTakenDetailsController = EnforcementActionBeenTakenDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

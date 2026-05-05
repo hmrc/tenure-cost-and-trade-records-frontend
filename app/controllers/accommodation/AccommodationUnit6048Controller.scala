@@ -19,8 +19,8 @@ package controllers.accommodation
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.accommodation.AccommodationUnit6048Form.accommodationUnit6048Form
-import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
 import models.submissions.accommodation.AccommodationDetails
+import models.submissions.accommodation.AccommodationDetails.updateAccommodationUnit
 import navigation.AccommodationNavigator
 import navigation.identifiers.AccommodationUnitPageId
 import play.api.Logging
@@ -42,7 +42,7 @@ class AccommodationUnit6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -83,7 +83,7 @@ class AccommodationUnit6048Controller @Inject() (
   }
 
   private def accommodationDetails(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 

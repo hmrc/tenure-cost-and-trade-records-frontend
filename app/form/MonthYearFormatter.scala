@@ -18,7 +18,7 @@ package form
 
 import models.submissions.Form6010.MonthsYearDuration
 import play.api.data.FormError
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.format.Formatter
 import play.api.i18n.Messages
 import util.DateUtil.nowInUK

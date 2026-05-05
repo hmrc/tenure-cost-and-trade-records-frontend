@@ -22,8 +22,8 @@ import org.scalatest.matchers.{MatchResult, Matcher}
 
 trait AnswerYesNoMatchers:
 
-  def beAnswerYes = new AnswerYesNoMatcher(expected = AnswerYes)
-  def beAnswerNo  = new AnswerYesNoMatcher(expected = AnswerNo)
+  def beAnswerYes: AnswerYesNoMatcher = AnswerYesNoMatcher(expected = AnswerYes)
+  def beAnswerNo: AnswerYesNoMatcher  = AnswerYesNoMatcher(expected = AnswerNo)
 
   class AnswerYesNoMatcher(expected: AnswersYesNo) extends Matcher[AnswersYesNo]:
 

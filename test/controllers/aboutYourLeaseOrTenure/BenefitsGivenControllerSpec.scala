@@ -20,14 +20,14 @@ import connectors.Audit
 import form.aboutYourLeaseOrTenure.BenefitsGivenForm.benefitsGivenForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
-import utils.TestBaseSpec
 import play.api.test.*
 import play.api.test.Helpers.*
+import utils.TestBaseSpec
 
 class BenefitsGivenControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -35,7 +35,7 @@ class BenefitsGivenControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = new BenefitsGivenController(
+  ): BenefitsGivenController = BenefitsGivenController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

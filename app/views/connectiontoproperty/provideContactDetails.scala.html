@@ -16,37 +16,37 @@
 
 @import models.pages.Summary
 @import models.submissions.connectiontoproperty.YourContactDetails
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukInput: GovukInput,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
         hmrcCharacterCount: HmrcCharacterCount,
-  formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[YourContactDetails], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("provideContactDetails.heading"),
-  backLinkUrl = backLink,
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.connectionToTheProperty"),
-  theForm = theForm
+    pageHeading = messages("provideContactDetails.heading"),
+    backLinkUrl = backLink,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.ProvideContactDetailsController.submit()) {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.ProvideContactDetailsController.submit()) {
 
-    <p class="govuk-body">@messages("provideContactDetails.p1")</p>
+        <p class="govuk-body">@messages("provideContactDetails.p1")</p>
 
-    @includes.textInput(govukInput, theForm, "yourContactDetails.fullName", "govuk-!-width-two-thirds", "fullName")
-    @includes.textInput(govukInput, theForm, "yourContactDetails.contactDetails.email", "govuk-!-width-two-thirds", "email")
-    @includes.textInput(govukInput, theForm, "yourContactDetails.contactDetails.phone", "govuk-!-width-two-thirds", "phone")
-    @includes.textInputHMRCCharCount(hmrcCharacterCount, theForm, "yourContactDetails.provideContactDetailsAdditionalInformation", "provideContactDetailsAdditionalInformation.heading","", isPageHeading = false, "provideContactDetailsAdditionalInformation.hint", charCount = 2000)
+        @includes.textInput(govukInput, theForm, "yourContactDetails.fullName", "govuk-!-width-two-thirds", "fullName")
+        @includes.textInput(govukInput, theForm, "yourContactDetails.contactDetails.email", "govuk-!-width-two-thirds", "email")
+        @includes.textInput(govukInput, theForm, "yourContactDetails.contactDetails.phone", "govuk-!-width-two-thirds", "phone")
+        @includes.textInputHMRCCharCount(hmrcCharacterCount, theForm, "yourContactDetails.provideContactDetailsAdditionalInformation", "provideContactDetailsAdditionalInformation.heading", "", isPageHeading = false, "provideContactDetailsAdditionalInformation.hint", charCount = 2000)
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

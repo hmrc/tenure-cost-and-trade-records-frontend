@@ -20,7 +20,7 @@ import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class MethodToFixCurrentRentControllerSpec extends TestBaseSpec {
@@ -29,7 +29,7 @@ class MethodToFixCurrentRentControllerSpec extends TestBaseSpec {
 
   def methodToFixCurrentRentController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = new MethodToFixCurrentRentController(
+  ): MethodToFixCurrentRentController = MethodToFixCurrentRentController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

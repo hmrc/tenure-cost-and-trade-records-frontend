@@ -17,8 +17,8 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
-import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import form.aboutyouandtheproperty.CostsBreakdownForm.costsBreakdownForm
+import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
@@ -36,7 +36,7 @@ class CostsBreakdownControllerSpec extends TestBaseSpec {
 
   def costsBreakdownController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new CostsBreakdownController(
+  ): CostsBreakdownController = CostsBreakdownController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -45,7 +45,7 @@ class CostsBreakdownControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def costsBreakdownControllerNone() = new CostsBreakdownController(
+  def costsBreakdownControllerNone(): CostsBreakdownController = CostsBreakdownController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

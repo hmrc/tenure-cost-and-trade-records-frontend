@@ -15,12 +15,12 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import models.pages.Summary
 @import models.submissions.common.CheckYourAnswersAndConfirm
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichCheckboxes
-@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import views.html.answers.answersConnectionToTheProperty
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -33,43 +33,43 @@
 
 @(theForm: Form[CheckYourAnswersAndConfirm], backLink: String, summary: Summary)(implicit request: SessionRequest[?], messages: Messages)
 
-    @layout(
-        pageHeading = messages("checkYourAnswersConnectionToProperty.heading"),
-        backLinkUrl = backLink,
-        fullWidth = true,
-        summary = Some(summary),
-        sectionName = messages("label.section.connectionToTheProperty"),
-        theForm = theForm
-    ) {
+@layout(
+    pageHeading = messages("checkYourAnswersConnectionToProperty.heading"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    summary = summary,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    theForm = theForm
+) {
 
-        @answersSectionConnectionToTheProperty()
+    @answersSectionConnectionToTheProperty()
 
-        @formWithCSRF(action = controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.submit()) {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.submit()) {
 
-            @govukWarningText(WarningText(
-                content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
-            ))
-            @govukCheckboxes(
-                Checkboxes(
-                    items = Seq(
-                        CheckboxItem(
-                            id = "answersConfirmed",
-                            name = "answersConfirmed",
-                            content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
-                            value = "true",
-                            checked = theForm("answersConfirmed").value.contains("true")
-                        )
+        @govukWarningText(WarningText(
+            content = Text(messages("checkYourAnswers.confirmAnswersAreCorrect.warning"))
+        ))
+        @govukCheckboxes(
+            Checkboxes(
+                items = Seq(
+                    CheckboxItem(
+                        id = "answersConfirmed",
+                        name = "answersConfirmed",
+                        content = HtmlContent("<strong>" + messages("checkYourAnswers.confirmAnswersAreCorrect.label") + "</strong>"),
+                        value = "true",
+                        checked = theForm("answersConfirmed").value.contains("true")
                     )
-                ).withFormField(theForm("answersConfirmed"))
-            )
+                )
+            ).withFormField(theForm("answersConfirmed"))
+        )
 
-            @includes.checkYourAnswersRadioButtons(
-                govukRadios,
-                theForm,
-                "answersChecked"
-            )
+        @includes.checkYourAnswersRadioButtons(
+            govukRadios,
+            theForm,
+            "answersChecked"
+        )
 
-            @includes.continueSaveAsDraftButtons(govukButton)
+        @includes.continueSaveAsDraftButtons(govukButton)
 
-        }
     }
+}

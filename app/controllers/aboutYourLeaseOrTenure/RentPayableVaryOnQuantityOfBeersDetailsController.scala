@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfBeersDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
@@ -39,26 +39,24 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   rentPayableVaryOnQuantityOfBeersDetailsView: rentPayableVaryOnQuantityOfBeersDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryOnQuantityOfBeersDetails")
 
-    Future.successful(
-      Ok(
-        rentPayableVaryOnQuantityOfBeersDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo
-            .flatMap(_.rentPayableVaryOnQuantityOfBeersDetails) match {
-            case Some(rentPayableVaryOnQuantityOfBeersInformationDetails) =>
-              rentPayableVaryOnQuantityOfBeersDetailsForm.fill(
-                rentPayableVaryOnQuantityOfBeersInformationDetails
-              )
-            case _                                                        => rentPayableVaryOnQuantityOfBeersDetailsForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentPayableVaryOnQuantityOfBeersDetailsView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo
+          .flatMap(_.rentPayableVaryOnQuantityOfBeersDetails) match {
+          case Some(rentPayableVaryOnQuantityOfBeersInformationDetails) =>
+            rentPayableVaryOnQuantityOfBeersDetailsForm.fill(
+              rentPayableVaryOnQuantityOfBeersInformationDetails
+            )
+          case _                                                        => rentPayableVaryOnQuantityOfBeersDetailsForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

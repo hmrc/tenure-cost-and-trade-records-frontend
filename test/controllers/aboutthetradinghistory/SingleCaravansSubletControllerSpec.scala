@@ -29,8 +29,8 @@ class SingleCaravansSubletControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def singleCaravansSubletController =
-    new SingleCaravansSubletController(
+  def singleCaravansSubletController: SingleCaravansSubletController =
+    SingleCaravansSubletController(
       caravansTrading6045View,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(

@@ -19,8 +19,8 @@ package controllers.aboutthetradinghistory
 import actions.WithSessionRefiner
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CheckYourAnswersOtherHolidayAccommodationForm.checkYourAnswersOtherHolidayAccommodationForm
-import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateOtherHolidayAccommodation
 import models.Session
+import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateOtherHolidayAccommodation
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.AnswerYes
 import navigation.AboutTheTradingHistoryNavigator
@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.checkYourAnswersOtherHolidayAccommodation
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersOtherHolidayAccommodationController @Inject() (
@@ -41,24 +41,22 @@ class CheckYourAnswersOtherHolidayAccommodationController @Inject() (
   checkYourAnswersOtherHolidayAccommodationView: checkYourAnswersOtherHolidayAccommodation,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        checkYourAnswersOtherHolidayAccommodationView(
-          request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.otherHolidayAccommodation.flatMap(_.checkYourAnswersOtherHolidayAccommodation)) match {
-            case Some(checkYourAnswersAboutTheTradingHistory) =>
-              checkYourAnswersOtherHolidayAccommodationForm.fill(checkYourAnswersAboutTheTradingHistory)
-            case _                                            => checkYourAnswersOtherHolidayAccommodationForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      checkYourAnswersOtherHolidayAccommodationView(
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.otherHolidayAccommodation.flatMap(_.checkYourAnswersOtherHolidayAccommodation)) match {
+          case Some(checkYourAnswersAboutTheTradingHistory) =>
+            checkYourAnswersOtherHolidayAccommodationForm.fill(checkYourAnswersAboutTheTradingHistory)
+          case _                                            => checkYourAnswersOtherHolidayAccommodationForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

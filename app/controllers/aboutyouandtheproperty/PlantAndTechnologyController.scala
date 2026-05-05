@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.plantAndTechnology
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PlantAndTechnologyController @Inject() (
@@ -40,7 +40,7 @@ class PlantAndTechnologyController @Inject() (
   view: plantAndTechnology,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with ReadOnlySupport
   with I18nSupport {
@@ -48,17 +48,15 @@ class PlantAndTechnologyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PlantAndTechnology")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology) match {
-            case Some(data) => plantAndTechnologyForm.fill(data)
-            case _          => plantAndTechnologyForm
-          },
-          calculateBackLink,
-          request.sessionData.toSummary,
-          isReadOnly
-        )
+    Ok(
+      view(
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.plantAndTechnology) match {
+          case Some(data) => plantAndTechnologyForm.fill(data)
+          case _          => plantAndTechnologyForm
+        },
+        calculateBackLink,
+        request.sessionData.toSummary,
+        isReadOnly
       )
     )
   }
@@ -84,7 +82,7 @@ class PlantAndTechnologyController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#how-is-used"

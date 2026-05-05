@@ -18,7 +18,7 @@ package form.aboutthetradinghistory
 
 import form.DateMappings.requiredDateMapping
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.i18n.Messages
 
 import java.time.LocalDate

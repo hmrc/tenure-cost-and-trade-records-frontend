@@ -14,10 +14,10 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import models.submissions.common.AnswersYesNo
 @import actions.SessionRequest
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -30,18 +30,18 @@
 @(theForm: Form[AnswersYesNo], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @details = {
-  <p>@messages("help.touringAndTentingPitches.p")</p>
-  <ul class="govuk-list--bullet">
-      <li>@messages("help.touringAndTentingPitches.pitches")</li>
-      <li>@messages("help.touringAndTentingPitches.glamping")</li>
-      <li>@messages("help.touringAndTentingPitches.rally")</li>
-  </ul>
+    <p>@messages("help.touringAndTentingPitches.p")</p>
+    <ul class="govuk-list--bullet">
+        <li>@messages("help.touringAndTentingPitches.pitches")</li>
+        <li>@messages("help.touringAndTentingPitches.glamping")</li>
+        <li>@messages("help.touringAndTentingPitches.rally")</li>
+    </ul>
 }
 
 @layout(
     pageHeading = messages("touringAndTentingPitches.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     backLinkUrl = backLink,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     theForm = theForm,

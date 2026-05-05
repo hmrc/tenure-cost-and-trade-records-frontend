@@ -41,7 +41,7 @@ class CostOfSalesController @Inject() (
   costOfSalesView: costOfSales,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -60,7 +60,7 @@ class CostOfSalesController @Inject() (
       val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
       session
         .saveOrUpdate(updatedData)
-        .flatMap(_ =>
+        .map(_ =>
           Ok(costOfSalesView(costOfSalesForm(years(aboutTheTradingHistory)).fill(costOfSales), navigator.from))
         )
     }
@@ -92,12 +92,12 @@ class CostOfSalesController @Inject() (
 
   private def runWithSessionCheck(
     action: AboutTheTradingHistory => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
       .filter(_.turnoverSections.nonEmpty)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory): Seq[LocalDate] =
     aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)

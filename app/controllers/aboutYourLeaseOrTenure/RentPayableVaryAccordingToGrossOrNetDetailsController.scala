@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryAccordingToGrossOrNetDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
@@ -39,23 +39,21 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
   rentPayableVaryAccordingToGrossOrNetDetailsView: rentPayableVaryAccordingToGrossOrNetDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryAccordingToGrossOrNetDetails")
 
-    Future.successful(
-      Ok(
-        rentPayableVaryAccordingToGrossOrNetDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo
-            .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
-            case Some(details) => rentPayableVaryAccordingToGrossOrNetInformationForm.fill(details)
-            case _             => rentPayableVaryAccordingToGrossOrNetInformationForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentPayableVaryAccordingToGrossOrNetDetailsView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo
+          .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
+          case Some(details) => rentPayableVaryAccordingToGrossOrNetInformationForm.fill(details)
+          case _             => rentPayableVaryAccordingToGrossOrNetInformationForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

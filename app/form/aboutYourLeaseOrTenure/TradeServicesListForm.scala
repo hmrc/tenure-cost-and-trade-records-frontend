@@ -23,7 +23,7 @@ import play.api.data.Forms.{mapping, optional}
 
 object TradeServicesListForm:
 
-  val theForm = Form(
+  val theForm: Form[AnswersYesNo] = Form(
     mapping(
       "tradeServicesList" -> optional(createYesNoType("error.addTradeService.required"))
         .verifying("error.addTradeService.required", _.nonEmpty)

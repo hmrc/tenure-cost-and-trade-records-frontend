@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -32,7 +32,7 @@ class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYouAndThePropertyNavigator(audit)
+  val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
 
   "About you and the property navigator" when {
 

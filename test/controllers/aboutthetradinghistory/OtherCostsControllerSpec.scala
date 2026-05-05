@@ -20,7 +20,7 @@ import actions.SessionRequest
 import connectors.Audit
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class OtherCostsControllerSpec extends TestBaseSpec {
@@ -30,7 +30,7 @@ class OtherCostsControllerSpec extends TestBaseSpec {
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
   private val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
 
-  private val otherCostsController = new OtherCostsController(
+  private val otherCostsController = OtherCostsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

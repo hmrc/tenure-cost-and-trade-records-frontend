@@ -15,11 +15,10 @@
  *@
 
 @import actions.SessionRequest
+@import models.submissions.aboutthetradinghistory.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import models.submissions.aboutthetradinghistory._
-@import util.DateUtilLocalised
 @import util.NumberUtil.*
-@import util.CyaTradingHistorySupport
+@import util.{CyaTradingHistorySupport, DateUtilLocalised}
 
 
 
@@ -56,7 +55,7 @@
             otherCost.otherCosts.getOrElse(zeroBigDecimal).asMoney
         )),
         financialYearEnds = data.map(_.financialYearEnd),
-        messageKeys = Some(otherCostsMessageKeys)
+        messageKeys = otherCostsMessageKeys
     ).body + optionalParagraph(otherCosts.flatMap(_.otherCostDetails), messages("otherCosts.otherCosts")).body
 }
 
@@ -65,13 +64,15 @@
     cyaSupport.table(
         valuesGrid = data.map(otherCost => Seq(otherCost.total.asMoney)),
         financialYearEnds = data.map(_.financialYearEnd),
-        messageKeys = Some(Seq("otherCosts.total"))
+        messageKeys = Seq("otherCosts.total")
     ).body
 }
 
 @optionalParagraph(textOpt: Option[String], ariaLabel: Option[String]) = {
 @textOpt.filterNot(_.trim.isEmpty).map { text =>
-    <p class="govuk-body" @{ariaLabel.map(label => s"""aria-label="$label"""")}>@text</p>
+    <p class="govuk-body" @{
+        ariaLabel.map(label => s"""aria-label="$label"""")
+    }>@text</p>
 }
 }
 
@@ -101,7 +102,7 @@
             payroll.total.asMoney
         )),
         financialYearEnds = totalPayrollCosts.map(_.financialYearEnd),
-        messageKeys = Some(payrollCostsMessageKeys)
+        messageKeys = payrollCostsMessageKeys
     ).body
 }
 
@@ -123,7 +124,7 @@
             }
         ),
         financialYearEnds = voeSections.map(_.variableOperatingExpenses).getOrElse(Seq.empty).map(_.financialYearEnd),
-        messageKeys = Some(variableOperatingExpensesMessageKeys)
+        messageKeys = variableOperatingExpensesMessageKeys
     ).body + optionalParagraph(voeSections.flatMap(_.otherExpensesDetails), messages("checkYourAnswersAboutTheTradingHistory.variableOperatingExpenses.other")).body
 }
 
@@ -137,7 +138,7 @@
             }
         ),
         financialYearEnds = voeSections.map(_.variableOperatingExpenses).getOrElse(Seq.empty).map(_.financialYearEnd),
-        messageKeys = Some(Seq(messages("variableOperatingExpenses.total")))
+        messageKeys = Seq(messages("variableOperatingExpenses.total"))
     ).body
 }
 
@@ -195,7 +196,7 @@
             foe.total.asMoney
         )),
         financialYearEnds = fixedOperatingExpenses.map(_.financialYearEnd),
-        messageKeys = Some(fixedOperatingExpensesMessageKeys)
+        messageKeys = fixedOperatingExpensesMessageKeys
     ).body
 }
 
@@ -232,7 +233,7 @@
             )
         },
         financialYearEnds = data.map(_._2),
-        messageKeys = Some(profitSummaryMessageKeys)
+        messageKeys = profitSummaryMessageKeys
     ).body
 }
 @cyaSupport.accountingInformation
@@ -241,12 +242,12 @@
 
 @govukSummaryList(SummaryList(rows =
     Seq(
-                    SummaryListRow(
-                        key = Key(HtmlContent(cyaSupport.turnoverKeys60156016)),
-                        value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => cyaSupport.turnoverValuesTable60156016(t.turnoverSections)))),
-                        actions = cyaSupport.actions
-                )
-            )
+        SummaryListRow(
+            key = Key(HtmlContent(cyaSupport.turnoverKeys60156016)),
+            value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => cyaSupport.turnoverValuesTable60156016(t.turnoverSections)))),
+            actions = cyaSupport.actions
+        )
+    )
 
 ))
 
@@ -257,20 +258,19 @@
         SummaryListRow(
             key = Key(HtmlContent(cyaSupport.costOfSalesKeys)),
             value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => cyaSupport.costOfSalesValuesTable(t.costOfSales)))),
-            actions = Some(
+            actions =
                 Actions(items =
                     Seq(
                         ActionItem(
                             href = s"${controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url}?from=CYA",
                             content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages("costOfSales.heading")),
+                            visuallyHiddenText = messages("costOfSales.heading"),
                             attributes = Map(
                                 "aria-label" -> s"${messages("label.change")} ${messages("costOfSales.heading")}"
                             )
                         )
                     )
                 )
-            )
         )
     )
 ))
@@ -282,20 +282,19 @@
         SummaryListRow(
             key = Key(HtmlContent(payrollCostsKeys)),
             value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => payrollCostsValuesTable(t.totalPayrollCostSections)))),
-            actions = Some(
+            actions =
                 Actions(items =
                     Seq(
                         ActionItem(
                             href = s"${controllers.aboutthetradinghistory.routes.TotalPayrollCostsController.show().url}?from=CYA",
                             content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")),
+                            visuallyHiddenText = messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts"),
                             attributes = Map(
                                 "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.totalPayrollCosts")}"
                             )
                         )
                     )
                 )
-            )
         )
     )
 ))
@@ -307,20 +306,20 @@
         SummaryListRow(
             key = Key(HtmlContent(variableOperatingExpensesKeys)),
             value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => variableOperatingExpensesValuesTable(t.variableOperatingExpenses)))),
-            actions = Some(
+            actions =
                 Actions(items =
                     Seq(
                         ActionItem(
                             href = s"${controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show().url}?from=CYA",
                             content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages("variableOperatingExpenses.heading")),
+                            visuallyHiddenText = messages("variableOperatingExpenses.heading"),
                             attributes = Map(
                                 "aria-label" -> s"${messages("label.change")} ${messages("variableOperatingExpenses.heading")}"
                             )
                         )
                     )
                 )
-            ),
+            ,
             classes = "no-border-bottom"
         ),
         SummaryListRow(
@@ -337,20 +336,19 @@
         SummaryListRow(
             key = Key(HtmlContent(fixedOperatingExpensesKeys)),
             value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => fixedOperatingExpensesValuesTable(t.fixedOperatingExpensesSections)))),
-            actions = Some(
+            actions =
                 Actions(items =
                     Seq(
                         ActionItem(
                             href = s"${controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show().url}?from=CYA",
                             content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages("fixedOperatingExpenses.heading")),
+                            visuallyHiddenText = messages("fixedOperatingExpenses.heading"),
                             attributes = Map(
                                 "aria-label" -> s"${messages("label.change")} ${messages("fixedOperatingExpenses.heading")}"
                             )
                         )
                     )
                 )
-            )
         )
     )
 ))
@@ -362,20 +360,20 @@
         SummaryListRow(
             key = Key(HtmlContent(otherCostsKeys)),
             value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => otherCostsValuesTable(t.otherCosts)))),
-            actions = Some(
+            actions =
                 Actions(items =
                     Seq(
                         ActionItem(
                             href = s"${controllers.aboutthetradinghistory.routes.OtherCostsController.show().url}?from=CYA",
                             content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages("otherCosts.heading")),
+                            visuallyHiddenText = messages("otherCosts.heading"),
                             attributes = Map(
                                 "aria-label" -> s"${messages("label.change")} ${messages("otherCosts.heading")}"
                             )
                         )
                     )
                 )
-            ),
+            ,
             classes = "no-border-bottom"
         ),
         SummaryListRow(
@@ -392,20 +390,19 @@
         SummaryListRow(
             key = Key(HtmlContent(profitSummaryKeys)),
             value = Value(HtmlContent(cyaSupport.sectionAnswers.answers.fold("")(t => profitSummaryValuesTable(t)))),
-            actions = Some(
+            actions =
                 Actions(items =
                     Seq(
                         ActionItem(
                             href = s"${controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url}?from=CYA",
                             content = Text(messages("label.change")),
-                            visuallyHiddenText = Some(messages("checkYourAnswersAboutTheTradingHistory.profitSummary")),
+                            visuallyHiddenText = messages("checkYourAnswersAboutTheTradingHistory.profitSummary"),
                             attributes = Map(
                                 "aria-label" -> s"${messages("label.change")} ${messages("checkYourAnswersAboutTheTradingHistory.profitSummary")}"
                             )
                         )
                     )
                 )
-            )
         )
     )
 ))

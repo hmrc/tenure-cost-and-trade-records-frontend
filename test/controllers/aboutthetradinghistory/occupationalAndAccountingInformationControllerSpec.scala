@@ -20,7 +20,7 @@ import connectors.Audit
 import navigation.AboutTheTradingHistoryNavigator
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutthetradinghistory.whenDidYouFirstOccupy as WhenDidYouFirstOccupyView
@@ -33,7 +33,7 @@ class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
   private val mockWhenDidYouFirstOccupyView                          = mock[WhenDidYouFirstOccupyView]
   when(mockWhenDidYouFirstOccupyView.apply(any, any)(using any, any)).thenReturn(HtmlFormat.empty)
 
-  private val aboutYourTradingHistoryController = new WhenDidYouFirstOccupyController(
+  private val aboutYourTradingHistoryController = WhenDidYouFirstOccupyController(
     stubMessagesControllerComponents(),
     mockAudit,
     mockAboutYouNavigator,

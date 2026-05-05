@@ -39,7 +39,7 @@ class CalculatingTheRentForController @Inject() (
   calculatingTheRentForView: calculatingTheRentFor,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with FranchiseAndLettingSupport
   with I18nSupport {
@@ -62,7 +62,7 @@ class CalculatingTheRentForController @Inject() (
     )
   }
 
-  def submit(index: Int) = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CalculatingTheRent](
       theForm,
       formWithErrors =>
@@ -82,7 +82,7 @@ class CalculatingTheRentForController @Inject() (
                 index,
                 records(index) match {
                   case concession: Concession6015IncomeRecord => concession.copy(calculatingTheRent = Some(data))
-                  case _                                      => throw new IllegalStateException("Unknown income record type")
+                  case _                                      => throw IllegalStateException("Unknown income record type")
                 }
               )
             }

@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.licensableActivitiesDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class LicensableActivitiesDetailsController @Inject() (
@@ -39,23 +39,21 @@ class LicensableActivitiesDetailsController @Inject() (
   licensableActivitiesDetailsView: licensableActivitiesDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("LicensableActivitiesDetails")
 
-    Future.successful(
-      Ok(
-        licensableActivitiesDetailsView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.licensableActivitiesInformationDetails) match {
-            case Some(licensableActivitiesInformation) =>
-              licensableActivitiesDetailsForm.fill(licensableActivitiesInformation)
-            case _                                     => licensableActivitiesDetailsForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      licensableActivitiesDetailsView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.licensableActivitiesInformationDetails) match {
+          case Some(licensableActivitiesInformation) =>
+            licensableActivitiesDetailsForm.fill(licensableActivitiesInformation)
+          case _                                     => licensableActivitiesDetailsForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

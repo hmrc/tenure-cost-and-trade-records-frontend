@@ -16,9 +16,9 @@
 
 package form.aboutYourLeaseOrTenure
 
+import form.MappingSupport.currencyMapping
 import models.submissions.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetails
 import play.api.data.Form
-import form.MappingSupport.currencyMapping
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 

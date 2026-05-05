@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.ultimatelyResponsibleOutsideRepairs
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class UltimatelyResponsibleOutsideRepairsController @Inject() (
@@ -43,27 +43,25 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
   ultimatelyResponsibleORView: ultimatelyResponsibleOutsideRepairs,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("UltimatelyResponsibleOutsideRepairs")
 
-    Future.successful(
-      Ok(
-        ultimatelyResponsibleORView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleOutsideRepairs) match {
-            case Some(ultimatelyResponsible) => ultimatelyResponsibleOutsideRepairsForm.fill(ultimatelyResponsible)
-            case _                           => ultimatelyResponsibleOutsideRepairsForm
-          },
-          getBackLink
-        )
+    Ok(
+      ultimatelyResponsibleORView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.ultimatelyResponsibleOutsideRepairs) match {
+          case Some(ultimatelyResponsible) => ultimatelyResponsibleOutsideRepairsForm.fill(ultimatelyResponsible)
+          case _                           => ultimatelyResponsibleOutsideRepairsForm
+        },
+        getBackLink
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[UltimatelyResponsibleOutsideRepairs](
       ultimatelyResponsibleOutsideRepairsForm,
       formWithErrors => BadRequest(ultimatelyResponsibleORView(formWithErrors, getBackLink)),
@@ -79,7 +77,7 @@ class UltimatelyResponsibleOutsideRepairsController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
       case FOR6020           =>
         if (

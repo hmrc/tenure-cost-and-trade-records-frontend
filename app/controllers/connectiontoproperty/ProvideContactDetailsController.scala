@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.provideContactDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ProvideContactDetailsController @Inject() (
@@ -42,7 +42,7 @@ class ProvideContactDetailsController @Inject() (
   provideContactDetailsView: provideContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -50,16 +50,14 @@ class ProvideContactDetailsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ProvideContactDetails")
 
-    Future.successful(
-      Ok(
-        provideContactDetailsView(
-          request.sessionData.stillConnectedDetails.flatMap(_.provideContactDetails) match {
-            case Some(customerDetails) => provideContactDetailsForm.fill(customerDetails)
-            case _                     => provideContactDetailsForm
-          },
-          getBackLink,
-          request.sessionData.toSummary
-        )
+    Ok(
+      provideContactDetailsView(
+        request.sessionData.stillConnectedDetails.flatMap(_.provideContactDetails) match {
+          case Some(customerDetails) => provideContactDetailsForm.fill(customerDetails)
+          case _                     => provideContactDetailsForm
+        },
+        getBackLink,
+        request.sessionData.toSummary
       )
     )
   }
@@ -87,7 +85,7 @@ class ProvideContactDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")

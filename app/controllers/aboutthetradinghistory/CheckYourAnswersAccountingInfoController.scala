@@ -41,7 +41,7 @@ class CheckYourAnswersAccountingInfoController @Inject() (
   theView: CheckYourAnswersAccountingInfoView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging:
@@ -76,5 +76,5 @@ class CheckYourAnswersAccountingInfoController @Inject() (
     )
   }
 
-  private def backLinkUrl(implicit request: SessionRequest[AnyContent]): String =
+  private def backLinkUrl(using request: SessionRequest[AnyContent]): String =
     backLinkToFinancialYearEndDates(navigator)

@@ -31,21 +31,21 @@ case class StubSessionRepo() extends SessionRepo with Logging:
 
   private var session: Option[JsValue] = None
 
-  override def start(data: Session)(implicit hc: HeaderCarrier): Future[Unit] =
+  override def start(data: Session)(using hc: HeaderCarrier): Future[Unit] =
     saveOrUpdate(data)
 
-  override def saveOrUpdate(data: Session)(implicit hc: HeaderCarrier): Future[Unit] = {
+  override def saveOrUpdate(data: Session)(using hc: HeaderCarrier): Future[Unit] = {
     logger.debug(s"hc: $hc")
     Future.successful {
       session = Some(Json.toJson(data))
     }
   }
 
-  override def get(implicit hc: HeaderCarrier): Future[Option[Session]] =
+  override def get(using hc: HeaderCarrier): Future[Option[Session]] =
     logger.debug(s"hc: $hc")
     Future.successful(session.map(_.as[Session]))
 
-  override def remove()(implicit hc: HeaderCarrier): Future[Unit] =
+  override def remove()(using hc: HeaderCarrier): Future[Unit] =
     logger.debug(s"hc: $hc")
     Future.successful {
       session = None

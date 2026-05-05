@@ -42,7 +42,7 @@ class TenantsAdditionsDisregardedController @Inject() (
   tenantsAdditionsDisregardedView: tenantsAdditionsDisregarded,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -76,7 +76,7 @@ class TenantsAdditionsDisregardedController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
       case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
       case FOR6045 | FOR6046 =>

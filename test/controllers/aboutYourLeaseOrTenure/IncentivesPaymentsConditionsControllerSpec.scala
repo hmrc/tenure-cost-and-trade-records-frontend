@@ -19,9 +19,9 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
-import utils.TestBaseSpec
 import play.api.test.*
 import play.api.test.Helpers.*
+import utils.TestBaseSpec
 
 class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
 
@@ -29,7 +29,7 @@ class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
 
   def incentivesPaymentsConditionsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ) = new IncentivesPaymentsConditionsController(
+  ): IncentivesPaymentsConditionsController = IncentivesPaymentsConditionsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

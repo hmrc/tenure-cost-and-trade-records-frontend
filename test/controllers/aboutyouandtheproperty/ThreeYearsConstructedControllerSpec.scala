@@ -19,24 +19,24 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.ThreeYearsConstructedForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status._
-import play.api.test.{FakeRequest, Helpers}
+import play.api.http.Status.*
 import play.api.test.Helpers.{POST, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.{FakeRequest, Helpers}
 import uk.gov.hmrc.http.HttpVerbs.GET
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
 class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def threeYearsConstructedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) =
-    new ThreeYearsConstructedController(
+  ): ThreeYearsConstructedController =
+    ThreeYearsConstructedController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYouAndThePropertyNavigator,
@@ -49,7 +49,7 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(
       prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = None)
     )
-  ) = new ThreeYearsConstructedController(
+  ): ThreeYearsConstructedController = ThreeYearsConstructedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

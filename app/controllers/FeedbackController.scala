@@ -31,7 +31,6 @@ import views.html.confirmation
 import views.html.feedback.{feedback, feedbackThx}
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class FeedbackController @Inject() (
@@ -58,14 +57,10 @@ class FeedbackController @Inject() (
     feedbackForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful {
-            BadRequest(feedbackView(formWithErrors))
-          },
-        feedbackForm => {
+        formWithErrors => BadRequest(feedbackView(formWithErrors)),
+        feedbackForm =>
           sendFeedback("InPageFeedback", feedbackForm)
-          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
-        }
+          Redirect(routes.FeedbackController.feedbackThx)
       )
   }
 
@@ -78,13 +73,10 @@ class FeedbackController @Inject() (
           feedbackForm
             .bindFromRequest()
             .fold(
-              formWithErrors =>
-                Future.successful {
-                  BadRequest(feedbackView(formWithErrors))
-                },
+              formWithErrors => BadRequest(feedbackView(formWithErrors)),
               feedbackForm => {
                 sendFeedback("InPageFeedback", feedbackForm, request.sessionData)
-                Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+                Redirect(routes.FeedbackController.feedbackThx)
               }
             )
         }
@@ -96,23 +88,20 @@ class FeedbackController @Inject() (
     feedbackForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful {
-            BadRequest(confirmationConnectedView(formWithErrors))
-          },
+        formWithErrors => BadRequest(confirmationConnectedView(formWithErrors)),
         feedbackForm => {
           val addressConnectionType  = request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType)
           val vacantPropertySelected = request.sessionData.stillConnectedDetails.flatMap(_.isPropertyVacant)
 
           if (addressConnectionType.contains(AddressConnectionTypeNo)) {
             sendFeedback("NotConnectedFeedback", feedbackForm, request.sessionData)
-            Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+            Redirect(routes.FeedbackController.feedbackThx)
           } else if (vacantPropertySelected.contains(AnswerYes)) {
             sendFeedback("VacantPropertyFeedback", feedbackForm, request.sessionData)
-            Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+            Redirect(routes.FeedbackController.feedbackThx)
           } else {
             sendFeedback("PostSubmitFeedback", feedbackForm, request.sessionData)
-            Future.successful(Redirect(routes.FeedbackController.feedbackThx))
+            Redirect(routes.FeedbackController.feedbackThx)
           }
         }
       )
@@ -122,21 +111,17 @@ class FeedbackController @Inject() (
     feedbackForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          Future.successful {
-            BadRequest(feedbackView(formWithErrors))
-          },
-        feedbackForm => {
+        formWithErrors => BadRequest(feedbackView(formWithErrors)),
+        feedbackForm =>
           sendFeedback("NoReferenceFeedback", feedbackForm)
-          Future.successful(Redirect(routes.FeedbackController.feedbackThx))
-        }
+          Redirect(routes.FeedbackController.feedbackThx)
       )
   }
 
-  private def sendFeedback(eventName: String, f: Feedback)(implicit request: Request[?]) =
+  private def sendFeedback(eventName: String, f: Feedback)(using request: Request[?]) =
     audit(eventName, Map("comments" -> f.comments.getOrElse(""), "satisfaction" -> f.rating.get))
 
-  private def sendFeedback(eventName: String, f: Feedback, session: Session)(implicit request: Request[?]) =
+  private def sendFeedback(eventName: String, f: Feedback, session: Session)(using request: Request[?]) =
     audit(
       eventName,
       Map(

@@ -16,11 +16,11 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.GrossReceiptsSubLetUnits
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtilLocalised
-@import util.AccessibilityUtil
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
+
 @import java.time.LocalDate
 
 
@@ -58,9 +58,9 @@
             content = HtmlContent(
                 govukInput(
                     Input(
-                        prefix = Some(PrefixOrSuffix(
-                            content = Text("£")
-                        )),
+                        prefix = PrefixOrSuffix(
+                            content = Text("£"
+                            )),
                         classes = "govuk-input--width-10",
                         attributes = Map(
                             "maxlength" -> "13",
@@ -76,7 +76,7 @@
 @layout(
     pageHeading = messages("turnover.6045.subLetUnits.grossReceipts.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
@@ -111,12 +111,12 @@
                                         govukInput(Input(
                                             classes = "govuk-input--width-5",
                                             attributes = Map(
-                                              "maxlength" -> "5",
-                                              "aria-label" -> accessibilityUtil.ariaBuilder("turnover.6045.lettingUnits.numberOfUnits.label", finYearEnd)
+                                                "maxlength" -> "5",
+                                                "aria-label" -> accessibilityUtil.ariaBuilder("turnover.6045.lettingUnits.numberOfUnits.label", finYearEnd)
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.units"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("label.units")
+                                                ))
                                         ).withFormField(form(s"turnover[$idx].numberOfUnits")))
                                     )
                                 )

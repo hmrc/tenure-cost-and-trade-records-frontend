@@ -21,8 +21,8 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutthetradinghistory.CaravansAnnualPitchFeeForm.caravansAnnualPitchFeeForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne.updateCaravans
-import models.submissions.aboutthetradinghistory.{Caravans, CaravansAnnualPitchFee}
 import models.submissions.aboutthetradinghistory.Caravans.CaravansPitchFeeServices.*
+import models.submissions.aboutthetradinghistory.{Caravans, CaravansAnnualPitchFee}
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.CaravansAnnualPitchFeeId
 import play.api.Logging
@@ -53,7 +53,7 @@ class CaravansAnnualPitchFeeController @Inject() (
 
   implicit val ec: ExecutionContext = mcc.executionContext
 
-  def savedAnswer(implicit request: SessionRequest[AnyContent]): Option[CaravansAnnualPitchFee] =
+  def savedAnswer(using request: SessionRequest[AnyContent]): Option[CaravansAnnualPitchFee] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.caravans)
       .flatMap(_.annualPitchFee)
@@ -98,7 +98,7 @@ class CaravansAnnualPitchFeeController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.cyaPage
       .filter(_ => navigator.from == "CYA")
       .getOrElse(routes.CaravansPerServiceController.show())

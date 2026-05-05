@@ -16,12 +16,11 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.OtherCosts
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.*
-@import util.DateUtilLocalised
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.NumberUtil.*
-@import util.AccessibilityUtil
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -45,7 +44,7 @@
 
 @otherCostsHeading = {
     <p class="govuk-body"><span class="govuk-!-font-weight-bold">@messages("otherCosts.otherCosts")</span></p>
-    @otherCostsDetailsDescription
+@otherCostsDetailsDescription
 }
 
 @otherCostsDetailsDescription = {
@@ -55,7 +54,7 @@
 @otherCostDetailsTextarea = @{
     govukCharacterCount(
         CharacterCount(
-            id ="otherCostDetails",
+            id = "otherCostDetails",
             name = "otherCostDetails",
             rows = 3,
             maxLength = 2000,
@@ -95,16 +94,16 @@
 }
 
 @layout(
-  pageHeading = messages("otherCosts.heading"),
-  showSection = true,
-  summary = Some(request.sessionData.toSummary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = fromLocation match {
-      case "TL" => s"${controllers.routes.TaskListController.show.url}#turnover"
-      case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
-      case _ =>controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show().url
-  },
-  theForm = theForm
+    pageHeading = messages("otherCosts.heading"),
+    showSection = true,
+    summary = request.sessionData.toSummary,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = fromLocation match {
+        case "TL" => s"${controllers.routes.TaskListController.show.url}#turnover"
+        case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
+        case _ => controllers.aboutthetradinghistory.routes.FixedOperatingExpensesController.show().url
+    },
+    theForm = theForm
 ) {
     @detailsContent
     @govukInsetText(InsetText(
@@ -129,9 +128,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
-                                                content = Text("£")
-                                            )),
+                                            prefix = PrefixOrSuffix(
+                                                content = Text("£"
+                                                )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("otherCosts.contributionToHeadOffice", finYearEnd)
@@ -148,9 +147,9 @@
                                 TableRow(
                                     content = HtmlContent(
                                         govukInput(Input(
-                                            prefix = Some(PrefixOrSuffix(
-                                                content = Text("£")
-                                            )),
+                                            prefix = PrefixOrSuffix(
+                                                content = Text("£"
+                                                )),
                                             attributes = Map(
                                                 "maxlength" -> "13",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("otherCosts.otherCosts", finYearEnd)

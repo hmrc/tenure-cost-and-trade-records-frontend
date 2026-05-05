@@ -41,7 +41,7 @@ class IncomeExpenditureSummary6076Controller @Inject() (
   view: incomeExpenditureSummary6076,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -51,23 +51,21 @@ class IncomeExpenditureSummary6076Controller @Inject() (
     runWithSessionCheck { turnoverSections6076 =>
       val entries = createEntries(turnoverSections6076)
 
-      Future.successful(
-        Ok(
-          view(
-            request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076) match {
-              case Some(incomeExpenditureConfirmation) =>
-                incomeExpenditureSummary6076Form.fill(incomeExpenditureConfirmation)
-              case _                                   => incomeExpenditureSummary6076Form
-            },
-            request.sessionData.toSummary,
-            entries
-          )
+      Ok(
+        view(
+          request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.incomeExpenditureConfirmation6076) match {
+            case Some(incomeExpenditureConfirmation) =>
+              incomeExpenditureSummary6076Form.fill(incomeExpenditureConfirmation)
+            case _                                   => incomeExpenditureSummary6076Form
+          },
+          request.sessionData.toSummary,
+          entries
         )
       )
     }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { turnoverSections6076 =>
       val entries = createEntries(turnoverSections6076)
 
@@ -111,12 +109,12 @@ class IncomeExpenditureSummary6076Controller @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6076] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def createEntries(
     turnoverSections6076: Seq[TurnoverSection6076]

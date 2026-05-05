@@ -20,7 +20,7 @@ import connectors.Audit
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -35,7 +35,7 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
 
   def premisesLicenseGrantedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new PremisesLicenseGrantedController(
+  ): PremisesLicenseGrantedController = PremisesLicenseGrantedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -44,7 +44,7 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def premisesLicenseGrantedControllerNone() = new PremisesLicenseGrantedController(
+  def premisesLicenseGrantedControllerNone(): PremisesLicenseGrantedController = PremisesLicenseGrantedController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

@@ -21,9 +21,11 @@ import connectors.Audit
 import connectors.addressLookup.{AddressLookupConfig, AddressLookupConnector}
 import controllers.{AddressLookupSupport, FORDataCaptureController}
 import form.aboutfranchisesorlettings.LettingOtherPartOfPropertyForm.theForm
+import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.aboutfranchisesorlettings.{IncomeRecord, LettingIncomeRecord, OperatorDetails}
+import models.submissions.common.Address
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.LettingTypeDetailsId
 import play.api.Logging
@@ -31,12 +33,9 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.lettingTypeDetails as LettingTypeDetailsView
-import models.ForType.*
-import models.submissions.common.Address
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class LettingTypeDetailsController @Inject() (
@@ -92,7 +91,7 @@ class LettingTypeDetailsController @Inject() (
         ),
       formData =>
         for
-          (newSession, updatedIndex) <- successful(sessionWithOperatorDetails(formData, idx))
+          (newSession, updatedIndex) <- sessionWithOperatorDetails(formData, idx)
           _                          <- repository.saveOrUpdate(newSession)
           redirectResult             <- redirectToAddressLookupFrontend(
                                           config = AddressLookupConfig(
@@ -131,7 +130,7 @@ class LettingTypeDetailsController @Inject() (
             idx,
             records(idx) match {
               case r: LettingIncomeRecord => r.copy(operatorDetails = Some(formData))
-              case _                      => throw new IllegalStateException("Unknown income record type")
+              case _                      => throw IllegalStateException("Unknown income record type")
             }
           )
         }
@@ -149,12 +148,12 @@ class LettingTypeDetailsController @Inject() (
       for
         confirmedAddress <- getConfirmedAddress(id)
         businessAddress   = confirmedAddress.asAddress
-        newSession       <- successful(newSessionWithLettingAddress(idx, businessAddress))
+        newSession       <- newSessionWithLettingAddress(idx, businessAddress)
         _                <- repository.saveOrUpdate(newSession)
       yield Redirect(navigator.nextPage(LettingTypeDetailsId, newSession).apply(newSession))
   }
 
-  private def backLink(idx: Int)(implicit request: SessionRequest[AnyContent]): String =
+  private def backLink(idx: Int)(using request: SessionRequest[AnyContent]): String =
     request.getQueryString("from") match {
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url

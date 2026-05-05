@@ -16,28 +16,26 @@
 
 package controllers.aboutYourLeaseOrTenure
 
-import actions.SessionRequest
-import actions.WithSessionRefiner
+import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsForm.rentIncludeTradeServicesDetailsForm
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsTextAreaForm.rentIncludeTradeServicesDetailsTextAreaForm
 import models.ForType
 import models.ForType.*
-import navigation.AboutYourLeaseOrTenureNavigator
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInformationDetails
+import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentIncludeTradeServicesDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import util.NumberUtil.zeroBigDecimal
-import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetails
-import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServicesDetailsTextArea
+import views.html.aboutYourLeaseOrTenure.{rentIncludeTradeServicesDetails, rentIncludeTradeServicesDetailsTextArea}
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentIncludeTradeServicesDetailsController @Inject() (
@@ -48,39 +46,35 @@ class RentIncludeTradeServicesDetailsController @Inject() (
   rentIncludeTradeServicesDetailsTextAreaView: rentIncludeTradeServicesDetailsTextArea,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
-  private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
+  private def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeTradeServicesDetails")
 
     if (forType == FOR6045 || forType == FOR6046) {
-      Future.successful(
-        Ok(
-          rentIncludeTradeServicesDetailsTextAreaView(
-            request.sessionData.aboutLeaseOrAgreementPartThree
-              .flatMap(_.rentIncludeTradeServicesDetailsTextArea) match {
-              case Some(rentIncludeTradeServicesDetailsTextArea) =>
-                rentIncludeTradeServicesDetailsTextAreaForm.fill(rentIncludeTradeServicesDetailsTextArea)
-              case _                                             => rentIncludeTradeServicesDetailsTextAreaForm
-            }
-          )
+      Ok(
+        rentIncludeTradeServicesDetailsTextAreaView(
+          request.sessionData.aboutLeaseOrAgreementPartThree
+            .flatMap(_.rentIncludeTradeServicesDetailsTextArea) match {
+            case Some(rentIncludeTradeServicesDetailsTextArea) =>
+              rentIncludeTradeServicesDetailsTextAreaForm.fill(rentIncludeTradeServicesDetailsTextArea)
+            case _                                             => rentIncludeTradeServicesDetailsTextAreaForm
+          }
         )
       )
     } else {
-      Future.successful(
-        Ok(
-          rentIncludeTradeServicesDetailsView(
-            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesInformation) match {
-              case Some(rentIncludeTradeServicesInformation) =>
-                rentIncludeTradeServicesDetailsForm().fill(rentIncludeTradeServicesInformation)
-              case _                                         => rentIncludeTradeServicesDetailsForm()
-            },
-            request.sessionData.toSummary
-          )
+      Ok(
+        rentIncludeTradeServicesDetailsView(
+          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesInformation) match {
+            case Some(rentIncludeTradeServicesInformation) =>
+              rentIncludeTradeServicesDetailsForm().fill(rentIncludeTradeServicesInformation)
+            case _                                         => rentIncludeTradeServicesDetailsForm()
+          },
+          request.sessionData.toSummary
         )
       )
     }

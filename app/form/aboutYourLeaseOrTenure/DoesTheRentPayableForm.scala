@@ -24,7 +24,7 @@ import play.api.data.validation.Constraints.maxLength
 
 object DoesTheRentPayableForm {
 
-  val doesTheRentPayableForm = Form(
+  val doesTheRentPayableForm: Form[DoesTheRentPayable] = Form(
     mapping(
       "rentPayable"        -> list(text).verifying(
         nonEmptyList("error.doesTheRentPayable.required"),

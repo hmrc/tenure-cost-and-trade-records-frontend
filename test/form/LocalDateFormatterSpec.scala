@@ -27,7 +27,7 @@ class LocalDateFormatterSpec extends TestBaseSpec {
     allowPastDates: Boolean,
     allowFutureDates: Boolean
   ): LocalDateFormatter =
-    new LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates)(using messages)
+    LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates)(using messages)
 
   "LocalDateFormatter" should {
     "validate a correct date without errors" in {

@@ -20,11 +20,14 @@ import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.residentList as ResidentListView
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class ResidentListControllerSpec extends LettingHistoryControllerSpec:
@@ -32,28 +35,28 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
   "the ResidentList controller" when {
     "the user session is fresh"      should {
       "be handling GET /list by replying 200 with the form showing an empty list of residents" in new ControllerFixture {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading     shouldBe "lettingHistory.residentList.heading.plural"
         // TODO page.backLink    shouldBe None
         page.summaryList shouldBe empty
       }
       "be handling GET /remove?index=0 by replying redirect to the 'Resident List' page" in new ControllerFixture {
-        val result = controller.remove(index = 0)(fakeGetRequest)
+        val result: Future[Result] = controller.remove(index = 0)(fakeGetRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.ResidentListController.show.url
       }
       "be handling POST /remove?index=0 by replying redirect to the 'Resident List' page" in new ControllerFixture {
-        val result = controller.performRemove(index = 0)(fakePostRequest)
+        val result: Future[Result] = controller.performRemove(index = 0)(fakePostRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.ResidentListController.show.url
         verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
       }
       "be handling POST /list?hasMoreResidents=yes by replying redirect to the 'Resident Detail' page" in new ControllerFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
+        val result: Future[Result] = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.ResidentDetailController.show().url
       }
@@ -63,30 +66,30 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /list and reply 200 by showing the list of known residents" in new ControllerFixture(
           oneResident
         ) {
-          val result = controller.show(fakeGetRequest)
+          val result: Future[Result] = controller.show(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.summaryList     shouldNot be(empty)
           page.summaryList.head shouldBe oneResident.head.name
         }
         "be handling GET /remove?index=0 by replying 200 with the 'Confirm remove' page" in new ControllerFixture(
           oneResident
         ) {
-          val result = controller.remove(index = 0)(fakeGetRequest)
+          val result: Future[Result] = controller.remove(index = 0)(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.submitAction shouldBe routes.ResidentListController.performRemove(0).url
         }
         "be handling invalid POST /remove?index=0 by replying 400 with error messages" in new ControllerFixture(
           oneResident
         ) {
-          val result = controller.performRemove(index = 0)(fakePostRequest) // genericRemoveConfirmation is missing
+          val result: Future[Result] = controller.performRemove(index = 0)(fakePostRequest) // genericRemoveConfirmation is missing
           status(result) shouldBe BAD_REQUEST
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.error("genericRemoveConfirmation") shouldBe "error.confirmableAction.required"
           verify(repository, never).saveOrUpdate(any[Session])(using any[HeaderCarrier])
         }
@@ -95,7 +98,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
             oneResident
           ) {
             // Confirm the removal of the resident at index 0 (who is "Mr. One")
-            val result = controller.performRemove(index = 0)(
+            val result: Future[Result] = controller.performRemove(index = 0)(
               fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
             )
             status(result) shouldBe SEE_OTHER
@@ -107,7 +110,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
           oneResident
         ) {
           // Deny the removal of the resident at index 0 (who is "Mr. One")
-          val result = controller.performRemove(index = 0)(
+          val result: Future[Result] = controller.performRemove(index = 0)(
             fakePostRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
           )
           status(result) shouldBe SEE_OTHER
@@ -119,19 +122,19 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
         "be handling invalid POST /list by replying 400 with error messages" in new ControllerFixture(
           fiveResidents
         ) {
-          val result = controller.submit(
+          val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
               "answer" -> "" // yes or no is missing!
             )
           )
           status(result) shouldBe BAD_REQUEST
-          val page   = contentAsJsoup(result)
+          val page: Document         = contentAsJsoup(result)
           page.error("answer") shouldBe "lettingHistory.residentList.hasMoreResidents.required"
         }
         "be handling POST /list?hasMoreResidents=yes by replying redirect to the 'Max Number of Residents' page" in new ControllerFixture(
           fiveResidents
         ) {
-          val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
+          val result: Future[Result] = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "yes"))
           status(result)                 shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe
             routes.MaxNumberReachedController
@@ -142,17 +145,17 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of the user session" should {
       "be handling invalid POST /list by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "" // yes or no is missing
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.residentList.hasMoreResidents.required"
       }
       "be handling POST /list?hasMoreResidents=no by replying redirect to the 'Commercial Lettings' page" in new ControllerFixture {
-        val result = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
+        val result: Future[Result] = controller.submit(fakePostRequest.withFormUrlEncodedBody("answer" -> "no"))
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.HasCompletedLettingsController.show.url
       }
@@ -161,7 +164,7 @@ class ResidentListControllerSpec extends LettingHistoryControllerSpec:
 
   trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil) extends MockRepositoryFixture with SessionCapturingFixture:
 
-    val controller = new ResidentListController(
+    val controller: ResidentListController = ResidentListController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theListView = inject[ResidentListView],

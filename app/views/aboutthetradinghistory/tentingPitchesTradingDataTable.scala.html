@@ -15,11 +15,11 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import models.submissions.aboutthetradinghistory.TentingPitchesTradingData
-@import util.DateUtilLocalised
-@import util.AccessibilityUtil
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
+
 @import java.time.LocalDate
 
 
@@ -55,49 +55,49 @@
                     ).withFormField(form(formField))))))
 }
 
-        <table class="hmrc-responsive-table">
-            <tbody>
-                <tr>
-                @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
-                <td>
-                    @govukTable(Table(
-                        head = Seq(
-                            HeadCell(content = Text(messages("tentingPitches.common.financialYearEnd"))),
-                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+<table class="hmrc-responsive-table">
+    <tbody>
+        <tr>
+        @request.sessionData.financialYearEndDates6045.map { case (finYearEnd, idx) =>
+        <td>
+            @govukTable(Table(
+                head = Seq(
+                    HeadCell(content = Text(messages("tentingPitches.common.financialYearEnd"))),
+                    HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                ),
+                firstCellIsHeader = true,
+                rows = Seq(
+                    Seq(
+                        TableRow(
+                            content = Text(messages("tentingPitches.common.tradingPeriod"))
                         ),
-                        firstCellIsHeader = true,
-                        rows = Seq(
-                            Seq(
-                                TableRow(
-                                    content = Text(messages("tentingPitches.common.tradingPeriod"))
-                                ),
-                                TableRow(
-                                    content = HtmlContent(
-                                        govukInput(Input(
-                                            classes = "govuk-input--width-2",
-                                            attributes = Map(
-                                                "maxlength" -> "2",
-                                                "aria-label" -> accessibilityUtil.ariaBuilder("tentingPitches.common.tradingPeriod", finYearEnd)
-                                            ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.weeks"))
-                                            ))
-                                        ).withFormField(form(s"tentingPitches[$idx].weeks")))
-                                    )
-                                )
-                            ),
-                            turnoverRow(
-                                s"tentingPitches[$idx].grossReceipts",
-                                "tentingPitches.common.grossReceipts",
-                                PrefixOrSuffix(content = Text(messages("label.pound"))),
-                                finYearEnd = finYearEnd),
-                            turnoverRow(
-                                s"tentingPitches[$idx].numberOfPitches",
-                                "tentingPitches.common.numberOfPitches",
-                                None,
-                                finYearEnd = finYearEnd))))
-                </td>
-                }
-                </tr>
-            </tbody>
-        </table>
+                        TableRow(
+                            content = HtmlContent(
+                                govukInput(Input(
+                                    classes = "govuk-input--width-2",
+                                    attributes = Map(
+                                        "maxlength" -> "2",
+                                        "aria-label" -> accessibilityUtil.ariaBuilder("tentingPitches.common.tradingPeriod", finYearEnd)
+                                    ),
+                                    suffix = PrefixOrSuffix(
+                                        content = Text(messages("label.weeks")
+                                        ))
+                                ).withFormField(form(s"tentingPitches[$idx].weeks")))
+                            )
+                        )
+                    ),
+                    turnoverRow(
+                        s"tentingPitches[$idx].grossReceipts",
+                        "tentingPitches.common.grossReceipts",
+                        PrefixOrSuffix(content = Text(messages("label.pound"))),
+                        finYearEnd = finYearEnd),
+                    turnoverRow(
+                        s"tentingPitches[$idx].numberOfPitches",
+                        "tentingPitches.common.numberOfPitches",
+                        None,
+                        finYearEnd = finYearEnd))))
+        </td>
+        }
+        </tr>
+    </tbody>
+</table>

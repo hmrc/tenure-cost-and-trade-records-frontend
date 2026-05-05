@@ -17,9 +17,9 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.lettingHistory.ResidentDetail
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         formWithCSRF: FormWithCSRF,
@@ -31,7 +31,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages("lettingHistory.residentDetail.heading"),
     backLinkUrl = backLink,
     showSection = true,

@@ -14,8 +14,8 @@
  * limitations under the License.
  *@
 
-@import views.includes.summary.SummaryEntry
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.includes.summary.SummaryEntry
 
 @(govukSummaryList: GovukSummaryList, summaryData: Seq[SummaryEntry])(implicit messages: Messages)
 
@@ -34,7 +34,7 @@
                         value = Value(
                             content = HtmlContent(value)
                         ),
-                        actions = Some(Actions(
+                        actions = Actions(
                             items = Seq(
                                 ActionItem(
                                     href = changeAction.toString,
@@ -45,7 +45,7 @@
                                 )
                             ),
                             classes = "govuk-!-padding-right-3"
-                        ))
+                        )
                     )
                 case _ => SummaryListRow()
             },

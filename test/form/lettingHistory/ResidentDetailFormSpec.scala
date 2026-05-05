@@ -16,8 +16,8 @@
 
 package form.lettingHistory
 
-import models.submissions.lettingHistory.ResidentDetail
 import form.lettingHistory.ResidentDetailForm.theForm
+import models.submissions.lettingHistory.ResidentDetail
 
 class ResidentDetailFormSpec extends FormSpec:
 

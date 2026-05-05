@@ -14,42 +14,40 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.submissions.requestReferenceNumber.RequestReferenceNumberContactDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukInput: GovukInput,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
         hmrcCharacterCount: HmrcCharacterCount,
-  formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[RequestReferenceNumberContactDetails])(implicit request: Request[?], messages: Messages)
 
-    @layout(
-        pageHeading = messages("requestReferenceNumberContactDetails.heading"),
-        showSection = true,
-        sectionName = messages("label.section.connectionToTheProperty"),
-        backLinkUrl = controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController.show().url,
-        theForm = theForm
-    )  {
+@layout(
+    pageHeading = messages("requestReferenceNumberContactDetails.heading"),
+    showSection = true,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController.show().url,
+    theForm = theForm
+) {
 
-  @formWithCSRF(action = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.submit()){
+    @formWithCSRF(action = controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.submit()) {
 
-      <p class="govuk-body">@messages("requestReferenceNumberContactDetails.p1")</p>
+        <p class="govuk-body">@messages("requestReferenceNumberContactDetails.p1")</p>
 
-      @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetailsFullName", "govuk-!-width-two-thirds", "requestReferenceNumberContactDetailsFullName")
-      @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetails.phone", "govuk-!-width-two-thirds", "phone")
-      @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetails.email", "govuk-!-width-two-thirds", "email")
-      @includes.textInputHMRCCharCount(hmrcCharacterCount, theForm, "requestReferenceNumberContactDetailsAdditionalInformation", "requestReferenceNumberContactDetailsAdditionalInformation.heading", charCount = 2000)
+        @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetailsFullName", "govuk-!-width-two-thirds", "requestReferenceNumberContactDetailsFullName")
+        @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetails.phone", "govuk-!-width-two-thirds", "phone")
+        @includes.textInput(govukInput, theForm, "requestReferenceNumberContactDetails.email", "govuk-!-width-two-thirds", "email")
+        @includes.textInputHMRCCharCount(hmrcCharacterCount, theForm, "requestReferenceNumberContactDetailsAdditionalInformation", "requestReferenceNumberContactDetailsAdditionalInformation.heading", charCount = 2000)
 
-      @includes.continueButton(govukButton)
-  }
+        @includes.continueButton(govukButton)
+    }
 }
 
 

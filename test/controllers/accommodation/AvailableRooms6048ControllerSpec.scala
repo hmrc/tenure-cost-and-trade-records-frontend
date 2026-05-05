@@ -27,8 +27,8 @@ class AvailableRooms6048ControllerSpec extends TestBaseSpec {
 
   private val nextPage = controllers.accommodation.routes.AccommodationLettingHistory6048Controller.show.url + "?idx=0"
 
-  def availableRooms6048Controller =
-    new AvailableRooms6048Controller(
+  def availableRooms6048Controller: AvailableRooms6048Controller =
+    AvailableRooms6048Controller(
       availableRoomsView,
       accommodationNavigator,
       preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),

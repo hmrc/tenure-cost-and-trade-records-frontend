@@ -33,7 +33,7 @@ class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = new IsVATPayableForWholePropertyController(
+  ): IsVATPayableForWholePropertyController = IsVATPayableForWholePropertyController(
     isVATPayableForWholePropertyView,
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

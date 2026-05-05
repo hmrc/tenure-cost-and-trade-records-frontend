@@ -14,11 +14,9 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -29,13 +27,17 @@
 
 @(theForm: Form[?], index: Option[Int], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
-@label =@{messages("label.section.aboutLettings")}
-@heading =@{messages(s"label.advertisingRightLetting.heading")}
+@label = @{
+    messages("label.section.aboutLettings")
+}
+@heading = @{
+    messages(s"label.advertisingRightLetting.heading")
+}
 
 @layout(
     pageHeading = heading,
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = label,
     backLinkUrl = backLink,
     theForm = theForm
@@ -43,11 +45,11 @@
 
     @formWithCSRF(action = controllers.aboutfranchisesorlettings.routes.AdvertisingRightLettingController.submit(index), args = Symbol("class") -> "myForm", Symbol("id") -> "myFormId") {
 
-            @includes.textInput(govukInput, theForm, "descriptionOfSpace", "govuk-input--width-20", "descriptionOfSpace", labelClasses = "govuk-!-font-weight-bold",hintMsg = "descriptionOfSpace")
+        @includes.textInput(govukInput, theForm, "descriptionOfSpace", "govuk-input--width-20", "descriptionOfSpace", labelClasses = "govuk-!-font-weight-bold", hintMsg = "descriptionOfSpace")
 
-            @includes.textInput(govukInput, theForm, "advertisingCompanyName", "govuk-input--width-20", "advertisingCompanyName", labelClasses = "govuk-!-font-weight-bold")
+        @includes.textInput(govukInput, theForm, "advertisingCompanyName", "govuk-input--width-20", "advertisingCompanyName", labelClasses = "govuk-!-font-weight-bold")
 
-            @includes.continueSaveAsDraftButtons(govukButton)
+        @includes.continueSaveAsDraftButtons(govukButton)
 
     }
 }

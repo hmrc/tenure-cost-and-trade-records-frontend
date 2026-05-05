@@ -14,15 +14,15 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[AnswersYesNo], backLink: String, summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
@@ -30,41 +30,53 @@
 @layout(
     pageHeading = messages("vacantProperties.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.connectionToTheProperty"),
     backLinkUrl = backLink,
     theForm = theForm,
     readOnly = readOnly
 ) {
 
-      <p class="govuk-body">@{messages("vacantProperties.p1")}</p>
+    <p class="govuk-body">@{
+        messages("vacantProperties.p1")
+    }</p>
 
-      <p class="govuk-body">@{messages("vacantProperties.p2")}</p>
+    <p class="govuk-body">@{
+        messages("vacantProperties.p2")
+    }</p>
 
-      <p class="govuk-body">@{messages("vacantProperties.p3")}</p>
+    <p class="govuk-body">@{
+        messages("vacantProperties.p3")
+    }</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-          <li>@{messages("vacantProperties.item1")}</li>
-          <li>@{messages("vacantProperties.item2")}</li>
-          <li>@{messages("vacantProperties.item3")}</li>
-      </ul>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@{
+            messages("vacantProperties.item1")
+        }</li>
+        <li>@{
+            messages("vacantProperties.item2")
+        }</li>
+        <li>@{
+            messages("vacantProperties.item3")
+        }</li>
+    </ul>
     @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesController.submit()) {
-      @includes.radioButtons(
-          govukRadios,
-          theForm,
-          "vacantProperties",
-          "label.vacantProperties",
-          "govuk-!-font-weight-bold govuk-fieldset__legend--m",
-          items = Seq(
-              "yes" -> messages("label.yes.ydy"),
-              "no" -> messages("label.no.nac.ydy")
-          ).map(radioItem => RadioItem(
-              content = Text(radioItem._2),
-              checked = radioItem._1.equals(theForm("vacantProperties").value.getOrElse("")),
-              value = Option(radioItem._1)
-          )),
-      )
+        @includes.radioButtons(
+            govukRadios,
+            theForm,
+            "vacantProperties",
+            "label.vacantProperties",
+            "govuk-!-font-weight-bold govuk-fieldset__legend--m",
+            items = Seq(
+                "yes" -> messages("label.yes.ydy"),
+                "no" -> messages("label.no.nac.ydy")
+            ).map(radioItem => RadioItem(
+                content = Text(radioItem._2),
+                checked = radioItem._1.equals(theForm("vacantProperties").value.getOrElse("")),
+                value = radioItem._1
+            )),
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

@@ -14,15 +14,14 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
+@import models.pages.{IncomeExpenditureEntry, Summary}
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import models.pages.Summary
-@import models.pages.IncomeExpenditureEntry
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import util.NumberUtil.*
-@import util.DateUtilLocalised
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
+
 @import java.time.LocalDate
-@import util.AccessibilityUtil
 
 
 @this(
@@ -37,7 +36,9 @@
 
 @(theForm: Form[String], summary: Summary, entries: Seq[IncomeExpenditureEntry])(implicit request: Request[?], messages: Messages)
 
-@classes = @{"govuk-!-padding-bottom-3 govuk-!-padding-top-3"}
+@classes = @{
+    "govuk-!-padding-bottom-3 govuk-!-padding-top-3"
+}
 
 @changeLink(url: String, itemKey: String) = {
     <a href="@url" class="govuk-link" aria-label="@messages("label.change") @messages(s"incomeExpenditureSummary.$itemKey")">
@@ -72,55 +73,55 @@
     showSection = true,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = controllers.aboutthetradinghistory.routes.OtherCostsController.show().url,
-    summary = Some(summary)
+    summary = summary
 ) {
-   <p class="govuk-body">@messages("incomeExpenditureSummary.p1")</p>
+    <p class="govuk-body">@messages("incomeExpenditureSummary.p1")</p>
 
-   @defining(entries.map(_.financialYearEnd).distinct) { financialYears =>
+    @defining(entries.map(_.financialYearEnd).distinct) { financialYears =>
         @govukTable(Table(
-          rows = Seq(
-               Seq(TableRow(content = Text(messages("incomeExpenditureSummary.financialYearEndLabel")), classes = classes)) ++
-                       financialYears.map(year => TableRow(
+            rows = Seq(
+                Seq(TableRow(content = Text(messages("incomeExpenditureSummary.financialYearEndLabel")), classes = classes)) ++
+                        financialYears.map(year => TableRow(
                             content = Text(dateUtil.formatDayMonthAbbrYear(LocalDate.parse(year))),
                             classes = "govuk-!-font-weight-bold")) ++ Seq(TableRow(content = Empty))) ++
-                   Seq(
-                       rowWithLink("totalTurnoverLabel", _.totalTurnover, _.turnoverUrl),
-                       rowWithLink("totalCostOfSalesLabel", _.totalCostOfSales, _.costOfSalesUrl),
-                       Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalGrossProfitsLabel")))) ++
-                               entries.map(entry => TableRow(content = Text(entry.totalGrossProfits.asMoney), attributes = ariaLabelMap("totalGrossProfitsLabel", entry)))++
-                               Seq(TableRow(content = Empty)),
-                       rowWithLink("totalPayrollCostLabel", _.totalPayrollCost, _.totalPayrollCostURL),
-                       rowWithLink("variableExpenses", _.variableExpenses, _.variableExpensesURL),
-                       rowWithLink("fixedExpensesLabel", _.fixedExpenses, _.fixedExpensesUrl),
-                       rowWithLink("otherCostsLabel", _.otherCost, _.otherCostsUrl),
-                       Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalNetProfitLabel")))) ++
-                               entries.map(entry => TableRow(content = Text(entry.totalNetProfit.asMoney), attributes = ariaLabelMap("totalNetProfitLabel", entry)))++
-                               Seq(TableRow(content = Empty)),
-                       Seq(TableRow(content = Text(messages("incomeExpenditureSummary.profitMargin")))) ++
-                               entries.map(entry => TableRow(content = Text(entry.profitMargin.withScale(2) + "%"), attributes = ariaLabelMap("profitMargin", entry)))++
-                               Seq(TableRow(content = Empty))
+                    Seq(
+                        rowWithLink("totalTurnoverLabel", _.totalTurnover, _.turnoverUrl),
+                        rowWithLink("totalCostOfSalesLabel", _.totalCostOfSales, _.costOfSalesUrl),
+                        Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalGrossProfitsLabel")))) ++
+                                entries.map(entry => TableRow(content = Text(entry.totalGrossProfits.asMoney), attributes = ariaLabelMap("totalGrossProfitsLabel", entry))) ++
+                                Seq(TableRow(content = Empty)),
+                        rowWithLink("totalPayrollCostLabel", _.totalPayrollCost, _.totalPayrollCostURL),
+                        rowWithLink("variableExpenses", _.variableExpenses, _.variableExpensesURL),
+                        rowWithLink("fixedExpensesLabel", _.fixedExpenses, _.fixedExpensesUrl),
+                        rowWithLink("otherCostsLabel", _.otherCost, _.otherCostsUrl),
+                        Seq(TableRow(content = Text(messages("incomeExpenditureSummary.totalNetProfitLabel")))) ++
+                                entries.map(entry => TableRow(content = Text(entry.totalNetProfit.asMoney), attributes = ariaLabelMap("totalNetProfitLabel", entry))) ++
+                                Seq(TableRow(content = Empty)),
+                        Seq(TableRow(content = Text(messages("incomeExpenditureSummary.profitMargin")))) ++
+                                entries.map(entry => TableRow(content = Text(entry.profitMargin.withScale(2) + "%"), attributes = ariaLabelMap("profitMargin", entry))) ++
+                                Seq(TableRow(content = Empty))
                     ),
             firstCellIsHeader = true,
             classes = "govuk-table"
-       ))
+        ))
     }
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.submit()) {
         @govukCheckboxes(
             Checkboxes(
-                fieldset = Some(Fieldset(
-                    legend = Some(Legend(
+                fieldset = Fieldset(
+                    legend = Legend(
                         classes = "govuk-label--l",
                         isPageHeading = false
-                    ))
-                )),
+                    )
+                ),
                 name = "incomeExpenditureSummary",
                 items = Seq(
                     CheckboxItem(
                         content = Text(messages("incomeExpenditureSummary.confirmation")),
                         value = "confirmed",
                         checked = theForm("incomeExpenditureSummary").value.contains("confirmed"),
-                        label = Some(Label(classes = "govuk-body govuk-!-font-weight-bold"))
+                        label = Label(classes = "govuk-body govuk-!-font-weight-bold")
                     )
                 )
             ).withFormField(theForm("incomeExpenditureSummary")))

@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.premisesLicenseConditions
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PremisesLicenseConditionsController @Inject() (
@@ -43,23 +43,22 @@ class PremisesLicenseConditionsController @Inject() (
   premisesLicenseView: premisesLicenseConditions,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PremisesLicenseConditions")
-    Future.successful(
-      Ok(
-        premisesLicenseView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match {
-            case Some(premisesLicense) => premisesLicenseConditionsForm.fill(premisesLicense)
-            case _                     => premisesLicenseConditionsForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+
+    Ok(
+      premisesLicenseView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match {
+          case Some(premisesLicense) => premisesLicenseConditionsForm.fill(premisesLicense)
+          case _                     => premisesLicenseConditionsForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

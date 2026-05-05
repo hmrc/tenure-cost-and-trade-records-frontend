@@ -23,7 +23,7 @@ import play.api.data.Forms.single
 
 object HasCompletedLettingsForm:
 
-  val theForm = Form[AnswersYesNo](
+  val theForm: Form[AnswersYesNo] = Form[AnswersYesNo](
     single(
       "answer" -> answerYesNo(errorMessage = "lettingHistory.hasCompletedLettings.required")
     )

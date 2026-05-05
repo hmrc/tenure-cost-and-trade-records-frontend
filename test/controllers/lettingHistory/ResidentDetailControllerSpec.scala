@@ -19,11 +19,15 @@ package controllers.lettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, ResidentDetail}
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
 import play.api.libs.json.Json
+import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}
+import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.residentDetail as ResidentDetailView
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
@@ -31,22 +35,22 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
   "the ResidentDetail controller" when {
     "the user session is fresh"                        should {
       "be handling GET /detail by replying 200 with the form showing name and address fields" in new ControllerFixture {
-        val result = controller.show(maybeIndex = None)(fakeGetRequest)
+        val result: Future[Result] = controller.show(maybeIndex = None)(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.residentDetail.heading"
         page.backLink          shouldBe routes.HasPermanentResidentsController.show.url
         page.input("name")       should beEmpty
         page.textarea("address") should beEmpty
       }
       "be handling good POST /detail by replying 303 redirect to the 'Residents List' page" in new ControllerFixture {
-        val request = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "name"    -> "Mr. Unknown",
           "address" -> "Neverland"
         )
-        val result  = controller.submit()(request)
+        val result: Future[Result]                           = controller.submit()(request)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.ResidentListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -62,11 +66,11 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /detail?index=0 by replying 200 with the form pre-filled with name and address values" in new ControllerFixture(
           oneResident
         ) {
-          val result = controller.show(maybeIndex = Some(0))(fakeGetRequest)
+          val result: Future[Result] = controller.show(maybeIndex = Some(0))(fakeGetRequest)
           status(result)            shouldBe OK
           contentType(result).value shouldBe HTML
           charset(result).value     shouldBe UTF8
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.input("name") should haveValue("Mr. One")
           // TODO page.textarea("address")   should haveValue("Address One")
         }
@@ -74,11 +78,11 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           oneResident
         ) {
           // Post an unknown resident detail and expect it to become the third resident
-          val request = fakePostRequest.withFormUrlEncodedBody(
+          val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
             "name"    -> "Mr. Unknown",
             "address" -> "Neverland"
           )
-          val result  = controller.submit()(request)
+          val result: Future[Result]                           = controller.submit()(request)
           status(result)                      shouldBe SEE_OTHER
           redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -91,11 +95,11 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           twoResidents
         ) {
           // Post the second resident detail again and expect it to be changed
-          val request = fakePostRequest.withFormUrlEncodedBody(
+          val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
             "name"    -> twoResidents.last.name,
             "address" -> "22, Different Street"
           )
-          val result  = controller.submit(maybeIndex = Some(1))(request)
+          val result: Future[Result]                           = controller.submit(maybeIndex = Some(1))(request)
           status(result)                      shouldBe SEE_OTHER
           redirectLocation(result).value      shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -109,13 +113,13 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           oneResident
         ) {
           // Post a duplicate and expect a 400 bad request
-          val request = fakePostRequest.withFormUrlEncodedBody(
+          val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
             "name"    -> "Mr. One",
             "address" -> "Address One"
           )
-          val result  = controller.submit()(request)
+          val result: Future[Result]                           = controller.submit()(request)
           status(result) shouldBe BAD_REQUEST
-          val page = contentAsJsoup(result)
+          val page: Document = contentAsJsoup(result)
           page.error("duplicate") shouldBe "lettingHistory.residentDetail.duplicate"
         }
 
@@ -124,7 +128,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /detail by replying 303 redirect to the 'Residents List' page" in new ControllerFixture(
           fiveResidents
         ) {
-          val result = controller.show(maybeIndex = None)(fakeGetRequest)
+          val result: Future[Result] = controller.show(maybeIndex = None)(fakeGetRequest)
           status(result)                 shouldBe SEE_OTHER
           redirectLocation(result).value shouldBe routes.ResidentListController.show.url
         }
@@ -132,14 +136,14 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of what the user might have submitted" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit()(
+        val result: Future[Result] = controller.submit()(
           fakePostRequest.withFormUrlEncodedBody(
             "name"    -> "",
             "address" -> ""
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("name")    shouldBe "lettingHistory.residentDetail.name.required"
         page.error("address") shouldBe "lettingHistory.residentDetail.address.required"
       }
@@ -158,7 +162,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
 
   trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil) extends MockRepositoryFixture with SessionCapturingFixture:
 
-    val controller = new ResidentDetailController(
+    val controller: ResidentDetailController = ResidentDetailController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[ResidentDetailView],

@@ -22,6 +22,7 @@ import form.lettingHistory.RentalPeriodForm.theForm
 import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
 import models.submissions.lettingHistory.LocalPeriod
+import play.api.data.Form
 import play.api.mvc.AnyContent
 import util.DateUtilLocalised
 import utils.toOpt
@@ -31,7 +32,7 @@ import java.time.LocalDate
 class RentalPeriodFormSpec extends FormSpec:
 
   it should "bind good data as expected" in new SessionFixture(isWelsh = false) {
-    val data  = Map(
+    val data: Map[String, String] = Map(
       "fromDate.day"   -> "1",
       "fromDate.month" -> "4",
       "fromDate.year"  -> (previousFiscalYearEnd - 1).toString,
@@ -39,17 +40,17 @@ class RentalPeriodFormSpec extends FormSpec:
       "toDate.month"   -> "3",
       "toDate.year"    -> previousFiscalYearEnd.toString
     )
-    val bound = theForm.bind(data)
+    val bound: Form[LocalPeriod]  = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
   }
 
   it should "unbind good data as expected" in new SessionFixture(isWelsh = false) {
-    val rentalPeriod = LocalPeriod(
+    val rentalPeriod: LocalPeriod = LocalPeriod(
       fromDate = LocalDate.of(previousFiscalYearEnd - 1, 8, 13),
       toDate = LocalDate.of(previousFiscalYearEnd, 12, 25)
     )
-    val filled       = theForm.fill(rentalPeriod)
+    val filled: Form[LocalPeriod] = theForm.fill(rentalPeriod)
     filled.hasErrors mustBe false
     filled.data mustBe Map(
       "fromDate.day"   -> "13",
@@ -63,7 +64,7 @@ class RentalPeriodFormSpec extends FormSpec:
 
   it should "detect errors related to fields being required" in new SessionFixture(isWelsh = false) {
     // When the form gets submitted before being filled
-    val bound = theForm.bind(
+    val bound: Form[LocalPeriod] = theForm.bind(
       Map(
         "fromDate.day"   -> "",
         "fromDate.month" -> "",
@@ -82,7 +83,7 @@ class RentalPeriodFormSpec extends FormSpec:
   it should "detect errors related to fields being constrained according to the Welsh journey" in new SessionFixture(
     isWelsh = true
   ) {
-    val bound = theForm.bind(
+    val bound: Form[LocalPeriod] = theForm.bind(
       Map(
         "fromDate.day"   -> "1",
         "fromDate.month" -> "4",
@@ -101,7 +102,7 @@ class RentalPeriodFormSpec extends FormSpec:
   it should "detect errors related to fields being constrained according to the English journey" in new SessionFixture(
     isWelsh = false
   ) {
-    val bound = theForm.bind(
+    val bound: Form[LocalPeriod] = theForm.bind(
       Map(
         "fromDate.day"   -> "1",
         "fromDate.month" -> "4",
@@ -127,10 +128,10 @@ class RentalPeriodFormSpec extends FormSpec:
       )
     )
 
-    val commercialLetFirstAvailable =
+    val commercialLetFirstAvailable: String =
       summon[DateUtilLocalised].formatDate(LocalDate.of(previousFiscalYearEnd, 2, 1))
 
-    val bound = theForm.bind(
+    val bound: Form[LocalPeriod] = theForm.bind(
       Map(
         "fromDate.day"   -> "31",
         "fromDate.month" -> "1",
@@ -148,7 +149,7 @@ class RentalPeriodFormSpec extends FormSpec:
   it should "detect errors related to the from date being greater than the to date" in new SessionFixture(
     isWelsh = false
   ) {
-    val bound = theForm.bind(
+    val bound: Form[LocalPeriod] = theForm.bind(
       Map(
         "fromDate.day"   -> "10",
         "fromDate.month" -> "4",

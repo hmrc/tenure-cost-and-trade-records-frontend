@@ -14,12 +14,10 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import models.submissions.aboutYourLeaseOrTenure.LeaseOrAgreementYearsDetails
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -30,46 +28,46 @@
 @(theForm: Form[LeaseOrAgreementYearsDetails], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("leaseOrAgreement.heading"),
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backLink,
- theForm = theForm
+    pageHeading = messages("leaseOrAgreement.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.submit()) {
 
-  @includes.radioButtonsYesNo(
-   govukRadios,
-   theForm,
-   "commenceWithinThreeYears",
-   "label.commenceWithinThreeYears",
-   "label.yes.do",
-   "label.no.naddo",
-   "govuk-fieldset__legend--m govuk-heading-m"
-  )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "commenceWithinThreeYears",
+            "label.commenceWithinThreeYears",
+            "label.yes.do",
+            "label.no.naddo",
+            "govuk-fieldset__legend--m govuk-heading-m"
+        )
 
-  @includes.radioButtonsYesNo(
-   govukRadios,
-   theForm,
-   "agreedReviewedAlteredThreeYears",
-   "label.agreedReviewedAlteredThreeYears",
-   "label.yes.do",
-   "label.no.naddo",
-   "govuk-fieldset__legend--m govuk-heading-m"
-  )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "agreedReviewedAlteredThreeYears",
+            "label.agreedReviewedAlteredThreeYears",
+            "label.yes.do",
+            "label.no.naddo",
+            "govuk-fieldset__legend--m govuk-heading-m"
+        )
 
-  @includes.radioButtonsYesNo(
-   govukRadios,
-   theForm,
-   "rentUnderReviewNegotiated",
-   "label.rentUnderReviewNegotiated",
-   "label.yes.do",
-   "label.no.naddo",
-   "govuk-fieldset__legend--m govuk-heading-m"
-  )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "rentUnderReviewNegotiated",
+            "label.rentUnderReviewNegotiated",
+            "label.yes.do",
+            "label.no.naddo",
+            "govuk-fieldset__legend--m govuk-heading-m"
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

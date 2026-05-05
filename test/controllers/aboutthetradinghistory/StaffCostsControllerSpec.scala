@@ -27,8 +27,8 @@ class StaffCostsControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def staffCostsController =
-    new StaffCostsController(
+  def staffCostsController: StaffCostsController =
+    StaffCostsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,
@@ -41,8 +41,8 @@ class StaffCostsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def staffCostsBaseloadController =
-    new StaffCostsController(
+  def staffCostsBaseloadController: StaffCostsController =
+    StaffCostsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

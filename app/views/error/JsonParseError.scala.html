@@ -23,7 +23,7 @@
 
 @layout(
     pageHeading = messages("error.json.page.heading"),
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     backLinkUrl = backLinkUrl
 ) {
 

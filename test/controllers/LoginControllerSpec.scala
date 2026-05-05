@@ -23,19 +23,19 @@ import models.audit.UserData
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json, Writes}
 import play.api.mvc.Result
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import security.LoginToBackend.{Postcode, RefNumber}
 import security.NoExistingDocument
 import stub.StubSessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.Helpers.fakeRequest2MessageRequest
-import views.html.login
-import utils.TestBaseSpec
 import util.DateUtil.nowInUK
+import utils.Helpers.fakeRequest2MessageRequest
+import utils.TestBaseSpec
+import views.html.login
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class LoginControllerSpec extends TestBaseSpec {
+class LoginControllerSpec extends TestBaseSpec:
 
   private val loginToBackend = mock[LoginToBackendAction]
 
@@ -48,7 +48,7 @@ class LoginControllerSpec extends TestBaseSpec {
   }
 
   override def fakeApplication(): play.api.Application =
-    new GuiceApplicationBuilder()
+    GuiceApplicationBuilder()
       .configure(
         "metrics.jvm"                         -> false,
         "metrics.enabled"                     -> false,
@@ -59,7 +59,7 @@ class LoginControllerSpec extends TestBaseSpec {
 
   "LoginController" should {
     "show login form" in {
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         inject[Audit],
         stubMessagesControllerComponents(),
@@ -85,7 +85,7 @@ class LoginControllerSpec extends TestBaseSpec {
     }
 
     "show logged out page" in {
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         inject[Audit],
         stubMessagesControllerComponents(),
@@ -109,8 +109,9 @@ class LoginControllerSpec extends TestBaseSpec {
       content should include("""logout.paragraph""")
       content should include("""logout.loginAgain""")
     }
+
     "show locked out page" in {
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         inject[Audit],
         stubMessagesControllerComponents(),
@@ -131,7 +132,7 @@ class LoginControllerSpec extends TestBaseSpec {
     }
 
     "show login failed page" in {
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         inject[Audit],
         stubMessagesControllerComponents(),
@@ -151,25 +152,23 @@ class LoginControllerSpec extends TestBaseSpec {
       val result: Future[Result] = loginController.loginFailed(attemptsRemaining)(fakeRequest)
 
       status(result) shouldBe UNAUTHORIZED
-
     }
 
     "Audit successful login" in {
-
       val audit = mock[Audit]
       doNothing()
         .when(audit)
         .sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-      val loginToBackendFunction = (refNum: RefNumber, _: Postcode) => {
-        assert(refNum.equals("01234567000"))
-        Future.successful(NoExistingDocument("token", "forNum", prefilledAddress, isWelsh = false))
-      }
+      val loginToBackendFunction: (RefNumber, Postcode) => Future[NoExistingDocument] =
+        (refNum: RefNumber, _: Postcode) =>
+          assert(refNum.equals("01234567000"))
+          NoExistingDocument("token", "forNum", prefilledAddress, isWelsh = false)
 
       val loginToBackend = mock[LoginToBackendAction]
       when(loginToBackend.apply(using any[HeaderCarrier], any[ExecutionContext])).thenReturn(loginToBackendFunction)
 
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         audit,
         stubMessagesControllerComponents(),
@@ -184,7 +183,6 @@ class LoginControllerSpec extends TestBaseSpec {
         mock[views.html.testSign]
       )
 
-//      val fakeRequest = FakeRequest()
       val response = loginController.verifyLogin("01234567000", "BN12 1AB")(using fakeRequest)
 
       status(response) shouldBe SEE_OTHER
@@ -200,7 +198,6 @@ class LoginControllerSpec extends TestBaseSpec {
           )
         )
       )(using any[HeaderCarrier], any[ExecutionContext])
-
     }
 
     "Audit logout event" in {
@@ -213,7 +210,7 @@ class LoginControllerSpec extends TestBaseSpec {
           any[Writes[UserData]]
         )
 
-      val loginController = new LoginController(
+      val loginController = LoginController(
         inject[BackendConnector],
         audit,
         stubMessagesControllerComponents(),
@@ -257,14 +254,7 @@ class LoginControllerSpec extends TestBaseSpec {
             accommodationDetails = None
           )
         )
-      )(
-        using any[HeaderCarrier],
-        any[ExecutionContext],
-        any[Writes[UserData]]
-      )
-
+      )(using any[HeaderCarrier], any[ExecutionContext], any[Writes[UserData]])
     }
 
   }
-
-}

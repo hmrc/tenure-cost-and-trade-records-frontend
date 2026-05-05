@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.tiedForGoods
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TiedForGoodsController @Inject() (
@@ -43,7 +43,7 @@ class TiedForGoodsController @Inject() (
   tiedForGoodsView: tiedForGoods,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -51,16 +51,14 @@ class TiedForGoodsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TiedForGoods")
 
-    Future.successful(
-      Ok(
-        tiedForGoodsView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
-            case Some(tiedForGoods) => tiedForGoodsForm.fill(tiedForGoods)
-            case _                  => tiedForGoodsForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      tiedForGoodsView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
+          case Some(tiedForGoods) => tiedForGoodsForm.fill(tiedForGoods)
+          case _                  => tiedForGoodsForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

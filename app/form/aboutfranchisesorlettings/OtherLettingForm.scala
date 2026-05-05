@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object OtherLettingForm {
 
-  val theForm = Form(
+  val theForm: Form[OtherLetting] = Form(
     mapping(
       "lettingType" -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.lettingType.required"),

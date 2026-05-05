@@ -31,7 +31,6 @@ import views.html.lettingHistory.whenWasLastLet as WhenWasLastLetView
 
 import java.time.LocalDate
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -63,11 +62,11 @@ class WhenWasLastLetController @Inject (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LocalDate](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, backLinkUrl)),
       date =>
         given Session = request.sessionData
         for
-          newSession   <- successful(withWhenWasLastLet(date))
+          newSession   <- withWhenWasLastLet(date)
           savedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = WhenWasLastLetPageId, savedSession)
     )

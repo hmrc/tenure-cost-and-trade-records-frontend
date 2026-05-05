@@ -16,13 +16,12 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.TurnoverSection6045
-@import views.html.components.PrimaryLayout
-@import util.SectionAnswersRowBuilder
 @import models.submissions.common.AnswersYesNo
-@import util.NumberUtil.given
-@import util.DateUtilLocalised
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.submissions.common.AnswersYesNo.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.NumberUtil.given
+@import util.{DateUtilLocalised, SectionAnswersRowBuilder}
+@import views.html.components.PrimaryLayout
 
 @import scala.language.implicitConversions
 
@@ -71,20 +70,20 @@
                 financialYearEndDates.map(dateUtil.formatDayMonthAbbrYear)
             ).body
         )),
-        actions = Some(
+        actions =
             Actions(items =
                 Seq(
                     ActionItem(
                         href = s"$editPage?from=CYA",
                         content = Text(messages("label.change")),
-                        visuallyHiddenText = Some(messages(pageHeadingKey)),
+                        visuallyHiddenText = messages(pageHeadingKey),
                         attributes = Map(
                             "aria-label" -> s"${messages("label.change")} ${messages(pageHeadingKey)}"
                         )
                     )
                 )
             )
-        ),
+        ,
         classes = "no-border-bottom"
     )
 }
@@ -99,7 +98,7 @@
     pageHeading = messages("cYa.additionalActivities.heading"),
     backLinkUrl = backLink,
     fullWidth = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     theForm = theForm
 ) {

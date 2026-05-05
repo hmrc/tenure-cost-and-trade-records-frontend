@@ -17,9 +17,9 @@
 @import actions.SessionRequest
 @import models.ForType.*
 @import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout,
@@ -34,7 +34,7 @@
 @layout(
     pageHeading = messages("intervalsOfRentReview.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = request.sessionData.forType match {
         case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 => controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show().url
@@ -44,28 +44,28 @@
     theForm = form
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.submit()) {
 
-    @includes.textInputHMRCCharCount(
-        hmrcCharacterCount,
-        form,
-        "intervalsOfRentReview",
-        "intervalsOfRentReview.label",
-        classes = "govuk-label--m",
-        hint = "hint.intervalsOfRentReview",
-        charCount = 2000
-    )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            form,
+            "intervalsOfRentReview",
+            "intervalsOfRentReview.label",
+            classes = "govuk-label--m",
+            hint = "hint.intervalsOfRentReview",
+            charCount = 2000
+        )
 
-    @includes.dateFields(
-        form = form,
-        field = "nextReview",
-        govukDate = govukDateInput,
-        showDays = true,
-        customClass = "govuk-fieldset__legend--m",
-        helpText = messages("label.nextReview.help")
-    )
+        @includes.dateFields(
+            form = form,
+            field = "nextReview",
+            govukDate = govukDateInput,
+            showDays = true,
+            customClass = "govuk-fieldset__legend--m",
+            helpText = messages("label.nextReview.help")
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 
 }

@@ -21,9 +21,9 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutyouandtheproperty.CommercialLettingQuestionForm.commercialLettingQuestionForm
 import models.submissions.Form6010.MonthsYearDuration
-import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
+import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CommercialLettingQuestionId
 import play.api.Logging
@@ -44,7 +44,7 @@ class CommercialLettingQuestionController @Inject() (
   view: commercialLettingQuestion,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -112,7 +112,7 @@ class CommercialLettingQuestionController @Inject() (
     }
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => s"${controllers.routes.TaskListController.show.url}#about-the-property"

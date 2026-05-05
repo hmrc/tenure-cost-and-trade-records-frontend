@@ -19,21 +19,24 @@ package controllers.aboutthetradinghistory
 import models.ForType.FOR6010
 import models.Session
 import models.submissions.common.AnswersYesNo.*
+import org.jsoup.nodes.Document
+import org.mockito.ArgumentCaptor
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
 import views.html.aboutthetradinghistory.checkYourAnswerNoFinancialYears as CheckYourAnswerNoFinancialYearsView
 
-import scala.concurrent.Future.successful
+import scala.concurrent.Future
 
 class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture:
-    val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any)(using any)).thenReturn(successful(()))
+    val repository: SessionRepo = mock[SessionRepo]
+    when(repository.saveOrUpdate(any)(using any)).thenReturn(Future.unit)
 
-    def controller(emptyTurnoverSections: Boolean = false) =
-      new CheckYourAnswersNoFinancialYearsController(
+    def controller(emptyTurnoverSections: Boolean = false): CheckYourAnswersNoFinancialYearsController =
+      CheckYourAnswersNoFinancialYearsController(
         mcc = stubMessagesControllerComponents(),
         navigator = aboutYourTradingHistoryNavigator,
         theView = inject[CheckYourAnswerNoFinancialYearsView],
@@ -54,11 +57,11 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
   "the CheckYourAnswersNoFinancialYears controller" when {
     "handling GET / requests"  should {
       "reply 200 with unchecked form" in new ControllerFixture {
-        val result = controller().show()(fakeGetRequest)
+        val result: Future[Result] = controller().show()(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading  shouldBe "checkYourAnswersAboutTheTradingHistory.heading"
         page.backLink shouldBe routes.FinancialYearEndController.show().url
       }
@@ -66,7 +69,7 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
     "handling POST / requests" should {
       "reply with 303 redirect to the next page" in new ControllerFixture {
 
-        val result = controller().submit()(
+        val result: Future[Result] = controller().submit()(
           fakePostRequest.withFormUrlEncodedBody(
             "correct"   -> "true",
             "completed" -> "yes"
@@ -75,12 +78,12 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe
           controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
-        val newSession = captor[Session]
+        val newSession: ArgumentCaptor[Session] = captor[Session]
         verify(repository).saveOrUpdate(newSession.capture())(using any)
         newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
       }
       "eventually reset turnover section" in new ControllerFixture {
-        val result = controller(emptyTurnoverSections = true).submit()(
+        val result: Future[Result] = controller(emptyTurnoverSections = true).submit()(
           fakePostRequest.withFormUrlEncodedBody(
             "correct"   -> "true",
             "completed" -> "yes"
@@ -88,7 +91,7 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
-        val newSession = captor[Session]
+        val newSession: ArgumentCaptor[Session] = captor[Session]
         verify(repository).saveOrUpdate(newSession.capture())(using any)
         newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
       }

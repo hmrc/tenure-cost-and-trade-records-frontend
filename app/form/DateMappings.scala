@@ -34,7 +34,7 @@ object DateMappings {
     years: Option[Seq[Int]] = None
   )(using messages: Messages
   ): Mapping[LocalDate] =
-    of(using new LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates, years))
+    of(using LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates, years))
 
   def monthYearMapping(
     fieldNameKey: String,
@@ -42,14 +42,14 @@ object DateMappings {
     allowFutureDates: Boolean = false
   )(using messages: Messages
   ): Mapping[MonthsYearDuration] =
-    of(using new MonthYearFormatter(fieldNameKey, allowPastDates, allowFutureDates))
+    of(using MonthYearFormatter(fieldNameKey, allowPastDates, allowFutureDates))
 
   def dayMonthMapping(
     fieldNameKey: String,
     allow29February: Boolean = false
   )(using messages: Messages
   ): Mapping[DayMonthsDuration] =
-    of(using new DayMonthFormatter(fieldNameKey, allow29February))
+    of(using DayMonthFormatter(fieldNameKey, allow29February))
 
   def betweenDates(
     startDate: LocalDate,

@@ -40,7 +40,7 @@ class GrossReceiptsExcludingVATController @Inject() (
   view: grossReceiptsExcludingVAT,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -59,7 +59,7 @@ class GrossReceiptsExcludingVATController @Inject() (
     }
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck { turnoverSections6076 =>
       continueOrSaveAsDraft[Seq[GrossReceiptsExcludingVAT]](
         grossReceiptsExcludingVATForm(years(turnoverSections6076)),
@@ -91,12 +91,12 @@ class GrossReceiptsExcludingVATController @Inject() (
 
   private def runWithSessionCheck(
     action: Seq[TurnoverSection6076] => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show())))(action)
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def years(turnoverSections6076: Seq[TurnoverSection6076]): Seq[String] =
     turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)

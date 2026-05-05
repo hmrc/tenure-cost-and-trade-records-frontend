@@ -15,23 +15,23 @@
  *@
 
 @import models.pages.Summary
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-    govukButton: GovukButton,
-    formWithCSRF: FormWithCSRF,
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
         hmrcCharacterCount: HmrcCharacterCount,
 )
 
 
-@(theForm: Form[?], index: Option[Int], backLink: String,   summary: Summary)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[?], index: Option[Int], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("servicePaidSeparately.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLink,
     theForm = theForm

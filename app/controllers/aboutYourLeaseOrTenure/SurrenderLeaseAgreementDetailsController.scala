@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.surrenderedLeaseAgreementDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class SurrenderLeaseAgreementDetailsController @Inject() (
@@ -40,23 +40,21 @@ class SurrenderLeaseAgreementDetailsController @Inject() (
   surrenderedLeaseAgreementDetailsView: surrenderedLeaseAgreementDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("SurrenderLeaseAgreementDetails")
 
-    Future.successful(
-      Ok(
-        surrenderedLeaseAgreementDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.surrenderedLeaseAgreementDetails) match {
-            case Some(surrenderedLeaseAgreementDetails) =>
-              surrenderedLeaseAgreementDetailsForm.fill(surrenderedLeaseAgreementDetails)
-            case _                                      => surrenderedLeaseAgreementDetailsForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      surrenderedLeaseAgreementDetailsView(
+        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.surrenderedLeaseAgreementDetails) match {
+          case Some(surrenderedLeaseAgreementDetails) =>
+            surrenderedLeaseAgreementDetailsForm.fill(surrenderedLeaseAgreementDetails)
+          case _                                      => surrenderedLeaseAgreementDetailsForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

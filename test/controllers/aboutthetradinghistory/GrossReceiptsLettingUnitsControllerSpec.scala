@@ -20,7 +20,7 @@ import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
@@ -31,8 +31,8 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def grossReceiptsLettingUnitsController =
-    new GrossReceiptsLettingUnitsController(
+  def grossReceiptsLettingUnitsController: GrossReceiptsLettingUnitsController =
+    GrossReceiptsLettingUnitsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

@@ -20,17 +20,17 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesForm.rentIncludeTradeServicesForm
-import navigation.AboutYourLeaseOrTenureNavigator
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne.updateAboutLeaseOrAgreementPartOne
 import models.submissions.common.AnswersYesNo
+import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.RentIncludeTradeServicesPageId
 import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentIncludeTradeServices
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentIncludeTradeServicesController @Inject() (
@@ -40,24 +40,22 @@ class RentIncludeTradeServicesController @Inject() (
   rentIncludeTradeServicesView: rentIncludeTradeServices,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeTradeServices")
 
-    Future.successful(
-      Ok(
-        rentIncludeTradeServicesView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
-            case Some(rentIncludeTradeServicesDetails) =>
-              rentIncludeTradeServicesForm.fill(rentIncludeTradeServicesDetails)
-            case _                                     => rentIncludeTradeServicesForm
-          },
-          request.sessionData.forType,
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentIncludeTradeServicesView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
+          case Some(rentIncludeTradeServicesDetails) =>
+            rentIncludeTradeServicesForm.fill(rentIncludeTradeServicesDetails)
+          case _                                     => rentIncludeTradeServicesForm
+        },
+        request.sessionData.forType,
+        request.sessionData.toSummary
       )
     )
   }

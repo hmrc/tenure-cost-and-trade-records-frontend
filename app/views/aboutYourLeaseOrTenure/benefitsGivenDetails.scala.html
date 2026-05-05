@@ -15,11 +15,10 @@
  *@
 
 @import models.pages.Summary
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.*
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.{CharacterCount, HmrcCharacterCount}
+@import views.html.components.PrimaryLayout
 
 @this(
         layout: PrimaryLayout,
@@ -32,27 +31,27 @@
 @(form: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("benefitsGivenDetails.heading"),
- showSection = true,
- summary = summary,
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url,
- theForm = form
+    pageHeading = messages("benefitsGivenDetails.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url,
+    theForm = form
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.submit()) {
 
-  @hmrcCharacterCount(
-   CharacterCount(
-    rows = 5,
-    maxLength = 2000,
-    hint = Hint(
-     content = Text(messages("benefitsGivenDetails.hint"))
-    )
-   ).withFormField(form("benefitsGivenDetails"))
-  )
+        @hmrcCharacterCount(
+            CharacterCount(
+                rows = 5,
+                maxLength = 2000,
+                hint = Hint(
+                    content = Text(messages("benefitsGivenDetails.hint"))
+                )
+            ).withFormField(form("benefitsGivenDetails"))
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 
 }

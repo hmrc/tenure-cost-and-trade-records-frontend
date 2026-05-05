@@ -21,7 +21,7 @@ import form.aboutyouandtheproperty.PremisesLicenseConditionsDetailsForm.premises
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -35,7 +35,7 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
 
   def premisesLicenseConditionsDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new PremisesLicenseConditionsDetailsController(
+  ): PremisesLicenseConditionsDetailsController = PremisesLicenseConditionsDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -44,7 +44,7 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def premisesLicenseConditionsDetailsControllerNone() = new PremisesLicenseConditionsDetailsController(
+  def premisesLicenseConditionsDetailsControllerNone(): PremisesLicenseConditionsDetailsController = PremisesLicenseConditionsDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

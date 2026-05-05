@@ -15,13 +15,14 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
+@import form.Feedback
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.Radios
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
+@import views.html.components.PrimaryLayout
 
-@import form.Feedback
 
 @this(
         layout: PrimaryLayout,
@@ -35,19 +36,17 @@
 
 @layout(
     pageHeading = messages("label.connectionToProperty.confirm.heading"),
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     showH1 = false,
     showAccountInfo = false
 ) {
-
     <div class="govuk-panel govuk-panel--confirmation govuk-!-display-none-print">
         <h1 class="govuk-panel__title">@messages("label.connectionToProperty.confirm.heading")</h1>
     </div>
-    
+
     <div class="govuk-!-display-none-print">
         <p class="govuk-body">@messages("label.connectionToProperty.requestRefNum")</p>
     </div>
-
 
     <h2 class="govuk-heading-m">@messages("label.connectionToProperty.whatNext")</h2>
     <p class="govuk-body">@messages("label.connectionToProperty.reissued")</p>
@@ -57,69 +56,65 @@
     </div>
 
     <ul class="govuk-list govuk-list--bullet">
-        <li>@{messages("list.connectionToProperty.p1")}</li>
-        <li>@{messages("list.connectionToProperty.p2")}</li>
-        <li>@{messages("list.connectionToProperty.p3")}</li>
+        <li>@{
+            messages("list.connectionToProperty.p1")
+        }</li>
+        <li>@{
+            messages("list.connectionToProperty.p2")
+        }</li>
+        <li>@{
+            messages("list.connectionToProperty.p3")
+        }</li>
     </ul>
 
     <hr>
     <p>
 
-    <div class="no-print">
+<div class="no-print">
 
-        @formWithCSRF(
-            action = routes.FeedbackController.feedbackRequestReferenceNumber,
-            args = Symbol("novalidate") -> "novalidate" ) {
+    @formWithCSRF(
+        action = routes.FeedbackController.feedbackRequestReferenceNumber,
+        args = Symbol("novalidate") -> "novalidate") {
 
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">@messages("confirmation.feedback.subheading")</legend>
 
-            <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">@messages("confirmation.feedback.subheading")</legend>
-
-                    @govukRadios(
-                        Radios(
-                            name = "feedback-rating",
-                            items =
-                                Seq(
-                                    "5" -> messages("feedback.rating.5"),
-                                    "4" -> messages("feedback.rating.4"),
-                                    "3" -> messages("feedback.rating.3"),
-                                    "2" -> messages("feedback.rating.2"),
-                                    "1" -> messages("feedback.rating.1")
-                                ).map(radioItem =>
-                                    RadioItem(
-                                        content = Text(radioItem._2),
-                                        checked = radioItem._1.equals(theForm("feedback-rating").value.getOrElse("")),
-                                        value = Option(radioItem._1)
-                                    )
-                                ),
-                            errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating"),
-                        )
+                @govukRadios(
+                    Radios(
+                        name = "feedback-rating",
+                        items =
+                            Seq(
+                                "5" -> messages("feedback.rating.5"),
+                                "4" -> messages("feedback.rating.4"),
+                                "3" -> messages("feedback.rating.3"),
+                                "2" -> messages("feedback.rating.2"),
+                                "1" -> messages("feedback.rating.1")
+                            ).map(radioItem =>
+                                RadioItem(
+                                    content = Text(radioItem._2),
+                                    checked = radioItem._1.equals(theForm("feedback-rating").value.getOrElse("")),
+                                    value = radioItem._1
+                                )
+                            ),
+                        errorMessage = theForm.errors.asTextErrorMessageForField("feedback-rating"),
                     )
-                </fieldset>
-            </div>
-
-            @includes.textInputHMRCCharCount(
-                hmrcCharacterCount,
-                theForm,
-                "feedback-comments",
-                "label.feedback.comments",
-                classes = "govuk-!-font-weight-bold",
-                hint = "feedback.bottomCopy",
-                charCount = 2000
-            )
-
-            @govukButton(
-                Button(
-                    attributes = Map("id" -> "send"),
-                    content = Text(messages("button.label.sendYourFeedback")),
-                    name = Some("send"),
-                    value = Some("send"),
-                    inputType = Some("submit")
                 )
-            )
-        }
+            </fieldset>
+        </div>
 
-    </div>
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "feedback-comments",
+            "label.feedback.comments",
+            classes = "govuk-!-font-weight-bold",
+            hint = "feedback.bottomCopy",
+            charCount = 2000
+        )
+
+        @govukButton(SubmitButton("sendYourFeedback"))
+    }
+</div>
 
 }

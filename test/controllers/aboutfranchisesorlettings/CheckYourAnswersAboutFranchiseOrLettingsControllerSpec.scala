@@ -18,12 +18,12 @@ package controllers.aboutfranchisesorlettings
 
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 import models.ForType.*
-import models.ForType.FOR6010
+import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutfranchisesorlettings.TypeOfIncome.{TypeConcession, TypeFranchise, TypeLetting}
-import models.{ForType, Session}
-import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, BusinessDetails, CalculatingTheRent, Concession6015IncomeRecord, ConcessionBusinessDetails, ConcessionIncomeRecord, FeeReceived, FeeReceivedPerYear, FranchiseIncomeRecord, LettingIncomeRecord, OperatorDetails, PropertyRentDetails, RentReceivedFrom}
 import models.submissions.common.AnswersYesNo.AnswerYes
+import models.{ForType, Session}
 import play.api.http.Status
+import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
@@ -32,7 +32,7 @@ import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import java.time.LocalDate
-import scala.concurrent.Future.successful
+import scala.concurrent.Future
 import scala.language.reflectiveCalls
 
 class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec:
@@ -41,8 +41,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
 
   def checkYourAnswersAboutFranchiseOrLettingsController6045(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
@@ -54,8 +54,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsWith6020LettingsAll
     )
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
@@ -67,8 +67,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
       prefilledAboutFranchiseOrLettingsNo
     )
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
@@ -79,47 +79,47 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
   "GET /" should {
 
     "return HTML FOR6010 about Franchise or Lettings" in new ControllerFixture(forType = FOR6010) {
-      val result = controller.show(fakeRequest)
+      val result: Future[Result] = controller.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6015 about Concessions or Lettings" in new ControllerFixture(forType = FOR6015) {
-      val result = controller.show(fakeRequest)
+      val result: Future[Result] = controller.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6020 about Lettings" in new ControllerFixture(forType = FOR6020) {
-      val result = controller.show(fakeRequest)
+      val result: Future[Result] = controller.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6030 about Franchise or Lettings" in new ControllerFixture(forType = FOR6030) {
-      val result = controller.show(fakeRequest)
+      val result: Future[Result] = controller.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6045 about Concessions, Franchises or Lettings" in new ControllerFixture(forType = FOR6045) {
-      val result = controller.show(fakeRequest)
+      val result: Future[Result] = controller.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6046 about Concessions, Franchises or Lettings" in new ControllerFixture(forType = FOR6046) {
-      val result = controller.show(fakeRequest)
+      val result: Future[Result] = controller.show(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return correct backLink when 'from=CYA' query param is present" in new ControllerFixture(forType = FOR6010) {
-      val result = controller.show()(FakeRequest(GET, "/path?from=CYA"))
+      val result: Future[Result] = controller.show()(FakeRequest(GET, "/path?from=CYA"))
       contentAsString(result) should include(
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       )
@@ -128,7 +128,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture(forType = FOR6010) {
-      val res = controller.submit(
+      val res: Future[Result] = controller.submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
@@ -166,10 +166,10 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
 
   trait ControllerFixture(forType: ForType) extends TestBaseSpec:
     val repository: SessionRepo = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier])).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier])).thenReturn(Future.unit)
 
     val controller: CheckYourAnswersAboutFranchiseOrLettingsController =
-      new CheckYourAnswersAboutFranchiseOrLettingsController(
+      CheckYourAnswersAboutFranchiseOrLettingsController(
         stubMessagesControllerComponents(),
         aboutFranchisesOrLettingsNavigator,
         checkYourAnswersAboutFranchiseOrLettings,

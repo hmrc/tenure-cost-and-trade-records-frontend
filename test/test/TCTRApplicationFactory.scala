@@ -17,8 +17,8 @@
 package test
 
 import org.scalatestplus.play.guice.GuiceFakeApplicationFactory
-import play.api.{Application, Configuration}
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.{Application, Configuration}
 
 /**
   * @author Yuriy Tumakha
@@ -32,6 +32,6 @@ trait TCTRApplicationFactory extends GuiceFakeApplicationFactory with TestObject
   )
 
   override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
+    GuiceApplicationBuilder()
       .configure(fakeAppConfiguration)
       .build()

@@ -21,19 +21,20 @@ import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
 import scala.language.reflectiveCalls
 
 class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   def checkYourAnswersAboutFranchiseOrLettingsController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings60156016)
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
@@ -47,8 +48,8 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
 
   def checkYourAnswersAboutFranchiseOrLettingsControllerNo(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettingsNo6016)
-  ) =
-    new CheckYourAnswersAboutFranchiseOrLettingsController(
+  ): CheckYourAnswersAboutFranchiseOrLettingsController =
+    CheckYourAnswersAboutFranchiseOrLettingsController(
       stubMessagesControllerComponents(),
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,

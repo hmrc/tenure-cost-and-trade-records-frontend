@@ -44,7 +44,7 @@ class AccommodationLettingHistory6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -98,32 +98,32 @@ class AccommodationLettingHistory6048Controller @Inject() (
   }
 
   private def finYearEndDates(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Seq[LocalDate] =
     val firstOccupy = request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate)
     AccountingInformationUtil.financialYearsRequiredAccommodation6048(firstOccupy, request.sessionData.isWelsh)
 
   private def accommodationDetails(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 
   private def currentUnit(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationUnit] =
     accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
   private def currentUnitName(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): String =
     currentUnit.fold("")(_.unitName)
 
   private def backLink(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): String =
     s"${controllers.accommodation.routes.AvailableRooms6048Controller.show.url}?idx=${navigator.idx}"

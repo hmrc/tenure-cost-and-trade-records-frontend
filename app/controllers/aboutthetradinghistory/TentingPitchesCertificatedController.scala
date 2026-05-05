@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.tentingPitchesCertificated
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TentingPitchesCertificatedController @Inject() (
@@ -41,7 +41,7 @@ class TentingPitchesCertificatedController @Inject() (
   view: tentingPitchesCertificated,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -49,17 +49,15 @@ class TentingPitchesCertificatedController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TentingPitchesCertificated")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.touringAndTentingPitches)
-            .flatMap(_.tentingPitchesCertificated) match {
-            case Some(answers) => tentingPitchesCertificatedForm.fill(answers)
-            case None          => tentingPitchesCertificatedForm
-          },
-          calculateBackLink
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.touringAndTentingPitches)
+          .flatMap(_.tentingPitchesCertificated) match {
+          case Some(answers) => tentingPitchesCertificatedForm.fill(answers)
+          case None          => tentingPitchesCertificatedForm
+        },
+        calculateBackLink
       )
     )
   }
@@ -97,7 +95,7 @@ class TentingPitchesCertificatedController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageForTentingPitches.url
       case _     => controllers.aboutthetradinghistory.routes.TentingPitchesTotalController.show().url

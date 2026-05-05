@@ -14,28 +14,28 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("enforcementActionHasBeenTaken.heading"),
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("enforcementActionHasBeenTaken.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
     <p class="govuk-body">@messages("enforcementActionHasBeenTaken.p1")</p>
@@ -50,30 +50,30 @@
     <p class="govuk-body govuk-!-font-weight-bold">@messages("enforcementActionHasBeenTaken.heading1")</p>
     <p class="govuk-body">@messages("enforcementActionHasBeenTaken.p3")</p>
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.submit()) {
 
-      @govukRadios(Radios(
-          fieldset = Some(Fieldset(
-              legend = Some(Legend(
-                  content = Text(messages("enforcementActionHasBeenTaken.label")),
-                  classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
-              ))
-          )),
-          classes = "govuk-radios--inline",
-          name = "enforcementActionBeenTaken",
-          items = Seq(
-              RadioItem(
-                  content = Text(messages("label.yes.ydw")),
-                  value = Some("yes")
-              ),
-              RadioItem(
-                  content = Text(messages("label.no.nac.ydw")),
-                  value = Some("no")
-              )
-          ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionBeenTaken")
-      ).withFormField(theForm("enforcementActionBeenTaken")))
+        @govukRadios(Radios(
+            fieldset = Fieldset(
+                legend = Legend(
+                    content = Text(messages("enforcementActionHasBeenTaken.label")),
+                    classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
+                )
+            ),
+            classes = "govuk-radios--inline",
+            name = "enforcementActionBeenTaken",
+            items = Seq(
+                RadioItem(
+                    content = Text(messages("label.yes.ydw")),
+                    value = "yes"
+                ),
+                RadioItem(
+                    content = Text(messages("label.no.nac.ydw")),
+                    value = "no"
+                )
+            ),
+            errorMessage = theForm.errors.asTextErrorMessageForField("enforcementActionBeenTaken")
+        ).withFormField(theForm("enforcementActionBeenTaken")))
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

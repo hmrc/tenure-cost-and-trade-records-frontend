@@ -15,22 +15,12 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
-@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Actions, Fieldset, Legend, RadioItem, Radios, SummaryList}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Key, SummaryListRow}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -41,78 +31,82 @@
 
 @(theForm: Form[?], index: Int)(implicit request: SessionRequest[?], messages: Messages)
 
-@session = @{request.sessionData}
-
-@services = @{
- session.aboutLeaseOrAgreementPartThree.fold(Seq.empty[String])(_.servicesPaid.map(_.details))
+@session = @{
+    request.sessionData
 }
 
-@headingService= @{if (services.isEmpty) messages("servicePaidSeparatelyListZero.heading") else if (services.size > 1) messages("servicePaidSeparatelyListPlural.heading", services.length, service) else messages("servicePaidSeparatelyList.heading", services.length, service) }
+@services = @{
+    session.aboutLeaseOrAgreementPartThree.fold(Seq.empty[String])(_.servicesPaid.map(_.details))
+}
 
-@service = @{ if (services.size > 1) messages("servicePaidSeparatelyList.services") else messages("servicePaidSeparatelyList.service") }
+@headingService = @{
+    if(services.isEmpty) messages("servicePaidSeparatelyListZero.heading") else if(services.size > 1) messages("servicePaidSeparatelyListPlural.heading", services.length, service) else messages("servicePaidSeparatelyList.heading", services.length, service)
+}
+
+@service = @{
+    if(services.size > 1) messages("servicePaidSeparatelyList.services") else messages("servicePaidSeparatelyList.service")
+}
 
 @layout(
- pageHeading = messages(headingService, services.size),
- showSection = true,
- summary = Some(session.toSummary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = None,
- theForm = theForm
+    pageHeading = messages(headingService, services.size),
+    showSection = true,
+    summary = session.toSummary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = None,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.submit(index)) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.submit(index)) {
 
-  @govukSummaryList(
-   SummaryList(
-    rows = services.zipWithIndex.map { case (operatorName, idx) =>
-     SummaryListRow(
-      key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
-      actions = Actions(
-       items = Seq(
-        ActionItem(
-         s"${controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(idx).url}&from=Change",
-         content = Text("Change")),
-        ActionItem(
-         controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.remove(idx).url,
-         content = Text("Remove"))
-       ),
-       classes = "hmrc-summary-list__actions"
-      )
-     )
-    },
-    classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
-   )
-  )
+        @govukSummaryList(
+            SummaryList(
+                rows = services.zipWithIndex.map { case (operatorName, idx) =>
+                    SummaryListRow(
+                        key = Key(Text(operatorName), classes = "govuk-!-font-weight-regular"),
+                        actions = Actions(
+                            items = Seq(
+                                ActionItem(
+                                    s"${controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(idx).url}&from=Change",
+                                    content = Text("Change")),
+                                ActionItem(
+                                    controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.remove(idx).url,
+                                    content = Text("Remove"))
+                            ),
+                            classes = "hmrc-summary-list__actions"
+                        )
+                    )
+                },
+                classes = "hmrc-list-with-actions hmrc-list-with-actions--short"
+            )
+        )
 
-  @govukRadios(
-   Radios(
-    name = "servicePaidSeparatelyList",
-    idPrefix = Option("servicePaidSeparatelyList"),
-    classes = "govuk-radios--inline",
-    items = Seq(
-     "yes" -> messages("label.yes"),
-     "no" -> messages("label.no")
-    ).map(radioItem => RadioItem(
-     content = Text(radioItem._2),
-     checked = radioItem._1.equals(theForm("servicePaidSeparatelyList").value.getOrElse("")),
-     value = Option(radioItem._1)
-    )
-    ),
-    errorMessage =  theForm.errors.asTextErrorMessageForField("servicePaidSeparatelyList"),
-    fieldset = Option(
-     Fieldset(
-      legend = Option(
-       Legend(
-        content = Text(messages("servicePaidSeparatelyList.label")),
-        classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
-       )
-      )
-     )
-    )
-   )
-  )
+        @govukRadios(
+            Radios(
+                name = "servicePaidSeparatelyList",
+                idPrefix = "servicePaidSeparatelyList",
+                classes = "govuk-radios--inline",
+                items = Seq(
+                    "yes" -> messages("label.yes"),
+                    "no" -> messages("label.no")
+                ).map(radioItem => RadioItem(
+                    content = Text(radioItem._2),
+                    checked = radioItem._1.equals(theForm("servicePaidSeparatelyList").value.getOrElse("")),
+                    value = radioItem._1
+                )
+                ),
+                errorMessage = theForm.errors.asTextErrorMessageForField("servicePaidSeparatelyList"),
+                fieldset =
+                    Fieldset(
+                        legend =
+                            Legend(
+                                content = Text(messages("servicePaidSeparatelyList.label")),
+                                classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
+                            )
+                    )
+            )
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 
 }

@@ -15,15 +15,14 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
+@import models.submissions.aboutthetradinghistory.CostOfSales6076Sum
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import uk.gov.hmrc.hmrcfrontend.views.html.components.CharacterCount
 @import uk.gov.hmrc.hmrcfrontend.views.Implicits.RichCharacterCount
-@import util.DateUtilLocalised
-@import models.submissions.aboutthetradinghistory.CostOfSales6076Sum
-@import util.AccessibilityUtil
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.{CharacterCount, HmrcCharacterCount}
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
+
 @import java.time.LocalDate
 
 @this(layout: PrimaryLayout,
@@ -41,115 +40,117 @@
 
 
 @totalContent(idx: Int) = {
-  <span data-total-prefix="costOfSales6076.[@idx]." data-total-items="fuelOrFeedstock,importedPower,TNuoS,BSuoS,otherSales">
-   form.value.fold("")(_.costOfSales6076Sum(idx).total.asMoney)
-  </span>
+    <span data-total-prefix="costOfSales6076.[@idx]." data-total-items="fuelOrFeedstock,importedPower,TNuoS,BSuoS,otherSales">
+        form.value.fold("")(_.costOfSales6076Sum(idx).total.asMoney)
+    </span>
 }
 
 @headingContent(key: String, hint: Boolean) = {
 
- <p class="govuk-body govuk-!-font-weight-bold">
-  @messages(s"costOfSales6076.$key") <br>
-  @if(hint) { <span class="govuk-caption-m">@messages(s"costOfSales6076.$key.hint")</span> }
- </p>
+    <p class="govuk-body govuk-!-font-weight-bold">
+        @messages(s"costOfSales6076.$key") <br>
+        @if(hint) {
+            <span class="govuk-caption-m">@messages(s"costOfSales6076.$key.hint")</span>
+        }
+    </p>
 }
 
-@costRow(key: String, idx: Int, classes: String = "", hint: Boolean = false, finYearEnd: LocalDate ) = @{
- Seq(
-  TableRow(content = HtmlContent(headingContent(key, hint)), classes = classes),
-  TableRow(
-   content = HtmlContent(
-    govukInput(Input(
-     prefix = Some(PrefixOrSuffix(
-      content = Text(messages("label.pound"))
-     )),
-     attributes = Map(
-      "maxlength" -> "13",
-      "aria-label" -> accessibilityUtil.ariaBuilder(s"costOfSales6076.$key", finYearEnd)
-     ),
-    ).withFormField(form(s"costOfSales6076.[$idx].$key")))),
-   classes = classes))
+@costRow(key: String, idx: Int, classes: String = "", hint: Boolean = false, finYearEnd: LocalDate) = @{
+    Seq(
+        TableRow(content = HtmlContent(headingContent(key, hint)), classes = classes),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    prefix = PrefixOrSuffix(
+                        content = Text(messages("label.pound")
+                        )),
+                    attributes = Map(
+                        "maxlength" -> "13",
+                        "aria-label" -> accessibilityUtil.ariaBuilder(s"costOfSales6076.$key", finYearEnd)
+                    ),
+                ).withFormField(form(s"costOfSales6076.[$idx].$key")))),
+            classes = classes))
 }
 @columns = @{
- request.sessionData.financialYearEndDates6076.size
+    request.sessionData.financialYearEndDates6076.size
 }
 
 @otherExpensesDetailsTextarea = @{
- hmrcCharacterCount(
-  CharacterCount(
-   rows = 3,
-   maxLength = 2000,
-   errorMessage = form.errors.asTextErrorMessageForField("otherSalesDetails"),
-   label = Label(
-    content = Text(messages("costOfSales6076.otherSales.label"))
-   )
-  ).withFormField(form("otherSalesDetails"))
- )
+    hmrcCharacterCount(
+        CharacterCount(
+            rows = 3,
+            maxLength = 2000,
+            errorMessage = form.errors.asTextErrorMessageForField("otherSalesDetails"),
+            label = Label(
+                content = Text(messages("costOfSales6076.otherSales.label"))
+            )
+        ).withFormField(form("otherSalesDetails"))
+    )
 }
 
 @otherExpensesDetailsContent(idx: Int) = {
 @if(columns == 1) {
- @otherExpensesDetailsTextarea
+    @otherExpensesDetailsTextarea
 } else {
- <div class="hmrc-overlap-columns-@columns-parent">
- @if(idx == 0) {
-  <div class="hmrc-overlap-columns-@columns">
-  @otherExpensesDetailsTextarea
-  </div>
- }
- </div>
+    <div class="hmrc-overlap-columns-@columns-parent">
+    @if(idx == 0) {
+        <div class="hmrc-overlap-columns-@columns">
+        @otherExpensesDetailsTextarea
+        </div>
+    }
+    </div>
 }
 }
 
 
- @layout(
-  pageHeading = messages("costOfSales6076.heading"),
-  showSection = true,
-  summary = Some(request.sessionData.toSummary),
-  sectionName = messages("label.section.aboutYourTradingHistory"),
-  backLinkUrl = backLink,
-  fullWidth = true,
-  theForm = form
- ) {
+@layout(
+    pageHeading = messages("costOfSales6076.heading"),
+    showSection = true,
+    summary = request.sessionData.toSummary,
+    sectionName = messages("label.section.aboutYourTradingHistory"),
+    backLinkUrl = backLink,
+    fullWidth = true,
+    theForm = form
+) {
 
-  <p class="govuk-body govuk-!-width-three-quarters">@messages("costOfSales6076.inset")</p>
+    <p class="govuk-body govuk-!-width-three-quarters">@messages("costOfSales6076.inset")</p>
 
-  @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.submit()) {
-    <table class="hmrc-responsive-table">
-     <tbody>
-      <tr>
-      @request.sessionData.financialYearEndDates6076.map { case (finYearEnd, idx) =>
-      <td>
-       @govukTable(Table(
-        head = Seq(
-         HeadCell(content = Text(messages("turnover.financialYearEnd"))),
-         HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
-        ),
-        firstCellIsHeader = true,
-        rows = Seq(
-         costRow("fuelOrFeedstock", idx, finYearEnd = finYearEnd),
-         costRow("importedPower", idx, finYearEnd = finYearEnd),
-         costRow("TNuoS", idx, finYearEnd = finYearEnd),
-         costRow("BSuoS", idx, finYearEnd = finYearEnd),
-         costRow("otherSales", idx, "no-border-bottom", hint = true, finYearEnd = finYearEnd),
-         Seq(
-          TableRow(),
-          TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))),
+    @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CostOfSales6076Controller.submit()) {
+        <table class="hmrc-responsive-table">
+            <tbody>
+                <tr>
+                @request.sessionData.financialYearEndDates6076.map { case (finYearEnd, idx) =>
+                <td>
+                    @govukTable(Table(
+                        head = Seq(
+                            HeadCell(content = Text(messages("turnover.financialYearEnd"))),
+                            HeadCell(content = Text(dateUtil.formatDayMonthAbbrYear(finYearEnd)))
+                        ),
+                        firstCellIsHeader = true,
+                        rows = Seq(
+                            costRow("fuelOrFeedstock", idx, finYearEnd = finYearEnd),
+                            costRow("importedPower", idx, finYearEnd = finYearEnd),
+                            costRow("TNuoS", idx, finYearEnd = finYearEnd),
+                            costRow("BSuoS", idx, finYearEnd = finYearEnd),
+                            costRow("otherSales", idx, "no-border-bottom", hint = true, finYearEnd = finYearEnd),
+                            Seq(
+                                TableRow(),
+                                TableRow(content = HtmlContent(otherExpensesDetailsContent(idx)))),
 
-         Seq(
-          TableRow(content = Text(messages("costOfSales6076.total"))),
-          TableRow(content = HtmlContent(totalContent(idx))))
+                            Seq(
+                                TableRow(content = Text(messages("costOfSales6076.total"))),
+                                TableRow(content = HtmlContent(totalContent(idx))))
 
-        )))
-      </td>
-      }</tr>
-     </tbody>
-    </table>
+                        )))
+                </td>
+                }</tr>
+            </tbody>
+        </table>
 
-   @includes.continueSaveAsDraftButtons(govukButton)
+        @includes.continueSaveAsDraftButtons(govukButton)
 
-  }
+    }
 
- <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
- <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
- }
+    <script src="@routes.Assets.versioned("javascripts/data-total.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/responsive-table.js")"></script>
+}

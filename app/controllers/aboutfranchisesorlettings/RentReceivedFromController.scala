@@ -82,7 +82,7 @@ class RentReceivedFromController @Inject() (
                 index,
                 records(index) match {
                   case concession: Concession6015IncomeRecord => concession.copy(rent = Some(formData))
-                  case _                                      => throw new IllegalStateException("Unknown income record type")
+                  case _                                      => throw IllegalStateException("Unknown income record type")
                 }
               )
             }

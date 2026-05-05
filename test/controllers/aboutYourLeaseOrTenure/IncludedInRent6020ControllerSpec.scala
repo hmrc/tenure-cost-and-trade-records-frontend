@@ -32,7 +32,7 @@ class IncludedInRent6020ControllerSpec extends TestBaseSpec {
 
   def includedInRent6020Controller(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = new IncludedInRent6020Controller(
+  ): IncludedInRent6020Controller = IncludedInRent6020Controller(
     mockAudit,
     includedInRent6020View,
     aboutYourLeaseOrTenureNavigator,

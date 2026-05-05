@@ -19,7 +19,7 @@ package views.aboutyouandtheproperty
 import form.aboutyouandtheproperty.AboutThePropertyForm
 import models.ForType.*
 import models.pages.Summary
-import models.submissions.aboutyouandtheproperty._
+import models.submissions.aboutyouandtheproperty.*
 import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
 import play.api.data.Form
 import play.twirl.api.Html
@@ -58,9 +58,9 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheProperty"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutTheProperty")}"""
     }
 
     "contain radio buttons for the value public house" in {
@@ -161,14 +161,14 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("save").text()
-      assert(loginButton == messages("button.label.save"))
+      val loginButton = doc.getElementById("save-button").text()
+      assert(loginButton == messages("button.save.label"))
     }
   }
 
@@ -185,9 +185,9 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheProperty"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutTheProperty")}"""
     }
 
     "contain radio buttons for the value hotel" in {
@@ -252,14 +252,14 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm6015(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("save").text()
-      assert(loginButton == messages("button.label.save"))
+      val loginButton = doc.getElementById("save-button").text()
+      assert(loginButton == messages("button.save.label"))
     }
   }
 }

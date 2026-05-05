@@ -29,7 +29,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class ErrorHandler @Inject() (
   errorTemplate: ErrorTemplate,
   val messagesApi: MessagesApi
-)(implicit
+)(using
   val ec: ExecutionContext
 ) extends FrontendErrorHandler {
 
@@ -37,14 +37,14 @@ class ErrorHandler @Inject() (
     pageTitle: String,
     heading: String,
     message: String
-  )(implicit
+  )(using
     request: RequestHeader
   ): Future[Html] =
     render { implicit request =>
       errorTemplate(pageTitle, heading, message)
     }
 
-  private def render(template: Request[?] => Html)(implicit rh: RequestHeader): Future[Html] =
+  private def render(template: Request[?] => Html)(using rh: RequestHeader): Future[Html] =
     Future.successful(template(Request(rh, "")))
 
 }

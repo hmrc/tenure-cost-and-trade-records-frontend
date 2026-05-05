@@ -34,7 +34,7 @@ import util.NumberUtil.zeroBigDecimal
 import views.html.aboutYourLeaseOrTenure.{rentIncludeFixtureAndFittingsDetails, rentIncludeFixtureAndFittingsDetailsTextArea}
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentIncludeFixtureAndFittingsDetailsController @Inject() (
@@ -45,38 +45,34 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   rentIncludeFixtureAndFittingsDetailsTextAreaView: rentIncludeFixtureAndFittingsDetailsTextArea,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
-  private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
+  private def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeFixtureAndFittingsDetails")
 
     if (forType == FOR6045 || forType == FOR6046) {
-      Future.successful(
-        Ok(
-          rentIncludeFixtureAndFittingsDetailsTextAreaView(
-            request.sessionData.aboutLeaseOrAgreementPartThree
-              .flatMap(_.rentIncludeFixtureAndFittingsDetailsTextArea) match {
-              case Some(rentIncludeFixtureAndFittingsDetailsTextArea) =>
-                rentIncludeFixtureAndFittingsDetailsTextAreaForm.fill(rentIncludeFixtureAndFittingsDetailsTextArea)
-              case _                                                  => rentIncludeFixtureAndFittingsDetailsTextAreaForm
-            },
-            request.sessionData.toSummary
-          )
+      Ok(
+        rentIncludeFixtureAndFittingsDetailsTextAreaView(
+          request.sessionData.aboutLeaseOrAgreementPartThree
+            .flatMap(_.rentIncludeFixtureAndFittingsDetailsTextArea) match {
+            case Some(rentIncludeFixtureAndFittingsDetailsTextArea) =>
+              rentIncludeFixtureAndFittingsDetailsTextAreaForm.fill(rentIncludeFixtureAndFittingsDetailsTextArea)
+            case _                                                  => rentIncludeFixtureAndFittingsDetailsTextAreaForm
+          },
+          request.sessionData.toSummary
         )
       )
     } else {
-      Future.successful(
-        Ok(
-          rentIncludeFixtureAndFittingsDetailsView(
-            rentIncludeFixtureAndFittingsDetailsForm().fill(
-              request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittingsAmount)
-            ),
-            request.sessionData.toSummary
-          )
+      Ok(
+        rentIncludeFixtureAndFittingsDetailsView(
+          rentIncludeFixtureAndFittingsDetailsForm().fill(
+            request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittingsAmount)
+          ),
+          request.sessionData.toSummary
         )
       )
     }

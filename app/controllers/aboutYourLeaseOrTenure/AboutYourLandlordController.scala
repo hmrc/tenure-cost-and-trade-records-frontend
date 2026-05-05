@@ -27,13 +27,13 @@ import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.common.Address
 import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.Logging
+import play.api.data.Form
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Request}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.aboutYourLandlord as AboutYourLandlordView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -53,25 +53,23 @@ class AboutYourLandlordController @Inject() (
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AboutYourLandlord")
-    val freshForm  = theForm
-    val filledForm =
+    val freshForm: Form[String]          = theForm
+    val filledForm: Option[Form[String]] =
       for
         aboutLeaseOrAgreementPartOne <- request.sessionData.aboutLeaseOrAgreementPartOne
         aboutTheLandlord             <- aboutLeaseOrAgreementPartOne.aboutTheLandlord
       yield theForm.fill(aboutTheLandlord.landlordFullName)
 
-    successful(
-      Ok(
-        theView(
-          filledForm.getOrElse(freshForm),
-          request.sessionData.toSummary,
-          getBackLink(request.sessionData)
-        )
+    Ok(
+      theView(
+        filledForm.getOrElse(freshForm),
+        request.sessionData.toSummary,
+        getBackLink(request.sessionData)
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       theForm,
       formWithErrors =>
@@ -81,7 +79,7 @@ class AboutYourLandlordController @Inject() (
       formData => {
         given Session = request.sessionData
         for
-          newSession     <- successful(sessionWithLandlordFullName(formData))
+          newSession     <- sessionWithLandlordFullName(formData)
           _              <- repository.saveOrUpdate(newSession)
           redirectResult <- redirectToAddressLookupFrontend(
                               config = AddressLookupConfig(
@@ -119,12 +117,12 @@ class AboutYourLandlordController @Inject() (
       )
     )
 
-  def addressLookupCallback(id: String) = (Action andThen withSessionRefiner).async { implicit request =>
+  def addressLookupCallback(id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     given Session = request.sessionData
     for
       confirmedAddress <- getConfirmedAddress(id)
       landlordAddress   = confirmedAddress.asAddress
-      newSession       <- successful(sessionWithLandlordAddress(landlordAddress))
+      newSession       <- sessionWithLandlordAddress(landlordAddress)
       _                <- repository.saveOrUpdate(newSession)
     yield navigator.from match {
       case "CYA" =>
@@ -135,7 +133,7 @@ class AboutYourLandlordController @Inject() (
     }
   }
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
     if (answers.forType == FOR6020)
       controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show().url
     else

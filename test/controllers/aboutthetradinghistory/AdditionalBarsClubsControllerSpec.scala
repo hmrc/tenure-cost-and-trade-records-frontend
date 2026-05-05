@@ -18,7 +18,7 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import form.aboutthetradinghistory.AdditionalBarsClubsForm
-import play.api.http.Status._
+import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
@@ -48,7 +48,7 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
       validFormDataPerYear(1)
 
   private def controller =
-    new AdditionalBarsClubsController(
+    AdditionalBarsClubsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

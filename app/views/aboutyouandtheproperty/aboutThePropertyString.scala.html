@@ -15,10 +15,10 @@
  *@
 
 @import models.ForType.*
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -28,39 +28,35 @@
 
 @(theForm: Form[String], forType: ForType, summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
-@for6020 = @{forType == FOR6020}
-
 @hint = @{
-    if(for6020) Some(Hint(content = Text(messages("hint.propertyCurrentlyUsedString"))))  else {
-        None
-    }
+    Option.when(forType == FOR6020)(Hint(content = Text(messages("hint.propertyCurrentlyUsedString"))))
 }
 
 @layout(
-  pageHeading = messages("aboutProperty.heading"),
-  showH1 = false,
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("aboutProperty.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.submit()) {
 
-    @govukInput(Input(
-    id = "propertyCurrentlyUsedString",
-    name = "propertyCurrentlyUsedString",
-    value = theForm("propertyCurrentlyUsedString").value,
-    errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsedString"),
-    label = Label(
-      content = Text(Messages("aboutProperty.heading")),
-      classes = "govuk-label--l govuk-fieldset__legend--l",
-      isPageHeading = true
-    ),
-    hint = hint
-  ))
+        @govukInput(Input(
+            id = "propertyCurrentlyUsedString",
+            name = "propertyCurrentlyUsedString",
+            value = theForm("propertyCurrentlyUsedString").value,
+            errorMessage = theForm.errors.asTextErrorMessageForField("propertyCurrentlyUsedString"),
+            label = Label(
+                content = Text(Messages("aboutProperty.heading")),
+                classes = "govuk-label--l govuk-fieldset__legend--l",
+                isPageHeading = true
+            ),
+            hint = hint
+        ))
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

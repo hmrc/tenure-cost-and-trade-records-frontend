@@ -14,41 +14,41 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("premisesLicenseConditions.heading"),
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("premisesLicenseConditions.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
     <p class="govuk-body">@messages("premisesLicenseConditions.p1")</p>
     <p class="govuk-body">@messages("premisesLicenseConditions.p2")</p>
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.submit()) {
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "premisesLicenseConditions",
-      "premisesLicenseConditions.label",
-      classes = "govuk-fieldset__legend--m"
-    )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "premisesLicenseConditions",
+            "premisesLicenseConditions.label",
+            classes = "govuk-fieldset__legend--m"
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

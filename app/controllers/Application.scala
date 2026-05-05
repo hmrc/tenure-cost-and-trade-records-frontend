@@ -20,22 +20,19 @@ import config.AppConfig
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.start
+
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
 
 @Singleton
 class Application @Inject() (
   mcc: MessagesControllerComponents,
   appConfig: AppConfig,
   start: start
-) extends FrontendController(mcc) {
+) extends FrontendController(mcc):
 
   val index: Action[AnyContent] = Action.async { implicit request =>
-    if (appConfig.startPageRedirect) {
-      Future.successful(Redirect(appConfig.govukStartPage))
-    } else {
-      Future.successful(Ok(start()))
-    }
+    if appConfig.startPageRedirect then
+      Redirect(appConfig.govukStartPage)
+    else
+      Ok(start())
   }
-
-}

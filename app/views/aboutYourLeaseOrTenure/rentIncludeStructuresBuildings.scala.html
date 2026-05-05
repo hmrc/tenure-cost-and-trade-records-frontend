@@ -14,9 +14,9 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import actions.SessionRequest
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -28,30 +28,30 @@
 @(theForm: Form[?], backLink: String)(implicit request: SessionRequest[?], messages: Messages)
 
 @layout(
- pageHeading = messages("rentIncludeStructuresBuildings.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(request.sessionData.toSummary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backLink,
- theForm = theForm
+    pageHeading = messages("rentIncludeStructuresBuildings.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = request.sessionData.toSummary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.submit()) {
 
-  @includes.radioButtonsYesNo(
-   govukRadios,
-   theForm,
-   "rentIncludeStructuresBuildings",
-   "rentIncludeStructuresBuildings.heading",
-   messages("label.yes.ydw"),
-   messages("label.no.nac.ydw"),
-   classes = "govuk-fieldset__legend--l",
-   isHeading = true
-  )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "rentIncludeStructuresBuildings",
+            "rentIncludeStructuresBuildings.heading",
+            messages("label.yes.ydw"),
+            messages("label.no.nac.ydw"),
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

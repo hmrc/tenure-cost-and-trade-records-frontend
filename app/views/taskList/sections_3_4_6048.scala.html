@@ -16,76 +16,78 @@
 
 @import actions.SessionRequest
 @import models.ForType.*
-@import views.lettingHistory.LettingHistoryTaskListHelper
 @import models.submissions.common.AnswersYesNo
 @import models.submissions.lettingHistory.LettingHistory
+@import views.lettingHistory.LettingHistoryTaskListHelper
 
 @(forType: ForType, section2Completed: Option[AnswersYesNo], section4AccommodationCompleted: Option[AnswersYesNo], sectionLettingHistoryCompleted: Option[AnswersYesNo])(implicit request: SessionRequest[?], messages: Messages)
 
-@session = @{ request.sessionData }
+@session = @{
+    request.sessionData
+}
 
 @if(forType == FOR6048) {
- <li>
-  <h2 id="letting-history" class="app-task-list__section">
-   <span class="app-task-list__section-number">3. </span> @messages("label.section.lettingHistory")
-  </h2>
-  <ul class="app-task-list__items">
-   @includes.taskListItem(
-    taskId = "residential-tenants",
-    taskNameKey = "checkYourAnswersLettingHistory.residentialTenants",
-    taskPage = controllers.lettingHistory.routes.HasPermanentResidentsController.show,
-    sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("residential-tenants"),
-    pageAnswer = LettingHistory.hasPermanentResidents(session),
-    cannotStartYet = {
-     section2Completed.isEmpty
-    }
-   )
-   @includes.taskListItem(
-    taskId = "temporary-occupiers",
-    taskNameKey = "checkYourAnswersLettingHistory.temporaryOccupiers",
-    taskPage = controllers.lettingHistory.routes.HasCompletedLettingsController.show,
-    sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("temporary-occupiers"),
-    pageAnswer = LettingHistory.hasCompletedLettings(session),
-    cannotStartYet = {
-     LettingHistory.hasPermanentResidents(session).isEmpty
-    }
-   )
-   @includes.taskListItem(
-    taskId = "intended-lettings",
-    taskNameKey = "checkYourAnswersLettingHistory.intendedLettings",
-    taskPage = controllers.lettingHistory.routes.HowManyNightsController.show,
-    sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("intended-lettings"),
-    pageAnswer = LettingHistory.intendedLettings(session),
-    cannotStartYet = {
-     LettingHistory.hasCompletedLettings(session).isEmpty
-    }
-   )
-   @includes.taskListItem(
-    taskId = "online-advertising",
-    taskNameKey = "checkYourAnswersLettingHistory.onlineAdvertising",
-    taskPage = controllers.lettingHistory.routes.HasOnlineAdvertisingController.show,
-    sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("online-advertising"),
-    pageAnswer = LettingHistory.hasOnlineAdvertising(session),
-    cannotStartYet = {
-     LettingHistory.intendedLettingsNights(session).isEmpty ||
-             LettingHistory.intendedLettingsIsYearlyAvailable(session).isEmpty
-     // TODO improve this logic condition
-    }
-   )
-  </ul>
- </li>
+    <li>
+        <h2 id="letting-history" class="app-task-list__section">
+            <span class="app-task-list__section-number">3. </span> @messages("label.section.lettingHistory")
+        </h2>
+        <ul class="app-task-list__items">
+            @includes.taskListItem(
+                taskId = "residential-tenants",
+                taskNameKey = "checkYourAnswersLettingHistory.residentialTenants",
+                taskPage = controllers.lettingHistory.routes.HasPermanentResidentsController.show,
+                sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("residential-tenants"),
+                pageAnswer = LettingHistory.hasPermanentResidents(session),
+                cannotStartYet = {
+                    section2Completed.isEmpty
+                }
+            )
+            @includes.taskListItem(
+                taskId = "temporary-occupiers",
+                taskNameKey = "checkYourAnswersLettingHistory.temporaryOccupiers",
+                taskPage = controllers.lettingHistory.routes.HasCompletedLettingsController.show,
+                sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("temporary-occupiers"),
+                pageAnswer = LettingHistory.hasCompletedLettings(session),
+                cannotStartYet = {
+                    LettingHistory.hasPermanentResidents(session).isEmpty
+                }
+            )
+            @includes.taskListItem(
+                taskId = "intended-lettings",
+                taskNameKey = "checkYourAnswersLettingHistory.intendedLettings",
+                taskPage = controllers.lettingHistory.routes.HowManyNightsController.show,
+                sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("intended-lettings"),
+                pageAnswer = LettingHistory.intendedLettings(session),
+                cannotStartYet = {
+                    LettingHistory.hasCompletedLettings(session).isEmpty
+                }
+            )
+            @includes.taskListItem(
+                taskId = "online-advertising",
+                taskNameKey = "checkYourAnswersLettingHistory.onlineAdvertising",
+                taskPage = controllers.lettingHistory.routes.HasOnlineAdvertisingController.show,
+                sectionCompleted = LettingHistoryTaskListHelper.isTaskComplete("online-advertising"),
+                pageAnswer = LettingHistory.hasOnlineAdvertising(session),
+                cannotStartYet = {
+                    LettingHistory.intendedLettingsNights(session).isEmpty ||
+                            LettingHistory.intendedLettingsIsYearlyAvailable(session).isEmpty
+                    // TODO improve this logic condition
+                }
+            )
+        </ul>
+    </li>
 
- <li>
-  <h2 id="accommodation" class="app-task-list__section">
-   <span class="app-task-list__section-number">4. </span> @messages("label.section.accommodation")
-  </h2>
-  <ul class="app-task-list__items">
-  @includes.taskListItem("accommodation-details", "checkYourAnswersAccommodation.accommodationDetails",
-   controllers.accommodation.routes.AccommodationUnit6048Controller.show,
-   section4AccommodationCompleted,
-   session.accommodationDetails,
-   sectionLettingHistoryCompleted.isEmpty
-  )
-  </ul>
- </li>
+    <li>
+        <h2 id="accommodation" class="app-task-list__section">
+            <span class="app-task-list__section-number">4. </span> @messages("label.section.accommodation")
+        </h2>
+        <ul class="app-task-list__items">
+        @includes.taskListItem("accommodation-details", "checkYourAnswersAccommodation.accommodationDetails",
+            controllers.accommodation.routes.AccommodationUnit6048Controller.show,
+            section4AccommodationCompleted,
+            session.accommodationDetails,
+            sectionLettingHistoryCompleted.isEmpty
+        )
+        </ul>
+    </li>
 }

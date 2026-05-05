@@ -25,7 +25,7 @@ import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, TotalP
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TotalPayrollCostId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.totalPayrollCosts
 
@@ -41,7 +41,7 @@ class TotalPayrollCostsController @Inject() (
   totalPayrollCostsView: totalPayrollCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -64,7 +64,7 @@ class TotalPayrollCostsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[Seq[TotalPayrollCost]](
           totalPayrollCostForm(years(aboutTheTradingHistory)),
           formWithErrors =>

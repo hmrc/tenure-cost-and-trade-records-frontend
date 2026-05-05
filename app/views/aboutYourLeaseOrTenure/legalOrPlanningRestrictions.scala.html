@@ -16,8 +16,8 @@
 
 @import models.pages.Summary
 @import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -28,37 +28,47 @@
 @(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("legalOrPlanningRestrictions.heading"),
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("legalOrPlanningRestrictions.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.submit()) {
 
-      <p class="govuk-body">@{messages("legalOrPlanningRestrictions.p1")}</p>
+        <p class="govuk-body">@{
+            messages("legalOrPlanningRestrictions.p1")
+        }</p>
 
-      <ul class="govuk-list govuk-list--bullet">
-          <li>@{messages("legalOrPlanningRestrictions.list1")}</li>
-          <li>@{messages("legalOrPlanningRestrictions.list2")}</li>
-          <li>@{messages("legalOrPlanningRestrictions.list3")}</li>
-      </ul>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@{
+                messages("legalOrPlanningRestrictions.list1")
+            }</li>
+            <li>@{
+                messages("legalOrPlanningRestrictions.list2")
+            }</li>
+            <li>@{
+                messages("legalOrPlanningRestrictions.list3")
+            }</li>
+        </ul>
 
-      <p class="govuk-body">@{messages("legalOrPlanningRestrictions.p2")}</p>
+        <p class="govuk-body">@{
+            messages("legalOrPlanningRestrictions.p2")
+        }</p>
 
 
-      @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "legalOrPlanningRestrictions",
-      "legalOrPlanningRestrictions.subheading",
-          messages("label.yes.do"),
-          messages("label.no.naddo"),
-      classes = "govuk-fieldset__legend--m"
-    )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "legalOrPlanningRestrictions",
+            "legalOrPlanningRestrictions.subheading",
+            messages("label.yes.do"),
+            messages("label.no.naddo"),
+            classes = "govuk-fieldset__legend--m"
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

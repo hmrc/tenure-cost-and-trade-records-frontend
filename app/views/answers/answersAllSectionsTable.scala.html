@@ -38,7 +38,7 @@
 }
 
 @forType = @{
- request.sessionData.forType
+    request.sessionData.forType
 }
 
 <span class="govuk-caption-m">@messages("label.section.connectionToTheProperty")</span>
@@ -56,10 +56,14 @@
 @answersAboutYourTradingHistory()
 
 <span class="govuk-caption-m">@messages("label.section.aboutFranchisesOrLettings")</span>
-    @forType match {
-    case FOR6020 => {@answersAboutLettings()}
-    case _       => {@answersAboutConcessionsFranchisesOrLettings()}
+@forType match {
+    case FOR6020 => {
+        @answersAboutLettings()
     }
+    case _ => {
+        @answersAboutConcessionsFranchisesOrLettings()
+    }
+}
 
 @if(isLeaseHolder) {
     <span class="govuk-caption-m">@messages("label.section.aboutYourLeaseOrTenure")</span>

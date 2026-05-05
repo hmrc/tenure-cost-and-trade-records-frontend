@@ -20,8 +20,8 @@ import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
-import models.submissions.common.AnswersYesNo.*
 import models.submissions.common.AnswersYesNo
+import models.submissions.common.AnswersYesNo.*
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.CheckYourAnswersAboutFranchiseOrLettingsId
 import play.api.Logging
@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings as CheckYourAnswersAboutFranchiseOrLettingsView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
@@ -40,7 +40,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
   theView: CheckYourAnswersAboutFranchiseOrLettingsView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repo: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging:
@@ -78,10 +78,8 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
               controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
             )
           )
-        repo.saveOrUpdate(updatedData).flatMap { _ =>
-          Future.successful(
-            Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
-          )
+        repo.saveOrUpdate(updatedData).map { _ =>
+          Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
         }
       }
     )

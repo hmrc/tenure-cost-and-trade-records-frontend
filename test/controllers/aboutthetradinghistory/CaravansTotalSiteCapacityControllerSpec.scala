@@ -30,8 +30,8 @@ class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec {
 
   private val nextPage = aboutthetradinghistory.routes.CaravansPerServiceController.show().url
 
-  def caravansTotalSiteCapacityController =
-    new CaravansTotalSiteCapacityController(
+  def caravansTotalSiteCapacityController: CaravansTotalSiteCapacityController =
+    CaravansTotalSiteCapacityController(
       caravansTotalSiteCapacityView,
       mockAudit,
       aboutYourTradingHistoryNavigator,

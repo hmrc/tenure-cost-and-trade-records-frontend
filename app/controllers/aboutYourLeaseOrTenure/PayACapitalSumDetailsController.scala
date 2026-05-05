@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.payACapitalSumDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PayACapitalSumDetailsController @Inject() (
@@ -43,7 +43,7 @@ class PayACapitalSumDetailsController @Inject() (
   payACapitalSumDetailsView: payACapitalSumDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -51,16 +51,14 @@ class PayACapitalSumDetailsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PayACapitalSumDetails")
 
-    Future.successful(
-      Ok(
-        payACapitalSumDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumInformationDetails) match {
-            case Some(data) => payACapitalSumDetailsForm.fill(data)
-            case _          => payACapitalSumDetailsForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      payACapitalSumDetailsView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumInformationDetails) match {
+          case Some(data) => payACapitalSumDetailsForm.fill(data)
+          case _          => payACapitalSumDetailsForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }
@@ -82,7 +80,7 @@ class PayACapitalSumDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-details"
       case _    =>

@@ -33,7 +33,7 @@ import views.html.connectiontoproperty.isRentReceivedFromLetting
 
 import java.util.concurrent.TimeUnit
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class IsRentReceivedFromLettingController @Inject() (
@@ -43,7 +43,7 @@ class IsRentReceivedFromLettingController @Inject() (
   isRentReceivedFromLettingView: isRentReceivedFromLetting,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -51,16 +51,14 @@ class IsRentReceivedFromLettingController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsRentReceivedFromLetting")
 
-    Future.successful(
-      Ok(
-        isRentReceivedFromLettingView(
-          request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
-            case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
-            case _                       => isRentReceivedFromLettingForm
-          },
-          getBackLink,
-          request.sessionData.toSummary
-        )
+    Ok(
+      isRentReceivedFromLettingView(
+        request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+          case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
+          case _                       => isRentReceivedFromLettingForm
+        },
+        getBackLink,
+        request.sessionData.toSummary
       )
     )
 
@@ -97,7 +95,7 @@ class IsRentReceivedFromLettingController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url

@@ -15,9 +15,9 @@
  *@
 
 @import models.pages.Summary
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -25,12 +25,12 @@
         hmrcCharacterCount: HmrcCharacterCount,
 )
 
-@(theForm: Form[String], backLink: String,   summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
+@(theForm: Form[String], backLink: String, summary: Summary, readOnly: Boolean)(implicit request: Request[?], messages: Messages)
 
 @layout(
     pageHeading = messages("plantAndTechnology.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = backLink,
     theForm = theForm,
@@ -38,15 +38,15 @@
 ) {
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.submit()) {
         <fieldset class="govuk-fieldset">
-            @includes.textInputHMRCCharCount(
-                hmrcCharacterCount,
-                theForm,
-                "plantAndTechnology",
-                "label.detailsToQuestions",
-                classes = "govuk-!-font-weight-bold",
-                hint = "plantAndTechnology.hint",
-                charCount = 2000
-            )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "plantAndTechnology",
+            "label.detailsToQuestions",
+            classes = "govuk-!-font-weight-bold",
+            hint = "plantAndTechnology.hint",
+            charCount = 2000
+        )
         </fieldset>
         @includes.continueSaveAsDraftButtons(govukButton)
     }

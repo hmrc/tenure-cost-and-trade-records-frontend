@@ -15,12 +15,12 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.ForType.*
 @import models.pages.Summary
 @import models.submissions.common.AnswersYesNo
-@import views.html.answers.{answersAboutYourTradingHistory,answersTradingHistory6048, answersTradingHistory6045, answersTradingHistory6076, answersTradingHistory6020, answersTradingHistory6015}
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.answers.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -50,21 +50,32 @@
     pageHeading = cyaPageHeading,
     backLinkUrl = backLink,
     fullWidth = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     theForm = theForm
 ) {
 
 
-  @forType match {
-    case FOR6015           => {@answers6015()}
-    case FOR6020           => {@answers6020()}
-    case FOR6045 | FOR6046 => {@answers6045()}
-    case FOR6048           => {@answers6048()}
-    case FOR6076           => {@answers6076()}
-    case _                 => {@answersSectionAboutYourTradingHistory()}
-  }
-
+    @forType match {
+        case FOR6015 => {
+            @answers6015()
+        }
+        case FOR6020 => {
+            @answers6020()
+        }
+        case FOR6045 | FOR6046 => {
+            @answers6045()
+        }
+        case FOR6048 => {
+            @answers6048()
+        }
+        case FOR6076 => {
+            @answers6076()
+        }
+        case _ => {
+            @answersSectionAboutYourTradingHistory()
+        }
+    }
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.submit()) {
         <input type="hidden" name="checkYourAnswersAboutTheTradingHistory" value="yes" />

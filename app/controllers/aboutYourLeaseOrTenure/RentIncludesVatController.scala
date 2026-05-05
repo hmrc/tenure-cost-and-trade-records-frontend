@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentIncludesVat
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentIncludesVatController @Inject() (
@@ -41,7 +41,7 @@ class RentIncludesVatController @Inject() (
   rentIncludeVatView: rentIncludesVat,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -49,15 +49,13 @@ class RentIncludesVatController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludesVat")
 
-    Future.successful(
-      Ok(
-        rentIncludeVatView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludesVat) match {
-            case Some(rentIncludeVat) => rentIncludesVatForm.fill(rentIncludeVat)
-            case _                    => rentIncludesVatForm
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      rentIncludeVatView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludesVat) match {
+          case Some(rentIncludeVat) => rentIncludesVatForm.fill(rentIncludeVat)
+          case _                    => rentIncludesVatForm
+        },
+        request.sessionData.toSummary
       )
     )
   }

@@ -21,45 +21,48 @@ import models.Session
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord}
 import models.submissions.common.Address
 import models.submissions.common.AnswersYesNo.*
+import org.jsoup.nodes.Document
+import org.mockito.ArgumentCaptor
+import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import utils.{JsoupHelpers, TestBaseSpec}
 
-import scala.concurrent.Future.successful
+import scala.concurrent.Future
 
 class LettingTypeDetailsControllerSpec extends TestBaseSpec with LettingTypeDetailsControllerBehaviours with JsoupHelpers:
 
   "the LettingTypeDetails controller" when {
     "handling GET requests"            should {
       "reply 200 with a fresh HTML form" in new ControllerFixture {
-        val result = controller.show(0)(fakeRequest)
+        val result: Future[Result] = controller.show(0)(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading shouldBe "lettingOtherPartOfPropertyDetailsTenants.heading"
       }
       "reply 200 with a fresh HTML form if given unknown index" in new ControllerFixture {
-        val result = controller.show(2)(fakeRequest)
-        val page   = contentAsJsoup(result)
+        val result: Future[Result] = controller.show(2)(fakeRequest)
+        val page: Document         = contentAsJsoup(result)
         page.input("lettingOperatorName")   should beEmpty
         page.input("lettingTypeOfBusiness") should beEmpty
       }
       "render back link to CYA if request comes from CYA" in new ControllerFixture {
-        val result = controller.show(0)(fakeRequestFromCYA)
-        val page   = contentAsJsoup(result)
+        val result: Future[Result] = controller.show(0)(fakeRequestFromCYA)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
       "render a correct back link to type of income page if no query parameters in the url " in new ControllerFixture {
-        val result = controller.show(0)(fakeRequest)
-        val page   = contentAsJsoup(result)
+        val result: Future[Result] = controller.show(0)(fakeRequest)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.TypeOfIncomeController.show(idx = Some(0)).url
       }
     }
     "handling POST requests"           should {
       "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
-        val res = controller.submit(0)(
+        val res: Future[Result] = controller.submit(0)(
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(res) shouldBe BAD_REQUEST
@@ -72,10 +75,10 @@ class LettingTypeDetailsControllerSpec extends TestBaseSpec with LettingTypeDeta
   }
 
   trait ControllerFixture extends MockAddressLookup:
-    val repository = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
+    val repository: SessionRepo = mock[SessionRepo]
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(Future.unit)
 
-    val controller = new LettingTypeDetailsController(
+    val controller: LettingTypeDetailsController = LettingTypeDetailsController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,
@@ -99,9 +102,9 @@ trait LettingTypeDetailsControllerBehaviours:
 
   def savingIncomeRecordAndRedirectingToAddressLookupService(index: Int): Unit =
     s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture {
-      val operatorName   = "Godzilla"
-      val typeOfBusiness = "Atomic Bomb Factory"
-      val result         = controller.submit(index)(
+      val operatorName           = "Godzilla"
+      val typeOfBusiness         = "Atomic Bomb Factory"
+      val result: Future[Result] = controller.submit(index)(
         fakePostRequest.withFormUrlEncodedBody(
           "lettingOperatorName"   -> operatorName,
           "lettingTypeOfBusiness" -> typeOfBusiness
@@ -109,7 +112,7 @@ trait LettingTypeDetailsControllerBehaviours:
       )
       status(result) shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe "/on-ramp"
-      val session = captor[Session]
+      val session: ArgumentCaptor[Session] = captor[Session]
       verify(repository, once).saveOrUpdate(session.capture())(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: LettingIncomeRecord =>
@@ -120,15 +123,15 @@ trait LettingTypeDetailsControllerBehaviours:
 
   def retrievingConfirmedAddressFromAddressLookupService(index: Int): Unit =
     s"save record at index=$index and reply 303 redirect to the next page" in new ControllerFixture {
-      val result = controller.addressLookupCallback(index, "confirmedAddress")(fakeRequest)
+      val result: Future[Result] = controller.addressLookupCallback(index, "confirmedAddress")(fakeRequest)
       status(result)                 shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe routes.RentalIncomeRentController.show(0).url
 
-      val id = captor[String]
+      val id: ArgumentCaptor[String] = captor[String]
       verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
       id.getValue shouldBe "confirmedAddress"
 
-      val session = captor[Session]
+      val session: ArgumentCaptor[Session] = captor[Session]
       verify(repository, once).saveOrUpdate(session)(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
         case record: LettingIncomeRecord =>

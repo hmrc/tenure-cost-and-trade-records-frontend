@@ -41,7 +41,7 @@ class UnusualCircumstancesController @Inject() (
   unusualCircumstancesView: unusualCircumstances,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -61,7 +61,7 @@ class UnusualCircumstancesController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[UnusualCircumstances](
       unusualCircumstancesForm,
       formWithErrors =>
@@ -82,7 +82,7 @@ class UnusualCircumstancesController @Inject() (
     )
   }
 
-  private def getBackLink(implicit answers: SessionRequest[AnyContent]): String =
+  private def getBackLink(using answers: SessionRequest[AnyContent]): String =
     answers.sessionData.forType match {
       case FOR6015 => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
       case FOR6030 => controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url

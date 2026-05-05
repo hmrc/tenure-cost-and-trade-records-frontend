@@ -14,13 +14,12 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Hint, Text}
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 
 @(govukInput: GovukInput,
         theForm: Form[?],
@@ -43,7 +42,7 @@
             classes = formGroupClasses,
         ),
         label = if(optional) Label(content = Text(s"${messages(s"label.$labelContent")} ${messages("hintText.optional")}"), classes = labelClasses)
-                else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
-        hint = Option(hintMsg).filterNot(_.trim.isEmpty).map(key => Hint(content = Text(messages(s"hint.$key"))))
+        else Label(content = Text(messages(s"label.$labelContent")), classes = labelClasses),
+        hint = hintMsg.filterNot(_.trim.isEmpty).map(key => Hint(content = Text(messages(s"hint.$key"))))
     ).withFormField(theForm(id))
 )

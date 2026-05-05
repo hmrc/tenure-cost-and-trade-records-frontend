@@ -21,7 +21,7 @@ import form.aboutyouandtheproperty.LicensableActivitiesInformationForm.licensabl
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -35,7 +35,7 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
 
   def licensableActivitiesDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new LicensableActivitiesDetailsController(
+  ): LicensableActivitiesDetailsController = LicensableActivitiesDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -44,7 +44,7 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def licensableActivitiesDetailsControllerNone() = new LicensableActivitiesDetailsController(
+  def licensableActivitiesDetailsControllerNone(): LicensableActivitiesDetailsController = LicensableActivitiesDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

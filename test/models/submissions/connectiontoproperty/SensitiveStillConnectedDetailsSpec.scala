@@ -19,9 +19,9 @@ package models.submissions.connectiontoproperty
 import crypto.MongoCrypto
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.common.{Address, CheckYourAnswersAndConfirm, ContactDetails}
-import play.api.Configuration
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
+import play.api.Configuration
 import utils.SensitiveTestHelper
 
 import java.time.LocalDate

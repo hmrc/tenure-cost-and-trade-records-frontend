@@ -21,15 +21,15 @@ import controllers.FORDataCaptureController
 import form.notconnected.RemoveConnectionForm.removeConnectionForm
 import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
 import models.submissions.notconnected.RemoveConnectionsDetails
-import play.api.i18n.I18nSupport
 import navigation.RemoveConnectionNavigator
 import navigation.identifiers.RemoveConnectionId
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.notconnected.removeConnection
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RemoveConnectionController @Inject() (
@@ -38,26 +38,24 @@ class RemoveConnectionController @Inject() (
   removeConnectionView: removeConnection,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        removeConnectionView(
-          request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
-            case Some(removeConnectionDetails) => removeConnectionForm.fill(removeConnectionDetails)
-            case _                             => removeConnectionForm
-          },
-          request.sessionData.toSummary,
-          calculateBackLink
-        )
+    Ok(
+      removeConnectionView(
+        request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
+          case Some(removeConnectionDetails) => removeConnectionForm.fill(removeConnectionDetails)
+          case _                             => removeConnectionForm
+        },
+        request.sessionData.toSummary,
+        calculateBackLink
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RemoveConnectionsDetails](
       removeConnectionForm,
       formWithErrors =>
@@ -72,7 +70,7 @@ class RemoveConnectionController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
       case _     => controllers.notconnected.routes.PastConnectionController.show().url

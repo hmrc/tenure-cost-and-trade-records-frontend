@@ -16,7 +16,7 @@
 
 package utils
 
-import navigation._
+import navigation.*
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.{FakeRequest, Injecting}
 

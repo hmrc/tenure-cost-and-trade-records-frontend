@@ -18,8 +18,8 @@ package form.aboutyouandtheproperty
 
 import form.MappingSupport.nonEmptyList
 import models.submissions.aboutyouandtheproperty.PropertyCurrentlyUsed
-import play.api.data._
-import play.api.data.Forms._
+import play.api.data.*
+import play.api.data.Forms.*
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 object PropertyCurrentlyUsedForm {

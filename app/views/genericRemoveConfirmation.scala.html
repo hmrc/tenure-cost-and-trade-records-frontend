@@ -15,12 +15,14 @@
  *@
 
 @import actions.SessionRequest
-@import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.ForType.*
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
+@import views.html.components.PrimaryLayout
 
-@this(layout: PrimaryLayout,
+@this(
+        layout: PrimaryLayout,
         govukButton: GovukButton,
         govukRadios: GovukRadios,
         formWithCSRF: FormWithCSRF
@@ -42,26 +44,25 @@
     forType match {
         case FOR6015 | FOR6016 => messages("label.section.aboutConcessionsOrLettings")
         case FOR6045 | FOR6046 => messages("label.section.aboutConcessionsFranchisesOrLettings")
-        case _                 => messages("label.section.aboutFranchisesOrLettings")
+        case _ => messages("label.section.aboutFranchisesOrLettings")
     }
 }
 
 @layout(
-    pageHeading = messages("genericRemoveConfirmation.heading",name),
+    pageHeading = messages("genericRemoveConfirmation.heading", name),
     showSection = true,
     showH1 = false,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = sectionName,
     backLinkUrl = cancelAction.url,
     theForm = theForm
 ) {
-
     @formWithCSRF(action = confirmAction) {
         @includes.radioButtonsYesNo(
             govukRadios,
             theForm,
             "genericRemoveConfirmation",
-            messages("genericRemoveConfirmation.heading",name),
+            messages("genericRemoveConfirmation.heading", name),
             "label.yes.ydw",
             "label.no.nac.ydw",
             classes = "govuk-fieldset__legend--l",
@@ -71,15 +72,7 @@
         <input type="hidden" name="from" value="@from" />
 
         <div class="govuk-button-group">
-        @govukButton(
-            Button(
-                attributes = Map("id" -> "continue"),
-                content = Text(messages("label.continue")),
-                name = Some("continue_button"),
-                value = Some("continue_button"),
-                inputType = Some("submit")
-            )
-        )
+        @govukButton(SubmitButton("continue"))
         </div>
     }
 }

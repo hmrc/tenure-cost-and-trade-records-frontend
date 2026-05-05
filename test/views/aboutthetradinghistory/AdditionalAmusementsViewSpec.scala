@@ -19,6 +19,7 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.AdditionalAmusementsForm
 import play.api.data.Form
+import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
 class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[BigDecimal]]] {
@@ -30,7 +31,7 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[Big
   override val form: Form[Seq[Option[BigDecimal]]] =
     AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages)
 
-  val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
   private val backLink = controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show().url
 
@@ -52,9 +53,9 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[Big
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").first().text()
-      assert(sectionText == messages("label.section.aboutYourTradingHistory"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contains paragraph" in {

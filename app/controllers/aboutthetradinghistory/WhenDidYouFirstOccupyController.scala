@@ -20,11 +20,11 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.{FORDataCaptureController, aboutthetradinghistory}
 import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInformationForm
+import models.ForType.*
+import models.Session
 import models.submissions.Form6010.MonthsYearDuration
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory.updateAboutTheTradingHistory
 import models.submissions.aboutthetradinghistory.OccupationalAndAccountingInformation
-import models.ForType.*
-import models.Session
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.AboutYourTradingHistoryPageId
 import play.api.Logging
@@ -45,7 +45,7 @@ class WhenDidYouFirstOccupyController @Inject() (
   theView: WhenDidYouFirstOccupyView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {

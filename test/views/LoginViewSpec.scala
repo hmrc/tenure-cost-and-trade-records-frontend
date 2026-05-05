@@ -40,8 +40,8 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
 
     "contain Login button with the value Login" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
   }
 }

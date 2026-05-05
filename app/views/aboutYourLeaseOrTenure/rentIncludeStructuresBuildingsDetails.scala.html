@@ -14,10 +14,10 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -28,33 +28,33 @@
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("rentIncludeStructuresBuildingsDetails.heading"),
-  showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
-  backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show().url,
- theForm = theForm
+    pageHeading = messages("rentIncludeStructuresBuildingsDetails.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController.show().url,
+    theForm = theForm
 ) {
 
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.submit()) {
 
-  @govukCharacterCount(
-   CharacterCount(
-    id = "rentIncludeStructuresBuildingsDetails",
-    name = "rentIncludeStructuresBuildingsDetails",
-    maxLength = 2000,
-    label = Label(
-     content = Text(messages("rentIncludeStructuresBuildingsDetails.heading")),
-     classes = "govuk-label--l",
-     isPageHeading = true
-    ),
-    errorMessage = theForm.errors.asTextErrorMessageForField("rentIncludeStructuresBuildingsDetails"),
-   ).withFormField(theForm("rentIncludeStructuresBuildingsDetails"))
-  )
+        @govukCharacterCount(
+            CharacterCount(
+                id = "rentIncludeStructuresBuildingsDetails",
+                name = "rentIncludeStructuresBuildingsDetails",
+                maxLength = 2000,
+                label = Label(
+                    content = Text(messages("rentIncludeStructuresBuildingsDetails.heading")),
+                    classes = "govuk-label--l",
+                    isPageHeading = true
+                ),
+                errorMessage = theForm.errors.asTextErrorMessageForField("rentIncludeStructuresBuildingsDetails"),
+            ).withFormField(theForm("rentIncludeStructuresBuildingsDetails"))
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

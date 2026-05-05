@@ -33,7 +33,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
 
   when(mockTaskListView()(using any, any)).thenReturn(HtmlFormat.empty)
 
-  private val checkYourAnswersTentingPitchesController = new CheckYourAnswersTentingPitchesController(
+  private val checkYourAnswersTentingPitchesController = CheckYourAnswersTentingPitchesController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersTentingPitchesView,
@@ -45,7 +45,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  private val checkYourAnswersTentingPitchesControllerYesTent = new CheckYourAnswersTentingPitchesController(
+  private val checkYourAnswersTentingPitchesControllerYesTent = CheckYourAnswersTentingPitchesController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersTentingPitchesView,
@@ -57,7 +57,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  private val checkYourAnswersTentingPitchesControllerNoTent = new CheckYourAnswersTentingPitchesController(
+  private val checkYourAnswersTentingPitchesControllerNoTent = CheckYourAnswersTentingPitchesController(
     stubMessagesControllerComponents(),
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersTentingPitchesView,

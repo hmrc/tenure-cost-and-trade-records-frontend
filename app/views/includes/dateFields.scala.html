@@ -14,87 +14,95 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases._
+@import uk.gov.hmrc.govukfrontend.views.Aliases.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.FormGroup
 @import util.DateUtil
 
-@(  form: Form[?],
-    field: String,
-    govukDate: GovukDateInput,
-    helpText: Option[String] = None,
-    labelSuffix: Option[String] = None,
-    label: Option[String] = None,
-    labelArg0: Option[String] = None,
-    customClass: Option[String] = None,
-    showDays : Boolean = false,
-        hideYear: Boolean= false,
-    showFieldSet: Boolean = true)(implicit messages: Messages)
+@(form: Form[?],
+        field: String,
+        govukDate: GovukDateInput,
+        helpText: Option[String] = None,
+        labelSuffix: Option[String] = None,
+        label: Option[String] = None,
+        labelArg0: Option[String] = None,
+        customClass: Option[String] = None,
+        showDays: Boolean = false,
+        hideYear: Boolean = false,
+        showFieldSet: Boolean = true)(implicit messages: Messages)
 
-    @labelText = @{ labelArg0.fold(messages(label.getOrElse("label." + field + labelSuffix.getOrElse(""))))(arg0 => messages(label.get, arg0))}
-    @dayfield  = @{field + ".day"}
-    @monthfield  = @{field + ".month"}
-    @yearfield  = @{field + ".year"}
-    @dateErrorMessage(field: String) = @{
-        var msg: Option[ErrorMessage] = None
-        if(form.errors(field).isDefined){
-            msg = form.errors.asTextErrorMessageForField(field)
-        }
-        if(msg.isEmpty) {
-            if(form.errors.exists(x => x.key.contains(field))){
-                val firstError = form.errors.find(x => x.key.contains(field))
-                msg = Some(ErrorMessage(content = Text(messages(firstError.get.message.replaceAll("[\\[|\\]]", ""), firstError.get.args*))))
-            }
-        }
-        msg
+@labelText = @{
+    labelArg0.fold(messages(label.getOrElse("label." + field + labelSuffix.getOrElse(""))))(arg0 => messages(label.get, arg0))
+}
+@dayfield = @{
+    field + ".day"
+}
+@monthfield = @{
+    field + ".month"
+}
+@yearfield = @{
+    field + ".year"
+}
+@dateErrorMessage(field: String) = @{
+    var msg: Option[ErrorMessage] = None
+    if(form.errors(field).isDefined) {
+        msg = form.errors.asTextErrorMessageForField(field)
     }
-
-    @dateInputItems = @{
-
-        def getErrorClass(inputField: String, datePart: String) = {
-            if (form.error(inputField).isDefined || form.errors.find(_.key.startsWith(field)).flatMap(_.args.lastOption).exists {
-                case errorParts: Seq[String @unchecked] => errorParts.contains(datePart)
-                case _ => false
-            }) {
-                "govuk-input--error"
-            } else {
-                ""
-            }
+    if(msg.isEmpty) {
+        if(form.errors.exists(x => x.key.contains(field))) {
+            val firstError = form.errors.find(x => x.key.contains(field))
+            msg = ErrorMessage(content = Text(messages(firstError.get.message.replaceAll("[\\[|\\]]", ""), firstError.get.args *)))
         }
+    }
+    msg
+}
 
-        val month = InputItem(
-            id = monthfield,
-            name = monthfield,
-            classes = "govuk-input--width-2 " + getErrorClass(monthfield, "month"),
-            value = form(monthfield).value,
-            label = messages("label.date.month")
-        )
-        val year = InputItem(
-            id = yearfield,
-            name = yearfield,
-            classes = "govuk-input--width-4 " + getErrorClass(yearfield, "year"),
-            value = form(yearfield).value,
-            label = messages("label.date.year")
-        )
-        val day = InputItem(
-            id = dayfield,
-            name = dayfield,
-            classes = "govuk-input--width-2 " + getErrorClass(dayfield, "day"),
-            value = form(dayfield).value,
-            label = messages("label.date.day")
-        )
+@dateInputItems = @{
 
-        if (showDays) {
-            Seq(day, month, year)
-        } else if (hideYear) {
-            Seq(day, month)
+    def getErrorClass(inputField: String, datePart: String) = {
+        if(form.error(inputField).isDefined || form.errors.find(_.key.startsWith(field)).flatMap(_.args.lastOption).exists {
+            case errorParts: Seq[String @unchecked] => errorParts.contains(datePart)
+            case _ => false
+        }) {
+            "govuk-input--error"
         } else {
-            Seq(month, year)
+            ""
         }
     }
 
-  @if(showFieldSet) {
+    val month = InputItem(
+        id = monthfield,
+        name = monthfield,
+        classes = "govuk-input--width-2 " + getErrorClass(monthfield, "month"),
+        value = form(monthfield).value,
+        label = messages("label.date.month")
+    )
+    val year = InputItem(
+        id = yearfield,
+        name = yearfield,
+        classes = "govuk-input--width-4 " + getErrorClass(yearfield, "year"),
+        value = form(yearfield).value,
+        label = messages("label.date.year")
+    )
+    val day = InputItem(
+        id = dayfield,
+        name = dayfield,
+        classes = "govuk-input--width-2 " + getErrorClass(dayfield, "day"),
+        value = form(dayfield).value,
+        label = messages("label.date.day")
+    )
+
+    if(showDays) {
+        Seq(day, month, year)
+    } else if(hideYear) {
+        Seq(day, month)
+    } else {
+        Seq(month, year)
+    }
+}
+
+@if(showFieldSet) {
     @govukDate(
         DateInput(
             id = field,
@@ -105,7 +113,7 @@
             hint = Hint(
                 content = HtmlContent(helpText.getOrElse(
                     if(showDays) messages("hint.date.example", DateUtil.exampleDayMonthYear(1))
-                    else if (hideYear) messages("help.date.day.month", DateUtil.exampleDayMonth(1))
+                    else if(hideYear) messages("help.date.day.month", DateUtil.exampleDayMonth(1))
                     else messages("help.date.month.year", DateUtil.exampleMonthYear(1))
                 ))
             ),
@@ -118,22 +126,22 @@
             errorMessage = dateErrorMessage(field),
         )
     )
-  } else {
-      @govukDate(
-          DateInput(
-              id = field,
-              formGroup = FormGroup(
-                  classes = if(form.errors.exists(e => e.key.contains(field))) "govuk-form-group--error" else ""
-              ),
-              items = dateInputItems,
-              hint = Hint(
-                  content = HtmlContent(helpText.getOrElse(
-                      if(showDays) messages("hint.date.example", DateUtil.exampleDayMonthYear(1))
-                      else if (hideYear) messages("help.date.day.month", DateUtil.exampleDayMonth(1))
-                      else messages("help.date.month.year", DateUtil.exampleMonthYear(1))
-                  ))
-              ),
-              errorMessage = dateErrorMessage(field),
-          )
-      )
-  }
+} else {
+    @govukDate(
+        DateInput(
+            id = field,
+            formGroup = FormGroup(
+                classes = if(form.errors.exists(e => e.key.contains(field))) "govuk-form-group--error" else ""
+            ),
+            items = dateInputItems,
+            hint = Hint(
+                content = HtmlContent(helpText.getOrElse(
+                    if(showDays) messages("hint.date.example", DateUtil.exampleDayMonthYear(1))
+                    else if(hideYear) messages("help.date.day.month", DateUtil.exampleDayMonth(1))
+                    else messages("help.date.month.year", DateUtil.exampleMonthYear(1))
+                ))
+            ),
+            errorMessage = dateErrorMessage(field),
+        )
+    )
+}

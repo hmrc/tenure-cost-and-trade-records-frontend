@@ -27,15 +27,15 @@ import scala.language.reflectiveCalls
 
 class LicensableActivitiesControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import form.aboutyouandtheproperty.LicensableActivitiesForm._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import form.aboutyouandtheproperty.LicensableActivitiesForm.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def licensableActivitiesController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new LicensableActivitiesController(
+  ): LicensableActivitiesController = LicensableActivitiesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -44,7 +44,7 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def licensableActivitiesControllerNone() = new LicensableActivitiesController(
+  def licensableActivitiesControllerNone(): LicensableActivitiesController = LicensableActivitiesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

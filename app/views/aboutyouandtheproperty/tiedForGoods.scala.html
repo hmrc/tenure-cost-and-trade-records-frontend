@@ -14,42 +14,46 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("tiedForGoods.heading"),
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("tiedForGoods.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.TiedForGoodsController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.TiedForGoodsController.submit()) {
 
-    <p class="govuk-body">@{messages("tiedForGoods.para1")}</p>
+        <p class="govuk-body">@{
+            messages("tiedForGoods.para1")
+        }</p>
 
-      <p class="govuk-body">@{messages("tiedForGoods.para2")}</p>
+        <p class="govuk-body">@{
+            messages("tiedForGoods.para2")
+        }</p>
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "tiedForGoods",
-      "tiedForGoods.label",
-      classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
-    )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "tiedForGoods",
+            "tiedForGoods.label",
+            classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

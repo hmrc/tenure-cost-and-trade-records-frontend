@@ -14,49 +14,49 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  govukDetails: GovukDetails,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukDetails: GovukDetails,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[AnswersYesNo], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("premisesLicenseGranted.heading"),
-  showH1 = false,
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url,
-  theForm = theForm
+    pageHeading = messages("premisesLicenseGranted.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.submit()) {
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "premisesLicenseGranted",
-      "premisesLicenseGranted.heading",
-      classes = "govuk-fieldset__legend--l",
-      isHeading = true
-    )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "premisesLicenseGranted",
+            "premisesLicenseGranted.heading",
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true
+        )
 
-    @govukDetails(Details(
-      summary = Text(messages("help.premisesLicenseGranted.title")),
-      content = Text(messages("help.premisesLicenseGranted.text"))
-    ))
+        @govukDetails(Details(
+            summary = Text(messages("help.premisesLicenseGranted.title")),
+            content = Text(messages("help.premisesLicenseGranted.text"))
+        ))
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

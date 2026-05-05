@@ -14,38 +14,35 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Hint, Legend, Radios}
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
 @(govukRadios: GovukRadios,
-  theForm: Form[?],
-  name: String,
-  legendContent: String = "",
-  classes: String = "",
-  items: Seq[RadioItem],
-  hint: String = "",
-  isHeading: Boolean = false,
-  inline: Boolean = true
+        theForm: Form[?],
+        name: String,
+        legendContent: String = "",
+        classes: String = "",
+        items: Seq[RadioItem],
+        hint: String = "",
+        isHeading: Boolean = false,
+        inline: Boolean = true
 )(implicit messages: Messages)
 
 @govukRadios(Radios(
-  fieldset =  Some(Fieldset(
-    legend = Some(Legend(
-      content = HtmlContent(Messages(legendContent)),
-      isPageHeading = isHeading,
-      classes = classes
-    ))
-  )),
-  hint = Hint(content = HtmlContent(hint)),
-  classes = if (inline) "govuk-radios--inline" else "",
-  name = name,
-  items = items,
-  errorMessage = theForm.errors.asTextErrorMessageForField(name)
+    fieldset = Fieldset(
+        legend = Legend(
+            content = HtmlContent(Messages(legendContent)),
+            isPageHeading = isHeading,
+            classes = classes
+        )
+    ),
+    hint = Hint(content = HtmlContent(hint)),
+    classes = if(inline) "govuk-radios--inline" else "",
+    name = name,
+    items = items,
+    errorMessage = theForm.errors.asTextErrorMessageForField(name)
 ).withFormField(theForm(name))
 )

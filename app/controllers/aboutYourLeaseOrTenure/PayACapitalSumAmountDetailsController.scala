@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.payACapitalSumAmountDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PayACapitalSumAmountDetailsController @Inject() (
@@ -42,7 +42,7 @@ class PayACapitalSumAmountDetailsController @Inject() (
   payACapitalSumAmountDetailsView: payACapitalSumAmountDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -50,16 +50,14 @@ class PayACapitalSumAmountDetailsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PayACapitalSumAmountDetails")
 
-    Future.successful(
-      Ok(
-        payACapitalSumAmountDetailsView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumAmount) match {
-            case Some(data) => payACapitalSumAmountDetailsForm.fill(data)
-            case _          => payACapitalSumAmountDetailsForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      payACapitalSumAmountDetailsView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumAmount) match {
+          case Some(data) => payACapitalSumAmountDetailsForm.fill(data)
+          case _          => payACapitalSumAmountDetailsForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }
@@ -85,7 +83,7 @@ class PayACapitalSumAmountDetailsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-amount-details"
       case _    =>

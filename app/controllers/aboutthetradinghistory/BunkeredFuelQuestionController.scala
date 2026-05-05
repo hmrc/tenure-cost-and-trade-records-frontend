@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.bunkeredFuelQuestion
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class BunkeredFuelQuestionController @Inject() (
@@ -41,7 +41,7 @@ class BunkeredFuelQuestionController @Inject() (
   view: bunkeredFuelQuestion,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -49,15 +49,13 @@ class BunkeredFuelQuestionController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("BunkeredFuelQuestion")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistory
-            .flatMap(_.bunkeredFuelQuestion)
-            .fold(bunkeredFuelQuestionForm)(bunkeredFuelQuestionForm.fill),
-          calculateBackLink(using request),
-          request.sessionData.toSummary
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistory
+          .flatMap(_.bunkeredFuelQuestion)
+          .fold(bunkeredFuelQuestionForm)(bunkeredFuelQuestionForm.fill),
+        calculateBackLink(using request),
+        request.sessionData.toSummary
       )
     )
   }
@@ -82,7 +80,7 @@ class BunkeredFuelQuestionController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

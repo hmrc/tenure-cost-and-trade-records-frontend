@@ -14,14 +14,13 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import models.submissions.aboutyouandtheproperty.CompletedLettings
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import util.DateUtilLocalised
 @import actions.SessionRequest
-@import util.AccessibilityUtil
+@import models.submissions.aboutyouandtheproperty.CompletedLettings
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -90,9 +89,9 @@
                                                 "maxlength" -> "3",
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("commercialLettingAvailability.label.welsh.nights", finYearEnd)
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("commercialLettingAvailability.label.nights"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("commercialLettingAvailability.label.nights")
+                                                ))
                                         ).withFormField(theForm(s"completedLettings-$idx")))
                                     ),
                                     classes = "govuk-!-width-one-third"

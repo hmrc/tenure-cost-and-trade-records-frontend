@@ -25,13 +25,13 @@ import utils.TestBaseSpec
 
 class CheckYourAnswersAdditionalActivitiesSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   def controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
-  ) =
-    new CheckYourAnswersAdditionalActivitiesController(
+  ): CheckYourAnswersAdditionalActivitiesController =
+    CheckYourAnswersAdditionalActivitiesController(
       stubMessagesControllerComponents(),
       aboutYourTradingHistoryNavigator,
       checkYourAnswersAdditionalActivitiesView,

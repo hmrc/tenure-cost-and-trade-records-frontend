@@ -43,7 +43,7 @@ class NoOpInternalAuthTokenInitialiser @Inject() () extends InternalAuthTokenIni
 class InternalAuthTokenInitialiserImpl @Inject() (
   configuration: Configuration,
   httpClientV2: HttpClientV2
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends InternalAuthTokenInitialiser
   with Logging {
 
@@ -91,7 +91,7 @@ class InternalAuthTokenInitialiserImpl @Inject() (
           logger.info("Auth token initialised")
           Future.successful(Done)
         } else {
-          Future.failed(new RuntimeException("Unable to initialise internal-auth token"))
+          Future.failed(RuntimeException("Unable to initialise internal-auth token"))
         }
       }
   }

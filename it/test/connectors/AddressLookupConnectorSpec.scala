@@ -21,10 +21,10 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import connectors.addressLookup.*
 import models.ForType.FOR6048
 import models.Session
-import play.api.mvc.{AnyContent, Call}
-import play.api.test.Helpers.*
-import play.api.test.FakeRequest
 import play.api.Configuration
+import play.api.mvc.{AnyContent, Call}
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import test.TCTRServerSpec
 
 class AddressLookupConnectorSpec extends TCTRServerSpec:

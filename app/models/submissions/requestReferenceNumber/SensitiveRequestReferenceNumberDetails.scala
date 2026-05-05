@@ -32,7 +32,7 @@ case class SensitiveRequestReferenceNumberDetails(
 
 object SensitiveRequestReferenceNumberDetails:
 
-  implicit def format(implicit crypto: MongoCrypto): OFormat[SensitiveRequestReferenceNumberDetails] = Json.format
+  implicit def format(using crypto: MongoCrypto): OFormat[SensitiveRequestReferenceNumberDetails] = Json.format
 
   def apply(requestReferenceNumber: RequestReferenceNumberDetails): SensitiveRequestReferenceNumberDetails =
     SensitiveRequestReferenceNumberDetails(

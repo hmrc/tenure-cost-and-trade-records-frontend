@@ -55,9 +55,9 @@ class DateUtilLocalised @Inject() (langUtil: LanguageUtils) {
   ).withDefaultValue(dayMonthAbbrYearFormatEN)
 
   private def createDateFormatForPattern(pattern: String, langCode: String): SimpleDateFormat = {
-    val uLocale         = new ULocale(langCode)
+    val uLocale         = ULocale(langCode)
     val locale: ULocale = if (ULocale.getAvailableLocales.contains(uLocale)) uLocale else ULocale.getDefault
-    val sdf             = new SimpleDateFormat(pattern, locale)
+    val sdf             = SimpleDateFormat(pattern, locale)
     sdf.setTimeZone(ibmTimeZone)
     sdf
   }

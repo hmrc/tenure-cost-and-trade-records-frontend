@@ -16,11 +16,11 @@
 
 package views.aboutthetradinghistory
 
+import form.aboutthetradinghistory.BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm
+import models.pages.Summary
 import models.submissions.aboutthetradinghistory.BunkerFuelCardDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
-import form.aboutthetradinghistory.BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm
-import models.pages.Summary
 
 class bunkerFuelCardsDetailsViewSpec extends QuestionViewBehaviours[BunkerFuelCardDetails]:
 

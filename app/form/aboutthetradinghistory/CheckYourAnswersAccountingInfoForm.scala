@@ -21,7 +21,7 @@ import play.api.data.Forms.{optional, single, text}
 
 object CheckYourAnswersAccountingInfoForm:
 
-  val theForm = Form[Boolean](
+  val theForm: Form[Boolean] = Form[Boolean](
     single(
       "isFinancialYearsCorrect" -> optional(text)
         .transform[Boolean](_.contains("true"), b => Some(b.toString))

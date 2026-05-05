@@ -14,18 +14,12 @@
  * limitations under the License.
  *@
 
-@import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDetails
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Details
-@import uk.gov.hmrc.govukfrontend.views.Aliases.HtmlContent
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
 @import models.pages.Summary
+@import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Details, HtmlContent, RadioItem}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput, GovukDetails, GovukRadios}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -47,7 +41,7 @@
 @layout(
     pageHeading = messages("howIsCurrentRentFixed.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutYourLeaseOrTenure"),
     backLinkUrl = backLink,
     theForm = theForm
@@ -71,7 +65,7 @@
             ).map(radioItem => RadioItem(
                 content = Text(radioItem._2),
                 checked = radioItem._1.equals(theForm("howIsCurrentRentFixed").value.getOrElse("")),
-                value = Option(radioItem._1)
+                value = radioItem._1
             )),
             inline = false
         )

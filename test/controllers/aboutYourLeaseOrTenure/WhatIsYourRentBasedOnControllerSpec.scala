@@ -20,7 +20,7 @@ import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
@@ -29,8 +29,8 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
 
   def whatIsYourRentBasedOnController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) =
-    new WhatIsYourRentBasedOnController(
+  ): WhatIsYourRentBasedOnController =
+    WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
@@ -39,8 +39,8 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def whatIsYourRentBasedOnControllerNone =
-    new WhatIsYourRentBasedOnController(
+  def whatIsYourRentBasedOnControllerNone: WhatIsYourRentBasedOnController =
+    WhatIsYourRentBasedOnController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

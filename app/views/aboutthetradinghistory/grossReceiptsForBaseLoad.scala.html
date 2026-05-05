@@ -15,13 +15,13 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtilLocalised
 @import models.submissions.aboutthetradinghistory.GrossReceiptsForBaseLoad
+@import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
+
 @import java.time.LocalDate
-@import util.AccessibilityUtil
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -45,19 +45,21 @@
 
     <p class="govuk-body govuk-!-font-weight-bold">
         @messages(s"grossReceiptsForBaseLoad.$key") <br>
-        @if(hint) { <span class="govuk-caption-m">@messages(s"grossReceiptsForBaseLoad.$key.hint")</span> }
+        @if(hint) {
+            <span class="govuk-caption-m">@messages(s"grossReceiptsForBaseLoad.$key.hint")</span>
+        }
     </p>
 }
 
-@costRow(key: String, idx: Int, hint: Boolean = false, finYearEnd: LocalDate ) = @{
+@costRow(key: String, idx: Int, hint: Boolean = false, finYearEnd: LocalDate) = @{
     Seq(
         TableRow(content = HtmlContent(headingContent(key, hint))),
         TableRow(
             content = HtmlContent(
                 govukInput(Input(
-                    prefix = Some(PrefixOrSuffix(
-                        content = Text(messages("label.pound"))
-                    )),
+                    prefix = PrefixOrSuffix(
+                        content = Text(messages("label.pound")
+                        )),
                     attributes = Map(
                         "maxlength" -> "13",
                         "aria-label" -> accessibilityUtil.ariaBuilder(s"grossReceiptsForBaseLoad.$key", finYearEnd)
@@ -69,7 +71,7 @@
 @layout(
     pageHeading = messages("grossReceiptsForBaseLoad.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
@@ -91,14 +93,14 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            costRow("renewableHeatIncentiveBioMethane", idx ,hint = true, finYearEnd = finYearEnd),
-                            costRow("renewableHeatIncentiveBioMass", idx ,hint = true, finYearEnd = finYearEnd),
+                            costRow("renewableHeatIncentiveBioMethane", idx, hint = true, finYearEnd = finYearEnd),
+                            costRow("renewableHeatIncentiveBioMass", idx, hint = true, finYearEnd = finYearEnd),
                             costRow("byProductSales", idx, hint = true, finYearEnd = finYearEnd),
                             costRow("hotWaterHeatOrSteamSales", idx, finYearEnd = finYearEnd),
                             costRow("gateIncomeFromWaste", idx, finYearEnd = finYearEnd),
-                               Seq(
-                                  TableRow(content = Text(messages("grossReceiptsForBaseLoad.total"))),
-                                  TableRow(content = HtmlContent(totalContent(idx)))))))
+                            Seq(
+                                TableRow(content = Text(messages("grossReceiptsForBaseLoad.total"))),
+                                TableRow(content = HtmlContent(totalContent(idx)))))))
                 </td>
                 }</tr>
             </tbody>

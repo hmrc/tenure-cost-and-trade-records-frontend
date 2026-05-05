@@ -16,10 +16,10 @@
 
 @import actions.SessionRequest
 @import models.submissions.accommodation.AvailableRooms
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -57,7 +57,7 @@
                 "aria-label" -> messages(labelKey)
             ),
             errorMessage = {
-                if (form.errors.exists(_.message == "error.accommodation.singleBedrooms.zero")) {
+                if(form.errors.exists(_.message == "error.accommodation.singleBedrooms.zero")) {
                     ErrorMessage(content = Text(messages("error.accommodation.singleBedrooms.zero")))
                 } else {
                     form.errors.asTextErrorMessageForField(formField)

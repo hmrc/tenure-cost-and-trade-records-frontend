@@ -14,11 +14,9 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput}
+@import views.html.components.PrimaryLayout
 
 @import java.time.LocalDate
 
@@ -32,24 +30,24 @@
 @(theForm: Form[LocalDate], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("vacantPropertyStartDate.heading"),
- showSection = true,
-    summary = Some(summary),
- sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = backLink,
- theForm = theForm
+    pageHeading = messages("vacantPropertyStartDate.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.submit()) {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.submit()) {
 
-    @includes.dateFields(
-        form = theForm,
-        field = "startDateOfVacantProperty",
-        govukDate = govukDateInput,
-        showDays = true,
-        helpText = messages("label.startDateOfVacantProperty.help")
-    )
+        @includes.dateFields(
+            form = theForm,
+            field = "startDateOfVacantProperty",
+            govukDate = govukDateInput,
+            showDays = true,
+            helpText = messages("label.startDateOfVacantProperty.help")
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

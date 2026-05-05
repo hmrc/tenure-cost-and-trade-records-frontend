@@ -23,7 +23,7 @@ import play.api.data.Forms.{mapping, optional}
 
 object AddAnotherLettingPartOfPropertyForm {
 
-  val theForm = Form(
+  val theForm: Form[AnswersYesNo] = Form(
     mapping(
       "addAnotherLettingPartOfProperty" -> optional(createYesNoType("error.addAnotherLetting.required"))
         .verifying("error.addAnotherLetting.required", _.nonEmpty)

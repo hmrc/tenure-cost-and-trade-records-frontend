@@ -18,7 +18,7 @@ package controllers.form
 
 import form.EmailMapping.validateEmail
 import org.scalatest.matchers.should
-import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
 import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
@@ -26,13 +26,13 @@ import play.api.data.Forms.single
 class EmailMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
 
   trait Setup {
-    val form = Form(single("emailFormat" -> validateEmail))
+    val form: Form[String] = Form(single("emailFormat" -> validateEmail))
   }
 
   "email address validation" should {
 
     "catch mandatory condition" in new Setup {
-      val isInput = Table(
+      val isInput: TableFor2[String, Boolean] = Table(
         ("web address", "validity"),
         ("test@test.com", true),
         ("more.tests@test.com", true),

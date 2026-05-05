@@ -17,13 +17,12 @@
 @import actions.SessionRequest
 @import models.ForType.*
 @import models.submissions.common.AnswersYesNo.*
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukWarningText
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
 @import models.submissions.lettingHistory.LettingHistory
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukWarningText}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.warningtext.WarningText
+@import uk.gov.hmrc.vo.service.model.button.SubmitButton
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout,
@@ -34,154 +33,185 @@
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
-@session = @{ request.sessionData }
+@session = @{
+    request.sessionData
+}
 
-@forType = @{ session.forType }
+@forType = @{
+    session.forType
+}
 
-@isLeaseHolder = @{ !session.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty).contains(AnswerYes) }
+@isLeaseHolder = @{
+    !session.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty).contains(AnswerYes)
+}
 
 @tradingHistoryNumber = @{
- forType match {
-  case FOR6048 => 5
-  case _ => 3
- }
+    forType match {
+        case FOR6048 => 5
+        case _ => 3
+    }
 }
 
 @leaseOrAgreementNumber = @{
- forType match {
-  case FOR6076 => 4
-  case FOR6048 => 6
-  case _ => 5
- }
+    forType match {
+        case FOR6076 => 4
+        case FOR6048 => 6
+        case _ => 5
+    }
 }
 
 @totalSections = @{
- if(isLeaseHolder) leaseOrAgreementNumber + 1 else leaseOrAgreementNumber
+    if(isLeaseHolder) leaseOrAgreementNumber + 1 else leaseOrAgreementNumber
 }
 
-@section1Completed       = @{ session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.answersChecked)) }
-@section2Completed       = @{ session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.answersChecked)) }
-@hasZeroTurnoverSections = @{ session.financialYearEndDates.isEmpty && session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).contains(AnswerYes)}
+@section1Completed = @{
+    session.stillConnectedDetails.flatMap(_.checkYourAnswersConnectionToProperty.map(_.answersChecked))
+}
+
+@section2Completed = @{
+    session.aboutYouAndTheProperty.flatMap(_.checkYourAnswersAboutTheProperty.map(_.answersChecked))
+}
+
+@hasZeroTurnoverSections = @{
+    session.financialYearEndDates.isEmpty && session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory).contains(AnswerYes)
+}
+
 @section3CompletedInFull = @{
     val section3AllAnswersGiven =
         (forType match {
             case FOR6045 | FOR6046 =>
-              Seq(
-                session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation).flatMap(_.checkYourAnswersOtherHolidayAccommodation),
-                session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches).flatMap(_.checkYourAnswersTentingPitches),
-                session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities).flatMap(_.checkYourAnswersAdditionalActivities)
-              )
+                Seq(
+                    session.aboutTheTradingHistoryPartOne.flatMap(_.otherHolidayAccommodation).flatMap(_.checkYourAnswersOtherHolidayAccommodation),
+                    session.aboutTheTradingHistoryPartOne.flatMap(_.touringAndTentingPitches).flatMap(_.checkYourAnswersTentingPitches),
+                    session.aboutTheTradingHistoryPartOne.flatMap(_.additionalActivities).flatMap(_.checkYourAnswersAdditionalActivities)
+                )
             case _ => //  FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6048 | FOR6076 =>
-              Seq(
-                session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory),
-              )
+                Seq(
+                    session.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory),
+                )
 
         }).forall(_.contains(AnswerYes))
     hasZeroTurnoverSections || section3AllAnswersGiven
 }
-@section3Completed       = @{ Some(section3CompletedInFull.toAnswer) }
-@section4Completed       = @{ session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings) }
-@section5Completed       = @{ session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure) }
-@section6Completed       = @{ session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) }
 
-@section4AccommodationCompleted = @{session.accommodationDetails.flatMap(_.sectionCompleted)}
-@sectionLettingHistoryCompleted = @{LettingHistory.sectionCompleted(request.sessionData).map(_.toAnswer)}
+@section3Completed = @{
+    Option(section3CompletedInFull.toAnswer)
+}
+
+@section4Completed = @{
+    session.aboutFranchisesOrLettings.flatMap(_.checkYourAnswersAboutFranchiseOrLettings)
+}
+
+@section5Completed = @{
+    session.aboutLeaseOrAgreementPartOne.flatMap(_.checkYourAnswersAboutYourLeaseOrTenure)
+}
+
+@section6Completed = @{
+    session.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation)
+}
+
+@section4AccommodationCompleted = @{
+    session.accommodationDetails.flatMap(_.sectionCompleted)
+}
+
+@sectionLettingHistoryCompleted = @{
+    LettingHistory.sectionCompleted(request.sessionData).map(_.toAnswer)
+}
 
 @completedSections = @{
- (forType match {
-  case FOR6048 => Seq(
-   section1Completed, // 1. Connection to the property
-   section2Completed, // 2. About you and the property
-   sectionLettingHistoryCompleted, // 3. Letting history
-   section4AccommodationCompleted, // 4. Accommodation details
-   section3Completed, // 5. Trading history
-   section5Completed, // 6. Your lease or agreement
-   section6Completed // 7. Additional information
-  )
-  case FOR6076 => Seq(
-   section1Completed,
-   section2Completed,
-   section3Completed,
-   section5Completed,
-   section6Completed
-  )
-  case _ => Seq(
-   section1Completed,
-   section2Completed,
-   section3Completed,
-   section4Completed,
-   section5Completed,
-   section6Completed
-  )
- }).count(_.contains(AnswerYes))
+    (forType match {
+        case FOR6048 => Seq(
+            section1Completed, // 1. Connection to the property
+            section2Completed, // 2. About you and the property
+            sectionLettingHistoryCompleted, // 3. Letting history
+            section4AccommodationCompleted, // 4. Accommodation details
+            section3Completed, // 5. Trading history
+            section5Completed, // 6. Your lease or agreement
+            section6Completed // 7. Additional information
+        )
+        case FOR6076 => Seq(
+            section1Completed,
+            section2Completed,
+            section3Completed,
+            section5Completed,
+            section6Completed
+        )
+        case _ => Seq(
+            section1Completed,
+            section2Completed,
+            section3Completed,
+            section4Completed,
+            section5Completed,
+            section6Completed
+        )
+    }).count(_.contains(AnswerYes))
 }
 
 @additionalInformationCannotStartYet = @{
- if(isLeaseHolder) section5Completed.isEmpty else
-  forType match {
-   case FOR6048 | FOR6076 => section3Completed.isEmpty
-   case _ => section4Completed.isEmpty
-  }
+    if(isLeaseHolder) section5Completed.isEmpty else
+        forType match {
+            case FOR6048 | FOR6076 => section3Completed.isEmpty
+            case _ => section4Completed.isEmpty
+        }
 }
 
 @declarationStatus = @{
- if(completedSections == totalSections) {
-  "complete"
- } else {
-  "incomplete"
- }
+    if(completedSections == totalSections) {
+        "complete"
+    } else {
+        "incomplete"
+    }
 }
 
 @layout(
- pageHeading = messages("taskList.heading"),
- backLinkUrl = session.lastCYAPageUrl.orElse(Some(LoginController.startPage.url)),
- summary = session.toSummary
+    pageHeading = messages("taskList.heading"),
+    backLinkUrl = session.lastCYAPageUrl.getOrElse(LoginController.startPage.url),
+    summary = session.toSummary
 ) {
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-2">Declaration @declarationStatus</h2>
+    <p class="govuk-body govuk-!-margin-bottom-7">You have completed @completedSections of @totalSections sections.</p>
 
-<h2 class="govuk-heading-s govuk-!-margin-bottom-2">Declaration @declarationStatus</h2>
-<p class="govuk-body govuk-!-margin-bottom-7">You have completed @completedSections of @totalSections sections.</p>
+    <ol class="app-task-list">
+        @sections_1_2(forType, isLeaseHolder, section1Completed, section2Completed)
 
- <ol class="app-task-list">
+        @sections_3_4_6048(forType, section2Completed, section4AccommodationCompleted, sectionLettingHistoryCompleted)
 
-  @sections_1_2(forType, isLeaseHolder, section1Completed, section2Completed)
+        @tradingHistory(forType, tradingHistoryNumber, section2Completed, section3Completed, section4AccommodationCompleted)
 
-  @sections_3_4_6048(forType, section2Completed, section4AccommodationCompleted, sectionLettingHistoryCompleted)
+        @franchiseAndLettings(forType, section3Completed, section4Completed)
 
-  @tradingHistory(forType, tradingHistoryNumber, section2Completed, section3Completed, section4AccommodationCompleted)
+        @leaseOrAgreement(forType, isLeaseHolder, leaseOrAgreementNumber, section3Completed, section4Completed, section5Completed)
 
-  @franchiseAndLettings(forType, section3Completed, section4Completed)
+        <li>
+            <h2 id="additionalInformation" class="app-task-list__section">
+                <span class="app-task-list__section-number">@totalSections
+                    . </span> @messages("label.section.additionalInformation")
+            </h2>
+            <ul class="app-task-list__items">
+            @includes.taskListItem("further-information-or-remarks",
+                if(forType == FOR6048) "furtherInformationOrRemarksTasklist.6048.heading" else "furtherInformationOrRemarksTasklist.heading",
+                controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
+                section6Completed,
+                session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
+                additionalInformationCannotStartYet
+            )
+            </ul>
+        </li>
 
-  @leaseOrAgreement(forType, isLeaseHolder, leaseOrAgreementNumber, section3Completed, section4Completed, section5Completed)
+    </ol>
 
-   <li>
-    <h2 id="additionalInformation" class="app-task-list__section">
-     <span class="app-task-list__section-number">@totalSections. </span> @messages("label.section.additionalInformation")
-    </h2>
-    <ul class="app-task-list__items">
-    @includes.taskListItem("further-information-or-remarks",
-     if(forType == FOR6048) "furtherInformationOrRemarksTasklist.6048.heading" else "furtherInformationOrRemarksTasklist.heading",
-     controllers.additionalinformation.routes.FurtherInformationOrRemarksController.show(),
-     section6Completed,
-     session.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails),
-     additionalInformationCannotStartYet
-    )
-    </ul>
-   </li>
+    @if(completedSections == totalSections) {
+        @formWithCSRF(action = controllers.routes.FormSubmissionController.submit()) {
 
- </ol>
+            <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
+            <p class="govuk-body">@messages("declaration.information")</p>
 
- @if(completedSections == totalSections) {
-  @formWithCSRF(action = controllers.routes.FormSubmissionController.submit()) {
+            @govukWarningText(WarningText(
+                content = Text(messages("hint.declaration"))
+            ))
 
-   <h2 class="govuk-heading-m">@messages("declaration.heading")</h2>
-   <p class="govuk-body">@messages("declaration.information")</p>
-
-   @govukWarningText(WarningText(
-    content = Text(messages("hint.declaration"))
-   ))
-
-   @includes.continueButton(govukButton, isSend = true)
-  }
- }
+            @govukButton(SubmitButton("send"))
+        }
+    }
 
 }

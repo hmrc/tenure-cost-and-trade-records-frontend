@@ -27,8 +27,8 @@ import navigation.identifiers.IncomeExpenditureSummaryId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
-import views.html.aboutthetradinghistory.incomeExpenditureSummary
 import util.NumberUtil.zeroBigDecimal
+import views.html.aboutthetradinghistory.incomeExpenditureSummary
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
@@ -40,7 +40,7 @@ class IncomeExpenditureSummaryController @Inject() (
   incomeExpenditureSummaryView: incomeExpenditureSummary,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 

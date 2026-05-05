@@ -16,11 +16,11 @@
 
 package models.submissions.common
 
-import org.scalatest.wordspec.AnyWordSpecLike
+import crypto.MongoCrypto
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.Configuration
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
-import crypto.MongoCrypto
 import utils.SensitiveTestHelper
 
 class SensitiveContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {

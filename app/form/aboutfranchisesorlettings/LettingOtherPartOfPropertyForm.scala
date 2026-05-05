@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object LettingOtherPartOfPropertyForm {
 
-  val theForm = Form[OperatorDetails](
+  val theForm: Form[OperatorDetails] = Form[OperatorDetails](
     mapping(
       "lettingOperatorName"   -> default(text, "").verifying(
         nonEmpty(errorMessage = "error.operatorName.required"),

@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import models.submissions.aboutyouandtheproperty._
+import models.submissions.aboutyouandtheproperty.*
 import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import play.api.libs.json.JsObject
@@ -32,7 +32,7 @@ class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new AboutYouAndThePropertyNavigator(audit)
+  val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
 
   "About you and the property navigator for form 6045" when {
 

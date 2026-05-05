@@ -17,6 +17,7 @@
 package form.connectiontoproperty
 
 import form.MappingSupport.connectionToThePropertyType
+import models.submissions.connectiontoproperty.ConnectionToProperty
 import play.api.data.Form
 import play.api.data.Forms.mapping
 
@@ -26,6 +27,6 @@ object ConnectionToThePropertyForm {
     "connectionToTheProperty" -> connectionToThePropertyType
   )(x => x)(b => Some(b))
 
-  val connectionToThePropertyForm = Form(baseConnectionToThePropertyMapping)
+  val connectionToThePropertyForm: Form[ConnectionToProperty] = Form(baseConnectionToThePropertyMapping)
 
 }

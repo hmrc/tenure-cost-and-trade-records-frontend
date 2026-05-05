@@ -30,8 +30,8 @@ import scala.language.reflectiveCalls
 
 class PayACapitalSumControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -42,8 +42,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       prefilledAboutLeaseOrAgreementPartThree
     ),
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
-  ) =
-    new PayACapitalSumController(
+  ): PayACapitalSumController =
+    PayACapitalSumController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

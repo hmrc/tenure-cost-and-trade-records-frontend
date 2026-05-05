@@ -32,7 +32,7 @@ class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec {
   private def createLowMarginFuelCardDetailsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory)
   ) =
-    new LowMarginFuelCardDetailsController(
+    LowMarginFuelCardDetailsController(
       stubMessagesControllerComponents(),
       mockNavigator,
       lowMarginFuelCardsDetailsView,

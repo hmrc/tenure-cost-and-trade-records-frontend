@@ -18,7 +18,7 @@ package controllers
 
 import actions.WithSessionRefiner
 import play.api.http.Status
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import stub.StubSessionRepo
 import utils.TestBaseSpec
 import views.html.taskList.taskList
@@ -27,7 +27,7 @@ class TaskListSpec extends TestBaseSpec {
 
   private val sessionRepo = StubSessionRepo()
 
-  private def taskListController = new TaskListController(
+  private def taskListController = TaskListController(
     stubMessagesControllerComponents(),
     inject[taskList],
     WithSessionRefiner(sessionRepo)

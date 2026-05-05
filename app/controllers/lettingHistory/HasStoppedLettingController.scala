@@ -32,7 +32,6 @@ import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class HasStoppedLettingController @Inject (
@@ -60,7 +59,7 @@ class HasStoppedLettingController @Inject (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, backLinkUrl)),
       answer =>
         given Session = request.sessionData
         for

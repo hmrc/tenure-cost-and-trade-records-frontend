@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport._
+import form.MappingSupport.*
 import models.submissions.aboutthetradinghistory.{VariableOperatingExpenses, VariableOperatingExpensesSections}
 import play.api.data.Forms.{ignored, mapping, optional, text}
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}

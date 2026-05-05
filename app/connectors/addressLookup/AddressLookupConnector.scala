@@ -42,7 +42,7 @@ class AddressLookupConnector @Inject() (
 ) extends FrontendHeaderCarrierProvider
   with Logging:
 
-  def initJourney(config: AddressLookupConfig)(implicit request: SessionRequest[AnyContent]): Future[Option[String]] =
+  def initJourney(config: AddressLookupConfig)(using request: SessionRequest[AnyContent]): Future[Option[String]] =
     val additionalParameter =
       if request.isFromCheckYourAnswer then "from=CYA"
       else if request.isFromTaskList then "from=TL"
@@ -157,10 +157,10 @@ class AddressLookupConnector @Inject() (
             successful(None)
       }
       .recoverWith { case e =>
-        failed(new Exception(s"Could not connect to the ADDRESS_LOOKUP_FRONTEND service (see $initUrl)", e))
+        failed(Exception(s"Could not connect to the ADDRESS_LOOKUP_FRONTEND service (see $initUrl)", e))
       }
 
-  def getConfirmedAddress(id: String)(implicit hc: HeaderCarrier): Future[AddressLookupConfirmedAddress] =
+  def getConfirmedAddress(id: String)(using hc: HeaderCarrier): Future[AddressLookupConfirmedAddress] =
     httpClientV2
       .get(url"$confirmedUrl$id")
       .execute[AddressLookupConfirmedAddress]

@@ -16,11 +16,11 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.TurnoverSection6030
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtilLocalised
-@import util.AccessibilityUtil
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
+
 @import java.time.LocalDate
 
 @this(layout: PrimaryLayout,
@@ -34,7 +34,7 @@
 )
 
 
-@(form: Form[Seq[TurnoverSection6030]],fromLocation:String="")(implicit request: SessionRequest[?], messages: Messages)
+@(form: Form[Seq[TurnoverSection6030]], fromLocation: String = "")(implicit request: SessionRequest[?], messages: Messages)
 
 @grossIncomeHeading = {
     <p class="govuk-body govuk-!-font-weight-bold">
@@ -50,77 +50,77 @@
     </p>
 }
 
-    @tradingPeriodRow(idx: Int, finYearEnd: LocalDate) = @{
-        Seq(
-            TableRow(
-                content = Text(messages("turnover.tradingPeriod"))
-            ),
-            TableRow(
-                content = HtmlContent(
-                    govukInput(Input(
-                        id = s"$idx.weeks",
-                        name = s"$idx.weeks",
-                        value = form(s"$idx.weeks").value,
-                        classes = "govuk-input--width-2",
-                        attributes = Map(
-                            "maxlength" -> "2",
-                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.tradingPeriod", finYearEnd)
-                        ),
-                        suffix = Some(PrefixOrSuffix(
-                            content = Text(messages("turnover.weeks"))
+@tradingPeriodRow(idx: Int, finYearEnd: LocalDate) = @{
+    Seq(
+        TableRow(
+            content = Text(messages("turnover.tradingPeriod"))
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    id = s"$idx.weeks",
+                    name = s"$idx.weeks",
+                    value = form(s"$idx.weeks").value,
+                    classes = "govuk-input--width-2",
+                    attributes = Map(
+                        "maxlength" -> "2",
+                        "aria-label" -> accessibilityUtil.ariaBuilder("turnover.tradingPeriod", finYearEnd)
+                    ),
+                    suffix = PrefixOrSuffix(
+                        content = Text(messages("turnover.weeks")
                         ))
-                    ).withFormField(form(s"$idx.weeks")))
-                )
+                ).withFormField(form(s"$idx.weeks")))
             )
         )
-    }
+    )
+}
 
-    @grossIncomeRow(idx: Int, finYearEnd: LocalDate) = @{
-        Seq(
-            TableRow(
-                content = HtmlContent(grossIncomeHeading)
-            ),
-            TableRow(
-                content = HtmlContent(
-                    govukInput(Input(
-                        id = s"$idx.grossIncome",
-                        name = s"$idx.grossIncome",
-                        value = form(s"$idx.grossIncome").value,
-                        classes = "govuk-input--width-10",
-                        attributes = Map(
-                            "maxlength" -> "13",
-                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.grossIncome", finYearEnd)
-                        ),
-                        prefix = Some(PrefixOrSuffix(
-                            content = Text("£")
+@grossIncomeRow(idx: Int, finYearEnd: LocalDate) = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(grossIncomeHeading)
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    id = s"$idx.grossIncome",
+                    name = s"$idx.grossIncome",
+                    value = form(s"$idx.grossIncome").value,
+                    classes = "govuk-input--width-10",
+                    attributes = Map(
+                        "maxlength" -> "13",
+                        "aria-label" -> accessibilityUtil.ariaBuilder("turnover.grossIncome", finYearEnd)
+                    ),
+                    prefix = PrefixOrSuffix(
+                        content = Text("£"
                         ))
-                    ).withFormField(form(s"$idx.grossIncome")))
-                )
+                ).withFormField(form(s"$idx.grossIncome")))
             )
         )
-    }
+    )
+}
 
-    @totalVisitorNumbersRow(idx: Int, finYearEnd: LocalDate) = @{
-        Seq(
-            TableRow(
-                content = HtmlContent(totalVisitorNumbersHeading)
-            ),
-            TableRow(
-                content = HtmlContent(
-                    govukInput(Input(
-                        id = s"$idx.totalVisitorNumber",
-                        name = s"$idx.totalVisitorNumber",
-                        value = form(s"$idx.totalVisitorNumber").value,
-                        classes = "govuk-input--width-10",
-                        attributes = Map(
-                            "maxlength" -> "13",
-                            "aria-label" -> accessibilityUtil.ariaBuilder("turnover.totalVisitorNumber", finYearEnd)
-                        )
-                    ).withFormField(form(s"$idx.totalVisitorNumber")))
-                )
+@totalVisitorNumbersRow(idx: Int, finYearEnd: LocalDate) = @{
+    Seq(
+        TableRow(
+            content = HtmlContent(totalVisitorNumbersHeading)
+        ),
+        TableRow(
+            content = HtmlContent(
+                govukInput(Input(
+                    id = s"$idx.totalVisitorNumber",
+                    name = s"$idx.totalVisitorNumber",
+                    value = form(s"$idx.totalVisitorNumber").value,
+                    classes = "govuk-input--width-10",
+                    attributes = Map(
+                        "maxlength" -> "13",
+                        "aria-label" -> accessibilityUtil.ariaBuilder("turnover.totalVisitorNumber", finYearEnd)
+                    )
+                ).withFormField(form(s"$idx.totalVisitorNumber")))
             )
         )
-    }
+    )
+}
 
 @renderRows(idx: Int, finYearEnd: LocalDate) = @{
     Seq(
@@ -133,7 +133,7 @@
 @layout(
     pageHeading = messages("turnover.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = fromLocation match {
         case "TL" => controllers.routes.TaskListController.show.url + "#turnover"

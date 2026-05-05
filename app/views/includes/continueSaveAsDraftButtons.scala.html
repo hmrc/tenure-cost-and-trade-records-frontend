@@ -14,45 +14,27 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.button.Button
+@import uk.gov.hmrc.vo.service.model.button.{SecondaryButton, SubmitButton}
 
 @(govukButton: GovukButton)(implicit request: Request[?], messages: Messages)
 
 @from = @{
- request.queryString.get("from").flatMap(_.headOption)
-         .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)))
-         .getOrElse("")
+    request.queryString.get("from").flatMap(_.headOption)
+    .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("from").flatMap(_.headOption)))
+    .getOrElse("")
 }
 
 @idx = @{
- request.queryString.get("idx").flatMap(_.headOption)
- .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("idx").flatMap(_.headOption)))
- .fold(0)(_.toInt)
+    request.queryString.get("idx").flatMap(_.headOption)
+    .orElse(request.asInstanceOf[Request[AnyContent]].body.asFormUrlEncoded.flatMap(_.get("idx").flatMap(_.headOption)))
+    .fold(0)(_.toInt)
 }
 
 <input type="hidden" name="from" value="@from" />
 <input type="hidden" name="idx" value="@idx"/>
 
 <div class="govuk-button-group">
- @govukButton(
-  Button(
-   attributes = Map("id" -> "continue"),
-   content = Text(messages("button.label.continue")),
-   name = Some("continue_button"),
-   value = Some("continue_button"),
-   inputType = Some("submit")
-  )
- )
- @govukButton(
-  Button(
-   classes="govuk-button--secondary",
-   attributes = Map("id" -> "save"),
-   content = Text(messages("button.label.save")),
-   name = Some("save_button"),
-   value = Some("save_button"),
-   inputType = Some("submit")
-  )
- )
+    @govukButton(SubmitButton("continue"))
+    @govukButton(SecondaryButton())
 </div>

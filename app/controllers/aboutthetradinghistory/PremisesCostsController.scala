@@ -40,7 +40,7 @@ class PremisesCostsController @Inject() (
   view: premisesCosts,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -87,17 +87,17 @@ class PremisesCostsController @Inject() (
 
   private def runWithSessionCheck(
     action: (Seq[TurnoverSection6076], Seq[String]) => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
     request.sessionData.aboutTheTradingHistoryPartOne
       .flatMap(_.turnoverSections6076)
       .filter(_.nonEmpty)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { turnoverSections6076 =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { turnoverSections6076 =>
         val years = turnoverSections6076.map(_.financialYearEnd.getYear.toString)
         action(turnoverSections6076, years)
       }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" =>
         aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

@@ -42,7 +42,7 @@ class FeeReceivedController @Inject() (
   feeReceivedView: feeReceived,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -110,7 +110,7 @@ class FeeReceivedController @Inject() (
     idx: Int
   )(
     action: ConcessionIncomeRecord => Future[Result]
-  )(implicit request: SessionRequest[AnyContent]
+  )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
     if (request.sessionData.aboutTheTradingHistory.map(_.turnoverSections6030).exists(_.nonEmpty)) {
       request.sessionData.aboutFranchisesOrLettings
@@ -119,12 +119,12 @@ class FeeReceivedController @Inject() (
         .collect[ConcessionIncomeRecord] { case concession: ConcessionIncomeRecord =>
           concession
         }
-        .fold(Future.successful(Redirect(backLink(idx))))(action)
+        .fold[Future[Result]](Redirect(backLink(idx)))(action)
     } else {
       Redirect(routes.WhenDidYouFirstOccupyController.show())
     }
 
-  private def initialFeeReceived(implicit request: SessionRequest[AnyContent]): FeeReceived =
+  private def initialFeeReceived(using request: SessionRequest[AnyContent]): FeeReceived =
     FeeReceived(
       request.sessionData.aboutTheTradingHistory
         .fold(Seq.empty[FeeReceivedPerYear])(
@@ -132,7 +132,7 @@ class FeeReceivedController @Inject() (
         )
     )
 
-  private def financialYearEndDates(implicit request: SessionRequest[AnyContent]): Seq[LocalDate] =
+  private def financialYearEndDates(using request: SessionRequest[AnyContent]): Seq[LocalDate] =
     request.sessionData.aboutTheTradingHistory.fold(Seq.empty[LocalDate])(
       _.turnoverSections6030.map(_.financialYearEnd)
     )

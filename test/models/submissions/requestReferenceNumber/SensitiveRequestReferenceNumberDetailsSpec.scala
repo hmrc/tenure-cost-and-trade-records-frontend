@@ -25,7 +25,7 @@ import play.api.libs.json.{JsSuccess, Json}
 
 class SensitiveRequestReferenceNumberDetailsSpec extends AnyFlatSpec with Matchers with OptionValues with MongoCryptoSupport:
 
-  val clearDetails = RequestReferenceNumberDetails(
+  val clearDetails: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
     propertyDetails = Some(
       RequestReferenceNumberPropertyDetails(
         businessTradingName = "Business Name",

@@ -31,7 +31,7 @@ import java.time.LocalDate
 
 class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
 
-  import utils.FormBindingTestAssertions._
+  import utils.FormBindingTestAssertions.*
 
   private val mockAudit: Audit = mock[Audit]
 
@@ -51,7 +51,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  ) = new CommercialLettingAvailabilityWelshController(
+  ) = CommercialLettingAvailabilityWelshController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

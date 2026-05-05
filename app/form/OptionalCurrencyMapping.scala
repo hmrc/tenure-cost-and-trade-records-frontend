@@ -18,7 +18,7 @@ package form
 
 import play.api.data.Forms.{optional, text}
 import play.api.data.Mapping
-import play.api.data.validation._
+import play.api.data.validation.*
 import util.NumberUtil.*
 
 import scala.util.{Failure, Success, Try}

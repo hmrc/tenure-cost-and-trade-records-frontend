@@ -18,9 +18,8 @@ package form.accommodation
 
 import form.MappingSupport.nonNegativeNumber
 import models.submissions.accommodation.AvailableRooms
-import play.api.data.Form
-import play.api.data._
-import play.api.data.Forms._
+import play.api.data.*
+import play.api.data.Forms.*
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 

@@ -14,12 +14,11 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
+@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.checkboxes._
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import models.pages.Summary
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -30,57 +29,57 @@
 @(form: Form[?], index: Int, operatorName: String, backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("lettingPartOfPropertyCheckboxesDetails.heading"),
- showSection = true,
- showH1 = false,
- summary = Some(summary),
- sectionName = messages("label.section.connectionToTheProperty"),
- backLinkUrl = backLink,
- theForm = form
+    pageHeading = messages("lettingPartOfPropertyCheckboxesDetails.heading"),
+    showSection = true,
+    showH1 = false,
+    summary = summary,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = backLink,
+    theForm = form
 ) {
 
- @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.submit(index)) {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.LettingPartOfPropertyItemsIncludedInRentController.submit(index)) {
 
-  <h1 class="govuk-heading-l">@messages("lettingPartOfPropertyCheckboxesDetails.title", operatorName)</h1>
+        <h1 class="govuk-heading-l">@messages("lettingPartOfPropertyCheckboxesDetails.title", operatorName)</h1>
 
-  @govukCheckboxes(
-   Checkboxes(
-    name = "itemsInRent[]",
-    fieldset = Some(Fieldset(
-     legend = Some(Legend(
-      classes = "govuk-fieldset__legend govuk-fieldset__legend--s"
-     ))
-    )),
-    items = Seq(
-     CheckboxItem(
-      value = "rates",
-      content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.rates"))
-     ),
-     CheckboxItem(
-      value = "propertyInsurance",
-      content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.propertyInsurance"))
-     ),
-     CheckboxItem(
-      value = "outsideRepairs",
-      content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs"))
-     ),
-     CheckboxItem(
-      value = "insideRepairs",
-      content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs"))
-     ),
-     CheckboxItem(
-      divider = Some(messages("checkbox.divider"))
-     ),
-     CheckboxItem(
-      behaviour = ExclusiveCheckbox,
-      value = "noneOfThese",
-      content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese"))
-     )
-    ),
-    hint = Some(Hint(content = Text(messages("hint.lettingPartOfPropertyCheckboxesDetails"))))
-   ).withFormField(form("itemsInRent"))
-  )
+        @govukCheckboxes(
+            Checkboxes(
+                name = "itemsInRent[]",
+                fieldset = Fieldset(
+                    legend = Legend(
+                        classes = "govuk-fieldset__legend govuk-fieldset__legend--s"
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+                    )),
+                items = Seq(
+                    CheckboxItem(
+                        value = "rates",
+                        content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.rates"))
+                    ),
+                    CheckboxItem(
+                        value = "propertyInsurance",
+                        content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.propertyInsurance"))
+                    ),
+                    CheckboxItem(
+                        value = "outsideRepairs",
+                        content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.outsideRepairs"))
+                    ),
+                    CheckboxItem(
+                        value = "insideRepairs",
+                        content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.insideRepairs"))
+                    ),
+                    CheckboxItem(
+                        divider = messages("checkbox.divider")
+                    ),
+                    CheckboxItem(
+                        behaviour = ExclusiveCheckbox,
+                        value = "noneOfThese",
+                        content = Text(messages("checkbox.lettingPartOfPropertyCheckboxesDetails.noneOfThese"))
+                    )
+                ),
+                hint = Hint(content = Text(messages("hint.lettingPartOfPropertyCheckboxesDetails")))
+            ).withFormField(form("itemsInRent"))
+        )
+
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

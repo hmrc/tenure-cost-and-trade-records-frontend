@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.connectedToLandlord
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ConnectedToLandlordController @Inject() (
@@ -41,7 +41,7 @@ class ConnectedToLandlordController @Inject() (
   connectedToLandlordView: connectedToLandlord,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -49,17 +49,15 @@ class ConnectedToLandlordController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ConnectedToLandlord")
 
-    Future.successful(
-      Ok(
-        connectedToLandlordView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
-            case Some(connectedToLandlord) =>
-              connectedToLandlordForm.fill(connectedToLandlord)
-            case _                         => connectedToLandlordForm
-          },
-          request.sessionData.toSummary,
-          request.sessionData.forType
-        )
+    Ok(
+      connectedToLandlordView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
+          case Some(connectedToLandlord) =>
+            connectedToLandlordForm.fill(connectedToLandlord)
+          case _                         => connectedToLandlordForm
+        },
+        request.sessionData.toSummary,
+        request.sessionData.forType
       )
     )
   }

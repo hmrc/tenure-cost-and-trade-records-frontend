@@ -19,8 +19,8 @@ package controllers.notconnected
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.notconnected.PastConnectionForm.pastConnectionForm
-import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
 import models.submissions.common.AnswersYesNo
+import models.submissions.notconnected.RemoveConnectionDetails.updateRemoveConnectionDetails
 import navigation.RemoveConnectionNavigator
 import navigation.identifiers.PastConnectionId
 import play.api.i18n.I18nSupport
@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import views.html.notconnected.pastConnection
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PastConnectionController @Inject() (
@@ -38,20 +38,18 @@ class PastConnectionController @Inject() (
   pastConnectionView: pastConnection,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        pastConnectionView(
-          request.sessionData.removeConnectionDetails
-            .flatMap(_.pastConnectionType)
-            .fold(pastConnectionForm)(pastConnectionForm.fill),
-          request.sessionData.toSummary,
-          calculateBackLink
-        )
+    Ok(
+      pastConnectionView(
+        request.sessionData.removeConnectionDetails
+          .flatMap(_.pastConnectionType)
+          .fold(pastConnectionForm)(pastConnectionForm.fill),
+        request.sessionData.toSummary,
+        calculateBackLink
       )
     )
   }
@@ -61,20 +59,15 @@ class PastConnectionController @Inject() (
       pastConnectionForm,
       formWithErrors =>
         BadRequest(pastConnectionView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
-      data => {
+      data =>
         val updatedData = updateRemoveConnectionDetails(_.copy(pastConnectionType = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PastConnectionId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
-    navigator.from match {
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
+    navigator.from match
       case "CYA" => controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
       case _     => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
-    }
-
-}

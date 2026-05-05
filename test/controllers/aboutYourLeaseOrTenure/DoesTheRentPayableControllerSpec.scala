@@ -20,7 +20,7 @@ import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class DoesTheRentPayableControllerSpec extends TestBaseSpec {
@@ -29,7 +29,7 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
 
   def doesTheRentPayableController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = new DoesTheRentPayableController(
+  ): DoesTheRentPayableController = DoesTheRentPayableController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

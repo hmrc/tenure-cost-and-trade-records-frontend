@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.partsUnavailable
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PartsUnavailableController @Inject() (
@@ -41,23 +41,22 @@ class PartsUnavailableController @Inject() (
   view: partsUnavailable,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PartsUnavailable")
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
-            case Some(tiedForGoods) => partsUnavailableForm.fill(tiedForGoods)
-            case _                  => partsUnavailableForm
-          },
-          calculateBackLink,
-          request.sessionData.toSummary
-        )
+
+    Ok(
+      view(
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
+          case Some(tiedForGoods) => partsUnavailableForm.fill(tiedForGoods)
+          case _                  => partsUnavailableForm
+        },
+        calculateBackLink,
+        request.sessionData.toSummary
       )
     )
   }
@@ -82,7 +81,7 @@ class PartsUnavailableController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => s"${controllers.routes.TaskListController.show.url}#family-usage"

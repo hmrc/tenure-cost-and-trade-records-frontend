@@ -14,22 +14,21 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.TotalFuelSold
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtilLocalised
-@import actions.SessionRequest
-@import util.AccessibilityUtil
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-    govukButton: GovukButton,
-    formWithCSRF: FormWithCSRF,
-    govukInput: GovukInput,
-    govukTable: GovukTable,
-    govukInsetText: GovukInsetText,
-    dateUtil: DateUtilLocalised,
-    accessibilityUtil: AccessibilityUtil
+        govukButton: GovukButton,
+        formWithCSRF: FormWithCSRF,
+        govukInput: GovukInput,
+        govukTable: GovukTable,
+        govukInsetText: GovukInsetText,
+        dateUtil: DateUtilLocalised,
+        accessibilityUtil: AccessibilityUtil
 )
 
 
@@ -38,12 +37,12 @@
 @layout(
     pageHeading = messages("totalFuelSold.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
-    backLinkUrl = Some(backLink),
+    backLinkUrl = backLink,
     theForm = form,
     fullWidth = true,
-    showH1  = false
+    showH1 = false
 ) {
 
     @formWithCSRF(action = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.submit()) {
@@ -53,8 +52,8 @@
         <p class="govuk-body govuk-!-width-three-quarters">@messages("totalFuelSold.bunkered")</p>
 
         @govukInsetText(InsetText(
-                content = Text(messages("common6020.inset"))
-            ))
+            content = Text(messages("common6020.inset"))
+        ))
 
         <table class="hmrc-responsive-table govuk-!-font-weight-regular govuk-!-width-one-half">
             <tbody>
@@ -89,9 +88,9 @@
                                             attributes = Map(
                                                 "aria-label" -> accessibilityUtil.ariaBuilder("totalFuelSold.fuel.label", finYearEnd)
                                             ),
-                                            suffix = Some(PrefixOrSuffix(
-                                                content = Text(messages("label.litres"))
-                                            ))
+                                            suffix = PrefixOrSuffix(
+                                                content = Text(messages("label.litres")
+                                                ))
                                         ).withFormField(form(s"totalFuelSold-$idx")))
                                     )
                                 )

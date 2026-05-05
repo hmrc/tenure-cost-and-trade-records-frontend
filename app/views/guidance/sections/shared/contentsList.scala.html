@@ -18,7 +18,8 @@
 
 <p id="contents" class="govuk-body-s">@messages("guidance.sections.shared.startingDeclaration.a2")</p>
 
-<ul class="govuk-list govuk-!-font-size-16" style="list-style-type: '- '; margin-left: 0.5em">
+<ul class="govuk-list govuk-!-font-size-16" style="list-style-type: '- ';
+    margin-left: 0.5em">
 @for((href, key) <- items) {
     <li><a class="govuk-link" href="@href">@messages(key)</a></li>
 }

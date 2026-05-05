@@ -17,12 +17,12 @@
 package controllers.connectiontoproperty
 
 import config.ErrorHandler
-import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
-import play.api.test.Helpers.{CREATED, status, stubMessagesControllerComponents}
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.ConnectedSubmission
+import models.submissions.connectiontoproperty.StillConnectedDetails
+import play.api.http.Status
 import play.api.mvc.Request
+import play.api.test.Helpers.{CREATED, status, stubMessagesControllerComponents}
 import play.twirl.api.Html
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import utils.TestBaseSpec
@@ -38,8 +38,8 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
   // doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
   def connectionToPropertySubmissionController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
-  ) =
-    new ConnectionToPropertySubmissionController(
+  ): ConnectionToPropertySubmissionController =
+    ConnectionToPropertySubmissionController(
       stubMessagesControllerComponents(),
       submissionConnector,
       errorHandler,
@@ -63,7 +63,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
     "submission fails" should {
       "return InternalServerError" in {
         when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
-          .thenReturn(Future.failed(new RuntimeException("Test error")))
+          .thenReturn(Future.failed(RuntimeException("Test error")))
         when(errorHandler.internalServerErrorTemplate(using org.mockito.ArgumentMatchers.any(classOf[Request[?]])))
           .thenReturn(Future.successful(Html("Some Error Message")))
         val result = connectionToPropertySubmissionController().submit(fakeRequest)

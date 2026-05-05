@@ -16,13 +16,13 @@
 
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
-@import models.submissions.lettingHistory.LettingHistory
 @import models.submissions.common.AnswersYesNo
-@import views.CheckYourAnswersHelpers.*
-@import views.lettingHistory.CheckYourAnswersLettingHistoryHelpers.*
-@import views.html.components.PrimaryLayout
+@import models.submissions.lettingHistory.LettingHistory
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.DateUtilLocalised
+@import views.CheckYourAnswersHelpers.*
+@import views.html.components.PrimaryLayout
+@import views.lettingHistory.CheckYourAnswersLettingHistoryHelpers.*
 
 @this(layout: PrimaryLayout, govukButton: GovukButton, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, dateUtil: DateUtilLocalised)
 
@@ -30,7 +30,7 @@
 
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages("lettingHistory.checkYourAnswers.heading"),
     backLinkUrl = backLink,
     fullWidth = true,

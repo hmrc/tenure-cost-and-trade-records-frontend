@@ -22,7 +22,7 @@
 
 @layout(
     pageHeading = messages("test.heading"),
-    backLinkUrl = Some(routes.LoginController.show.url)
+    backLinkUrl = routes.LoginController.show.url
 ) {
     <p class="govuk-body">@{
         messages("test.text")

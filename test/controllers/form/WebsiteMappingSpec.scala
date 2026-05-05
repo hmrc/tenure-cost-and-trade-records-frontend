@@ -18,7 +18,7 @@ package controllers.form
 
 import form.WebsiteMapping.validateWebaddress
 import org.scalatest.matchers.should
-import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
 import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
@@ -26,13 +26,13 @@ import play.api.data.Forms.single
 class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
 
   trait Setup {
-    val form = Form(single("websiteAddressForProperty" -> validateWebaddress))
+    val form: Form[String] = Form(single("websiteAddressForProperty" -> validateWebaddress))
   }
 
   "web address validation" should {
 
     "catch invalid length error" in new Setup {
-      val lengths = Table(
+      val lengths: TableFor2[String, Boolean] = Table(
         ("websiteAddressForProperty", "validity"),
         ("www", false),
         ("www 23", false),
@@ -52,7 +52,7 @@ class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with Table
     }
 
     "catch mandatory condition" in new Setup {
-      val isInput = Table(
+      val isInput: TableFor2[String, Boolean] = Table(
         ("web address", "validity"),
         ("www.test.com", true),
         ("https://www.test.test.com", true),

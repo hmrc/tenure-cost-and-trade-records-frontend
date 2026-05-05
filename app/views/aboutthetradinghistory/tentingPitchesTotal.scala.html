@@ -15,9 +15,9 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 
 @this(
@@ -34,7 +34,7 @@
 @layout(
     pageHeading = messages("tentingPitchesTotal.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
@@ -47,9 +47,15 @@
 
     <ul class="govuk-list govuk-list--bullet govuk-!-width-three-quarters">
 
-        <li>@{messages("tentingPitchesTotal.list.one")}</li>
-        <li>@{messages("tentingPitchesTotal.list.two")}</li>
-        <li>@{messages("tentingPitchesTotal.list.three")}</li>
+        <li>@{
+            messages("tentingPitchesTotal.list.one")
+        }</li>
+        <li>@{
+            messages("tentingPitchesTotal.list.two")
+        }</li>
+        <li>@{
+            messages("tentingPitchesTotal.list.three")
+        }</li>
 
     </ul>
 
@@ -59,7 +65,7 @@
                 <tr>
                     <td>
                     @govukTable(Table(
-                      classes = "govuk-!-width-full",
+                        classes = "govuk-!-width-full",
                         rows = Seq(
                             Seq(
                                 TableRow(

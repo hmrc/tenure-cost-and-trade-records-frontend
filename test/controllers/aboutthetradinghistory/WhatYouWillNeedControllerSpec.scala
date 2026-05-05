@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 
 class WhatYouWillNeedControllerSpec extends TestBaseSpec {
 
-  def whatYouWillNeedController(forType: ForType = FOR6010) = new WhatYouWillNeedController(
+  def whatYouWillNeedController(forType: ForType = FOR6010): WhatYouWillNeedController = WhatYouWillNeedController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     whatYouWillNeedView,

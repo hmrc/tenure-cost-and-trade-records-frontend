@@ -18,8 +18,7 @@ package repository
 
 import models.Session
 import org.scalatest.BeforeAndAfterEach
-import repositories.SessionData
-import repositories.{SessionRepository => SessionRepo}
+import repositories.{SessionData, SessionRepository as SessionRepo}
 import utils.TestBaseSpec
 
 class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach {

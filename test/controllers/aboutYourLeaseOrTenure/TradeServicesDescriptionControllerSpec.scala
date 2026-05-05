@@ -34,8 +34,8 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) =
-    new TradeServicesDescriptionController(
+  ): TradeServicesDescriptionController =
+    TradeServicesDescriptionController(
       stubMessagesControllerComponents(),
       mockAudit,
       inject[AboutYourLeaseOrTenureNavigator],

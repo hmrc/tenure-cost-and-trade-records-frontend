@@ -22,7 +22,7 @@ import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class StaticCaravansControllerSpec extends TestBaseSpec {
@@ -36,8 +36,8 @@ class StaticCaravansControllerSpec extends TestBaseSpec {
 
   private val nextPageOnNo = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def staticCaravansController =
-    new StaticCaravansController(
+  def staticCaravansController: StaticCaravansController =
+    StaticCaravansController(
       staticCaravansView,
       mockAudit,
       aboutYourTradingHistoryNavigator,

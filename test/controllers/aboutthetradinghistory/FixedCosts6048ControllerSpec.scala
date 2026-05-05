@@ -32,8 +32,8 @@ class FixedCosts6048ControllerSpec extends TestBaseSpec {
 
   private val cyaPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  def fixedCosts6048Controller =
-    new FixedCosts6048Controller(
+  def fixedCosts6048Controller: FixedCosts6048Controller =
+    FixedCosts6048Controller(
       fixedCosts6048View,
       mockAudit,
       aboutYourTradingHistoryNavigator,

@@ -26,8 +26,8 @@ class ConcessionTypeFeesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def controller =
-    new ConcessionTypeFeesController(
+  def controller: ConcessionTypeFeesController =
+    ConcessionTypeFeesController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutFranchisesOrLettingsNavigator,

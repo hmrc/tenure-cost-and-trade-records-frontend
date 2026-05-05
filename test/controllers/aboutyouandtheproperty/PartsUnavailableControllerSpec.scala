@@ -26,12 +26,12 @@ import utils.TestBaseSpec
 
 class PartsUnavailableControllerSpec extends TestBaseSpec {
 
-  import TestData._
-  import utils.FormBindingTestAssertions._
+  import TestData.*
+  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
-  def controller(isWelsh: Boolean = false) = new PartsUnavailableController(
+  def controller(isWelsh: Boolean = false): PartsUnavailableController = PartsUnavailableController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

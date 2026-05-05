@@ -29,7 +29,7 @@
 @(
         pageTitle: Option[String] = None,
         pageHeading: String,
-        theForm: Form[?] = null,
+        theForm: Option[Form[?]] = None,
         showH1: Boolean = true,
         showSection: Boolean = false,
         showAccountInfo: Boolean = true,
@@ -42,16 +42,16 @@
 
 @accountInfo = @{
     summary.filter(_ => showAccountInfo)
-        .map(info => AccountInfo(FormatRefNum(info.referenceNumber), info.address.map(_.singleLine)))
+    .map(info => AccountInfo(FormatRefNum(info.referenceNumber), info.address.map(_.singleLine)))
 }
 
 @errorSummary = @{
-    Option(theForm).filter(_.hasErrors).map { form =>
+    theForm.filter(_.hasErrors).map { form =>
         ErrorSummary(
             errorList = form.errors.map { error =>
                 FormError(
                     error.key,
-                    error.messages.map(str=> str.replaceAll("[\\[|\\]]", "")),
+                    error.messages.map(str => str.replaceAll("[\\[|\\]]", "")),
                     error.args
                 )
             }.asTextErrorLinks,
@@ -61,7 +61,7 @@
 }
 
 @content = {
-    @contentBlock
+@contentBlock
 
     <script type="text/javascript">
             @readOnly &&

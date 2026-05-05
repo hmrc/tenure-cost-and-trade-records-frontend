@@ -19,7 +19,7 @@ package form.aboutthetradinghistory
 import form.DateMappings.monthYearMapping
 import models.submissions.Form6010.MonthsYearDuration
 import play.api.data.Form
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.i18n.Messages
 
 object OccupationalInformationForm {

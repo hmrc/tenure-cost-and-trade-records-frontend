@@ -15,27 +15,14 @@
  *@
 
 @import actions.SessionRequest
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukSummaryList
-@import uk.gov.hmrc.govukfrontend.views.Aliases.SummaryList
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Value
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Actions
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.ActionItem
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import models.submissions.aboutfranchisesorlettings.{LettingIncomeRecord,ConcessionIncomeRecord, Concession6015IncomeRecord}
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import models.ForType.*
-@import models.submissions.aboutfranchisesorlettings.FranchiseIncomeRecord
+@import models.submissions.aboutfranchisesorlettings.{Concession6015IncomeRecord, ConcessionIncomeRecord, FranchiseIncomeRecord, LettingIncomeRecord}
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Actions, Fieldset, Legend, RadioItem, Radios, SummaryList}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.{HtmlContent, Text}
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Key, SummaryListRow, Value}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -47,14 +34,14 @@
 @(theForm: Form[?], index: Int)(implicit request: SessionRequest[AnyContent], messages: Messages)
 
 @forType = @{
-  request.sessionData.forType
+    request.sessionData.forType
 }
 
 @sectionName = @{
     forType match {
         case FOR6015 | FOR6016 => messages("label.section.aboutConcessionsOrLettings")
         case FOR6045 | FOR6046 => messages("label.section.aboutConcessionsFranchisesOrLettings")
-        case _                 => messages("label.section.aboutFranchisesOrLettings")
+        case _ => messages("label.section.aboutFranchisesOrLettings")
     }
 }
 
@@ -74,18 +61,18 @@
         record match {
             case franchise: FranchiseIncomeRecord =>
                 (franchise.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
-                 controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
+                        controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession6015: Concession6015IncomeRecord =>
                 (concession6015.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
-                 controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
+                        controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(index).url)
             case concession: ConcessionIncomeRecord =>
                 (concession.businessDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
-                        if (forType == FOR6030) controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(index).url
+                        if(forType == FOR6030) controllers.aboutfranchisesorlettings.routes.CateringOperationBusinessDetailsController.show(index).url
                         else controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(index).url
                 )
             case letting: LettingIncomeRecord =>
                 (letting.operatorDetails.fold(("", ""))(d => (s"${d.operatorName}, ${d.typeOfBusiness}", "")),
-                 controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index).url)
+                        controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(index).url)
         }
     }
 
@@ -94,7 +81,7 @@
 @layout(
     pageHeading = pageHeading,
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = sectionName,
     backLinkUrl = None,
     theForm = theForm
@@ -127,7 +114,7 @@
         @govukRadios(
             Radios(
                 name = "rentalIncomeList",
-                idPrefix = Option("rentalIncomeList"),
+                idPrefix = "rentalIncomeList",
                 classes = "govuk-radios--inline",
                 items = Seq(
                     "yes" -> messages("label.yes.oes"),
@@ -135,20 +122,18 @@
                 ).map(radioItem => RadioItem(
                     content = Text(radioItem._2),
                     checked = radioItem._1.equals(theForm("rentalIncomeList").value.getOrElse("")),
-                    value = Option(radioItem._1)
+                    value = radioItem._1
                 )
                 ),
-                errorMessage =  theForm.errors.asTextErrorMessageForField("rentalIncomeList"),
-                fieldset = Option(
+                errorMessage = theForm.errors.asTextErrorMessageForField("rentalIncomeList"),
+                fieldset =
                     Fieldset(
-                        legend = Option(
+                        legend =
                             Legend(
                                 content = Text(messages("label.rentalIncomeList")),
                                 classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
                             )
-                        )
                     )
-                )
             )
         )
 

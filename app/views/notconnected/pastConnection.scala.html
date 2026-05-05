@@ -14,46 +14,43 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-
 @import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[?], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("pastConnectionType.heading"),
-  showH1 = false,
-  theForm = theForm,
+    pageHeading = messages("pastConnectionType.heading"),
+    showH1 = false,
+    theForm = theForm,
     showSection = true,
     sectionName = messages("label.section.connectionToTheProperty"),
-  summary = Some(summary),
-  backLinkUrl = backLink
+    summary = summary,
+    backLinkUrl = backLink
 ) {
 
-  @formWithCSRF(action = controllers.notconnected.routes.PastConnectionController.submit()) {
+    @formWithCSRF(action = controllers.notconnected.routes.PastConnectionController.submit()) {
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "pastConnectionType",
-      "pastConnectionType.heading",
-      "label.yes.ydw",
-      "label.no.nac.ydw",
-      classes = "govuk-fieldset__legend--l",
-      isHeading = true
-    )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "pastConnectionType",
+            "pastConnectionType.heading",
+            "label.yes.ydw",
+            "label.no.nac.ydw",
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true
+        )
 
-      @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }
 
 

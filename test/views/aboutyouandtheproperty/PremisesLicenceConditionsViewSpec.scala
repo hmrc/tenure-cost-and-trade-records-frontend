@@ -51,9 +51,9 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYe
     }
 
     "Section heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form))
-      val sectionText = doc.getElementsByClass("govuk-caption-m").text()
-      assert(sectionText == messages("label.section.aboutTheProperty"))
+      val doc  = asDocument(createViewUsingForm(form))
+      val html = doc.getElementsByClass("govuk-caption-m").html()
+      html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutTheProperty")}"""
     }
 
     "contain radio buttons for the value yes" in {
@@ -82,14 +82,14 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYe
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("continue").text()
-      assert(loginButton == messages("button.label.continue"))
+      val loginButton = doc.getElementById("continue-button").text()
+      assert(loginButton == messages("button.continue.label"))
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
-      val loginButton = doc.getElementById("save").text()
-      assert(loginButton == messages("button.label.save"))
+      val loginButton = doc.getElementById("save-button").text()
+      assert(loginButton == messages("button.save.label"))
     }
 
   }

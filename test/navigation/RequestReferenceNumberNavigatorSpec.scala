@@ -17,7 +17,7 @@
 package navigation
 
 import connectors.Audit
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.libs.json.JsObject
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.TestBaseSpec
@@ -30,7 +30,7 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator = new RequestReferenceNumberNavigator(audit)
+  val navigator: RequestReferenceNumberNavigator = RequestReferenceNumberNavigator(audit)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

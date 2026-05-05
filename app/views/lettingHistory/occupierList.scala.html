@@ -17,15 +17,14 @@
 @import actions.SessionRequest
 @import controllers.lettingHistory.routes
 @import models.submissions.common.AnswersYesNo
-@import models.submissions.lettingHistory.OccupierDetail
-@import models.submissions.lettingHistory.LocalPeriod
-@import navigation.identifiers.{asPageIdentifier, OccupierRemovePageId}
-@import views.html.components.PrimaryLayout
+@import models.submissions.lettingHistory.{LocalPeriod, OccupierDetail}
+@import navigation.identifiers.{OccupierRemovePageId, asPageIdentifier}
 @import uk.gov.hmrc.govukfrontend.views.Aliases.{HtmlContent, Text}
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios, GovukSummaryList}
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, Key, SummaryList, SummaryListRow, Value}
-@import util.DateUtilLocalised
 @import util.DateUtil.*
+@import util.DateUtilLocalised
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout, formWithCSRF: FormWithCSRF, govukSummaryList: GovukSummaryList, govukRadios: GovukRadios, govukButton: GovukButton, dateUtil: DateUtilLocalised)
 
@@ -35,11 +34,13 @@
     request.session.get("from").flatMap(_.asPageIdentifier)
 }
 
-@occupiersCount = @{ completedLettings.length }
+@occupiersCount = @{
+    completedLettings.length
+}
 
 @pageHeadingMessageKey = @{
-    if (occupiersCount == 0 && fromPage.contains(OccupierRemovePageId)) "lettingHistory.occupierList.heading.removedAll"
-    else if (occupiersCount == 1) "lettingHistory.occupierList.heading.singular"
+    if(occupiersCount == 0 && fromPage.contains(OccupierRemovePageId)) "lettingHistory.occupierList.heading.removedAll"
+    else if(occupiersCount == 1) "lettingHistory.occupierList.heading.singular"
     else "lettingHistory.occupierList.heading.plural"
 }
 
@@ -60,7 +61,7 @@
 }
 @layout(
     theForm = theForm,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     pageHeading = messages(pageHeadingMessageKey, occupiersCount),
     // TODO we may prefer to remove the backLink link for this particular page
     backLinkUrl = backLink,
@@ -78,7 +79,7 @@
                 value = Value(
                     content = Text(rentalPeriodOf(occupier)),
                 ),
-                actions = Some(Actions(
+                actions = Actions(
                     items = Seq(
                         ActionItem(
                             href = s"${routes.OccupierDetailController.show(index).url}",
@@ -90,7 +91,7 @@
                         )
                     )
                     ,
-                    classes = "govuk-!-width-one-third"))
+                    classes = "govuk-!-width-one-third")
             )
         }
     ))

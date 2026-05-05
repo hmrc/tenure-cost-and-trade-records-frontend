@@ -16,19 +16,19 @@
 
 @import controllers.guidance.GuidancePage
 @import models.ForType.*
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
-@this(layout: PrimaryLayout, govukInsetText : GovukInsetText)
+@this(layout: PrimaryLayout, govukInsetText: GovukInsetText)
 
 @(forType: ForType)(implicit request: Request[AnyContent], messages: Messages)
 
 @overview6076 = @{
-  if(forType == FOR6076) {
-      sections.FOR6076.overview(govukInsetText)
-  } else {
-      sections.shared.overview(govukInsetText)
-  }
+    if(forType == FOR6076) {
+        sections.FOR6076.overview(govukInsetText)
+    } else {
+        sections.shared.overview(govukInsetText)
+    }
 }
 
 @guidancePage = @{
@@ -36,190 +36,190 @@
         case FOR6010 =>
             GuidancePage(
                 contentsItems = Seq(
-                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
-                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
-                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
-                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
-                    ("#franchise-or-lettings"      , "label.section.aboutFranchisesOrLettings"),
-                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
-                    ("#additional-information"     , "label.section.additionalInformation"),
-                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                    ("#overview", "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property", "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property", "label.section.aboutTheProperty"),
+                    ("#trading-history", "label.section.aboutYourTradingHistory"),
+                    ("#franchise-or-lettings", "label.section.aboutFranchisesOrLettings"),
+                    ("#your-lease-or-agreement", "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information", "label.section.additionalInformation"),
+                    ("#starting-declaration", "guidance.sections.shared.startingDeclaration.h1"),
                 ),
                 sections = Seq(
-                    () =>  sections.FOR6048.connectionToTheProperty(),
-                    () =>  sections.FOR6010.aboutYouAndTheProperty(),
-                    () =>  sections.FOR6010.tradingHistory(),
-                    () =>  sections.FOR6010.aboutTheFranchiseLettings(),
-                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
-                    () =>  sections.shared.additionalInformation()
+                    () => sections.FOR6048.connectionToTheProperty(),
+                    () => sections.FOR6010.aboutYouAndTheProperty(),
+                    () => sections.FOR6010.tradingHistory(),
+                    () => sections.FOR6010.aboutTheFranchiseLettings(),
+                    () => sections.FOR6048.yourLeaseOrAgreement(),
+                    () => sections.shared.additionalInformation()
                 )
             )
         case FOR6011 =>
             GuidancePage(
                 contentsItems = Seq(
-                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
-                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
-                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
-                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
-                    ("#franchise-or-lettings"      , "label.section.aboutFranchisesOrLettings"),
-                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
-                    ("#additional-information"     , "label.section.additionalInformation"),
-                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                    ("#overview", "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property", "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property", "label.section.aboutTheProperty"),
+                    ("#trading-history", "label.section.aboutYourTradingHistory"),
+                    ("#franchise-or-lettings", "label.section.aboutFranchisesOrLettings"),
+                    ("#your-lease-or-agreement", "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information", "label.section.additionalInformation"),
+                    ("#starting-declaration", "guidance.sections.shared.startingDeclaration.h1"),
                 ),
                 sections = Seq(
-                    () =>  sections.FOR6048.connectionToTheProperty(),
-                    () =>  sections.FOR6010.aboutYouAndTheProperty(),
-                    () =>  sections.FOR6010.tradingHistory(),
-                    () =>  sections.FOR6010.aboutTheFranchiseLettings(),
-                    () =>  sections.FOR6011.yourLeaseOrAgreement(),
-                    () =>  sections.shared.additionalInformation()
+                    () => sections.FOR6048.connectionToTheProperty(),
+                    () => sections.FOR6010.aboutYouAndTheProperty(),
+                    () => sections.FOR6010.tradingHistory(),
+                    () => sections.FOR6010.aboutTheFranchiseLettings(),
+                    () => sections.FOR6011.yourLeaseOrAgreement(),
+                    () => sections.shared.additionalInformation()
                 )
             )
         case FOR6015 =>
             GuidancePage(
                 contentsItems = Seq(
-                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
-                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
-                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
-                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
-                    ("#franchise-or-lettings"      , "label.section.aboutConcessionsOrLettings"),
-                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
-                    ("#additional-information"     , "label.section.additionalInformation"),
-                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                    ("#overview", "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property", "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property", "label.section.aboutTheProperty"),
+                    ("#trading-history", "label.section.aboutYourTradingHistory"),
+                    ("#franchise-or-lettings", "label.section.aboutConcessionsOrLettings"),
+                    ("#your-lease-or-agreement", "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information", "label.section.additionalInformation"),
+                    ("#starting-declaration", "guidance.sections.shared.startingDeclaration.h1"),
                 ),
                 sections = Seq(
-                    () =>  sections.FOR6048.connectionToTheProperty(),
-                    () =>  sections.FOR6010.aboutYouAndTheProperty(),
-                    () =>  sections.FOR6015.tradingHistory(),
-                    () =>  sections.FOR6015.aboutTheFranchiseConcessions(),
-                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
-                    () =>  sections.shared.additionalInformation()
+                    () => sections.FOR6048.connectionToTheProperty(),
+                    () => sections.FOR6010.aboutYouAndTheProperty(),
+                    () => sections.FOR6015.tradingHistory(),
+                    () => sections.FOR6015.aboutTheFranchiseConcessions(),
+                    () => sections.FOR6048.yourLeaseOrAgreement(),
+                    () => sections.shared.additionalInformation()
                 )
             )
         case FOR6016 =>
             GuidancePage(
                 contentsItems = Seq(
-                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
-                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
-                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
-                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
-                    ("#franchise-or-lettings"      , "label.section.aboutConcessionsOrLettings"),
-                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
-                    ("#additional-information"     , "label.section.additionalInformation"),
-                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                    ("#overview", "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property", "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property", "label.section.aboutTheProperty"),
+                    ("#trading-history", "label.section.aboutYourTradingHistory"),
+                    ("#franchise-or-lettings", "label.section.aboutConcessionsOrLettings"),
+                    ("#your-lease-or-agreement", "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information", "label.section.additionalInformation"),
+                    ("#starting-declaration", "guidance.sections.shared.startingDeclaration.h1"),
                 ),
                 sections = Seq(
-                    () =>  sections.FOR6048.connectionToTheProperty(),
-                    () =>  sections.FOR6016.aboutYouAndTheProperty(),
-                    () =>  sections.FOR6016.tradingHistory(),
-                    () =>  sections.FOR6015.aboutTheFranchiseConcessions(),
-                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
-                    () =>  sections.shared.additionalInformation()
+                    () => sections.FOR6048.connectionToTheProperty(),
+                    () => sections.FOR6016.aboutYouAndTheProperty(),
+                    () => sections.FOR6016.tradingHistory(),
+                    () => sections.FOR6015.aboutTheFranchiseConcessions(),
+                    () => sections.FOR6048.yourLeaseOrAgreement(),
+                    () => sections.shared.additionalInformation()
                 )
             )
         case FOR6020 =>
             GuidancePage(
                 contentsItems = Seq(
-                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
-                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
-                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
-                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
-                    ("#lettings"                   , "label.section.aboutLettings"),
-                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
-                    ("#additional-information"     , "label.section.additionalInformation"),
-                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                    ("#overview", "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property", "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property", "label.section.aboutTheProperty"),
+                    ("#trading-history", "label.section.aboutYourTradingHistory"),
+                    ("#lettings", "label.section.aboutLettings"),
+                    ("#your-lease-or-agreement", "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information", "label.section.additionalInformation"),
+                    ("#starting-declaration", "guidance.sections.shared.startingDeclaration.h1"),
                 ),
                 sections = Seq(
-                    () =>  sections.FOR6048.connectionToTheProperty(),
-                    () =>  sections.FOR6020.aboutYouAndTheProperty(),
-                    () =>  sections.FOR6020.tradingHistory(),
-                    () =>  sections.FOR6020.lettings(),
-                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
-                    () =>  sections.shared.additionalInformation()
+                    () => sections.FOR6048.connectionToTheProperty(),
+                    () => sections.FOR6020.aboutYouAndTheProperty(),
+                    () => sections.FOR6020.tradingHistory(),
+                    () => sections.FOR6020.lettings(),
+                    () => sections.FOR6048.yourLeaseOrAgreement(),
+                    () => sections.shared.additionalInformation()
                 )
             )
         case FOR6030 =>
             GuidancePage(
                 contentsItems = Seq(
-                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
-                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
-                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
-                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
-                    ("#franchise-or-lettings"      , "label.section.aboutFranchisesOrLettings"),
-                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
-                    ("#additional-information"     , "label.section.additionalInformation"),
-                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                    ("#overview", "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property", "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property", "label.section.aboutTheProperty"),
+                    ("#trading-history", "label.section.aboutYourTradingHistory"),
+                    ("#franchise-or-lettings", "label.section.aboutFranchisesOrLettings"),
+                    ("#your-lease-or-agreement", "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information", "label.section.additionalInformation"),
+                    ("#starting-declaration", "guidance.sections.shared.startingDeclaration.h1"),
                 ),
                 sections = Seq(
-                    () =>  sections.FOR6048.connectionToTheProperty(),
-                    () =>  sections.FOR6030.aboutYouAndTheProperty(),
-                    () =>  sections.FOR6030.tradingHistory(),
-                    () =>  sections.FOR6010.aboutTheFranchiseLettings(),
-                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
-                    () =>  sections.shared.additionalInformation()
+                    () => sections.FOR6048.connectionToTheProperty(),
+                    () => sections.FOR6030.aboutYouAndTheProperty(),
+                    () => sections.FOR6030.tradingHistory(),
+                    () => sections.FOR6010.aboutTheFranchiseLettings(),
+                    () => sections.FOR6048.yourLeaseOrAgreement(),
+                    () => sections.shared.additionalInformation()
                 )
             )
         case FOR6045 | FOR6046 =>
             GuidancePage(
                 contentsItems = Seq(
-                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
-                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
-                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
-                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
-                    ("#franchise-or-lettings"      , "label.section.aboutConcessionsFranchisesOrLettings"),
-                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
-                    ("#additional-information"     , "label.section.additionalInformation"),
-                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                    ("#overview", "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property", "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property", "label.section.aboutTheProperty"),
+                    ("#trading-history", "label.section.aboutYourTradingHistory"),
+                    ("#franchise-or-lettings", "label.section.aboutConcessionsFranchisesOrLettings"),
+                    ("#your-lease-or-agreement", "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information", "label.section.additionalInformation"),
+                    ("#starting-declaration", "guidance.sections.shared.startingDeclaration.h1"),
                 ),
                 sections = Seq(
-                    () =>  sections.FOR6048.connectionToTheProperty(),
-                    () =>  sections.FOR6020.aboutYouAndTheProperty(),
-                    () =>  sections.FOR6045.tradingHistory(),
-                    () =>  sections.FOR6045.aboutTheFranchiseConcessions(),
-                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
-                    () =>  sections.shared.additionalInformation()
+                    () => sections.FOR6048.connectionToTheProperty(),
+                    () => sections.FOR6020.aboutYouAndTheProperty(),
+                    () => sections.FOR6045.tradingHistory(),
+                    () => sections.FOR6045.aboutTheFranchiseConcessions(),
+                    () => sections.FOR6048.yourLeaseOrAgreement(),
+                    () => sections.shared.additionalInformation()
                 )
             )
         case FOR6048 =>
             GuidancePage(
                 contentsItems = Seq(
-                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
-                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
-                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
-                    ("#letting-history"            , "label.section.lettingHistory"),
-                    ("#accomodation-details"       , "label.section.accommodation"),
-                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
-                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
-                    ("#additional-information"     , "label.section.additionalInformation"),
-                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                    ("#overview", "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property", "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property", "label.section.aboutTheProperty"),
+                    ("#letting-history", "label.section.lettingHistory"),
+                    ("#accomodation-details", "label.section.accommodation"),
+                    ("#trading-history", "label.section.aboutYourTradingHistory"),
+                    ("#your-lease-or-agreement", "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information", "label.section.additionalInformation"),
+                    ("#starting-declaration", "guidance.sections.shared.startingDeclaration.h1"),
                 ),
                 sections = Seq(
-                    () =>  sections.FOR6048.connectionToTheProperty(),
-                    () =>  sections.FOR6048.aboutYouAndTheProperty(),
-                    () =>  sections.FOR6048.lettingHistory(),
-                    () =>  sections.FOR6048.accommodationDetails(),
-                    () =>  sections.FOR6048.tradingHistory(),
-                    () =>  sections.FOR6048.yourLeaseOrAgreement(),
-                    () =>  sections.shared.additionalInformation()
+                    () => sections.FOR6048.connectionToTheProperty(),
+                    () => sections.FOR6048.aboutYouAndTheProperty(),
+                    () => sections.FOR6048.lettingHistory(),
+                    () => sections.FOR6048.accommodationDetails(),
+                    () => sections.FOR6048.tradingHistory(),
+                    () => sections.FOR6048.yourLeaseOrAgreement(),
+                    () => sections.shared.additionalInformation()
                 )
             )
         case FOR6076 =>
             GuidancePage(
                 contentsItems = Seq(
-                    ("#overview"                   , "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
-                    ("#connection-to-the-property" , "label.section.connectionToTheProperty"),
-                    ("#about-you-and-the-property" , "label.section.aboutTheProperty"),
-                    ("#trading-history"            , "label.section.aboutYourTradingHistory"),
-                    ("#your-lease-or-agreement"    , "label.section.aboutYourLeaseOrTenure"),
-                    ("#additional-information"     , "label.section.additionalInformation"),
-                    ("#starting-declaration"       , "guidance.sections.shared.startingDeclaration.h1"),
+                    ("#overview", "guidance.sections.shared.startingDeclaration.a2.shared.overview.h1"),
+                    ("#connection-to-the-property", "label.section.connectionToTheProperty"),
+                    ("#about-you-and-the-property", "label.section.aboutTheProperty"),
+                    ("#trading-history", "label.section.aboutYourTradingHistory"),
+                    ("#your-lease-or-agreement", "label.section.aboutYourLeaseOrTenure"),
+                    ("#additional-information", "label.section.additionalInformation"),
+                    ("#starting-declaration", "guidance.sections.shared.startingDeclaration.h1"),
                 ),
                 sections = Seq(
-                    () =>  sections.FOR6076.connectionToTheProperty(),
-                    () =>  sections.FOR6076.aboutYouAndTheProperty(),
-                    () =>  sections.FOR6076.tradingHistory(),
-                    () =>  sections.FOR6076.yourLeaseOrAgreement(),
-                    () =>  sections.shared.additionalInformation()
+                    () => sections.FOR6076.connectionToTheProperty(),
+                    () => sections.FOR6076.aboutYouAndTheProperty(),
+                    () => sections.FOR6076.tradingHistory(),
+                    () => sections.FOR6076.yourLeaseOrAgreement(),
+                    () => sections.shared.additionalInformation()
                 )
             )
     }
@@ -232,13 +232,19 @@
     backLinkUrl = controllers.guidance.routes.GuidanceReferenceNumberController.show.url
 ) {
 
-    @if(forType == FOR6030) {<p class="govuk-body">@messages("guidance.FOR6030.subheading")</p>} else {<p class="govuk-body">@messages("guidance.subheading")</p>}
+    @if(forType == FOR6030) {
+        <p class="govuk-body">@messages("guidance.FOR6030.subheading")</p>
+    } else {
+        <p class="govuk-body">@messages("guidance.subheading")</p>
+    }
 
     @sections.shared.contentsList(items = guidancePage.contentsItems)
 
     @overview6076
 
-    @for(section <- guidancePage.sections) { @section.apply() }
+    @for(section <- guidancePage.sections) {
+        @section.apply()
+    }
 
     @sections.shared.startingDeclaration(startCall = guidancePage.startCall)
 

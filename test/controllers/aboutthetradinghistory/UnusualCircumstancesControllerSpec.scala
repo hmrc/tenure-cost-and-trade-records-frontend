@@ -20,14 +20,14 @@ import connectors.Audit
 import models.ForType.*
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class UnusualCircumstancesControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def unusualCircumstancesController6015 = new UnusualCircumstancesController(
+  def unusualCircumstancesController6015: UnusualCircumstancesController = UnusualCircumstancesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,
@@ -36,7 +36,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def unusualCircumstancesController6030 = new UnusualCircumstancesController(
+  def unusualCircumstancesController6030: UnusualCircumstancesController = UnusualCircumstancesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,
@@ -45,7 +45,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def unusualCircumstancesControllerNone = new UnusualCircumstancesController(
+  def unusualCircumstancesControllerNone: UnusualCircumstancesController = UnusualCircumstancesController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

@@ -29,7 +29,7 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec {
 
   def customerCreditAccountsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ) = new CustomerCreditAccountsController(
+  ): CustomerCreditAccountsController = CustomerCreditAccountsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,
@@ -40,7 +40,7 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec {
 
   def customerCreditAccountsControllerNoBunkered(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistoryNoBunkered)
-  ) = new CustomerCreditAccountsController(
+  ): CustomerCreditAccountsController = CustomerCreditAccountsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

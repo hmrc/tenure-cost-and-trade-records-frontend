@@ -17,9 +17,10 @@
 package controllers.requestReferenceNumber
 
 import actions.WithSessionRefiner
+import controllers.*
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.theForm
-import navigation.RequestReferenceNumberNavigator
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails.updateRequestReferenceNumber
+import navigation.RequestReferenceNumberNavigator
 import navigation.identifiers.NoReferenceNumberContactDetailsPageId
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -28,7 +29,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.requestReferenceNumber.requestReferenceNumberContactDetails
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RequestReferenceNumberContactDetailsController @Inject() (
@@ -37,20 +38,18 @@ class RequestReferenceNumberContactDetailsController @Inject() (
   requestReferenceNumberContactDetailsView: requestReferenceNumberContactDetails,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FrontendController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        requestReferenceNumberContactDetailsView(
-          request.sessionData.requestReferenceNumberDetails.flatMap(_.contactDetails) match {
-            case Some(requestReferenceContactDetails) =>
-              theForm.fill(requestReferenceContactDetails)
-            case _                                    => theForm
-          }
-        )
+    Ok(
+      requestReferenceNumberContactDetailsView(
+        request.sessionData.requestReferenceNumberDetails.flatMap(_.contactDetails) match {
+          case Some(requestReferenceContactDetails) =>
+            theForm.fill(requestReferenceContactDetails)
+          case _                                    => theForm
+        }
       )
     )
   }
@@ -59,15 +58,14 @@ class RequestReferenceNumberContactDetailsController @Inject() (
     theForm
       .bindFromRequest()
       .fold(
-        formWithErrors => Future.successful(BadRequest(requestReferenceNumberContactDetailsView(formWithErrors))),
-        data => {
+        formWithErrors => BadRequest(requestReferenceNumberContactDetailsView(formWithErrors)),
+        data =>
           val updatedData = updateRequestReferenceNumber(_.copy(contactDetails = Some(data)))
           session
             .saveOrUpdate(updatedData)
             .map(_ =>
               Redirect(navigator.nextPage(NoReferenceNumberContactDetailsPageId, updatedData).apply(updatedData))
             )
-        }
       )
   }
 

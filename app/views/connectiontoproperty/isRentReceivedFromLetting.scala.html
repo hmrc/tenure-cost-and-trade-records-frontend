@@ -14,42 +14,42 @@
  * limitations under the License.
  *@
 
-@import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[AnswersYesNo], backLink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("isRentReceivedFromLetting.heading"),
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.connectionToTheProperty"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    pageHeading = messages("isRentReceivedFromLetting.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.connectionToTheProperty"),
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.submit()) {
+    @formWithCSRF(action = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.submit()) {
 
-    <p class="govuk-body">@messages("isRentReceivedFromLetting.p1")</p>
+        <p class="govuk-body">@messages("isRentReceivedFromLetting.p1")</p>
 
-    @includes.radioButtonsYesNo(
-      govukRadios,
-      theForm,
-      "isRentReceivedFromLetting",
-      "isRentReceivedFromLetting.label",
-      messages("label.yes.oes"),
-      messages("label.no.nac.oes"),
-      classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
-    )
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "isRentReceivedFromLetting",
+            "isRentReceivedFromLetting.label",
+            messages("label.yes.oes"),
+            messages("label.no.nac.oes"),
+            classes = "govuk-!-font-weight-bold govuk-fieldset__legend--m"
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

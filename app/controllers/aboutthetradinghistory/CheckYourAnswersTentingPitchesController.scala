@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.checkYourAnswersTentingPitches
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CheckYourAnswersTentingPitchesController @Inject() (
@@ -40,28 +40,26 @@ class CheckYourAnswersTentingPitchesController @Inject() (
   view: checkYourAnswersTentingPitches,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)) match {
-            case Some(checkYourAnswersAboutTheTradingHistory) =>
-              checkYourAnswersTentingPitchesForm.fill(checkYourAnswersAboutTheTradingHistory)
-            case _                                            => checkYourAnswersTentingPitchesForm
-          },
-          calculateBackLink
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.touringAndTentingPitches.flatMap(_.checkYourAnswersTentingPitches)) match {
+          case Some(checkYourAnswersAboutTheTradingHistory) =>
+            checkYourAnswersTentingPitchesForm.fill(checkYourAnswersAboutTheTradingHistory)
+          case _                                            => checkYourAnswersTentingPitchesForm
+        },
+        calculateBackLink
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersTentingPitchesForm,
       formWithErrors =>
@@ -83,7 +81,7 @@ class CheckYourAnswersTentingPitchesController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     request.sessionData.aboutTheTradingHistoryPartOne.flatMap(
       _.touringAndTentingPitches.flatMap(_.tentingPitchesOnSite)
     ) match {

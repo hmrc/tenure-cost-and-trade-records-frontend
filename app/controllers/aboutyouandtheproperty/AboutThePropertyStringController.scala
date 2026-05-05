@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.aboutThePropertyString
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class AboutThePropertyStringController @Inject() (
@@ -40,7 +40,7 @@ class AboutThePropertyStringController @Inject() (
   aboutThePropertyStringView: aboutThePropertyString,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -48,17 +48,15 @@ class AboutThePropertyStringController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AboutThePropertyString")
 
-    Future.successful(
-      Ok(
-        aboutThePropertyStringView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetailsString) match {
-            case Some(propertyDetails) => aboutThePropertyStringForm.fill(propertyDetails)
-            case _                     => aboutThePropertyStringForm
-          },
-          request.sessionData.forType,
-          request.sessionData.toSummary,
-          backLink
-        )
+    Ok(
+      aboutThePropertyStringView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetailsString) match {
+          case Some(propertyDetails) => aboutThePropertyStringForm.fill(propertyDetails)
+          case _                     => aboutThePropertyStringForm
+        },
+        request.sessionData.forType,
+        request.sessionData.toSummary,
+        backLink
       )
     )
   }
@@ -84,7 +82,7 @@ class AboutThePropertyStringController @Inject() (
     )
   }
 
-  private def backLink(implicit request: Request[AnyContent]): String =
+  private def backLink(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url + "#about-the-property"
       case _    => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url

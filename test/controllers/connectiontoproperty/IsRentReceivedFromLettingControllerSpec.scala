@@ -28,14 +28,14 @@ import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
 class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 
   def isRentReceivedFromLettingController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
-    new IsRentReceivedFromLettingController(
+  ): IsRentReceivedFromLettingController =
+    IsRentReceivedFromLettingController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,

@@ -27,8 +27,8 @@ class RallyAreasControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def controller =
-    new RallyAreasController(
+  def controller: RallyAreasController =
+    RallyAreasController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.propertyCurrentlyUsed
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PropertyCurrentlyUsedController @Inject() (
@@ -41,23 +41,22 @@ class PropertyCurrentlyUsedController @Inject() (
   view: propertyCurrentlyUsed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PropertyCurrentlyUsed")
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed) match {
-            case Some(propertyDetails) => propertyCurrentlyUsedForm.fill(propertyDetails)
-            case _                     => propertyCurrentlyUsedForm
-          },
-          request.sessionData.toSummary,
-          backLink
-        )
+
+    Ok(
+      view(
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed) match {
+          case Some(propertyDetails) => propertyCurrentlyUsedForm.fill(propertyDetails)
+          case _                     => propertyCurrentlyUsedForm
+        },
+        request.sessionData.toSummary,
+        backLink
       )
     )
   }
@@ -82,7 +81,7 @@ class PropertyCurrentlyUsedController @Inject() (
     )
   }
 
-  private def backLink(implicit request: Request[AnyContent]): String =
+  private def backLink(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL"  => controllers.routes.TaskListController.show.url
       case "CYA" => routes.CheckYourAnswersAboutThePropertyController.show().url

@@ -21,7 +21,7 @@ import form.aboutyouandtheproperty.AboutThePropertyStringForm.aboutThePropertySt
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -35,7 +35,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
 
   def aboutThePropertyStringController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYesString)
-  ) = new AboutThePropertyStringController(
+  ): AboutThePropertyStringController = AboutThePropertyStringController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -46,7 +46,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
 
   def aboutThePropertyStringControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNoString)
-  ) = new AboutThePropertyStringController(
+  ): AboutThePropertyStringController = AboutThePropertyStringController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -55,7 +55,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
     mockSessionRepo
   )
 
-  def aboutThePropertyStringControllerNone() = new AboutThePropertyStringController(
+  def aboutThePropertyStringControllerNone(): AboutThePropertyStringController = AboutThePropertyStringController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

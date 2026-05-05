@@ -46,7 +46,7 @@ class AcceptLowMarginFuelCardController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -90,7 +90,7 @@ class AcceptLowMarginFuelCardController @Inject() (
   }
 
   private def tradingHistory(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutTheTradingHistory] = request.sessionData.aboutTheTradingHistory
 

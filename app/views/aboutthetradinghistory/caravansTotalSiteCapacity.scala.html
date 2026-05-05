@@ -16,9 +16,9 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.CaravansTotalSiteCapacity
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import views.html.components.PrimaryLayout
 
 
 @this(
@@ -74,7 +74,7 @@
 @layout(
     pageHeading = messages(s"turnover.6045.caravansTotalSiteCapacity.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLinkUrl,
     theForm = form

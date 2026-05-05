@@ -17,8 +17,8 @@
 package form.aboutthetradinghistory
 
 import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
-import form.MappingSupport._
-import play.api.data.Forms._
+import form.MappingSupport.*
+import play.api.data.Forms.*
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages

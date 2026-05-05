@@ -35,7 +35,7 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
   private def intervalsOfRentReviewController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
   ) =
-    new IntervalsOfRentReviewController(
+    IntervalsOfRentReviewController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourLeaseOrTenureNavigator,

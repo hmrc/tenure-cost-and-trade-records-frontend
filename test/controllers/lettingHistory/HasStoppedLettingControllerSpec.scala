@@ -19,10 +19,13 @@ package controllers.lettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.hasStoppedLetting as HasStoppedLettingView
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
@@ -30,28 +33,28 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
   "the HasStoppedLetting controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture {
-        val result = controller.show(fakeGetRequest.withSession("from" -> "permanentResidentsPage"))
+        val result: Future[Result] = controller.show(fakeGetRequest.withSession("from" -> "permanentResidentsPage"))
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.hasStoppedLetting.heading"
         page.backLink          shouldBe routes.HowManyNightsController.show.url
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing answer!
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.intendedLettings.hasStoppedLetting.required"
       }
       "be handling POST answer='yes' by replying 303 redirect to the 'Last Rent' page" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
@@ -66,11 +69,11 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
       "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
         hasStopped = Some(true)
       ) {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveChecked(value = "yes")
         page.radios("answer") shouldNot haveChecked(value = "no")
@@ -79,7 +82,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         hasStopped = Some(true)
       ) {
         // Answering 'no' will clear out all residents details
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "answer" -> "no"
           )
@@ -94,7 +97,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
 
   trait ControllerFixture(hasStopped: Option[Boolean] = None) extends MockRepositoryFixture with SessionCapturingFixture:
 
-    val controller = new HasStoppedLettingController(
+    val controller: HasStoppedLettingController = HasStoppedLettingController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[HasStoppedLettingView],

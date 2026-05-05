@@ -60,7 +60,7 @@ class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionV
     deserialized shouldBe JsSuccess(encryptedLettingHistory)
   }
 
-  val clearLettingHistory = LettingHistory(
+  val clearLettingHistory: LettingHistory = LettingHistory(
     hasPermanentResidents = Some(true),
     permanentResidents = List(
       ResidentDetail(

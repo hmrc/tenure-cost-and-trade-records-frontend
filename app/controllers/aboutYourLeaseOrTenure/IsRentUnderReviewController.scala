@@ -46,7 +46,7 @@ class IsRentUnderReviewController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -79,11 +79,11 @@ class IsRentUnderReviewController @Inject() (
   }
 
   private def leaseOrAgreementPartThree(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
       case FOR6045 | FOR6046 => routes.MethodToFixCurrentRentController.show().url
       case _                 => routes.IntervalsOfRentReviewController.show().url

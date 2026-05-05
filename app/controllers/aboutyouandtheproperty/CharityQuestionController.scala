@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.charityQuestion
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CharityQuestionController @Inject() (
@@ -40,29 +40,27 @@ class CharityQuestionController @Inject() (
   charityQuestionView: charityQuestion,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CharityQuestion")
 
-    Future.successful(
-      Ok(
-        charityQuestionView(
-          request.sessionData.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
-            case Some(answer) =>
-              charityQuestionForm.fill(answer)
-            case _            => charityQuestionForm
-          },
-          request.sessionData.toSummary,
-          navigator.from
-        )
+    Ok(
+      charityQuestionView(
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
+          case Some(answer) =>
+            charityQuestionForm.fill(answer)
+          case _            => charityQuestionForm
+        },
+        request.sessionData.toSummary,
+        navigator.from
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       charityQuestionForm,
       formWithErrors => BadRequest(charityQuestionView(formWithErrors, request.sessionData.toSummary)),

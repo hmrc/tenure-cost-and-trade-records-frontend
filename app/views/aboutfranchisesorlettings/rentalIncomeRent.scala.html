@@ -14,18 +14,13 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukDateInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Label
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.govukfrontend.views.Aliases.PrefixOrSuffix
-@import models.pages.Summary
 @import models.ForType.*
+@import models.pages.Summary
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Input, Label, PrefixOrSuffix}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukDateInput, GovukInput}
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukInput: GovukInput,
@@ -41,7 +36,7 @@
     forType match {
         case FOR6015 | FOR6016 => messages("label.section.aboutConcessionsOrLettings")
         case FOR6045 | FOR6046 => messages("label.section.aboutConcessionsFranchisesOrLettings")
-        case _                 => messages("label.section.aboutFranchisesOrLettings")
+        case _ => messages("label.section.aboutFranchisesOrLettings")
     }
 }
 
@@ -49,17 +44,17 @@
     pageHeading = messages("lettingOtherPartOfPropertyRentDetails.heading", operatorName),
     showSection = true,
     showH1 = false,
-    summary = Some(summary),
+    summary = summary,
     sectionName = sectionName,
     backLinkUrl = backLink,
     theForm = theForm
 ) {
     @formWithCSRF(action = {
-     controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.submit(index)
+        controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.submit(index)
     }
     ) {
 
-       <h1 class="govuk-heading-l">@messages("lettingOtherPartOfPropertyRentDetails.heading", operatorName)</h1>
+        <h1 class="govuk-heading-l">@messages("lettingOtherPartOfPropertyRentDetails.heading", operatorName)</h1>
 
         @govukInput(Input(
             id = "annualRent",
@@ -70,10 +65,10 @@
                 content = Text(messages("label.annualRent")),
                 classes = "govuk-!-font-weight-bold"
             ),
-            prefix = Some(PrefixOrSuffix(
-                content = Text(messages("label.pound"))
-            )),
-            autocomplete = Some("off"),
+            prefix = PrefixOrSuffix(
+                content = Text(messages("label.pound")
+                )),
+            autocomplete = "off",
         ).withFormField(theForm("annualRent")))
 
         @includes.dateFields(form = theForm, field = "dateInput", govukDate = govukDateInput, showDays = true)

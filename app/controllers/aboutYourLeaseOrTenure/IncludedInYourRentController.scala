@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.includedInYourRent
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class IncludedInYourRentController @Inject() (
@@ -41,31 +41,29 @@ class IncludedInYourRentController @Inject() (
   includedInYourRentView: includedInYourRent,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
-  private def forType(implicit request: SessionRequest[?]): ForType = request.sessionData.forType
+  private def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IncludedInYourRent")
 
-    Future.successful(
-      Ok(
-        includedInYourRentView(
-          request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match {
-            case Some(includedInYourRentDetails) => includedInYourRentForm(forType).fill(includedInYourRentDetails)
-            case _                               => includedInYourRentForm(forType)
-          },
-          request.sessionData.toSummary,
-          forType,
-          navigator.from
-        )
+    Ok(
+      includedInYourRentView(
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match {
+          case Some(includedInYourRentDetails) => includedInYourRentForm(forType).fill(includedInYourRentDetails)
+          case _                               => includedInYourRentForm(forType)
+        },
+        request.sessionData.toSummary,
+        forType,
+        navigator.from
       )
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[IncludedInYourRentDetails](
       includedInYourRentForm(forType),
       formWithErrors =>

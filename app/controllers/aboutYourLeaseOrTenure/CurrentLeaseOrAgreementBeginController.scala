@@ -40,7 +40,7 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
   currentLeaseOrAgreementBeginView: currentLeaseOrAgreementBegin,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -59,7 +59,7 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
     )
   }
 
-  def submit = (Action andThen withSessionRefiner).async { implicit request =>
+  def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CurrentLeaseOrAgreementBegin](
       currentLeaseOrAgreementBeginForm,
       formWithErrors => BadRequest(currentLeaseOrAgreementBeginView(formWithErrors, request.sessionData.toSummary)),

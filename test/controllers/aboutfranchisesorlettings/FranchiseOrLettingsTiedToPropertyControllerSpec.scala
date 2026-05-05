@@ -21,7 +21,7 @@ import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.fran
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -29,13 +29,13 @@ import scala.language.reflectiveCalls
 
 class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
   val mockAudit: Audit = mock[Audit]
 
   def franchiseOrLettingsTiedToPropertyController(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings)
-  ) =
-    new FranchiseOrLettingsTiedToPropertyController(
+  ): FranchiseOrLettingsTiedToPropertyController =
+    FranchiseOrLettingsTiedToPropertyController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutFranchisesOrLettingsNavigator,

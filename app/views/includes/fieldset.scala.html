@@ -18,31 +18,28 @@
 * Design your service using GOV.UK styles, components and patterns
 * See https://design-system.service.gov.uk/components/fieldset/
 *@
-
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend, Text}
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukFieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 
 @(
-    govukFieldset: GovukFieldset,
-    legendContent: String = "",
-    legendKey: String = "",
-    classes: String = "",
-    isPageHeading: Boolean = false
+        govukFieldset: GovukFieldset,
+        legendContent: String = "",
+        legendKey: String = "",
+        classes: String = "",
+        isPageHeading: Boolean = false
 )(
-    htmlContent: Html
+        htmlContent: Html
 )(
-    implicit messages: Messages
+        implicit messages: Messages
 )
 
 @govukFieldset(
     Fieldset(
-        legend = Some(Legend(
-            content = Text(value = if (legendKey != "") messages(legendKey) else legendContent),
+        legend = Legend(
+            content = Text(value = if(legendKey != "") messages(legendKey) else legendContent),
             classes = classes,
             isPageHeading = isPageHeading
-        )),
+        ),
         html = htmlContent
     )
 )

@@ -27,8 +27,8 @@ class CostOfSales6076IntermittentControllerSpec extends TestBaseSpec {
 
   val mockAudit: Audit = mock[Audit]
 
-  def costOfSales6076IntermittentController =
-    new CostOfSales6076IntermittentController(
+  def costOfSales6076IntermittentController: CostOfSales6076IntermittentController =
+    CostOfSales6076IntermittentController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutYourTradingHistoryNavigator,

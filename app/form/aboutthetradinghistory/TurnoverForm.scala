@@ -18,7 +18,7 @@ package form.aboutthetradinghistory
 
 import form.MappingSupport.{tradingPeriodWeeks, turnoverSalesMappingWithYear}
 import models.submissions.aboutthetradinghistory.TurnoverSection
-import play.api.data.Forms._
+import play.api.data.Forms.*
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
@@ -88,9 +88,7 @@ object TurnoverForm {
           }
 
         case _ =>
-          throw new IllegalArgumentException(
-            s"Unexpected number of financial years: $expectedNumberOfFinancialYears"
-          )
+          throw IllegalArgumentException(s"Unexpected number of financial years: $expectedNumberOfFinancialYears")
       }
     }
   }

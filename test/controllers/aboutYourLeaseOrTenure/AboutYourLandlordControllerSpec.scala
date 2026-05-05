@@ -43,7 +43,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
   private def aboutYourLandlordController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ) = new AboutYourLandlordController(
+  ) = AboutYourLandlordController(
     stubMessagesControllerComponents(),
     audit,
     aboutYourLeaseOrTenureNavigator,

@@ -15,14 +15,12 @@
  *@
 
 @import models.submissions.common.AnswersYesNo.*
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Fieldset, Legend, Radios}
 @import uk.gov.hmrc.govukfrontend.views.html.components.GovukRadios
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Radios
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Legend
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Fieldset
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
 @(govukRadios: GovukRadios,
         theForm: Form[?],
@@ -36,28 +34,28 @@
         conditionalHtmlOnYes: Option[Html] = None,
         conditionalHtmlOnNo: Option[Html] = None)(implicit messages: Messages)
 
-    @item(value: String, label: String, conditionalHtml: Option[Html]) = @{
-        RadioItem(
-            content = Text(label),
-            checked = theForm(name).value.contains(value),
-            value = value,
-            conditionalHtml = conditionalHtml
-        )
-    }
-
-    @govukRadios(
-        Radios(
-            fieldset = Fieldset(
-                legend = Legend(
-                    content = Text(messages(label)),
-                    isPageHeading = isHeading,
-                    classes = s"govuk-fieldset__legend $classes"
-                )
-            ),
-            items = Seq(
-                item(AnswerYes.toString, messages(yesLabel), conditionalHtmlOnYes),
-                item(AnswerNo.toString, messages(noLabel), conditionalHtmlOnNo)
-            ),
-            hint = Hint(content = Text(messages(hint)))
-        ).withFormField(theForm(name))
+@item(value: String, label: String, conditionalHtml: Option[Html]) = @{
+    RadioItem(
+        content = Text(label),
+        checked = theForm(name).value.contains(value),
+        value = value,
+        conditionalHtml = conditionalHtml
     )
+}
+
+@govukRadios(
+    Radios(
+        fieldset = Fieldset(
+            legend = Legend(
+                content = Text(messages(label)),
+                isPageHeading = isHeading,
+                classes = s"govuk-fieldset__legend $classes"
+            )
+        ),
+        items = Seq(
+            item(AnswerYes.toString, messages(yesLabel), conditionalHtmlOnYes),
+            item(AnswerNo.toString, messages(noLabel), conditionalHtmlOnNo)
+        ),
+        hint = Hint(content = Text(messages(hint)))
+    ).withFormField(theForm(name))
+)

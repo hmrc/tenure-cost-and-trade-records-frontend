@@ -14,11 +14,11 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.input.Input
 @import uk.gov.hmrc.govukfrontend.views.viewmodels.label.Label
+@import views.html.components.PrimaryLayout
 
 @this(
         layout: PrimaryLayout,
@@ -49,7 +49,7 @@
                     classes = "govuk-!-font-weight-bold"
                 ),
                 errorMessage = theForm.errors.asTextErrorMessageForField("referenceNumber"),
-                hint = Some(Hint(content = Text(messages("hint.referenceNumber")))),
+                hint = Hint(content = Text(messages("hint.referenceNumber"))),
             )
         )
 
@@ -64,7 +64,7 @@
                     classes = "govuk-!-font-weight-bold"
                 ),
                 errorMessage = theForm.errors.asTextErrorMessageForField("postcode"),
-                hint = Some(Hint(content = Text(messages("hint.postcode")))),
+                hint = Hint(content = Text(messages("hint.postcode"))),
             )
         )
 

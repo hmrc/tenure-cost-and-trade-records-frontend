@@ -35,7 +35,7 @@ class DefaultBackendConnector @Inject() (
   servicesConfig: ServicesConfig,
   appConfig: AppConfig,
   httpClientV2: HttpClientV2
-)(implicit
+)(using
   ec: ExecutionContext
 ) extends BackendConnector:
 
@@ -54,7 +54,7 @@ class DefaultBackendConnector @Inject() (
   override def verifyCredentials(
     refNumber: String,
     postcode: String
-  )(implicit
+  )(using
     hc: HeaderCarrier
   ): Future[FORLoginResponse] =
     val credentials = Credentials(cleanedRefNumber(refNumber), postcode)
@@ -68,7 +68,7 @@ class DefaultBackendConnector @Inject() (
       .flatMap { response =>
         response.status match {
           case 200    => Future.successful(Json.parse(response.body).as[FORLoginResponse])
-          case 400    => Future.failed(new BadRequestException(response.body))
+          case 400    => Future.failed(BadRequestException(response.body))
           case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
         }
       }
@@ -95,7 +95,7 @@ class DefaultBackendConnector @Inject() (
       .flatMap { response =>
         response.status match {
           case 201    => Future.unit
-          case 400    => Future.failed(new BadRequestException(response.body))
+          case 400    => Future.failed(BadRequestException(response.body))
           case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
         }
       }
@@ -130,7 +130,7 @@ class DefaultBackendConnector @Inject() (
 @ImplementedBy(classOf[DefaultBackendConnector])
 trait BackendConnector:
 
-  def verifyCredentials(refNumber: String, postcode: String)(implicit hc: HeaderCarrier): Future[FORLoginResponse]
+  def verifyCredentials(refNumber: String, postcode: String)(using hc: HeaderCarrier): Future[FORLoginResponse]
 
   def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String]
 

@@ -26,8 +26,8 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
 import utils.FormBindingTestAssertions.mustContainError
+import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
@@ -40,7 +40,7 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
   def aboutYourTradingHistoryController(
     forType: ForType = FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new WhenDidYouFirstOccupyController(
+  ): WhenDidYouFirstOccupyController = WhenDidYouFirstOccupyController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourTradingHistoryNavigator,

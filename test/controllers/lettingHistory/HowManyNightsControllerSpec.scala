@@ -19,10 +19,14 @@ package controllers.lettingHistory
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{IntendedDetail, LettingHistory}
 import navigation.LettingHistoryNavigator
+import org.jsoup.nodes.Document
+import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}
+import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.howManyNights as HowManyNightsView
 
+import scala.concurrent.Future
 import scala.language.implicitConversions
 
 class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
@@ -32,11 +36,11 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
       "be handling GET requests by replying 200 with the form showing just the nights field" in new ControllerFixture(
         hasCompletedLettings = Some(false)
       ) {
-        val result = controller.show()(fakeGetRequest)
+        val result: Future[Result] = controller.show()(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading       shouldBe "lettingHistory.intendedLettings.nights.heading"
         page.backLink      shouldBe routes.HasCompletedLettingsController.show.url
         page.input("nights") should beEmpty
@@ -45,10 +49,10 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         isWelsh = false,
         hasStopped = Some(true)
       ) {
-        val request = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "nights" -> "140" // meets criteria (England)
         )
-        val result  = controller.submit(request)
+        val result: Future[Result]                           = controller.submit(request)
         status(result)                            shouldBe SEE_OTHER
         redirectLocation(result).value            shouldBe routes.IsYearlyAvailableController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -63,11 +67,11 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         nights = Some(100),
         hasStopped = Some(false)
       ) {
-        val result = controller.show(fakeGetRequest)
+        val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.backLink      shouldBe routes.OccupierListController.show.url
         page.input("nights") should haveValue("100")
       }
@@ -76,10 +80,10 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         nights = Some(100),
         hasStopped = Some(false)
       ) {
-        val request = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "nights" -> "251" // still does NOT meet criteria (in Wales)
         )
-        val result  = controller.submit(request)
+        val result: Future[Result]                           = controller.submit(request)
         status(result)                                shouldBe SEE_OTHER
         redirectLocation(result).value                shouldBe routes.HasStoppedLettingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
@@ -89,13 +93,13 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
     }
     "regardless of what users might have submitted"           should {
       "be handling invalid POST by replying 400 with error messages" in new ControllerFixture {
-        val result = controller.submit(
+        val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
             "nights" -> ""
           )
         )
         status(result) shouldBe BAD_REQUEST
-        val page   = contentAsJsoup(result)
+        val page: Document         = contentAsJsoup(result)
         page.error("nights") shouldBe "error.number"
       }
     }
@@ -109,7 +113,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
   ) extends MockRepositoryFixture
     with SessionCapturingFixture:
 
-    val controller = new HowManyNightsController(
+    val controller: HowManyNightsController = HowManyNightsController(
       mcc = stubMessagesControllerComponents(),
       navigator = inject[LettingHistoryNavigator],
       theView = inject[HowManyNightsView],

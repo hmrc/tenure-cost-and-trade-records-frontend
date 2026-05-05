@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfBeers
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class RentPayableVaryOnQuantityOfBeersController @Inject() (
@@ -41,22 +41,20 @@ class RentPayableVaryOnQuantityOfBeersController @Inject() (
   rentPayableVaryOnQuantityOfBeersView: rentPayableVaryOnQuantityOfBeers,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryOnQuantityOfBeers")
 
-    Future.successful(
-      Ok(
-        rentPayableVaryOnQuantityOfBeersView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match {
-            case Some(answer) => rentPayableVaryOnQuantityOfBeersForm.fill(answer)
-            case _            => rentPayableVaryOnQuantityOfBeersForm
-          },
-          getBackLink
-        )
+    Ok(
+      rentPayableVaryOnQuantityOfBeersView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match {
+          case Some(answer) => rentPayableVaryOnQuantityOfBeersForm.fill(answer)
+          case _            => rentPayableVaryOnQuantityOfBeersForm
+        },
+        getBackLink
       )
     )
   }

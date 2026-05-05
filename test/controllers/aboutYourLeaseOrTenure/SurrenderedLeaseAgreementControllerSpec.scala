@@ -29,7 +29,7 @@ class SurrenderedLeaseAgreementControllerSpec extends TestBaseSpec {
 
   def surrenderedLeaseAgreementController(
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
-  ) = new SurrenderLeaseAgreementDetailsController(
+  ): SurrenderLeaseAgreementDetailsController = SurrenderLeaseAgreementDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

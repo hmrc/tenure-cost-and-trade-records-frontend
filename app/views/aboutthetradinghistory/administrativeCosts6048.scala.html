@@ -16,14 +16,13 @@
 
 @import actions.SessionRequest
 @import models.submissions.aboutthetradinghistory.AdministrativeCosts6048
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.govukfrontend.views.Implicits.RichInput
-@import util.DateUtilLocalised
-@import util.NumberUtil.{*, given}
-@import util.AccessibilityUtil
-@import java.time.LocalDate
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import util.NumberUtil.*
+@import util.{AccessibilityUtil, DateUtilLocalised}
+@import views.html.components.PrimaryLayout
 
+@import java.time.LocalDate
 @import scala.language.implicitConversions
 
 @this(
@@ -45,23 +44,23 @@
         <span class="govuk-!-font-weight-bold">@messages(labelKey)</span>
         @messages("turnover.6048.excludingVAT")
     </p>
-@if(hintKey.nonEmpty) {
-    <span class="govuk-caption-m">@messages(hintKey)</span>
+@hintKey.map { hint =>
+    <span class="govuk-caption-m">@messages(hint)</span>
 }
 }
 
 @turnoverRow(formField: String, labelKey: String, hintKey: String = "", finYearEnd: LocalDate) = @{
     Seq(
         TableRow(
-            content = HtmlContent(rowLabel(labelKey, Option(hintKey).filterNot(_.isEmpty)))
+            content = HtmlContent(rowLabel(labelKey, hintKey.filterNot(_.isEmpty)))
         ),
         TableRow(
             content = HtmlContent(
                 govukInput(
                     Input(
-                        prefix = Some(PrefixOrSuffix(
-                            content = Text("£")
-                        )),
+                        prefix = PrefixOrSuffix(
+                            content = Text("£"
+                            )),
                         attributes = Map(
                             "maxlength" -> "13",
                             "aria-label" -> accessibilityUtil.ariaBuilder(labelKey, finYearEnd)
@@ -84,7 +83,7 @@
 @layout(
     pageHeading = messages("turnover.6048.administrativeCosts.heading"),
     showSection = true,
-    summary = Some(request.sessionData.toSummary),
+    summary = request.sessionData.toSummary,
     sectionName = messages("label.section.aboutYourTradingHistory"),
     backLinkUrl = backLink,
     fullWidth = true,
@@ -108,7 +107,7 @@
                         ),
                         firstCellIsHeader = true,
                         rows = Seq(
-                            turnoverRow(s"turnover[$idx].subscriptionsAndFees", "turnover.6048.administrativeCosts.subscriptionsAndFees", "turnover.6048.administrativeCosts.subscriptionsAndFees.hint", finYearEnd = finYearEnd ),
+                            turnoverRow(s"turnover[$idx].subscriptionsAndFees", "turnover.6048.administrativeCosts.subscriptionsAndFees", "turnover.6048.administrativeCosts.subscriptionsAndFees.hint", finYearEnd = finYearEnd),
                             turnoverRow(s"turnover[$idx].telephoneBroadbandStationeryPostage", "turnover.6048.administrativeCosts.telephoneBroadbandStationeryPostage", finYearEnd = finYearEnd),
                             turnoverRow(s"turnover[$idx].bookingAgency", "turnover.6048.administrativeCosts.bookingAgency", "turnover.6048.administrativeCosts.bookingAgency.hint", finYearEnd = finYearEnd),
                             turnoverRow(s"turnover[$idx].advertising", "turnover.6048.administrativeCosts.advertising", "turnover.6048.administrativeCosts.advertising.hint", finYearEnd = finYearEnd),

@@ -20,11 +20,11 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutYourLeaseOrTenure.HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm
+import models.ForType.*
+import models.Session
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo.updateAboutLeaseOrAgreementPartTwo
 import models.submissions.aboutYourLeaseOrTenure.HowIsCurrentRentFixed
 import models.submissions.common.AnswersYesNo.*
-import models.ForType.*
-import models.Session
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.HowIsCurrentRentFixedId
 import play.api.Logging
@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.howIsCurrentRentFixed
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class HowIsCurrentRentFixedController @Inject() (
@@ -44,7 +44,7 @@ class HowIsCurrentRentFixedController @Inject() (
   howIsCurrentRentFixedView: howIsCurrentRentFixed,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -52,16 +52,14 @@ class HowIsCurrentRentFixedController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("HowIsCurrentRentFixed")
 
-    Future.successful(
-      Ok(
-        howIsCurrentRentFixedView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed) match {
-            case Some(data) => howIsCurrentRentFixedForm.fill(data)
-            case _          => howIsCurrentRentFixedForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      howIsCurrentRentFixedView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed) match {
+          case Some(data) => howIsCurrentRentFixedForm.fill(data)
+          case _          => howIsCurrentRentFixedForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }

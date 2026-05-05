@@ -21,7 +21,7 @@ import config.ErrorHandler
 import connectors.Audit
 import crypto.MongoHasher
 import models.ForType.*
-import play.api.http.Status.{BAD_REQUEST, NOT_FOUND, OK, SEE_OTHER, TEMPORARY_REDIRECT}
+import play.api.http.Status.*
 import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, stubMessagesControllerComponents}
 import stub.{StubBackendConnector, StubSessionRepo}
 import util.DateUtilLocalised
@@ -40,7 +40,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
 
   def mongoHasher: MongoHasher = inject[MongoHasher]
 
-  private def saveAsDraftController = new SaveAsDraftController(
+  private def saveAsDraftController = SaveAsDraftController(
     backendConnector,
     inject[customPasswordSaveAsDraft],
     inject[submissionDraftSaved],

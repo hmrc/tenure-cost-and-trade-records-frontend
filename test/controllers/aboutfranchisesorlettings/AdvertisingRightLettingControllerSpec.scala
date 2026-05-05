@@ -21,22 +21,25 @@ import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.AdvertisingRightLetting
 import models.submissions.common.Address
+import org.jsoup.nodes.Document
+import org.mockito.ArgumentCaptor
 import play.api.mvc.Codec.utf_8 as UTF_8
+import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import utils.{JsoupHelpers, TestBaseSpec}
 
-import scala.concurrent.Future.successful
+import scala.concurrent.Future
 
 class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository: SessionRepo = mock[SessionRepo]
-    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(successful(()))
+    when(repository.saveOrUpdate(any[Session])(using any)).thenReturn(Future.unit)
 
-    val controller: AdvertisingRightLettingController = new AdvertisingRightLettingController(
+    val controller: AdvertisingRightLettingController = AdvertisingRightLettingController(
       stubMessagesControllerComponents(),
       mock[Audit],
       aboutFranchisesOrLettingsNavigator,
@@ -59,34 +62,34 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
   "the AdvertisingRightLetting controller" when {
     "handling GET requests"  should {
       "reply 200 with a fresh HTML form" in new ControllerFixture {
-        val result = controller.show(index = Some(4))(fakeRequest)
+        val result: Future[Result] = controller.show(index = Some(4))(fakeRequest)
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.heading                       shouldBe "label.advertisingRightLetting.heading"
         page.input("descriptionOfSpace")     should beEmpty
         page.input("advertisingCompanyName") should beEmpty
       }
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
-        val result = controller.show(index = Some(2))(fakeRequest)
-        val page   = contentAsJsoup(result)
+        val result: Future[Result] = controller.show(index = Some(2))(fakeRequest)
+        val page: Document         = contentAsJsoup(result)
         page.input("descriptionOfSpace")     should haveValue("Billboard")
         page.input("advertisingCompanyName") should haveValue("JCDx")
       }
       "render back link to CYA if come from CYA" in new ControllerFixture {
-        val result = controller.show(Some(0))(fakeRequestFromCYA)
-        val page   = contentAsJsoup(result)
+        val result: Future[Result] = controller.show(Some(0))(fakeRequestFromCYA)
+        val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
     }
     "handling POST requests" should {
       "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
-        val result = controller.submit(index = Some(0))(
+        val result: Future[Result] = controller.submit(index = Some(0))(
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(result) shouldBe BAD_REQUEST
-        val page = contentAsJsoup(result)
+        val page: Document = contentAsJsoup(result)
         page.error("descriptionOfSpace")     shouldBe "error.descriptionOfSpace.required"
         page.error("advertisingCompanyName") shouldBe "error.advertisingCompanyName.required"
       }
@@ -95,7 +98,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
       ) {
         val descriptionOfSpace     = "New Ballet Hall"
         val advertisingCompanyName = "Dancing Company"
-        val result                 = controller.submit(index = Some(0))(
+        val result: Future[Result] = controller.submit(index = Some(0))(
           fakePostRequest.withFormUrlEncodedBody(
             "descriptionOfSpace"     -> descriptionOfSpace,
             "advertisingCompanyName" -> advertisingCompanyName
@@ -103,7 +106,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
-        val session = captor[Session]
+        val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) {
           case record: AdvertisingRightLetting =>
@@ -114,7 +117,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
       "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
         val descriptionOfSpace     = "Turned into Ballet Hall"
         val advertisingCompanyName = "Dancing Company"
-        val result                 = controller.submit(index = Some(2))(
+        val result: Future[Result] = controller.submit(index = Some(2))(
           fakePostRequest.withFormUrlEncodedBody(
             "descriptionOfSpace"     -> descriptionOfSpace,
             "advertisingCompanyName" -> advertisingCompanyName
@@ -122,7 +125,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
-        val session = captor[Session]
+        val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(2)) {
           case record: AdvertisingRightLetting =>
@@ -131,15 +134,15 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
         }
       }
       "save record and reply 303 redirect to the next page" in new ControllerFixture {
-        val result = controller.addressLookupCallback(idx = 2, "confirmedAddress")(fakeRequest)
+        val result: Future[Result] = controller.addressLookupCallback(idx = 2, "confirmedAddress")(fakeRequest)
         status(result)                 shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentDetailsController.show(2).url
 
-        val id = captor[String]
+        val id: ArgumentCaptor[String] = captor[String]
         verify(addressLookupConnector, once).getConfirmedAddress(id)(using any[HeaderCarrier])
         id.getValue shouldBe "confirmedAddress"
 
-        val session = captor[Session]
+        val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session)(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(2)) {
           case record: AdvertisingRightLetting =>

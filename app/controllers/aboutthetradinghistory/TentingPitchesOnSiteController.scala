@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.tentingPitchesOnSite
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class TentingPitchesOnSiteController @Inject() (
@@ -42,7 +42,7 @@ class TentingPitchesOnSiteController @Inject() (
   view: tentingPitchesOnSite,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -50,17 +50,15 @@ class TentingPitchesOnSiteController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TentingPitchesOnSite")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutTheTradingHistoryPartOne
-            .flatMap(_.touringAndTentingPitches)
-            .flatMap(_.tentingPitchesOnSite) match {
-            case Some(answers) => tentingPitchesOnSiteForm.fill(answers)
-            case None          => tentingPitchesOnSiteForm
-          },
-          calculateBackLink
-        )
+    Ok(
+      view(
+        request.sessionData.aboutTheTradingHistoryPartOne
+          .flatMap(_.touringAndTentingPitches)
+          .flatMap(_.tentingPitchesOnSite) match {
+          case Some(answers) => tentingPitchesOnSiteForm.fill(answers)
+          case None          => tentingPitchesOnSiteForm
+        },
+        calculateBackLink
       )
     )
   }
@@ -106,7 +104,7 @@ class TentingPitchesOnSiteController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageForTentingPitches.url
       case "TL"  => controllers.routes.TaskListController.show.url + "#tenting-pitches-on-site"

@@ -19,14 +19,14 @@ package controllers.aboutthetradinghistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class IncomeExpenditureSummaryControllerSpec extends TestBaseSpec {
 
   def incomeExpenditureSummaryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ) = new IncomeExpenditureSummaryController(
+  ): IncomeExpenditureSummaryController = IncomeExpenditureSummaryController(
     stubMessagesControllerComponents(),
     aboutYourTradingHistoryNavigator,
     incomeExpenditureSummaryView,

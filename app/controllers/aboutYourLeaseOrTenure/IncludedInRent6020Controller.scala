@@ -45,7 +45,7 @@ class IncludedInRent6020Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -78,11 +78,11 @@ class IncludedInRent6020Controller @Inject() (
   }
 
   private def leaseOrAgreementPartOne(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartOne] = request.sessionData.aboutLeaseOrAgreementPartOne
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     if (request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings).contains(AnswerYes)) {
       controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show().url
     } else {

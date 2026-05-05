@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.propertyUpdates
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class PropertyUpdatesController @Inject() (
@@ -44,7 +44,7 @@ class PropertyUpdatesController @Inject() (
   view: propertyUpdates,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -52,16 +52,14 @@ class PropertyUpdatesController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PropertyUpdates")
 
-    Future.successful(
-      Ok(
-        view(
-          request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match {
-            case Some(data) => propertyUpdatesForm.fill(data)
-            case _          => propertyUpdatesForm
-          },
-          request.sessionData.toSummary,
-          backLink(request.sessionData)
-        )
+    Ok(
+      view(
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match {
+          case Some(data) => propertyUpdatesForm.fill(data)
+          case _          => propertyUpdatesForm
+        },
+        request.sessionData.toSummary,
+        backLink(request.sessionData)
       )
     )
   }

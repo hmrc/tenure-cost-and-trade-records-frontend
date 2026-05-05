@@ -30,7 +30,7 @@ import utils.TestBaseSpec
 
 class OccupiersDetailsListControllerSpec extends TestBaseSpec {
 
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -38,7 +38,7 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec {
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
       prefilledAboutYouAndThePropertyPartTwo6048
     )
-  ) = new OccupiersDetailsListController(
+  ): OccupiersDetailsListController = OccupiersDetailsListController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

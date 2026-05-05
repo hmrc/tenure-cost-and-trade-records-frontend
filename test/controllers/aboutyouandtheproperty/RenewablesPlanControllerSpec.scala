@@ -18,14 +18,14 @@ package controllers.aboutyouandtheproperty
 
 import connectors.Audit
 import form.Errors
+import form.aboutyouandtheproperty.RenewablesPlantForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
+import models.submissions.common.AnswersYesNo.*
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.FormBindingTestAssertions.mustContainError
-import form.aboutyouandtheproperty.RenewablesPlantForm.theForm
-import models.submissions.common.AnswersYesNo.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -38,7 +38,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
 
   def renewablesPlantController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ) = new RenewablesPlantController(
+  ): RenewablesPlantController = RenewablesPlantController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,
@@ -51,7 +51,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(
       prefilledAboutYouAndThePropertyYes.copy(renewablesPlant = None)
     )
-  ) = new RenewablesPlantController(
+  ): RenewablesPlantController = RenewablesPlantController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYouAndThePropertyNavigator,

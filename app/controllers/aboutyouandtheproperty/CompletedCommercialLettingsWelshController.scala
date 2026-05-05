@@ -25,7 +25,7 @@ import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo,
 import navigation.AboutYouAndThePropertyNavigator
 import navigation.identifiers.CompletedCommercialLettingsWelshId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.completedCommercialLettingsWelsh
 
@@ -40,7 +40,7 @@ class CompletedCommercialLettingsWelshController @Inject() (
   view: completedCommercialLettingsWelsh,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -66,7 +66,7 @@ class CompletedCommercialLettingsWelshController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutYouAndThePropertyPartTwo
       .filter(_.commercialLetDate.isDefined)
-      .fold(Future.successful(Redirect(routes.CommercialLettingQuestionController.show()))) { data =>
+      .fold[Future[Result]](Redirect(routes.CommercialLettingQuestionController.show())) { data =>
         continueOrSaveAsDraft[Seq[CompletedLettings]](
           completedCommercialLettingsWelshForm(years(data)),
           formWithErrors =>
@@ -101,7 +101,7 @@ class CompletedCommercialLettingsWelshController @Inject() (
   private def financialYearEndDates(data: AboutYouAndThePropertyPartTwo): Seq[LocalDate] =
     data.financialEndYearDates.getOrElse(Seq.empty)
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match {
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show().url

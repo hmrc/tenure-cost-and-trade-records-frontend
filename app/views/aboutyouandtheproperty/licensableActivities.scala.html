@@ -14,22 +14,22 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
-@import models.submissions.common.AnswersYesNo
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
 @import models.pages.Summary
+@import models.submissions.common.AnswersYesNo
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
+@import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukRadios: GovukRadios,
-  govukDetails: GovukDetails,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        govukRadios: GovukRadios,
+        govukDetails: GovukDetails,
+        formWithCSRF: FormWithCSRF
 )
 
-@(theForm: Form[AnswersYesNo], summary: Summary, fromLocation:String = "")(implicit request: Request[?], messages: Messages)
+@(theForm: Form[AnswersYesNo], summary: Summary, fromLocation: String = "")(implicit request: Request[?], messages: Messages)
 
 @helpContent = {
     <p class="govuk-body">@messages("help.licensableActivities.p1")</p>
@@ -46,15 +46,17 @@
 }
 
 @layout(
-  pageHeading = messages("licensableActivities.heading"),
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = {fromLocation match {
-      case "TL" => controllers.routes.TaskListController.show.url+"#licensable-activities"
-      case _ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
-  }},
-  theForm = theForm
+    pageHeading = messages("licensableActivities.heading"),
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = {
+        fromLocation match {
+            case "TL" => controllers.routes.TaskListController.show.url + "#licensable-activities"
+            case _ => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
+        }
+    },
+    theForm = theForm
 ) {
 
     <p class="govuk-body">@messages("licensableActivities.p1")</p>
@@ -66,36 +68,35 @@
         <li>@messages("licensableActivities.list1.item3")</li>
     </ul>
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.submit()) {
 
-      @govukRadios(Radios(
-          fieldset = Some(Fieldset(
-              legend = Some(Legend(
-                  content = Text(messages("licensableActivities.label")),
-                  classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
-              ))
-          )),
-          classes = "govuk-radios--inline",
-          name = "licensableActivities",
-          items = Seq(
-              RadioItem(
-                  content = Text(messages("label.yes.ydw")),
-                  value = Some("yes")
-              ),
-              RadioItem(
-                  content = Text(messages("label.no.nac.ydw")),
-                  value = Some("no")
-              )
-          ),
-          errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities")
-      ).withFormField(theForm("licensableActivities")))
+        @govukRadios(Radios(
+            fieldset = Fieldset(
+                legend = Legend(
+                    content = Text(messages("licensableActivities.label")),
+                    classes = "govuk-fieldset__legend govuk-fieldset__legend--m",
+                )
+            ),
+            classes = "govuk-radios--inline",
+            name = "licensableActivities",
+            items = Seq(
+                RadioItem(
+                    content = Text(messages("label.yes.ydw")),
+                    value = "yes"
+                ),
+                RadioItem(
+                    content = Text(messages("label.no.nac.ydw")),
+                    value = "no"
+                )
+            ),
+            errorMessage = theForm.errors.asTextErrorMessageForField("licensableActivities")
+        ).withFormField(theForm("licensableActivities")))
 
+        @govukDetails(Details(
+            summary = Text(messages("help.licensableActivities.title")),
+            content = HtmlContent(helpContent)
+        ))
 
-    @govukDetails(Details(
-      summary = Text(messages("help.licensableActivities.title")),
-      content = HtmlContent(helpContent)
-    ))
-
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

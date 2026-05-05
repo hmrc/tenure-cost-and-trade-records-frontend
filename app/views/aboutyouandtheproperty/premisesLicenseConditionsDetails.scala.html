@@ -14,54 +14,54 @@
  * limitations under the License.
  *@
 
-@import views.html.components.PrimaryLayout
+@import models.pages.Summary
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import models.pages.Summary
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  hmrcCharacterCount: HmrcCharacterCount,
-  govukDetails: GovukDetails,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        hmrcCharacterCount: HmrcCharacterCount,
+        govukDetails: GovukDetails,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("premisesLicenseConditionsDetails.heading"),
-  showH1 = false,
-  showSection = true,
-    summary = Some(summary),
-  sectionName = messages("label.section.aboutTheProperty"),
-  backLinkUrl = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url,
-  theForm = theForm
+    pageHeading = messages("premisesLicenseConditionsDetails.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutTheProperty"),
+    backLinkUrl = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.submit()) {
+    @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.submit()) {
 
-      @includes.textInputHMRCCharCount(
-          hmrcCharacterCount,
-          theForm,
-          "premisesLicenseConditionsDetails",
-          "premisesLicenseConditionsDetails.heading",
-          classes = "govuk-label--l",
-          isPageHeading = true,
-          charCount = 2000
-      )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "premisesLicenseConditionsDetails",
+            "premisesLicenseConditionsDetails.heading",
+            classes = "govuk-label--l",
+            isPageHeading = true,
+            charCount = 2000
+        )
 
-    @govukDetails(Details(
-      summary = Text(messages("help.premisesLicenseConditionsDetails.title")),
-      content = HtmlContent(
-        s"<p class='govuk-!-font-weight-bold'>${messages("help.premisesLicenseConditionsDetails.heading")}</p>" +
-        s"<p>${messages("help.premisesLicenseConditionsDetails.p1")}</p>" +
-        s"<ul class='govuk-list--bullet'>" +
-          s"<li>${messages("help.premisesLicenseConditionsDetails.list.p1")}</li>" +
-          s"<li>${messages("help.premisesLicenseConditionsDetails.list.p2")}</li>" +
-          s"<li>${messages("help.premisesLicenseConditionsDetails.list.p3")}</li>" +
-        s"</ul>")
-    ))
+        @govukDetails(Details(
+            summary = Text(messages("help.premisesLicenseConditionsDetails.title")),
+            content = HtmlContent(
+                s"<p class='govuk-!-font-weight-bold'>${messages("help.premisesLicenseConditionsDetails.heading")}</p>" +
+                        s"<p>${messages("help.premisesLicenseConditionsDetails.p1")}</p>" +
+                        s"<ul class='govuk-list--bullet'>" +
+                        s"<li>${messages("help.premisesLicenseConditionsDetails.list.p1")}</li>" +
+                        s"<li>${messages("help.premisesLicenseConditionsDetails.list.p2")}</li>" +
+                        s"<li>${messages("help.premisesLicenseConditionsDetails.list.p3")}</li>" +
+                        s"</ul>")
+        ))
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

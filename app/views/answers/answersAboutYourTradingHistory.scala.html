@@ -15,13 +15,11 @@
  *@
 
 @import actions.SessionRequest
-@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import models.ForType.*
-@import models.submissions.aboutthetradinghistory.TurnoverSection
-@import models.submissions.aboutthetradinghistory.TurnoverSection6030
-@import util.CyaTradingHistorySupport
-@import util.DateUtilLocalised
+@import models.submissions.aboutthetradinghistory.{TurnoverSection, TurnoverSection6030}
+@import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import util.NumberUtil.*
+@import util.{CyaTradingHistorySupport, DateUtilLocalised}
 
 @this(
         govukSummaryList: GovukSummaryList,
@@ -32,7 +30,9 @@
 
 @()(implicit request: SessionRequest[?], messages: Messages)
 
-@forType = @{request.sessionData.forType}
+@forType = @{
+    request.sessionData.forType
+}
 
 @turnoverMessageKeys = @{
     Seq(
@@ -66,7 +66,7 @@
             t.averageOccupancyRate.getOrElse(zeroBigDecimal).withScale(2) + "%"
         )),
         financialYearEnds = turnoverSections.map(_.financialYearEnd),
-        messageKeys = Some(turnoverMessageKeys)
+        messageKeys = turnoverMessageKeys
     ).body
 }
 
@@ -96,22 +96,20 @@
             s"${t.totalVisitorNumbers.getOrElse(0)}"
         )),
         financialYearEnds = turnoverSections.map(_.financialYearEnd),
-        messageKeys = Some(turnoverMessageKeys6030)
+        messageKeys = turnoverMessageKeys6030
     ).body
 }
 
 
 @actions6030 = @{
-    Some(
-        Actions(items =
-            Seq(
-                ActionItem(
-                    href = s"${controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url}?from=CYA",
-                    content = Text(messages("label.change")),
-                    visuallyHiddenText = Some(messages("turnover.heading")),
-                    attributes = Map(
-                        "aria-label" -> s"${messages("label.change")} ${messages("turnover.heading")}"
-                    )
+    Actions(items =
+        Seq(
+            ActionItem(
+                href = s"${controllers.aboutthetradinghistory.routes.Turnover6030Controller.show().url}?from=CYA",
+                content = Text(messages("label.change")),
+                visuallyHiddenText = messages("turnover.heading"),
+                attributes = Map(
+                    "aria-label" -> s"${messages("label.change")} ${messages("turnover.heading")}"
                 )
             )
         )

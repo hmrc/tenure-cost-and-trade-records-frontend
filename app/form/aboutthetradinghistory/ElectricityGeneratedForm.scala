@@ -16,7 +16,7 @@
 
 package form.aboutthetradinghistory
 
-import form.MappingSupport._
+import form.MappingSupport.*
 import play.api.data.Forms.{default, text, tuple}
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages

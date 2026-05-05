@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.canRentBeReducedOnReview
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CanRentBeReducedOnReviewController @Inject() (
@@ -42,22 +42,20 @@ class CanRentBeReducedOnReviewController @Inject() (
   canRentBeReducedOnReviewView: canRentBeReducedOnReview,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CanRentBeReducedOnReview")
 
-    Future.successful(
-      Ok(
-        canRentBeReducedOnReviewView(
-          request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReview) match {
-            case Some(data) => canRentBeReducedOnReviewForm.fill(data)
-            case _          => canRentBeReducedOnReviewForm
-          },
-          getBackLink
-        )
+    Ok(
+      canRentBeReducedOnReviewView(
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReview) match {
+          case Some(data) => canRentBeReducedOnReviewForm.fill(data)
+          case _          => canRentBeReducedOnReviewForm
+        },
+        getBackLink
       )
     )
   }
@@ -76,7 +74,7 @@ class CanRentBeReducedOnReviewController @Inject() (
     )
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]): String =
+  private def getBackLink(using request: SessionRequest[AnyContent]): String =
     request.sessionData.forType match {
       case FOR6020                                         =>
         if (

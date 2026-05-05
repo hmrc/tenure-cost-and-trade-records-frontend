@@ -20,15 +20,15 @@ import actions.{SessionRequest, WithSessionRefiner}
 import form.MaxOfLettingsForm.maxOfLettingsForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings.updateAboutFranchisesOrLettings
 import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
-import navigation.{AboutFranchisesOrLettingsNavigator, ConnectionToPropertyNavigator}
 import navigation.identifiers.{MaxOfLettingsReachedCurrentId, MaxOfLettingsReachedId}
+import navigation.{AboutFranchisesOrLettingsNavigator, ConnectionToPropertyNavigator}
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.maxOfLettingsReached
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class MaxOfLettingsReachedController @Inject() (
@@ -38,7 +38,7 @@ class MaxOfLettingsReachedController @Inject() (
   connectionNavigator: ConnectionToPropertyNavigator,
   franchiseNavigator: AboutFranchisesOrLettingsNavigator,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -46,13 +46,11 @@ class MaxOfLettingsReachedController @Inject() (
     val (backLink, form) = getDetails(src, request)
     val filledForm       = form.fold(maxOfLettingsForm)(maxOfLettingsForm.fill)
 
-    Future.successful(
-      Ok(
-        maxOfLettingsReachedView(
-          filledForm,
-          backLink,
-          src.getOrElse("")
-        )
+    Ok(
+      maxOfLettingsReachedView(
+        filledForm,
+        backLink,
+        src.getOrElse("")
       )
     )
   }
@@ -72,10 +70,10 @@ class MaxOfLettingsReachedController @Inject() (
         ),
       data => {
         val updatedData = src match {
-          case Some("connection")   => updateStillConnectedDetails(_.copy(maxOfLettings = Some(data)))
+          case Some("connection")   => updateStillConnectedDetails(_.copy(maxOfLettings = data))
           case Some("lettings")     => updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
-          case Some("typeOfIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = Some(data)))
-          case Some("rentalIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = Some(data)))
+          case Some("typeOfIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = data))
+          case Some("rentalIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = data))
           case _                    => request.sessionData
         }
         session

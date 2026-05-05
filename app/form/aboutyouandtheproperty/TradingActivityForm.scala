@@ -26,7 +26,7 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object TradingActivityForm {
 
-  val tradingActivityForm = Form(
+  val tradingActivityForm: Form[TradingActivity] = Form(
     mapping(
       "tradingActivityQuestion" -> createYesNoType("error.tradingActivity.missing"),
       "tradingActivityDetails"  -> mandatoryIfEqual(

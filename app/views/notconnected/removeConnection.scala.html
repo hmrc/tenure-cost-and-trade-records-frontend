@@ -14,71 +14,70 @@
  * limitations under the License.
  *@
 
+@import models.pages.Summary
 @import models.submissions.notconnected.RemoveConnectionsDetails
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.*
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
-@import models.pages.Summary
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  govukInput: GovukInput,
+        govukButton: GovukButton,
+        govukInput: GovukInput,
         hmrcCharacterCount: HmrcCharacterCount,
-  formWithCSRF: FormWithCSRF
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[RemoveConnectionsDetails], summary: Summary, backLink: String)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("removeConnection.heading"),
-  summary = Some(summary),
+    pageHeading = messages("removeConnection.heading"),
+    summary = summary,
     showSection = true,
     sectionName = messages("label.section.connectionToTheProperty"),
-  backLinkUrl = backLink,
-  theForm = theForm
+    backLinkUrl = backLink,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.notconnected.routes.RemoveConnectionController.submit()) {
+    @formWithCSRF(action = controllers.notconnected.routes.RemoveConnectionController.submit()) {
 
-    <p class="govuk-body">@messages("removeConnection.subheading")</p>
+        <p class="govuk-body">@messages("removeConnection.subheading")</p>
 
-    @includes.textInput(
-      govukInput,
-      theForm,
-      "removeConnectionFullName",
-      "govuk-input--width-20",
-      "fullName",
-    )
+        @includes.textInput(
+            govukInput,
+            theForm,
+            "removeConnectionFullName",
+            "govuk-input--width-20",
+            "fullName",
+        )
 
-      @includes.textInput(
-          govukInput,
-          theForm,
-          "removeConnectionDetails.phone",
-          "govuk-input--width-20",
-          "phone",
-      )
+        @includes.textInput(
+            govukInput,
+            theForm,
+            "removeConnectionDetails.phone",
+            "govuk-input--width-20",
+            "phone",
+        )
 
-    @includes.textInput(
-      govukInput,
-      theForm,
-      "removeConnectionDetails.email",
-      "govuk-input--width-20",
-      "email",
-    )
-      
+        @includes.textInput(
+            govukInput,
+            theForm,
+            "removeConnectionDetails.email",
+            "govuk-input--width-20",
+            "email",
+        )
 
-      @includes.textInputHMRCCharCount(
-          hmrcCharacterCount,
-          theForm,
-          "removeConnectionAdditionalInfo",
-          "label.removeConnectionAdditionalInfo",
-          hint = "hint.removeConnectionDetails.removeConnectionAdditionalInfo",
-          charCount = 2000
-      )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "removeConnectionAdditionalInfo",
+            "label.removeConnectionAdditionalInfo",
+            hint = "hint.removeConnectionDetails.removeConnectionAdditionalInfo",
+            charCount = 2000
+        )
 
-      @includes.continueSaveAsDraftButtons(govukButton)
+        @includes.continueSaveAsDraftButtons(govukButton)
 
-  }
+    }
 }
 
 

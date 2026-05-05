@@ -25,7 +25,7 @@ import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, Turnov
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.TurnoverPageId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.turnover6030
 
@@ -40,7 +40,7 @@ class Turnover6030Controller @Inject() (
   turnoverView: turnover6030,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -64,7 +64,7 @@ class Turnover6030Controller @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val numberOfColumns = aboutTheTradingHistory.turnoverSections6030.size
         continueOrSaveAsDraft[Seq[TurnoverSection6030]](
           turnoverForm6030(numberOfColumns, financialYearEndDates(aboutTheTradingHistory)),

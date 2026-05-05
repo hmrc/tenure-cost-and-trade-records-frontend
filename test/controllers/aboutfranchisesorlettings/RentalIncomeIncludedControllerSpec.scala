@@ -39,8 +39,8 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec {
 
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
-  ) =
-    new RentalIncomeIncludedController(
+  ): RentalIncomeIncludedController =
+    RentalIncomeIncludedController(
       controllerComponents,
       mockAudit,
       mockAboutFranchisesOrLettingsNavigator,

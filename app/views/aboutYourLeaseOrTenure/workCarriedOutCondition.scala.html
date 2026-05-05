@@ -16,8 +16,8 @@
 
 @import models.pages.Summary
 @import models.submissions.common.AnswersYesNo
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukRadios}
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -29,26 +29,26 @@
 @(theForm: Form[AnswersYesNo], backlink: String, summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
- pageHeading = messages("workCarriedOutCondition.heading"),
- showH1 = false,
- showSection = true,
- summary = Some(summary),
- sectionName = messages("label.section.aboutYourLeaseOrTenure"),
- backLinkUrl = backlink,
- theForm = theForm
+    pageHeading = messages("workCarriedOutCondition.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.aboutYourLeaseOrTenure"),
+    backLinkUrl = backlink,
+    theForm = theForm
 ) {
- @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.submit()) {
-  @includes.radioButtonsYesNo(
-   govukRadios,
-   theForm,
-   "workCarriedOutCondition",
-   "workCarriedOutCondition.heading",
-   messages("label.yes.oes"),
-   messages("label.no.nac.oes"),
-   classes = "govuk-fieldset__legend--l",
-   isHeading = true
-  )
+    @formWithCSRF(action = controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.submit()) {
+        @includes.radioButtonsYesNo(
+            govukRadios,
+            theForm,
+            "workCarriedOutCondition",
+            "workCarriedOutCondition.heading",
+            messages("label.yes.oes"),
+            messages("label.no.nac.oes"),
+            classes = "govuk-fieldset__legend--l",
+            isHeading = true
+        )
 
-  @includes.continueSaveAsDraftButtons(govukButton)
- }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

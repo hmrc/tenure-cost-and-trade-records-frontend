@@ -28,14 +28,14 @@ import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
 class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
-  import TestData._
+  import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 
   def tradingNameOwnThePropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) =
-    new TradingNameOwnThePropertyController(
+  ): TradingNameOwnThePropertyController =
+    TradingNameOwnThePropertyController(
       stubMessagesControllerComponents(),
       mockAudit,
       connectedToPropertyNavigator,

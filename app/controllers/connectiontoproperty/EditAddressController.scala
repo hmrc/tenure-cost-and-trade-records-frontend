@@ -21,16 +21,16 @@ import connectors.Audit
 import controllers.FORDataCaptureController
 import form.connectiontoproperty.EditAddressForm.editAddressForm
 import models.submissions.common.Address
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.EditAddressPageId
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.editAddress
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class EditAddressController @Inject() (
@@ -40,23 +40,21 @@ class EditAddressController @Inject() (
   editAddressView: editAddress,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("EditAddress")
 
-    Future.successful(
-      Ok(
-        editAddressView(
-          request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
-            case Some(editAddress) => editAddressForm.fill(editAddress)
-            case _                 => editAddressForm
-          },
-          request.sessionData.toSummary,
-          calculateBackLink
-        )
+    Ok(
+      editAddressView(
+        request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
+          case Some(editAddress) => editAddressForm.fill(editAddress)
+          case _                 => editAddressForm
+        },
+        request.sessionData.toSummary,
+        calculateBackLink
       )
     )
   }
@@ -80,7 +78,7 @@ class EditAddressController @Inject() (
     )
   }
 
-  private def calculateBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url

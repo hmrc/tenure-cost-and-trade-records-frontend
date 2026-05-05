@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.leaseOrAgreementYears
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class LeaseOrAgreementYearsController @Inject() (
@@ -43,7 +43,7 @@ class LeaseOrAgreementYearsController @Inject() (
   leaseOrAgreementYearsView: leaseOrAgreementYears,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -51,16 +51,14 @@ class LeaseOrAgreementYearsController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("LeaseOrAgreementYears")
 
-    Future.successful(
-      Ok(
-        leaseOrAgreementYearsView(
-          leaseOrAgreementDetailsInSession match {
-            case Some(leaseOrAgreementYearsDetails) => leaseOrAgreementYearsForm.fill(leaseOrAgreementYearsDetails)
-            case _                                  => leaseOrAgreementYearsForm
-          },
-          getBackLink(request.sessionData),
-          request.sessionData.toSummary
-        )
+    Ok(
+      leaseOrAgreementYearsView(
+        leaseOrAgreementDetailsInSession match {
+          case Some(leaseOrAgreementYearsDetails) => leaseOrAgreementYearsForm.fill(leaseOrAgreementYearsDetails)
+          case _                                  => leaseOrAgreementYearsForm
+        },
+        getBackLink(request.sessionData),
+        request.sessionData.toSummary
       )
     )
   }
@@ -94,13 +92,13 @@ class LeaseOrAgreementYearsController @Inject() (
       .forall(_ == AnswerNo)
 
   private def leaseOrAgreementDetailsInSession(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[LeaseOrAgreementYearsDetails] =
     request.sessionData.aboutLeaseOrAgreementPartOne
       .flatMap(_.leaseOrAgreementYearsDetails)
 
-  private def getBackLink(answers: Session)(implicit request: Request[AnyContent]): String =
+  private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
     navigator.from match {
       case "TL" => controllers.routes.TaskListController.show.url + "#lease-or-agreement-details"
       case _    =>

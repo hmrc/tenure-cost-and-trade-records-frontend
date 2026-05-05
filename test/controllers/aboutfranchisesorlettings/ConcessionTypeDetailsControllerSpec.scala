@@ -30,8 +30,8 @@ class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
 
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
-  ) =
-    new ConcessionTypeDetailsController(
+  ): ConcessionTypeDetailsController =
+    ConcessionTypeDetailsController(
       stubMessagesControllerComponents(),
       mockAudit,
       aboutFranchisesOrLettingsNavigator,

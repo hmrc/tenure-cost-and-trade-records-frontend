@@ -18,9 +18,9 @@ package connectors
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import models.ForType.*
+import play.api.Configuration
 import play.api.libs.json.Json
 import play.api.test.Helpers.*
-import play.api.Configuration
 import test.TCTRServerSpec
 import uk.gov.hmrc.http.{BadRequestException, UpstreamErrorResponse}
 

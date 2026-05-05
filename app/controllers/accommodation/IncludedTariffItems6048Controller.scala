@@ -42,7 +42,7 @@ class IncludedTariffItems6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -83,25 +83,25 @@ class IncludedTariffItems6048Controller @Inject() (
   }
 
   private def accommodationDetails(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 
   private def currentUnit(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationUnit] =
     accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
   private def currentUnitName(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): String =
     currentUnit.fold("")(_.unitName)
 
   private def backLink(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): String =
     s"${controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url}?idx=${navigator.idx}"

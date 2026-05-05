@@ -36,7 +36,6 @@ import views.html.aboutfranchisesorlettings.franchiseTypeDetails as FranchiseTyp
 
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
-import scala.concurrent.Future.successful
 
 @Singleton
 class FranchiseTypeDetailsController @Inject() (
@@ -83,18 +82,16 @@ class FranchiseTypeDetailsController @Inject() (
     continueOrSaveAsDraft[BusinessDetails](
       theForm,
       formWithErrors =>
-        successful(
-          BadRequest(
-            theView(
-              formWithErrors,
-              idx,
-              backLink(idx)
-            )
+        BadRequest(
+          theView(
+            formWithErrors,
+            idx,
+            backLink(idx)
           )
         ),
       formData =>
         for
-          (newSession, updatedIndex) <- successful(sessionWithBusinessDetails(formData, idx))
+          (newSession, updatedIndex) <- sessionWithBusinessDetails(formData, idx)
           _                          <- repository.saveOrUpdate(newSession)
           redirectResult             <- redirectToAddressLookupFrontend(
                                           config = AddressLookupConfig(
@@ -136,7 +133,7 @@ class FranchiseTypeDetailsController @Inject() (
               case r: FranchiseIncomeRecord      => r.copy(businessDetails = Some(formData))
               case r: Concession6015IncomeRecord => r.copy(businessDetails = Some(formData))
               // case r: ConcessionIncomeRecord  => r.copy(businessDetails = Some(formData))
-              case _                             => throw new IllegalStateException("Unknown income record type")
+              case _                             => throw IllegalStateException("Unknown income record type")
             }
           )
         }
@@ -155,7 +152,7 @@ class FranchiseTypeDetailsController @Inject() (
       for
         confirmedAddress <- getConfirmedAddress(id)
         businessAddress   = confirmedAddress.asAddress
-        newSession       <- successful(newSessionWithBusinessAddress(idx, businessAddress))
+        newSession       <- newSessionWithBusinessAddress(idx, businessAddress)
         _                <- repository.saveOrUpdate(newSession)
       yield Redirect(navigator.nextPage(FranchiseTypeDetailsId, newSession).apply(newSession))
   }

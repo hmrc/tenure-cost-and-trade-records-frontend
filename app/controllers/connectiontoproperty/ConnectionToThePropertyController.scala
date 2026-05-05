@@ -23,17 +23,17 @@ import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToTheProp
 import models.Session
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.ConnectionToProperty
+import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import navigation.ConnectionToPropertyNavigator
 import navigation.identifiers.ConnectionToPropertyPageId
 import play.api.Logging
-import models.submissions.connectiontoproperty.StillConnectedDetails.updateStillConnectedDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.connectionToTheProperty
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ConnectionToThePropertyController @Inject() (
@@ -43,7 +43,7 @@ class ConnectionToThePropertyController @Inject() (
   connectionToThePropertyView: connectionToTheProperty,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -51,21 +51,19 @@ class ConnectionToThePropertyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ConnectionToTheProperty")
 
-    Future.successful(
-      Ok(
-        connectionToThePropertyView(
-          request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match {
-            case Some(connectionToProperty) => connectionToThePropertyForm.fill(connectionToProperty)
-            case _                          => connectionToThePropertyForm
-          },
-          getBackLink(request.sessionData) match {
-            case Right(link) => link
-            case Left(msg)   =>
-              logger.warn(s"Navigation for connection to property page reached with error: $msg")
-              throw new RuntimeException(s"Navigation for connection to property page reached with error $msg")
-          },
-          request.sessionData.toSummary
-        )
+    Ok(
+      connectionToThePropertyView(
+        request.sessionData.stillConnectedDetails.flatMap(_.connectionToProperty) match {
+          case Some(connectionToProperty) => connectionToThePropertyForm.fill(connectionToProperty)
+          case _                          => connectionToThePropertyForm
+        },
+        getBackLink(request.sessionData) match {
+          case Right(link) => link
+          case Left(msg)   =>
+            logger.warn(s"Navigation for connection to property page reached with error: $msg")
+            throw RuntimeException(s"Navigation for connection to property page reached with error $msg")
+        },
+        request.sessionData.toSummary
       )
     )
   }

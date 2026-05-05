@@ -31,7 +31,6 @@ import repositories.SessionRepo
 import views.html.lettingHistory.hasPermanentResidents as HasPermanentResidentsView
 
 import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.Future.successful
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -59,11 +58,11 @@ class HasPermanentResidentsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors => successful(BadRequest(theView(theFormWithErrors, backLinkUrl))),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, backLinkUrl)),
       answer =>
         given Session = request.sessionData
         for
-          newSession     <- successful(withHasPermanentResidents(answer.toBoolean))
+          newSession     <- withHasPermanentResidents(answer.toBoolean)
           updatedSession <- repository.saveOrUpdateSession(newSession)
         yield navigator.redirect(currentPage = HasPermanentResidentsPageId, updatedSession)
     )

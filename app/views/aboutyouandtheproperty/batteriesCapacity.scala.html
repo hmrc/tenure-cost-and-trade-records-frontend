@@ -15,14 +15,11 @@
  *@
 
 @import models.pages.Summary
-@import views.html.components.PrimaryLayout
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukButton
-@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
-@import uk.gov.hmrc.govukfrontend.views.html.components.GovukInput
-@import uk.gov.hmrc.govukfrontend.views.html.components.FormWithCSRF
+@import uk.gov.hmrc.govukfrontend.views.Aliases.{Hint, Input}
+@import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton, GovukInput}
 @import uk.gov.hmrc.govukfrontend.views.html.components.implicits.*
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Input
-@import uk.gov.hmrc.govukfrontend.views.Aliases.Hint
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
         govukButton: GovukButton,
@@ -36,7 +33,7 @@
 @layout(
     pageHeading = messages("batteriesCapacity.heading"),
     showSection = true,
-    summary = Some(summary),
+    summary = summary,
     sectionName = messages("label.section.aboutTheProperty"),
     backLinkUrl = controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show().url,
     theForm = theForm,
@@ -45,14 +42,14 @@
 
     @formWithCSRF(action = controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.submit()) {
         <fieldset class="govuk-fieldset">
-            @govukInput(Input(
-                id = "batteriesCapacity",
-                name = "batteriesCapacity",
-                value = theForm("batteriesCapacity").value,
-                errorMessage = theForm.errors.asTextErrorMessageForField("batteriesCapacity"),
-                hint = Some(Hint(content = Text(messages("batteriesCapacity.hint")))),
-                classes = "govuk-!-width-one-third"
-            ))
+        @govukInput(Input(
+            id = "batteriesCapacity",
+            name = "batteriesCapacity",
+            value = theForm("batteriesCapacity").value,
+            errorMessage = theForm.errors.asTextErrorMessageForField("batteriesCapacity"),
+            hint = Hint(content = Text(messages("batteriesCapacity.hint"))),
+            classes = "govuk-!-width-one-third"
+        ))
         </fieldset>
 
         @includes.continueSaveAsDraftButtons(govukButton)

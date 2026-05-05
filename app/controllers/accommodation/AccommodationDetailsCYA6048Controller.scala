@@ -19,8 +19,8 @@ package controllers.accommodation
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
 import form.accommodation.AccommodationDetailsCYA6048Form.accommodationDetailsCYA6048Form
-import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit}
 import models.submissions.accommodation.AccommodationDetails.updateAccommodationDetails
+import models.submissions.accommodation.{AccommodationDetails, AccommodationUnit}
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import navigation.AccommodationNavigator
@@ -44,7 +44,7 @@ class AccommodationDetailsCYA6048Controller @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with Logging {
@@ -86,12 +86,12 @@ class AccommodationDetailsCYA6048Controller @Inject() (
   }
 
   private def accommodationDetails(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
 
   private def accommodationUnits(
-    implicit
+    using
     request: SessionRequest[AnyContent]
   ): List[AccommodationUnit] =
     accommodationDetails.fold(List.empty)(_.accommodationUnits)

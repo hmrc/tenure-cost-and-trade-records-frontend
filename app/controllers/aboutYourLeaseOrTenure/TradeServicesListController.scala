@@ -28,7 +28,7 @@ import models.submissions.common.AnswersYesNo.*
 import navigation.AboutYourLeaseOrTenureNavigator
 import navigation.identifiers.TradeServicesListId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.tradeServicesList as TradeServicesListView
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
@@ -45,7 +45,7 @@ class TradeServicesListController @Inject() (
   theConfirmationView: RemoveConfirmationView,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
-)(implicit val ec: ExecutionContext
+)(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -55,15 +55,13 @@ class TradeServicesListController @Inject() (
 
     audit.sendChangeLink("TradeServicesList")
 
-    Future.successful(
-      Ok(
-        theListView(
-          existingSection.flatMap(_.addAnotherService) match {
-            case Some(answer) => theForm.fill(answer)
-            case _            => theForm
-          },
-          index
-        )
+    Ok(
+      theListView(
+        existingSection.flatMap(_.addAnotherService) match {
+          case Some(answer) => theForm.fill(answer)
+          case _            => theForm
+        },
+        index
       )
     )
   }
@@ -82,15 +80,13 @@ class TradeServicesListController @Inject() (
         request.sessionData.aboutLeaseOrAgreementPartThree
           .map(_.tradeServices)
           .filter(_.nonEmpty)
-          .fold(
-            Future.successful(
-              Redirect(
-                if (formData == AnswerYes) {
-                  routes.TradeServicesDescriptionController.show(Some(index))
-                } else {
-                  navigator.nextPage(TradeServicesListId, request.sessionData).apply(request.sessionData)
-                }
-              )
+          .fold[Future[Result]](
+            Redirect(
+              if (formData == AnswerYes) {
+                routes.TradeServicesDescriptionController.show(Some(index))
+              } else {
+                navigator.nextPage(TradeServicesListId, request.sessionData).apply(request.sessionData)
+              }
             )
           ) { existingSections =>
             if formData == AnswerNo || existingSections.size < TradeServices.maxListItems then
@@ -116,15 +112,13 @@ class TradeServicesListController @Inject() (
       .flatMap(_.tradeServices.lift(index))
       .map { services =>
         val service = services.details
-        Future.successful(
-          Ok(
-            theConfirmationView(
-              confirmableActionForm,
-              service,
-              controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.performRemove(index),
-              navigator.callBackToCYAor(
-                controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
-              )
+        Ok(
+          theConfirmationView(
+            confirmableActionForm,
+            service,
+            controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.performRemove(index),
+            navigator.callBackToCYAor(
+              controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
             )
           )
         )
@@ -142,15 +136,13 @@ class TradeServicesListController @Inject() (
           .flatMap(_.tradeServices.lift(index))
           .map { services =>
             val description = services.details
-            Future.successful(
-              BadRequest(
-                theConfirmationView(
-                  formWithErrors,
-                  description,
-                  controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.performRemove(index),
-                  navigator.callBackToCYAor(
-                    controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
-                  )
+            BadRequest(
+              theConfirmationView(
+                formWithErrors,
+                description,
+                controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.performRemove(index),
+                navigator.callBackToCYAor(
+                  controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index)
                 )
               )
             )

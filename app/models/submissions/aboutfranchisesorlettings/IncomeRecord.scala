@@ -20,23 +20,20 @@ import models.submissions.aboutfranchisesorlettings.TypeOfIncome.*
 import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{JsError, JsObject, JsResult, JsValue, Json, OFormat}
 
-sealed trait IncomeRecord {
+sealed trait IncomeRecord:
   def sourceType: TypeOfIncome
 
   def addAnotherRecord: Option[AnswersYesNo]
 
-}
+object IncomeRecord:
 
-object IncomeRecord {
-
-  implicit val format: OFormat[IncomeRecord] = {
+  implicit val format: OFormat[IncomeRecord] =
     val franchiseFormat      = Json.format[FranchiseIncomeRecord]
     val concessionFormat     = Json.format[ConcessionIncomeRecord]
     val concession6015Format = Json.format[Concession6015IncomeRecord]
     val lettingFormat        = Json.format[LettingIncomeRecord]
 
-    new OFormat[IncomeRecord] {
-
+    new OFormat[IncomeRecord]:
       def reads(json: JsValue): JsResult[IncomeRecord] = (json \ "sourceType").validate[String].flatMap {
         case "typeFranchise"      => franchiseFormat.reads(json)
         case "typeConcession"     => concessionFormat.reads(json)
@@ -46,15 +43,11 @@ object IncomeRecord {
       }
 
       def writes(record: IncomeRecord): JsObject =
-        record match {
+        record match
           case franchise: FranchiseIncomeRecord           => franchiseFormat.writes(franchise)
           case concession: ConcessionIncomeRecord         => concessionFormat.writes(concession)
           case concession6015: Concession6015IncomeRecord => concession6015Format.writes(concession6015)
           case letting: LettingIncomeRecord               => lettingFormat.writes(letting)
-        }
-    }
-  }
-}
 
 case class FranchiseIncomeRecord(
   sourceType: TypeOfIncome = TypeFranchise,
@@ -64,9 +57,8 @@ case class FranchiseIncomeRecord(
   addAnotherRecord: Option[AnswersYesNo] = None
 ) extends IncomeRecord
 
-object FranchiseIncomeRecord {
+object FranchiseIncomeRecord:
   implicit val format: OFormat[FranchiseIncomeRecord] = Json.format
-}
 
 case class Concession6015IncomeRecord(
   sourceType: TypeOfIncome = TypeConcession6015,
@@ -77,9 +69,8 @@ case class Concession6015IncomeRecord(
   addAnotherRecord: Option[AnswersYesNo] = None
 ) extends IncomeRecord
 
-object Concession6015IncomeRecord {
+object Concession6015IncomeRecord:
   implicit val format: OFormat[Concession6015IncomeRecord] = Json.format
-}
 
 case class ConcessionIncomeRecord(
   sourceType: TypeOfIncome = TypeConcession,
@@ -88,9 +79,8 @@ case class ConcessionIncomeRecord(
   addAnotherRecord: Option[AnswersYesNo] = None
 ) extends IncomeRecord
 
-object ConcessionIncomeRecord {
+object ConcessionIncomeRecord:
   implicit val format: OFormat[ConcessionIncomeRecord] = Json.format
-}
 
 case class LettingIncomeRecord(
   sourceType: TypeOfIncome = TypeLetting,
@@ -100,6 +90,5 @@ case class LettingIncomeRecord(
   addAnotherRecord: Option[AnswersYesNo] = None
 ) extends IncomeRecord
 
-object LettingIncomeRecord {
+object LettingIncomeRecord:
   implicit val format: OFormat[LettingIncomeRecord] = Json.format
-}

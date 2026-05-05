@@ -20,13 +20,14 @@ import actions.SessionRequest
 import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.theForm
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
+import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class addAnotherLowMarginFuelCardDetailsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
-  val messageKeyPrefix                  = "addAnotherLowMarginFuelCardDetails"
-  val sessionRequest                    = SessionRequest(baseFilled6010Session, fakeRequest)
-  override val form: Form[AnswersYesNo] = theForm
+  val messageKeyPrefix                                       = "addAnotherLowMarginFuelCardDetails"
+  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
+  override val form: Form[AnswersYesNo]                      = theForm
 
   def createView: () => Html = () =>
     addAnotherLowMarginFuelCardsDetailsView(

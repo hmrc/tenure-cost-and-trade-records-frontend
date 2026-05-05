@@ -15,42 +15,42 @@
  *@
 
 @import models.pages.Summary
-@import views.html.components.PrimaryLayout
 @import uk.gov.hmrc.govukfrontend.views.html.components.{FormWithCSRF, GovukButton}
 @import uk.gov.hmrc.hmrcfrontend.views.html.components.HmrcCharacterCount
+@import views.html.components.PrimaryLayout
 
 @this(layout: PrimaryLayout,
-  govukButton: GovukButton,
-  hmrcCharacterCount: HmrcCharacterCount,
-  formWithCSRF: FormWithCSRF
+        govukButton: GovukButton,
+        hmrcCharacterCount: HmrcCharacterCount,
+        formWithCSRF: FormWithCSRF
 )
 
 @(theForm: Form[String], summary: Summary)(implicit request: Request[?], messages: Messages)
 
 @layout(
-  pageHeading = messages("furtherInformationOrRemarks.heading"),
-  showH1 = false,
-  showSection = true,
-  summary = Some(summary),
-  sectionName = messages("label.section.additionalInformation"),
-  backLinkUrl = controllers.routes.TaskListController.show.url,
-  theForm = theForm
+    pageHeading = messages("furtherInformationOrRemarks.heading"),
+    showH1 = false,
+    showSection = true,
+    summary = summary,
+    sectionName = messages("label.section.additionalInformation"),
+    backLinkUrl = controllers.routes.TaskListController.show.url,
+    theForm = theForm
 ) {
 
-  @formWithCSRF(action = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.submit()) {
+    @formWithCSRF(action = controllers.additionalinformation.routes.FurtherInformationOrRemarksController.submit()) {
 
-      <h1 class="govuk-heading-l">@messages("furtherInformationOrRemarks.heading")</h1>
+        <h1 class="govuk-heading-l">@messages("furtherInformationOrRemarks.heading")</h1>
 
-      <p class="govuk-body">@messages("hint.furtherInformationOrRemarks")</p>
+        <p class="govuk-body">@messages("hint.furtherInformationOrRemarks")</p>
 
-    @includes.textInputHMRCCharCount(
-      hmrcCharacterCount,
-      theForm,
-      "furtherInformationOrRemarks",
-      classes = "govuk-label--l",
-        charCount = 2000
-    )
+        @includes.textInputHMRCCharCount(
+            hmrcCharacterCount,
+            theForm,
+            "furtherInformationOrRemarks",
+            classes = "govuk-label--l",
+            charCount = 2000
+        )
 
-    @includes.continueSaveAsDraftButtons(govukButton)
-  }
+        @includes.continueSaveAsDraftButtons(govukButton)
+    }
 }

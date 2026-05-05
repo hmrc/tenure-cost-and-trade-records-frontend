@@ -18,12 +18,12 @@ package controllers.connectiontoproperty
 
 import connectors.Audit
 import form.Errors
-import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails}
 import form.connectiontoproperty.ProvideContactDetailsForm.provideContactDetailsForm
 import models.submissions.common.AnswersYesNo.*
+import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails}
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -37,7 +37,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
 
   def provideContactDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ) = new ProvideContactDetailsController(
+  ): ProvideContactDetailsController = ProvideContactDetailsController(
     stubMessagesControllerComponents(),
     mockAudit,
     connectedToPropertyNavigator,

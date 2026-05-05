@@ -21,7 +21,7 @@ import form.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseForm.provideDetailsO
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -37,7 +37,7 @@ class ProvideDetailsOfYourLeaseControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ) = new ProvideDetailsOfYourLeaseController(
+  ): ProvideDetailsOfYourLeaseController = ProvideDetailsOfYourLeaseController(
     stubMessagesControllerComponents(),
     mockAudit,
     aboutYourLeaseOrTenureNavigator,

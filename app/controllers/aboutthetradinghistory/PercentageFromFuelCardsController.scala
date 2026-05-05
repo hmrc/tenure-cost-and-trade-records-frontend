@@ -25,7 +25,7 @@ import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, Percen
 import navigation.AboutTheTradingHistoryNavigator
 import navigation.identifiers.PercentageFromFuelCardsId
 import play.api.i18n.I18nSupport
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.percentageFromFuelCards
 
@@ -41,7 +41,7 @@ class PercentageFromFuelCardsController @Inject() (
   view: percentageFromFuelCards,
   withSessionRefiner: WithSessionRefiner,
   @Named("session") val session: SessionRepo
-)(implicit ec: ExecutionContext
+)(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport {
 
@@ -65,7 +65,7 @@ class PercentageFromFuelCardsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
       .filter(_.occupationAndAccountingInformation.isDefined)
-      .fold(Future.successful(Redirect(routes.WhenDidYouFirstOccupyController.show()))) { aboutTheTradingHistory =>
+      .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         continueOrSaveAsDraft[Seq[PercentageFromFuelCards]](
           percentageFromFuelCardsForm(years(aboutTheTradingHistory)),
           formWithErrors =>
@@ -89,7 +89,7 @@ class PercentageFromFuelCardsController @Inject() (
       }
   }
 
-  private def getBackLink(implicit request: SessionRequest[AnyContent]) =
+  private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url

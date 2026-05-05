@@ -36,7 +36,7 @@ trait MaxOfLettingsReachedControllerBehaviours:
     src: String,
     controller: MaxOfLettingsReachedController,
     navigator: AboutFranchisesOrLettingsNavigator
-  ) =
+  ): Unit =
     s"reply 303 and location header when sourcing from '$src'" in {
       val request = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
       val result  = controller.submit(Some("connection"))(request)
@@ -52,7 +52,7 @@ trait MaxOfLettingsReachedControllerBehaviours:
     src: String,
     controller: MaxOfLettingsReachedController,
     navigator: AboutFranchisesOrLettingsNavigator
-  ) =
+  ): Unit =
     s"reply 303 and location header when sourcing from '$src'" in {
       val anyIdentifier             = any[Identifier]
       val anySession                = any[Session]
@@ -73,7 +73,7 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
 
   private val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
-  private def maxOfLettingsReachedController = new MaxOfLettingsReachedController(
+  private def maxOfLettingsReachedController = MaxOfLettingsReachedController(
     stubMessagesControllerComponents(),
     preEnrichedActionRefiner(),
     maxOfLettingsReachedView,
