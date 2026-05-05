@@ -24,6 +24,5 @@ case class UltimatelyResponsibleOutsideRepairs(
   sharedResponsibilitiesOR: Option[String]
 )
 
-object UltimatelyResponsibleOutsideRepairs {
+object UltimatelyResponsibleOutsideRepairs:
   implicit val format: OFormat[UltimatelyResponsibleOutsideRepairs] = Json.format
-}

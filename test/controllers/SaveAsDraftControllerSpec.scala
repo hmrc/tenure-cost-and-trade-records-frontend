@@ -252,7 +252,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     }
   }
 
-  private def checkCustomUserPasswordForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit = 
+  private def checkCustomUserPasswordForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit =
     content should include("saveAsDraft.createPassword.header")
     content should include("""name="password"""")
     content should include("""name="confirmPassword"""")
@@ -261,14 +261,14 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       content should include(expectedError)
     }
 
-  private def checkFinalPageDraftSaved(content: String): Unit = 
+  private def checkFinalPageDraftSaved(content: String): Unit =
     content    should include("saveAsDraft.preHeader")
     content    should include("saveAsDraft.logout")
     content shouldNot include(password)
     content shouldNot include("saveAsDraft.createPassword.header")
     content shouldNot include("""name="password"""")
 
-  private def checkSaveAsDraftLoginForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit = 
+  private def checkSaveAsDraftLoginForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit =
     content should include("saveAsDraft.retrieveYourDraft")
     content should include("""name="password"""")
     content should include("saveAsDraft.startAgain")

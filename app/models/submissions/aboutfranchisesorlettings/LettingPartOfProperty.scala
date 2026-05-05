@@ -22,13 +22,12 @@ import play.api.libs.json.*
 
 import java.time.LocalDate
 
-sealed trait LettingPartOfProperty {
+sealed trait LettingPartOfProperty:
   def typeOfLetting: TypeOfLetting
   def rentalDetails: Option[RentDetails]
   def addAnotherLetting: Option[AnswersYesNo]
-}
 
-object LettingPartOfProperty {
+object LettingPartOfProperty:
 
   implicit val lettingReads: Reads[LettingPartOfProperty] = (__ \ "type").read[String].flatMap {
     case "ATMLetting"              => summon[Reads[ATMLetting]].map(identity)
@@ -57,29 +56,24 @@ object LettingPartOfProperty {
 
   implicit val lettingFormat: Format[LettingPartOfProperty] = Format(lettingReads, lettingWrites)
 
-}
-
 case class RentDetails(
   annualRent: BigDecimal,
   sumFixedDate: LocalDate
 )
 
-object RentDetails {
+object RentDetails:
   implicit val format: Format[RentDetails] = Json.format
-}
 
 case class ATMLetting(
   bankOrCompany: Option[String],
   correspondenceAddress: Option[Address],
   rentalDetails: Option[RentDetails] = None,
   override val addAnotherLetting: Option[AnswersYesNo] = None
-) extends LettingPartOfProperty {
+) extends LettingPartOfProperty:
   override def typeOfLetting: TypeOfLetting = TypeOfLettingAutomatedTellerMachine
-}
 
-object ATMLetting {
+object ATMLetting:
   implicit val format: Format[ATMLetting] = Json.format
-}
 
 case class TelecomMastLetting(
   operatingCompanyName: Option[String],
@@ -87,13 +81,11 @@ case class TelecomMastLetting(
   correspondenceAddress: Option[Address] = None,
   rentalDetails: Option[RentDetails] = None,
   override val addAnotherLetting: Option[AnswersYesNo] = None
-) extends LettingPartOfProperty {
+) extends LettingPartOfProperty:
   override def typeOfLetting: TypeOfLetting = TypeOfLettingTelecomMast
-}
 
-object TelecomMastLetting {
+object TelecomMastLetting:
   implicit val format: Format[TelecomMastLetting] = Json.format
-}
 
 case class AdvertisingRightLetting(
   descriptionOfSpace: Option[String],
@@ -101,13 +93,11 @@ case class AdvertisingRightLetting(
   correspondenceAddress: Option[Address],
   rentalDetails: Option[RentDetails] = None,
   override val addAnotherLetting: Option[AnswersYesNo] = None
-) extends LettingPartOfProperty {
+) extends LettingPartOfProperty:
   override def typeOfLetting: TypeOfLetting = TypeOfLettingAdvertisingRight
-}
 
-object AdvertisingRightLetting {
+object AdvertisingRightLetting:
   implicit val format: Format[AdvertisingRightLetting] = Json.format
-}
 
 case class OtherLetting(
   lettingType: Option[String],
@@ -115,10 +105,8 @@ case class OtherLetting(
   correspondenceAddress: Option[Address],
   rentalDetails: Option[RentDetails] = None,
   override val addAnotherLetting: Option[AnswersYesNo] = None
-) extends LettingPartOfProperty {
+) extends LettingPartOfProperty:
   override def typeOfLetting: TypeOfLetting = TypeOfLettingOther
-}
 
-object OtherLetting {
+object OtherLetting:
   implicit val format: Format[OtherLetting] = Json.format
-}

@@ -60,7 +60,7 @@ class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach {
     }
   }
 
-  override protected def beforeEach(): Unit = 
+  override protected def beforeEach(): Unit =
     super.beforeEach()
     repository.removeAll().futureValue
 

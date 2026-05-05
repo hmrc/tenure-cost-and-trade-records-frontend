@@ -25,6 +25,5 @@ case class PayACapitalSumInformationDetails(
   capitalSumPaidDetailsDateInput: Option[LocalDate]
 )
 
-object PayACapitalSumInformationDetails {
+object PayACapitalSumInformationDetails:
   implicit val format: OFormat[PayACapitalSumInformationDetails] = Json.format
-}

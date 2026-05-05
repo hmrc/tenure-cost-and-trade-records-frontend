@@ -27,6 +27,5 @@ case class LettingPartOfPropertyDetails(
   maxOfLettings: Option[Boolean] = None
 )
 
-object LettingPartOfPropertyDetails {
+object LettingPartOfPropertyDetails:
   implicit val format: OFormat[LettingPartOfPropertyDetails] = Json.format
-}

@@ -24,6 +24,5 @@ case class LowMarginFuelCardsDetails(
   addAnotherLowMarginFuelCardDetails: Option[AnswersYesNo] = None
 )
 
-object LowMarginFuelCardsDetails {
+object LowMarginFuelCardsDetails:
   implicit val format: OFormat[LowMarginFuelCardsDetails] = Json.format
-}

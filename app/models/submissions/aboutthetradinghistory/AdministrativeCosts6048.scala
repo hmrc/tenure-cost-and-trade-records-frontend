@@ -27,8 +27,7 @@ case class AdministrativeCosts6048(
   bookingAgency: Option[BigDecimal] = None,
   advertising: Option[BigDecimal] = None,
   printing: Option[BigDecimal] = None
-) {
-
+):
   def total: BigDecimal = Seq(
     subscriptionsAndFees,
     telephoneBroadbandStationeryPostage,
@@ -36,8 +35,6 @@ case class AdministrativeCosts6048(
     advertising,
     printing
   ).flatten.sum
-}
 
-object AdministrativeCosts6048 {
+object AdministrativeCosts6048:
   implicit val format: OFormat[AdministrativeCosts6048] = Json.format
-}

@@ -23,11 +23,8 @@ import java.time.MonthDay
 /**
   * Represents dd/mm part of Date.
   */
-case class DayMonthsDuration(days: Int, months: Int) {
+case class DayMonthsDuration(days: Int, months: Int):
   def toMonthDay: MonthDay = MonthDay.of(months, days)
-}
 
-object DayMonthsDuration {
+object DayMonthsDuration:
   implicit val format: OFormat[DayMonthsDuration] = Json.format
-
-}

@@ -27,7 +27,7 @@ case class AccountingCosts6048(
   depreciationContents: Option[BigDecimal] = None,
   bookkeepingOrAccountancy: Option[BigDecimal] = None,
   bankCharges: Option[BigDecimal] = None
-) {
+):
 
   def total: BigDecimal = Seq(
     wagesAndNationalInsurance,
@@ -36,8 +36,6 @@ case class AccountingCosts6048(
     bookkeepingOrAccountancy,
     bankCharges
   ).flatten.sum
-}
 
-object AccountingCosts6048 {
+object AccountingCosts6048:
   implicit val format: OFormat[AccountingCosts6048] = Json.format
-}

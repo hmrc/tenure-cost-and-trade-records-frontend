@@ -23,6 +23,5 @@ case class AdditionalMiscDetails(
   otherActivitiesReceipts: Option[String] = None
 )
 
-object AdditionalMiscDetails {
+object AdditionalMiscDetails:
   implicit val format: OFormat[AdditionalMiscDetails] = Json.format
-}

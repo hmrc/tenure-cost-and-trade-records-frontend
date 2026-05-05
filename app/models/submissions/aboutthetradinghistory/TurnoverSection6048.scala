@@ -35,6 +35,5 @@ case class TurnoverSection6048(
   operationalCosts: Option[OperationalCosts6048] = None
 )
 
-object TurnoverSection6048 {
+object TurnoverSection6048:
   implicit val format: OFormat[TurnoverSection6048] = Json.format
-}

@@ -26,6 +26,5 @@ case class FeeReceived(
   feeCalculationDetails: Option[String] = None
 )
 
-object FeeReceived {
+object FeeReceived:
   implicit val format: OFormat[FeeReceived] = Json.format
-}

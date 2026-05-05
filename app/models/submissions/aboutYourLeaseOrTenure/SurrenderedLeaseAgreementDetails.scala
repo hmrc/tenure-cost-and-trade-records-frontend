@@ -23,6 +23,5 @@ case class SurrenderedLeaseAgreementDetails(
   surrenderedLeaseAgreementMonths: String
 )
 
-object SurrenderedLeaseAgreementDetails {
+object SurrenderedLeaseAgreementDetails:
   implicit val format: OFormat[SurrenderedLeaseAgreementDetails] = Json.format
-}

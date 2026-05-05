@@ -23,6 +23,5 @@ case class OccupiersDetails(
   address: String
 )
 
-object OccupiersDetails {
+object OccupiersDetails:
   implicit val format: OFormat[OccupiersDetails] = Json.format[OccupiersDetails]
-}

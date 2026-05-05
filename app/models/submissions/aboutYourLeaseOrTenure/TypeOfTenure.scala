@@ -23,6 +23,5 @@ case class TypeOfTenure(
   typeOfTenureDetails: Option[String]
 )
 
-object TypeOfTenure {
+object TypeOfTenure:
   implicit val format: Format[TypeOfTenure] = Json.format
-}

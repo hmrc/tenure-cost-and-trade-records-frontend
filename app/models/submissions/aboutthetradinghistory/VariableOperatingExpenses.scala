@@ -30,8 +30,7 @@ case class VariableOperatingExpenses(
   administrationAndSundries: Option[BigDecimal],
   entertainment: Option[BigDecimal],
   other: Option[BigDecimal]
-) {
-
+):
   def total: BigDecimal =
     Seq(
       energyAndUtilities,
@@ -43,8 +42,6 @@ case class VariableOperatingExpenses(
       entertainment,
       other
     ).flatten.sum
-}
 
-object VariableOperatingExpenses {
+object VariableOperatingExpenses:
   implicit val format: OFormat[VariableOperatingExpenses] = Json.format
-}

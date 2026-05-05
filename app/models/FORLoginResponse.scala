@@ -21,6 +21,5 @@ import play.api.libs.json.{Json, OFormat}
 
 case class FORLoginResponse(forAuthToken: String, forType: String, address: Address, isWelsh: Boolean)
 
-object FORLoginResponse {
+object FORLoginResponse:
   implicit val formats: OFormat[FORLoginResponse] = Json.format
-}

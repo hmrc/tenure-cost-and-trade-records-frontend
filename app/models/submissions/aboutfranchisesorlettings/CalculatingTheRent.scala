@@ -25,6 +25,5 @@ case class CalculatingTheRent(
   dateInput: LocalDate
 )
 
-object CalculatingTheRent {
+object CalculatingTheRent:
   implicit val format: OFormat[CalculatingTheRent] = Json.format
-}

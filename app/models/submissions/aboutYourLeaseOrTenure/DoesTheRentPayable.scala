@@ -30,6 +30,5 @@ case class DoesTheRentPayable(
   detailsToQuestions: String
 )
 
-object DoesTheRentPayable {
+object DoesTheRentPayable:
   implicit val format: OFormat[DoesTheRentPayable] = Json.format
-}

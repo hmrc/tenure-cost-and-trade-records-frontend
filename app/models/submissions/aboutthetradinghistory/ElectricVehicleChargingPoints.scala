@@ -24,6 +24,5 @@ case class ElectricVehicleChargingPoints(
   spacesOrBays: Option[Int]
 )
 
-object ElectricVehicleChargingPoints {
+object ElectricVehicleChargingPoints:
   implicit val format: OFormat[ElectricVehicleChargingPoints] = Json.format
-}

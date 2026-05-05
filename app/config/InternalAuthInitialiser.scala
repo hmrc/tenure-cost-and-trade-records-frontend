@@ -30,14 +30,12 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, ExecutionContext, Future}
 
-abstract class InternalAuthTokenInitialiser {
+abstract class InternalAuthTokenInitialiser:
   val initialised: Future[Done]
-}
 
 @Singleton
-class NoOpInternalAuthTokenInitialiser @Inject() () extends InternalAuthTokenInitialiser {
+class NoOpInternalAuthTokenInitialiser @Inject() () extends InternalAuthTokenInitialiser:
   override val initialised: Future[Done] = Future.successful(Done)
-}
 
 @Singleton
 class InternalAuthTokenInitialiserImpl @Inject() (
@@ -45,7 +43,7 @@ class InternalAuthTokenInitialiserImpl @Inject() (
   httpClientV2: HttpClientV2
 )(using ec: ExecutionContext
 ) extends InternalAuthTokenInitialiser
-  with Logging {
+  with Logging:
 
   private val internalAuthService: Service = configuration.get[Service]("microservice.services.internal-auth")
   private val internalAuthToken            = configuration.get[String]("internalAuthToken")
@@ -101,5 +99,3 @@ class InternalAuthTokenInitialiserImpl @Inject() (
       .setHeader(authorisation -> internalAuthToken)
       .execute[HttpResponse]
       .map(_.status == OK)
-
-}

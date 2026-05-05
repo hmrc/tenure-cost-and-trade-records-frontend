@@ -28,10 +28,8 @@ case class TurnoverSection(
   otherReceipts: Option[BigDecimal],
   accommodation: Option[BigDecimal],
   averageOccupancyRate: Option[BigDecimal]
-) {
+):
   def total: BigDecimal = Seq(alcoholicDrinks, accommodation, food, otherReceipts).flatten.sum
-}
 
-object TurnoverSection {
+object TurnoverSection:
   implicit val format: OFormat[TurnoverSection] = Json.format
-}

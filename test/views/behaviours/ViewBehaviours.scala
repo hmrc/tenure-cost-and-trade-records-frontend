@@ -23,9 +23,9 @@ import views.ViewSpecBase
 
 import java.util.Locale
 
-trait ViewBehaviours extends ViewSpecBase {
+trait ViewBehaviours extends ViewSpecBase:
 
-  def labelDefinedAndUsedOnce(option: String, prefix: String, view: () => HtmlFormat.Appendable): Assertion = 
+  def labelDefinedAndUsedOnce(option: String, prefix: String, view: () => HtmlFormat.Appendable): Assertion =
     val doc   = asDocument(view())
     assert(messages.isDefinedAt(s"$prefix.$option"))
     val label = doc.select(s"label[for=$prefix.$option]")
@@ -222,11 +222,8 @@ trait ViewBehaviours extends ViewSpecBase {
       }
     }
 
-  protected def checkServiceNameInHeaderBanner(html: Html): Assertion = 
+  protected def checkServiceNameInHeaderBanner(html: Html): Assertion =
     val doc    = asDocument(html)
     val header = doc.getElementsByAttributeValue("class", "govuk-service-navigation__service-name").first()
     val link   = header.children.first
     link.text shouldBe messagesApi("service.name")(using Lang(Locale.UK))
-  
-
-}

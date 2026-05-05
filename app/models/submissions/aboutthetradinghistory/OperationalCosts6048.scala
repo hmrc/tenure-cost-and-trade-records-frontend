@@ -28,8 +28,7 @@ case class OperationalCosts6048(
   tvLicences: Option[BigDecimal] = None,
   travellingAndMotorExpenses: Option[BigDecimal] = None,
   other: Option[BigDecimal] = None // other details in AboutTheTradingHistoryPartOne.otherOperationalExpensesDetails
-) {
-
+):
   def total: BigDecimal = Seq(
     energyBills,
     laundryCleaning,
@@ -38,8 +37,6 @@ case class OperationalCosts6048(
     travellingAndMotorExpenses,
     other
   ).flatten.sum
-}
 
-object OperationalCosts6048 {
+object OperationalCosts6048:
   implicit val format: OFormat[OperationalCosts6048] = Json.format
-}

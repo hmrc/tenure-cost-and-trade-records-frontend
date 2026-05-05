@@ -30,6 +30,5 @@ case class CaravansPerService(
   privateElectricityOnly: Int = 0
 )
 
-object CaravansPerService {
+object CaravansPerService:
   implicit val format: OFormat[CaravansPerService] = Json.format
-}

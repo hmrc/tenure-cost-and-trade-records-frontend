@@ -22,10 +22,8 @@ case class TotalSiteCapacity(
   availableForLetting: Int = 0,
   occupiedBySeasonalStuff: Int = 0,
   privatelyOwned: Int = 0
-) {
+):
   def total: Int = Seq(availableForLetting, occupiedBySeasonalStuff, privatelyOwned).sum
-}
 
-object TotalSiteCapacity {
+object TotalSiteCapacity:
   implicit val format: OFormat[TotalSiteCapacity] = Json.format
-}

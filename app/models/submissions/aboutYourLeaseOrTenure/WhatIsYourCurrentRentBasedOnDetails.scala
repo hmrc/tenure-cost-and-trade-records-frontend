@@ -23,6 +23,5 @@ case class WhatIsYourCurrentRentBasedOnDetails(
   describe: Option[String]
 )
 
-object WhatIsYourCurrentRentBasedOnDetails {
+object WhatIsYourCurrentRentBasedOnDetails:
   implicit val format: OFormat[WhatIsYourCurrentRentBasedOnDetails] = Json.format
-}

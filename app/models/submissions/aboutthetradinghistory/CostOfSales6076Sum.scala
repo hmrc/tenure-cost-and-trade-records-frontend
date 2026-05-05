@@ -24,11 +24,8 @@ case class CostOfSales6076Sum(
   TNuoS: Option[BigDecimal],
   BSuoS: Option[BigDecimal],
   other: Option[BigDecimal]
-) {
-
+):
   def total: BigDecimal = Seq(fuelOrFeedstock, importedPower, TNuoS, BSuoS, other).flatten.sum
-}
 
-object CostOfSales6076Sum {
+object CostOfSales6076Sum:
   implicit val format: OFormat[CostOfSales6076Sum] = Json.format
-}

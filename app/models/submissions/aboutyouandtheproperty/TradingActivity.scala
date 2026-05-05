@@ -24,6 +24,5 @@ case class TradingActivity(
   tradingActivityDetails: Option[String]
 )
 
-object TradingActivity {
+object TradingActivity:
   implicit val format: OFormat[TradingActivity] = Json.format
-}

@@ -41,6 +41,5 @@ case class TurnoverSection6076(
   incomeAndExpenditureSummary: Option[IncomeAndExpenditureSummary6076] = None
 )
 
-object TurnoverSection6076 {
+object TurnoverSection6076:
   implicit val format: OFormat[TurnoverSection6076] = Json.format
-}

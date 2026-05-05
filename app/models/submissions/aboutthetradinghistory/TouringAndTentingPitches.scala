@@ -26,6 +26,5 @@ case class TouringAndTentingPitches(
   checkYourAnswersTentingPitches: Option[AnswersYesNo] = None
 )
 
-object TouringAndTentingPitches {
+object TouringAndTentingPitches:
   implicit val format: OFormat[TouringAndTentingPitches] = Json.format
-}

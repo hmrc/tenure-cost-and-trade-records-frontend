@@ -23,10 +23,8 @@ case class StaffCosts(
   nationalInsurance: Option[BigDecimal],
   pensionContributions: Option[BigDecimal],
   remunerations: Option[BigDecimal]
-) {
+):
   def total: BigDecimal = Seq(wagesAndSalaries, nationalInsurance, pensionContributions, remunerations).flatten.sum
-}
 
-object StaffCosts {
+object StaffCosts:
   implicit val format: OFormat[StaffCosts] = Json.format
-}

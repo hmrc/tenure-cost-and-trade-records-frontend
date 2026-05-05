@@ -25,6 +25,5 @@ case class TiedForGoodsInformationDetails(
   partialTieConditional: Option[String] = None
 )
 
-object TiedForGoodsInformationDetails {
+object TiedForGoodsInformationDetails:
   implicit val format: OFormat[TiedForGoodsInformationDetails] = Json.format
-}

@@ -27,6 +27,5 @@ case class ThroughputAffectsRent(
   throughputAffectsRentDetails: Option[String] = None
 )
 
-object ThroughputAffectsRent {
+object ThroughputAffectsRent:
   implicit val format: OFormat[ThroughputAffectsRent] = Json.format
-}

@@ -27,6 +27,5 @@ case class AdditionalMisc(
   bottledGasReceipts: Option[BigDecimal] = None
 )
 
-object AdditionalMisc {
+object AdditionalMisc:
   implicit val format: OFormat[AdditionalMisc] = Json.format
-}

@@ -26,12 +26,8 @@ case class SubmissionDraft(
   forType: ForType,
   session: Session,
   exitPath: String
-) {
-
+):
   def toSavedAsDraftEvent: SavedAsDraftEvent = SavedAsDraftEvent(forType, session.toUserData, exitPath)
 
-}
-
-object SubmissionDraft {
+object SubmissionDraft:
   implicit val format: OFormat[SubmissionDraft] = Json.format
-}

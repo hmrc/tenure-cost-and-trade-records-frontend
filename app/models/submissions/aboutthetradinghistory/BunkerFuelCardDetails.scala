@@ -23,6 +23,5 @@ case class BunkerFuelCardDetails(
   handlingFee: BigDecimal
 )
 
-object BunkerFuelCardDetails {
+object BunkerFuelCardDetails:
   implicit val format: OFormat[BunkerFuelCardDetails] = Json.format
-}

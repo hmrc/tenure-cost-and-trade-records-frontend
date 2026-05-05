@@ -24,10 +24,8 @@ case class TotalPayrollCost(
   financialYearEnd: LocalDate,
   managersAndStaff: Option[BigDecimal],
   directorsRemuneration: Option[BigDecimal]
-) {
+):
   def total: BigDecimal = Seq(managersAndStaff, directorsRemuneration).flatten.sum
-}
 
-object TotalPayrollCost {
+object TotalPayrollCost:
   implicit val format: OFormat[TotalPayrollCost] = Json.format
-}

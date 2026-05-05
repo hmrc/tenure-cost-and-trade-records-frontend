@@ -23,6 +23,5 @@ case class RentReceivedFrom(
   declaration: Boolean
 )
 
-object RentReceivedFrom {
+object RentReceivedFrom:
   implicit val format: OFormat[RentReceivedFrom] = Json.format
-}

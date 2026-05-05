@@ -23,6 +23,5 @@ case class AdditionalCatering(
   costOfPurchase: Option[BigDecimal] = None
 )
 
-object AdditionalCatering {
+object AdditionalCatering:
   implicit val format: OFormat[AdditionalCatering] = Json.format
-}

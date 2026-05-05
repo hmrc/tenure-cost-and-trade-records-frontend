@@ -24,6 +24,5 @@ case class BunkerFuelCardsDetails(
   addAnotherBunkerFuelCardDetails: Option[AnswersYesNo] = None
 )
 
-object BunkerFuelCardsDetails {
+object BunkerFuelCardsDetails:
   implicit val format: OFormat[BunkerFuelCardsDetails] = Json.format
-}

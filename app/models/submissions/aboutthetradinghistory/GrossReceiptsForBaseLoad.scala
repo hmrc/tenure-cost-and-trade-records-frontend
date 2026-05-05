@@ -24,8 +24,7 @@ case class GrossReceiptsForBaseLoad(
   byProductSales: Option[BigDecimal],
   hotWaterHeatOrSteamSales: Option[BigDecimal],
   gateIncomeFromWaste: Option[BigDecimal]
-) {
-
+):
   def total: BigDecimal = Seq(
     renewableHeatIncentiveBioMethane,
     renewableHeatIncentiveBioMass,
@@ -33,8 +32,6 @@ case class GrossReceiptsForBaseLoad(
     hotWaterHeatOrSteamSales,
     gateIncomeFromWaste
   ).flatten.sum
-}
 
-object GrossReceiptsForBaseLoad {
+object GrossReceiptsForBaseLoad:
   implicit val format: OFormat[GrossReceiptsForBaseLoad] = Json.format
-}

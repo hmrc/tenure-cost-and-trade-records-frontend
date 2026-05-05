@@ -28,12 +28,9 @@ case class CaravansTotalSiteCapacity(
   subletByPrivateOwners: Int = 0,
   charitablePurposes: Int = 0,
   seasonalStaff: Int = 0
-) {
-
+):
   def total: Int = ownedByOperatorForFleetHire + privatelyOwnedForOwnerAndFamily + subletByOperator +
     subletByPrivateOwners + charitablePurposes + seasonalStaff
-}
 
-object CaravansTotalSiteCapacity {
+object CaravansTotalSiteCapacity:
   implicit val format: OFormat[CaravansTotalSiteCapacity] = Json.format
-}
