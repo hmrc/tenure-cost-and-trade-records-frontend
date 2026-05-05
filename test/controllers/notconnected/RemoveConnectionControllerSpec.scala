@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class RemoveConnectionControllerSpec extends TestBaseSpec {
+class RemoveConnectionControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
@@ -80,7 +80,8 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
       }
     }
   }
-  "calculateBackLink"            should {
+
+  "calculateBackLink" should {
     "return back link to NotConnected CYA page when 'from=CYA' query param is present and user is not connected to the property" in {
       val result = removeConnectionController().show(fakeRequestFromCYA)
       contentAsString(result) should include(
@@ -102,6 +103,7 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
 
       mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
     }
+
     "error if phone number is too short" in {
       val formData = baseFormData + (errorKey.phone -> "12345")
       val form     = removeConnectionForm.bind(formData)
@@ -131,24 +133,22 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
+
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val fullName: String = "removeConnectionFullName"
       val phone            = "removeConnectionDetails.phone"
       val email            = "removeConnectionDetails.email"
-    }
 
     val formErrors: FormErrors = new FormErrors
 
-    class RequiredError {
+    class RequiredError:
       val fullName: FormError = FormError(errorKey.fullName, Errors.required)
-    }
 
-    class FormErrors {
+    class FormErrors:
       val required: RequiredError = new RequiredError
-    }
 
     val baseFormData: Map[String, String] = Map(
       "contactDetails.phone"  -> "12345678901",
@@ -156,6 +156,3 @@ class RemoveConnectionControllerSpec extends TestBaseSpec {
       "contactDetails.email1" -> "blah.blah@test.com",
       "fullName"              -> "Mr John Smith"
     )
-
-  }
-}
