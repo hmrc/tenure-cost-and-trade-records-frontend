@@ -202,7 +202,7 @@ class EditFinancialYearEndDateController @Inject() (
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
+  ): Session =
     val turnoverSections =
       aboutTheTradingHistory.turnoverSections
         .updated(index, aboutTheTradingHistory.turnoverSections(index).copy(financialYearEnd = data))
@@ -232,7 +232,6 @@ class EditFinancialYearEndDateController @Inject() (
       )
     )
     updatedData
-  }
 
   private def buildUpdateData6020(
     aboutTheTradingHistory: AboutTheTradingHistory,
@@ -240,7 +239,7 @@ class EditFinancialYearEndDateController @Inject() (
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
+  ): Session =
     val turnoverSections6020    = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty)
     val updatedTurnoverSections = turnoverSections6020.updated(
       index,
@@ -253,7 +252,6 @@ class EditFinancialYearEndDateController @Inject() (
       )
     )
     updatedData
-  }
 
   private def buildUpdateData6030(
     aboutTheTradingHistory: AboutTheTradingHistory,
@@ -261,7 +259,7 @@ class EditFinancialYearEndDateController @Inject() (
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
+  ): Session =
     val turnoverSections6030       = aboutTheTradingHistory.turnoverSections6030
     val updatedTurnoverSection6030 =
       turnoverSections6030.updated(index, turnoverSections6030(index).copy(financialYearEnd = data))
@@ -273,14 +271,13 @@ class EditFinancialYearEndDateController @Inject() (
       )
     )
     updatedData
-  }
 
   private def buildUpdatedData6045(
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
+  ): Session =
     val turnoverSections6045    =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).getOrElse(Seq.empty)
     val updatedTurnoverSections = turnoverSections6045.updated(
@@ -300,14 +297,13 @@ class EditFinancialYearEndDateController @Inject() (
           .copy(turnoverSections6045 = Some(updatedTurnoverSections))
       )
     )
-  }
 
   private def buildUpdatedData6048(
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
+  ): Session =
     val turnoverSections6048    =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).getOrElse(Seq.empty)
     val updatedTurnoverSections = turnoverSections6048.updated(
@@ -327,14 +323,13 @@ class EditFinancialYearEndDateController @Inject() (
           .copy(turnoverSections6048 = Some(updatedTurnoverSections))
       )
     )
-  }
 
   private def buildUpdatedData6076(
     index: Int,
     data: LocalDate,
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
+  ): Session =
     val turnoverSections6076    =
       request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
     val updatedTurnoverSections = turnoverSections6076.updated(
@@ -354,6 +349,5 @@ class EditFinancialYearEndDateController @Inject() (
           .copy(turnoverSections6076 = Some(updatedTurnoverSections))
       )
     )
-  }
 
 }

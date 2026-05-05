@@ -36,9 +36,8 @@ object RequestReferenceNumberDetails:
 
     val currentRequestReferenceNumber = sessionRequest.sessionData.requestReferenceNumberDetails
 
-    val updatedRequestReferenceNumber = currentRequestReferenceNumber match {
+    val updatedRequestReferenceNumber = currentRequestReferenceNumber match
       case Some(_) => sessionRequest.sessionData.requestReferenceNumberDetails.map(copy)
       case _       => Some(copy(RequestReferenceNumberDetails()))
-    }
 
     sessionRequest.sessionData.copy(requestReferenceNumberDetails = updatedRequestReferenceNumber)

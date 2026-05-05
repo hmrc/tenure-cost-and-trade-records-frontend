@@ -85,10 +85,9 @@ abstract class Navigator @Inject() (audit: Audit):
   ): Call =
     nextPage(id, session).apply(session).callWithParam(paramAndValue)
 
-  protected def auditNextUrl(session: Session)(call: Call)(using hc: HeaderCarrier): Call = {
+  protected def auditNextUrl(session: Session)(call: Call)(using hc: HeaderCarrier): Call =
     audit.sendContinueNextPage(session, call.url)
     call
-  }
 
   private def possibleCYARedirect(session: Session)(nextCall: Call)(using request: Request[AnyContent]): Call =
     if (from == "CYA") {

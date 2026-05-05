@@ -138,7 +138,7 @@ class FinancialYearEndDatesController @Inject() (
     data: Seq[LocalDate],
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ) = {
+  ) =
     val turnoverSections = (aboutTheTradingHistory.turnoverSections zip data).map { case (turnoverSection, finYearEnd) =>
       turnoverSection.copy(financialYearEnd = finYearEnd)
     }
@@ -159,14 +159,13 @@ class FinancialYearEndDatesController @Inject() (
       )
     )
     updatedData
-  }
 
   private def buildUpdateData6030(
     aboutTheTradingHistory: AboutTheTradingHistory,
     data: Seq[LocalDate],
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ) = {
+  ) =
     val turnoverSections6030 = (aboutTheTradingHistory.turnoverSections6030 zip data).map { case (turnoverSection6030, finYearEnd) =>
       turnoverSection6030.copy(financialYearEnd = finYearEnd)
     }
@@ -178,6 +177,5 @@ class FinancialYearEndDatesController @Inject() (
       )
     )
     updatedData
-  }
 
 }

@@ -90,7 +90,7 @@ class SaveAsDraftController @Inject() (
   )(using
     hc: HeaderCarrier,
     request: Request[?]
-  ): Future[Result] = {
+  ): Future[Result] =
     val forType         = session.forType
     val submissionDraft = SubmissionDraft(forType, session, exitPath)
 
@@ -98,7 +98,6 @@ class SaveAsDraftController @Inject() (
       audit.sendSavedAsDraft(submissionDraft.toSavedAsDraftEvent)
       Ok(submissionDraftSavedView(expiryDate, exitPath))
     }
-  }
 
   def loginToResume: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(saveAsDraftLoginView(saveAsDraftLoginForm, request.sessionData.toSummary))

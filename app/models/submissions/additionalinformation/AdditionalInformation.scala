@@ -37,9 +37,8 @@ object AdditionalInformation:
 
     val currentAdditionalInformation = sessionRequest.sessionData.additionalInformation
 
-    val updateAdditionalInformation = currentAdditionalInformation match {
+    val updateAdditionalInformation = currentAdditionalInformation match
       case Some(_) => sessionRequest.sessionData.additionalInformation.map(copy)
       case _       => Some(copy(AdditionalInformation()))
-    }
 
     sessionRequest.sessionData.copy(additionalInformation = updateAdditionalInformation)

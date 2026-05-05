@@ -214,14 +214,13 @@ class CyaTradingHistorySupport @Inject() (
   )(using
     request: SessionRequest[?],
     messages: Messages
-  ): Html = {
+  ): Html =
     val rows = financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
 
     Html(
       s"""<h2 class="govuk-heading-m">${messages(pageHeadingKey)}</h2>
          ${govukSummaryList(SummaryList(rows = rows)).body}""".stripMargin
     )
-  }
 
   def costOfSalesValuesTable(costOfSales: Seq[CostOfSales])(using messages: Messages): String =
     table(

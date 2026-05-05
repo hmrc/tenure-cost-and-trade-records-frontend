@@ -47,8 +47,7 @@ object AboutYouAndThePropertyPartTwo {
   def updateAboutYouAndThePropertyPartTwo(
     copy: AboutYouAndThePropertyPartTwo => AboutYouAndThePropertyPartTwo
   )(using sessionRequest: SessionRequest[?]
-  ): Session = {
-
+  ): Session =
     val currentAboutThePropertyPartTwo = sessionRequest.sessionData.aboutYouAndThePropertyPartTwo
 
     val updateAboutTheProperty = currentAboutThePropertyPartTwo match {
@@ -57,6 +56,4 @@ object AboutYouAndThePropertyPartTwo {
     }
 
     sessionRequest.sessionData.copy(aboutYouAndThePropertyPartTwo = updateAboutTheProperty)
-
-  }
 }

@@ -100,7 +100,7 @@ object CheckYourAnswersLettingHistoryHelpers:
     fragment: String
   )(using request: SessionRequest[AnyContent],
     messages: Messages
-  ): Seq[SummaryEntry] = {
+  ): Seq[SummaryEntry] =
     val data = mutable.Buffer(
       SummaryEntry(
         key = messages("lettingHistory.checkYourAnswers.intendedLettings.nights"),
@@ -160,7 +160,6 @@ object CheckYourAnswersLettingHistoryHelpers:
         )
       data.toSeq
     else data.toSeq
-  }
 
   def mapBool2String(maybeBool: Option[Boolean])(using messages: Messages): Option[String] =
     maybeBool.map {

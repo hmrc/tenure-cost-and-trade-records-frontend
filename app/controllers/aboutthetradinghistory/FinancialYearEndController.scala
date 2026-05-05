@@ -186,7 +186,7 @@ class FinancialYearEndController @Inject() (
     isFinancialYearEndDayUnchanged: Boolean,
     isFinancialYearsListUnchanged: Boolean
   )(using request: SessionRequest[AnyContent]
-  ) = {
+  ) =
     val turnoverSections =
       if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
         if (!newOccupationAndAccounting.financialYearEndHasChanged.get) {
@@ -241,7 +241,6 @@ class FinancialYearEndController @Inject() (
       )
     )
     updatedData
-  }
 
   private def buildUpdateData6020(
     aboutTheTradingHistory: AboutTheTradingHistory,
@@ -249,8 +248,7 @@ class FinancialYearEndController @Inject() (
     newOccupationAndAccountingInfo: OccupationalAndAccountingInformation,
     newFinancialYearEndSameAsOld: Boolean
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
-
+  ): Session =
     val financialYearEndHasChanged    = newOccupationAndAccountingInfo.financialYearEndHasChanged.getOrElse(false)
     val originalTurnoverSections      = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty)
     val originalFinancialYearEndDates = originalTurnoverSections.map(_.financialYearEnd)
@@ -275,7 +273,6 @@ class FinancialYearEndController @Inject() (
       )
     )
     updatedSession
-  }
 
   private def buildUpdateData6030(
     aboutTheTradingHistory: AboutTheTradingHistory,
@@ -283,8 +280,7 @@ class FinancialYearEndController @Inject() (
     newOccupationAndAccountingInfo: OccupationalAndAccountingInformation,
     newFinancialYearEndSameAsOld: Boolean
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
-
+  ): Session =
     val financialYearEndHasChanged    = newOccupationAndAccountingInfo.financialYearEndHasChanged.getOrElse(false)
     val originalTurnoverSections      = aboutTheTradingHistory.turnoverSections6030
     val originalFinancialYearEndDates = originalTurnoverSections.map(_.financialYearEnd)
@@ -312,4 +308,3 @@ class FinancialYearEndController @Inject() (
       )
     )
     updatedData
-  }

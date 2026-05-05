@@ -67,7 +67,7 @@ class InternalAuthTokenInitialiserImpl @Inject() (
       }
     }
 
-  private def createClientAuthToken(): Future[Done] = {
+  private def createClientAuthToken(): Future[Done] =
     logger.info("Initialising auth token")
 
     httpClientV2
@@ -94,7 +94,6 @@ class InternalAuthTokenInitialiserImpl @Inject() (
           Future.failed(RuntimeException("Unable to initialise internal-auth token"))
         }
       }
-  }
 
   private def authTokenIsValid(): Future[Boolean] =
     httpClientV2

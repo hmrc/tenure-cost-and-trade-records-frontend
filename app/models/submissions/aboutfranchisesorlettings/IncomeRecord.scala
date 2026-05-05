@@ -34,13 +34,12 @@ object IncomeRecord:
     val lettingFormat        = Json.format[LettingIncomeRecord]
 
     new OFormat[IncomeRecord]:
-      def reads(json: JsValue): JsResult[IncomeRecord] = (json \ "sourceType").validate[String].flatMap {
+      def reads(json: JsValue): JsResult[IncomeRecord] = (json \ "sourceType").validate[String].flatMap:
         case "typeFranchise"      => franchiseFormat.reads(json)
         case "typeConcession"     => concessionFormat.reads(json)
         case "typeConcession6015" => concession6015Format.reads(json)
         case "typeLetting"        => lettingFormat.reads(json)
         case other                => JsError(s"Unknown type: $other")
-      }
 
       def writes(record: IncomeRecord): JsObject =
         record match

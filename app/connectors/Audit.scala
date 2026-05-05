@@ -39,16 +39,14 @@ trait Audit extends AuditConnector {
 
   private val AUDIT_SOURCE = "tenure-cost-and-trade-records-frontend"
 
-  def apply(event: String, detail: Map[String, String])(using hc: HeaderCarrier): Future[AuditResult] = {
+  def apply(event: String, detail: Map[String, String])(using hc: HeaderCarrier): Future[AuditResult] =
     val tags = hc.toAuditTags()
     val de   = DataEvent(auditSource = AUDIT_SOURCE, auditType = event, tags = tags, detail = detail)
     sendEvent(de)
-  }
 
-  def sendContinueNextPage(session: Session, url: String)(using hc: HeaderCarrier): Unit = {
+  def sendContinueNextPage(session: Session, url: String)(using hc: HeaderCarrier): Unit =
     val continueNextPageJson = Json.toJson(session).as[JsObject] + ("nextPageURL" -> Json.toJson(url))
     sendExplicitAudit("ContinueNextPage", continueNextPageJson)
-  }
 
   def sendSavedAsDraft(savedAsDraftEvent: SavedAsDraftEvent)(using hc: HeaderCarrier): Unit =
     sendExplicitAudit("SavedAsDraft", savedAsDraftEvent)

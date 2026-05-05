@@ -67,7 +67,7 @@ class RentDetailsController @Inject() (
     )
   }
 
-  private def getOperatorName(existingDetails: Option[LettingPartOfProperty]) = {
+  private def getOperatorName(existingDetails: Option[LettingPartOfProperty]) =
     val operatorName = existingDetails match {
       case Some(atm: ATMLetting)                      => atm.bankOrCompany.getOrElse("")
       case Some(telecomMast: TelecomMastLetting)      => telecomMast.operatingCompanyName.getOrElse("")
@@ -76,7 +76,6 @@ class RentDetailsController @Inject() (
       case _                                          => "Unknown operator"
     }
     operatorName
-  }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingDetails = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings.get.lift(index))

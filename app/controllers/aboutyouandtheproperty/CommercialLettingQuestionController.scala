@@ -97,7 +97,7 @@ class CommercialLettingQuestionController @Inject() (
     )
   }
 
-  private def calculateFinancialEndYearDates(commercialLetDate: MonthsYearDuration): Option[Seq[LocalDate]] = {
+  private def calculateFinancialEndYearDates(commercialLetDate: MonthsYearDuration): Option[Seq[LocalDate]] =
     val commercialLet = commercialLetDate.toYearMonth.atEndOfMonth()
 
     val endDates = commercialLet match {
@@ -110,7 +110,6 @@ class CommercialLettingQuestionController @Inject() (
       case Nil   => None
       case dates => Option(dates)
     }
-  }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match {

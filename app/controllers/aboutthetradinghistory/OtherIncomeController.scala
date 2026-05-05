@@ -114,7 +114,7 @@ class OtherIncomeController @Inject() (
     val intermittentCheck =
       request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant)
 
-    intermittentCheck match {
+    intermittentCheck match
       case Some(Intermittent) =>
         navigator.from match {
           case "CYA" =>
@@ -134,6 +134,4 @@ class OtherIncomeController @Inject() (
             aboutthetradinghistory.routes.GrossReceiptsForBaseLoadController.show().url
         }
       case _                  => controllers.routes.TaskListController.show.url
-    }
-
 }

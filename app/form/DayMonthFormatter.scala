@@ -40,8 +40,7 @@ class DayMonthFormatter(
   private val dayMonthFields = Seq("day", "month")
   private val validationYear = if allow29February then 2020 else 2021
 
-  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], DayMonthsDuration] = {
-
+  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], DayMonthsDuration] =
     val dateText = messages("error.dateParts.date")
     val dMText   = messages("error.dateParts.dayMonth")
 
@@ -83,7 +82,6 @@ class DayMonthFormatter(
             ).flatten
           )
     }
-  }
 
   override def unbind(key: String, value: DayMonthsDuration): Map[String, String] =
     Map(

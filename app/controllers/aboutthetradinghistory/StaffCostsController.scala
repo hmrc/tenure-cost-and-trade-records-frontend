@@ -102,7 +102,7 @@ class StaffCostsController @Inject() (
     val intermittentCheck =
       request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant)
 
-    intermittentCheck match {
+    intermittentCheck match
       case Some(Intermittent) =>
         navigator.from match {
           case "CYA" =>
@@ -122,6 +122,5 @@ class StaffCostsController @Inject() (
             aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
         }
       case _                  => controllers.routes.TaskListController.show.url
-    }
 
 }

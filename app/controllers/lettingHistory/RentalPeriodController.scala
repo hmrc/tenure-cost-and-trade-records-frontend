@@ -93,7 +93,7 @@ class RentalPeriodController @Inject (
   )(
     generateResult: (PartiallyAppliedView, OccupierDetail, Int) => Future[Result]
   )(using request: SessionRequest[AnyContent]
-  ): Future[Result] = {
+  ): Future[Result] =
 
     val result =
       for
@@ -105,7 +105,6 @@ class RentalPeriodController @Inject (
       }
 
     result.getOrElse(Redirect(routes.OccupierListController.show))
-  }
 
   private def backLinkUrl(index: Int)(using request: SessionRequest[AnyContent]): Option[String] =
     val navigationData = Map("index" -> index)

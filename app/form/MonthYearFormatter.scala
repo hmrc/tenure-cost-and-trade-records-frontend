@@ -46,7 +46,7 @@ class MonthYearFormatter(
 
   private val monthYearFields = Seq("month", "year")
 
-  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], MonthsYearDuration] = {
+  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], MonthsYearDuration] =
 
     val dateText = messages("error.dateParts.date")
     val mYText   = messages("error.dateParts.monthYear")
@@ -87,7 +87,6 @@ class MonthYearFormatter(
             ).flatten
           )
     }
-  }
 
   override def unbind(key: String, value: MonthsYearDuration): Map[String, String] =
     Map(

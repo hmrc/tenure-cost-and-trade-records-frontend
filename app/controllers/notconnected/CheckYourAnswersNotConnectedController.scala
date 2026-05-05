@@ -88,7 +88,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
     session: Session
   )(using hc: HeaderCarrier,
     messages: Messages
-  ): Future[Unit] = {
+  ): Future[Unit] =
     val sessionRemoveConnection = session.removeConnectionDetails.flatMap(_.removeConnectionDetails)
 
     val submission = NotConnectedSubmission(
@@ -105,6 +105,5 @@ class CheckYourAnswersNotConnectedController @Inject() (
     )
 
     submissionConnector.submitNotConnected(session.referenceNumber, submission).map(_ => ())
-  }
 
 }

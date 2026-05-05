@@ -260,7 +260,7 @@ object AnswersAboutRentalIncomeHelpers:
     index: Int,
     dateUtil: DateUtilLocalised
   )(using messages: Messages
-  ) = {
+  ) =
     val fragment = "franchiseOperatorName"
     CardData(
       index = businessCounter,
@@ -284,7 +284,6 @@ object AnswersAboutRentalIncomeHelpers:
         itemsIncludedCardEntry(record.itemsIncluded, index)
       )
     )
-  }
 
   def cardsData(
     rentalIncome: Seq[IncomeRecord],

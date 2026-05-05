@@ -66,11 +66,10 @@ class DefaultBackendConnector @Inject() (
       .withBody(Json.toJson(credentials))
       .execute[HttpResponse]
       .flatMap { response =>
-        response.status match {
+        response.status match
           case 200    => Future.successful(Json.parse(response.body).as[FORLoginResponse])
           case 400    => Future.failed(BadRequestException(response.body))
           case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
-        }
       }
 
   override def retrieveFORType(referenceNumber: String, hc: HeaderCarrier): Future[String] =
@@ -93,11 +92,10 @@ class DefaultBackendConnector @Inject() (
       .withBody(Json.toJson(submissionDraft))
       .execute[HttpResponse]
       .flatMap { response =>
-        response.status match {
+        response.status match
           case 201    => Future.unit
           case 400    => Future.failed(BadRequestException(response.body))
           case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
-        }
       }
 
   override def loadSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Option[SubmissionDraft]] =
@@ -107,11 +105,10 @@ class DefaultBackendConnector @Inject() (
       .get(saveAsDraftURL(referenceNumber))(using headerCarrier)
       .execute[HttpResponse]
       .flatMap { response =>
-        response.status match {
+        response.status match
           case 200    => Future.successful(Json.parse(response.body).asOpt[SubmissionDraft])
           case 404    => Future.successful(None)
           case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
-        }
       }
 
   override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] =
@@ -121,10 +118,9 @@ class DefaultBackendConnector @Inject() (
       .delete(saveAsDraftURL(referenceNumber))(using headerCarrier)
       .execute[HttpResponse]
       .flatMap { response =>
-        response.status match {
+        response.status match
           case 200    => Future.successful((response.json \ "deletedCount").as[Int])
           case status => Future.failed(throw UpstreamErrorResponse(response.body, status, status))
-        }
       }
 
 @ImplementedBy(classOf[DefaultBackendConnector])

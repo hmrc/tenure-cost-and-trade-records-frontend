@@ -43,11 +43,11 @@ object FieldMappings:
     if field == "fromDate" then
       mapping.verifying(
         error = messages(s"$prefix.$field.error", dateUtil.formatDate(period.fromDate)),
-        constraint = { d => d.isAfter(period.fromDate) || d.isEqual(period.fromDate) }
+        constraint = d => d.isAfter(period.fromDate) || d.isEqual(period.fromDate)
       )
     else if field == "toDate" then
       mapping.verifying(
         error = messages(s"$prefix.$field.error", dateUtil.formatDate(period.toDate)),
-        constraint = { d => d.isBefore(period.toDate) || d.isEqual(period.toDate) }
+        constraint = d => d.isBefore(period.toDate) || d.isEqual(period.toDate)
       )
     else /* unconstrained */ mapping

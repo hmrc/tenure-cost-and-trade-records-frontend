@@ -146,7 +146,7 @@ class AboutYourLandlordController @Inject() (
     assert(session.aboutLeaseOrAgreementPartOne.isDefined)
     assert(session.aboutLeaseOrAgreementPartOne.get.aboutTheLandlord.isDefined)
     session.copy(
-      aboutLeaseOrAgreementPartOne = session.aboutLeaseOrAgreementPartOne.map { about =>
+      aboutLeaseOrAgreementPartOne = session.aboutLeaseOrAgreementPartOne.map: about =>
         about.copy(
           aboutTheLandlord = about.aboutTheLandlord.map { landlord =>
             landlord.copy(
@@ -154,5 +154,4 @@ class AboutYourLandlordController @Inject() (
             )
           }
         )
-      }
     )

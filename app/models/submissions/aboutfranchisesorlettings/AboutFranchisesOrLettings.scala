@@ -58,9 +58,8 @@ object AboutFranchisesOrLettings:
 
     val currentAboutFranchisesOrLettings = sessionRequest.sessionData.aboutFranchisesOrLettings
 
-    val updateAboutFranchisesOrLettings = currentAboutFranchisesOrLettings match {
+    val updateAboutFranchisesOrLettings = currentAboutFranchisesOrLettings match
       case Some(_) => sessionRequest.sessionData.aboutFranchisesOrLettings.map(copy)
       case _       => Some(copy(AboutFranchisesOrLettings()))
-    }
 
     sessionRequest.sessionData.copy(aboutFranchisesOrLettings = updateAboutFranchisesOrLettings)

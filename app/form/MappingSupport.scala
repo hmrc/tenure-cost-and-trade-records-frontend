@@ -315,7 +315,7 @@ object MappingSupport:
   def mappingPerYear[T](
     financialYears: Seq[String],
     mappingPerYearAndIdx: (String, Int) => (String, Mapping[T])
-  ): Mapping[Seq[T]] = {
+  ): Mapping[Seq[T]] =
     val yearsMapping: Seq[(String, Mapping[T])] = financialYears.take(3).zipWithIndex.map(mappingPerYearAndIdx.tupled)
 
     yearsMapping match {
@@ -324,4 +324,3 @@ object MappingSupport:
       case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
       case _            => throw IllegalArgumentException("Financial years sequence is empty")
     }
-  }

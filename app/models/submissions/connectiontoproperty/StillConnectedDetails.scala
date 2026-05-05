@@ -50,9 +50,8 @@ object StillConnectedDetails:
   ): Session =
     val currentStillConnectedDetails = sessionRequest.sessionData.stillConnectedDetails
 
-    val updatedStillConnectedDetails = currentStillConnectedDetails match {
+    val updatedStillConnectedDetails = currentStillConnectedDetails match
       case Some(_) => sessionRequest.sessionData.stillConnectedDetails.map(copy)
       case _       => Some(copy(StillConnectedDetails()))
-    }
 
     sessionRequest.sessionData.copy(stillConnectedDetails = updatedStillConnectedDetails)

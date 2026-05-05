@@ -111,7 +111,7 @@ class TypeOfLettingController @Inject() (
     index: Option[Int]
   )(using request: SessionRequest[AnyContent],
     hc: HeaderCarrier
-  ): Future[Result] = {
+  ): Future[Result] =
     val existingFranchisesOrLetting =
       request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
     val updatedSession              = request.sessionData.copy(
@@ -122,7 +122,6 @@ class TypeOfLettingController @Inject() (
     session.saveOrUpdate(updatedSession).map { _ =>
       Redirect(toSpecificController(lettingType, index))
     }
-  }
 
   private def createLettingType(typeOfLetting: TypeOfLetting): LettingPartOfProperty = typeOfLetting match {
     case TypeOfLettingAutomatedTellerMachine => ATMLetting(None, None, None)
@@ -131,7 +130,7 @@ class TypeOfLettingController @Inject() (
     case TypeOfLettingOther                  => OtherLetting(None, None, None, None)
   }
 
-  private def toSpecificController(typeOfLetting: TypeOfLetting, index: Option[Int]): Call = {
+  private def toSpecificController(typeOfLetting: TypeOfLetting, index: Option[Int]): Call =
     val targetIndex = index.getOrElse(0) // Default to the first index if none provided
     typeOfLetting match {
       case TypeOfLettingAutomatedTellerMachine => routes.AtmLettingController.show(Some(targetIndex))
@@ -139,7 +138,6 @@ class TypeOfLettingController @Inject() (
       case TypeOfLettingAdvertisingRight       => routes.AdvertisingRightLettingController.show(Some(targetIndex))
       case TypeOfLettingOther                  => routes.OtherLettingController.show(Some(targetIndex))
     }
-  }
 
   private def getBackLink(idx: Option[Int])(using request: SessionRequest[AnyContent]): String =
     if (navigator.from == "CYA") {

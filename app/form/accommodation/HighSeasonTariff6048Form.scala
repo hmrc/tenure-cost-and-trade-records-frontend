@@ -40,7 +40,7 @@ object HighSeasonTariff6048Form extends RentalPeriodSupport:
     val finYearStart = effectiveRentalPeriod.fromDate
     val finYearEnd   = effectiveRentalPeriod.toDate
 
-    Form {
+    Form(
       mapping(
         "fromDate" -> requiredDateMapping("accommodation.highSeasonTariff.fromDate", allowPastDates = true)
           .verifying(
@@ -55,4 +55,4 @@ object HighSeasonTariff6048Form extends RentalPeriodSupport:
           "error.accommodation.highSeasonTariff.fromDate.mustBeBefore.toDate",
           highSeason => highSeason.fromDate.isBefore(highSeason.toDate)
         )
-    }
+    )

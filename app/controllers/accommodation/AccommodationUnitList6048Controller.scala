@@ -119,12 +119,11 @@ class AccommodationUnitList6048Controller @Inject() (
 
     session
       .saveOrUpdate(updatedData)
-      .map { _ =>
+      .map: _ =>
         if updatedData.accommodationDetails.exists(_.accommodationUnits.nonEmpty) then
           if navigator.from == "CYA" then Redirect(navigator.cyaPage.get)
           else Redirect(controllers.accommodation.routes.AccommodationUnitList6048Controller.show)
         else Redirect(s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=0")
-      }
 
   private def accommodationDetails(
     using

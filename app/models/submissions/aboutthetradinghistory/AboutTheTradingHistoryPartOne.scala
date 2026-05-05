@@ -51,8 +51,7 @@ object AboutTheTradingHistoryPartOne {
   def updateAboutTheTradingHistoryPartOne(
     copy: AboutTheTradingHistoryPartOne => AboutTheTradingHistoryPartOne
   )(using sessionRequest: SessionRequest[?]
-  ): Session = {
-
+  ): Session =
     val currentAboutTheTradingHistoryPartOne = sessionRequest.sessionData.aboutTheTradingHistoryPartOne
 
     val updateAboutTheTradingHistoryPartOne = currentAboutTheTradingHistoryPartOne match {
@@ -61,7 +60,6 @@ object AboutTheTradingHistoryPartOne {
     }
 
     sessionRequest.sessionData.copy(aboutTheTradingHistoryPartOne = updateAboutTheTradingHistoryPartOne)
-  }
 
   def updateCaravans(
     update: Caravans => Caravans

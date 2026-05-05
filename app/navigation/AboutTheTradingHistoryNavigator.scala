@@ -90,21 +90,21 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     routes.CostOfSalesController.show()
   ).map(_.url)
 
-  private def financialYearEndRouting: Session => Call = { s =>
-    if s.financialYearEndDates.isEmpty
-    then controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController.show()
-    else
-      s.aboutTheTradingHistory.flatMap(
-        _.occupationAndAccountingInformation.flatMap(_.financialYearEndHasChanged)
-      ) match {
-        case Some(true) =>
-          s.forType match {
-            case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
-              routes.FinancialYearEndDatesSummaryController.show()
-          }
-        case _          => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
-      }
-  }
+  private def financialYearEndRouting: Session => Call =
+    s =>
+      if s.financialYearEndDates.isEmpty
+      then controllers.aboutthetradinghistory.routes.CheckYourAnswersNoFinancialYearsController.show()
+      else
+        s.aboutTheTradingHistory.flatMap(
+          _.occupationAndAccountingInformation.flatMap(_.financialYearEndHasChanged)
+        ) match {
+          case Some(true) =>
+            s.forType match {
+              case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6045 | FOR6046 | FOR6048 | FOR6076 =>
+                routes.FinancialYearEndDatesSummaryController.show()
+            }
+          case _          => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
+        }
 
   private def bunkeredFuelQuestionRouting: Session => Call = answers =>
     answers.aboutTheTradingHistory.flatMap(_.bunkeredFuelQuestion) match {
@@ -133,7 +133,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case _       => routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     }
 
-  private def getAddAnotherBunkerFuelCardsDetailRouting(answers: Session): Call = {
+  private def getAddAnotherBunkerFuelCardsDetailRouting(answers: Session): Call =
     val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails) match {
       case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
       case _                                 => None
@@ -146,7 +146,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case None      =>
         routes.AddAnotherBunkerFuelCardsDetailsController.show(0) // Fallback or start new
     }
-  }
 
   private def acceptLowMarginFuelCardsRouting: Session => Call =
     _.aboutTheTradingHistory.flatMap(_.doYouAcceptLowMarginFuelCard) match {
@@ -160,7 +159,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case _               => routes.CheckYourAnswersAboutTheTradingHistoryController.show()
     }
 
-  private def getAddAnotherLowMarginFuelCardsDetailRouting(answers: Session): Call = {
+  private def getAddAnotherLowMarginFuelCardsDetailRouting(answers: Session): Call =
     val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails) match {
       case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
       case _                                 => None
@@ -173,7 +172,6 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case None      =>
         routes.AddAnotherLowMarginFuelCardsDetailsController.show(0) // Fallback or start new
     }
-  }
 
   private def otherHolidayAccommodationRouting(answers: Session): Call =
     answers.aboutTheTradingHistoryPartOne.flatMap(

@@ -63,7 +63,7 @@ object AccountingInformationUtil {
   def deriveFinancialYearEndDatesFrom(
     firstOccupy: MonthsYearDuration,
     financialYear: DayMonthsDuration
-  ): Seq[LocalDate] = {
+  ): Seq[LocalDate] =
     val now     = LocalDate.now
     val yearNow = now.getYear
 
@@ -90,7 +90,6 @@ object AccountingInformationUtil {
         }
         .filterNot(_.isBefore(LocalDate.of(firstOccupy.years, firstOccupy.months, 1)))
     }
-  }
 
   def maxNightsInFinYear6048(year: Int)(using request: SessionRequest[AnyContent]): Int =
     val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
@@ -138,8 +137,7 @@ object AccountingInformationUtil {
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
-
+  ): Session =
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
     val originalTurnoverSections6045  =
@@ -172,15 +170,13 @@ object AccountingInformationUtil {
           )
       )
     )
-  }
 
   def buildUpdatedData6048(
     aboutTheTradingHistory: AboutTheTradingHistory,
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
-
+  ): Session =
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
     val originalTurnoverSections6048  =
@@ -213,15 +209,13 @@ object AccountingInformationUtil {
           )
       )
     )
-  }
 
   def buildUpdatedData6076(
     aboutTheTradingHistory: AboutTheTradingHistory,
     newOccupationAndAccounting: OccupationalAndAccountingInformation,
     isFinancialYearEndDayUnchanged: Boolean
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
-
+  ): Session =
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
     val originalTurnoverSections6076  =
@@ -254,7 +248,6 @@ object AccountingInformationUtil {
           )
       )
     )
-  }
 
   private def sectionCompleted(
     isFinancialYearsListUnchanged: Boolean,

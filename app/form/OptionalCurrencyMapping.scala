@@ -51,7 +51,7 @@ object OptionalCurrencyMapping {
     otherIncludedPartsSum: BigDecimal,
     annualRent: Option[BigDecimal],
     errorTitle: String
-  ): ValidationResult = {
+  ): ValidationResult =
     val includedPartsSum = partOfRent + otherIncludedPartsSum
     val rent             = annualRent.getOrElse(BigDecimal(Long.MaxValue))
 
@@ -61,6 +61,4 @@ object OptionalCurrencyMapping {
     else if includedPartsSum > rent then
       Invalid(ValidationError("error.includedPartsSum.graterThanAnnualRent", includedPartsSum.asMoney, rent.asMoney))
     else Valid
-  }
-
 }

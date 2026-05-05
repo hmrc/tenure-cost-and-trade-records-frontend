@@ -203,7 +203,7 @@ class LoginController @Inject() (
     formOfReturn: String
   )(using
     hc: HeaderCarrier
-  ): Unit = {
+  ): Unit =
     val json = Json.obj(
       "returningUser"       -> returnUser,
       Audit.referenceNumber -> refNumber,
@@ -211,7 +211,6 @@ class LoginController @Inject() (
       Audit.address         -> address
     )
     audit.sendExplicitAudit("UserLogin", json)
-  }
 
   private def auditLockedOut(
     refNumber: String,
@@ -220,7 +219,7 @@ class LoginController @Inject() (
     lockedIP: String
   )(using
     hc: HeaderCarrier
-  ): Unit = {
+  ): Unit =
     val detailJson = Json.obj(
       Audit.referenceNumber -> refNumber,
       "postcode"            -> postcode,
@@ -228,7 +227,6 @@ class LoginController @Inject() (
       "lockedIP"            -> lockedIP
     )
     audit.sendExplicitAudit("LockedOut", detailJson)
-  }
 
   def lockedOut: Action[AnyContent] = Action { implicit request =>
     Unauthorized(lockedOutView())

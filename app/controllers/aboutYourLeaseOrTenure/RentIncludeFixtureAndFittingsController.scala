@@ -86,8 +86,7 @@ class RentIncludeFixtureAndFittingsController @Inject() (
     )
   }
 
-  private def getBackLink(answers: Session): String = {
-
+  private def getBackLink(answers: Session): String =
     val index = answers.aboutLeaseOrAgreementPartThree.map(_.servicesPaidIndex).getOrElse(0)
 
     answers.forType match {
@@ -112,5 +111,4 @@ class RentIncludeFixtureAndFittingsController @Inject() (
           case _               => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
         }
     }
-  }
 }

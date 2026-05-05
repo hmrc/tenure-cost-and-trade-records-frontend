@@ -35,9 +35,8 @@ object RemoveConnectionDetails:
   ): Session =
     val currentRemoveConnectionDetails = sessionRequest.sessionData.removeConnectionDetails
 
-    val updatedRemoveConnectionDetails = currentRemoveConnectionDetails match {
+    val updatedRemoveConnectionDetails = currentRemoveConnectionDetails match
       case Some(_) => sessionRequest.sessionData.removeConnectionDetails.map(copy)
       case _       => Some(copy(RemoveConnectionDetails()))
-    }
 
     sessionRequest.sessionData.copy(removeConnectionDetails = updatedRemoveConnectionDetails)

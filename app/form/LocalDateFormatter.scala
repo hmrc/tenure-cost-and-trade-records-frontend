@@ -46,7 +46,7 @@ class LocalDateFormatter(
   private val allDateFields   = Seq("day", "month", "year")
   private val nineteenHundred = LocalDate.of(1900, 1, 1)
 
-  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], LocalDate] = {
+  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], LocalDate] =
 
     val indexFromKey = key.split("\\[|\\]")
     val fieldIndex   = indexFromKey.lift(1).flatMap(s => Try(s.toInt).toOption).getOrElse(0)
@@ -107,7 +107,6 @@ class LocalDateFormatter(
         val focusKey         = s"$key.${missedFields.head}"
         oneError(focusKey, "error.date.mustInclude", Seq(fieldNameCapitalized, arg1, missedFields))
     }
-  }
 
   override def unbind(key: String, value: LocalDate): Map[String, String] =
     Map(

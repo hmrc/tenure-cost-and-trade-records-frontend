@@ -60,10 +60,9 @@ object AboutLeaseOrAgreementPartThree:
   ): Session =
     val currentAboutLeaseOrAgreementPartThree = sessionRequest.sessionData.aboutLeaseOrAgreementPartThree
 
-    val updatedAboutLeaseOrAgreementPartThree = currentAboutLeaseOrAgreementPartThree match {
+    val updatedAboutLeaseOrAgreementPartThree = currentAboutLeaseOrAgreementPartThree match
       case Some(_) => sessionRequest.sessionData.aboutLeaseOrAgreementPartThree.map(copy)
       case _       => Some(copy(AboutLeaseOrAgreementPartThree()))
-    }
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartThree = updatedAboutLeaseOrAgreementPartThree)
 

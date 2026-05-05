@@ -122,7 +122,7 @@ class TypeOfIncomeController @Inject() (
     updatedIndex: Option[Int]
   )(using request: SessionRequest[AnyContent],
     hc: HeaderCarrier
-  ): Future[Result] = {
+  ): Future[Result] =
     val existingFranchisesOrLetting =
       request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
     val updatedSession              = request.sessionData.copy(
@@ -136,7 +136,6 @@ class TypeOfIncomeController @Inject() (
     session.saveOrUpdate(updatedSession).map { _ =>
       Redirect(toSpecificController(source, updatedIndex))
     }
-  }
 
   private def createIncomeRecord(sourceType: TypeOfIncome): IncomeRecord =
     sourceType match
@@ -162,7 +161,7 @@ class TypeOfIncomeController @Inject() (
     index: Option[Int]
   )(using
     request: SessionRequest[AnyContent]
-  ): Call = {
+  ): Call =
     val targetIndex = index.getOrElse(0)
     typeOfLetting match {
       case TypeFranchise | TypeConcession6015   =>
@@ -173,7 +172,6 @@ class TypeOfIncomeController @Inject() (
         controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(targetIndex)
       case TypeLetting                          => controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(targetIndex)
     }
-  }
 
   private def forType(using request: SessionRequest[AnyContent]): ForType = request.sessionData.forType
 
