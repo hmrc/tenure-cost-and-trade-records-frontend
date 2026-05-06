@@ -21,7 +21,7 @@ import form.aboutYourLeaseOrTenure.RentIncludeTradeServicesDetailsTextAreaForm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeTradeServicesDetailsTextAreaViewSpec extends QuestionViewBehaviours[String] {
+class RentIncludeTradeServicesDetailsTextAreaViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "describeServicesTextArea"
 
@@ -61,4 +61,3 @@ class RentIncludeTradeServicesDetailsTextAreaViewSpec extends QuestionViewBehavi
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

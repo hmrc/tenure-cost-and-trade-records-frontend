@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.BunkeredFuelSold
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
 
-class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSold]] {
+class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSold]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
 
@@ -101,4 +101,3 @@ class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSo
       }
     }
   }
-}

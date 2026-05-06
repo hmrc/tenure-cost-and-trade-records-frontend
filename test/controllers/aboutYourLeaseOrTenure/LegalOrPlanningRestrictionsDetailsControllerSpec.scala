@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec {
+class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -87,4 +87,3 @@ class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class AccountingCosts6048ControllerSpec extends TestBaseSpec {
+class AccountingCosts6048ControllerSpec extends TestBaseSpec:
 
   private val previousPage = aboutthetradinghistory.routes.FixedCosts6048Controller.show.url
 
@@ -122,5 +122,3 @@ class AccountingCosts6048ControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

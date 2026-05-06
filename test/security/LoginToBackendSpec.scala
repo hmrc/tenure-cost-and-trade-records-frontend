@@ -25,7 +25,8 @@ import utils.UnitTest
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class LoginToBackendSpec extends UnitTest {
+class LoginToBackendSpec extends UnitTest:
+
   import TestData.*
 
   type ReferenceNumber = String
@@ -50,7 +51,7 @@ class LoginToBackendSpec extends UnitTest {
     }
   }
 
-  object TestData {
+  object TestData:
     val refNum                          = "1111111899"
     val password                        = "aljsljdf"
     val postcode                        = "CV24 5RR"
@@ -58,7 +59,5 @@ class LoginToBackendSpec extends UnitTest {
     val forType: String                 = FOR6010.toString
     val auth                            = "YouAreLoggedInNow"
     val loginResponse: FORLoginResponse = FORLoginResponse(auth, forType, testAddress, isWelsh = false)
-  }
-}
 
 case class ArgumentsDidNotMatch(es: Seq[Any], as: Seq[Any]) extends Exception(s"Expected: $es but got: $as")

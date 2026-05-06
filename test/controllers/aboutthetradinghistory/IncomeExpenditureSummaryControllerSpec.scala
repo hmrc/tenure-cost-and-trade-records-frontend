@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class IncomeExpenditureSummaryControllerSpec extends TestBaseSpec {
+class IncomeExpenditureSummaryControllerSpec extends TestBaseSpec:
 
   def incomeExpenditureSummaryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
@@ -53,4 +53,3 @@ class IncomeExpenditureSummaryControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

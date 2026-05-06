@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class TurnoverControllerSpec extends TestBaseSpec {
+class TurnoverControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -72,5 +72,3 @@ class TurnoverControllerSpec extends TestBaseSpec {
       }
     }
   }
-
-}

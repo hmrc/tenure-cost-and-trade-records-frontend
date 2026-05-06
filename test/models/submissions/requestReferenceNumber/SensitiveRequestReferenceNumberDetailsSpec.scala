@@ -52,10 +52,9 @@ class SensitiveRequestReferenceNumberDetailsSpec extends AnyFlatSpec with Matche
     )
   )
 
-  it should "encrypt and decrypt sensitive fields correctly" in {
+  it should "encrypt and decrypt sensitive fields correctly" in:
     val encryptedDetails = SensitiveRequestReferenceNumberDetails(clearDetails)
     encryptedDetails.decryptedValue shouldBe clearDetails
-  }
 
   it should "serialize to encrypted JSON" in
     pending

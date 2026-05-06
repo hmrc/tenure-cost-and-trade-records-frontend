@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PlantAndTechnologyControllerSpec extends TestBaseSpec {
+class PlantAndTechnologyControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
@@ -150,16 +150,12 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val plantAndTechnology = "plantAndTechnology"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "plantAndTechnology" -> "xxx"
     )
-  }
-
-}

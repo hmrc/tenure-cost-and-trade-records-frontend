@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationDetailsCYA6048ControllerSpec extends TestBaseSpec {
+class AccommodationDetailsCYA6048ControllerSpec extends TestBaseSpec:
 
   private val nextPage = "/send-trade-and-cost-information/task-list#accommodation-details"
 
@@ -65,5 +65,3 @@ class AccommodationDetailsCYA6048ControllerSpec extends TestBaseSpec {
     }
 
   }
-
-}

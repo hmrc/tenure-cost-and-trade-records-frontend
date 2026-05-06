@@ -23,7 +23,7 @@ import models.submissions.common.CheckYourAnswersAndConfirm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm] {
+class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm]:
 
   private val messageKeyPrefix = "checkYourAnswersAboutTheProperty"
 
@@ -133,4 +133,3 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
 
     }
   }
-}

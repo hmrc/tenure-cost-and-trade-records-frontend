@@ -25,7 +25,7 @@ import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.aboutthetradinghistory.whenDidYouFirstOccupy as WhenDidYouFirstOccupyView
 
-class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
+class OccupationalAndAccountingInformationControllerSpec extends TestBaseSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
@@ -63,4 +63,3 @@ class occupationalAndAccountingInformationControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

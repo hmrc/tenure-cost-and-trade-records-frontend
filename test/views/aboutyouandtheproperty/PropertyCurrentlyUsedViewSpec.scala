@@ -23,7 +23,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PropertyCurrentlyUsedViewSpec extends QuestionViewBehaviours[PropertyCurrentlyUsed] {
+class PropertyCurrentlyUsedViewSpec extends QuestionViewBehaviours[PropertyCurrentlyUsed]:
 
   val messageKeyPrefix = "propertyCurrentlyUsed"
 
@@ -107,5 +107,3 @@ class PropertyCurrentlyUsedViewSpec extends QuestionViewBehaviours[PropertyCurre
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

@@ -19,7 +19,7 @@ package models.submissions
 import models.submissions.common.Address
 import utils.TestBaseSpec
 
-class AddressesSpec extends TestBaseSpec {
+class AddressesSpec extends TestBaseSpec:
   // Test Address
   val address: Address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
 
@@ -33,4 +33,3 @@ class AddressesSpec extends TestBaseSpec {
       result shouldBe "001<br/> GORING ROAD<br/> GORING-BY-SEA, WORTHING<br/> WEST SUSSEX<br/> BN12 4AX"
     }
   }
-}

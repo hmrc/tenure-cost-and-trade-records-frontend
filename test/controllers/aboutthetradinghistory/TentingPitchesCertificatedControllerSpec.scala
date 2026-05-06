@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class TentingPitchesCertificatedControllerSpec extends TestBaseSpec {
+class TentingPitchesCertificatedControllerSpec extends TestBaseSpec:
 
   import utils.FormBindingTestAssertions.*
 
@@ -85,5 +85,3 @@ class TentingPitchesCertificatedControllerSpec extends TestBaseSpec {
       mustContainError("tentingPitchesCertificated", "error.tentingPitchesCertificated.missing", form)
     }
   }
-
-}

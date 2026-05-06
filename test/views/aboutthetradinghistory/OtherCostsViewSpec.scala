@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.OtherCosts
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
+class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts]:
 
   private val messageKeyPrefix = "otherCosts"
 
@@ -64,4 +64,3 @@ class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

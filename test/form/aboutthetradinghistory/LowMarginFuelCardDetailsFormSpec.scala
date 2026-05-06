@@ -20,7 +20,7 @@ import models.submissions.aboutthetradinghistory.LowMarginFuelCardDetail
 import play.api.data.FormError
 import utils.TestBaseSpec
 
-class LowMarginFuelCardDetailsFormSpec extends TestBaseSpec {
+class LowMarginFuelCardDetailsFormSpec extends TestBaseSpec:
 
   "LowMarginFuelCardDetailsForm" should {
 
@@ -92,4 +92,3 @@ class LowMarginFuelCardDetailsFormSpec extends TestBaseSpec {
       form.data should contain("handlingFee" -> "100.5")
     }
   }
-}

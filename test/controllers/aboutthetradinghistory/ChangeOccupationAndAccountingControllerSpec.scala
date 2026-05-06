@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class ChangeOccupationAndAccountingControllerSpec extends TestBaseSpec {
+class ChangeOccupationAndAccountingControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -67,5 +67,3 @@ class ChangeOccupationAndAccountingControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

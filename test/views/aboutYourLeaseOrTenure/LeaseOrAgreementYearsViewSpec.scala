@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreementYearsDetails] {
+class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreementYearsDetails]:
 
   private val messageKeyPrefix = "leaseOrAgreement"
 
@@ -133,4 +133,3 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

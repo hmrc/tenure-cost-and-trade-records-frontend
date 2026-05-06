@@ -20,7 +20,7 @@ import connectors.addressLookup.*
 import play.api.libs.json.{JsValue, Json}
 import utils.TestBaseSpec
 
-class AddressLookupConfirmedAddressSpec extends TestBaseSpec {
+class AddressLookupConfirmedAddressSpec extends TestBaseSpec:
 
   val testAddress: JsValue =
     Json.parse(input = """{
@@ -39,6 +39,6 @@ class AddressLookupConfirmedAddressSpec extends TestBaseSpec {
     "return correct string format when passed asString from Json" in {
       val address = testAddress.as[AddressLookupConfirmedAddress]
       address.auditRef shouldBe "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2"
+
     }
   }
-}

@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
+class ThroughputAffectsRentControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -80,5 +80,3 @@ class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

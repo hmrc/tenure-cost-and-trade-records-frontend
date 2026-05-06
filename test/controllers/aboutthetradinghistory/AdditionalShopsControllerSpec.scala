@@ -25,7 +25,8 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLoc
 import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
-class AdditionalShopsControllerSpec extends TestBaseSpec {
+class AdditionalShopsControllerSpec extends TestBaseSpec:
+
   private val mockAudit: Audit = mock[Audit]
 
   private val years = Seq("2023", "2022", "2021")
@@ -177,4 +178,3 @@ class AdditionalShopsControllerSpec extends TestBaseSpec {
       )
     }
   }
-}

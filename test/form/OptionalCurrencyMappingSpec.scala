@@ -20,7 +20,7 @@ import play.api.data.Form
 import play.api.data.Forms.*
 import utils.TestBaseSpec
 
-class OptionalCurrencyMappingSpec extends TestBaseSpec {
+class OptionalCurrencyMappingSpec extends TestBaseSpec:
 
   "currencyMappingOptional" should {
 
@@ -67,5 +67,3 @@ class OptionalCurrencyMappingSpec extends TestBaseSpec {
     }
 
   }
-
-}

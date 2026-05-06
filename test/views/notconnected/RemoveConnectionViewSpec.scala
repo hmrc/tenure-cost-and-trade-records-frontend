@@ -23,7 +23,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsDetails] {
+class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsDetails]:
 
   private val messageKeyPrefix = "removeConnection"
 
@@ -81,4 +81,3 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

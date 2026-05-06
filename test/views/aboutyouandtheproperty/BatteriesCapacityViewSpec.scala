@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String] {
+class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String]:
 
   val messageKeyPrefix = "batteriesCapacity"
 
@@ -75,4 +75,3 @@ class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

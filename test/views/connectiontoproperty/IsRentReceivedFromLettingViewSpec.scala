@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class IsRentReceivedFromLettingViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class IsRentReceivedFromLettingViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "isRentReceivedFromLetting"
 
@@ -90,4 +90,3 @@ class IsRentReceivedFromLettingViewSpec extends QuestionViewBehaviours[AnswersYe
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

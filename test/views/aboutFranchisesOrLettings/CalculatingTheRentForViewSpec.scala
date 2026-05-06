@@ -22,7 +22,7 @@ import models.submissions.aboutfranchisesorlettings.CalculatingTheRent
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTheRent] {
+class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTheRent]:
 
   override val form: Form[CalculatingTheRent] =
     CalculatingTheRentForm.calculatingTheRentForm(using messages)
@@ -109,4 +109,3 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

@@ -20,7 +20,7 @@ import actions.SessionRequest
 import controllers.FeedbackFormMapper
 import views.behaviours.ViewBehaviours
 
-class confirmationViewSpec extends ViewBehaviours {
+class confirmationViewSpec extends ViewBehaviours:
 
   private val messageKeyPrefix = "confirmation"
   private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
@@ -38,6 +38,6 @@ class confirmationViewSpec extends ViewBehaviours {
       assert(doc.toString.contains(messages("confirmation.whatNext")))
       assert(doc.toString.contains(messages("confirmation.list.1")))
       assert(doc.toString.contains(messages("confirmation.list.2")))
+
     }
   }
-}

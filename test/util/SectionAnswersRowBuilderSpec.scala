@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class SectionAnswersRowBuilderSpec extends TestBaseSpec {
+class SectionAnswersRowBuilderSpec extends TestBaseSpec:
 
   private def sectionAnswers =
     SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)(using messages)
@@ -99,5 +99,3 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec {
     }
 
   }
-
-}

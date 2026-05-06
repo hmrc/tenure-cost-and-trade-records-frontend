@@ -24,7 +24,7 @@ import test.TestObjects
 /**
   * @author Yuriy Tumakha
   */
-class AboutTheTradingHistorySpec extends AnyFlatSpec with Matchers with TestObjects {
+class AboutTheTradingHistorySpec extends AnyFlatSpec with Matchers with TestObjects:
 
   "AboutTheTradingHistory" should "handle turnover models" in {
     val tradingHistory = prefilledAboutYourTradingHistory
@@ -38,5 +38,3 @@ class AboutTheTradingHistorySpec extends AnyFlatSpec with Matchers with TestObje
     val json = Json.toJson(prefilledAboutYourTradingHistory)
     json.as[AboutTheTradingHistory] shouldBe prefilledAboutYourTradingHistory
   }
-
-}

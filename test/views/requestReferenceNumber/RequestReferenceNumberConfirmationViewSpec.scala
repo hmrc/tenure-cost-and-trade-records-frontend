@@ -24,7 +24,7 @@ import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.ViewBehaviours
 
-class RequestReferenceNumberConfirmationViewSpec extends ViewBehaviours {
+class RequestReferenceNumberConfirmationViewSpec extends ViewBehaviours:
 
   val messageKeyPrefix                                       = "label.connectionToProperty.confirm"
   val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
@@ -45,6 +45,6 @@ class RequestReferenceNumberConfirmationViewSpec extends ViewBehaviours {
       assert(doc.toString.contains(messages("list.connectionToProperty.p1")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p2")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p3")))
+
     }
   }
-}

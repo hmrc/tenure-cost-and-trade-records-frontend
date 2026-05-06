@@ -20,7 +20,7 @@ import models.submissions.aboutthetradinghistory.BunkerFuelCardDetails
 import play.api.data.FormError
 import utils.TestBaseSpec
 
-class BunkerFuelCardDetailsFormSpec extends TestBaseSpec {
+class BunkerFuelCardDetailsFormSpec extends TestBaseSpec:
   "BunkerFuelCardDetailsForm" should {
 
     "bind valid data correctly" in {
@@ -91,4 +91,3 @@ class BunkerFuelCardDetailsFormSpec extends TestBaseSpec {
       form.data should contain("handlingFee" -> "100.5")
     }
   }
-}

@@ -20,7 +20,7 @@ import models.submissions.accommodation.AvailableRooms
 import play.api.data.FormError
 import utils.TestBaseSpec
 
-class AvailableRooms6048FormSpec extends TestBaseSpec {
+class AvailableRooms6048FormSpec extends TestBaseSpec:
   "AvailableRooms6048Form" should {
 
     "fail to bind when single and double bedrooms are zero" in {
@@ -36,6 +36,6 @@ class AvailableRooms6048FormSpec extends TestBaseSpec {
 
       form.errors  should contain(FormError("", "error.accommodation.singleBedrooms.zero"))
       form.value shouldBe None
+
     }
   }
-}

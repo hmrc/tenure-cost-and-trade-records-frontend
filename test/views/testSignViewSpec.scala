@@ -18,7 +18,7 @@ package views
 
 import views.behaviours.ViewBehaviours
 
-class testSignViewSpec extends ViewBehaviours {
+class testSignViewSpec extends ViewBehaviours:
 
   private def createView = () => testSignView()(using fakeRequest, messages)
 
@@ -27,6 +27,6 @@ class testSignViewSpec extends ViewBehaviours {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("test.heading")))
       assert(doc.toString.contains(messages("test.text")))
+
     }
   }
-}

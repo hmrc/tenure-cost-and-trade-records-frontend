@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.PayACapitalSumInformationDetail
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PayACapitalSumDetailsViewSpec extends QuestionViewBehaviours[PayACapitalSumInformationDetails] {
+class PayACapitalSumDetailsViewSpec extends QuestionViewBehaviours[PayACapitalSumInformationDetails]:
 
   private val messageKeyPrefix = "capitalSumPaidDetails"
 
@@ -84,4 +84,3 @@ class PayACapitalSumDetailsViewSpec extends QuestionViewBehaviours[PayACapitalSu
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

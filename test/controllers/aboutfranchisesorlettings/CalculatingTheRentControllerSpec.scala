@@ -26,7 +26,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class CalculatingTheRentControllerSpec extends TestBaseSpec {
+class CalculatingTheRentControllerSpec extends TestBaseSpec:
 
   val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
     mock[AboutFranchisesOrLettingsNavigator]
@@ -79,4 +79,3 @@ class CalculatingTheRentControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

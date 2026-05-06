@@ -22,7 +22,7 @@ import models.submissions.aboutfranchisesorlettings.TelecomMastLetting
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetting] {
+class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetting]:
 
   private def TelecomMastLettingView = inject[views.html.aboutfranchisesorlettings.telecomMastLetting]
 
@@ -66,4 +66,3 @@ class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetti
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

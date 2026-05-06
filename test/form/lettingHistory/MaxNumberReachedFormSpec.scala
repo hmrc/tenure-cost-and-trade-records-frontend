@@ -20,14 +20,13 @@ import form.lettingHistory.MaxNumberReachedForm.theForm
 
 class MaxNumberReachedFormSpec extends FormSpec:
 
-  it should "bind data as expected" in {
+  it should "bind data as expected" in:
     val data  = Map(
       "understood" -> "true"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
-  }
 
   it should "unbind data as expected" in {
     val filled = theForm.fill(true)

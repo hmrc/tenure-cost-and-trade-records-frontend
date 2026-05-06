@@ -20,7 +20,7 @@ import controllers.{LoginController, LoginDetails}
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
+class LoginViewSpec extends QuestionViewBehaviours[LoginDetails]:
 
   private def login = inject[views.html.login]
 
@@ -42,6 +42,6 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
       assert(loginButton == messages("button.continue.label"))
+
     }
   }
-}

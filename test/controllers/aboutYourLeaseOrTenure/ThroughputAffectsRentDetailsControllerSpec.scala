@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class ThroughputAffectsRentDetailsControllerSpec extends TestBaseSpec {
+class ThroughputAffectsRentDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -87,5 +87,3 @@ class ThroughputAffectsRentDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

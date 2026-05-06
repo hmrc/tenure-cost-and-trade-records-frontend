@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec extends QuestionViewBehaviours[String] {
+class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "rentPayableVaryAccordingToGrossOrNetDetails"
 
@@ -66,4 +66,3 @@ class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec extends QuestionViewBe
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

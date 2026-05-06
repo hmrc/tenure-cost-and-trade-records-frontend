@@ -29,7 +29,7 @@ import utils.TestBaseSpec
 import scala.concurrent.Future
 import scala.language.reflectiveCalls
 
-class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec {
+class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
 
   trait ControllerWithInjectedSubmissionConnectorFixture(
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
@@ -134,5 +134,3 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
       }
     }
   }
-
-}

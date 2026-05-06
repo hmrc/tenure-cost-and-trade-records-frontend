@@ -23,7 +23,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate] {
+class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate]:
 
   private val messageKeyPrefix = "currentRentFirstPaid"
 
@@ -78,4 +78,3 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

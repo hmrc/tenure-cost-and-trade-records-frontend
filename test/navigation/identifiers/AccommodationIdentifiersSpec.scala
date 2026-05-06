@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class AccommodationIdentifiersSpec extends TestBaseSpec {
+class AccommodationIdentifiersSpec extends TestBaseSpec:
 
   "Letting history identifiers" when {
 
@@ -45,5 +45,5 @@ class AccommodationIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for accommodation details CYA page" in
       assert(AccommodationDetailsCYAPageId.toString.equals("accommodationDetailsCYAPage"))
+
   }
-}

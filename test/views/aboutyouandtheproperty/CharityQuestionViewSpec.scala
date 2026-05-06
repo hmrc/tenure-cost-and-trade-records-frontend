@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "charityQuestion"
 
@@ -91,4 +91,3 @@ class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

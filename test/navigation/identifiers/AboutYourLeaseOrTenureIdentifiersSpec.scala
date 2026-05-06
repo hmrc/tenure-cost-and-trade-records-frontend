@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
+class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec:
 
   "About your lease or tenure identifiers" when {
 
@@ -231,5 +231,5 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for surrendered lease agreement details" in
       assert(SurrenderedLeaseAgreementDetailsId.toString.equals("surrenderedLeaseAgreementDetailsPage"))
+
   }
-}

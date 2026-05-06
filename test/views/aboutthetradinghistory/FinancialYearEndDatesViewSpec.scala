@@ -25,7 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate]] {
+class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate]]:
 
   val messageKeyPrefix = "financialYearEndDates"
 
@@ -81,5 +81,3 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

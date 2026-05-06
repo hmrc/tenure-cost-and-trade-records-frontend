@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "premisesLicenseConditions"
 
@@ -93,4 +93,3 @@ class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYe
     }
 
   }
-}

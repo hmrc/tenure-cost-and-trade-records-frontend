@@ -22,7 +22,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PaymentForTradeServicesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PaymentForTradeServicesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "paymentForTradeServices"
 
@@ -84,4 +84,3 @@ class PaymentForTradeServicesViewSpec extends QuestionViewBehaviours[AnswersYesN
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

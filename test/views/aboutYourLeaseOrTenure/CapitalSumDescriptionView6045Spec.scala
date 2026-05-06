@@ -21,7 +21,7 @@ import form.aboutYourLeaseOrTenure.CapitalSumDescriptionForm.capitalSumDescripti
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CapitalSumDescriptionView6045Spec extends QuestionViewBehaviours[String] {
+class CapitalSumDescriptionView6045Spec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "capitalSumDescription6045"
 
@@ -64,4 +64,3 @@ class CapitalSumDescriptionView6045Spec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

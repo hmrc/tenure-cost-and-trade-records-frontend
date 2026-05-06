@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
-class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
+class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec:
 
   val audit: Audit = mock[Audit]
 
@@ -149,4 +149,3 @@ class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec {
       }
     }
   }
-}

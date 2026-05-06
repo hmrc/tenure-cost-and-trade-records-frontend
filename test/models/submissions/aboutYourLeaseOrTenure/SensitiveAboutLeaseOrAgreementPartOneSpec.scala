@@ -23,7 +23,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.Configuration
 import utils.SensitiveTestHelper
 
-class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
+class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
 
   val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
@@ -56,7 +56,6 @@ class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Mat
       sensitiveAboutLeaseOrAgreementPartOne.connectedToLandlordDetails.isInstanceOf[Option[String]] shouldBe true
 
       sensitiveAboutLeaseOrAgreementPartOne.decryptedValue shouldBe originalAboutLeaseOrAgreementPartOne
-    }
 
+    }
   }
-}

@@ -25,7 +25,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class FranchiseOrLettingsTiedToPropertyView6016Spec extends QuestionViewBehaviours[AnswersYesNo] {
+class FranchiseOrLettingsTiedToPropertyView6016Spec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "franchiseLettings"
 
@@ -100,4 +100,3 @@ class FranchiseOrLettingsTiedToPropertyView6016Spec extends QuestionViewBehaviou
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

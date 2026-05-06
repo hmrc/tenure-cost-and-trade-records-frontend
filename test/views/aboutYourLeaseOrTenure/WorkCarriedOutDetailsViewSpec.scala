@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class WorkCarriedOutDetailsViewSpec extends QuestionViewBehaviours[String] {
+class WorkCarriedOutDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "workCarriedOutDetails"
 
@@ -61,4 +61,3 @@ class WorkCarriedOutDetailsViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

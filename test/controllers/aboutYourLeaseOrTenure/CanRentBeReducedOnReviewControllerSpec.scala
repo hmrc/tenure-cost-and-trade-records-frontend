@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
+class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -116,12 +116,10 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val canRentBeReducedOnReview: String = "canRentBeReducedOnReview"
-    }
+
     val baseFormData: Map[String, String] = Map("canRentBeReducedOnReview" -> "yes")
-  }
-}

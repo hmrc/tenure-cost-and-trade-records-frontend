@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "workCarriedOutCondition"
 
@@ -83,4 +83,3 @@ class WorkCarriedOutConditionViewSpec extends QuestionViewBehaviours[AnswersYesN
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

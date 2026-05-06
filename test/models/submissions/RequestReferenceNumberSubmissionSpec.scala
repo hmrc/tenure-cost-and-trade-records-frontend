@@ -29,7 +29,7 @@ import java.time.Instant
   */
 class RequestReferenceNumberSubmissionSpec extends AnyFlatSpec with should.Matchers with TestObjects:
 
-  "RequestReferenceNumberSubmission model" should "be serialized/deserialized from json" in {
+  "RequestReferenceNumberSubmission model" should "be serialized/deserialized from json" in:
 
     val requestReferenceNumberSubmissionModel = RequestReferenceNumberSubmission(
       "12345",
@@ -57,4 +57,3 @@ class RequestReferenceNumberSubmissionSpec extends AnyFlatSpec with should.Match
     val json = Json.toJson(requestReferenceNumberSubmissionModel)
     json.as[RequestReferenceNumberSubmission] shouldBe requestReferenceNumberSubmissionModel
     Json.stringify(json)                      shouldBe jsonString
-  }

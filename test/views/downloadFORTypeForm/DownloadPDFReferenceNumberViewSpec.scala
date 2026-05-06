@@ -22,7 +22,7 @@ import models.submissions.ReferenceNumber
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[ReferenceNumber] {
+class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[ReferenceNumber]:
 
   private val messageKeyPrefix = "referenceNumber"
 
@@ -79,4 +79,3 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

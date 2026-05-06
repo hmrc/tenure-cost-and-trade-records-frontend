@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
+class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec:
 
   def checkYourAnswersAboutThePropertyController6010Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
@@ -335,4 +335,3 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec {
       }
     }
   }
-}

@@ -23,7 +23,7 @@ import org.scalatest.matchers.should
 import org.scalatest.prop.TableDrivenPropertyChecks
 import play.api.data.{Form, FormError}
 
-class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherValues with TableDrivenPropertyChecks {
+class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherValues with TableDrivenPropertyChecks:
 
   private val positiveTestData = Table(
     ("raw postcode", "formated postcode"),
@@ -64,4 +64,3 @@ class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherVa
       val result = Form("postcode" -> PostcodeMapping.postcode()).bind(Map("postcode" -> rawPostcode))
       result.errors should contain oneElementOf List(FormError("postcode", errorMessage))
     }
-}

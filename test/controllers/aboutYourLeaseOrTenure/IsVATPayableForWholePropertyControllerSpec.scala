@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
+class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -82,5 +82,3 @@ class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

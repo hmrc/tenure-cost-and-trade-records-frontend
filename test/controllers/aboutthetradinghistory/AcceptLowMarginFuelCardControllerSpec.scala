@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class AcceptLowMarginFuelCardControllerSpec extends TestBaseSpec {
+class AcceptLowMarginFuelCardControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -68,5 +68,3 @@ class AcceptLowMarginFuelCardControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

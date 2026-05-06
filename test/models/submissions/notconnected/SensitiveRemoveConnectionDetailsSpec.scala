@@ -41,10 +41,9 @@ class SensitiveRemoveConnectionDetailsSpec extends AnyFlatSpec with Matchers wit
     pastConnectionType = Some(AnswerYes)
   )
 
-  it should "encrypt and decrypt sensitive fields correctly" in {
+  it should "encrypt and decrypt sensitive fields correctly" in:
     val encryptedDetails = SensitiveRemoveConnectionDetails(clearEnvelope)
     encryptedDetails.decryptedValue shouldBe clearEnvelope
-  }
 
   it should "serialize to encrypted JSON" in {
     val encryptedValue = SensitiveRemoveConnectionDetails(clearEnvelope)

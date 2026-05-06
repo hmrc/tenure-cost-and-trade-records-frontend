@@ -33,7 +33,7 @@ import utils.TestBaseSpec
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
-class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
+class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
@@ -540,4 +540,3 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec {
     }
 
   }
-}

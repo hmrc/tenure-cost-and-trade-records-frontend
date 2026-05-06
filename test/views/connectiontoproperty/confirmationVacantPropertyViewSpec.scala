@@ -22,7 +22,7 @@ import form.Feedback
 import play.api.data.Form
 import views.behaviours.ViewBehaviours
 
-class confirmationVacantPropertyViewSpec extends ViewBehaviours {
+class confirmationVacantPropertyViewSpec extends ViewBehaviours:
 
   private val messageKeyPrefix = "label.connectionToProperty.confirm"
   private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
@@ -43,6 +43,6 @@ class confirmationVacantPropertyViewSpec extends ViewBehaviours {
       assert(doc.toString.contains(messages("list.connectionToProperty.p1")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p2")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p3")))
+
     }
   }
-}

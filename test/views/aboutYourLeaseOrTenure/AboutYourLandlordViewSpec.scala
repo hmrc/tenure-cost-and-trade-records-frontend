@@ -22,7 +22,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String] {
+class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String]:
 
   private def aboutYourLandordView = inject[views.html.aboutYourLeaseOrTenure.aboutYourLandlord]
 
@@ -68,4 +68,3 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

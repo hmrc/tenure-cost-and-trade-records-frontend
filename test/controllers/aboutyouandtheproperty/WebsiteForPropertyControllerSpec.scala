@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class WebsiteForPropertyControllerSpec extends TestBaseSpec {
+class WebsiteForPropertyControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import form.aboutyouandtheproperty.WebsiteForPropertyForm.*
@@ -127,13 +127,10 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val buildingOperatingHaveAWebsite: String = "buildingOperatingHaveAWebsite"
-    }
 
     val baseFormData: Map[String, String] = Map("buildingOperatingHaveAWebsite" -> "yes")
-  }
-}

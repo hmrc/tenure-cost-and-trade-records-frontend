@@ -24,7 +24,7 @@ import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersTentingPitchesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CheckYourAnswersTentingPitchesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "cYa.touringAndTentingPitches"
 
@@ -64,4 +64,3 @@ class CheckYourAnswersTentingPitchesViewSpec extends QuestionViewBehaviours[Answ
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -20,7 +20,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.FormError
 import utils.TestBaseSpec
 
-class BunkeredFuelQuestionFormSpec extends TestBaseSpec {
+class BunkeredFuelQuestionFormSpec extends TestBaseSpec:
 
   "BunkeredFuelQuestionForm" should {
 
@@ -62,4 +62,3 @@ class BunkeredFuelQuestionFormSpec extends TestBaseSpec {
       form.data should contain("bunkeredFuelQuestion" -> "no")
     }
   }
-}

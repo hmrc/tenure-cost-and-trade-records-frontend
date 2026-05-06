@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class TentingPitchesTotalControllerSpec extends TestBaseSpec {
+class TentingPitchesTotalControllerSpec extends TestBaseSpec:
 
   import utils.FormBindingTestAssertions.*
 
@@ -88,5 +88,3 @@ class TentingPitchesTotalControllerSpec extends TestBaseSpec {
       mustContainError("tentingPitchesTotal", "error.tentingPitchesTotal.missing", form)
     }
   }
-
-}

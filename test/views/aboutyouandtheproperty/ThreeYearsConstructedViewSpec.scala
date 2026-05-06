@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class ThreeYearsConstructedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class ThreeYearsConstructedViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "threeYearsConstructed"
 
@@ -109,4 +109,3 @@ class ThreeYearsConstructedViewSpec extends QuestionViewBehaviours[AnswersYesNo]
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

@@ -29,7 +29,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
+class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
   import TestData.*
 
   val mockAudit: Audit = mock[Audit]
@@ -129,11 +129,9 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val propertyUseLeasebackArrangementErrorKey = "propertyUseLeasebackArrangement"
 
     val baseFormData: Map[String, String] = Map(
       "propertyUseLeasebackArrangement" -> "yes"
     )
-  }
-}

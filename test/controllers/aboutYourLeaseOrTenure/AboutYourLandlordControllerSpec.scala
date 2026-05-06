@@ -155,14 +155,12 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val landlordFullName = "landlordFullName"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "landlordFullName" -> "Orinoco"
     )
-  }

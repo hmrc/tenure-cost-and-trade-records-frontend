@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
+class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec:
 
   val audit: Audit = mock[Audit]
 
@@ -46,38 +46,37 @@ class AboutYouAndThePropertyNavigator6045Spec extends TestBaseSpec {
           .nextPage(ContactDetailsQuestionId, answers)
           .apply(answers) shouldBe
           controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
+
       }
 
-    }
+      "handling yes answers" should {
 
-    "handling yes answers" should {
-
-      "navigate to WebsiteForPropertyController after completing PropertyCurrentlyUsed" in {
-        val answers = baseFilled6045Session.copy(
-          aboutYouAndThePropertyPartTwo = Some(
-            AboutYouAndThePropertyPartTwo(propertyCurrentlyUsed =
-              Some(PropertyCurrentlyUsed(List("test"), Some("test")))
+        "navigate to WebsiteForPropertyController after completing PropertyCurrentlyUsed" in {
+          val answers = baseFilled6045Session.copy(
+            aboutYouAndThePropertyPartTwo = Some(
+              AboutYouAndThePropertyPartTwo(propertyCurrentlyUsed =
+                Some(PropertyCurrentlyUsed(List("test"), Some("test")))
+              )
             )
           )
-        )
-        navigator
-          .nextPage(PropertyCurrentlyUsedPageId, answers)
-          .apply(answers) shouldBe
-          controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
-      }
+          navigator
+            .nextPage(PropertyCurrentlyUsedPageId, answers)
+            .apply(answers) shouldBe
+            controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
+        }
 
-      "navigate to CheckYourAnswersAboutThePropertyController after completing WebsiteForProperty" in {
-        val answers = baseFilled6045Session.copy(
-          aboutYouAndTheProperty = Some(
-            AboutYouAndTheProperty(websiteForPropertyDetails = Some(WebsiteForPropertyDetails(AnswerNo, Some("test"))))
+        "navigate to CheckYourAnswersAboutThePropertyController after completing WebsiteForProperty" in {
+          val answers = baseFilled6045Session.copy(
+            aboutYouAndTheProperty = Some(
+              AboutYouAndTheProperty(websiteForPropertyDetails = Some(WebsiteForPropertyDetails(AnswerNo, Some("test"))))
+            )
           )
-        )
-        navigator
-          .nextPage(WebsiteForPropertyPageId, answers)
-          .apply(answers) shouldBe
-          controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+          navigator
+            .nextPage(WebsiteForPropertyPageId, answers)
+            .apply(answers) shouldBe
+            controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+        }
       }
     }
-  }
 
-}
+  }

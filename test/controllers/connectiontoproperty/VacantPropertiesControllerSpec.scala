@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class VacantPropertiesControllerSpec extends TestBaseSpec {
+class VacantPropertiesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -114,6 +114,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
     }
 
   }
+
   "VacantPropertiesController SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
@@ -132,4 +133,3 @@ class VacantPropertiesControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

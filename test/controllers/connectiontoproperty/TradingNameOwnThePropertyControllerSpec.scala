@@ -27,7 +27,8 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
+class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec:
+
   import TestData.*
 
   val mockAudit: Audit = mock[Audit]
@@ -120,15 +121,12 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val tradingNameOwnTheProperty = "tradingNameOwnTheProperty"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "tradingNameOwnTheProperty" -> "yes"
     )
-  }
-}

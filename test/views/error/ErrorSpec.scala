@@ -19,7 +19,7 @@ package views.error
 import actions.SessionRequest
 import views.behaviours.ViewBehaviours
 
-class ErrorSpec extends ViewBehaviours {
+class ErrorSpec extends ViewBehaviours:
 
   private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
   private def createView     = () => errorView(409)(using sessionRequest, messages)
@@ -29,6 +29,6 @@ class ErrorSpec extends ViewBehaviours {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("error.409.heading")))
       assert(doc.toString.contains(messages("error.409.body")))
+
     }
   }
-}

@@ -23,7 +23,7 @@ import util.AlphanumericPasswordGenerator.passwordLength
 /**
   * @author Yuriy Tumakha
   */
-class AlphanumericPasswordGeneratorSpec extends AnyFlatSpec with should.Matchers {
+class AlphanumericPasswordGeneratorSpec extends AnyFlatSpec with should.Matchers:
 
   "AlphanumericPasswordGenerator" should s"generate passwords with length $passwordLength" in {
     AlphanumericPasswordGenerator.generatePassword should have length passwordLength
@@ -40,5 +40,3 @@ class AlphanumericPasswordGeneratorSpec extends AnyFlatSpec with should.Matchers
   it should "have at least 4 different chars in password" in {
     AlphanumericPasswordGenerator.generatePassword.toSet.size should be >= 4
   }
-
-}

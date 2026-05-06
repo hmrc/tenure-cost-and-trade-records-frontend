@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
+class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -136,13 +136,10 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val ultimatelyResponsibleOR: String = "outsideRepairs"
-    }
 
     val baseFormData: Map[String, String] = Map("outsideRepairs" -> "tenant")
-  }
-}

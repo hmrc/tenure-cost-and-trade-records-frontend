@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotConnectedContactDetails] {
+class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotConnectedContactDetails]:
 
   val messageKeyPrefix = "checkYourAnswersNotConnected"
 
@@ -99,4 +99,3 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
       assert(loginButton == messages("button.send.label"))
     }
   }
-}

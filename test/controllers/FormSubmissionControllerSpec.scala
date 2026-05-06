@@ -34,7 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   * @author Yuriy Tumakha
   */
-class FormSubmissionControllerSpec extends TestBaseSpec {
+class FormSubmissionControllerSpec extends TestBaseSpec:
 
   private val sessionRepo         = StubSessionRepo()
   private val submissionConnector = mock[SubmissionConnector]
@@ -91,5 +91,3 @@ class FormSubmissionControllerSpec extends TestBaseSpec {
       verify(errorHandler, times(1)).internalServerErrorTemplate(using any[Request[?]])
     }
   }
-
-}

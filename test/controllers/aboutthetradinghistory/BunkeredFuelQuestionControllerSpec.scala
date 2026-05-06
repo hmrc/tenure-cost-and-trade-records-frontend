@@ -22,7 +22,7 @@ import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, s
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
-class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {
+class BunkeredFuelQuestionControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -77,5 +77,3 @@ class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

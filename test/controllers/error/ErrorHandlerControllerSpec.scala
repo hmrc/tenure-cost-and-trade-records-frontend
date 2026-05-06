@@ -20,7 +20,7 @@ import play.api.http.Status
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class ErrorHandlerControllerSpec extends TestBaseSpec {
+class ErrorHandlerControllerSpec extends TestBaseSpec:
 
   val errorHandlerController: ErrorHandlerController =
     ErrorHandlerController(preFilledSession, jsonErrorView = jsonErrorView, cc = stubMessagesControllerComponents())
@@ -38,4 +38,3 @@ class ErrorHandlerControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some(UTF8)
     }
   }
-}

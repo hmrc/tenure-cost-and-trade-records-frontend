@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
+class CarParkingAnnualRentControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -92,4 +92,3 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

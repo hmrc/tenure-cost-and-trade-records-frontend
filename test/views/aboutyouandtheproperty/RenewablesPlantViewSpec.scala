@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlantType] {
+class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlantType]:
 
   private val messageKeyPrefix = "renewablesPlant"
 
@@ -93,4 +93,3 @@ class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlantType
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviours[Option[BigDecimal]] {
+class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviours[Option[BigDecimal]]:
 
   private val messageKeyPrefix = "rentIncludeFixturesAndFittingsDetails"
 
@@ -63,4 +63,3 @@ class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviour
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -23,7 +23,7 @@ import play.api.Configuration
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
 
-class SensitiveContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
+class SensitiveContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
 
   val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
@@ -42,7 +42,6 @@ class SensitiveContactDetailsSpec extends AnyWordSpecLike with Matchers with Sen
       sensitiveContactDetails.email.isInstanceOf[SensitiveString] shouldBe true
 
       sensitiveContactDetails.decryptedValue shouldBe originalContactDetails
-    }
 
+    }
   }
-}

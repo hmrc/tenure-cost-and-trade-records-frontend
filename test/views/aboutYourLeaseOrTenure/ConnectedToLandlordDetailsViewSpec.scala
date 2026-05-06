@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
-class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[String] {
+class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "connectedToLandlordDetails"
 
@@ -63,5 +63,3 @@ class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[String] 
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

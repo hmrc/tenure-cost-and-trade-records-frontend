@@ -24,7 +24,7 @@ import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration, Boolean)] {
+class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration, Boolean)]:
 
   val messageKeyPrefix = "financialYearEnd"
 
@@ -79,4 +79,3 @@ class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -25,7 +25,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome] {
+class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome]:
 
   private val messageKeyPrefix = "typeOfIncome"
 
@@ -95,4 +95,3 @@ class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

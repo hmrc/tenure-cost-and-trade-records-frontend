@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class AreYouVATRegisteredControllerSpec extends TestBaseSpec {
+class AreYouVATRegisteredControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -54,5 +54,3 @@ class AreYouVATRegisteredControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

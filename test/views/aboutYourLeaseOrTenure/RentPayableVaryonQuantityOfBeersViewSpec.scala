@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentPayableVaryOnQuantityOfBeers"
 
@@ -84,4 +84,3 @@ class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[An
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

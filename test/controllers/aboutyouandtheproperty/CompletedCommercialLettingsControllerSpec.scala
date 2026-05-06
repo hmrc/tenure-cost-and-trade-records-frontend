@@ -28,7 +28,7 @@ import play.api.test.Helpers.{POST, charset, contentAsString, contentType, statu
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class CompletedCommercialLettingsControllerSpec extends TestBaseSpec {
+class CompletedCommercialLettingsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -132,16 +132,12 @@ class CompletedCommercialLettingsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val numberOfDays = "completedCommercialLettings"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "completedCommercialLettings" -> "9"
     )
-
-  }
-}

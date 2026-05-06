@@ -20,7 +20,7 @@ import models.submissions.aboutyouandtheproperty.PropertyCurrentlyUsed
 import org.scalatestplus.play.*
 import play.api.data.FormError
 
-class PropertyCurrentlyUsedFormSpec extends PlaySpec {
+class PropertyCurrentlyUsedFormSpec extends PlaySpec:
 
   "PropertyCurrentlyUsedForm" must {
 
@@ -72,4 +72,3 @@ class PropertyCurrentlyUsedFormSpec extends PlaySpec {
       form.get mustEqual PropertyCurrentlyUsed(List("residential"), None)
     }
   }
-}

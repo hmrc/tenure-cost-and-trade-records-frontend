@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class GeneratorCapacityViewSpec extends QuestionViewBehaviours[String] {
+class GeneratorCapacityViewSpec extends QuestionViewBehaviours[String]:
 
   val messageKeyPrefix = "generatorCapacity"
 
@@ -68,4 +68,3 @@ class GeneratorCapacityViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

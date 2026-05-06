@@ -23,7 +23,7 @@ import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCurrentRentBasedOnDetails] {
+class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCurrentRentBasedOnDetails]:
 
   private val messageKeyPrefix = "currentRentBasedOn"
 
@@ -133,4 +133,3 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

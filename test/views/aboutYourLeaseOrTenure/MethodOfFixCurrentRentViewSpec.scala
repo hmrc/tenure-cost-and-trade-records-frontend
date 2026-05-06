@@ -23,7 +23,7 @@ import models.submissions.aboutYourLeaseOrTenure.MethodToFixCurrentRent.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixCurrentRent] {
+class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixCurrentRent]:
 
   private val messageKeyPrefix = "methodUsedToFixCurrentRent"
 
@@ -106,4 +106,3 @@ class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixC
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

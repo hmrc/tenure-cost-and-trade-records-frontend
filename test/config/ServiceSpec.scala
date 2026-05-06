@@ -20,7 +20,7 @@ import test.TCTRAppSpec
 
 class ServiceSpec extends TCTRAppSpec:
 
-  "Service" should {
+  "Service" should:
     "be loaded correctly from configuration" in {
       val internalAuth: Service = configuration.get[Service]("microservice.services.internal-auth")
 
@@ -30,5 +30,5 @@ class ServiceSpec extends TCTRAppSpec:
       internalAuth.baseUrl                  shouldBe "http://localhost:8470"
       internalAuth.toString                 shouldBe "http://localhost:8470"
       Service.convertToString(internalAuth) shouldBe "http://localhost:8470"
+
     }
-  }

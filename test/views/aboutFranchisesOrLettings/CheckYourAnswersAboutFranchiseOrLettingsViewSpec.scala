@@ -22,7 +22,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutFranchiseOrLettingsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CheckYourAnswersAboutFranchiseOrLettingsViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private def cyaFranchiseOrLettingsView =
     inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
@@ -63,4 +63,3 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec extends QuestionViewBehav
   "Check Your Answers About The Property view for 6045" must {
     behave like normalPage(createView6045, messageKeyPrefix)
   }
-}

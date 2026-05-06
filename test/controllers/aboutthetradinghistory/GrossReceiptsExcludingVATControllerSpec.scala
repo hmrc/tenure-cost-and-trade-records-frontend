@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class GrossReceiptsExcludingVATControllerSpec extends TestBaseSpec {
+class GrossReceiptsExcludingVATControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -79,5 +79,3 @@ class GrossReceiptsExcludingVATControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

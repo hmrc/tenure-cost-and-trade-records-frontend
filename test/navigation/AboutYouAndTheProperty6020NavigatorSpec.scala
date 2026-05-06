@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import utils.TestBaseSpec
 
-class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
+class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec:
 
   val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
 
@@ -69,4 +69,3 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
   }
-}

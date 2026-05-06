@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentPayableVaryAccordingToGrossOrNet"
 
@@ -86,4 +86,3 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviour
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

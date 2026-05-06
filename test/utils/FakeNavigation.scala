@@ -20,7 +20,9 @@ import navigation.*
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.{FakeRequest, Injecting}
 
-trait FakeNavigation { this: Injecting =>
+trait FakeNavigation:
+
+  this: Injecting =>
 
   implicit def implicitRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
@@ -30,10 +32,7 @@ trait FakeNavigation { this: Injecting =>
   val aboutYouAndThePropertyNavigator: AboutYouAndThePropertyNavigator  = inject[AboutYouAndThePropertyNavigator]
   val aboutYourTradingHistoryNavigator: AboutTheTradingHistoryNavigator = inject[AboutTheTradingHistoryNavigator]
 
-  val aboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
-    inject[AboutFranchisesOrLettingsNavigator]
+  val aboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator = inject[AboutFranchisesOrLettingsNavigator]
   val aboutYourLeaseOrTenureNavigator: AboutYourLeaseOrTenureNavigator       = inject[AboutYourLeaseOrTenureNavigator]
   val additionalInformationNavigator: AdditionalInformationNavigator         = inject[AdditionalInformationNavigator]
   val accommodationNavigator: AccommodationNavigator                         = inject[AccommodationNavigator]
-
-}

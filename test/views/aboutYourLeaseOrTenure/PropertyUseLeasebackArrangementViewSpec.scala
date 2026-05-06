@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val backLink = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
 
@@ -81,4 +81,3 @@ class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[Ans
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

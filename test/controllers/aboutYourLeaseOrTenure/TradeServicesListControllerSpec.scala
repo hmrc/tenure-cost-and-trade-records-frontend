@@ -29,7 +29,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class TradeServicesListControllerSpec extends TestBaseSpec {
+class TradeServicesListControllerSpec extends TestBaseSpec:
 
   import TestData.*
 
@@ -145,15 +145,12 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
 
       val addTradeService: String =
         "tradeServicesList"
-    }
 
     val baseFormData: Map[String, String] = Map("tradeServicesList" -> "yes")
-  }
-}

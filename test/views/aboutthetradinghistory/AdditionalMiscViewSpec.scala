@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMisc
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc], AdditionalMiscDetails)] {
+class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc], AdditionalMiscDetails)]:
 
   private val years = Seq("2023", "2022", "2021")
 
@@ -121,4 +121,3 @@ class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc]
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

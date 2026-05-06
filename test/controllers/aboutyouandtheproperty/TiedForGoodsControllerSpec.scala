@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class TiedForGoodsControllerSpec extends TestBaseSpec {
+class TiedForGoodsControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import form.aboutyouandtheproperty.TiedForGoodsForm.*
@@ -123,13 +123,10 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val tiedForGoods: String = "tiedForGoods"
-    }
 
     val baseFormData: Map[String, String] = Map("tiedForGoods" -> "yes")
-  }
-}

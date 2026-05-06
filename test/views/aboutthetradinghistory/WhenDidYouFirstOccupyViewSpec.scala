@@ -23,7 +23,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDuration] {
+class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDuration]:
 
   private val messageKeyPrefix = "firstOccupy"
 
@@ -81,4 +81,3 @@ class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDur
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

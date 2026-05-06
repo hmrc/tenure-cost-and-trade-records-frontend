@@ -21,7 +21,7 @@ import org.scalatest.BeforeAndAfterEach
 import repositories.{SessionData, SessionRepository as SessionRepo}
 import utils.TestBaseSpec
 
-class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach {
+class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach:
 
   val repository: SessionRepo = inject[SessionRepo]
 
@@ -63,5 +63,3 @@ class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach {
   override protected def beforeEach(): Unit =
     super.beforeEach()
     repository.removeAll().futureValue
-
-}

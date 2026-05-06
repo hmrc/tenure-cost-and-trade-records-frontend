@@ -24,7 +24,7 @@ import play.api.Configuration
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
 
-class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
+class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
 
   val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
@@ -53,7 +53,6 @@ class SensitiveAboutTheLandlordSpec extends AnyWordSpecLike with Matchers with S
 
       // Ensure the sensitive fields are decrypted correctly
       sensitiveAboutTheLandlord.decryptedValue shouldBe originalAboutTheLandlord
-    }
 
+    }
   }
-}

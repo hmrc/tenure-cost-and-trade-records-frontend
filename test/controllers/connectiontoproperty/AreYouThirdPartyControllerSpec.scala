@@ -29,7 +29,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AreYouThirdPartyControllerSpec extends TestBaseSpec {
+class AreYouThirdPartyControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -172,16 +172,12 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec {
     }
   }
 
-}
-
-object TestData {
+object TestData:
   val errorKey = new ErrorKey
 
-  class ErrorKey {
+  class ErrorKey:
     val areYouThirdParty = "areYouThirdParty"
-  }
 
   val baseFormData: Map[String, String] = Map(
     "areYouThirdParty" -> "yes"
   )
-}

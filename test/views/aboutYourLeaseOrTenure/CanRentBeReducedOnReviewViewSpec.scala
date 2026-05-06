@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "canRentBeReducedOnReview"
   private val backLink         = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
@@ -84,4 +84,3 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[AnswersYes
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -22,7 +22,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AdditionalActivitiesOnSiteSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class AdditionalActivitiesOnSiteSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val sessionRequest = SessionRequest(baseFilled6045Session, fakeRequest)
 
@@ -85,4 +85,3 @@ class AdditionalActivitiesOnSiteSpec extends QuestionViewBehaviours[AnswersYesNo
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

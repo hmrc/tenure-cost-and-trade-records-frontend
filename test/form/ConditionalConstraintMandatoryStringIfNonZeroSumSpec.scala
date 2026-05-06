@@ -30,7 +30,7 @@ import scala.util.Try
 /**
   * @author Yuriy Tumakha
   */
-class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyFlatSpec with should.Matchers {
+class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyFlatSpec with should.Matchers:
 
   private def columnMapping: Mapping[BigDecimal] = single(
     "otherIncome" ->
@@ -118,5 +118,3 @@ class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyFlatSpec w
     items: List[BigDecimal] = List.empty,
     description: String
   )
-
-}

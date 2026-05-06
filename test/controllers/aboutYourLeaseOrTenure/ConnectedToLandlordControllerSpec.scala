@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class ConnectedToLandlordControllerSpec extends TestBaseSpec {
+class ConnectedToLandlordControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -93,13 +93,10 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val connectedToLandlord: String = "connectedToLandlord"
-    }
 
     val baseFormData: Map[String, String] = Map("connectedToLandlord" -> "yes")
-  }
-}

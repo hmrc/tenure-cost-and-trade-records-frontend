@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
+class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -118,19 +118,16 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val occupyMonth = "leaseBegin.month"
       val occupyYear  = "leaseBegin.year"
       val grantedFor  = "grantedFor"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "leaseBegin.month" -> "9",
       "leaseBegin.year"  -> "2017",
       "grantedFor"       -> "1 year"
     )
-  }
-}

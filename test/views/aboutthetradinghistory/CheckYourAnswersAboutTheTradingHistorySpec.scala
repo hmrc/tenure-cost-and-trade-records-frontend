@@ -25,7 +25,7 @@ import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutTheTradingHistorySpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CheckYourAnswersAboutTheTradingHistorySpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "checkYourAnswersAboutTheTradingHistory"
 
@@ -124,5 +124,3 @@ class CheckYourAnswersAboutTheTradingHistorySpec extends QuestionViewBehaviours[
   "Check Your Answers About The Property view for 6076" must {
     behave like normalPage(createView6076, messageKeyPrefix)
   }
-
-}

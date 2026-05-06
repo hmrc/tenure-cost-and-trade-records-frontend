@@ -24,7 +24,7 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, status, stu
 import utils.JsoupHelpers.contentAsJsoup
 import utils.TestBaseSpec
 
-class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
+class ConcessionTypeDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -91,5 +91,3 @@ class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

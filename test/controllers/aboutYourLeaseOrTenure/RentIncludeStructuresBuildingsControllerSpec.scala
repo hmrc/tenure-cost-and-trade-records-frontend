@@ -26,7 +26,7 @@ import utils.{TestBaseSpec, toOpt}
 
 import scala.language.reflectiveCalls
 
-class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec {
+class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -122,13 +122,10 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val rentIncludeStructuresBuildings: String = "rentIncludeStructuresBuildings"
-    }
 
     val baseFormData: Map[String, String] = Map("rentIncludeStructuresBuildings" -> "yes")
-  }
-}

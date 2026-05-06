@@ -22,9 +22,9 @@ class ErrorHandlerSpec extends TCTRAppSpec:
 
   private val errorHandler = inject[ErrorHandler]
 
-  "standardErrorTemplate" should {
+  "standardErrorTemplate" should:
     "render HTML" in {
       val html = errorHandler.standardErrorTemplate("title", "heading", "message")(using getRequest).futureValue
       html.contentType shouldBe "text/html"
+
     }
-  }

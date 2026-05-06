@@ -23,7 +23,7 @@ import models.submissions.aboutYourLeaseOrTenure.DoesTheRentPayable
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayable] {
+class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayable]:
 
   private val messageKeyPrefix = "rentPayable"
 
@@ -143,5 +143,3 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

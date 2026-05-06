@@ -35,6 +35,5 @@ class bunkerFuelCardsDetailsViewSpec extends QuestionViewBehaviours[BunkerFuelCa
       controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url,
       Summary("99996010001")
     )(using fakeRequest, messages)
-  "Catering bunker fuel cards details view" must {
+  "Catering bunker fuel cards details view" must:
     behave like normalPage(createView, messageKeyPrefix)
-  }

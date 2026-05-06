@@ -22,7 +22,7 @@ import models.submissions.aboutyouandtheproperty.CustomerDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
+class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails]:
 
   private val messageKeyPrefix = "aboutYou"
 
@@ -85,4 +85,3 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

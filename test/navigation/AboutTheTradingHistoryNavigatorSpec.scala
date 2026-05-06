@@ -34,7 +34,7 @@ import utils.{TestBaseSpec, toOpt}
 
 import scala.concurrent.ExecutionContext
 
-class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
+class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec:
 
   private val audit: Audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
@@ -913,4 +913,3 @@ class AboutTheTradingHistoryNavigatorSpec extends TestBaseSpec {
 
     }
   }
-}

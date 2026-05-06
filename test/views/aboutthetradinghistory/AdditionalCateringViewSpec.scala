@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.AdditionalCatering
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCatering]] {
+class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCatering]]:
 
   private val years = Seq("2023", "2022", "2021")
 
@@ -84,4 +84,3 @@ class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCa
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

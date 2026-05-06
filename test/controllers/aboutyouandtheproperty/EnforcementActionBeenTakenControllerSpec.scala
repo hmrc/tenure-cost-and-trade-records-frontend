@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
+class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import form.aboutyouandtheproperty.EnforcementActionForm.*
@@ -123,13 +123,10 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val enforcementAction: String = "enforcementActionBeenTaken"
-    }
 
     val baseFormData: Map[String, String] = Map("enforcementActionBeenTaken" -> "yes")
-  }
-}

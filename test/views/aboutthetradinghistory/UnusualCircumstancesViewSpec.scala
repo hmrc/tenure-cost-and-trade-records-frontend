@@ -24,7 +24,7 @@ import models.submissions.aboutthetradinghistory.UnusualCircumstances
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircumstances] {
+class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircumstances]:
   // NOTE: this is a holding view test until the other costs page is implemented
   private val messageKeyPrefix     = "unusualCircumstances"
   private val messageKeyPrefix6030 = "unusualCircumstancesReceipts"
@@ -102,4 +102,3 @@ class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircums
       assertRenderedById(doc, "unusualCircumstances")
     }
   }
-}

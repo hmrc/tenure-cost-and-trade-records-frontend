@@ -21,7 +21,7 @@ import controllers.FeedbackFormMapper
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.ViewBehaviours
 
-class ConfirmationRequestReferenceNumberViewSpec extends ViewBehaviours {
+class ConfirmationRequestReferenceNumberViewSpec extends ViewBehaviours:
 
   val messageKeyPrefix                                       = "label.connectionToProperty.confirm"
   val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
@@ -42,6 +42,6 @@ class ConfirmationRequestReferenceNumberViewSpec extends ViewBehaviours {
       assert(doc.toString.contains(messages("list.connectionToProperty.p1")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p2")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p3")))
+
     }
   }
-}

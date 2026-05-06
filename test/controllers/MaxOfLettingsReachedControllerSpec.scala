@@ -69,7 +69,7 @@ trait MaxOfLettingsReachedControllerBehaviours:
       reset(navigator)
     }
 
-class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettingsReachedControllerBehaviours {
+class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettingsReachedControllerBehaviours:
 
   private val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
@@ -87,26 +87,32 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
       val result = maxOfLettingsReachedController.show(None)(fakeRequest)
       status(result) shouldBe OK
     }
+
     "return 200 when  scr parameter equals connection" in {
       val result = maxOfLettingsReachedController.show("connection")(fakeRequest)
       status(result) shouldBe OK
     }
+
     "return 200 when  scr parameter equals franchiseCatering" in {
       val result = maxOfLettingsReachedController.show("franchiseCatering")(fakeRequest)
       status(result) shouldBe OK
     }
+
     "return 200 when  scr parameter equals lettings" in {
       val result = maxOfLettingsReachedController.show("lettings")(fakeRequest)
       status(result) shouldBe OK
     }
+
     "return 200 when  scr parameter equals typeOfIncome" in {
       val result = maxOfLettingsReachedController.show("typeOfIncome")(fakeRequest)
       status(result) shouldBe OK
     }
+
     "return 200 when  scr parameter equals rentalIncome" in {
       val result = maxOfLettingsReachedController.show("rentalIncome")(fakeRequest)
       status(result) shouldBe OK
     }
+
     "return 200 when  scr parameter equals franchiseLetting" in {
       val result = maxOfLettingsReachedController.show("franchiseLetting")(fakeRequest)
       status(result) shouldBe OK
@@ -144,16 +150,19 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
       maxOfLettingsReachedController,
       mockAboutFranchisesOrLettingsNavigator
     )
+
     behave like updatingFranchiseOrLettings(
       src = "franchiseCatering",
       maxOfLettingsReachedController,
       mockAboutFranchisesOrLettingsNavigator
     )
+
     behave like updatingFranchiseOrLettings(
       src = "franchiseLetting",
       maxOfLettingsReachedController,
       mockAboutFranchisesOrLettingsNavigator
     )
+
     behave like updatingFranchiseOrLettings(
       src = "lettings",
       maxOfLettingsReachedController,
@@ -179,4 +188,3 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

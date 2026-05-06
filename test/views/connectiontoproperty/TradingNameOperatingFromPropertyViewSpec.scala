@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[String] {
+class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[String]:
 
   private val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
 
@@ -69,4 +69,3 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[St
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

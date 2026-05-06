@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.Future
 
-class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
+class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit                             = mock[Audit]
   val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
@@ -86,4 +86,3 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec {
     }
 
   }
-}

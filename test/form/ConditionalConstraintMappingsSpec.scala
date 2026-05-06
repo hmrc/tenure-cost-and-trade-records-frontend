@@ -28,7 +28,7 @@ import scala.collection.immutable.ArraySeq
 /**
   * @author Yuriy Tumakha
   */
-class ConditionalConstraintMappingsSpec extends AnyFlatSpec with should.Matchers {
+class ConditionalConstraintMappingsSpec extends AnyFlatSpec with should.Matchers:
 
   private val form: Form[Model] = Form(
     mapping(
@@ -87,5 +87,3 @@ class ConditionalConstraintMappingsSpec extends AnyFlatSpec with should.Matchers
     items: List[String] = List.empty,
     description: String
   )
-
-}

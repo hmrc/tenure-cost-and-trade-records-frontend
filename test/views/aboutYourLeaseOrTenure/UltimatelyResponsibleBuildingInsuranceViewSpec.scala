@@ -23,7 +23,7 @@ import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class UltimatelyResponsibleBuildingInsuranceViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleBuildingInsurance] {
+class UltimatelyResponsibleBuildingInsuranceViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleBuildingInsurance]:
 
   private val messageKeyPrefix = "ultimatelyResponsibleBI"
 
@@ -101,4 +101,3 @@ class UltimatelyResponsibleBuildingInsuranceViewSpec extends QuestionViewBehavio
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

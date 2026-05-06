@@ -23,7 +23,7 @@ import models.submissions.connectiontoproperty.ConnectionToProperty.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionToProperty] {
+class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionToProperty]:
 
   private val messageKeyPrefix = "connectionToTheProperty"
 
@@ -105,4 +105,3 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

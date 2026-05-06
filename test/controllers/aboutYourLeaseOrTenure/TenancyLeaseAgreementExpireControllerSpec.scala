@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit.DAYS
 
-class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
+class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -108,4 +108,3 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
       }
     }
   }
-}

@@ -20,7 +20,7 @@ import actions.SessionRequest
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehaviours[String] {
+class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "requestReferenceNumber.checkYourAnswers"
 
@@ -52,5 +52,3 @@ class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehavio
       assert(loginButton == messages("button.confirmAndSend.label"))
     }
   }
-
-}

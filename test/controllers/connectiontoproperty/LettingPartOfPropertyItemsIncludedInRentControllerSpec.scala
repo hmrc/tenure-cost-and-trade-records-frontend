@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpec {
+class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -92,12 +92,11 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       )
     }
-  }
-  "return correct back link with corresponding index" in {
-    val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
-    contentAsString(result) should include(
-      controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(0).url
-    )
-  }
 
-}
+    "return correct back link with corresponding index" in {
+      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(0).url
+      )
+    }
+  }

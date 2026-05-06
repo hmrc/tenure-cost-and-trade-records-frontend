@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PayACapitalSumControllerSpec extends TestBaseSpec {
+class PayACapitalSumControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -241,13 +241,10 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val payACapitalSum: String = "payACapitalSum"
-    }
 
     val baseFormData: Map[String, String] = Map("payACapitalSum" -> "yes")
-  }
-}

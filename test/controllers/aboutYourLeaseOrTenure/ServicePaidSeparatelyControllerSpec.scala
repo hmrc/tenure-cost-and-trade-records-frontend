@@ -25,7 +25,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
+class ServicePaidSeparatelyControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -110,4 +110,3 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec {
 
     }
   }
-}

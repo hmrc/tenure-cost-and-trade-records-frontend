@@ -25,7 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import scala.jdk.CollectionConverters.*
 
-class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   override val form: Form[AnswersYesNo] = AreYouThirdPartyForm.theForm
 
@@ -114,4 +114,3 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

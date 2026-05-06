@@ -26,7 +26,7 @@ import play.api.test.Helpers.{POST, charset, contentType, redirectLocation, stat
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class RentalIncomeListControllerSpec extends TestBaseSpec {
+class RentalIncomeListControllerSpec extends TestBaseSpec:
   import TestData.*
   val mockAudit: Audit = mock[Audit]
 
@@ -156,15 +156,12 @@ class RentalIncomeListControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
 
       val rentalIncomeList: String =
         "rentalIncomeList"
-    }
 
     val baseFormData: Map[String, String] = Map("rentalIncomeList" -> "yes")
-  }
-}

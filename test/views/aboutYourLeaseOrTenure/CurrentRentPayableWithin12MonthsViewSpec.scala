@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[CurrentRentPayableWithin12Months] {
+class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[CurrentRentPayableWithin12Months]:
 
   private val messageKeyPrefix = "currentRentPayableWithin12Months"
 
@@ -101,4 +101,3 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

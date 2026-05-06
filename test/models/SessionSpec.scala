@@ -26,10 +26,9 @@ import test.TestObjects
   */
 class SessionSpec extends AnyFlatSpec with Matchers with TestObjects:
 
-  "Session" should "be serialized/deserialized from JSON - 6010" in {
+  "Session" should "be serialized/deserialized from JSON - 6010" in:
     val json = Json.toJson(aboutYourTradingHistory6010YesSession)
     json.as[Session] shouldBe aboutYourTradingHistory6010YesSession
-  }
 
   it should "be serialized/deserialized from JSON - 6020" in {
     val json = Json.toJson(prefilledFull6020Session)

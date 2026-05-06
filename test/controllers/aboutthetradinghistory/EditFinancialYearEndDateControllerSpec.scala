@@ -27,7 +27,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
+class EditFinancialYearEndDateControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -346,5 +346,3 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec {
     }
 
   }
-
-}

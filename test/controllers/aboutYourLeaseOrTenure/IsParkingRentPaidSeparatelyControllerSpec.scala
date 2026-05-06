@@ -28,7 +28,7 @@ import scala.language.reflectiveCalls
 /**
   * @author Yuriy Tumakha
   */
-class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
+class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -104,14 +104,10 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val isParkingRentPaidSeparately: String = "isParkingRentPaidSeparately"
-    }
 
     val baseFormData: Map[String, String] = Map("isParkingRentPaidSeparately" -> "yes")
-  }
-
-}

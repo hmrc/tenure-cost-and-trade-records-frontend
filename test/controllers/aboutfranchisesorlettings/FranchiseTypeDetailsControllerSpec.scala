@@ -112,7 +112,7 @@ trait FranchiseTypeDetailsControllerBehaviours:
   this: FranchiseTypeDetailsControllerSpec =>
 
   def savingIncomeRecordAndRedirectingToAddressLookupService(index: Int): Unit =
-    s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture {
+    s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture:
       val operatorName           = "Godzilla"
       val typeOfBusiness         = "Atomic Bomb Factory"
       val result: Future[Result] = controller.submit(index)(
@@ -132,8 +132,8 @@ trait FranchiseTypeDetailsControllerBehaviours:
         case record: FranchiseIncomeRecord      =>
           record.businessDetails.value.operatorName   shouldBe operatorName
           record.businessDetails.value.typeOfBusiness shouldBe typeOfBusiness
+
       }
-    }
 
   def retrievingConfirmedAddressFromAddressLookupService(index: Int): Unit =
     s"save record at index=$index and reply 303 redirect to the next page" in new ControllerFixture {

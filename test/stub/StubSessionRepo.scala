@@ -36,9 +36,8 @@ case class StubSessionRepo() extends SessionRepo with Logging:
 
   override def saveOrUpdate(data: Session)(using hc: HeaderCarrier): Future[Unit] =
     logger.debug(s"hc: $hc")
-    Future.successful {
+    Future.successful:
       session = Some(Json.toJson(data))
-    }
 
   override def get(using hc: HeaderCarrier): Future[Option[Session]] =
     logger.debug(s"hc: $hc")

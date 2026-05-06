@@ -29,7 +29,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec {
+class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.*
 
@@ -118,15 +118,12 @@ class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec {
 
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
 
       val addAnotherLowMarginFuelCardsDetails: String =
         "addAnotherLowMarginFuelCardsDetails"
-    }
 
     val baseFormData: Map[String, String] = Map("addAnotherLowMarginFuelCardsDetails" -> "yes")
-  }
-}

@@ -22,7 +22,7 @@ import org.scalatest.matchers.should
 /**
   * @author Yuriy Tumakha
   */
-class NumberUtilSpec extends AnyFlatSpec with should.Matchers {
+class NumberUtilSpec extends AnyFlatSpec with should.Matchers:
 
   import NumberUtil.*
 
@@ -42,5 +42,3 @@ class NumberUtilSpec extends AnyFlatSpec with should.Matchers {
     BigDecimal(777).asMoneyFull        shouldBe "£777.00"
     BigDecimal(8888).asMoneyFull       shouldBe "£8,888.00"
   }
-
-}

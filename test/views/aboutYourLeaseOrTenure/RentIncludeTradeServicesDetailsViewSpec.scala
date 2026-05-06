@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInforma
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeTradeServicesDetailsViewSpec extends QuestionViewBehaviours[RentIncludeTradeServicesInformationDetails] {
+class RentIncludeTradeServicesDetailsViewSpec extends QuestionViewBehaviours[RentIncludeTradeServicesInformationDetails]:
 
   private val messageKeyPrefix = "rentIncludeTradeServicesDetails"
 
@@ -66,4 +66,3 @@ class RentIncludeTradeServicesDetailsViewSpec extends QuestionViewBehaviours[Ren
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -25,7 +25,7 @@ import play.api.data.Form
 import play.api.mvc.AnyContent
 import views.behaviours.QuestionViewBehaviours
 
-class rentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom] {
+class RentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom]:
 
   override val form: Form[RentReceivedFrom] =
     RentReceivedFromForm.rentReceivedFromForm(using messages)
@@ -106,4 +106,3 @@ class rentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom] 
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

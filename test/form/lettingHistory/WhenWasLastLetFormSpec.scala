@@ -26,7 +26,7 @@ import java.time.LocalDate
 
 class WhenWasLastLetFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in new SessionFixture {
+  it should "bind good data as expected" in new SessionFixture:
     val data: Map[String, String] = Map(
       "date.day"   -> "1",
       "date.month" -> "4",
@@ -35,7 +35,6 @@ class WhenWasLastLetFormSpec extends FormSpec:
     val bound: Form[LocalDate]    = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
-  }
 
   it should "unbind good data as expected" in new SessionFixture {
     val date: LocalDate         = LocalDate.of(2024, 8, 13)

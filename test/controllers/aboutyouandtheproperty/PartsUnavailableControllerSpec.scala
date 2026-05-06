@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class PartsUnavailableControllerSpec extends TestBaseSpec {
+class PartsUnavailableControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -111,14 +111,10 @@ class PartsUnavailableControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val partsUnavailableQuestion: String = "partsUnavailable"
-    }
 
     val baseFormData: Map[String, String] = Map("partsUnavailable" -> "yes")
-  }
-
-}

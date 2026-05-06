@@ -26,7 +26,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
+class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -195,4 +195,3 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec {
     )
     status(res) shouldBe SEE_OTHER
   }
-}

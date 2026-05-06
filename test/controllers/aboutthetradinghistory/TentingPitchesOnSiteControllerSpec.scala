@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
+class TentingPitchesOnSiteControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -92,10 +92,7 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val tentingPitchesOnSiteErrorKey: String = "tentingPitchesOnSite"
 
     val baseFormData: Map[String, String] = Map("tentingPitchesOnSite" -> "yes")
-  }
-
-}

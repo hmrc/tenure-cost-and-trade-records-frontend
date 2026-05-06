@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class ElectricVehicleChargingPointsViewSpec extends QuestionViewBehaviours[ElectricVehicleChargingPoints] {
+class ElectricVehicleChargingPointsViewSpec extends QuestionViewBehaviours[ElectricVehicleChargingPoints]:
 
   private val messageKeyPrefix = "electricVehicleChargingPoints"
 
@@ -105,4 +105,3 @@ class ElectricVehicleChargingPointsViewSpec extends QuestionViewBehaviours[Elect
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

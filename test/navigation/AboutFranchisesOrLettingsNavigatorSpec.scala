@@ -20,7 +20,7 @@ import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import utils.TestBaseSpec
 
-class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
+class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec:
 
   "About franchise or lettings navigator" when {
 
@@ -257,4 +257,3 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       }
     }
   }
-}

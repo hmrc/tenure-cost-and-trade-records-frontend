@@ -23,7 +23,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDate] {
+class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDate]:
 
   private def tenancyLeaseAgreementExpireView = inject[views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire]
 
@@ -85,4 +85,3 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDa
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

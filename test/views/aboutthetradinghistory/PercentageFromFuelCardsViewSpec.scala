@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.PercentageFromFuelCards
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
 
-class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[PercentageFromFuelCards]] {
+class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[PercentageFromFuelCards]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
 
@@ -115,4 +115,3 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
       }
     }
   }
-}

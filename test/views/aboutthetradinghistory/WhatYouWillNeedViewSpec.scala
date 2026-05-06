@@ -22,7 +22,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
+class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String]:
 
   private val sessionRequest     = SessionRequest(baseFilled6076Session, fakeRequest)
   private val sessionRequest6010 = SessionRequest(baseFilled6010Session, fakeRequest)
@@ -235,4 +235,3 @@ class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String] {
     }
 
   }
-}

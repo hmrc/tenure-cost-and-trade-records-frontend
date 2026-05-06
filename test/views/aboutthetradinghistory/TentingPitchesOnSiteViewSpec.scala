@@ -22,7 +22,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TentingPitchesOnSiteViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class TentingPitchesOnSiteViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val sessionRequest = SessionRequest(baseFilled6045Session, fakeRequest)
 
@@ -85,4 +85,3 @@ class TentingPitchesOnSiteViewSpec extends QuestionViewBehaviours[AnswersYesNo] 
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

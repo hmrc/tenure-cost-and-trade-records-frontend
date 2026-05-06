@@ -25,7 +25,7 @@ import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMes
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
-class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
+class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -115,13 +115,10 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val propertyCurrentlyUsed: String = "propertyCurrentlyUsed"
-    }
 
     val baseFormData: Map[String, String] = Map("propertyCurrentlyUsed" -> "yes")
-  }
-}

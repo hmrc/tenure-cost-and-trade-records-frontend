@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
+class PremisesLicenseGrantedControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   import form.aboutyouandtheproperty.PremisesLicenseGrantedForm.premisesLicenseGrantedForm
@@ -96,15 +96,12 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val premisesLicenseGranted: String = "premisesLicenseGranted"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "premisesLicenseGranted" -> "true"
     )
-  }
-}

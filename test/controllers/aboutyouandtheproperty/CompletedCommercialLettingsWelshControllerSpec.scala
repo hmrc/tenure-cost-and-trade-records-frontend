@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import java.time.LocalDate
 
-class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
+class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec:
 
   import utils.FormBindingTestAssertions.*
 
@@ -159,5 +159,3 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
     }
 
   }
-
-}

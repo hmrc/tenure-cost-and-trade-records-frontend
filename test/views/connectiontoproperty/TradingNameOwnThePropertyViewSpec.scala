@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "tradingNameOwnTheProperty"
 
@@ -90,4 +90,3 @@ class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYe
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

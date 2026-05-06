@@ -29,7 +29,8 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
+class AddOrRemoveLettingControllerSpec extends TestBaseSpec:
+
   import TestData.*
   val mockAudit: Audit = mock[Audit]
 
@@ -217,15 +218,12 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
 
       val addAnotherLetting: String =
         "addAnotherLetting"
-    }
 
     val baseFormData: Map[String, String] = Map("addAnotherLetting" -> "yes")
-  }
-}

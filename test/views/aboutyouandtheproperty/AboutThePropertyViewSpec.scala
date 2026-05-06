@@ -25,7 +25,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
+class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails]:
 
   val messageKeyPrefix = "aboutProperty"
 
@@ -262,4 +262,3 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

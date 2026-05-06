@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "formerLeaseSurrendered"
 
@@ -83,4 +83,3 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Answer
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

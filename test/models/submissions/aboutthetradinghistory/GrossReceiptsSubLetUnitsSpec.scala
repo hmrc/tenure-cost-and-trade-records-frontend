@@ -19,7 +19,7 @@ package models.submissions.aboutthetradinghistory
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.Json
 
-class GrossReceiptsSubLetUnitsSpec extends PlaySpec {
+class GrossReceiptsSubLetUnitsSpec extends PlaySpec:
 
   "GrossReceiptsSubLetUnits" should {
     "serialize and deserialize correctly" in {
@@ -29,7 +29,7 @@ class GrossReceiptsSubLetUnitsSpec extends PlaySpec {
       )
       val json                     = Json.toJson(grossReceiptsSubLetUnits)
       json.as[GrossReceiptsSubLetUnits] mustBe grossReceiptsSubLetUnits
-    }
-  }
 
-}
+    }
+
+  }

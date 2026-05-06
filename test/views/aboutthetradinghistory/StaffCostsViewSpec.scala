@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.StaffCosts
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class StaffCostsViewSpec extends QuestionViewBehaviours[Seq[StaffCosts]] {
+class StaffCostsViewSpec extends QuestionViewBehaviours[Seq[StaffCosts]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
@@ -54,5 +54,3 @@ class StaffCostsViewSpec extends QuestionViewBehaviours[Seq[StaffCosts]] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

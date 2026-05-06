@@ -31,7 +31,7 @@ class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers w
   val testConfig: Configuration = loadTestConfig()
   given MongoCrypto             = createTestMongoCrypto(testConfig)
 
-  "SensitiveStillConnectedDetails" should {
+  "SensitiveStillConnectedDetails" should:
 
     "encrypt and decrypt sensitive fields correctly" in {
       val clearData     = StillConnectedDetails(
@@ -72,5 +72,5 @@ class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers w
       val encryptedData = SensitiveStillConnectedDetails(clearData)
       val d             = encryptedData.decryptedValue
       d shouldBe clearData
+
     }
-  }

@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate] {
+class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate]:
 
   private val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
@@ -86,4 +86,3 @@ class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate] 
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

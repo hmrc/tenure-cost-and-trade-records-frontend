@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IncludedInRent6020ControllerSpec extends TestBaseSpec {
+class IncludedInRent6020ControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -83,5 +83,3 @@ class IncludedInRent6020ControllerSpec extends TestBaseSpec {
       redirectLocation(res) shouldBe None
     }
   }
-
-}

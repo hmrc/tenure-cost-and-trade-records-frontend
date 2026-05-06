@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
+class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]]:
 
   val messageKeyPrefix = "turnover"
 
@@ -131,4 +131,3 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

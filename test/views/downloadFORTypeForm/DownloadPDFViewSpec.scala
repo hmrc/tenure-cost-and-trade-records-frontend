@@ -19,7 +19,7 @@ package views.downloadFORTypeForm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class DownloadPDFViewSpec extends QuestionViewBehaviours[String] {
+class DownloadPDFViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix    = "downloadPdf"
   private val testReferenceNumber = "12345678"
@@ -116,4 +116,3 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[String] {
       assert(doc.toString.contains(messages("downloadPdf.retry")))
     }
   }
-}

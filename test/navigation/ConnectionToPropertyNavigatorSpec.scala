@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
+class ConnectionToPropertyNavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
 
@@ -365,5 +365,3 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec {
       .nextPage(AddAnotherLettingPartOfPropertyPageId, session)
       .apply(session) shouldBe routes.LettingPartOfPropertyDetailsController.show(Some(0))
   }
-
-}

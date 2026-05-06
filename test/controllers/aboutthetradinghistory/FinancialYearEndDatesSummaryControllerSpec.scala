@@ -26,7 +26,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
+class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec:
 
   def financialYearEndDatesSummaryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
@@ -304,5 +304,3 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
     }
 
   }
-
-}

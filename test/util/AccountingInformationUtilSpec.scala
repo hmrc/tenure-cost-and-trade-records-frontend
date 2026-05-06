@@ -33,13 +33,12 @@ class AccountingInformationUtilSpec extends AnyFlatSpec with should.Matchers wit
 
   private val financialYearEnd = DayMonthsDuration(5, 4)
 
-  "AccountingInformationUtil.financialYearsRequired" should "return 3 dates" in {
+  "AccountingInformationUtil.financialYearsRequired" should "return 3 dates" in:
     val firstOccupy = MonthsYearDuration(1, yearNow - 5)
     verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3)
 
     val firstOccupy2 = MonthsYearDuration(1, yearNow - 4)
     verifyFinancialYearEndDates(firstOccupy2, financialYearEnd, 3)
-  }
 
   it should "return more dates" in {
     val firstOccupy = MonthsYearDuration(1, yearNow - 3)

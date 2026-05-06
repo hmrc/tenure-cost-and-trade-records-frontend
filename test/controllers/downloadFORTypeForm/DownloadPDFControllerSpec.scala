@@ -21,7 +21,7 @@ import play.api.http.Status
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class DownloadPDFControllerSpec extends TestBaseSpec {
+class DownloadPDFControllerSpec extends TestBaseSpec:
 
   val audit: Audit = mock[Audit]
 
@@ -48,5 +48,3 @@ class DownloadPDFControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some(UTF8)
     }
   }
-
-}

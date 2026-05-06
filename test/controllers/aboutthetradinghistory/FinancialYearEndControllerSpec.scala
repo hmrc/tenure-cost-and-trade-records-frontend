@@ -36,7 +36,7 @@ import utils.TestBaseSpec
 import scala.concurrent.Future
 import scala.language.reflectiveCalls
 
-class FinancialYearEndControllerSpec extends TestBaseSpec {
+class FinancialYearEndControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   val mockAudit: Audit = mock[Audit]
@@ -241,18 +241,14 @@ class FinancialYearEndControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val financialYearDay   = "financialYear.day"
       val financialYearMonth = "financialYear.month"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "financialYear.day"   -> "27",
       "financialYear.month" -> "9"
     )
-
-  }
-}

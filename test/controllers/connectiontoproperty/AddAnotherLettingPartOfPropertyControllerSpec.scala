@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
+class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
 
   import TestData.*
 
@@ -119,15 +119,10 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
-
-      val addAnotherLettingPartOfProperty: String =
-        "addAnotherLettingPartOfProperty"
-    }
+    class ErrorKey:
+      val addAnotherLettingPartOfProperty: String = "addAnotherLettingPartOfProperty"
 
     val baseFormData: Map[String, String] = Map("addAnotherLettingPartOfProperty" -> "yes")
-  }
-}

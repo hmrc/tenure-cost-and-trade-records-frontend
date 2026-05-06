@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
+class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -86,4 +86,3 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

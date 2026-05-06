@@ -25,7 +25,7 @@ import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
-class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentOpenMarketValue"
 
@@ -101,4 +101,3 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

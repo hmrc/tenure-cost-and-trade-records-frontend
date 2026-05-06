@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "receivePaymentWhenLeaseGranted"
 
@@ -85,4 +85,3 @@ class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[AnswersYesN
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

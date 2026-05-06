@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
+class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec:
 
   "Connection to property identifiers" when {
 
@@ -88,5 +88,5 @@ class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec {
       assert(CheckYourAnswersConnectionToPropertyId.toString.equals("CheckYourAnswersConnectionToPropertyPage"))
     "Identifier for max letting  page" in
       assert(MaxOfLettingsReachedId.toString.equals("MaxOfLettingsReachedPage"))
+
   }
-}

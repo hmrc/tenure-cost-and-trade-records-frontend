@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[BigDecimal] {
+class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[BigDecimal]:
 
   private val messageKeyPrefix = "currentAnnualRent"
 
@@ -69,4 +69,3 @@ class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[BigDecimal] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

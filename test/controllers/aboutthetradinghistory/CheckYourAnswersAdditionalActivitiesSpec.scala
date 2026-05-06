@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class CheckYourAnswersAdditionalActivitiesSpec extends TestBaseSpec {
+class CheckYourAnswersAdditionalActivitiesSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -84,10 +84,7 @@ class CheckYourAnswersAdditionalActivitiesSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val additionalActivitiesCYAErrorKey: String = "checkYourAnswersAdditionalActivities"
 
     val baseFormData: Map[String, String] = Map("checkYourAnswersAdditionalActivities" -> "yes")
-  }
-
-}

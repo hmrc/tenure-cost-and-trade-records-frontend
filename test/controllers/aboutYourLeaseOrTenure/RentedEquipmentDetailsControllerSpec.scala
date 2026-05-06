@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class RentedEquipmentDetailsControllerSpec extends TestBaseSpec {
+class RentedEquipmentDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -85,5 +85,3 @@ class RentedEquipmentDetailsControllerSpec extends TestBaseSpec {
     }
 
   }
-
-}

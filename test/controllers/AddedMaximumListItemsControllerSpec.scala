@@ -54,12 +54,12 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
       "exceededMaxListItems" -> "true"
     )
 
-  "AccommodationUnits - GET /" should {
+  "AccommodationUnits - GET /" should:
     "return 200" in {
       val result = addedMaximumListItemsController.show(AccommodationUnits)(fakeRequest)
       status(result) shouldBe OK
+
     }
-  }
 
   "AccommodationUnits - SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {

@@ -22,7 +22,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDecimal] {
+class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDecimal]:
 
   private val messageKeyPrefix = "capitalSumPaidDetails6048"
 
@@ -67,4 +67,3 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDeci
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
+class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -120,10 +120,10 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec {
       )
     }
   }
+
   "return correct back link with corresponding index" in {
     val result = lettingPartOfPropertyDetailsRentController().show(0)(fakeRequest)
     contentAsString(result) should include(
       controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(0)).url
     )
   }
-}

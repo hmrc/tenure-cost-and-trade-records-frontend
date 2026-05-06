@@ -29,7 +29,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.Future
 
-class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
+class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec:
 
   val audit: Audit                             = mock[Audit]
   val submissionConnector: SubmissionConnector = mock[SubmissionConnector]
@@ -49,7 +49,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "submit method" when {
+  "Submit method" when {
 
     "submission is successful" should {
       "redirect (HTTP 303)" in {
@@ -72,7 +72,8 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
     }
 
   }
-  "confirmation method" should {
+
+  "Confirmation method" should {
 
     "display the confirmation view" in {
       val result = connectionToPropertySubmissionController().confirmation(fakeRequest)
@@ -80,5 +81,3 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec {
     }
 
   }
-
-}

@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class EnforcementActionBeenTakenDetailsViewSpec extends QuestionViewBehaviours[String] {
+class EnforcementActionBeenTakenDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   val messageKeyPrefix = "enforcementActionHasBeenTakenDetails"
 
@@ -80,4 +80,3 @@ class EnforcementActionBeenTakenDetailsViewSpec extends QuestionViewBehaviours[S
       assert(doc.toString.contains(messages("help.enforcementActionHasBeenTakenDetails.list.p3")))
     }
   }
-}

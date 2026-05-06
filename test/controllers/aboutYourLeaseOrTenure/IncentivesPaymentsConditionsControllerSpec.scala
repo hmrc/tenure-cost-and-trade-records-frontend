@@ -23,7 +23,7 @@ import play.api.test.*
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
+class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -75,4 +75,3 @@ class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

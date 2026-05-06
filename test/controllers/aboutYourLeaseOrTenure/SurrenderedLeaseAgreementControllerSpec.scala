@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class SurrenderedLeaseAgreementControllerSpec extends TestBaseSpec {
+class SurrenderedLeaseAgreementControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -78,4 +78,3 @@ class SurrenderedLeaseAgreementControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

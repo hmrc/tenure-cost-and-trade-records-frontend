@@ -32,7 +32,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
+class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
@@ -216,4 +216,3 @@ class AboutYourLeaseOrTenure6076NavigatorSpec extends TestBaseSpec {
         controllers.aboutYourLeaseOrTenure.routes.ProvideDetailsOfYourLeaseController.show()
     }
   }
-}

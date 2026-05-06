@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AdditionalInformationNavigatorSpec extends TestBaseSpec {
+class AdditionalInformationNavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
 
@@ -70,4 +70,3 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
       )
     }
   }
-}

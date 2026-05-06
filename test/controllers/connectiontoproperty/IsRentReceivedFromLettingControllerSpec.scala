@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
+class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
   import TestData.*
 
   val mockAudit: Audit = mock[Audit]
@@ -117,15 +117,12 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val isRentReceivedFromLetting = "isRentReceivedFromLetting"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "isRentReceivedFromLetting" -> "yes"
     )
-  }
-}

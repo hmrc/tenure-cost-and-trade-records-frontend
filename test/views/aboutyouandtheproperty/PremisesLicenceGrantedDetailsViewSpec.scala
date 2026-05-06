@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[String] {
+class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "premisesLicenseGrantedInformation"
 
@@ -68,4 +68,3 @@ class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[Strin
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

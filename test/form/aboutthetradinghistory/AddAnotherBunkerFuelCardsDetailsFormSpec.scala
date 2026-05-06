@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo.*
 import org.scalatestplus.play.PlaySpec
 import play.api.data.FormError
 
-class AddAnotherBunkerFuelCardsDetailsFormSpec extends PlaySpec {
+class AddAnotherBunkerFuelCardsDetailsFormSpec extends PlaySpec:
 
   "AddAnotherBunkerFuelCardsDetailsForm" should {
 
@@ -50,4 +50,3 @@ class AddAnotherBunkerFuelCardsDetailsFormSpec extends PlaySpec {
       )
     }
   }
-}

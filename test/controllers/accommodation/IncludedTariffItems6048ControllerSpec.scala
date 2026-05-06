@@ -25,7 +25,7 @@ import scala.concurrent.ExecutionContext
 /**
   * @author Yuriy Tumakha
   */
-class IncludedTariffItems6048ControllerSpec extends TestBaseSpec {
+class IncludedTariffItems6048ControllerSpec extends TestBaseSpec:
 
   private val nextPage = controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url + "?idx=0"
 
@@ -71,5 +71,3 @@ class IncludedTariffItems6048ControllerSpec extends TestBaseSpec {
     }
 
   }
-
-}

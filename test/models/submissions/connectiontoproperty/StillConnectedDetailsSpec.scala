@@ -26,7 +26,6 @@ import test.TestObjects
   */
 class StillConnectedDetailsSpec extends AnyFlatSpec with Matchers with TestObjects:
 
-  "StillConnectedDetails" should "be serialized/deserialized from JSON" in {
+  "StillConnectedDetails" should "be serialized/deserialized from JSON" in:
     val json = Json.toJson(prefilledStillConnectedDetailsYesToAll)
     json.as[StillConnectedDetails] shouldBe prefilledStillConnectedDetailsYesToAll
-  }

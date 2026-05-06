@@ -25,7 +25,7 @@ import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm] {
+class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm]:
 
   val messageKeyPrefix = "checkYourAnswersConnectionToProperty"
 
@@ -61,4 +61,3 @@ class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviour
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

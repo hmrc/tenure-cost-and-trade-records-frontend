@@ -30,7 +30,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class RenewablesPlanControllerSpec extends TestBaseSpec {
+class RenewablesPlanControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -143,13 +143,10 @@ class RenewablesPlanControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val renewablesPlant: String = "renewablesPlant"
-    }
 
     val baseFormData: Map[String, String] = Map("renewablesPlant" -> "baseload")
-  }
-}

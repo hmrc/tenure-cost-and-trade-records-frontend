@@ -26,7 +26,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class IncludedInYourRentControllerSpec extends TestBaseSpec {
+class IncludedInYourRentControllerSpec extends TestBaseSpec:
 
   import utils.FormBindingTestAssertions.*
 
@@ -123,4 +123,3 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec {
       mustContainMissingVatValueErrorFor("", form)
     }
   }
-}

@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec {
+class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -98,4 +98,3 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec {
       }
     }
   }
-}

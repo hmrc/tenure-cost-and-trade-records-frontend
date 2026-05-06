@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.ViewBehaviours
 
-class maxOfLettingsReachedViewSpec extends ViewBehaviours {
+class maxOfLettingsReachedViewSpec extends ViewBehaviours:
 
   private val messageKeyPrefix     = "maxOf5Lettings"
   private val messageKeyPrefix6015 = "maxOf5Lettings.businessOrConcession"
@@ -90,4 +90,3 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours {
   "max of Lettings reached franchise  view for 6030" must {
     behave like normalPage(prepareViewFranchise(sessionRequest6030), messageKeyPrefix6030)
   }
-}

@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "checkYourAnswersAboutYourLeaseOrTenure"
 
@@ -98,4 +98,3 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehavio
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec {
+class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
 
   def cYAAboutYourLeaseOrTenureController(
     forType: ForType = FOR6010,
@@ -156,4 +156,3 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec 
       status(res) shouldBe SEE_OTHER
     }
   }
-}

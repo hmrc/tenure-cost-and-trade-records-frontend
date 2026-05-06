@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
+class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -101,10 +101,7 @@ class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val additionalActivitiesOnSiteErrorKey: String = "additionalActivitiesOnSite"
 
     val baseFormData: Map[String, String] = Map("additionalActivitiesOnSite" -> "yes")
-  }
-
-}

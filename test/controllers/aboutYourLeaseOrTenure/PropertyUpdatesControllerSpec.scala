@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PropertyUpdatesControllerSpec extends TestBaseSpec {
+class PropertyUpdatesControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -137,13 +137,10 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val propertyUpdates: String = "propertyUpdates"
-    }
 
     val baseFormData: Map[String, String] = Map("propertyUpdates" -> "yes")
-  }
-}

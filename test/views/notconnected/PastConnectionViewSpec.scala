@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "pastConnectionType"
 
@@ -94,4 +94,3 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

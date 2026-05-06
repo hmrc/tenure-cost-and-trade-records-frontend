@@ -52,10 +52,10 @@ case class StubBackendConnector() extends BackendConnector:
     Future.successful(draft.filter(_._1 == referenceNumber).map(_._2))
 
   override def deleteSubmissionDraft(referenceNumber: String, hc: HeaderCarrier): Future[Int] =
-    val deletedCount = draft match {
+    val deletedCount = draft match
       case Some((`referenceNumber`, _)) =>
         draft = None
         1
       case _                            => 0
-    }
+
     Future.successful(deletedCount)

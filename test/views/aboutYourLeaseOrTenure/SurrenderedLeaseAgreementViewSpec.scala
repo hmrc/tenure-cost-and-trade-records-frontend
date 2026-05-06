@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetail
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class SurrenderedLeaseAgreementViewSpec extends QuestionViewBehaviours[SurrenderedLeaseAgreementDetails] {
+class SurrenderedLeaseAgreementViewSpec extends QuestionViewBehaviours[SurrenderedLeaseAgreementDetails]:
 
   private val messageKeyPrefix = "surrenderedLeaseAgreement"
 
@@ -64,4 +64,3 @@ class SurrenderedLeaseAgreementViewSpec extends QuestionViewBehaviours[Surrender
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

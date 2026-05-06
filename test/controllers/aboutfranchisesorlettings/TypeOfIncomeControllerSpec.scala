@@ -28,7 +28,7 @@ import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redir
 import test.TestObjects
 import utils.TestBaseSpec
 
-class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects {
+class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -238,4 +238,3 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects {
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Option("/send-trade-and-cost-information/max-lettings?src=typeOfIncome")
   }
-}

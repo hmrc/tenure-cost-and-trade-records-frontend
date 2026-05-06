@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
+class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec:
 
   val mockAboutYourLeaseOrTenureNavigator: AboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
@@ -103,4 +103,3 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

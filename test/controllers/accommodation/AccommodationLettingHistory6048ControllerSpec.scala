@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec {
+class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec:
 
   private val nextPage = controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url + "?idx=0"
 
@@ -50,25 +50,25 @@ class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec {
     "return 200" in {
       val result = accommodationLettingHistory6048Controller.show(fakeRequest)
       status(result) shouldBe OK
+
     }
+
+    "SUBMIT /" should {
+      "return BAD_REQUEST if an empty form is submitted" in {
+        val res = accommodationLettingHistory6048Controller.submit(
+          FakeRequest().withFormUrlEncodedBody()
+        )
+        status(res) shouldBe BAD_REQUEST
+      }
+
+      "save the form data and redirect to the next page" in {
+        val res = accommodationLettingHistory6048Controller.submit(
+          fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        )
+        status(res)           shouldBe SEE_OTHER
+        redirectLocation(res) shouldBe Some(nextPage)
+      }
+
+    }
+
   }
-
-  "SUBMIT /" should {
-    "return BAD_REQUEST if an empty form is submitted" in {
-      val res = accommodationLettingHistory6048Controller.submit(
-        FakeRequest().withFormUrlEncodedBody()
-      )
-      status(res) shouldBe BAD_REQUEST
-    }
-
-    "save the form data and redirect to the next page" in {
-      val res = accommodationLettingHistory6048Controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
-      )
-      status(res)           shouldBe SEE_OTHER
-      redirectLocation(res) shouldBe Some(nextPage)
-    }
-
-  }
-
-}

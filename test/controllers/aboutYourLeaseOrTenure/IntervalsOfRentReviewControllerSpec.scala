@@ -26,7 +26,7 @@ import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
-class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
+class IntervalsOfRentReviewControllerSpec extends TestBaseSpec:
 
   private val test2001character = "x" * 2001
 
@@ -120,4 +120,3 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec {
       mustContainError("intervalsOfRentReview", "error.intervalsOfRent.maxLength", form)
     }
   }
-}

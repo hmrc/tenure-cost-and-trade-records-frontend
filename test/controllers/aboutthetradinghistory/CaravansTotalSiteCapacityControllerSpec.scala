@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec {
+class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -112,5 +112,3 @@ class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

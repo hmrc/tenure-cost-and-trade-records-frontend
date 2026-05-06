@@ -32,7 +32,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class RemoveConnectionNavigatorSpec extends TestBaseSpec {
+class RemoveConnectionNavigatorSpec extends TestBaseSpec:
 
   val audit: Audit = mock[Audit]
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
@@ -110,4 +110,3 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec {
       result.map(_.url shouldBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url)
     }
   }
-}

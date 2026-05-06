@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
+class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -82,5 +82,3 @@ class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

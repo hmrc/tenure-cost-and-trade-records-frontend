@@ -25,7 +25,7 @@ import play.api.test.Helpers.{contentAsString, contentType, status, stubMessages
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
-class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec {
+class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec:
 
   private val mockNavigator = mock[AboutTheTradingHistoryNavigator]
 
@@ -72,4 +72,3 @@ class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

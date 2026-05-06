@@ -23,7 +23,7 @@ import models.submissions.aboutYourLeaseOrTenure.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRentDetails] {
+class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRentDetails]:
 
   private val messageKeyPrefix = "includedInYourRent"
 
@@ -95,5 +95,3 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
     }
 
   }
-
-}

@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
+class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec:
 
   private val previousPage = aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show().url
 
@@ -110,5 +110,3 @@ class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

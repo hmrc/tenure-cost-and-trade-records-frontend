@@ -24,7 +24,7 @@ import play.api.test.*
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class BenefitsGivenControllerSpec extends TestBaseSpec {
+class BenefitsGivenControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -92,13 +92,10 @@ class BenefitsGivenControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val benefitsGiven: String = "benefitsGiven"
-    }
 
     val baseFormData: Map[String, String] = Map("benefitsGiven" -> "yes")
-  }
-}

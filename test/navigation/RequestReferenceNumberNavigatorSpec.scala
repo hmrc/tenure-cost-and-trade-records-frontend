@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
+class RequestReferenceNumberNavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
 
@@ -83,5 +83,3 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec {
       )
     }
   }
-
-}

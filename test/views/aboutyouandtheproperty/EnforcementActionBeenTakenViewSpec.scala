@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "enforcementActionHasBeenTaken"
 
@@ -93,4 +93,3 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
     }
 
   }
-}

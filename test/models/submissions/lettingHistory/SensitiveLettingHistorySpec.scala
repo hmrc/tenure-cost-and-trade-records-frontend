@@ -26,10 +26,9 @@ import java.time.LocalDate
 
 class SensitiveLettingHistorySpec extends AnyFlatSpec with Matchers with OptionValues with MongoCryptoSupport:
 
-  it should "encrypt and decrypt sensitive fields correctly" in {
+  it should "encrypt and decrypt sensitive fields correctly" in:
     val encryptedLettingHistory = SensitiveLettingHistory(clearLettingHistory)
     encryptedLettingHistory.decryptedValue shouldBe clearLettingHistory
-  }
 
   it should "serialize to encrypted JSON" in {
     val encryptedValue = SensitiveLettingHistory(clearLettingHistory)

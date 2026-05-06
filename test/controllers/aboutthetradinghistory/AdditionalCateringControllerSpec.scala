@@ -24,7 +24,7 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLoc
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class AdditionalCateringControllerSpec extends TestBaseSpec {
+class AdditionalCateringControllerSpec extends TestBaseSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
@@ -182,4 +182,3 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
       )
     }
   }
-}

@@ -28,7 +28,7 @@ import views.html.aboutthetradinghistory.costOfSales
 
 import scala.concurrent.ExecutionContext
 
-class CostOfSalesControllerSpec extends TestBaseSpec {
+class CostOfSalesControllerSpec extends TestBaseSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
@@ -72,5 +72,3 @@ class CostOfSalesControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

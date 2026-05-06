@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.PremisesCosts
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesCostsViewSpec extends QuestionViewBehaviours[Seq[PremisesCosts]] {
+class PremisesCostsViewSpec extends QuestionViewBehaviours[Seq[PremisesCosts]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
@@ -53,5 +53,3 @@ class PremisesCostsViewSpec extends QuestionViewBehaviours[Seq[PremisesCosts]] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

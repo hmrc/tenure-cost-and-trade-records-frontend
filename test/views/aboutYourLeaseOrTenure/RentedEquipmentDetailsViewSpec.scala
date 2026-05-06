@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class RentedEquipmentDetailsViewSpec extends QuestionViewBehaviours[String] {
+class RentedEquipmentDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   val messageKeyPrefix = "rentedEquipmentDetails"
 
@@ -72,4 +72,3 @@ class RentedEquipmentDetailsViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

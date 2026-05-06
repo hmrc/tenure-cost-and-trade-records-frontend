@@ -21,7 +21,7 @@ import models.pages.{IncomeExpenditureEntry, Summary}
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[String] {
+class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[String]:
   // NOTE: this is a holding view test until page is implemented
   private val messageKeyPrefix = "incomeExpenditureSummary"
 
@@ -84,4 +84,3 @@ class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[String] {
       30
     )
   )
-}

@@ -20,7 +20,7 @@ import play.api.data.FormError
 import util.NumberUtil.*
 import utils.TestBaseSpec
 
-class CurrentAnnualRentFormSpec extends TestBaseSpec {
+class CurrentAnnualRentFormSpec extends TestBaseSpec:
   "CurrentAnnualRentForm" should {
 
     "bind valid data correctly" in {
@@ -79,4 +79,3 @@ class CurrentAnnualRentFormSpec extends TestBaseSpec {
       form.value shouldBe None
     }
   }
-}

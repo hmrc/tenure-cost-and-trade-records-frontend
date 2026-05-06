@@ -25,7 +25,7 @@ import utils.FormBindingTestAssertions.*
 
 import java.time.{ZoneOffset, ZonedDateTime}
 
-class LoginMappingSpec extends AnyFlatSpec with should.Matchers {
+class LoginMappingSpec extends AnyFlatSpec with should.Matchers:
 
   val loginForm: Form[LoginDetails] = controllers.LoginController.loginForm
 
@@ -77,5 +77,3 @@ class LoginMappingSpec extends AnyFlatSpec with should.Matchers {
     val d4 = data.updated("postcode", "aa11 1aa")
     mustNotContainErrorFor("postcode", loginForm.bind(d4))
   }
-
-}

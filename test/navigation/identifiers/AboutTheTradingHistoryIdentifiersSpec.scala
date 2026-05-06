@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
+class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec:
 
   "About your trading history identifiers" when {
 
@@ -225,4 +225,3 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(OperationalCosts6048Id.toString.equals("operationalCostsPage"))
 
   }
-}

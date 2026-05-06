@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class GeneratorCapacityControllerSpec extends TestBaseSpec {
+class GeneratorCapacityControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
@@ -101,16 +101,12 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val generatorCapacity = "generatorCapacity"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "generatorCapacity" -> "test capacity"
     )
-  }
-
-}

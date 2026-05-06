@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewBehaviours[String] {
+class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "describeFittingsTextArea"
 
@@ -58,4 +58,3 @@ class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewB
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.LowMarginFuelCardDetail
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMarginFuelCardDetail] {
+class LowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMarginFuelCardDetail]:
 
   override val form: Form[LowMarginFuelCardDetail] = lowMarginFuelCardDetailsForm
 
@@ -65,5 +65,3 @@ class LowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMargin
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

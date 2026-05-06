@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
+class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec:
 
   // This suite tests all generic paths based on form type 6010
 
@@ -186,4 +186,3 @@ class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
       }
     }
   }
-}

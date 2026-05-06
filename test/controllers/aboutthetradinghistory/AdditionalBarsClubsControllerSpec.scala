@@ -24,7 +24,8 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLoc
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
+class AdditionalBarsClubsControllerSpec extends TestBaseSpec:
+
   private val mockAudit: Audit = mock[Audit]
 
   private val years = Seq("2023", "2022", "2021")
@@ -184,4 +185,3 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec {
       )
     }
   }
-}

@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec {
+class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -88,4 +88,3 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

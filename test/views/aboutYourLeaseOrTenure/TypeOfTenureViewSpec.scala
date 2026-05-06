@@ -23,7 +23,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TypeOfTenureViewSpec extends QuestionViewBehaviours[TypeOfTenure] {
+class TypeOfTenureViewSpec extends QuestionViewBehaviours[TypeOfTenure]:
 
   val messageKeyPrefix = "typeOfTenure"
 
@@ -84,5 +84,3 @@ class TypeOfTenureViewSpec extends QuestionViewBehaviours[TypeOfTenure] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

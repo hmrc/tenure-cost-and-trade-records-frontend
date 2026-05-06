@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
+class ConnectionToThePropertyControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
@@ -103,15 +103,12 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val connectionToTheProperty = "connectionToTheProperty"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "connectionToTheProperty" -> "ownerTrustee"
     )
-  }
-}

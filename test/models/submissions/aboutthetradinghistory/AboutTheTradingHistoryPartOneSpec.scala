@@ -24,7 +24,7 @@ import test.TestObjects
 /**
   * @author Yuriy Tumakha
   */
-class AboutTheTradingHistoryPartOneSpec extends AnyFlatSpec with Matchers with TestObjects {
+class AboutTheTradingHistoryPartOneSpec extends AnyFlatSpec with Matchers with TestObjects:
 
   "AboutTheTradingHistoryPartOne" should "be serialized/deserialized from JSON for 6076" in {
     val json = Json.toJson(prefilledTurnoverSections6076)
@@ -67,5 +67,3 @@ class AboutTheTradingHistoryPartOneSpec extends AnyFlatSpec with Matchers with T
     turnoverSections6048.map(_.flatMap(_.administrativeCosts.map(_.total)).sum) shouldBe Some(999)
     turnoverSections6048.map(_.flatMap(_.operationalCosts.map(_.total)).sum)    shouldBe Some(666)
   }
-
-}

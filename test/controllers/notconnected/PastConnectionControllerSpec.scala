@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PastConnectionControllerSpec extends TestBaseSpec {
+class PastConnectionControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -113,13 +113,10 @@ class PastConnectionControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val pastConnectionType: String = "pastConnectionType"
-    }
 
     val baseFormData: Map[String, String] = Map("premisesLicenseConditions" -> "yes")
-  }
-}

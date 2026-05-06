@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TypeOfLettingControllerSpec extends TestBaseSpec {
+class TypeOfLettingControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -126,4 +126,3 @@ class TypeOfLettingControllerSpec extends TestBaseSpec {
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/other-letting?idx=0")
   }
-}

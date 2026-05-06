@@ -24,7 +24,8 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
 
-class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
+class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
+
   import SensitiveFormatsSpec.*
 
   val testConfig: Configuration = loadTestConfig()
@@ -57,19 +58,15 @@ class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveT
     }
 
   }
-}
 
-object SensitiveFormatsSpec {
+object SensitiveFormatsSpec:
 
   case class SensitiveTestEntity(
     normalString: String,
     encryptedString: SensitiveString
   )
 
-  object SensitiveTestEntity {
+  object SensitiveTestEntity:
     import crypto.SensitiveFormats.*
 
     implicit def format(using crypto: MongoCrypto): OFormat[SensitiveTestEntity] = Json.format
-  }
-
-}

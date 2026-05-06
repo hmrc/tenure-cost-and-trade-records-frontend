@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AboutThePropertyStringControllerSpec extends TestBaseSpec {
+class AboutThePropertyStringControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -131,15 +131,12 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val propertyCurrentlyUsedString: String = "propertyCurrentlyUsedString"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "propertyCurrentlyUsedString" -> "Test content"
     )
-  }
-}

@@ -25,7 +25,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
+class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -125,4 +125,3 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

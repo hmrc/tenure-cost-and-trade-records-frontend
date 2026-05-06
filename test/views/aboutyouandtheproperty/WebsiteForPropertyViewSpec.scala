@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForPropertyDetails] {
+class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForPropertyDetails]:
 
   private val messageKeyPrefix = "buildingOperatingHaveAWebsite"
 
@@ -97,4 +97,3 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

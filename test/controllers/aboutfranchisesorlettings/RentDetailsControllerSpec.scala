@@ -25,7 +25,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentDetailsControllerSpec extends TestBaseSpec {
+class RentDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -179,5 +179,3 @@ class RentDetailsControllerSpec extends TestBaseSpec {
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
     )
   }
-
-}

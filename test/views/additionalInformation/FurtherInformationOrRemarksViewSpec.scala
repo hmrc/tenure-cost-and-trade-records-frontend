@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[String] {
+class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[String]:
 
   val messageKeyPrefix = "furtherInformationOrRemarks"
 
@@ -64,4 +64,3 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[String]
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -22,7 +22,7 @@ import models.submissions.aboutfranchisesorlettings.AdvertisingRightLetting
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[AdvertisingRightLetting] {
+class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[AdvertisingRightLetting]:
 
   private def advertisingRightLettingView = inject[views.html.aboutfranchisesorlettings.advertisingRightLetting]
 
@@ -66,4 +66,3 @@ class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[Advertising
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

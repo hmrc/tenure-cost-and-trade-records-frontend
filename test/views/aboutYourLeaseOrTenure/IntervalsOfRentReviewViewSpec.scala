@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.IntervalsOfRentReview
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRentReview] {
+class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRentReview]:
 
   private val messageKeyPrefix = "intervalsOfRentReview"
 
@@ -93,4 +93,3 @@ class IntervalsOfRentReviewViewSpec extends QuestionViewBehaviours[IntervalsOfRe
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

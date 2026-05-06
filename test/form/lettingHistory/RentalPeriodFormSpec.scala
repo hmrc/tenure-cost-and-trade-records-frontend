@@ -31,7 +31,7 @@ import java.time.LocalDate
 
 class RentalPeriodFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in new SessionFixture(isWelsh = false) {
+  it should "bind good data as expected" in new SessionFixture(isWelsh = false):
     val data: Map[String, String] = Map(
       "fromDate.day"   -> "1",
       "fromDate.month" -> "4",
@@ -43,7 +43,6 @@ class RentalPeriodFormSpec extends FormSpec:
     val bound: Form[LocalPeriod]  = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
-  }
 
   it should "unbind good data as expected" in new SessionFixture(isWelsh = false) {
     val rentalPeriod: LocalPeriod = LocalPeriod(

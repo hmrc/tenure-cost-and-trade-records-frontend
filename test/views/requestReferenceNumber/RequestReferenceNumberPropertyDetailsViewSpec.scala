@@ -20,7 +20,7 @@ import form.requestReferenceNumber.RequestReferenceNumberPropertyDetailsForm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviours[String] {
+class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "requestReferenceNumber"
 
@@ -89,4 +89,3 @@ class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviou
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

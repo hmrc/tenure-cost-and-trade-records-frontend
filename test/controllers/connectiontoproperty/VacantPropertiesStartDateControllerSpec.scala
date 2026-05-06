@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
+class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -118,5 +118,3 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec {
       )
     }
   }
-
-}

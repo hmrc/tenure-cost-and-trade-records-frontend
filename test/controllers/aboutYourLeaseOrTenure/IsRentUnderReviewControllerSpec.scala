@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IsRentUnderReviewControllerSpec extends TestBaseSpec {
+class IsRentUnderReviewControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -94,5 +94,3 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

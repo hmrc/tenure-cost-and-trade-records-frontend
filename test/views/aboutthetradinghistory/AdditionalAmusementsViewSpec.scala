@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
-class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[BigDecimal]]] {
+class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[BigDecimal]]]:
 
   private val years = Seq("2023", "2022", "2021")
 
@@ -70,4 +70,3 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[Big
       assertRenderedById(doc, "additionalAmusements[2].receipts")
     }
   }
-}

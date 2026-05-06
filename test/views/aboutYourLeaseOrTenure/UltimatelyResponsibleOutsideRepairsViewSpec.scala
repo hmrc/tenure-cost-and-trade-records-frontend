@@ -23,7 +23,7 @@ import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class UltimatelyResponsibleOutsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleOutsideRepairs] {
+class UltimatelyResponsibleOutsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleOutsideRepairs]:
 
   private val messageKeyPrefix = "ultimatelyResponsibleOR"
 
@@ -104,4 +104,3 @@ class UltimatelyResponsibleOutsideRepairsViewSpec extends QuestionViewBehaviours
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

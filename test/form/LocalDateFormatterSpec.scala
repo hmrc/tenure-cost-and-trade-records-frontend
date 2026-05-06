@@ -20,7 +20,7 @@ import utils.TestBaseSpec
 
 import java.time.LocalDate
 
-class LocalDateFormatterSpec extends TestBaseSpec {
+class LocalDateFormatterSpec extends TestBaseSpec:
 
   def createLocalDateFormatter(
     fieldNameKey: String,
@@ -169,4 +169,3 @@ class LocalDateFormatterSpec extends TestBaseSpec {
       }
     }
   }
-}

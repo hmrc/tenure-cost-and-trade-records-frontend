@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeStructuresBuildingsDetailsViewSpec extends QuestionViewBehaviours[String] {
+class RentIncludeStructuresBuildingsDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "rentIncludeStructuresBuildingsDetails"
 
@@ -62,4 +62,3 @@ class RentIncludeStructuresBuildingsDetailsViewSpec extends QuestionViewBehaviou
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

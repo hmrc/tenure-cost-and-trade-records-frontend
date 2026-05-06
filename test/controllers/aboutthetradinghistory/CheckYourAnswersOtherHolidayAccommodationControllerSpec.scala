@@ -27,7 +27,7 @@ import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.taskList.taskList
 
-class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSpec {
+class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSpec:
 
   private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   private val mockTaskListView                    = mock[taskList]
@@ -50,7 +50,7 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
     mockSessionRepo
   )
 
-  "GET /"    should {
+  "GET /" should {
     "return 200" in {
       val result = checkYourAnswersOtherHolidayAccommodationController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -72,6 +72,7 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
 
     }
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = checkYourAnswersOtherHolidayAccommodationController().submit(
@@ -80,4 +81,3 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

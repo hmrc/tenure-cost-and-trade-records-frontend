@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AreYouStillConnectedControllerSpec extends TestBaseSpec {
+class AreYouStillConnectedControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
@@ -144,15 +144,12 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val isRelated = "isRelated"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "isRelated" -> "yes-change-address"
     )
-  }
-}

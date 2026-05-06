@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[String] {
+class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   val messageKeyPrefix = "premisesLicenseConditionsDetails"
 
@@ -80,4 +80,3 @@ class PremisesLicenceConditionsDetailsViewSpec extends QuestionViewBehaviours[St
       assert(doc.toString.contains(messages("help.premisesLicenseConditionsDetails.list.p3")))
     }
   }
-}

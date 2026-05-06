@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo.*
 import org.scalatestplus.play.PlaySpec
 import play.api.data.FormError
 
-class AddAnotherLowMarginFuelCardsDetailsFormSpec extends PlaySpec {
+class AddAnotherLowMarginFuelCardsDetailsFormSpec extends PlaySpec:
 
   "AddAnotherLowMarginFuelCardsDetailsForm" should {
 
@@ -51,4 +51,3 @@ class AddAnotherLowMarginFuelCardsDetailsFormSpec extends PlaySpec {
     }
 
   }
-}

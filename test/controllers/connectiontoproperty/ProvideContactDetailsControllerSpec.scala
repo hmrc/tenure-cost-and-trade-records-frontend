@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class ProvideContactDetailsControllerSpec extends TestBaseSpec {
+class ProvideContactDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
@@ -212,15 +212,14 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val fullName: String = "yourContactDetails.fullName"
       val phone            = "yourContactDetails.contactDetails.phone"
       val email            = "yourContactDetails.contactDetails.email"
       val email1TooLong    = "yourContactDetails.contactDetails.email.email.tooLong"
-    }
 
     val tooLongEmail = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
 
@@ -230,6 +229,3 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
       "contactDetails.email1" -> "blah.blah@test.com",
       "fullName"              -> "Mr John Smith"
     )
-
-  }
-}

@@ -23,7 +23,7 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.Configuration
 import utils.SensitiveTestHelper
 
-class SensitiveAboutYouAndThePropertySpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
+class SensitiveAboutYouAndThePropertySpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
 
   val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
@@ -47,7 +47,6 @@ class SensitiveAboutYouAndThePropertySpec extends AnyWordSpecLike with Matchers 
       sensitiveAboutYouAndTheProperty.customerDetails.get.isInstanceOf[SensitiveCustomerDetails] shouldBe true
 
       sensitiveAboutYouAndTheProperty.decryptedValue shouldBe originalAboutYouAndTheProperty
-    }
 
+    }
   }
-}

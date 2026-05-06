@@ -27,7 +27,6 @@ import test.TestObjects
   */
 class NotConnectedSubmissionSpec extends AnyFlatSpec with Matchers with TestObjects:
 
-  "NotConnectedSubmission" should "be serialized/deserialized from JSON" in {
+  "NotConnectedSubmission" should "be serialized/deserialized from JSON" in:
     val json = Json.toJson(notConnectedSubmission)
     json.as[NotConnectedSubmission] shouldBe notConnectedSubmission
-  }

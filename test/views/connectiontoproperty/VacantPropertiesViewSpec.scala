@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "vacantProperties"
 
@@ -114,4 +114,3 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

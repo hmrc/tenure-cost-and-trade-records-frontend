@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
+class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -97,15 +97,12 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val workCarriedOutDetails: String = "workCarriedOutDetails"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "workCarriedOutDetails" -> "Test content"
     )
-  }
-}

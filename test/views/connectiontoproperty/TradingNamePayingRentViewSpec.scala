@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
@@ -89,4 +89,3 @@ class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo]
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

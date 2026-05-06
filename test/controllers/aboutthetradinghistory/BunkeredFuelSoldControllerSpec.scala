@@ -22,7 +22,7 @@ import play.api.http.Status.*
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class BunkeredFuelSoldControllerSpec extends TestBaseSpec {
+class BunkeredFuelSoldControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -63,5 +63,3 @@ class BunkeredFuelSoldControllerSpec extends TestBaseSpec {
       }
     }
   }
-
-}

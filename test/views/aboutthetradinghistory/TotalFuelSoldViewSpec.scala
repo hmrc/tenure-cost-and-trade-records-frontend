@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.TotalFuelSold
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
 
-class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
+class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
 
@@ -100,4 +100,3 @@ class TotalFuelSoldViewSpec extends QuestionViewBehaviours[Seq[TotalFuelSold]] {
       }
     }
   }
-}

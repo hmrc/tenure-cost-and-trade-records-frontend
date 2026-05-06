@@ -23,7 +23,7 @@ import play.api.http.Status
 import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class WhatYouWillNeedControllerSpec extends TestBaseSpec {
+class WhatYouWillNeedControllerSpec extends TestBaseSpec:
 
   def whatYouWillNeedController(forType: ForType = FOR6010): WhatYouWillNeedController = WhatYouWillNeedController(
     stubMessagesControllerComponents(),
@@ -132,5 +132,3 @@ class WhatYouWillNeedControllerSpec extends TestBaseSpec {
 
     }
   }
-
-}

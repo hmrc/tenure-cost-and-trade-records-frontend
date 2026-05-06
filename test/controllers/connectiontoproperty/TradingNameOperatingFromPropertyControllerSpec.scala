@@ -29,7 +29,7 @@ import utils.{TestBaseSpec, toOpt}
 
 import scala.language.reflectiveCalls
 
-class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
+class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
 
   import TestData.*
 
@@ -208,13 +208,10 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val tradingNameFromProperty: String = "tradingNameFromProperty"
-    }
 
     val baseFormData: Map[String, String] = Map("tradingNameFromProperty" -> "TRADING NAME")
-  }
-}

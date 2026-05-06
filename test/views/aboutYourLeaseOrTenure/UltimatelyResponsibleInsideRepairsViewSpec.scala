@@ -24,7 +24,7 @@ import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleInsideRepairs] {
+class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleInsideRepairs]:
 
   private val messageKeyPrefix = "ultimatelyResponsibleIR"
 
@@ -138,4 +138,3 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

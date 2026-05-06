@@ -33,8 +33,8 @@ class AddressMappingSpec extends TestBaseSpec:
   def fromJson(json: String): JsResult[Address] =
     Json.fromJson[Address](Json.parse(json))
 
-  "Address with a fully filled in address" should {
+  "Address with a fully filled in address" should:
     "create a fully filled Address" in {
       fromJson(json2) should be(JsSuccess(data2))
+
     }
-  }

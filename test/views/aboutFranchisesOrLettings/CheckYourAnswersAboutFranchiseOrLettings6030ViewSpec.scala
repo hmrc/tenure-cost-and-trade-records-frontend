@@ -22,7 +22,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private def cyaFranchiseOrLettingsView =
     inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
@@ -48,6 +48,6 @@ class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec extends QuestionViewB
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
       assert(loginButton == messages("button.continue.label"))
+
     }
   }
-}

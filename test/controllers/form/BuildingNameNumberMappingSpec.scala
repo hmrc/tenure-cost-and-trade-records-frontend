@@ -23,13 +23,12 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
 
-class BuildingNameNumberMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
+class BuildingNameNumberMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
 
-  trait Setup {
+  trait Setup:
     val form: Form[String] = Form(single("buildingNameNumber" -> validateBuildingNameNumber))
-  }
 
-  "buildingNameNumber validation" should {
+  "BuildingNameNumber validation" should {
 
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
@@ -43,11 +42,10 @@ class BuildingNameNumberMappingSpec extends AnyWordSpecLike with should.Matchers
       TableDrivenPropertyChecks.forAll(lengths) { (buildingNameNumber, isValid) =>
         val res: Form[String] = form.bind(Map("buildingNameNumber" -> buildingNameNumber))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.buildingNameNumber.maxLength"
-        }
       }
     }
 
@@ -61,13 +59,10 @@ class BuildingNameNumberMappingSpec extends AnyWordSpecLike with should.Matchers
       TableDrivenPropertyChecks.forAll(isInput) { (buildingNameNumber, isValid) =>
         val res: Form[String] = form.bind(Map("buildingNameNumber" -> buildingNameNumber))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.buildingNameNumber.required"
-        }
       }
     }
   }
-
-}

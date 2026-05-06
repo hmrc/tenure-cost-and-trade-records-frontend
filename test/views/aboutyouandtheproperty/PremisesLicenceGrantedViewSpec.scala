@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "premisesLicenseGranted"
 
@@ -96,4 +96,3 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo
       assert(doc.toString.contains(messages("help.premisesLicenseGranted.text")))
     }
   }
-}

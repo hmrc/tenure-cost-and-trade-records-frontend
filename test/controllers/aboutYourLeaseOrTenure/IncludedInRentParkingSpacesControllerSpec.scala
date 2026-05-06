@@ -25,7 +25,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec {
+class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -89,5 +89,3 @@ class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

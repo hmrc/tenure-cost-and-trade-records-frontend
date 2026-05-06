@@ -31,7 +31,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
+class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -180,20 +180,16 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val occupyMonth        = "firstOccupy.month"
       val occupyYear         = "firstOccupy.year"
       val financialYearDay   = "financialYear.day"
       val financialYearMonth = "financialYear.month"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "firstOccupy.month" -> "9",
       "firstOccupy.year"  -> "2017"
     )
-
-  }
-}

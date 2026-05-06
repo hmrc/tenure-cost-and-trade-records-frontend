@@ -24,7 +24,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentIncludeTradeServices"
 
@@ -102,4 +102,3 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesN
       assert(hint == messages("hint.rentIncludeTradeServices"))
     }
   }
-}

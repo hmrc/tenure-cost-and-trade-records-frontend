@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
+class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
@@ -140,19 +140,16 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val fullName = "requestReferenceNumberContactDetailsFullName"
       val phone    = "requestReferenceNumberContactDetails.phone"
       val email    = "requestReferenceNumberContactDetails.email"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "requestReferenceNumberContactDetailsFullName" -> "John Smith",
       "requestReferenceNumberContactDetails.phone"   -> "01234 123123",
       "requestReferenceNumberContactDetails.email1"  -> "blah.blah@test.com"
     )
-  }
-}

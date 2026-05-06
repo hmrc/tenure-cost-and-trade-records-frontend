@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class EditAddressControllerSpec extends TestBaseSpec {
+class EditAddressControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
   import utils.FormBindingTestAssertions.mustContainError
@@ -148,17 +148,14 @@ class EditAddressControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val buildingNameNumber = "editAddress.buildingNameNumber"
       val postcode           = "editAddress.postcode"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "editAddress.buildingNameNumber" -> "",
       "editAddress.postcode"           -> "BN12 4AX"
     )
-  }
-}

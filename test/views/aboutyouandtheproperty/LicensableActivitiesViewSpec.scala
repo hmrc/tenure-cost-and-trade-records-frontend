@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class LicensableActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class LicensableActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "licensableActivities"
 
@@ -102,5 +102,3 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] 
       assert(doc.contains(messages("help.licensableActivities.list1.item7")))
     }
   }
-
-}

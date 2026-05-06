@@ -22,7 +22,7 @@ import models.submissions.aboutfranchisesorlettings.ATMLetting
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AtmLettingViewSpec extends QuestionViewBehaviours[ATMLetting] {
+class AtmLettingViewSpec extends QuestionViewBehaviours[ATMLetting]:
 
   private def AtmLettingView = inject[views.html.aboutfranchisesorlettings.atmLetting]
 
@@ -66,4 +66,3 @@ class AtmLettingViewSpec extends QuestionViewBehaviours[ATMLetting] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

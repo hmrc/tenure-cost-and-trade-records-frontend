@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
+class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec:
 
   val audit: Audit = mock[Audit]
 
@@ -111,4 +111,3 @@ class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
     }
   }
-}

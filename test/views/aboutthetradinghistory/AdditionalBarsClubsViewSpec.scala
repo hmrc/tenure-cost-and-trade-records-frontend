@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.AdditionalBarsClubs
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalBarsClubs]] {
+class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalBarsClubs]]:
 
   private val years = Seq("2023", "2022", "2021")
 
@@ -101,4 +101,3 @@ class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalB
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

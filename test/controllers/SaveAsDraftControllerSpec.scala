@@ -31,7 +31,7 @@ import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, 
 /**
   * @author Yuriy Tumakha
   */
-class SaveAsDraftControllerSpec extends TestBaseSpec {
+class SaveAsDraftControllerSpec extends TestBaseSpec:
 
   private val sessionRepo      = StubSessionRepo()
   private val backendConnector = StubBackendConnector()
@@ -275,5 +275,3 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     expectedErrors.foreach { expectedError =>
       content should include(expectedError)
     }
-
-}

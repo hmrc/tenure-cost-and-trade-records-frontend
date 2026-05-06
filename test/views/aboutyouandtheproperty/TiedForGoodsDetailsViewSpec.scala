@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInformationDetails] {
+class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInformationDetails]:
 
   val messageKeyPrefix = "tiedForGoodsDetails"
 
@@ -102,4 +102,3 @@ class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInf
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

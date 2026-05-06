@@ -25,7 +25,7 @@ import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
-class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentRentFixed] {
+class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentRentFixed]:
 
   private val messageKeyPrefix = "howIsCurrentRentFixed"
 
@@ -162,4 +162,3 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
       assert(doc.toString.contains(messages("help.rentActuallyAgreed.p2")))
     }
   }
-}

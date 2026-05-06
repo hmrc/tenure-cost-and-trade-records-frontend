@@ -23,7 +23,7 @@ import models.submissions.connectiontoproperty.AddressConnectionType.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnectionType] {
+class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnectionType]:
 
   override val form: Form[AddressConnectionType] = AreYouStillConnectedForm.theForm
 
@@ -98,4 +98,3 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

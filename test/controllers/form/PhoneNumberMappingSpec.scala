@@ -23,13 +23,12 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
 
-class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
+class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
 
-  trait Setup {
+  trait Setup:
     val form: Form[String] = Form(single("phone" -> validatePhoneNumber))
-  }
 
-  "phone number validation" should {
+  "Phone number validation" should {
 
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
@@ -51,11 +50,10 @@ class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with T
       TableDrivenPropertyChecks.forAll(lengths) { (phone, isValid) =>
         val res: Form[String] = form.bind(Map("phone" -> phone))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors           shouldBe false
+        else
           res.errors.head.message shouldBe "error.contact.phone.invalidLength"
-        }
       }
     }
 
@@ -83,13 +81,10 @@ class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with T
       TableDrivenPropertyChecks.forAll(isNumber) { (phone, isValid) =>
         val res: Form[String] = form.bind(Map("phone" -> phone))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors           shouldBe false
+        else
           res.errors.head.message shouldBe "error.contact.phone.required"
-        }
       }
     }
   }
-
-}

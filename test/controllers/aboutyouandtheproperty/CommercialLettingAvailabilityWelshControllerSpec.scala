@@ -29,7 +29,7 @@ import utils.TestBaseSpec
 
 import java.time.LocalDate
 
-class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
+class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec:
 
   import utils.FormBindingTestAssertions.*
 
@@ -163,4 +163,3 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec {
       json.as[LettingAvailability] shouldBe lettingAvailability
     }
   }
-}

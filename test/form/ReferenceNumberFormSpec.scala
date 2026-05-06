@@ -24,14 +24,13 @@ import org.scalatest.matchers.must.Matchers
 
 class ReferenceNumberFormSpec extends AnyFlatSpec with Matchers with OptionValues:
 
-  it should "bind good data as expected" in {
+  it should "bind good data as expected" in:
     val data  = Map(
       "referenceNumber" -> "0123456789"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
-  }
 
   it should "unbind good data as expected" in {
     val referenceNumber = ReferenceNumber(

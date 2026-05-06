@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[CurrentLeaseOrAgreementBegin] {
+class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[CurrentLeaseOrAgreementBegin]:
 
   private val messageKeyPrefix = "currentLeaseOrAgreementBegin"
 
@@ -81,4 +81,3 @@ class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[Curren
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}
