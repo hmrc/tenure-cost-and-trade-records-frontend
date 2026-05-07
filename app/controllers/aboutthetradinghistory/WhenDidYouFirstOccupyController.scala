@@ -68,7 +68,7 @@ class WhenDidYouFirstOccupyController @Inject() (
     continueOrSaveAsDraft[MonthsYearDuration](
       occupationalInformationForm,
       formWithErrors => BadRequest(theView(formWithErrors, getBackLink(request.sessionData))),
-      formData => {
+      formData =>
         val occupationAndAccountingInfo = request.sessionData.aboutTheTradingHistory
           .flatMap(_.occupationAndAccountingInformation)
           .fold(OccupationalAndAccountingInformation(formData))(_.copy(firstOccupy = formData))
@@ -94,7 +94,6 @@ class WhenDidYouFirstOccupyController @Inject() (
               .getOrElse(navigator.nextPage(AboutYourTradingHistoryPageId, updatedData).apply(updatedData))
           )
           .map(Redirect)
-      }
     )
   }
 
@@ -102,4 +101,5 @@ class WhenDidYouFirstOccupyController @Inject() (
     answers.forType match
       case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6020 | FOR6030 | FOR6045 | FOR6046 | FOR6076 =>
         controllers.aboutthetradinghistory.routes.WhatYouWillNeedController.show().url
-      case FOR6048                                                                                 => controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url
+      case FOR6048                                                                                 =>
+        controllers.aboutthetradinghistory.routes.AreYouVATRegisteredController.show.url

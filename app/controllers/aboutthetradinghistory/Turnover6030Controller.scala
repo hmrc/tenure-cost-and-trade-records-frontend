@@ -69,7 +69,7 @@ class Turnover6030Controller @Inject() (
         continueOrSaveAsDraft[Seq[TurnoverSection6030]](
           turnoverForm6030(numberOfColumns, financialYearEndDates(aboutTheTradingHistory)),
           formWithErrors => BadRequest(turnoverView(formWithErrors)),
-          success => {
+          success =>
             val turnoverSections6030 = (success zip financialYearEndDates(aboutTheTradingHistory)).map {
               case (turnoverSection6030, finYearEnd) =>
                 turnoverSection6030.copy(financialYearEnd = finYearEnd)
@@ -88,7 +88,6 @@ class Turnover6030Controller @Inject() (
                   .getOrElse(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData))
               }
               .map(Redirect)
-          }
         )
       }
   }

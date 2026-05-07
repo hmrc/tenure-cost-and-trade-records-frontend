@@ -49,13 +49,12 @@ class CostOfSalesController @Inject() (
     audit.sendChangeLink("CostOfSales")
 
     runWithSessionCheck { aboutTheTradingHistory =>
-      val costOfSales = if (aboutTheTradingHistory.costOfSales.size == aboutTheTradingHistory.turnoverSections.size) {
+      val costOfSales = if aboutTheTradingHistory.costOfSales.size == aboutTheTradingHistory.turnoverSections.size then
         (aboutTheTradingHistory.costOfSales zip financialYearEndDates(aboutTheTradingHistory)).map {
           case (costOfSales, finYearEnd) => costOfSales.copy(financialYearEnd = finYearEnd)
         }
-      } else {
+      else
         financialYearEndDates(aboutTheTradingHistory).map(CostOfSales(_, None, None, None, None))
-      }
 
       val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
       session
@@ -71,7 +70,7 @@ class CostOfSalesController @Inject() (
       continueOrSaveAsDraft[Seq[CostOfSales]](
         costOfSalesForm(years(aboutTheTradingHistory)),
         formWithErrors => BadRequest(costOfSalesView(formWithErrors, navigator.from)),
-        data => {
+        data =>
           val costOfSales = (data zip financialYearEndDates(aboutTheTradingHistory)).map { case (costOfSales, finYearEnd) =>
             costOfSales.copy(financialYearEnd = finYearEnd)
           }
@@ -85,7 +84,6 @@ class CostOfSalesController @Inject() (
                 .getOrElse(navigator.nextPage(CostOfSalesId, updatedData).apply(updatedData))
             )
             .map(Redirect)
-        }
       )
     }
   }

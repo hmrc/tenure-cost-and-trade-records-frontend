@@ -66,7 +66,7 @@ class AreYouVATRegisteredController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       areYouVATRegisteredForm,
       formWithErrors => BadRequest(areYouVATRegisteredView(formWithErrors)),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistoryPartOne(_.copy(areYouVATRegistered = Some(data)))
 
         session
@@ -74,7 +74,6 @@ class AreYouVATRegisteredController @Inject() (
           .map { _ =>
             Redirect(navigator.nextPage(AreYouVATRegisteredId, updatedData).apply(updatedData))
           }
-      }
     )
   }
 

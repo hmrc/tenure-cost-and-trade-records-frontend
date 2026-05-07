@@ -67,7 +67,7 @@ class AdditionalAmusementsController @Inject() (
       continueOrSaveAsDraft[Seq[Option[BigDecimal]]](
         additionalAmusementsForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(additionalAmusements = data)
           }
@@ -89,7 +89,6 @@ class AdditionalAmusementsController @Inject() (
                 .apply(updatedData)
             )
           }
-        }
       )
     }
   }

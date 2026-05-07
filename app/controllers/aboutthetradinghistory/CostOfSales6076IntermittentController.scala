@@ -52,6 +52,7 @@ class CostOfSales6076IntermittentController @Inject() (
       val costOfSales6076                = turnoverSections6076.flatMap(_.costOfSales6076IntermittentSum)
       val costOfSales6076Details: String =
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherSalesDetails).getOrElse("")
+
       Ok(
         view(
           costOfSales6076IntermittentForm(years).fill((costOfSales6076, costOfSales6076Details)),

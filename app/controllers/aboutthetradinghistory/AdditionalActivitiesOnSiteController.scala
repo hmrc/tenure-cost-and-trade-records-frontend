@@ -73,7 +73,7 @@ class AdditionalActivitiesOnSiteController @Inject() (
             calculateBackLink
           )
         ),
-      data => {
+      data =>
         val previousAnswer = request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.additionalActivities)
           .flatMap(_.additionalActivitiesOnSite)
@@ -84,7 +84,7 @@ class AdditionalActivitiesOnSiteController @Inject() (
         session
           .saveOrUpdate(updatedSession)
           .map { _ =>
-            val nextPage = (previousAnswer, data, navigator.from) match {
+            val nextPage = (previousAnswer, data, navigator.from) match
               case (Some(AnswerYes), AnswerYes, "CYA") =>
                 controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
               case (Some(AnswerNo), AnswerYes, _)      =>
@@ -97,10 +97,8 @@ class AdditionalActivitiesOnSiteController @Inject() (
                     navigator.cyaPageForAdditionalActivities
                   )
                   .apply(updatedSession)
-            }
             Redirect(nextPage)
           }
-      }
     )
   }
 

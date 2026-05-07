@@ -54,8 +54,7 @@ class OperationalExpensesController @Inject() (
 
     runWithSessionCheck { turnoverSections6076 =>
       val years   = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
-      val details =
-        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherOperationalExpensesDetails).getOrElse("")
+      val details = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherOperationalExpensesDetails).getOrElse("")
 
       Ok(
         operationalExpensesView(
@@ -75,7 +74,7 @@ class OperationalExpensesController @Inject() (
       continueOrSaveAsDraft[(Seq[OperationalExpenses], String)](
         operationalExpensesForm(years),
         formWithErrors => BadRequest(operationalExpensesView(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success._1 zip turnoverSections6076).map { case (operationalExpenses, previousSection) =>
             previousSection.copy(operationalExpenses = Some(operationalExpenses))
           }
@@ -96,7 +95,6 @@ class OperationalExpensesController @Inject() (
                 .getOrElse(navigator.nextPage(OperationalExpensesId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }

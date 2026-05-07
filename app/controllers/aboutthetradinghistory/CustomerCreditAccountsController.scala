@@ -77,7 +77,7 @@ class CustomerCreditAccountsController @Inject() (
                 backLink(request.sessionData)
               )
             ),
-          success => {
+          success =>
             val accounts = (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (account, finYearEnd) =>
               account.copy(financialYearEnd = finYearEnd)
             }
@@ -86,7 +86,6 @@ class CustomerCreditAccountsController @Inject() (
             session
               .saveOrUpdate(updatedData)
               .map(_ => Redirect(navigator.nextPage(CustomerCreditAccountsId, updatedData).apply(updatedData)))
-          }
         )
       }
   }

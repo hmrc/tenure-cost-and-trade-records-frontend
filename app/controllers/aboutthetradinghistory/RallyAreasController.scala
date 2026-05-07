@@ -68,7 +68,7 @@ class RallyAreasController @Inject() (
       continueOrSaveAsDraft[Seq[RallyAreasTradingData]](
         rallyAreasTradingDataForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(rallyAreas = Some(data))
           }
@@ -90,7 +90,6 @@ class RallyAreasController @Inject() (
                 .apply(updatedData)
             )
           }
-        }
       )
     }
   }

@@ -75,7 +75,7 @@ class GrossReceiptsCaravanFleetHireController @Inject() (
       continueOrSaveAsDraft[Seq[GrossReceiptsCaravanFleetHire]](
         grossReceiptsCaravanFleetHireForm(years),
         formWithErrors => BadRequest(grossReceiptsCaravanFleetHireView(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(grossReceiptsCaravanFleetHire = Some(data))
           }
@@ -90,7 +90,6 @@ class GrossReceiptsCaravanFleetHireController @Inject() (
             .saveOrUpdate(updatedData)
             .map(_ => navigator.nextPage(GrossReceiptsCaravanFleetHireId, updatedData).apply(updatedData))
             .map(Redirect)
-        }
       )
     }
   }

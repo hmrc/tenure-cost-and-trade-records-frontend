@@ -115,17 +115,15 @@ class IncomeExpenditureSummaryController @Inject() (
         .flatMap(_.variableOperatingExpenses.find(_.financialYearEnd == finYearEnd).map(_.total))
         .getOrElse(zeroBigDecimal)
 
-      val fixedExpensesEntry =
-        aboutTheTradingHistory.fixedOperatingExpensesSections.find(_.financialYearEnd == finYearEnd).get
+      val fixedExpensesEntry = aboutTheTradingHistory.fixedOperatingExpensesSections.find(_.financialYearEnd == finYearEnd).get
       val totalFixedExpenses = fixedExpensesEntry.total
 
-      val otherCosts =
-        aboutTheTradingHistory.otherCosts.flatMap(_.otherCosts.find(_.financialYearEnd == finYearEnd)).map(_.total).sum
+      val otherCosts = aboutTheTradingHistory.otherCosts.flatMap(_.otherCosts.find(_.financialYearEnd == finYearEnd)).map(_.total).sum
 
       val totalTurnover    = turnoverSection.total
       val totalGrossProfit = totalTurnover - totalCostOfSales
       val totalNetProfit   = totalGrossProfit - (totalPayrollCosts + variableExpenses + totalFixedExpenses + otherCosts)
-      val profitMargin     = if (totalTurnover > BigDecimal(0)) (totalNetProfit / totalTurnover) * 100 else BigDecimal(0)
+      val profitMargin     = if totalTurnover > BigDecimal(0) then (totalNetProfit / totalTurnover) * 100 else BigDecimal(0)
 
       IncomeExpenditureEntry(
         financialYearEnd = turnoverSection.financialYearEnd.toString,

@@ -74,14 +74,13 @@ class CaravansTotalSiteCapacityController @Inject() (
     continueOrSaveAsDraft[CaravansTotalSiteCapacity](
       caravansTotalSiteCapacityForm,
       formWithErrors => BadRequest(caravansTotalSiteCapacityView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCaravans(updateAnswer(data))
 
         session
           .saveOrUpdate(updatedData)
           .map(_ => navigator.nextPage(CaravansTotalSiteCapacityId, updatedData).apply(updatedData))
           .map(Redirect)
-      }
     )
   }
 

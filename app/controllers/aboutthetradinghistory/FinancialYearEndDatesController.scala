@@ -73,10 +73,9 @@ class FinancialYearEndDatesController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(using request: SessionRequest[AnyContent]
   ): Boolean =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6030 => aboutTheTradingHistory.turnoverSections6030.nonEmpty
       case _       => aboutTheTradingHistory.turnoverSections.nonEmpty
-    }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
@@ -93,21 +92,20 @@ class FinancialYearEndDatesController @Inject() (
                 financialYearsList(occupationAndAccounting)
               )
             ),
-          data => {
+          data =>
             val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
             val financialYearEnd        = occupationAndAccounting.currentFinancialYearEnd.get.toMonthDay
 
             val newOccupationAndAccounting =
-              if (data.forall(d => MonthDay.of(d.getMonthValue, d.getDayOfMonth) == financialYearEnd)) {
+              if data.forall(d => MonthDay.of(d.getMonthValue, d.getDayOfMonth) == financialYearEnd) then
                 occupationAndAccounting
-              } else {
+              else
                 occupationAndAccounting.copy(financialYearEndHasChanged = Some(true))
-              }
 
-            val updatedData: Session = request.sessionData.forType match {
+            val updatedData: Session = request.sessionData.forType match
               case FOR6030 => buildUpdateData6030(aboutTheTradingHistory, data, newOccupationAndAccounting)
               case _       => buildUpdateData(aboutTheTradingHistory, data, newOccupationAndAccounting)
-            }
+
             session
               .saveOrUpdate(updatedData)
               .map(_ =>
@@ -118,7 +116,6 @@ class FinancialYearEndDatesController @Inject() (
                   .getOrElse(navigator.nextPage(FinancialYearEndDatesPageId, updatedData).apply(updatedData))
               )
               .map(Redirect)
-          }
         )
       }
   }
@@ -127,10 +124,9 @@ class FinancialYearEndDatesController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(using request: SessionRequest[AnyContent]
   ) =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6030 => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
       case _       => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
-    }
 
   private def buildUpdateData(
     aboutTheTradingHistory: AboutTheTradingHistory,
@@ -142,22 +138,20 @@ class FinancialYearEndDatesController @Inject() (
       turnoverSection.copy(financialYearEnd = finYearEnd)
     }
 
-    val costOfSales = if (aboutTheTradingHistory.costOfSales.size == turnoverSections.size) {
+    val costOfSales = if aboutTheTradingHistory.costOfSales.size == turnoverSections.size then
       (aboutTheTradingHistory.costOfSales zip turnoverSections.map(_.financialYearEnd)).map {
         case (costOfSales, finYearEnd) => costOfSales.copy(financialYearEnd = finYearEnd)
       }
-    } else {
+    else
       turnoverSections.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
-    }
 
-    val updatedData = updateAboutTheTradingHistory(
+    updateAboutTheTradingHistory(
       _.copy(
         occupationAndAccountingInformation = Some(newOccupationAndAccounting),
         turnoverSections = turnoverSections,
         costOfSales = costOfSales
       )
     )
-    updatedData
 
   private def buildUpdateData6030(
     aboutTheTradingHistory: AboutTheTradingHistory,
@@ -169,10 +163,9 @@ class FinancialYearEndDatesController @Inject() (
       turnoverSection6030.copy(financialYearEnd = finYearEnd)
     }
 
-    val updatedData = updateAboutTheTradingHistory(
+    updateAboutTheTradingHistory(
       _.copy(
         occupationAndAccountingInformation = Some(newOccupationAndAccounting),
         turnoverSections6030 = turnoverSections6030
       )
     )
-    updatedData

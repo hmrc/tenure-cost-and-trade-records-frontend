@@ -79,14 +79,13 @@ abstract class CaravansAgeCategoriesController @Inject() (
     continueOrSaveAsDraft[CaravansAge](
       form,
       formWithErrors => BadRequest(caravansAgeCategoriesView(formWithErrors, caravanUnitType, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCaravans(updateAnswer(data))
 
         session
           .saveOrUpdate(updatedData)
           .map(_ => navigator.nextPage(pageId, updatedData).apply(updatedData))
           .map(Redirect)
-      }
     )
   }
 

@@ -100,7 +100,7 @@ class AddAnotherLowMarginFuelCardsDetailsController @Inject() (
             repository.saveOrUpdate(updatedData)
           }
           .map(_ =>
-            if (formData == AnswerYes)
+            if formData == AnswerYes then
               Redirect(
                 if aboutTheTradingHistoryData
                     .flatMap(_.lowMarginFuelCardsDetails)

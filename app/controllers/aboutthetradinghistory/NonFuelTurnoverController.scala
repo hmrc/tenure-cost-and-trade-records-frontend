@@ -73,7 +73,7 @@ class NonFuelTurnoverController @Inject() (
       continueOrSaveAsDraft[Seq[TurnoverSection6020]](
         turnoverForm6020(years),
         formWithErrors => BadRequest(turnoverView(formWithErrors, getBackLink(tradingHistory))),
-        success => {
+        success =>
           val turnoverSections6020 = (success zip yearEndDates).map { case (turnoverSection, finYearEnd) =>
             turnoverSection.copy(financialYearEnd = finYearEnd)
           }
@@ -92,7 +92,6 @@ class NonFuelTurnoverController @Inject() (
                 .getOrElse(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }

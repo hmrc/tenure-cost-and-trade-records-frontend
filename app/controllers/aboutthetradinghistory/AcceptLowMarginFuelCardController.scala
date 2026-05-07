@@ -68,7 +68,7 @@ class AcceptLowMarginFuelCardController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       acceptLowMarginFuelCardForm,
       formWithErrors => BadRequest(acceptLowMarginFuelCardView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistory(_.copy(doYouAcceptLowMarginFuelCard = Some(data)))
 
         session
@@ -85,7 +85,6 @@ class AcceptLowMarginFuelCardController @Inject() (
               .getOrElse(navigator.nextPage(AcceptLowMarginFuelCardsId, updatedData).apply(updatedData))
           }
           .map(Redirect)
-      }
     )
   }
 

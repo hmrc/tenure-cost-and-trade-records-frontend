@@ -72,13 +72,12 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistory(_.copy(checkYourAnswersAboutTheTradingHistory = Some(data)))
           .copy(lastCYAPageUrl = Some(routes.CheckYourAnswersAboutTheTradingHistoryController.show().url))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

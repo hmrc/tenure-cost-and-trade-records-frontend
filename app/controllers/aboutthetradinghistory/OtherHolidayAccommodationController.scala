@@ -65,7 +65,7 @@ class OtherHolidayAccommodationController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       otherHolidayAccommodationForm,
       formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateOtherHolidayAccommodation(_.copy(otherHolidayAccommodation = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
@@ -75,7 +75,6 @@ class OtherHolidayAccommodationController @Inject() (
               .apply(updatedData)
           )
         }
-      }
     )
   }
 

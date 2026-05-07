@@ -50,8 +50,7 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
       view(
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.additionalActivities.flatMap(_.checkYourAnswersAdditionalActivities)) match
-          case Some(cYaAnswer) =>
-            checkYourAnswersAdditionalActivitiesForm.fill(cYaAnswer)
+          case Some(cYaAnswer) => checkYourAnswersAdditionalActivitiesForm.fill(cYaAnswer)
           case _               => checkYourAnswersAdditionalActivitiesForm
         ,
         calculateBackLink
@@ -69,8 +68,7 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
             calculateBackLink
           )
         ),
-      data => {
-
+      data =>
         val updatedSession = AboutTheTradingHistoryPartOne.updateAdditionalActivities { additionalActivities =>
           additionalActivities.copy(checkYourAnswersAdditionalActivities = Some(data))
         }
@@ -87,7 +85,6 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
                 .apply(updatedSession)
             )
           }
-      }
     )
   }
 

@@ -71,12 +71,11 @@ class BunkeredFuelQuestionController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistory(_.copy(bunkeredFuelQuestion = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(BunkeredFuelQuestionId, updatedData).apply(updatedData)))
-      }
     )
   }
 

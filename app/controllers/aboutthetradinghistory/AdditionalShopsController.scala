@@ -68,7 +68,7 @@ class AdditionalShopsController @Inject() (
       continueOrSaveAsDraft[Seq[AdditionalShops]](
         additionalShopsForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(additionalShops = Some(data))
           }
@@ -90,7 +90,6 @@ class AdditionalShopsController @Inject() (
                 .apply(updatedData)
             )
           }
-        }
       )
     }
   }

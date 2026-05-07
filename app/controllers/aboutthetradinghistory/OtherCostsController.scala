@@ -51,12 +51,11 @@ class OtherCostsController @Inject() (
     runWithSessionCheckForOtherCosts { aboutTheTradingHistory =>
       val yearEndDates       = financialYearEndDates(aboutTheTradingHistory)
       val existingOtherCosts = aboutTheTradingHistory.otherCosts.getOrElse(OtherCosts())
-      val updatedOtherCosts  = if (existingOtherCosts.otherCosts.size != yearEndDates.size) {
+      val updatedOtherCosts  = if existingOtherCosts.otherCosts.size != yearEndDates.size then
         val newOtherCosts = yearEndDates.map(date => OtherCost(date, None, None))
         OtherCosts(newOtherCosts)
-      } else {
+      else
         existingOtherCosts
-      }
 
       val updatedData = updateAboutTheTradingHistory(_.copy(otherCosts = Some(updatedOtherCosts)))
       val filledForm  = form.fill(updatedOtherCosts)
@@ -70,25 +69,24 @@ class OtherCostsController @Inject() (
     runWithSessionCheckForOtherCosts { aboutTheTradingHistory =>
       continueOrSaveAsDraft[OtherCosts](
         form,
-        formWithErrors => {
+        formWithErrors =>
           val updatedOtherCosts = aboutTheTradingHistory.otherCosts.getOrElse(OtherCosts(Seq.empty)).otherCosts
 
           val updatedErrors         = formWithErrors.errors.map { error =>
-            if (error.key.startsWith("otherCosts[")) {
+            if error.key.startsWith("otherCosts[") then
               val index            = error.key.split("\\[")(1).split("\\]")(0).toInt
               val financialYearEnd = updatedOtherCosts.lift(index).map(_.financialYearEnd).getOrElse(LocalDate.now)
               error.copy(args = Seq(financialYearEnd))
-            } else if (error.key.isEmpty && error.message == "error.otherCostDetails.required") {
+            else if error.key.isEmpty && error.message == "error.otherCostDetails.required" then
               error.copy(key = "otherCostDetails")
-            } else {
+            else
               error
-            }
           }
           val updatedFormWithErrors = formWithErrors.copy(errors = updatedErrors)
 
           BadRequest(otherCostsView(updatedFormWithErrors, navigator.from))
-        },
-        data => {
+        ,
+        data =>
           val updatedOtherCostWithDate = (data.otherCosts zip financialYearEndDates(aboutTheTradingHistory)).map {
             case (otherCost, finYearEnd) => otherCost.copy(financialYearEnd = finYearEnd)
           }
@@ -103,7 +101,6 @@ class OtherCostsController @Inject() (
                 .getOrElse(navigator.nextPage(OtherCostsId, updatedData).apply(updatedData))
             )
             .map(Redirect)
-        }
       )
     }
   }

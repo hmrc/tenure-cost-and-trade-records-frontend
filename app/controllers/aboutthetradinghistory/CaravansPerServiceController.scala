@@ -75,14 +75,13 @@ class CaravansPerServiceController @Inject() (
     continueOrSaveAsDraft[CaravansPerService](
       caravansPerServiceForm,
       formWithErrors => BadRequest(caravansPerServiceView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCaravans(updateAnswer(data))
 
         session
           .saveOrUpdate(updatedData)
           .map(_ => navigator.nextPage(CaravansPerServiceId, updatedData).apply(updatedData))
           .map(Redirect)
-      }
     )
   }
 

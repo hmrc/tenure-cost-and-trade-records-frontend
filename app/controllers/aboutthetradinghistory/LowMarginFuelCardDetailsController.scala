@@ -48,8 +48,7 @@ class LowMarginFuelCardDetailsController @Inject() (
     val existingLowMarginFuelCardDetails: Option[LowMarginFuelCardDetail] =
       for
         requestedIndex      <- index
-        existingBFCDetails  <-
-          request.sessionData.aboutTheTradingHistory.map(_.lowMarginFuelCardsDetails.getOrElse(IndexedSeq.empty))
+        existingBFCDetails  <- request.sessionData.aboutTheTradingHistory.map(_.lowMarginFuelCardsDetails.getOrElse(IndexedSeq.empty))
         requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
       yield requestedBFCDetails.lowMarginFuelCardDetail
 
@@ -67,7 +66,7 @@ class LowMarginFuelCardDetailsController @Inject() (
     continueOrSaveAsDraft[LowMarginFuelCardDetail](
       lowMarginFuelCardDetailsForm,
       formWithErrors => BadRequest(view(formWithErrors, index, getBackLinkUrl(index), request.sessionData.toSummary)),
-      data => {
+      data =>
         val ifLowMarginFuelCardsDetailsEmpty = AboutTheTradingHistory(lowMarginFuelCardsDetails =
           Some(IndexedSeq(LowMarginFuelCardsDetails(lowMarginFuelCardDetail = data)))
         )
@@ -92,7 +91,6 @@ class LowMarginFuelCardDetailsController @Inject() (
         session.saveOrUpdate(updatedSessionData).map { _ =>
           Redirect(navigator.nextPage(LowMarginFuelCardsDetailsId, updatedSessionData).apply(updatedSessionData))
         }
-      }
     )
   }
 

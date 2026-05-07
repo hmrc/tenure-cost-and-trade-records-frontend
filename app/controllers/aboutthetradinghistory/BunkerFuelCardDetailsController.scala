@@ -67,14 +67,13 @@ class BunkerFuelCardDetailsController @Inject() (
     continueOrSaveAsDraft[BunkerFuelCardDetails](
       bunkerFuelCardDetailsForm,
       formWithErrors => BadRequest(view(formWithErrors, index, getBackLinkUrl(index), request.sessionData.toSummary)),
-      data => {
+      data =>
         val ifBunkerFuelCardsDetailsEmpty = AboutTheTradingHistory(bunkerFuelCardsDetails =
           Some(IndexedSeq(BunkerFuelCardsDetails(bunkerFuelCardDetails = data)))
         )
         val updatedAboutTheTradingHistory =
           request.sessionData.aboutTheTradingHistory.fold(ifBunkerFuelCardsDetailsEmpty) { aboutTheTradingHistory =>
-            val existingBunkerFuelCardsDetails                            =
-              aboutTheTradingHistory.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty)
+            val existingBunkerFuelCardsDetails                            = aboutTheTradingHistory.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty)
             val requestedDetails                                          = index.flatMap(existingBunkerFuelCardsDetails.lift)
             val updatedDetails: (Int, IndexedSeq[BunkerFuelCardsDetails]) = requestedDetails.fold {
               val defaultDetails  = BunkerFuelCardsDetails(data)
@@ -92,7 +91,6 @@ class BunkerFuelCardDetailsController @Inject() (
         session.saveOrUpdate(updatedSessionData).map { _ =>
           Redirect(navigator.nextPage(BunkerFuelCardsDetailsId, updatedSessionData).apply(updatedSessionData))
         }
-      }
     )
   }
 

@@ -72,8 +72,7 @@ class TentingPitchesCertificatedController @Inject() (
             calculateBackLink
           )
         ),
-      data => {
-
+      data =>
         val updatedSession = AboutTheTradingHistoryPartOne.updateTouringAndTentingPitches { touringAndTentingPitches =>
           touringAndTentingPitches.copy(tentingPitchesCertificated = Some(data))
         }
@@ -91,7 +90,6 @@ class TentingPitchesCertificatedController @Inject() (
                 .apply(updatedSession)
             )
           )
-      }
     )
   }
 

@@ -87,14 +87,13 @@ class CaravansAnnualPitchFeeController @Inject() (
     continueOrSaveAsDraft[CaravansAnnualPitchFee](
       caravansAnnualPitchFeeForm,
       formWithErrors => BadRequest(caravansAnnualPitchFeeView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCaravans(updateAnswer(data))
 
         session
           .saveOrUpdate(updatedData)
           .map(_ => navigator.nextPage(CaravansAnnualPitchFeeId, updatedData).apply(updatedData))
           .map(Redirect)
-      }
     )
   }
 

@@ -86,8 +86,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
   }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val fromCYA =
-      aboutTheTradingHistoryDataPartOne.flatMap(_.fromCYA).getOrElse(false) || navigator.from == "CYA"
+    val fromCYA = aboutTheTradingHistoryDataPartOne.flatMap(_.fromCYA).getOrElse(false) || navigator.from == "CYA"
 
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
@@ -103,8 +102,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
           .flatMap(_.bunkerFuelCardsDetails)
           .filter(_.isDefinedAt(index))
           .fold(Future.unit) { existingCards =>
-            val updatedCards   =
-              existingCards.updated(index, existingCards(index).copy(addAnotherBunkerFuelCardDetails = Some(formData)))
+            val updatedCards   = existingCards.updated(index, existingCards(index).copy(addAnotherBunkerFuelCardDetails = Some(formData)))
             val updatedData    = updateAboutTheTradingHistory(
               _.copy(
                 bunkerFuelCardsDetails = Some(updatedCards)
@@ -119,11 +117,9 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
             repository.saveOrUpdate(updatedDataCYA)
           }
           .map(_ =>
-            if (formData == AnswerNo && fromCYA) {
-              Redirect(
-                routes.CheckYourAnswersAboutTheTradingHistoryController.show()
-              )
-            } else if (formData == AnswerYes) {
+            if formData == AnswerNo && fromCYA then
+              Redirect(routes.CheckYourAnswersAboutTheTradingHistoryController.show())
+            else if formData == AnswerYes then
               Redirect(
                 if aboutTheTradingHistoryData
                     .flatMap(_.bunkerFuelCardsDetails)
@@ -131,7 +127,7 @@ class AddAnotherBunkerFuelCardsDetailsController @Inject() (
                 then controllers.routes.AddedMaximumListItemsController.show(BunkerFuelCards)
                 else routes.BunkerFuelCardDetailsController.show()
               )
-            } else
+            else
               Redirect(
                 navigator
                   .nextPage(AddAnotherBunkerFuelCardsDetailsId, request.sessionData)

@@ -68,7 +68,7 @@ class GrossReceiptsSubLetUnitsController @Inject() (
       continueOrSaveAsDraft[Seq[GrossReceiptsSubLetUnits]](
         grossReceiptsSubLetUnitsForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(grossReceiptsSubLetUnits = Some(data))
           }
@@ -89,7 +89,6 @@ class GrossReceiptsSubLetUnitsController @Inject() (
               )
 
             }
-        }
       )
     }
   }

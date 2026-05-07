@@ -56,13 +56,12 @@ class VariableOperatingExpensesController @Inject() (
         .fold(Seq.empty[VariableOperatingExpenses])(_.variableOperatingExpenses)
 
       val voeSeq =
-        if (existingVoeSeq.size == tradingHistory.turnoverSections.size) {
+        if existingVoeSeq.size == tradingHistory.turnoverSections.size then
           (existingVoeSeq zip yearEndDates).map { case (voe, finYearEnd) =>
             voe.copy(financialYearEnd = finYearEnd)
           }
-        } else {
+        else
           yearEndDates.map(VariableOperatingExpenses(_, None, None, None, None, None, None, None, None))
-        }
 
       val voeSections = tradingHistory.variableOperatingExpenses
         .fold(VariableOperatingExpensesSections(voeSeq))(_.copy(variableOperatingExpenses = voeSeq))
@@ -88,25 +87,23 @@ class VariableOperatingExpensesController @Inject() (
 
       continueOrSaveAsDraft[VariableOperatingExpensesSections](
         variableOperatingExpensesForm(years),
-        formWithErrors => {
+        formWithErrors =>
           val updatedErrors         = formWithErrors.errors.map { error =>
-            if (error.key.isEmpty && error.message == "error.variableExpenses.otherExpensesDetails.required") {
+            if error.key.isEmpty && error.message == "error.variableExpenses.otherExpensesDetails.required" then
               error.copy(key = "otherExpensesDetails")
-            } else {
+            else
               error
-            }
           }
           val updatedFormWithErrors = formWithErrors.copy(errors = updatedErrors)
           BadRequest(variableOperativeExpensesView(updatedFormWithErrors, navigator.from))
-        },
+        ,
         data =>
-          val voeSeq = (data.variableOperatingExpenses zip yearEndDates).map { case (voe, finYearEnd) =>
+          val voeSeq      = (data.variableOperatingExpenses zip yearEndDates).map { case (voe, finYearEnd) =>
             voe.copy(financialYearEnd = finYearEnd)
           }
-
           val voeSections = data.copy(variableOperatingExpenses = voeSeq)
-
           val updatedData = updateAboutTheTradingHistory(_.copy(variableOperatingExpenses = Some(voeSections)))
+
           session
             .saveOrUpdate(updatedData)
             .map(_ =>

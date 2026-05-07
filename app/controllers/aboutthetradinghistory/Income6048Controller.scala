@@ -71,7 +71,7 @@ class Income6048Controller @Inject() (
       continueOrSaveAsDraft[Seq[(Int, Income6048)]](
         income6048Form(years),
         formWithErrors => BadRequest(income6048View(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6048).map { case (data, previousSection) =>
             previousSection.copy(
               tradingPeriod = data._1,
@@ -89,7 +89,6 @@ class Income6048Controller @Inject() (
             .saveOrUpdate(updatedData)
             .map(_ => navigator.nextPage(Income6048Id, updatedData).apply(updatedData))
             .map(Redirect)
-        }
       )
     }
   }

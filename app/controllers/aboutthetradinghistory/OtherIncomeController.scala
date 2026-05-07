@@ -75,7 +75,7 @@ class OtherIncomeController @Inject() (
       continueOrSaveAsDraft[(Seq[Option[BigDecimal]], String)](
         otherIncomeForm(years),
         formWithErrors => BadRequest(otherIncomeView(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success._1 zip turnoverSections6076).map { case (otherIncome, previousSection) =>
             previousSection.copy(otherIncome = otherIncome)
           }
@@ -96,7 +96,6 @@ class OtherIncomeController @Inject() (
                 .getOrElse(navigator.nextPage(OtherIncomeId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }

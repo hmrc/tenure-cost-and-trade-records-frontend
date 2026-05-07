@@ -73,12 +73,11 @@ class ElectricVehicleChargingPointsController @Inject() (
             getBackLink
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistory(_.copy(electricVehicleChargingPoints = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(ElectricVehicleChargingPointsId, updatedData).apply(updatedData)))
-      }
     )
   }
 

@@ -68,7 +68,7 @@ class AdditionalBarsClubsController @Inject() (
       continueOrSaveAsDraft[Seq[AdditionalBarsClubs]](
         additionalBarsClubsForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(additionalBarsClubs = Some(data))
           }
@@ -90,7 +90,6 @@ class AdditionalBarsClubsController @Inject() (
                 .apply(updatedData)
             )
           }
-        }
       )
     }
   }

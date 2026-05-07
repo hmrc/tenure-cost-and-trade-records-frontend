@@ -68,13 +68,13 @@ class FinancialYearEndDatesSummaryController @Inject() (
           )
         ),
       data =>
-        if (!data) {
+        if !data then
           val formWithError = financialYearEndDatesSummaryForm
             .fill(data)
             .withError("isFinancialYearEndDatesCorrect", Messages("error.financialYearEndDates.incorrect"))
 
           BadRequest(financialYearEndDateSummaryView(formWithError, getBackLink))
-        } else {
+        else
           val updatedData = updateAboutTheTradingHistoryPartOne(_.copy(Some(data)))
           session
             .saveOrUpdate(updatedData)
@@ -86,7 +86,6 @@ class FinancialYearEndDatesSummaryController @Inject() (
                 .getOrElse(navigator.nextPage(FinancialYearEndDatesPageId, updatedData).apply(updatedData))
             )
             .map(Redirect)
-        }
     )
   }
 
@@ -94,7 +93,7 @@ class FinancialYearEndDatesSummaryController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(using request: SessionRequest[AnyContent]
   ) =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6020           =>
         aboutTheTradingHistory.turnoverSections6020.flatMap(_.headOption).exists(_.shop.isDefined)
       case FOR6030           => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
@@ -114,7 +113,6 @@ class FinancialYearEndDatesSummaryController @Inject() (
           .flatMap(_.headOption)
           .exists(_.electricityGenerated.isDefined)
       case _                 => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
-    }
 
   private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match

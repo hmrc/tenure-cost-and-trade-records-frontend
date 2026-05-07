@@ -94,7 +94,7 @@ abstract class CaravansTrading6045Controller(
         form(years),
         formWithErrors =>
           BadRequest(caravansTrading6045View(formWithErrors, formAction, messageKeyPrefix, showHelpText, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map(updateAnswer(_).apply(_))
 
           val updatedData = updateAboutTheTradingHistoryPartOne(
@@ -105,7 +105,6 @@ abstract class CaravansTrading6045Controller(
             .saveOrUpdate(updatedData)
             .map(_ => navigator.nextPage(pageId, updatedData).apply(updatedData))
             .map(Redirect)
-        }
       )
     }
   }
@@ -123,12 +122,11 @@ abstract class CaravansTrading6045Controller(
     turnoverSections6045.map(section => getSavedAnswer(section).getOrElse(CaravansTrading6045()))
 
   private def formAction: Call =
-    tradingPage match {
+    tradingPage match
       case SingleCaravansOwnedByOperator => routes.SingleCaravansOwnedByOperatorController.submit()
       case SingleCaravansSublet          => routes.SingleCaravansSubletController.submit()
       case TwinCaravansOwnedByOperator   => routes.TwinUnitCaravansOwnedByOperatorController.submit()
       case TwinCaravansSublet            => routes.TwinUnitCaravansSubletController.submit()
-    }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
     (navigator.from match

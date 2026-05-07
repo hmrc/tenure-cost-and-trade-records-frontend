@@ -67,7 +67,7 @@ class StaticCaravansController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       staticCaravansForm,
       formWithErrors => BadRequest(staticCaravansView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCaravans(_.copy(anyStaticLeisureCaravansOnSite = Some(data)))
 
         session
@@ -78,7 +78,6 @@ class StaticCaravansController @Inject() (
               .getOrElse(navigator.nextWithoutRedirectToCYA(StaticCaravansId, updatedData).apply(updatedData))
           }
           .map(Redirect)
-      }
     )
   }
 

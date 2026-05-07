@@ -68,7 +68,7 @@ class PitchesForGlampingController @Inject() (
       continueOrSaveAsDraft[Seq[TentingPitchesData]](
         tentingPitchesDataForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(pitchesForGlamping = Some(data))
           }
@@ -90,7 +90,6 @@ class PitchesForGlampingController @Inject() (
                 .apply(updatedData)
             )
           }
-        }
       )
     }
   }

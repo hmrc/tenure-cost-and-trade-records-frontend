@@ -68,7 +68,7 @@ class AdditionalCateringController @Inject() (
       continueOrSaveAsDraft[Seq[AdditionalCatering]](
         additionalCateringForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(additionalCatering = Some(data))
           }
@@ -90,7 +90,6 @@ class AdditionalCateringController @Inject() (
                 .apply(updatedData)
             )
           }
-        }
       )
     }
   }

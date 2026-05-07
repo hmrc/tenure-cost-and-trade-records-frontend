@@ -75,7 +75,7 @@ class HeadOfficeExpensesController @Inject() (
       continueOrSaveAsDraft[(Seq[Option[BigDecimal]], Option[String])](
         headOfficeExpensesForm(years),
         formWithErrors => BadRequest(headOfficeExpensesView(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections      = (success._1 zip turnoverSections6076).map { case (headOfficeExpenses, previousSection) =>
             previousSection.copy(headOfficeExpenses = headOfficeExpenses)
           }
@@ -96,7 +96,6 @@ class HeadOfficeExpensesController @Inject() (
                 .getOrElse(navigator.nextPage(HeadOfficeExpensesId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }

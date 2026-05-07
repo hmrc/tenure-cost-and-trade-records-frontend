@@ -71,7 +71,7 @@ class AdministrativeCosts6048Controller @Inject() (
       continueOrSaveAsDraft[Seq[AdministrativeCosts6048]](
         administrativeCosts6048Form(years),
         formWithErrors => BadRequest(administrativeCosts6048View(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6048).map { case (administrativeCosts, previousSection) =>
             previousSection.copy(
               administrativeCosts = Some(administrativeCosts)
@@ -88,7 +88,6 @@ class AdministrativeCosts6048Controller @Inject() (
             .saveOrUpdate(updatedData)
             .map(_ => navigator.nextPage(AdministrativeCosts6048Id, updatedData).apply(updatedData))
             .map(Redirect)
-        }
       )
     }
   }

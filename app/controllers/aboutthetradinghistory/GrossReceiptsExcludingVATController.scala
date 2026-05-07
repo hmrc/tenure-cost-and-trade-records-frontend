@@ -70,7 +70,7 @@ class GrossReceiptsExcludingVATController @Inject() (
               navigator.from
             )
           ),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6076).map { case (grossReceipts, previousSection) =>
             previousSection.copy(grossReceiptsExcludingVAT = Some(grossReceipts))
           }
@@ -84,7 +84,6 @@ class GrossReceiptsExcludingVATController @Inject() (
           session
             .saveOrUpdate(updatedData)
             .map(_ => Redirect(navigator.nextPage(GrossReceiptsExcludingVatId, updatedData).apply(updatedData)))
-        }
       )
     }
   }

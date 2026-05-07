@@ -63,7 +63,7 @@ class GrossReceiptsForBaseLoadController @Inject() (
       continueOrSaveAsDraft[Seq[GrossReceiptsForBaseLoad]](
         grossReceiptsForBaseLoadForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6076).map { case (updatedGrossReceiptsForBaseLoad, turnoverSection) =>
             turnoverSection.copy(grossReceiptsForBaseLoad = Some(updatedGrossReceiptsForBaseLoad))
           }
@@ -80,7 +80,6 @@ class GrossReceiptsForBaseLoadController @Inject() (
                 .getOrElse(navigator.nextPage(GrossReceiptsForBaseLoadId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }

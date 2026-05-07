@@ -61,6 +61,7 @@ class FixedOperatingExpensesController @Inject() (
           yearEndDates.map(FixedOperatingExpenses(_, None, None, None, None, None))
 
       val updatedData = updateAboutTheTradingHistory(_.copy(fixedOperatingExpensesSections = fixedOperatingExpenses))
+
       session
         .saveOrUpdate(updatedData)
         .flatMap(_ =>
@@ -87,8 +88,8 @@ class FixedOperatingExpensesController @Inject() (
             foe.copy(financialYearEnd = finYearEnd)
           }
 
-          val updatedData =
-            updateAboutTheTradingHistory(_.copy(fixedOperatingExpensesSections = fixedOperatingExpenses))
+          val updatedData = updateAboutTheTradingHistory(_.copy(fixedOperatingExpensesSections = fixedOperatingExpenses))
+
           session
             .saveOrUpdate(updatedData)
             .map(_ =>
