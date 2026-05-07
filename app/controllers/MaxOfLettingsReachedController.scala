@@ -68,18 +68,17 @@ class MaxOfLettingsReachedController @Inject() (
             src.getOrElse("")
           )
         ),
-      data => {
-        val updatedData = src match {
+      data =>
+        val updatedData = src match
           case Some("connection")   => updateStillConnectedDetails(_.copy(maxOfLettings = data))
           case Some("lettings")     => updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
           case Some("typeOfIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = data))
           case Some("rentalIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = data))
           case _                    => request.sessionData
-        }
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
-            src match {
+            src match
               case Some("connection") =>
                 connectionNavigator
                   .cyaPageDependsOnSession(updatedData)
@@ -90,10 +89,8 @@ class MaxOfLettingsReachedController @Inject() (
                       .apply(updatedData)
                   )
               case _                  => franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
-            }
           }
           .map(Redirect)
-      }
     )
   }
 

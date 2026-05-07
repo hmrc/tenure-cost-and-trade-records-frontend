@@ -65,23 +65,21 @@ class FeedbackController @Inject() (
   }
 
   def feedbackSubmit: Action[AnyContent] = Action.async { implicit request =>
-    if (request.session.get("session").isEmpty) {
+    if request.session.get("session").isEmpty then
       feedbackSubmitWithoutSession.apply(request) // need that if user is not logged in
-    } else {
+    else
       (Action andThen withSessionRefiner)
         .async { implicit request =>
           feedbackForm
             .bindFromRequest()
             .fold(
               formWithErrors => BadRequest(feedbackView(formWithErrors)),
-              feedbackForm => {
+              feedbackForm =>
                 sendFeedback("InPageFeedback", feedbackForm, request.sessionData)
                 Redirect(routes.FeedbackController.feedbackThx)
-              }
             )
         }
         .apply(request)
-    }
   }
 
   def feedbackSharedSubmit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -89,21 +87,19 @@ class FeedbackController @Inject() (
       .bindFromRequest()
       .fold(
         formWithErrors => BadRequest(confirmationConnectedView(formWithErrors)),
-        feedbackForm => {
+        feedbackForm =>
           val addressConnectionType  = request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType)
           val vacantPropertySelected = request.sessionData.stillConnectedDetails.flatMap(_.isPropertyVacant)
 
-          if (addressConnectionType.contains(AddressConnectionTypeNo)) {
+          if addressConnectionType.contains(AddressConnectionTypeNo) then
             sendFeedback("NotConnectedFeedback", feedbackForm, request.sessionData)
             Redirect(routes.FeedbackController.feedbackThx)
-          } else if (vacantPropertySelected.contains(AnswerYes)) {
+          else if vacantPropertySelected.contains(AnswerYes) then
             sendFeedback("VacantPropertyFeedback", feedbackForm, request.sessionData)
             Redirect(routes.FeedbackController.feedbackThx)
-          } else {
+          else
             sendFeedback("PostSubmitFeedback", feedbackForm, request.sessionData)
             Redirect(routes.FeedbackController.feedbackThx)
-          }
-        }
       )
   }
 

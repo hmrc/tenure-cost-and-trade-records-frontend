@@ -19,8 +19,8 @@ package controllers.aboutfranchisesorlettings
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
 import form.ConfirmableActionForm.confirmableActionForm
+import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
@@ -56,19 +56,16 @@ class AddOrRemoveLettingController @Inject() (
   private def getOperatorName(idx: Int)(using request: SessionRequest[AnyContent]): Option[String] =
     franchisesOrLettingsData.flatMap { fr =>
       fr.lettings.flatMap { lettings =>
-        lettings.lift(idx).map {
+        lettings.lift(idx).map:
           case atm: ATMLetting                 => atm.bankOrCompany.getOrElse("")
           case telecom: TelecomMastLetting     => telecom.operatingCompanyName.getOrElse("")
           case advert: AdvertisingRightLetting => advert.advertisingCompanyName.getOrElse("")
           case other: OtherLetting             => other.tenantName.getOrElse("")
-        }
       }
     }
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val addAnother: Option[AnswersYesNo] =
-      franchisesOrLettingsData
-        .flatMap(_.lettings.flatMap(_.lift(index)).flatMap(_.addAnotherLetting))
+    val addAnother: Option[AnswersYesNo] = franchisesOrLettingsData.flatMap(_.lettings.flatMap(_.lift(index)).flatMap(_.addAnotherLetting))
 
     audit.sendChangeLink("AddOrRemoveLetting")
 
@@ -82,22 +79,16 @@ class AddOrRemoveLettingController @Inject() (
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val lettingsData          = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings)
-    val numberOfLettings: Int =
-      request.sessionData.aboutFranchisesOrLettings.map(_.lettings.getOrElse(IndexedSeq.empty).size).getOrElse(0)
+    val numberOfLettings: Int = request.sessionData.aboutFranchisesOrLettings.map(_.lettings.getOrElse(IndexedSeq.empty).size).getOrElse(0)
+
     continueOrSaveAsDraft[AnswersYesNo](
       addAnotherLettingForm,
-      formWithErrors =>
-        BadRequest(
-          theListView(
-            formWithErrors,
-            index
-          )
-        ),
+      formWithErrors => BadRequest(theListView(formWithErrors, index)),
       formData =>
-        if (formData == AnswerYes && numberOfLettings >= 5 && navigator.from != "CYA") {
+        if formData == AnswerYes && numberOfLettings >= 5 && navigator.from != "CYA" then
           Redirect(controllers.routes.MaxOfLettingsReachedController.show(Some("lettings")))
-        } else {
-          lettingsData match {
+        else
+          lettingsData match
             case Some(lettings) if lettings.isDefinedAt(index) =>
               val updatedLettings: IndexedSeq[LettingPartOfProperty] =
                 lettings.updated(index, updateLettingWithNewAnswer(lettings(index), Some(formData)))
@@ -105,24 +96,18 @@ class AddOrRemoveLettingController @Inject() (
                 about.copy(lettings = Some(updatedLettings))
               )
               repository.saveOrUpdate(updatesSession).map { _ =>
-                if (formData == AnswerYes) {
+                if formData == AnswerYes then
                   Redirect(routes.TypeOfLettingController.show(Some(index + 1)))
-                } else {
+                else
                   Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
-                }
               }
             case Some(lettings) if lettings.isEmpty            =>
-              if (formData == AnswerYes) {
+              if formData == AnswerYes then
                 Redirect(routes.TypeOfLettingController.show())
-              } else {
+              else
                 Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
-              }
             case _                                             =>
-              Redirect(
-                routes.AddOrRemoveLettingController.show(lettingsData.map(_.size).getOrElse(0))
-              )
-          }
-        }
+              Redirect(routes.AddOrRemoveLettingController.show(lettingsData.map(_.size).getOrElse(0)))
     )
   }
 
@@ -130,12 +115,11 @@ class AddOrRemoveLettingController @Inject() (
     letting: LettingPartOfProperty,
     newAnswer: Option[AnswersYesNo]
   ): LettingPartOfProperty =
-    letting match {
+    letting match
       case atm: ATMLetting                 => atm.copy(addAnotherLetting = newAnswer)
       case telecom: TelecomMastLetting     => telecom.copy(addAnotherLetting = newAnswer)
       case advert: AdvertisingRightLetting => advert.copy(addAnotherLetting = newAnswer)
       case other: OtherLetting             => other.copy(addAnotherLetting = newAnswer)
-    }
 
   def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     getOperatorName(idx)
@@ -172,21 +156,18 @@ class AddOrRemoveLettingController @Inject() (
           ),
       {
         case AnswerYes =>
-          val aboutFranchisesOrLettings =
-            request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
+          val aboutFranchisesOrLettings = request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
           val lettings                  = aboutFranchisesOrLettings.lettings.getOrElse(IndexedSeq.empty)
-          if (idx >= 0 && idx < lettings.length) {
+          if idx >= 0 && idx < lettings.length then
             val updatedLettings = lettings.patch(idx, Nil, 1)
             val updatedAbout    = aboutFranchisesOrLettings.copy(lettings = Some(updatedLettings))
             repository.saveOrUpdate(request.sessionData.copy(aboutFranchisesOrLettings = Some(updatedAbout))).map { _ =>
               Redirect(
                 controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController
-                  .show(if (updatedLettings.isEmpty) 0 else updatedLettings.length - 1)
+                  .show(if updatedLettings.isEmpty then 0 else updatedLettings.length - 1)
               )
             }
-          } else {
-            Redirect(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(0))
-          }
+          else Redirect(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(0))
         case AnswerNo  =>
           Redirect(controllers.aboutfranchisesorlettings.routes.AddOrRemoveLettingController.show(idx))
       }

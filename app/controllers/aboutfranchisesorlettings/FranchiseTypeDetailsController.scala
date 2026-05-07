@@ -94,18 +94,18 @@ class FranchiseTypeDetailsController @Inject() (
           _                          <- repository.saveOrUpdate(newSession)
           redirectResult             <- redirectToAddressLookupFrontend(
                                           config = AddressLookupConfig(
-                                            lookupPageHeadingKey = forType match {
+                                            lookupPageHeadingKey = forType match
                                               case FOR6010 => "concessionDetails.address.lookupPageHeadingOperator"
                                               case _       => "concessionDetails.address.lookupPageHeading"
-                                            },
-                                            selectPageHeadingKey = forType match {
+                                            ,
+                                            selectPageHeadingKey = forType match
                                               case FOR6010 => "concessionDetails.address.selectPageHeadingOperator"
                                               case _       => "concessionDetails.address.selectPageHeading"
-                                            },
-                                            confirmPageLabelKey = forType match {
+                                            ,
+                                            confirmPageLabelKey = forType match
                                               case FOR6010 => "concessionDetails.address.confirmPageHeadingOperator"
                                               case _       => "concessionDetails.address.confirmPageHeading"
-                                            },
+                                            ,
                                             offRampCall = routes.FranchiseTypeDetailsController.addressLookupCallback(
                                               updatedIndex
                                             )
@@ -120,30 +120,27 @@ class FranchiseTypeDetailsController @Inject() (
     idx: Int
   )(using
     request: SessionRequest[AnyContent]
-  ): (Session, Int) = {
+  ): (Session, Int) =
     var updatedIndex   = 0
     val updatedSession = updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
-      if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
+      if aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx)) then
         val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
           records.updated(
             idx,
-            records(idx) match {
+            records(idx) match
               // See the @concessionOrfranchise function of the typeOfIncome.scala.html file
               case r: FranchiseIncomeRecord      => r.copy(businessDetails = Some(formData))
               case r: Concession6015IncomeRecord => r.copy(businessDetails = Some(formData))
               // case r: ConcessionIncomeRecord  => r.copy(businessDetails = Some(formData))
               case _                             => throw IllegalStateException("Unknown income record type")
-            }
           )
         }
         updatedIndex = idx
         aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome, rentalIncomeIndex = idx)
-      } else {
+      else
         aboutFranchisesOrLettings
-      }
     }(using request)
     (updatedSession, updatedIndex)
-  }
 
   def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
     implicit request =>

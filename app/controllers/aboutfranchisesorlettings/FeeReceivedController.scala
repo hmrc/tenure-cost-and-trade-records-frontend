@@ -49,6 +49,7 @@ class FeeReceivedController @Inject() (
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck(idx) { concessionIncomeRecord =>
       val years = financialYearEndDates.map(_.getYear.toString)
+
       audit.sendChangeLink("FeeReceived")
 
       Ok(
@@ -81,7 +82,7 @@ class FeeReceivedController @Inject() (
             )
           ),
         data =>
-          if (data.feeReceivedPerYear.size == yearEndDates.size) {
+          if data.feeReceivedPerYear.size == yearEndDates.size then
             val feeReceivedSeq = (data.feeReceivedPerYear zip yearEndDates).map { case (feePerYear, finYearEnd) =>
               feePerYear.copy(financialYearEnd = finYearEnd)
             }
@@ -93,15 +94,13 @@ class FeeReceivedController @Inject() (
               .map(_.updated(idx, concessionIncomeRecord.copy(feeReceived = Some(updatedFeeReceived))))
               .get
 
-            val updatedData =
-              updateAboutFranchisesOrLettings(_.copy(rentalIncome = Some(updatedSections)))
+            val updatedData = updateAboutFranchisesOrLettings(_.copy(rentalIncome = Some(updatedSections)))
 
             session.saveOrUpdate(updatedData).map { _ =>
               Redirect(navigator.nextPage(FeeReceivedPageId, updatedData).apply(updatedData))
             }
-          } else {
+          else
             Redirect(controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(idx))
-          }
       )
     }
   }
@@ -112,7 +111,7 @@ class FeeReceivedController @Inject() (
     action: ConcessionIncomeRecord => Future[Result]
   )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
-    if (request.sessionData.aboutTheTradingHistory.map(_.turnoverSections6030).exists(_.nonEmpty)) {
+    if request.sessionData.aboutTheTradingHistory.map(_.turnoverSections6030).exists(_.nonEmpty) then
       request.sessionData.aboutFranchisesOrLettings
         .filter(_.rentalIncome.nonEmpty)
         .flatMap(_.rentalIncome.flatMap(_.lift(idx)))
@@ -120,9 +119,8 @@ class FeeReceivedController @Inject() (
           concession
         }
         .fold[Future[Result]](Redirect(backLink(idx)))(action)
-    } else {
+    else
       Redirect(routes.WhenDidYouFirstOccupyController.show())
-    }
 
   private def initialFeeReceived(using request: SessionRequest[AnyContent]): FeeReceived =
     FeeReceived(

@@ -20,7 +20,7 @@ import connectors.Audit
 import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
-import navigation.identifiers._
+import navigation.identifiers.*
 import play.api.Logging
 import play.api.mvc.Call
 

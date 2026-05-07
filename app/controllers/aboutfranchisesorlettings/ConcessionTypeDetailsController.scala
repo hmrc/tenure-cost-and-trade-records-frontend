@@ -46,16 +46,18 @@ class ConcessionTypeDetailsController @Inject() (
   with Logging:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[ConcessionBusinessDetails] = for {
-      requestedIndex   <- Some(index)
-      allRecords       <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
-      existingRecord   <- allRecords.lift(requestedIndex)
-      concessionRecord <- existingRecord match
-                            case concession: ConcessionIncomeRecord => concession.businessDetails
-                            case _                                  => None
-    } yield concessionRecord
+    val existingDetails: Option[ConcessionBusinessDetails] =
+      for
+        requestedIndex   <- Some(index)
+        allRecords       <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
+        existingRecord   <- allRecords.lift(requestedIndex)
+        concessionRecord <- existingRecord match
+                              case concession: ConcessionIncomeRecord => concession.businessDetails
+                              case _                                  => None
+      yield concessionRecord
 
     audit.sendChangeLink("ConcessionTypeDetails")
+
     Ok(
       view(
         existingDetails.fold(concessionTypeDetailsForm)(
@@ -80,22 +82,20 @@ class ConcessionTypeDetailsController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
-          if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
-            val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
+          if aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx)) then
+            val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map(records =>
               records.updated(idx, records(idx).asInstanceOf[ConcessionIncomeRecord].copy(businessDetails = Some(data)))
-            }
+            )
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome, rentalIncomeIndex = idx)
-          } else {
+          else
             aboutFranchisesOrLettings
-          }
         }(using request)
 
         session.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(ConcessionTypeDetailsId, updatedSession).apply(updatedSession))
         }
-      }
     )
   }
 

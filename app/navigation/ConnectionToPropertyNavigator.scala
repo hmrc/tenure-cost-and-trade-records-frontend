@@ -18,7 +18,7 @@ package navigation
 
 import connectors.Audit
 import controllers.connectiontoproperty.routes
-import identifiers._
+import identifiers.*
 import play.api.mvc.Call
 import models.ForType.*
 import models.Session

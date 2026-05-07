@@ -77,14 +77,14 @@ class TelecomMastLettingController @Inject() (
       lettingsOpt: Option[IndexedSeq[LettingPartOfProperty]],
       telecomMastLetting: TelecomMastLetting,
       index: Option[Int]
-    ): (IndexedSeq[LettingPartOfProperty], Int) = {
+    ): (IndexedSeq[LettingPartOfProperty], Int) =
       var updatedIndex: Int = -1
-      val updatedLetting    = lettingsOpt match {
+      val updatedLetting    = lettingsOpt match
         case Some(lettings) =>
-          index match {
+          index match
             case Some(idx) if idx < lettings.length =>
               updatedIndex = idx
-              lettings(idx) match {
+              lettings(idx) match
                 case existingOther: TelecomMastLetting =>
                   lettings.updated(
                     idx,
@@ -96,17 +96,14 @@ class TelecomMastLettingController @Inject() (
                   )
                 case _                                 =>
                   lettings.updated(idx, telecomMastLetting)
-              }
             case _                                  =>
               updatedIndex = lettings.length
               lettings :+ telecomMastLetting
-          }
         case None           =>
           updatedIndex = 0
           IndexedSeq(telecomMastLetting)
-      }
+
       (updatedLetting, updatedIndex)
-    }
 
     continueOrSaveAsDraft[TelecomMastLetting](
       theForm,
@@ -119,7 +116,7 @@ class TelecomMastLettingController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      formData => {
+      formData =>
         var updatedIndex: Int = -1
         val updatedSession    = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { about =>
           val (updatedLettings, idx) = updateOrAddTelecomMastLetting(about.lettings, formData, index)
@@ -141,7 +138,6 @@ class TelecomMastLettingController @Inject() (
                               )
                             )
         yield redirectResult
-      }
     )
   }
 

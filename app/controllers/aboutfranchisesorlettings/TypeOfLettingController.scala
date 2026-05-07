@@ -46,21 +46,20 @@ class TypeOfLettingController @Inject() (
   with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[TypeOfLetting] = for {
-      requestedIndex                <- index
-      existingAccommodationSections <-
-        request.sessionData.aboutFranchisesOrLettings.map(
-          _.lettings.getOrElse(IndexedSeq.empty)
-        )
-      requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
-    } yield requestedAccommodationSection.typeOfLetting
+    val existingDetails: Option[TypeOfLetting] =
+      for
+        requestedIndex                <- index
+        existingAccommodationSections <- request.sessionData.aboutFranchisesOrLettings.map(
+                                           _.lettings.getOrElse(IndexedSeq.empty)
+                                         )
+        requestedAccommodationSection <- existingAccommodationSections.lift(requestedIndex)
+      yield requestedAccommodationSection.typeOfLetting
+
     audit.sendChangeLink("TypeOfLetting")
 
     Ok(
       typeOfLettingView(
-        existingDetails.fold(typeOfLettingForm)(
-          typeOfLettingForm.fill
-        ),
+        existingDetails.fold(typeOfLettingForm)(typeOfLettingForm.fill),
         index,
         request.sessionData.toSummary,
         getBackLink(index)
@@ -80,28 +79,21 @@ class TypeOfLettingController @Inject() (
             getBackLink(index)
           )
         ),
-      data => {
+      data =>
         val newLetting       = createLettingType(data)
-        val existingLettings =
-          request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings).getOrElse(IndexedSeq.empty)
+        val existingLettings = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings).getOrElse(IndexedSeq.empty)
 
-        index match {
+        index match
           case Some(idx) if idx >= 0 && idx < existingLettings.length =>
             val existingLetting = existingLettings(idx)
-            if (existingLetting.getClass == newLetting.getClass && navigator.from == "CYA") {
-
-              Redirect(
-                controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-              )
-            } else {
+            if existingLetting.getClass == newLetting.getClass && navigator.from == "CYA" then
+              Redirect(controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+            else
               val updatedLettings = existingLettings.updated(idx, newLetting)
               updateSessionAndRedirect(updatedLettings, data, index)
-            }
           case _                                                      =>
             val updatedLettings = existingLettings :+ newLetting
             updateSessionAndRedirect(updatedLettings, data, index)
-        }
-      }
     )
   }
 
@@ -112,8 +104,7 @@ class TypeOfLettingController @Inject() (
   )(using request: SessionRequest[AnyContent],
     hc: HeaderCarrier
   ): Future[Result] =
-    val existingFranchisesOrLetting =
-      request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
+    val existingFranchisesOrLetting = request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
     val updatedSession              = request.sessionData.copy(
       aboutFranchisesOrLettings = Some(
         existingFranchisesOrLetting.copy(lettings = Some(updatedLettings))
@@ -123,21 +114,20 @@ class TypeOfLettingController @Inject() (
       Redirect(toSpecificController(lettingType, index))
     }
 
-  private def createLettingType(typeOfLetting: TypeOfLetting): LettingPartOfProperty = typeOfLetting match {
-    case TypeOfLettingAutomatedTellerMachine => ATMLetting(None, None, None)
-    case TypeOfLettingTelecomMast            => TelecomMastLetting(None, None, None, None)
-    case TypeOfLettingAdvertisingRight       => AdvertisingRightLetting(None, None, None, None)
-    case TypeOfLettingOther                  => OtherLetting(None, None, None, None)
-  }
+  private def createLettingType(typeOfLetting: TypeOfLetting): LettingPartOfProperty =
+    typeOfLetting match
+      case TypeOfLettingAutomatedTellerMachine => ATMLetting(None, None, None)
+      case TypeOfLettingTelecomMast            => TelecomMastLetting(None, None, None, None)
+      case TypeOfLettingAdvertisingRight       => AdvertisingRightLetting(None, None, None, None)
+      case TypeOfLettingOther                  => OtherLetting(None, None, None, None)
 
   private def toSpecificController(typeOfLetting: TypeOfLetting, index: Option[Int]): Call =
     val targetIndex = index.getOrElse(0) // Default to the first index if none provided
-    typeOfLetting match {
+    typeOfLetting match
       case TypeOfLettingAutomatedTellerMachine => routes.AtmLettingController.show(Some(targetIndex))
       case TypeOfLettingTelecomMast            => routes.TelecomMastLettingController.show(Some(targetIndex))
       case TypeOfLettingAdvertisingRight       => routes.AdvertisingRightLettingController.show(Some(targetIndex))
       case TypeOfLettingOther                  => routes.OtherLettingController.show(Some(targetIndex))
-    }
 
   private def getBackLink(idx: Option[Int])(using request: SessionRequest[AnyContent]): String =
     if navigator.from == "CYA" then

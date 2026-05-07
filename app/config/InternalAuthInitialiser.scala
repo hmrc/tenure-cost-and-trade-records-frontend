@@ -57,12 +57,11 @@ class InternalAuthTokenInitialiserImpl @Inject() (
 
   private def ensureAuthToken(): Future[Done] =
     authTokenIsValid().flatMap { isValid =>
-      if (isValid) {
+      if isValid then
         logger.info("Auth token is already valid")
         Future.successful(Done)
-      } else {
+      else
         createClientAuthToken()
-      }
     }
 
   private def createClientAuthToken(): Future[Done] =
@@ -85,12 +84,11 @@ class InternalAuthTokenInitialiserImpl @Inject() (
       )
       .execute[HttpResponse]
       .flatMap { response =>
-        if (response.status == CREATED) {
+        if response.status == CREATED then
           logger.info("Auth token initialised")
           Future.successful(Done)
-        } else {
+        else
           Future.failed(RuntimeException("Unable to initialise internal-auth token"))
-        }
       }
 
   private def authTokenIsValid(): Future[Boolean] =

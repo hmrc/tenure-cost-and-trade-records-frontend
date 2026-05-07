@@ -17,9 +17,9 @@
 package actions
 
 import play.api.i18n.MessagesApi
-import play.api.mvc.Results._
-import play.api.mvc._
-
+import play.api.mvc.Results.*
+import play.api.mvc.*
+import controllers.*
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -34,10 +34,9 @@ class RefNumAction @Inject() (
   with ActionRefiner[Request, RefNumRequest]
   with MessagesActionBuilder:
 
-  override def refine[A](request: Request[A]): Future[Either[Result, RefNumRequest[A]]] = Future.successful {
+  override def refine[A](request: Request[A]): Future[Either[Result, RefNumRequest[A]]] =
     request.session.get("refNum") match
       case Some(refNum) => Right(RefNumRequest(refNum, request, messagesApi))
-      case None         => Left(Redirect(controllers.routes.LoginController.show))
-  }
+      case None         => Left(Redirect(routes.LoginController.show))
 
   override def parser: BodyParser[AnyContent] = bodyParser

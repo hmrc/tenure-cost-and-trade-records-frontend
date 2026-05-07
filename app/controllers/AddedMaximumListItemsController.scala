@@ -62,13 +62,12 @@ class AddedMaximumListItemsController @Inject() (
     continueOrSaveAsDraft[Option[Boolean]](
       addedMaximumListItemsForm(list.itemsInPluralKey),
       formWithErrors => BadRequest(addedMaximumListItemsView(formWithErrors, list)),
-      data => {
+      data =>
         val updatedData = saveAnswer(list, data)
 
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(nextPage(list)))
-      }
     )
   }
 
@@ -117,9 +116,8 @@ class AddedMaximumListItemsController @Inject() (
       case AccommodationUnits     => controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show
       case TradeServices          => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
       case ServicesPaidSeparately =>
-        forType match {
+        forType match
           case FOR6020 => aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show()
           case _       => aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show()
-        }
       case BunkerFuelCards        => controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show()
       case LowMarginFuelCards     => controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show()

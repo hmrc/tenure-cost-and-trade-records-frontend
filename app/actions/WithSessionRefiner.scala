@@ -24,6 +24,7 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import javax.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
+import scala.language.implicitConversions
 
 case class WithSessionRefiner @Inject() (
   @Named("session") sessionRepository: SessionRepo
@@ -34,8 +35,6 @@ case class WithSessionRefiner @Inject() (
     HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
   override protected def refine[A](request: Request[A]): Future[Either[Result, SessionRequest[A]]] =
-    sessionRepository.get(using hc(using request)).map {
+    sessionRepository.get(using hc(using request)).map:
       case Some(s) => Right(actions.SessionRequest(sessionData = s, request = request))
       case None    => Left(TemporaryRedirect(controllers.routes.LoginController.show.url))
-
-    }

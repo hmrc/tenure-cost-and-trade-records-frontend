@@ -51,11 +51,10 @@ abstract class FORDataCaptureController(cc: MessagesControllerComponents) extend
   )(using
     request: SessionRequest[AnyContent]
   ): Future[Result] =
-    if (isSaveAsDraft) saveAsDraftRedirect else successResult
+    if isSaveAsDraft then saveAsDraftRedirect else successResult
 
   private def isSaveAsDraft(using request: SessionRequest[AnyContent]) =
     request.body.asFormUrlEncoded.flatMap(_.get("save-button")).isDefined
 
-  private def saveAsDraftRedirect(using request: Request[?]): Result = Redirect(
-    controllers.routes.SaveAsDraftController.customPassword(request.uri)
-  )
+  private def saveAsDraftRedirect(using request: Request[?]): Result =
+    Redirect(routes.SaveAsDraftController.customPassword(request.uri))

@@ -18,7 +18,7 @@ package models.submissions
 
 import models.ForType
 import models.submissions.common.Address
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import java.time.Instant
 

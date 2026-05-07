@@ -91,7 +91,6 @@ class RentReceivedFromController @Inject() (
 
         repository.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(RentReceivedFromPageId, updatedSession).apply(updatedSession))
-
         }
     )
   }

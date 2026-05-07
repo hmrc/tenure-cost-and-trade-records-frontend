@@ -53,6 +53,7 @@ class RentalIncomeIncludedController @Inject() (
       case franchise: FranchiseIncomeRecord           => franchise.itemsIncluded
       case _                                          => None
     }.flatten
+
     audit.sendChangeLink("LettingTypeIncluded")
 
     Ok(
@@ -79,18 +80,17 @@ class RentalIncomeIncludedController @Inject() (
             calculateBackLink(idx)
           )
         ),
-      data => {
+      data =>
         val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
           if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
               records.updated(
                 idx,
-                records(idx) match {
+                records(idx) match
                   case franchise: FranchiseIncomeRecord       => franchise.copy(itemsIncluded = Some(data))
                   case concession: Concession6015IncomeRecord => concession.copy(itemsIncluded = Some(data))
                   case letting: LettingIncomeRecord           => letting.copy(itemsIncluded = Some(data))
                   case _                                      => throw IllegalStateException("Unknown income record type")
-                }
               )
             }
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
@@ -99,9 +99,7 @@ class RentalIncomeIncludedController @Inject() (
 
         session.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(RentalIncomeIncludedId, updatedSession).apply(updatedSession))
-
         }
-      }
     )
   }
 

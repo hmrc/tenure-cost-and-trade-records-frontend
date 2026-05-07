@@ -84,7 +84,7 @@ class OtherLettingController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      formData => {
+      formData =>
         var updatedIndex: Int = -1
         val updatedSession    = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { about =>
           val (updatedLettings, idx) = updateOrAddOtherLetting(about.lettings, formData, index)
@@ -106,7 +106,6 @@ class OtherLettingController @Inject() (
                               )
                             )
         yield redirectResult
-      }
     )
   }
 
@@ -114,14 +113,14 @@ class OtherLettingController @Inject() (
     lettingsOpt: Option[IndexedSeq[LettingPartOfProperty]],
     otherLetting: OtherLetting,
     index: Option[Int]
-  ): (IndexedSeq[LettingPartOfProperty], Int) = {
+  ): (IndexedSeq[LettingPartOfProperty], Int) =
     var updatedIndex: Int = -1
-    val updatedLetting    = lettingsOpt match {
+    val updatedLetting    = lettingsOpt match
       case Some(lettings) =>
-        index match {
+        index match
           case Some(idx) if idx < lettings.length =>
             updatedIndex = idx
-            lettings(idx) match {
+            lettings(idx) match
               case existingOther: OtherLetting =>
                 lettings.updated(
                   idx,
@@ -131,20 +130,15 @@ class OtherLettingController @Inject() (
                     correspondenceAddress = otherLetting.correspondenceAddress
                   )
                 )
-
-              case _ =>
+              case _                           =>
                 lettings.updated(idx, otherLetting)
-            }
           case _                                  =>
             updatedIndex = lettings.length
             lettings :+ otherLetting
-        }
       case None           =>
         updatedIndex = 0
         IndexedSeq(otherLetting)
-    }
     (updatedLetting, updatedIndex)
-  }
 
   private def backLink(idx: Option[Int])(using request: SessionRequest[AnyContent]): String =
     if navigator.from == "CYA"

@@ -44,16 +44,18 @@ class RentDetailsController @Inject() (
   with Logging:
 
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[LettingPartOfProperty] = for {
-      existingAccommodationSections <-
-        request.sessionData.aboutFranchisesOrLettings.map(
-          _.lettings.getOrElse(IndexedSeq.empty)
-        )
-      requestedAccommodationSection <- existingAccommodationSections.lift(idx)
-    } yield requestedAccommodationSection
-    val rentDetails: Option[RentDetails]               = existingDetails.flatMap(_.rentalDetails)
-    val operatorName: String                           = getOperatorName(existingDetails)
-    val rentalDetailForm                               = rentDetails.fold(rentDetailsForm)(rentDetailsForm.fill)
+    val existingDetails: Option[LettingPartOfProperty] =
+      for
+        existingAccommodationSections <- request.sessionData.aboutFranchisesOrLettings.map(
+                                           _.lettings.getOrElse(IndexedSeq.empty)
+                                         )
+        requestedAccommodationSection <- existingAccommodationSections.lift(idx)
+      yield requestedAccommodationSection
+
+    val rentDetails: Option[RentDetails] = existingDetails.flatMap(_.rentalDetails)
+    val operatorName: String             = getOperatorName(existingDetails)
+    val rentalDetailForm                 = rentDetails.fold(rentDetailsForm)(rentDetailsForm.fill)
+
     audit.sendChangeLink("RentDetails")
 
     Ok(
@@ -68,14 +70,12 @@ class RentDetailsController @Inject() (
   }
 
   private def getOperatorName(existingDetails: Option[LettingPartOfProperty]) =
-    val operatorName = existingDetails match {
+    existingDetails match
       case Some(atm: ATMLetting)                      => atm.bankOrCompany.getOrElse("")
       case Some(telecomMast: TelecomMastLetting)      => telecomMast.operatingCompanyName.getOrElse("")
       case Some(advertRight: AdvertisingRightLetting) => advertRight.advertisingCompanyName.getOrElse("")
       case Some(otherLetting: OtherLetting)           => otherLetting.tenantName.getOrElse("")
       case _                                          => "Unknown operator"
-    }
-    operatorName
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val existingDetails = request.sessionData.aboutFranchisesOrLettings.flatMap(_.lettings.get.lift(index))
@@ -91,7 +91,7 @@ class RentDetailsController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedLetting                   = existingDetails.map {
           case atm: ATMLetting                      => atm.copy(rentalDetails = Some(data))
           case telecom: TelecomMastLetting          => telecom.copy(rentalDetails = Some(data))
@@ -107,17 +107,14 @@ class RentDetailsController @Inject() (
           val aboutFranchisesOrLettings =
             request.sessionData.aboutFranchisesOrLettings.getOrElse(AboutFranchisesOrLettings())
           val lettings                  = aboutFranchisesOrLettings.lettings.getOrElse(IndexedSeq.empty)
-          if (index >= 0 && index < lettings.length) {
-            if (navigator.from == "CYA") {
+          if index >= 0 && index < lettings.length then
+            if navigator.from == "CYA" then
               Redirect(routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
-            } else {
+            else
               Redirect(routes.AddOrRemoveLettingController.show(lettings.length - 1))
-            }
-          } else {
+          else
             Redirect(routes.AddOrRemoveLettingController.show(0))
-          }
         }
-      }
     )
   }
 
@@ -127,11 +124,10 @@ class RentDetailsController @Inject() (
   )(using
     request: SessionRequest[AnyContent]
   ): String =
-    if (navigator.from == "CYA") {
+    if navigator.from == "CYA" then
       routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    } else {
+    else
       getUrlByType(existingDetails, idx)
-    }
 
   private def getUrlByType(existingDetails: Option[LettingPartOfProperty], idx: Option[Int]) =
     existingDetails match

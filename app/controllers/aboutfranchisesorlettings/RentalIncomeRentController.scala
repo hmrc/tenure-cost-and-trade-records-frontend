@@ -82,29 +82,26 @@ class RentalIncomeRentController @Inject() (
             request.sessionData.forType
           )
         ),
-      data => {
+      data =>
         val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
-          if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
+          if aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx)) then
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
               records.updated(
                 idx,
-                records(idx) match {
+                records(idx) match
                   case franchise: FranchiseIncomeRecord => franchise.copy(rent = Some(data))
                   case letting: LettingIncomeRecord     => letting.copy(rent = Some(data))
                   case _                                => throw IllegalStateException("Unknown income record type")
-                }
               )
             }
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
-          } else {
+          else
             aboutFranchisesOrLettings
-          }
         }(using request)
 
         session.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(RentalIncomeRentId, updatedSession).apply(updatedSession))
         }
-      }
     )
   }
 

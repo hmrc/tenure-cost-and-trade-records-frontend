@@ -19,8 +19,8 @@ package models.submissions.aboutfranchisesorlettings
 import actions.SessionRequest
 import models.Session
 import models.submissions.common.AnswersYesNo
-import play.api.libs.functional.syntax._
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
 
 case class AboutFranchisesOrLettings(
   franchisesOrLettingsTiedToProperty: Option[AnswersYesNo] = None,

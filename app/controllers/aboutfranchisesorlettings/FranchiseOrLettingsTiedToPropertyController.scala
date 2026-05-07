@@ -75,7 +75,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
         session
           .saveOrUpdate(updatedData)
@@ -98,7 +98,6 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
               )
           }
           .map(Redirect)
-      }
     )
   }
 

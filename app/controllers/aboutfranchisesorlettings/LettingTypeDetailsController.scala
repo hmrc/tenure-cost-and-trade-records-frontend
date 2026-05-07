@@ -94,18 +94,18 @@ class LettingTypeDetailsController @Inject() (
           _                          <- repository.saveOrUpdate(newSession)
           redirectResult             <- redirectToAddressLookupFrontend(
                                           config = AddressLookupConfig(
-                                            lookupPageHeadingKey = forType match {
+                                            lookupPageHeadingKey = forType match
                                               case FOR6010 | FOR6030 => "lettingDetails.address.lookupPageHeadingTenant"
                                               case _                 => "lettingDetails.address.lookupPageHeading"
-                                            },
-                                            selectPageHeadingKey = forType match {
+                                            ,
+                                            selectPageHeadingKey = forType match
                                               case FOR6010 | FOR6030 => "lettingDetails.address.selectPageHeadingTenant"
                                               case _                 => "lettingDetails.address.selectPageHeading"
-                                            },
-                                            confirmPageLabelKey = forType match {
+                                            ,
+                                            confirmPageLabelKey = forType match
                                               case FOR6010 | FOR6030 => "lettingDetails.address.confirmPageHeadingTenant"
                                               case _                 => "lettingDetails.address.confirmPageHeading"
-                                            },
+                                            ,
                                             offRampCall = routes.LettingTypeDetailsController.addressLookupCallback(
                                               updatedIndex
                                             )
@@ -123,21 +123,19 @@ class LettingTypeDetailsController @Inject() (
   ): (Session, Int) =
     var updatedIndex   = 0
     val updatedSession = updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
-      if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
+      if aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx)) then
         val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
           records.updated(
             idx,
-            records(idx) match {
+            records(idx) match
               case r: LettingIncomeRecord => r.copy(operatorDetails = Some(formData))
               case _                      => throw IllegalStateException("Unknown income record type")
-            }
           )
         }
         updatedIndex = idx
         aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome, rentalIncomeIndex = idx)
-      } else {
+      else
         aboutFranchisesOrLettings
-      }
     }(using request)
     (updatedSession, updatedIndex)
 
@@ -153,11 +151,10 @@ class LettingTypeDetailsController @Inject() (
   }
 
   private def backLink(idx: Int)(using request: SessionRequest[AnyContent]): String =
-    request.getQueryString("from") match {
+    request.getQueryString("from") match
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       case _           => controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(Some(idx)).url
-    }
 
   private def newSessionWithLettingAddress(idx: Int, addr: Address)(using session: Session) =
     assert(session.aboutFranchisesOrLettings.isDefined)

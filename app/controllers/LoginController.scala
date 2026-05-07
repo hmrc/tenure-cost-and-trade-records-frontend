@@ -150,21 +150,19 @@ class LoginController @Inject() (
     loginToBackend(using hc, ec)(cleanedRefNumber, cleanPostcode)
       .flatMap { case NoExistingDocument(token, forNum, address, isWelsh) =>
         auditLogin(referenceNumber, false, address, forNum)
-        ForType.find(forNum) match {
+        ForType.find(forNum) match
           case Some(forType) =>
             session
               .start(Session(referenceNumber, forType, address, token, isWelsh))
               .flatMap { _ =>
-                backendConnector.loadSubmissionDraft(cleanedRefNumber, hc).map {
+                backendConnector.loadSubmissionDraft(cleanedRefNumber, hc).map:
                   case Some(_) => Redirect(controllers.routes.SaveAsDraftController.loginToResume)
                   case _       => Redirect(startPage)
-                }
               }
           case None          =>
             session
               .start(Session(referenceNumber, FOR6010, address, token, isWelsh))
               .map(_ => Redirect(routes.LoginController.notValidFORType()))
-        }
       }
       .recover {
         case UpstreamErrorResponse(_, 409, _, _)    =>
@@ -175,14 +173,13 @@ class LoginController @Inject() (
           val failed            = Json.parse(body).as[FailedLoginResponse]
           val remainingAttempts = failed.numberOfRemainingTriesUntilIPLockout
           logger.warn(s"Failed login: RefNum: $referenceNumber Attempts remaining: $remainingAttempts")
-          if (remainingAttempts < 1) {
+          if remainingAttempts < 1 then
             val clientIP = r.headers.get(trueClientIp).getOrElse("")
             auditLockedOut(cleanedRefNumber, postcode, cleanPostcode, clientIP)
 
             Redirect(routes.LoginController.lockedOut)
-          } else {
+          else
             Redirect(routes.LoginController.loginFailed(remainingAttempts))
-          }
       }
       .recoverWith { case e: JsValidationException =>
         logger.warn(s"Failed login: JSON Error: $e")
