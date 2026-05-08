@@ -59,9 +59,7 @@ class ContactDetailsQuestionController @Inject() (
         altDetailsQuestion     <- aboutYouAndTheProperty.altDetailsQuestion
       yield theForm.fill(altDetailsQuestion)
 
-    Ok(
-      theView(filledForm.getOrElse(freshForm), request.sessionData.toSummary, isReadOnly, navigator.from)
-    )
+    Ok(theView(filledForm.getOrElse(freshForm), request.sessionData.toSummary, isReadOnly, navigator.from))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -91,15 +89,14 @@ class ContactDetailsQuestionController @Inject() (
     )
   }
 
-  def addressLookupCallback(id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
-    implicit request =>
-      given Session = request.sessionData
-      for
-        confirmedAddress  <- getConfirmedAddress(id)
-        alternativeAddress = confirmedAddress.asAddress
-        newSession        <- sessionWithAlternativeAddress(alternativeAddress)
-        _                 <- repository.saveOrUpdate(newSession)
-      yield Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession))
+  def addressLookupCallback(id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    given Session = request.sessionData
+    for
+      confirmedAddress  <- getConfirmedAddress(id)
+      alternativeAddress = confirmedAddress.asAddress
+      newSession        <- sessionWithAlternativeAddress(alternativeAddress)
+      _                 <- repository.saveOrUpdate(newSession)
+    yield Redirect(navigator.nextPage(ContactDetailsQuestionId, newSession).apply(newSession))
   }
 
   private def sessionWithFormData(formData: AnswersYesNo)(using session: Session) =

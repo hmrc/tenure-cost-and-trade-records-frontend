@@ -61,13 +61,7 @@ class LicensableActivitiesDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       licensableActivitiesDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          licensableActivitiesDetailsView(
-            formWithErrors,
-            request.sessionData.toSummary
-          )
-        ),
+      formWithErrors => BadRequest(licensableActivitiesDetailsView(formWithErrors, request.sessionData.toSummary)),
       data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(licensableActivitiesInformationDetails = Some(data)))
         session

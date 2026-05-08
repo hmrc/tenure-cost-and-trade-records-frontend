@@ -64,12 +64,11 @@ class CommercialLettingAvailabilityController @Inject() (
     continueOrSaveAsDraft[Int](
       commercialLettingAvailabilityForm,
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(commercialLetAvailability = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CommercialLettingAvailabilityId, updatedData).apply(updatedData)))
-      }
     )
   }
 

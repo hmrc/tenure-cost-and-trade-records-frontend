@@ -65,15 +65,7 @@ class ThreeYearsConstructedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(
-            formWithErrors,
-            navigator.from,
-            request.sessionData.toSummary,
-            isReadOnly
-          )
-        ),
+      formWithErrors => BadRequest(theView(formWithErrors, navigator.from, request.sessionData.toSummary, isReadOnly)),
       data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(threeYearsConstructed = Some(data)))
         repo

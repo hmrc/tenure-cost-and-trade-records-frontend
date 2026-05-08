@@ -59,13 +59,7 @@ class CostsBreakdownController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       costsBreakdownForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            request.sessionData.toSummary
-          )
-        ),
+      formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary)),
       data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(costsBreakdown = Some(data)))
         session

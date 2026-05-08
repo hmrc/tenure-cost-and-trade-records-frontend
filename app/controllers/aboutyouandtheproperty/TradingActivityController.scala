@@ -63,13 +63,7 @@ class TradingActivityController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TradingActivity](
       tradingActivityForm,
-      formWithErrors =>
-        BadRequest(
-          tradingActivityView(
-            formWithErrors,
-            request.sessionData.toSummary
-          )
-        ),
+      formWithErrors => BadRequest(tradingActivityView(formWithErrors, request.sessionData.toSummary)),
       data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(tradingActivity = Some(data)))
         session

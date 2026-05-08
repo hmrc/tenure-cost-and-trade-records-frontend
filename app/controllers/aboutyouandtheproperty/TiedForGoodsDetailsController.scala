@@ -61,13 +61,7 @@ class TiedForGoodsDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TiedForGoodsInformationDetails](
       tiedForGoodsDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          tiedForGoodsDetailsView(
-            formWithErrors,
-            request.sessionData.toSummary
-          )
-        ),
+      formWithErrors => BadRequest(tiedForGoodsDetailsView(formWithErrors, request.sessionData.toSummary)),
       data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoodsDetails = Some(data)))
         session

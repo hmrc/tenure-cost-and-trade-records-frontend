@@ -74,12 +74,11 @@ class EnforcementActionBeenTakenController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(enforcementAction = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(EnforcementActionBeenTakenPageId, updatedData).apply(updatedData)))
-      }
     )
   }
 

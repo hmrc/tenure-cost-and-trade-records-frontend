@@ -64,21 +64,12 @@ class PlantAndTechnologyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       plantAndTechnologyForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary,
-            isReadOnly
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, calculateBackLink, request.sessionData.toSummary, isReadOnly)),
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(plantAndTechnology = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PlantAndTechnologyId, updatedData).apply(updatedData)))
-      }
     )
   }
 
@@ -89,8 +80,6 @@ class PlantAndTechnologyController @Inject() (
       case _     =>
         request.sessionData.aboutYouAndTheProperty
           .flatMap(_.threeYearsConstructed) match
-          case Some(AnswerYes) =>
-            controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show().url
-          case Some(AnswerNo)  =>
-            controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
+          case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show().url
+          case Some(AnswerNo)  => controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
           case _               => controllers.routes.TaskListController.show.url

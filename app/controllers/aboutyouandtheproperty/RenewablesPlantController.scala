@@ -63,10 +63,7 @@ class RenewablesPlantController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RenewablesPlantType](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(formWithErrors, calculateBackLink(using request), request.sessionData.toSummary, isReadOnly)
-        ),
+      formWithErrors => BadRequest(theView(formWithErrors, calculateBackLink(using request), request.sessionData.toSummary, isReadOnly)),
       data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(renewablesPlant = Some(data)))
         repo

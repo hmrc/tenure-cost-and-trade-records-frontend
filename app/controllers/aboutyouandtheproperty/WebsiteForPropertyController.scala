@@ -66,21 +66,12 @@ class WebsiteForPropertyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[WebsiteForPropertyDetails](
       websiteForPropertyForm,
-      formWithErrors =>
-        BadRequest(
-          websiteForPropertyView(
-            formWithErrors,
-            request.sessionData.toSummary,
-            backLink(request.sessionData)
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(websiteForPropertyView(formWithErrors, request.sessionData.toSummary, backLink(request.sessionData))),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(websiteForPropertyDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(WebsiteForPropertyPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

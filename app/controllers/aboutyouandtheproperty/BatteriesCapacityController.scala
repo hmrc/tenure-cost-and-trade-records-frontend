@@ -61,19 +61,11 @@ class BatteriesCapacityController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       batteriesCapacityForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            request.sessionData.toSummary,
-            isReadOnly
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, isReadOnly)),
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(batteriesCapacity = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(BatteriesCapacityId, updatedData).apply(updatedData)))
-      }
     )
   }

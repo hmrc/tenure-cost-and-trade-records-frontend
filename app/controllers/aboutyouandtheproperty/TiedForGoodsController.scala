@@ -66,21 +66,12 @@ class TiedForGoodsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       tiedForGoodsForm,
-      formWithErrors =>
-        BadRequest(
-          tiedForGoodsView(
-            formWithErrors,
-            getBackLink(request.sessionData),
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(tiedForGoodsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoods = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TiedForGoodsPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

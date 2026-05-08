@@ -66,20 +66,12 @@ class PremisesLicenseConditionsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       premisesLicenseConditionsForm,
-      formWithErrors =>
-        BadRequest(
-          premisesLicenseView(
-            formWithErrors,
-            getBackLink(request.sessionData),
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(premisesLicenseView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseConditions = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PremisesLicenceConditionsPageId, updatedData).apply(updatedData)))
-      }
     )
   }
 

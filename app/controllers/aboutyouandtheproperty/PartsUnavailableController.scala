@@ -64,20 +64,12 @@ class PartsUnavailableController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       partsUnavailableForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, calculateBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(partsUnavailable = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PartsUnavailableId, updatedData).apply(updatedData)))
-      }
     )
   }
 

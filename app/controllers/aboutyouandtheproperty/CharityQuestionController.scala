@@ -50,8 +50,7 @@ class CharityQuestionController @Inject() (
     Ok(
       charityQuestionView(
         request.sessionData.aboutYouAndTheProperty.flatMap(_.charityQuestion) match
-          case Some(answer) =>
-            charityQuestionForm.fill(answer)
+          case Some(answer) => charityQuestionForm.fill(answer)
           case _            => charityQuestionForm
         ,
         request.sessionData.toSummary,
@@ -64,11 +63,10 @@ class CharityQuestionController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       charityQuestionForm,
       formWithErrors => BadRequest(charityQuestionView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(charityQuestion = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CharityQuestionPageId, updatedData).apply(updatedData)))
-      }
     )
   }

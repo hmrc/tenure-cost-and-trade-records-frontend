@@ -63,7 +63,7 @@ class CompletedCommercialLettingsController @Inject() (
     continueOrSaveAsDraft[Int](
       completedCommercialLettingsForm,
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(
           _.copy(
             completedCommercialLettings = Option(data)
@@ -72,7 +72,6 @@ class CompletedCommercialLettingsController @Inject() (
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CompletedCommercialLettingsId, updatedData).apply(updatedData)))
-      }
     )
   }
 

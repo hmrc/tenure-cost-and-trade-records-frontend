@@ -74,17 +74,15 @@ class AboutThePropertyController @Inject() (
             backLink
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData)))
-      }
     )
   }
 
   private def backLink(using request: Request[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url + "#about-the-property"
       case _    => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-    }

@@ -66,10 +66,7 @@ class AboutYouController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CustomerDetails](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(formWithErrors, request.sessionData.toSummary, isReadOnly)
-        ),
+      formWithErrors => BadRequest(theView(formWithErrors, request.sessionData.toSummary, isReadOnly)),
       data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(customerDetails = Some(data)))
         repo

@@ -69,14 +69,8 @@ class CompletedCommercialLettingsWelshController @Inject() (
       .fold[Future[Result]](Redirect(routes.CommercialLettingQuestionController.show())) { data =>
         continueOrSaveAsDraft[Seq[CompletedLettings]](
           completedCommercialLettingsWelshForm(years(data)),
-          formWithErrors =>
-            BadRequest(
-              view(
-                formWithErrors,
-                calculateBackLink
-              )
-            ),
-          success => {
+          formWithErrors => BadRequest(view(formWithErrors, calculateBackLink)),
+          success =>
             val updatedLettingData = (success zip financialYearEndDates(data)).map { case (completedLettings, finYearEnd) =>
               completedLettings.copy(financialYearEnd = finYearEnd)
             }
@@ -90,7 +84,6 @@ class CompletedCommercialLettingsWelshController @Inject() (
               .map(_ =>
                 Redirect(navigator.nextPage(CompletedCommercialLettingsWelshId, updatedData).apply(updatedData))
               )
-          }
         )
       }
   }

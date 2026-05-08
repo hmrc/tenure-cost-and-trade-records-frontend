@@ -70,26 +70,18 @@ class CommercialLettingAvailabilityWelshController @Inject() (
       .fold(Future(Redirect(routes.CommercialLettingQuestionController.show()))) { data =>
         continueOrSaveAsDraft[Seq[LettingAvailability]](
           commercialLettingAvailabilityWelshForm(years(data)),
-          formWithErrors =>
-            BadRequest(
-              view(
-                formWithErrors,
-                calculateBackLink
-              )
-            ),
-          success => {
+          formWithErrors => BadRequest(view(formWithErrors, calculateBackLink)),
+          success =>
             val updatedLettingData = (success zip financialYearEndDates(data)).map { case (lettingAvailability, finYearEnd) =>
               lettingAvailability.copy(financialYearEnd = finYearEnd)
             }
 
-            val updatedData =
-              updateAboutYouAndThePropertyPartTwo(_.copy(commercialLetAvailabilityWelsh = Some(updatedLettingData)))
+            val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(commercialLetAvailabilityWelsh = Some(updatedLettingData)))
             session
               .saveOrUpdate(updatedData)
               .map(_ =>
                 Redirect(navigator.nextPage(CommercialLettingAvailabilityWelshId, updatedData).apply(updatedData))
               )
-          }
         )
       }
   }

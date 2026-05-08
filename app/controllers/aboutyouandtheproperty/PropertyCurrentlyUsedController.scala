@@ -64,20 +64,12 @@ class PropertyCurrentlyUsedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PropertyCurrentlyUsed](
       propertyCurrentlyUsedForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            request.sessionData.toSummary,
-            backLink
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, backLink)),
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(propertyCurrentlyUsed = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(PropertyCurrentlyUsedPageId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

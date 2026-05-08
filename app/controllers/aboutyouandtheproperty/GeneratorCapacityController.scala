@@ -61,14 +61,7 @@ class GeneratorCapacityController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(
-            formWithErrors,
-            request.sessionData.toSummary,
-            isReadOnly
-          )
-        ),
+      formWithErrors => BadRequest(theView(formWithErrors, request.sessionData.toSummary, isReadOnly)),
       data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(generatorCapacity = Some(data)))
         repo

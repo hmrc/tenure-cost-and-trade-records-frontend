@@ -67,7 +67,7 @@ class CommercialLettingQuestionController @Inject() (
     continueOrSaveAsDraft[MonthsYearDuration](
       commercialLettingQuestionForm,
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink)),
-      data => {
+      data =>
         val updatedSessionWithTradingHistory = updateAboutTheTradingHistory { theTradingHistory =>
           theTradingHistory.copy(
             occupationAndAccountingInformation = Option(
@@ -93,7 +93,6 @@ class CommercialLettingQuestionController @Inject() (
         session
           .saveOrUpdate(updatedSession)
           .map(_ => Redirect(navigator.nextPage(CommercialLettingQuestionId, updatedSession).apply(updatedSession)))
-      }
     )
   }
 

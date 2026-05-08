@@ -67,27 +67,18 @@ class OccupiersDetailsController @Inject() (
   def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[OccupiersDetails](
       occupiersDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            index,
-            getBackLink,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, index, getBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedAboutYouAndTheProperty =
           request.sessionData.aboutYouAndThePropertyPartTwo.fold(
             AboutYouAndThePropertyPartTwo(occupiersList = IndexedSeq(data))
           ) { aboutProperty =>
             val existingOccupiersList = aboutProperty.occupiersList
 
-            val updatedList = index match {
+            val updatedList = index match
               case Some(index) if existingOccupiersList.isDefinedAt(index) =>
                 existingOccupiersList.updated(index, data)
               case _                                                       => existingOccupiersList :+ data
-            }
 
             aboutProperty.copy(occupiersList = updatedList, occupiersListIndex = updatedList.length - 1)
           }
@@ -98,7 +89,6 @@ class OccupiersDetailsController @Inject() (
         session.saveOrUpdate(updatedSessionData).map { _ =>
           Redirect(navigator.nextPage(OccupiersDetailsId, updatedSessionData).apply(updatedSessionData))
         }
-      }
     )
   }
 
