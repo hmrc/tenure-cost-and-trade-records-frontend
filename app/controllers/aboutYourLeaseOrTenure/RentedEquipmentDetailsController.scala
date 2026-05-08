@@ -66,15 +66,13 @@ class RentedEquipmentDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       rentedEquipmentDetailsForm,
-      formWithErrors =>
-        BadRequest(rentedEquipmentDetailsView(formWithErrors, getBackLink, request.sessionData.toSummary)),
-      data => {
+      formWithErrors => BadRequest(rentedEquipmentDetailsView(formWithErrors, getBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(rentedEquipmentDetails = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(RentedEquipmentDetailsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

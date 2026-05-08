@@ -77,16 +77,13 @@ class RentPayableVaryAccordingToGrossOrNetController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
-        val updatedData =
-          updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNet = Some(data)))
+      data =>
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryAccordingToGrossOrNet = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ =>
             Redirect(navigator.nextPage(RentPayableVaryAccordingToGrossOrNetId, updatedData).apply(updatedData))
           )
-
-      }
     )
   }
 

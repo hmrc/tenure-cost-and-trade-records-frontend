@@ -63,7 +63,7 @@ class TenancyLeaseAgreementExpireController @Inject() (
     continueOrSaveAsDraft[LocalDate](
       tenancyLeaseAgreementExpireForm,
       formWithErrors => BadRequest(tenancyLeaseAgreementExpireView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenancyLeaseAgreementExpire = Some(data)))
         session
           .saveOrUpdate(updatedData)
@@ -72,7 +72,5 @@ class TenancyLeaseAgreementExpireController @Inject() (
               navigator.nextPage(TenancyLeaseAgreementExpirePageId, request.sessionData).apply(request.sessionData)
             )
           )
-
-      }
     )
   }

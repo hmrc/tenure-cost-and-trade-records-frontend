@@ -68,12 +68,11 @@ class PropertyUpdatesController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       propertyUpdatesForm,
       formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, backLink(request.sessionData))),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(propertyUpdates = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(PropertyUpdatesId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
@@ -81,7 +80,6 @@ class PropertyUpdatesController @Inject() (
     answers.forType match
       case FOR6045 | FOR6046 =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
       case _                 => controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url

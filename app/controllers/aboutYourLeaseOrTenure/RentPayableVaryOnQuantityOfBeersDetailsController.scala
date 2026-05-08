@@ -64,11 +64,9 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       rentPayableVaryOnQuantityOfBeersDetailsForm,
-      formWithErrors =>
-        BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors, request.sessionData.toSummary)),
+      formWithErrors => BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors, request.sessionData.toSummary)),
       data =>
-        val updatedData =
-          updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentVaryQuantityOfBeersDetailsId, updatedData).apply(updatedData)))

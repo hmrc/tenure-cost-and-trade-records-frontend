@@ -65,11 +65,10 @@ class RentDevelopedLandController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       rentDevelopedLandForm,
       formWithErrors => BadRequest(rentDevelopedLandView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(rentDevelopedLand = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(RentDevelopedLandId, updatedData).apply(updatedData))
         }
-      }
     )
   }

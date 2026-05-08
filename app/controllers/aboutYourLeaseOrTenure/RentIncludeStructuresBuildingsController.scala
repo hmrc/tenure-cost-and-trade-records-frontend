@@ -66,12 +66,11 @@ class RentIncludeStructuresBuildingsController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       rentIncludeStructuresBuildingsForm,
       formWithErrors => BadRequest(rentIncludeStructuresBuildingsView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartFour(_.copy(rentIncludeStructuresBuildings = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(RentIncludeStructuresBuildingsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

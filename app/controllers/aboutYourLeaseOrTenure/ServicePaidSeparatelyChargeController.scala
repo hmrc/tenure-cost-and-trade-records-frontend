@@ -63,26 +63,17 @@ class ServicePaidSeparatelyChargeController @Inject() (
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[BigDecimal](
       servicePaidSeparatelyChargeForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            index,
-            request.sessionData.toSummary
-          )
-        ),
+      formWithErrors => BadRequest(view(formWithErrors, index, request.sessionData.toSummary)),
       data =>
         request.sessionData.aboutLeaseOrAgreementPartThree.fold[Future[Result]](
           Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show(index))
         ) { details =>
           val existingSections = details.servicesPaid
-          val updatedDetails   = existingSections
-            .updated(index, existingSections(index).copy(annualCharge = Some(data)))
+          val updatedDetails   = existingSections.updated(index, existingSections(index).copy(annualCharge = Some(data)))
           val updatedData      = updateAboutLeaseOrAgreementPartThree(_.copy(servicesPaid = updatedDetails))
           session
             .saveOrUpdate(updatedData)
             .map(_ => Redirect(navigator.nextPage(ServicePaidSeparatelyChargeId, updatedData).apply(updatedData)))
-
         }
     )
   }

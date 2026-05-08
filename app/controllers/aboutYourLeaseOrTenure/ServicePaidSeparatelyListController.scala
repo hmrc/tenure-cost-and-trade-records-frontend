@@ -19,8 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 import form.ConfirmableActionForm.confirmableActionForm
+import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.AnswersYesNo
@@ -48,8 +48,7 @@ class ServicePaidSeparatelyListController @Inject() (
   with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingSection =
-      request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid.lift(index))
+    val existingSection = request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid.lift(index))
 
     audit.sendChangeLink("ServicePaidSeparatelyList")
 
@@ -67,29 +66,18 @@ class ServicePaidSeparatelyListController @Inject() (
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       addServicePaidSeparatelyForm,
-      formWithErrors =>
-        BadRequest(
-          theListView(
-            formWithErrors,
-            index
-          )
-        ),
+      formWithErrors => BadRequest(theListView(formWithErrors, index)),
       formData =>
         request.sessionData.aboutLeaseOrAgreementPartThree
           .map(_.servicesPaid)
           .filter(_.nonEmpty)
           .fold {
-            formData match {
-              case AnswerYes =>
-                Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show())
+            formData match
+              case AnswerYes => Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show())
               case AnswerNo  =>
-                request.sessionData.forType match {
-                  case FOR6020 =>
-                    Redirect(controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show())
-                  case _       =>
-                    Redirect(controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show())
-                }
-            }
+                request.sessionData.forType match
+                  case FOR6020 => Redirect(controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show())
+                  case _       => Redirect(controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show())
           } { existingServices =>
             val updatedServices = existingServices.updated(
               index,

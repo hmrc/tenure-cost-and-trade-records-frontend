@@ -77,13 +77,11 @@ class PayACapitalSumController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumOrPremium = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PayCapitalSumId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
@@ -94,8 +92,7 @@ class PayACapitalSumController @Inject() (
         answers.forType match
           case FOR6020           =>
             answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven) match
-              case Some(AnswerYes) =>
-                controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
+              case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
               case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url
               case _               =>
                 logger.warn("Back link for pay capital sum page reached with unknown benefits given value")

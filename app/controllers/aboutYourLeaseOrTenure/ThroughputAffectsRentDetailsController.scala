@@ -67,13 +67,12 @@ class ThroughputAffectsRentDetailsController @Inject() (
     continueOrSaveAsDraft[String](
       throughputAffectsRentDetailsForm,
       formWithErrors => BadRequest(throughputAffectsRentDetailsView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateThroughputAffectsRent(_.copy(throughputAffectsRentDetails = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(ThroughputAffectsRentDetailsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

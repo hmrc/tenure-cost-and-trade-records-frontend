@@ -69,15 +69,13 @@ class IsParkingRentPaidSeparatelyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       isParkingRentPaidSeparatelyForm,
-      formWithErrors =>
-        BadRequest(isParkingRentPaidSeparatelyView(formWithErrors, getBackLink, request.sessionData.toSummary)),
-      data => {
+      formWithErrors => BadRequest(isParkingRentPaidSeparatelyView(formWithErrors, getBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateCarParking(_.copy(isRentPaidSeparately = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(IsParkingRentPaidSeparatelyId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

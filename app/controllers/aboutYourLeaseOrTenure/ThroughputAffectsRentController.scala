@@ -68,13 +68,12 @@ class ThroughputAffectsRentController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       doesRentVaryToThroughputForm,
       formWithErrors => BadRequest(throughputAffectsRentView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateThroughputAffectsRent(_.copy(doesRentVaryToThroughput = data))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(ThroughputAffectsRentId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

@@ -68,13 +68,12 @@ class DoesRentIncludeParkingController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       doesRentIncludeParkingForm,
       formWithErrors => BadRequest(doesRentIncludeParkingView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCarParking(_.copy(doesRentIncludeParkingOrGarage = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(DoesRentIncludeParkingId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

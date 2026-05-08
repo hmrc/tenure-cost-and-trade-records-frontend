@@ -67,13 +67,12 @@ class RentedSeparatelyParkingSpacesController @Inject() (
     continueOrSaveAsDraft[CarParkingSpaces](
       rentedSeparatelyParkingSpacesForm,
       formWithErrors => BadRequest(rentedSeparatelyParkingSpacesView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCarParking(_.copy(rentedSeparatelySpaces = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(RentedSeparatelyParkingSpacesId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

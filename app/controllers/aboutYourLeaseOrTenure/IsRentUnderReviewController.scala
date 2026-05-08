@@ -68,13 +68,12 @@ class IsRentUnderReviewController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       isRentUnderReviewForm,
       formWithErrors => BadRequest(isRentUnderReviewView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(isRentUnderReview = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(IsRentUnderReviewId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

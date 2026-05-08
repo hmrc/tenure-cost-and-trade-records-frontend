@@ -65,13 +65,11 @@ class LeaseSurrenderedEarlyController @Inject() (
       leaseSurrenderedEarlyForm,
       formWithErrors =>
         BadRequest(view(formWithErrors, calculateBackLink(using request), request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(leaseSurrenderedEarly = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(LeaseSurrenderedEarlyId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

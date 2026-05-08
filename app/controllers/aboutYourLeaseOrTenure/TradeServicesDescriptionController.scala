@@ -45,11 +45,12 @@ class TradeServicesDescriptionController @Inject() (
   with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[String] = for {
-      idx               <- index
-      existingServices  <- request.sessionData.aboutLeaseOrAgreementPartThree.map(_.tradeServices)
-      requestedServices <- existingServices.lift(idx)
-    } yield requestedServices.details
+    val existingDetails: Option[String] =
+      for
+        idx               <- index
+        existingServices  <- request.sessionData.aboutLeaseOrAgreementPartThree.map(_.tradeServices)
+        requestedServices <- existingServices.lift(idx)
+      yield requestedServices.details
     audit.sendChangeLink("TradeServicesDescription")
 
     Ok(
@@ -74,7 +75,7 @@ class TradeServicesDescriptionController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedDetails =
           request.sessionData.aboutLeaseOrAgreementPartThree.fold(
             AboutLeaseOrAgreementPartThree(tradeServices = IndexedSeq(TradeService(details = data)))
@@ -101,8 +102,6 @@ class TradeServicesDescriptionController @Inject() (
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TradeServicesDescriptionId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

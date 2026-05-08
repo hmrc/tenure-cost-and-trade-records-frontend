@@ -63,16 +63,11 @@ class RentIncludeTradeServicesController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       rentIncludeTradeServicesForm,
-      formWithErrors =>
-        BadRequest(
-          rentIncludeTradeServicesView(formWithErrors, request.sessionData.forType, request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(rentIncludeTradeServicesView(formWithErrors, request.sessionData.forType, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentIncludeTradeServicesPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }

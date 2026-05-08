@@ -75,14 +75,12 @@ class RentIncludeFixtureAndFittingsController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData =
           updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittings = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentFixtureAndFittingsPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
@@ -96,14 +94,12 @@ class RentIncludeFixtureAndFittingsController @Inject() (
           case _               => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
       case FOR6030 =>
         answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
           case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
           case _               =>
             logger.warn("Back link for fixture and fittings page reached with unknown payment trade services value")
             controllers.routes.TaskListController.show.url
       case _       =>
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show().url
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url

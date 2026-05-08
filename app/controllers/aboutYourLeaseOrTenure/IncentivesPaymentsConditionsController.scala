@@ -62,12 +62,10 @@ class IncentivesPaymentsConditionsController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       incentivesPaymentsConditionsForm,
       formWithErrors => BadRequest(incentivesPaymentsConditionsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(incentivesPaymentsConditionsDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(IncentivesPaymentsConditionsId, updatedData).apply(updatedData)))
-
-      }
     )
   }

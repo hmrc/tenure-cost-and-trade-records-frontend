@@ -64,12 +64,10 @@ class RentIncludesVatController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       rentIncludesVatForm,
       formWithErrors => BadRequest(rentIncludeVatView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludesVat = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentIncludesVatPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }

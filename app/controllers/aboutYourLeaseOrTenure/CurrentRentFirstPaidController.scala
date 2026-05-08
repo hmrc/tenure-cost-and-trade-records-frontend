@@ -69,13 +69,11 @@ class CurrentRentFirstPaidController @Inject() (
         BadRequest(
           currentRentFirstPaidView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
         ),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentFirstPaid = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CurrentRentFirstPaidPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

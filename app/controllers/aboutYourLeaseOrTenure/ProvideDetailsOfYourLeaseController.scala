@@ -63,13 +63,11 @@ class ProvideDetailsOfYourLeaseController @Inject() (
     continueOrSaveAsDraft[String](
       provideDetailsOfYourLeaseForm,
       formWithErrors => BadRequest(provideDetailsOfYourLeaseView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(provideDetailsOfYourLease = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(ProvideDetailsOfYourLeasePageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

@@ -67,13 +67,12 @@ class IsVATPayableForWholePropertyController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       isVATPayableForWholePropertyForm,
       formWithErrors => BadRequest(isVATPayableForWholePropertyView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(isVATPayableForWholeProperty = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(IsVATPayableForWholePropertyId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

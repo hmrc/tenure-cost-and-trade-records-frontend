@@ -64,13 +64,11 @@ class CanRentBeReducedOnReviewController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       canRentBeReducedOnReviewForm,
       formWithErrors => BadRequest(canRentBeReducedOnReviewView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReview = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CanRentBeReducedOnReviewId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

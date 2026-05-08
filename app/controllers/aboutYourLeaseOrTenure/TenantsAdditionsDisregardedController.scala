@@ -64,15 +64,12 @@ class TenantsAdditionsDisregardedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       tenantsAdditionsDisregardedForm,
-      formWithErrors =>
-        BadRequest(tenantsAdditionsDisregardedView(formWithErrors, getBackLink, request.sessionData.toSummary)),
-      data => {
+      formWithErrors => BadRequest(tenantsAdditionsDisregardedView(formWithErrors, getBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregarded = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TenantsAdditionsDisregardedId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
@@ -81,8 +78,6 @@ class TenantsAdditionsDisregardedController @Inject() (
       case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
       case FOR6045 | FOR6046 =>
         request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
-      case _                 =>
-        controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
+      case _                 => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url

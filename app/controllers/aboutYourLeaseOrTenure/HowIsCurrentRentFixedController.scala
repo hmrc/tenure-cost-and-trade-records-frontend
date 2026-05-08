@@ -67,17 +67,12 @@ class HowIsCurrentRentFixedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[HowIsCurrentRentFixed](
       howIsCurrentRentFixedForm,
-      formWithErrors =>
-        BadRequest(
-          howIsCurrentRentFixedView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(howIsCurrentRentFixedView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(howIsCurrentRentFixed = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(HowIsCurrentRentFixedId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

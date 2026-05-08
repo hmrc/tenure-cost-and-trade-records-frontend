@@ -54,11 +54,11 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
           case Some(answer) => checkYourAnswersAboutYourLeaseOrTenureForm.fill(answer)
           case _            => checkYourAnswersAboutYourLeaseOrTenureForm
         ,
-        navigator.from match {
+        navigator.from match
           case "CYA" =>
             controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
           case _     => getBackLink(request.sessionData)
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -71,15 +71,15 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
         BadRequest(
           checkYourAnswersAboutYourLeaseOrTenureView(
             formWithErrors,
-            navigator.from match {
+            navigator.from match
               case "CYA" =>
                 controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url
               case _     => getBackLink(request.sessionData)
-            },
+            ,
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData =
           updateAboutLeaseOrAgreementPartOne(_.copy(checkYourAnswersAboutYourLeaseOrTenure = Some(data)))
             .copy(lastCYAPageUrl =
@@ -90,14 +90,12 @@ class CheckYourAnswersAboutYourLeaseOrTenureController @Inject() (
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
   private def getBackLink(answers: Session): String =
     answers.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match
-      case Some(AnswerYes) =>
-        controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show().url
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show().url
       case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
       case _               =>
         (

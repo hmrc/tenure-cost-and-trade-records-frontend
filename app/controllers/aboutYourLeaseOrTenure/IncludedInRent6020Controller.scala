@@ -67,13 +67,12 @@ class IncludedInRent6020Controller @Inject() (
     continueOrSaveAsDraft[DoesTheRentPayable](
       includedInRent6020Form,
       formWithErrors => BadRequest(includedInRent6020View(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(doesTheRentPayable = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(IncludedInRent6020Id, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

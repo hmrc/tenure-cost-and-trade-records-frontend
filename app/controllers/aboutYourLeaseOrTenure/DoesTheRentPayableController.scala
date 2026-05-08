@@ -62,14 +62,11 @@ class DoesTheRentPayableController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[DoesTheRentPayable](
       doesTheRentPayableForm,
-      formWithErrors =>
-        BadRequest(doesTheRentPayableView(formWithErrors, request.sessionData.forType, request.sessionData.toSummary)),
-      data => {
+      formWithErrors => BadRequest(doesTheRentPayableView(formWithErrors, request.sessionData.forType, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(doesTheRentPayable = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(DoesRentPayablePageId, updatedData).apply(updatedData)))
-
-      }
     )
   }

@@ -62,12 +62,10 @@ class BenefitsGivenController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       benefitsGivenForm,
       formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(benefitsGiven = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(BenefitsGivenId, updatedData).apply(updatedData)))
-
-      }
     )
   }

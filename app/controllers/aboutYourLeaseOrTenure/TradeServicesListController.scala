@@ -19,8 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.aboutYourLeaseOrTenure.TradeServicesListForm.theForm
 import form.ConfirmableActionForm.confirmableActionForm
+import form.aboutYourLeaseOrTenure.TradeServicesListForm.theForm
 import models.pages.ListPageConfig.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.AnswersYesNo
@@ -50,8 +50,7 @@ class TradeServicesListController @Inject() (
   with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingSection =
-      request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices.lift(index))
+    val existingSection = request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.tradeServices.lift(index))
 
     audit.sendChangeLink("TradeServicesList")
 
@@ -69,24 +68,15 @@ class TradeServicesListController @Inject() (
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theListView(
-            formWithErrors,
-            index
-          )
-        ),
+      formWithErrors => BadRequest(theListView(formWithErrors, index)),
       formData =>
         request.sessionData.aboutLeaseOrAgreementPartThree
           .map(_.tradeServices)
           .filter(_.nonEmpty)
           .fold[Future[Result]](
             Redirect(
-              if (formData == AnswerYes) {
-                routes.TradeServicesDescriptionController.show(Some(index))
-              } else {
-                navigator.nextPage(TradeServicesListId, request.sessionData).apply(request.sessionData)
-              }
+              if formData == AnswerYes then routes.TradeServicesDescriptionController.show(Some(index))
+              else navigator.nextPage(TradeServicesListId, request.sessionData).apply(request.sessionData)
             )
           ) { existingSections =>
             if formData == AnswerNo || existingSections.size < TradeServices.maxListItems then

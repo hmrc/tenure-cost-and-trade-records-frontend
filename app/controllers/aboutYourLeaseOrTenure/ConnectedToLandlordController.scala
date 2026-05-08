@@ -67,12 +67,10 @@ class ConnectedToLandlordController @Inject() (
       connectedToLandlordForm,
       formWithErrors =>
         BadRequest(connectedToLandlordView(formWithErrors, request.sessionData.toSummary, request.sessionData.forType)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(connectedToLandlord = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(ConnectedToLandlordPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }

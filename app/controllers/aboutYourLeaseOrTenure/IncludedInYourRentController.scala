@@ -66,14 +66,7 @@ class IncludedInYourRentController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[IncludedInYourRentDetails](
       includedInYourRentForm(forType),
-      formWithErrors =>
-        BadRequest(
-          includedInYourRentView(
-            formWithErrors,
-            request.sessionData.toSummary,
-            forType
-          )
-        ),
+      formWithErrors => BadRequest(includedInYourRentView(formWithErrors, request.sessionData.toSummary, forType)),
       data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(includedInYourRentDetails = Some(data)))
         session

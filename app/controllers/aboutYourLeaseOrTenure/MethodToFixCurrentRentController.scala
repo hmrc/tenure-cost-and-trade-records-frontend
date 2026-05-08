@@ -62,12 +62,10 @@ class MethodToFixCurrentRentController @Inject() (
     continueOrSaveAsDraft[MethodToFixCurrentRent](
       methodToFixCurrentRentForm,
       formWithErrors => BadRequest(methodToFixCurrentRentView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(methodToFixCurrentRentDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(MethodToFixCurrentRentsId, updatedData).apply(updatedData)))
-
-      }
     )
   }

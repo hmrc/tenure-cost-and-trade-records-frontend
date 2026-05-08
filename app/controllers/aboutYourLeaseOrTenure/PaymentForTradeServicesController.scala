@@ -89,10 +89,8 @@ class PaymentForTradeServicesController @Inject() (
         answers.aboutLeaseOrAgreementPartThree.flatMap { aboutYourLeaseOrAgreement =>
           aboutYourLeaseOrAgreement.tradeServices.lastOption.map(_ => aboutYourLeaseOrAgreement.tradeServices.size - 1)
         } match
-          case Some(index) =>
-            controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index).url
+          case Some(index) => controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(index).url
           case None        =>
             answers.forType match
-              case FOR6030 =>
-                controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+              case FOR6030 => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
               case _       => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url

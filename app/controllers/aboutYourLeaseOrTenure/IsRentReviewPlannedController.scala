@@ -66,13 +66,12 @@ class IsRentReviewPlannedController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       isRentReviewPlannedForm,
       formWithErrors => BadRequest(isRentReviewPlannedView(formWithErrors)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(isRentReviewPlanned = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(IsRentReviewPlannedId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

@@ -66,11 +66,8 @@ class LeaseOrAgreementYearsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LeaseOrAgreementYearsDetails](
       leaseOrAgreementYearsForm,
-      formWithErrors =>
-        BadRequest(
-          leaseOrAgreementYearsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(leaseOrAgreementYearsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val sessionContains3No = leaseOrAgreementDetailsInSession.exists(contains3No)
         val updatedData        = updateAboutLeaseOrAgreementPartOne(_.copy(leaseOrAgreementYearsDetails = Some(data)))
         session
@@ -83,7 +80,6 @@ class LeaseOrAgreementYearsController @Inject() (
               )
           }
           .map(Redirect)
-      }
     )
   }
 

@@ -66,17 +66,12 @@ class PayACapitalSumDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PayACapitalSumInformationDetails](
       payACapitalSumDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          payACapitalSumDetailsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(payACapitalSumDetailsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumInformationDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PayCapitalSumDetailsId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
@@ -85,6 +80,5 @@ class PayACapitalSumDetailsController @Inject() (
       case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-details"
       case _    =>
         answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url

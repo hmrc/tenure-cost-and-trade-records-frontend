@@ -63,23 +63,17 @@ class WorkCarriedOutConditionController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       workCarriedOutConditionForm,
-      formWithErrors =>
-        BadRequest(
-          view(formWithErrors, calculateBackLink, request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, calculateBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(workCarriedOut = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(WorkCarriedOutConditionId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.propertyUpdates) match
-      case Some(AnswerYes) =>
-        controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
+      case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutDetailsController.show().url
       case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show().url
       case _               => controllers.routes.TaskListController.show.url

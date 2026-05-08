@@ -67,17 +67,12 @@ class RentOpenMarketValueController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       rentOpenMarketValuesForm,
-      formWithErrors =>
-        BadRequest(
-          rentOpenMarketValueView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(rentOpenMarketValueView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValue = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentOpenMarketPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
@@ -88,13 +83,9 @@ class RentOpenMarketValueController @Inject() (
         answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match
           case Some(AnswerYes) =>
             answers.forType match
-              case FOR6020 =>
-                controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
-              case _       =>
-                controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
+              case FOR6020 => controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
+              case _       => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
           case _               =>
             answers.forType match
-              case FOR6020 =>
-                controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
-              case _       =>
-                controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+              case FOR6020 => controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
+              case _       => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url

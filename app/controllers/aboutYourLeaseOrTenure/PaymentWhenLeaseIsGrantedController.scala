@@ -67,17 +67,12 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       paymentWhenLeaseIsGrantedForm,
-      formWithErrors =>
-        BadRequest(
-          paymentWhenLeaseIsGrantedView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(paymentWhenLeaseIsGrantedView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(receivePaymentWhenLeaseGranted = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PayWhenLeaseGrantedId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
@@ -88,7 +83,6 @@ class PaymentWhenLeaseIsGrantedController @Inject() (
         answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match
           case Some(AnswerYes) =>
             answers.forType match
-              case FOR6030 =>
-                controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show().url
+              case FOR6030 => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumDetailsController.show().url
               case _       => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url

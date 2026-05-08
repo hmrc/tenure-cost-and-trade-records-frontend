@@ -45,11 +45,12 @@ class ServicePaidSeparatelyController @Inject() (
   with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[String] = for {
-      idx                   <- index
-      existingServicesPaid  <- request.sessionData.aboutLeaseOrAgreementPartThree.map(_.servicesPaid)
-      requestedServicesPaid <- existingServicesPaid.lift(idx)
-    } yield requestedServicesPaid.details
+    val existingDetails: Option[String] =
+      for
+        idx                   <- index
+        existingServicesPaid  <- request.sessionData.aboutLeaseOrAgreementPartThree.map(_.servicesPaid)
+        requestedServicesPaid <- existingServicesPaid.lift(idx)
+      yield requestedServicesPaid.details
 
     audit.sendChangeLink("ServicePaidSeparately")
 
@@ -75,7 +76,7 @@ class ServicePaidSeparatelyController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedDetails =
           request.sessionData.aboutLeaseOrAgreementPartThree.fold(
             AboutLeaseOrAgreementPartThree(servicesPaid = IndexedSeq(ServicesPaid(details = data)))
@@ -102,7 +103,6 @@ class ServicePaidSeparatelyController @Inject() (
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(ServicePaidSeparatelyId, updatedData).apply(updatedData)))
-      }
     )
   }
 

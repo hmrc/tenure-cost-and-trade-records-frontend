@@ -67,21 +67,12 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       rentIncreasedAnnuallyWithRPIDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          rentIncreaseAnnuallyWithRPIView(
-            formWithErrors,
-            getBackLink(request.sessionData),
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentIncreaseByRPIPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

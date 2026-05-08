@@ -64,8 +64,7 @@ class UltimatelyResponsibleBuildingInsuranceController @Inject() (
       ultimatelyResponsibleBuildingInsuranceForm,
       formWithErrors => BadRequest(ultimatelyResponsibleBIView(formWithErrors, request.sessionData.toSummary)),
       data =>
-        val updatedData =
-          updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleBuildingInsurance = Some(data)))
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(ultimatelyResponsibleBuildingInsurance = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ =>
