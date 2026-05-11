@@ -54,9 +54,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
   import controllers.FeedbackFormMapper.feedbackForm
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(
-      checkYourAnswersView(request.sessionData)
-    )
+    Ok(checkYourAnswersView(request.sessionData))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -89,14 +87,10 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
     }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future(Ok(confirmationView(feedbackForm)))
+    Ok(confirmationView(feedbackForm))
   }
 
-  private def submitRequestRefNumToBackend(
-    session: Session
-  )(using hc: HeaderCarrier,
-    messages: Messages
-  ): Future[Unit] =
+  private def submitRequestRefNumToBackend(session: Session)(using hc: HeaderCarrier, messages: Messages): Future[Unit] =
     val sessionRequestRefNum        = session.requestReferenceNumberDetails
     val sessionRequestRefNumAddress = sessionRequestRefNum.flatMap(_.propertyDetails)
     val sessionRequestRefNumDetails = sessionRequestRefNum.flatMap(_.contactDetails)

@@ -62,7 +62,7 @@ class AccommodationUnit6048Controller @Inject() (
     continueOrSaveAsDraft[(String, String)](
       accommodationUnit6048Form,
       formWithErrors => BadRequest(accommodationUnitView(formWithErrors)),
-      data => {
+      data =>
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
@@ -78,11 +78,8 @@ class AccommodationUnit6048Controller @Inject() (
               navigator.nextPageWithParam(AccommodationUnitPageId, updatedData, s"idx=${navigator.idx}")
             )
           }
-      }
     )
   }
 
-  private def accommodationDetails(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] =
+    request.sessionData.accommodationDetails

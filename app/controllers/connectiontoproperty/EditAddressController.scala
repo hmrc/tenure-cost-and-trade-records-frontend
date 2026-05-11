@@ -63,7 +63,7 @@ class EditAddressController @Inject() (
     continueOrSaveAsDraft[Address](
       editAddressForm,
       formWithErrors => BadRequest(editAddressView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
-      data => {
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
         session
           .saveOrUpdate(updatedData)
@@ -74,7 +74,6 @@ class EditAddressController @Inject() (
               .getOrElse(navigator.nextWithoutRedirectToCYA(EditAddressPageId, updatedData).apply(updatedData))
           )
           .map(Redirect)
-      }
     )
   }
 

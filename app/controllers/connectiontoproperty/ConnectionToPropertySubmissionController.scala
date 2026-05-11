@@ -16,16 +16,16 @@
 
 package controllers.connectiontoproperty
 
-import actions.{SessionRequest, WithSessionRefiner}
+import actions.WithSessionRefiner
 import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
-import controllers.FeedbackFormMapper
+import controllers.*
 import models.Session
 import models.submissions.ConnectedSubmission
 import play.api.Logging
 import play.api.i18n.I18nSupport
 import play.api.libs.json.{JsObject, Json}
-import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -52,21 +52,18 @@ class ConnectionToPropertySubmissionController @Inject() (
   import FeedbackFormMapper.feedbackForm
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    submit()
-  }
-
-  private def submit[T]()(using request: SessionRequest[T]): Future[Result] =
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
-    val auditType                  = "VacantFormSubmission"
-    val submissionJson             = Json.toJson(request.sessionData).as[JsObject]
-    val session                    = request.sessionData
+
+    val auditType      = "VacantFormSubmission"
+    val submissionJson = Json.toJson(request.sessionData).as[JsObject]
+    val session        = request.sessionData
+
     submitToBackend(session).map { _ =>
       val outcome = Json.obj("isSuccessful" -> true)
       audit.sendExplicitAudit(auditType, submissionJson ++ Audit.languageJson ++ Json.obj("outcome" -> outcome))
       Redirect(controllers.connectiontoproperty.routes.ConnectionToPropertySubmissionController.confirmation())
     } recoverWith { case e: Exception =>
-      val failureReason =
-        s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")} - ${e.getMessage}"
+      val failureReason = s"Could not send data to HOD - ${session.referenceNumber} - ${hc.sessionId.getOrElse("")} - ${e.getMessage}"
       logger.error(failureReason, e)
       val outcome       = Json.obj(
         "isSuccessful"    -> false,
@@ -76,15 +73,12 @@ class ConnectionToPropertySubmissionController @Inject() (
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
       errorHandler.internalServerErrorTemplate(using request).map(InternalServerError(_))
     }
-
-  def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future(Ok(confirmationView(feedbackForm)))
   }
 
-  private def submitToBackend(
-    session: Session
-  )(using hc: HeaderCarrier
-  ): Future[Unit] =
-    val submission = ConnectedSubmission(session)
+  def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
+    Ok(confirmationView(feedbackForm))
+  }
 
+  private def submitToBackend(session: Session)(using hc: HeaderCarrier): Future[Unit] =
+    val submission = ConnectedSubmission(session)
     submissionConnector.submitConnected(session.referenceNumber, submission).map(_ => ())

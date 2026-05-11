@@ -81,7 +81,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future(Ok(confirmationView(feedbackForm)))
+    Ok(confirmationView(feedbackForm))
   }
 
   private def submitToBackend(

@@ -84,10 +84,7 @@ class AdvertisingListController @Inject() (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      theFormWithErrors =>
-        BadRequest(
-          theListView(theFormWithErrors)
-        ),
+      theFormWithErrors => BadRequest(theListView(theFormWithErrors)),
       answer =>
         navigator.redirect(
           currentPage = AdvertisingListPageId,
@@ -97,12 +94,7 @@ class AdvertisingListController @Inject() (
     )
   }
 
-  private def withAdvertisingDetailAt(
-    index: Int
-  )(
-    func: AdvertisingDetail => Future[Result]
-  )(using request: SessionRequest[AnyContent]
-  ): Future[Result] =
+  private def withAdvertisingDetailAt(index: Int)(func: AdvertisingDetail => Future[Result])(using request: SessionRequest[AnyContent]): Future[Result] =
     LettingHistory
       .onlineAdvertising(request.sessionData)
       .lift(index)

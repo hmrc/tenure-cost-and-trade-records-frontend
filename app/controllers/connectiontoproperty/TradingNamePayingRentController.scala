@@ -51,10 +51,10 @@ class TradingNamePayingRentController @Inject() (
     audit.sendChangeLink("TradingNamePayingRent")
     val freshForm  = theForm
     val filledForm =
-      for {
+      for
         stillConnectedDetails <- request.sessionData.stillConnectedDetails
         tradingNamePayingRent <- stillConnectedDetails.tradingNamePayingRent
-      } yield theForm.fill(tradingNamePayingRent)
+      yield theForm.fill(tradingNamePayingRent)
 
     Ok(
       theView(
@@ -80,21 +80,17 @@ class TradingNamePayingRentController @Inject() (
             isReadOnly
           )
         ),
-      data => {
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(tradingNamePayingRent = Some(data)))
         repo.saveOrUpdate(updatedData).map { _ =>
           val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(using request) == "CYA")
-          val nextPage      =
-            redirectToCYA.getOrElse(navigator.nextPage(TradingNamePayingRentPageId, updatedData).apply(updatedData))
+          val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(TradingNamePayingRentPageId, updatedData).apply(updatedData))
           Redirect(nextPage)
         }
-      }
     )
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]) =
     navigator.from match
-      case "CYA" =>
-        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
-      case _     =>
-        controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
+      case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+      case _     => controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url

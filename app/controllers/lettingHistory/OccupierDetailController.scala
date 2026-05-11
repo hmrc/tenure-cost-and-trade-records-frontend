@@ -77,15 +77,7 @@ class OccupierDetailController @Inject (
   def submit(maybeIndex: Option[Int] = None): Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[OccupierDetail](
       theForm,
-      theFormWithErrors =>
-        BadRequest(
-          theView(
-            theFormWithErrors,
-            effectiveRentalPeriod,
-            backLinkUrl,
-            maybeIndex
-          )
-        ),
+      theFormWithErrors => BadRequest(theView(theFormWithErrors, effectiveRentalPeriod, backLinkUrl, maybeIndex)),
       formData =>
         given Session                      = request.sessionData
         val (updatedIndex, updatedSession) = byAddingOrUpdatingOccupier(formData, maybeIndex)

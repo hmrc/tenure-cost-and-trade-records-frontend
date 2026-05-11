@@ -37,9 +37,7 @@ class CheckYourAnswersConnectionToVacantPropertyController @Inject() (
   with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(
-      checkYourAnswersConnectionToVacantPropertyView(getBackLink)
-    )
+    Ok(checkYourAnswersConnectionToVacantPropertyView(getBackLink))
   }
 
   private def getBackLink: String =

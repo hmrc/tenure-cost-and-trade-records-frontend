@@ -65,23 +65,14 @@ class VacantPropertiesStartDateController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LocalDate](
       vacantPropertyStartDateForm,
-      formWithErrors =>
-        BadRequest(
-          vacantPropertyStartDateView(
-            formWithErrors,
-            request.sessionData.toSummary,
-            calculateBackLink
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(vacantPropertyStartDateView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(vacantPropertyStartDate = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from == "CYA")
-          val nextPage      =
-            redirectToCYA.getOrElse(navigator.nextPage(PropertyBecomeVacantPageId, updatedData).apply(updatedData))
+          val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(PropertyBecomeVacantPageId, updatedData).apply(updatedData))
           Redirect(nextPage)
         }
-      }
     )
   }
 

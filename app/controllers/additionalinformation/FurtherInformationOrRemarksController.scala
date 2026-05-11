@@ -62,7 +62,7 @@ class FurtherInformationOrRemarksController @Inject() (
     continueOrSaveAsDraft[String](
       furtherInformationOrRemarksForm,
       formWithErrors => BadRequest(furtherInformationOrRemarksView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
@@ -73,6 +73,5 @@ class FurtherInformationOrRemarksController @Inject() (
                 .apply(updatedData)
             )
           )
-      }
     )
   }

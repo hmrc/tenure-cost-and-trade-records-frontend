@@ -55,7 +55,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TradingNameOperatingFromProperty")
 
-    if (forType == FOR6048) {
+    if forType == FOR6048 then
       Ok(
         theView(
           request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match
@@ -66,7 +66,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
           isReadOnly
         )
       )
-    } else {
+    else
       Ok(
         theView(
           request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOperatingFromProperty) match {
@@ -77,55 +77,33 @@ class TradingNameOperatingFromPropertyController @Inject() (
           isReadOnly
         )
       )
-    }
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    if (forType == FOR6048) {
+    if forType == FOR6048 then
       continueOrSaveAsDraft[String](
         tradingNameOperatingFromProperty6048Form,
-        formWithErrors =>
-          BadRequest(
-            theView(
-              formWithErrors,
-              calculateBackLink,
-              isReadOnly
-            )
-          ),
-        data => {
+        formWithErrors => BadRequest(theView(formWithErrors, calculateBackLink, isReadOnly)),
+        data =>
           val updatedData = updateStillConnectedDetails(_.copy(tradingNameOperatingFromProperty = Some(data)))
           repo.saveOrUpdate(updatedData).map { _ =>
             val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(using request) == "CYA")
-            val nextPage      =
-              redirectToCYA
-                .getOrElse(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
+            val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
             Redirect(nextPage)
           }
-        }
       )
-    } else {
+    else
       continueOrSaveAsDraft[String](
         tradingNameOperatingFromPropertyForm,
-        formWithErrors =>
-          BadRequest(
-            theView(
-              formWithErrors,
-              calculateBackLink,
-              isReadOnly
-            )
-          ),
-        data => {
+        formWithErrors => BadRequest(theView(formWithErrors, calculateBackLink, isReadOnly)),
+        data =>
           val updatedData = updateStillConnectedDetails(_.copy(tradingNameOperatingFromProperty = Some(data)))
           repo.saveOrUpdate(updatedData).map { _ =>
             val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(using request) == "CYA")
-            val nextPage      =
-              redirectToCYA
-                .getOrElse(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
+            val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(TradingNameOperatingFromPropertyPageId, updatedData).apply(updatedData))
             Redirect(nextPage)
           }
-        }
       )
-    }
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
@@ -136,10 +114,7 @@ class TradingNameOperatingFromPropertyController @Inject() (
         request.sessionData.forType match
           case FOR6076 =>
             request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match
-              case Some(AddressConnectionTypeYes)              =>
-                routes.AreYouStillConnectedController.show().url
-              case Some(AddressConnectionTypeYesChangeAddress) =>
-                routes.EditAddressController.show().url
-              case _                                           =>
-                controllers.routes.TaskListController.show.url
+              case Some(AddressConnectionTypeYes)              => routes.AreYouStillConnectedController.show().url
+              case Some(AddressConnectionTypeYesChangeAddress) => routes.EditAddressController.show().url
+              case _                                           => controllers.routes.TaskListController.show.url
           case _       => routes.VacantPropertiesController.show().url

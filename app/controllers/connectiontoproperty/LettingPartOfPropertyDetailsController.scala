@@ -81,7 +81,7 @@ class LettingPartOfPropertyDetailsController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      formData => {
+      formData =>
         val ifLettingPartOfPropertyDetailsEmpty = StillConnectedDetails(lettingPartOfPropertyDetails =
           IndexedSeq(LettingPartOfPropertyDetails(tenantDetails = formData))
         )
@@ -123,7 +123,6 @@ class LettingPartOfPropertyDetailsController @Inject() (
                               )
                             )
         yield redirectResult
-      }
     )
   }
 
@@ -134,25 +133,19 @@ class LettingPartOfPropertyDetailsController @Inject() (
       correspondenceAddress = confirmedAddress.asAddress
       newSession           <- sessionWithCorrespondenceAddress(idx, correspondenceAddress)
       _                    <- repository.saveOrUpdate(newSession)
-    yield {
+    yield
       val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(using request) == "CYA")
-      val nextPage      =
-        redirectToCYA.getOrElse(navigator.nextPage(LettingPartOfPropertyDetailsPageId, newSession).apply(newSession))
+      val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(LettingPartOfPropertyDetailsPageId, newSession).apply(newSession))
       Redirect(nextPage)
-    }
   }
 
   private def getBackLink(mayBeIndex: Option[Int])(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+    navigator.from match
+      case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       case _     =>
-        mayBeIndex match {
-          case Some(index) if index > 0 =>
-            controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(index - 1).url
-          case _                        => controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
-        }
-    }
+        mayBeIndex match
+          case Some(idx) if idx > 0 => controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx - 1).url
+          case _                    => controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
 
   private def sessionWithCorrespondenceAddress(idx: Int, address: Address)(using session: Session) =
     assert(session.stillConnectedDetails.isDefined)

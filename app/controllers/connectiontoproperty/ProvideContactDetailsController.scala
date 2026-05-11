@@ -65,30 +65,20 @@ class ProvideContactDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[YourContactDetails](
       provideContactDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          provideContactDetailsView(
-            formWithErrors,
-            getBackLink,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(provideContactDetailsView(formWithErrors, getBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(provideContactDetails = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(using request) == "CYA")
-          val nextPage      =
-            redirectToCYA.getOrElse(navigator.nextPage(ProvideYourContactDetailsPageId, updatedData).apply(updatedData))
+          val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(ProvideYourContactDetailsPageId, updatedData).apply(updatedData))
           Redirect(nextPage)
         }
-      }
     )
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
     navigator.from match
-      case "CYA" =>
-        navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
+      case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     =>
         request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match
           case Some(AnswerYes) =>

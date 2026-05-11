@@ -65,8 +65,7 @@ class ResidentListController @Inject() (
       theRemoveConfirmationForm
         .bindFromRequest()
         .fold(
-          formWithErrors =>
-            BadRequest(renderTheConfirmationViewWith(formWithErrors, residentialDetail, index)),
+          formWithErrors => BadRequest(renderTheConfirmationViewWith(formWithErrors, residentialDetail, index)),
           answer =>
             val eventuallySavedSession: Future[SessionWrapper] =
               if answer == AnswerYes then
@@ -88,10 +87,7 @@ class ResidentListController @Inject() (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theListForm,
-      theFormWithErrors =>
-        BadRequest(
-          theListView(theFormWithErrors, permanentResidents(request.sessionData))
-        ),
+      theFormWithErrors => BadRequest(theListView(theFormWithErrors, permanentResidents(request.sessionData))),
       answer =>
         val answerBool = answer.toBoolean
         given Session  = request.sessionData
@@ -108,11 +104,10 @@ class ResidentListController @Inject() (
     hc: HeaderCarrier,
     ec: ExecutionContext
   ): Future[SessionWrapper] =
-    if !hasMoreResidents && permanentResidents(session).isEmpty
-    then {
+    if !hasMoreResidents && permanentResidents(session).isEmpty then
       val newSession = withHasPermanentResidents(false)
       repository.saveOrUpdateSession(newSession)
-    } else session.withChangedData(false)
+    else session.withChangedData(false)
 
   private def withResidentDetailAt(
     index: Int

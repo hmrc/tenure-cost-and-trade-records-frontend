@@ -57,29 +57,14 @@ class VacantPropertiesController @Inject() (
         isPropertyVacant      <- stillConnectedDetails.isPropertyVacant
       yield theForm.fill(isPropertyVacant)
 
-    Ok(
-      theView(
-        filledForm.getOrElse(freshForm),
-        calculateBackLink,
-        request.sessionData.toSummary,
-        isReadOnly
-      )
-    )
+    Ok(theView(filledForm.getOrElse(freshForm), calculateBackLink, request.sessionData.toSummary, isReadOnly))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(
-            formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary,
-            isReadOnly
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(theView(formWithErrors, calculateBackLink, request.sessionData.toSummary, isReadOnly)),
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(isPropertyVacant = Some(data)))
         repo
           .saveOrUpdate(updatedData)
@@ -95,7 +80,6 @@ class VacantPropertiesController @Inject() (
               .getOrElse(navigator.nextWithoutRedirectToCYA(VacantPropertiesPageId, updatedData).apply(updatedData))
           )
           .map(Redirect)
-      }
     )
   }
 

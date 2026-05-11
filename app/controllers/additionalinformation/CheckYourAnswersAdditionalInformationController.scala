@@ -59,13 +59,7 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersAdditionalInformationForm,
-      formWithErrors =>
-        BadRequest(
-          checkYourAnswersAdditionalInformationView(
-            formWithErrors,
-            request.sessionData
-          )
-        ),
+      formWithErrors => BadRequest(checkYourAnswersAdditionalInformationView(formWithErrors, request.sessionData)),
       data =>
         val updatedData = updateAdditionalInformation(_.copy(checkYourAnswersAdditionalInformation = Some(data)))
           .copy(lastCYAPageUrl =

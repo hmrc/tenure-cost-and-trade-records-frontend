@@ -58,15 +58,12 @@ class RemoveConnectionController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RemoveConnectionsDetails](
       removeConnectionForm,
-      formWithErrors =>
-        BadRequest(removeConnectionView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
-      data => {
+      formWithErrors => BadRequest(removeConnectionView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
+      data =>
         val updatedData = updateRemoveConnectionDetails(_.copy(removeConnectionDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RemoveConnectionId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 

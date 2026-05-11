@@ -64,7 +64,6 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
           )
         )
     }
-
   }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -92,9 +91,7 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
           val updatedData      = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
           session.saveOrUpdate(updatedData).map { _ =>
             val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(using request) == "CYA")
-            val nextPage      =
-              redirectToCYA
-                .getOrElse(navigator.nextPage(LettingPartOfPropertyRentDetailsPageId, updatedData).apply(updatedData))
+            val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(LettingPartOfPropertyRentDetailsPageId, updatedData).apply(updatedData))
             Redirect(nextPage)
           }
         }

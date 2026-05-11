@@ -72,9 +72,8 @@ class AccommodationLettingHistory6048Controller @Inject() (
 
     continueOrSaveAsDraft[Seq[AccommodationLettingHistory]](
       accommodationLettingHistory6048Form(years),
-      formWithErrors =>
-        BadRequest(accommodationLettingHistoryView(formWithErrors, yearEndDates, currentUnitName, backLink)),
-      data => {
+      formWithErrors => BadRequest(accommodationLettingHistoryView(formWithErrors, yearEndDates, currentUnitName, backLink)),
+      data =>
         val updatedLettingHistory = (data zip yearEndDates).map { case (lettingHistory, yearEnd) =>
           lettingHistory.copy(financialYearEnd = yearEnd)
         }
@@ -93,37 +92,22 @@ class AccommodationLettingHistory6048Controller @Inject() (
               navigator.nextPageWithParam(AccommodationLettingHistoryPageId, updatedData, s"idx=${navigator.idx}")
             )
           }
-      }
     )
   }
 
-  private def finYearEndDates(
-    using
-    request: SessionRequest[AnyContent]
-  ): Seq[LocalDate] =
+  private def finYearEndDates(using request: SessionRequest[AnyContent]): Seq[LocalDate] =
     val firstOccupy = request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate)
     AccountingInformationUtil.financialYearsRequiredAccommodation6048(firstOccupy, request.sessionData.isWelsh)
 
-  private def accommodationDetails(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] =
+    request.sessionData.accommodationDetails
 
-  private def currentUnit(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationUnit] =
+  private def currentUnit(using request: SessionRequest[AnyContent]): Option[AccommodationUnit] =
     accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
-  private def currentUnitName(
-    using
-    request: SessionRequest[AnyContent]
-  ): String =
+  private def currentUnitName(using request: SessionRequest[AnyContent]): String =
     currentUnit.fold("")(_.unitName)
 
-  private def backLink(
-    using
-    request: SessionRequest[AnyContent]
-  ): String =
+  private def backLink(using request: SessionRequest[AnyContent]): String =
     s"${controllers.accommodation.routes.AvailableRooms6048Controller.show.url}?idx=${navigator.idx}"

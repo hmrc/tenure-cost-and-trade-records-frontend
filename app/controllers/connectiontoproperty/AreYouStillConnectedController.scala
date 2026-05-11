@@ -50,24 +50,15 @@ class AreYouStillConnectedController @Inject() (
     audit.sendChangeLink("AreYouStillConnected")
     val freshForm  = theForm
     val filledForm = addressConnectionType.map(theForm.fill)
-    Ok(
-      theView(
-        filledForm.getOrElse(freshForm),
-        request.sessionData.toSummary,
-        calculateBackLink,
-        isReadOnly
-      )
-    )
+
+    Ok(theView(filledForm.getOrElse(freshForm), request.sessionData.toSummary, calculateBackLink, isReadOnly))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AddressConnectionType](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(formWithErrors, request.sessionData.toSummary, calculateBackLink, isReadOnly)
-        ),
-      data => {
+      formWithErrors => BadRequest(theView(formWithErrors, request.sessionData.toSummary, calculateBackLink, isReadOnly)),
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(addressConnectionType = Some(data)))
         repo
           .saveOrUpdate(updatedData)
@@ -76,26 +67,23 @@ class AreYouStillConnectedController @Inject() (
               .cyaPageDependsOnSession(updatedData)
               .filter(_ => navigator.from == "CYA" && addressConnectionType.contains(data))
               .getOrElse(
-                if (data == AddressConnectionTypeNo || addressConnectionType.contains(AddressConnectionTypeNo)) {
+                if data == AddressConnectionTypeNo || addressConnectionType.contains(AddressConnectionTypeNo) then
                   navigator.nextWithoutRedirectToCYA(AreYouStillConnectedPageId, updatedData).apply(updatedData)
-                } else if (navigator.from == "CYA" && data == AddressConnectionTypeYes) {
+                else if navigator.from == "CYA" && data == AddressConnectionTypeYes then
                   navigator.cyaPageDependsOnSession(updatedData).orElse(navigator.cyaPage).get
-                } else {
+                else
                   navigator.nextPage(AreYouStillConnectedPageId, updatedData).apply(updatedData)
-                }
               )
           )
           .map(Redirect)
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case "TL"  => controllers.routes.TaskListController.show.url
       case _     => controllers.routes.LoginController.show.url
-    }
 
   private def addressConnectionType(using r: SessionRequest[AnyContent]) =
     r.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType)

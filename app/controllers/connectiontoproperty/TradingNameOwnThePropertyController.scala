@@ -80,7 +80,7 @@ class TradingNameOwnThePropertyController @Inject() (
             isReadOnly
           )
         ),
-      data => {
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(tradingNameOwnTheProperty = Some(data)))
         repo
           .saveOrUpdate(updatedData)
@@ -91,14 +91,10 @@ class TradingNameOwnThePropertyController @Inject() (
               .getOrElse(navigator.nextPage(TradingNameOwnThePropertyPageId, updatedData).apply(updatedData))
           }
           .map(Redirect)
-      }
     )
   }
 
-  private def ownThePropertyInSession(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AnswersYesNo] =
+  private def ownThePropertyInSession(using request: SessionRequest[AnyContent]): Option[AnswersYesNo] =
     request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty)
 
   private def getBackLink(using request: SessionRequest[AnyContent]) =

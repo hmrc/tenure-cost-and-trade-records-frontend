@@ -31,7 +31,7 @@ class MongoHasher @Inject() (configuration: Configuration) extends Hasher with V
 
   def hash(plainText: PlainText): Scrambled = hasherCrypto.hash(plainText)
 
-  def verify(sample: PlainText, ncrypted: Scrambled): Boolean = hasherCrypto.verify(sample, ncrypted)
+  def verify(sample: PlainText, encrypted: Scrambled): Boolean = hasherCrypto.verify(sample, encrypted)
 
   def hash(str: String): String = hash(PlainText(str)).value
 

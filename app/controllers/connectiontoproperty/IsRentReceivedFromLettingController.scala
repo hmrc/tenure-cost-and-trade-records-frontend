@@ -75,7 +75,7 @@ class IsRentReceivedFromLettingController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(isAnyRentReceived = Some(data)))
         session
           .saveOrUpdate(updatedData)
@@ -91,7 +91,6 @@ class IsRentReceivedFromLettingController @Inject() (
               .getOrElse(navigator.nextWithoutRedirectToCYA(LettingIncomePageId, updatedData).apply(updatedData))
           }
           .map(Redirect)
-      }
     )
   }
 

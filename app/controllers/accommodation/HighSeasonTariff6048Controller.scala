@@ -75,22 +75,14 @@ class HighSeasonTariff6048Controller @Inject() (
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
-            Redirect(
-              navigator.nextPageWithParam(HighSeasonTariffPageId, updatedData, s"idx=${navigator.idx}")
-            )
+            Redirect(navigator.nextPageWithParam(HighSeasonTariffPageId, updatedData, s"idx=${navigator.idx}"))
           }
     )
   }
 
-  private def currentUnit(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationUnit] =
+  private def currentUnit(using request: SessionRequest[AnyContent]): Option[AccommodationUnit] =
     request.sessionData.accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
-  private def backLink(
-    using
-    request: SessionRequest[AnyContent]
-  ): String =
+  private def backLink(using request: SessionRequest[AnyContent]): String =
     s"${controllers.accommodation.routes.AccommodationLettingHistory6048Controller.show.url}?idx=${navigator.idx}"

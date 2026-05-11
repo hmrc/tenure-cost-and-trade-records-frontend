@@ -63,7 +63,7 @@ class AvailableRooms6048Controller @Inject() (
     continueOrSaveAsDraft[AvailableRooms](
       availableRooms6048Form,
       formWithErrors => BadRequest(availableRoomsView(formWithErrors, currentUnitName, backLink)),
-      data => {
+      data =>
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
@@ -76,11 +76,11 @@ class AvailableRooms6048Controller @Inject() (
           .map { _ =>
             Redirect(navigator.nextPageWithParam(AvailableRoomsPageId, updatedData, s"idx=${navigator.idx}"))
           }
-      }
     )
   }
 
-  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] =
+    request.sessionData.accommodationDetails
 
   private def currentUnit(using request: SessionRequest[AnyContent]): Option[AccommodationUnit] =
     accommodationDetails

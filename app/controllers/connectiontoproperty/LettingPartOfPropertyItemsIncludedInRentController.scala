@@ -67,10 +67,10 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
   }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    (for {
+    (for
       existingSections <- request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails)
       currentSection   <- existingSections.lift(index)
-    } yield continueOrSaveAsDraft[List[String]](
+    yield continueOrSaveAsDraft[List[String]](
       lettingPartOfPropertyRentIncludesForm,
       formWithErrors =>
         BadRequest(
@@ -82,7 +82,7 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedSections = existingSections.updated(
           index,
           currentSection.copy(itemsIncludedInRent = data)
@@ -96,7 +96,6 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
             )
           Redirect(nextPage)
         }
-      }
     )).getOrElse(startRedirect)
   }
 
