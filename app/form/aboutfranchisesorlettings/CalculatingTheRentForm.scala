@@ -27,9 +27,7 @@ object CalculatingTheRentForm:
   def calculatingTheRentForm(using messages: Messages): Form[CalculatingTheRent] =
     Form(
       mapping(
-        "rentDetails" ->
-          text
-            .verifying(messages("calculating.the.rent.for.explain.error"), value => value.nonEmpty),
+        "rentDetails" -> text.verifying(messages("calculating.the.rent.for.explain.error"), _.nonEmpty),
         "dateInput"   -> requiredDateMapping("cateringOrLettingFixedRentDate", allowPastDates = true)
       )(CalculatingTheRent.apply)(o => Some(Tuple.fromProductTyped(o)))
     )

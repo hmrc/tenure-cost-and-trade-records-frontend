@@ -53,10 +53,10 @@ class LocalDateFormatter(
 
     val yearForField = years.flatMap(_.lift(fieldIndex))
 
-    val fieldName            = yearForField match {
+    val fieldName = yearForField match
       case Some(year) => messages(s"fieldName.$fieldNameKey", year.toString)
       case None       => messages(s"fieldName.$fieldNameKey")
-    }
+
     val fieldNameCapitalized = fieldName.capitalize
     val dayKey               = s"$key.day"
 
@@ -82,7 +82,7 @@ class LocalDateFormatter(
           (year, s"$key.year", "error.date.year.invalid")
         ).filter(_._1 == 0)
 
-        invalidFields match {
+        invalidFields match
           case Seq((_, field, error))                      =>
             oneError(field, error, Seq(fieldNameCapitalized, field))
           case multipleErrors if multipleErrors.length > 1 =>
@@ -93,7 +93,6 @@ class LocalDateFormatter(
             validateDate(day, month, year).left.map { errorKey =>
               Seq(FormError(key, errorKey, Seq(fieldNameCapitalized, allDateFields)))
             }
-        }
 
       case (d, m, y) =>
         val prefix           = messages("error.dateParts.prefix")

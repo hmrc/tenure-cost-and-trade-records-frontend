@@ -16,7 +16,7 @@
 
 package form.lettingHistory
 
-import form.WebsiteMapping.validateWebaddress
+import form.WebsiteMapping.validateWebAddress
 import models.submissions.lettingHistory.AdvertisingDetail
 import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
@@ -25,7 +25,7 @@ object AdvertisingDetailForm:
 
   val theForm: Form[AdvertisingDetail] = Form(
     mapping(
-      "websiteAddress"          -> validateWebaddress,
+      "websiteAddress"          -> validateWebAddress,
       "propertyReferenceNumber" -> default(text, "")
     )(AdvertisingDetail.apply)(AdvertisingDetail.unapply)
   )

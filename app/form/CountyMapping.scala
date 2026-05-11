@@ -27,7 +27,7 @@ object CountyMapping:
 
   def validateCounty: Mapping[String] =
     text
-      .verifying(Errors.addressCountyRequired, county => county.nonEmpty)
+      .verifying(Errors.addressCountyRequired, _.nonEmpty)
       .verifying(Errors.addressCountyLength, county => if county.nonEmpty then validCountyLength(county) else true)
       .verifying(
         Errors.invalidCharAddressCounty,

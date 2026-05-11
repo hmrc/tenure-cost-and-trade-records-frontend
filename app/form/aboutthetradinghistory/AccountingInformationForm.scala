@@ -24,10 +24,11 @@ import play.api.i18n.Messages
 
 object AccountingInformationForm:
 
-  def accountingInformationForm(using messages: Messages): Form[(DayMonthsDuration, Boolean)] = Form(
-    tuple(
-      "financialYear"  -> dayMonthMapping("financialYear", allow29February = false),
-      "yearEndChanged" -> optional(text)
-        .transform[Boolean](_.contains("true"), b => Some(b.toString))
+  def accountingInformationForm(using messages: Messages): Form[(DayMonthsDuration, Boolean)] =
+    Form(
+      tuple(
+        "financialYear"  -> dayMonthMapping("financialYear", allow29February = false),
+        "yearEndChanged" -> optional(text)
+          .transform[Boolean](_.contains("true"), b => Some(b.toString))
+      )
     )
-  )

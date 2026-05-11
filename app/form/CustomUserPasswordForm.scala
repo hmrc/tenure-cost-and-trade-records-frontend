@@ -29,16 +29,15 @@ object CustomUserPasswordForm:
 
   private val passwordMinLength = AlphanumericPasswordGenerator.passwordLength
 
-  val customUserPasswordForm: Form[CustomUserPassword] = Form(
-    mapping(
-      "password"        ->
-        text
-          .verifying(
-            minLength(passwordMinLength, "error.password.minLength"),
-            pattern(".*\\d.*".r, error = "error.password.atLeastOneNumber"),
-            pattern(".*[a-zA-Z]+.*".r, error = "error.password.atLeastOneLetter")
-          ),
-      "confirmPassword" -> text
-    )(CustomUserPassword.apply)(o => Some(Tuple.fromProductTyped(o)))
-      .verifying("saveAsDraft.error.passwordsDontMatch", data => data.confirmPassword == data.password)
-  )
+  val customUserPasswordForm: Form[CustomUserPassword] =
+    Form(
+      mapping(
+        "password"        -> text.verifying(
+          minLength(passwordMinLength, "error.password.minLength"),
+          pattern(".*\\d.*".r, error = "error.password.atLeastOneNumber"),
+          pattern(".*[a-zA-Z]+.*".r, error = "error.password.atLeastOneLetter")
+        ),
+        "confirmPassword" -> text
+      )(CustomUserPassword.apply)(o => Some(Tuple.fromProductTyped(o)))
+        .verifying("saveAsDraft.error.passwordsDontMatch", data => data.confirmPassword == data.password)
+    )

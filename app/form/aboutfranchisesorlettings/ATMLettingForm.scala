@@ -23,13 +23,14 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ATMLettingForm:
 
-  val theForm: Form[ATMLetting] = Form(
-    mapping(
-      "bankOrCompany" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.bankOrCompany.required"),
-        maxLength(500, "error.bankOrCompany.maxLength")
+  val theForm: Form[ATMLetting] =
+    Form(
+      mapping(
+        "bankOrCompany" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.bankOrCompany.required"),
+          maxLength(500, "error.bankOrCompany.maxLength")
+        )
+      )(bankOrCompany => ATMLetting(Some(bankOrCompany), None, None))(atmLetting =>
+        Some(atmLetting.bankOrCompany.getOrElse(""))
       )
-    )(bankOrCompany => ATMLetting(Some(bankOrCompany), None, None))(atmLetting =>
-      Some(atmLetting.bankOrCompany.getOrElse(""))
     )
-  )

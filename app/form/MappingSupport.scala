@@ -236,10 +236,7 @@ object MappingSupport:
   def weeksMapping(blankErrorMessage: String, invalidErrorMessage: String, minWeeks: Int = 1): Mapping[Int] =
     default(text, "")
       .verifying(blankErrorMessage, _.trim.nonEmpty)
-      .transform[Int](
-        str => Try(str.toInt).getOrElse(-1),
-        _.toString
-      )
+      .transform[Int](str => Try(str.toInt).getOrElse(-1), _.toString)
       .verifying(invalidErrorMessage, (minWeeks to 52).contains(_))
 
   def nonNegativeNumberWithYear(
@@ -260,10 +257,7 @@ object MappingSupport:
   def rallyAreasMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = optional(
     text
       .verifying(messages("error.rallyAreas.areaInHectares.range", year), s => Try(BigDecimal(s)).isSuccess)
-      .transform[BigDecimal](
-        s => BigDecimal(s),
-        _.toString
-      )
+      .transform[BigDecimal](s => BigDecimal(s), _.toString)
       .verifying(messages("error.rallyAreas.areaInHectares.range", year), _ >= 0)
   ).verifying(messages("error.rallyAreas.areaInHectares.required", year), _.isDefined)
 
@@ -273,10 +267,7 @@ object MappingSupport:
     optional(
       text
         .verifying(messages(s"error.$field.range", year), s => Try(BigDecimal(s)).isSuccess)
-        .transform[BigDecimal](
-          s => BigDecimal(s),
-          _.toString
-        )
+        .transform[BigDecimal](s => BigDecimal(s), _.toString)
         .verifying(messages(s"error.$field.negative", year), _ >= 0)
         .verifying(messages(s"error.$field.range", year), _ <= salesMax)
     ).verifying(messages(s"error.$field.required", year), _.isDefined)
@@ -285,10 +276,7 @@ object MappingSupport:
     optional(
       text
         .verifying(s"error.$field.nonNumeric", s => Try(BigDecimal(s)).isSuccess)
-        .transform[BigDecimal](
-          s => BigDecimal(s),
-          _.toString
-        )
+        .transform[BigDecimal](s => BigDecimal(s), _.toString)
         .verifying(s"error.$field.negative", _ >= 0)
     )
 

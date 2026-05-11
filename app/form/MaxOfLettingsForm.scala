@@ -25,9 +25,7 @@ object MaxOfLettingsForm:
 
   def maxOfLettingsForm(using messages: Messages): Form[Boolean] =
     Form(
-      mapping(
-        "maxOfLettings" ->
-          of[Boolean]
-            .verifying(messages("maxOf5Lettings.error"), value => value)
-      )(x => x)(b => Some(b))
+      single(
+        "maxOfLettings" -> of[Boolean].verifying(messages("maxOf5Lettings.error"), value => value)
+      )
     )

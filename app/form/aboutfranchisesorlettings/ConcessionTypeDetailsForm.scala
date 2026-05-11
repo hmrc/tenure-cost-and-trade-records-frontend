@@ -23,19 +23,20 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ConcessionTypeDetailsForm:
 
-  val concessionTypeDetailsForm: Form[ConcessionBusinessDetails] = Form(
-    mapping(
-      "operatorName"   -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.concessionTypeDetails.operator.required"),
-        maxLength(100, "error.concessionTypeDetails.operator.maxLength")
-      ),
-      "typeOfBusiness" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.concessionTypeDetails.describeType.required"),
-        maxLength(100, "error.concessionTypeDetails.describeType.maxLength")
-      ),
-      "howIsUsed"      -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.concessionTypeDetails.describeUse.required"),
-        maxLength(100, "error.concessionTypeDetails.describeUse.maxLength")
-      )
-    )(ConcessionBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val concessionTypeDetailsForm: Form[ConcessionBusinessDetails] =
+    Form(
+      mapping(
+        "operatorName"   -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.concessionTypeDetails.operator.required"),
+          maxLength(100, "error.concessionTypeDetails.operator.maxLength")
+        ),
+        "typeOfBusiness" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.concessionTypeDetails.describeType.required"),
+          maxLength(100, "error.concessionTypeDetails.describeType.maxLength")
+        ),
+        "howIsUsed"      -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.concessionTypeDetails.describeUse.required"),
+          maxLength(100, "error.concessionTypeDetails.describeUse.maxLength")
+        )
+      )(ConcessionBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

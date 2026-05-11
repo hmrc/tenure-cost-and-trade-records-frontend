@@ -23,8 +23,9 @@ import play.api.data.Forms.single
 
 object RentalIncomeListForm:
 
-  val theForm: Form[AnswersYesNo] = Form[AnswersYesNo](
-    single(
-      "rentalIncomeList" -> createYesNoType("error.rentalIncomeList.required")
+  val theForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "rentalIncomeList" -> createYesNoType("error.rentalIncomeList.required")
+      )
     )
-  )

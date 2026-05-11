@@ -29,11 +29,12 @@ import java.time.LocalDate
   */
 object FeeReceivedForm:
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[FeeReceivedPerYear] = mapping(
-    "financialYearEnd"         -> ignored(LocalDate.EPOCH),
-    "tradingPeriod"            -> tradingPeriodWeeks(year),
-    "concessionOrFranchiseFee" -> turnoverSalesMappingWithYear("feeReceived.concessionOrFranchiseFee", year)
-  )(FeeReceivedPerYear.apply)(o => Some(Tuple.fromProductTyped(o)))
+  private def columnMapping(year: String)(using messages: Messages): Mapping[FeeReceivedPerYear] =
+    mapping(
+      "financialYearEnd"         -> ignored(LocalDate.EPOCH),
+      "tradingPeriod"            -> tradingPeriodWeeks(year),
+      "concessionOrFranchiseFee" -> turnoverSalesMappingWithYear("feeReceived.concessionOrFranchiseFee", year)
+    )(FeeReceivedPerYear.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   private def feeReceivedPerYearSeq(
     years: Seq[String]

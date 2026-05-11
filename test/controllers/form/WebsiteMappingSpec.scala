@@ -16,7 +16,7 @@
 
 package controllers.form
 
-import form.WebsiteMapping.validateWebaddress
+import form.WebsiteMapping.validateWebAddress
 import org.scalatest.matchers.should
 import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
 import org.scalatest.wordspec.AnyWordSpecLike
@@ -26,7 +26,7 @@ import play.api.data.Forms.single
 class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
 
   trait Setup:
-    val form: Form[String] = Form(single("websiteAddressForProperty" -> validateWebaddress))
+    val form: Form[String] = Form(single("websiteAddressForProperty" -> validateWebAddress))
 
   "Web address validation" should {
 

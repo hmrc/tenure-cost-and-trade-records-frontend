@@ -19,16 +19,15 @@ package form
 import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{mapping, optional}
+import play.api.data.Forms.{optional, single}
 
 object ConfirmableActionForm:
 
-  private val confirmableActionMapping = mapping(
-    "genericRemoveConfirmation" -> optional(
-      createYesNoType("error.confirmableAction.required")
+  val confirmableActionForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "genericRemoveConfirmation" -> optional(createYesNoType("error.confirmableAction.required"))
+          .verifying("error.confirmableAction.required", _.nonEmpty)
+          .transform[AnswersYesNo](_.get, Some(_))
+      )
     )
-      .verifying("error.confirmableAction.required", _.nonEmpty)
-      .transform[AnswersYesNo](_.get, Some(_))
-  )(x => x)(b => Some(b))
-
-  val confirmableActionForm: Form[AnswersYesNo] = Form(confirmableActionMapping)

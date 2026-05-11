@@ -22,6 +22,7 @@ import play.api.data.Form
 
 object TypeOfIncomeForm:
 
-  val typeOfIncomeForm: Form[TypeOfIncome] = Form(
-    "typeOfIncome" -> typeOfIncomeMapping
-  )
+  val typeOfIncomeForm: Form[TypeOfIncome] =
+    Form(
+      "typeOfIncome" -> typeOfIncomeMapping
+    )

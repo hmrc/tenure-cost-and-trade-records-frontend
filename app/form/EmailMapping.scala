@@ -27,7 +27,7 @@ object EmailMapping:
 
   def validateEmail: Mapping[String] =
     text
-      .verifying(Errors.contactEmailRequired, eA => eA.nonEmpty)
+      .verifying(Errors.contactEmailRequired, _.nonEmpty)
       .verifying(
         Errors.emailFormat,
         eA => if eA.nonEmpty then eA.matches(invalidEmailRegex) else true

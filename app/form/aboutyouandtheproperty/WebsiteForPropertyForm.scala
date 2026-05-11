@@ -18,7 +18,7 @@ package form.aboutyouandtheproperty
 
 import form.Errors
 import form.MappingSupport.createYesNoType
-import form.WebsiteMapping.validateWebaddress
+import form.WebsiteMapping.validateWebAddress
 import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
 import models.submissions.common.AnswersYesNo.AnswerYes
 import play.api.data.Form
@@ -33,7 +33,7 @@ object WebsiteForPropertyForm:
       "websiteAddressForProperty"     -> mandatoryIfEqual(
         "buildingOperatingHaveAWebsite",
         AnswerYes.toString,
-        validateWebaddress
+        validateWebAddress
       )
     )(WebsiteForPropertyDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
   )

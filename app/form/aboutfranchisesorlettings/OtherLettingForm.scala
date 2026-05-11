@@ -23,22 +23,23 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object OtherLettingForm:
 
-  val theForm: Form[OtherLetting] = Form(
-    mapping(
-      "lettingType" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.lettingType.required"),
-        maxLength(50, "error.lettingType.maxLength")
-      ),
-      "tenantName"  -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.tenantName.required"),
-        maxLength(50, "error.otherLetting.tenantName.maxLength")
-      )
-    )((lettingType, tenantName) => OtherLetting(Some(lettingType), Some(tenantName), None, None))(otherLetting =>
-      Some(
-        (
-          otherLetting.lettingType.getOrElse(""),
-          otherLetting.tenantName.getOrElse("")
+  val theForm: Form[OtherLetting] =
+    Form(
+      mapping(
+        "lettingType" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.lettingType.required"),
+          maxLength(50, "error.lettingType.maxLength")
+        ),
+        "tenantName"  -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.tenantName.required"),
+          maxLength(50, "error.otherLetting.tenantName.maxLength")
+        )
+      )((lettingType, tenantName) => OtherLetting(Some(lettingType), Some(tenantName), None, None))(otherLetting =>
+        Some(
+          (
+            otherLetting.lettingType.getOrElse(""),
+            otherLetting.tenantName.getOrElse("")
+          )
         )
       )
     )
-  )

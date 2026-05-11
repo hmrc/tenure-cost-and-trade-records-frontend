@@ -27,7 +27,7 @@ object BuildingNameNumberMapping:
 
   def validateBuildingNameNumber: Mapping[String] =
     text
-      .verifying(Errors.addressBuildingNameNumberRequired, bNN => bNN.nonEmpty)
+      .verifying(Errors.addressBuildingNameNumberRequired, _.nonEmpty)
       .verifying(Errors.buildingMaxLength, bNN => if bNN.nonEmpty then validBuildingNameNumberLength(bNN) else true)
       .verifying(
         Errors.invalidCharAddress1,

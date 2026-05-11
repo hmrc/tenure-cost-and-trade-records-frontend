@@ -29,7 +29,7 @@ object AlternativePhoneNumberMapping:
 
   def validateAlternativePhoneNumber: Mapping[String] =
     text
-      .verifying(Errors.contactAlternativePhoneRequired, pN => pN.nonEmpty)
+      .verifying(Errors.contactAlternativePhoneRequired, _.nonEmpty)
       .verifying(Errors.contactPhoneLength, pN => if pN.nonEmpty then validPNLength(pN) else true)
       .verifying(
         Errors.invalidPhone,

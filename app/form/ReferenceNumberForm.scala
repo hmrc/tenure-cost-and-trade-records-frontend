@@ -23,11 +23,11 @@ import play.api.data.validation.Constraints.nonEmpty
 
 object ReferenceNumberForm:
 
-  val theForm: Form[ReferenceNumber] = Form[ReferenceNumber](
-    mapping(
-      "referenceNumber" ->
-        default(text, "").verifying(
+  val theForm: Form[ReferenceNumber] =
+    Form(
+      mapping(
+        "referenceNumber" -> default(text, "").verifying(
           nonEmpty(errorMessage = "error.referenceNumber.required")
         )
-    )(ReferenceNumber.apply)(ReferenceNumber.unapply)
-  )
+      )(ReferenceNumber.apply)(ReferenceNumber.unapply)
+    )

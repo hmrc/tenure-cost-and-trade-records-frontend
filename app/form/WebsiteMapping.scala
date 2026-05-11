@@ -28,9 +28,9 @@ object WebsiteMapping:
   private val validWebAddressRegex =
     """(https?://)?(www\.)?([a-zA-Z0-9]+([a-zA-Z0-9-]+)?(\.[a-zA-Z]{2,})+|([a-zA-Z0-9]+\.)?[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,})(/|$)""".stripMargin
 
-  def validateWebaddress: Mapping[String] =
+  def validateWebAddress: Mapping[String] =
     text
-      .verifying(Errors.webAddressBlank, wA => wA.nonEmpty)
+      .verifying(Errors.webAddressBlank, _.nonEmpty)
       .verifying(
         Errors.webaddressFormat,
         wA => if wA.nonEmpty then wA.matches(validWebAddressRegex) else true

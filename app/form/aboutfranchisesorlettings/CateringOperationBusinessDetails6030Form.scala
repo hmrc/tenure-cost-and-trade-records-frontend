@@ -23,19 +23,20 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object CateringOperationBusinessDetails6030Form:
 
-  val cateringOperationBusinessDetails6030Form: Form[ConcessionBusinessDetails] = Form(
-    mapping(
-      "operatorName6030"          -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.operatorName6030.required"),
-        maxLength(100, "error.operatorName6030.maxLength")
-      ),
-      "typeOfBusiness"            -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.typeOfBusiness.required"),
-        maxLength(100, "error.typeOfBusiness.maxLength")
-      ),
-      "howBusinessPropertyIsUsed" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.howBusinessPropertyIsUsed.required"),
-        maxLength(50, "error.howBusinessPropertyIsUsed.maxLength")
-      )
-    )(ConcessionBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val cateringOperationBusinessDetails6030Form: Form[ConcessionBusinessDetails] =
+    Form(
+      mapping(
+        "operatorName6030"          -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.operatorName6030.required"),
+          maxLength(100, "error.operatorName6030.maxLength")
+        ),
+        "typeOfBusiness"            -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.typeOfBusiness.required"),
+          maxLength(100, "error.typeOfBusiness.maxLength")
+        ),
+        "howBusinessPropertyIsUsed" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.howBusinessPropertyIsUsed.required"),
+          maxLength(50, "error.howBusinessPropertyIsUsed.maxLength")
+        )
+      )(ConcessionBusinessDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )
