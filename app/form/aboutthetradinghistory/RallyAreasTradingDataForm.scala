@@ -30,10 +30,7 @@ object RallyAreasTradingDataForm:
       "areasInHectares" -> rallyAreasMapping(year)
     )(RallyAreasTradingData.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def rallyAreasTradingDataForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[RallyAreasTradingData]] =
+  def rallyAreasTradingDataForm(years: Seq[String])(using messages: Messages): Form[Seq[RallyAreasTradingData]] =
     Form(
       mappingPerYear(years, (year, idx) => s"rallyAreas[$idx]" -> columnMapping(year))
     )

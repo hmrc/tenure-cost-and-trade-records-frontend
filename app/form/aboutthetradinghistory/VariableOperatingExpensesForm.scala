@@ -27,28 +27,26 @@ import java.time.LocalDate
 
 object VariableOperatingExpensesForm:
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[VariableOperatingExpenses] = mapping(
-    "financial-year-end"               -> ignored(LocalDate.EPOCH),
-    "energy-and-utilities"             -> turnoverSalesMappingWithYear("variableExpenses.energyAndUtilities", year),
-    "cleaning-and-laundry"             -> turnoverSalesMappingWithYear("variableExpenses.cleaningAndLaundry", year),
-    "building-maintenance-and-repairs" -> turnoverSalesMappingWithYear(
-      "variableExpenses.buildingMaintenanceAndRepairs",
-      year
-    ),
-    "fixtures-fittings-and-equipment"  -> turnoverSalesMappingWithYear(
-      "variableExpenses.fixturesFittingsAndEquipment",
-      year
-    ),
-    "advertising-and-promotions"       -> turnoverSalesMappingWithYear("variableExpenses.advertisingAndPromotions", year),
-    "administration-and-sundries"      -> turnoverSalesMappingWithYear("variableExpenses.administrationAndSundries", year),
-    "entertainment"                    -> turnoverSalesMappingWithYear("variableExpenses.entertainment", year),
-    "other"                            -> turnoverSalesMappingWithYear("variableExpenses.other", year)
-  )(VariableOperatingExpenses.apply)(o => Some(Tuple.fromProductTyped(o)))
+  private def columnMapping(year: String)(using messages: Messages): Mapping[VariableOperatingExpenses] =
+    mapping(
+      "financial-year-end"               -> ignored(LocalDate.EPOCH),
+      "energy-and-utilities"             -> turnoverSalesMappingWithYear("variableExpenses.energyAndUtilities", year),
+      "cleaning-and-laundry"             -> turnoverSalesMappingWithYear("variableExpenses.cleaningAndLaundry", year),
+      "building-maintenance-and-repairs" -> turnoverSalesMappingWithYear(
+        "variableExpenses.buildingMaintenanceAndRepairs",
+        year
+      ),
+      "fixtures-fittings-and-equipment"  -> turnoverSalesMappingWithYear(
+        "variableExpenses.fixturesFittingsAndEquipment",
+        year
+      ),
+      "advertising-and-promotions"       -> turnoverSalesMappingWithYear("variableExpenses.advertisingAndPromotions", year),
+      "administration-and-sundries"      -> turnoverSalesMappingWithYear("variableExpenses.administrationAndSundries", year),
+      "entertainment"                    -> turnoverSalesMappingWithYear("variableExpenses.entertainment", year),
+      "other"                            -> turnoverSalesMappingWithYear("variableExpenses.other", year)
+    )(VariableOperatingExpenses.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  private def variableOperatingExpensesSeq(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Mapping[Seq[VariableOperatingExpenses]] =
+  private def variableOperatingExpensesSeq(years: Seq[String])(using messages: Messages): Mapping[Seq[VariableOperatingExpenses]] =
     mappingPerYear(years, (year, idx) => s"year[$idx]" -> columnMapping(year))
 
   private def otherExpensesDetailsRequired: Constraint[VariableOperatingExpensesSections] =
@@ -58,10 +56,7 @@ object VariableOperatingExpensesForm:
       else Valid
     }
 
-  def variableOperatingExpensesForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[VariableOperatingExpensesSections] =
+  def variableOperatingExpensesForm(years: Seq[String])(using messages: Messages): Form[VariableOperatingExpensesSections] =
     Form(
       mapping(
         "variableOperatingExpenses" -> variableOperatingExpensesSeq(years),

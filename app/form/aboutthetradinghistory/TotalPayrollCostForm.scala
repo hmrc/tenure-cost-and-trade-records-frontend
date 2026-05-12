@@ -26,11 +26,12 @@ import java.time.LocalDate
 
 object TotalPayrollCostForm:
 
-  private def totalPayrollCostMapping(year: String)(using messages: Messages): Mapping[TotalPayrollCost] = mapping(
-    "financial-year-end"     -> ignored(LocalDate.EPOCH),
-    "managers-and-staff"     -> turnoverSalesMappingWithYear("managers-and-staff", year),
-    "directors-remuneration" -> turnoverSalesMappingWithYear("directors-remuneration", year)
-  )(TotalPayrollCost.apply)(o => Some(Tuple.fromProductTyped(o)))
+  private def totalPayrollCostMapping(year: String)(using messages: Messages): Mapping[TotalPayrollCost] =
+    mapping(
+      "financial-year-end"     -> ignored(LocalDate.EPOCH),
+      "managers-and-staff"     -> turnoverSalesMappingWithYear("managers-and-staff", year),
+      "directors-remuneration" -> turnoverSalesMappingWithYear("directors-remuneration", year)
+    )(TotalPayrollCost.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def totalPayrollCostForm(years: Seq[String])(using messages: Messages): Form[Seq[TotalPayrollCost]] =
     Form(

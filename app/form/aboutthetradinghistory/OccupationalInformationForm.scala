@@ -24,8 +24,9 @@ import play.api.i18n.Messages
 
 object OccupationalInformationForm:
 
-  def occupationalInformationForm(using messages: Messages): Form[MonthsYearDuration] = Form(
-    single(
-      "firstOccupy" -> monthYearMapping("firstOccupy", allowPastDates = true)
+  def occupationalInformationForm(using messages: Messages): Form[MonthsYearDuration] =
+    Form(
+      single(
+        "firstOccupy" -> monthYearMapping("firstOccupy", allowPastDates = true)
+      )
     )
-  )

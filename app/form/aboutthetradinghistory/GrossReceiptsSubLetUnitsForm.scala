@@ -30,10 +30,7 @@ object GrossReceiptsSubLetUnitsForm:
       "numberOfUnits" -> nonNegativeNumberWithYear("subLetUnits.numberOfUnits", year)
     )(GrossReceiptsSubLetUnits.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def grossReceiptsSubLetUnitsForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[GrossReceiptsSubLetUnits]] =
+  def grossReceiptsSubLetUnitsForm(years: Seq[String])(using messages: Messages): Form[Seq[GrossReceiptsSubLetUnits]] =
     Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     )

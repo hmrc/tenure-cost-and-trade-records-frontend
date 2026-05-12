@@ -27,20 +27,15 @@ import play.api.i18n.Messages
   */
 object HeadOfficeExpensesForm:
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = single(
-    "headOfficeExpenses" -> turnoverSalesMappingWithYear("turnover.6076.headOfficeExpenses", year)
-  )
+  private def columnMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] =
+    single(
+      "headOfficeExpenses" -> turnoverSalesMappingWithYear("turnover.6076.headOfficeExpenses", year)
+    )
 
-  private def headOfficeExpensesSeq(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Mapping[Seq[Option[BigDecimal]]] =
+  private def headOfficeExpensesSeq(years: Seq[String])(using messages: Messages): Mapping[Seq[Option[BigDecimal]]] =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
-  def headOfficeExpensesForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[(Seq[Option[BigDecimal]], Option[String])] =
+  def headOfficeExpensesForm(years: Seq[String])(using messages: Messages): Form[(Seq[Option[BigDecimal]], Option[String])] =
     Form(
       tuple(
         "headOfficeExpensesSeq"       -> headOfficeExpensesSeq(years),

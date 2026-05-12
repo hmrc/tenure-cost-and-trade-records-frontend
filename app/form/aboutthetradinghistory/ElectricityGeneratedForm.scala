@@ -46,11 +46,12 @@ object ElectricityGeneratedForm:
         optInt => optInt.forall(weeks => (minWeeks to 52).contains(weeks))
       )
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[(Option[Int], String)] = tuple(
-    "weeks"                -> weeksMapping(year),
-    "electricityGenerated" -> default(text, "")
-      .verifying(messages("error.turnover.6076.electricityGenerated.required", year), _.trim.nonEmpty)
-  )
+  private def columnMapping(year: String)(using messages: Messages): Mapping[(Option[Int], String)] =
+    tuple(
+      "weeks"                -> weeksMapping(year),
+      "electricityGenerated" -> default(text, "")
+        .verifying(messages("error.turnover.6076.electricityGenerated.required", year), _.trim.nonEmpty)
+    )
 
   def electricityGeneratedForm(years: Seq[String])(using messages: Messages): Form[Seq[(Option[Int], String)]] =
     Form(

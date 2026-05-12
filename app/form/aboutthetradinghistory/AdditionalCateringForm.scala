@@ -30,10 +30,7 @@ object AdditionalCateringForm:
       "costOfPurchase" -> turnoverSalesMappingWithYear("additionalCatering.costOfPurchase", year)
     )(AdditionalCatering.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def additionalCateringForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[AdditionalCatering]] =
+  def additionalCateringForm(years: Seq[String])(using messages: Messages): Form[Seq[AdditionalCatering]] =
     Form(
       mappingPerYear(years, (year, idx) => s"additionalCatering[$idx]" -> columnMapping(year))
     )

@@ -26,13 +26,14 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object ElectricVehicleChargingPointsForm:
 
-  val electricVehicleChargingPointsForm: Form[ElectricVehicleChargingPoints] = Form(
-    mapping(
-      "electricVehicleChargingPoints" -> createYesNoType("error.electricVehicleChargingPoints.required"),
-      "spacesOrBays"                  -> mandatoryIfEqual(
-        "electricVehicleChargingPoints",
-        AnswerYes.toString,
-        validateSpacesOrBays
-      )
-    )(ElectricVehicleChargingPoints.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val electricVehicleChargingPointsForm: Form[ElectricVehicleChargingPoints] =
+    Form(
+      mapping(
+        "electricVehicleChargingPoints" -> createYesNoType("error.electricVehicleChargingPoints.required"),
+        "spacesOrBays"                  -> mandatoryIfEqual(
+          "electricVehicleChargingPoints",
+          AnswerYes.toString,
+          validateSpacesOrBays
+        )
+      )(ElectricVehicleChargingPoints.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

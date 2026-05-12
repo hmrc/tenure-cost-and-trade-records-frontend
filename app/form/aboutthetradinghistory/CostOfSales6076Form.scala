@@ -35,7 +35,7 @@ object CostOfSales6076Form:
       "otherSales"      -> turnoverSalesMappingWithYear("costOfSales6076.otherSales", year)
     )(CostOfSales6076Sum.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def costOfSales6076Mapping(years: Seq[String])(using messages: Messages): Mapping[Seq[CostOfSales6076Sum]] =
+  private def costOfSales6076Mapping(years: Seq[String])(using messages: Messages): Mapping[Seq[CostOfSales6076Sum]] =
     mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
 
   def costOfSales6076Form(years: Seq[String])(using messages: Messages): Form[(Seq[CostOfSales6076Sum], String)] =

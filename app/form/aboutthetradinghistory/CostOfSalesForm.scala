@@ -26,13 +26,14 @@ import java.time.LocalDate
 
 object CostOfSalesForm:
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[CostOfSales] = mapping(
-    "financial-year-end" -> ignored(LocalDate.EPOCH),
-    "accommodation"      -> turnoverSalesMappingWithYear("turnover.accommodation.sales", year),
-    "food"               -> turnoverSalesMappingWithYear("turnover.food.sales", year),
-    "drinks"             -> turnoverSalesMappingWithYear("turnover.alcohol.sales", year),
-    "other"              -> turnoverSalesMappingWithYear("turnover.other.sales", year)
-  )(CostOfSales.apply)(o => Some(Tuple.fromProductTyped(o)))
+  private def columnMapping(year: String)(using messages: Messages): Mapping[CostOfSales] =
+    mapping(
+      "financial-year-end" -> ignored(LocalDate.EPOCH),
+      "accommodation"      -> turnoverSalesMappingWithYear("turnover.accommodation.sales", year),
+      "food"               -> turnoverSalesMappingWithYear("turnover.food.sales", year),
+      "drinks"             -> turnoverSalesMappingWithYear("turnover.alcohol.sales", year),
+      "other"              -> turnoverSalesMappingWithYear("turnover.other.sales", year)
+    )(CostOfSales.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def costOfSalesForm(years: Seq[String])(using messages: Messages): Form[Seq[CostOfSales]] =
     Form(

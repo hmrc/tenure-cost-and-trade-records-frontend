@@ -45,17 +45,10 @@ object OperationalCosts6048Form:
       "other"                      -> turnoverSalesMappingWithYear("turnover.6048.operationalCosts.other", year)
     )(OperationalCosts6048.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  private def operationalCostsSeq(
-    years: Seq[String]
-  )(using
-    messages: Messages
-  ): Mapping[Seq[OperationalCosts6048]] =
+  private def operationalCostsSeq(years: Seq[String])(using messages: Messages): Mapping[Seq[OperationalCosts6048]] =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
-  def operationalCosts6048Form(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[(Seq[OperationalCosts6048], String)] =
+  def operationalCosts6048Form(years: Seq[String])(using messages: Messages): Form[(Seq[OperationalCosts6048], String)] =
     Form(
       tuple(
         "operationalCostsSeq"  -> operationalCostsSeq(years),

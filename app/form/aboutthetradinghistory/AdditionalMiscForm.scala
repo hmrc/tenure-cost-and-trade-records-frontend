@@ -39,10 +39,7 @@ object AdditionalMiscForm:
   private def additionalMiscMapping(years: Seq[String])(using messages: Messages): Mapping[Seq[AdditionalMisc]] =
     mappingPerYear(years, (year, idx) => s"[$idx]" -> columnMapping(year))
 
-  def additionalMiscForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[(Seq[AdditionalMisc], AdditionalMiscDetails)] =
+  def additionalMiscForm(years: Seq[String])(using messages: Messages): Form[(Seq[AdditionalMisc], AdditionalMiscDetails)] =
     Form(
       tuple(
         "additionalMisc" -> additionalMiscMapping(years),

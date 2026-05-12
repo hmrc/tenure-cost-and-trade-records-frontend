@@ -40,12 +40,7 @@ object CaravansTradingForm:
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year, s"caravans.$unitType.$lettingType"))
     )
 
-  private def columnMapping(
-    year: String,
-    combinedKey: String
-  )(using
-    messages: Messages
-  ): Mapping[CaravansTrading6045] =
+  private def columnMapping(year: String, combinedKey: String)(using messages: Messages): Mapping[CaravansTrading6045] =
     mapping(
       "grossReceipts" -> turnoverSalesMappingWithYear(s"turnover.6045.$combinedKey.grossReceipts", year),
       "vans"          -> nonNegativeNumberWithYear(s"$combinedKey.vans", year)

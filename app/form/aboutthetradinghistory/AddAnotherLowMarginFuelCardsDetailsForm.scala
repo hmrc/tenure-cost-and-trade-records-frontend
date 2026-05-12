@@ -19,16 +19,16 @@ package form.aboutthetradinghistory
 import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.{mapping, optional}
+import play.api.data.Forms.{optional, single}
 
 object AddAnotherLowMarginFuelCardsDetailsForm:
 
-  val theForm: Form[AnswersYesNo] = Form(
-    mapping(
-      "addAnotherLowMarginFuelCardsDetails" -> optional(
-        createYesNoType("error.addAnotherLowMarginFuelCardsDetails.required")
+  val theForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "addAnotherLowMarginFuelCardsDetails" ->
+          optional(createYesNoType("error.addAnotherLowMarginFuelCardsDetails.required"))
+            .verifying("error.addAnotherLowMarginFuelCardsDetails.required", _.nonEmpty)
+            .transform[AnswersYesNo](_.get, Some(_))
       )
-        .verifying("error.addAnotherLowMarginFuelCardsDetails.required", _.nonEmpty)
-        .transform[AnswersYesNo](_.get, Some(_))
-    )(x => x)(b => Some(b))
-  )
+    )

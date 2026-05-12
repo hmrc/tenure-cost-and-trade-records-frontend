@@ -30,10 +30,7 @@ object TentingPitchesDataForm:
       "numberOfPitches" -> nonNegativeNumberWithYear("tentingPitches.numberOfPitches", year)
     )(TentingPitchesData.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def tentingPitchesDataForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[TentingPitchesData]] =
+  def tentingPitchesDataForm(years: Seq[String])(using messages: Messages): Form[Seq[TentingPitchesData]] =
     Form(
       mappingPerYear(years, (year, idx) => s"tentingPitches[$idx]" -> columnMapping(year))
     )

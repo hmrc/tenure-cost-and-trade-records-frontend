@@ -35,10 +35,7 @@ object GrossReceiptsCaravanFleetHireForm:
       "grossReceipts" -> turnoverSalesMappingWithYear("turnover.6045.caravanFleetHire.grossReceipts", year)
     )(GrossReceiptsCaravanFleetHire.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def grossReceiptsCaravanFleetHireForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[GrossReceiptsCaravanFleetHire]] =
+  def grossReceiptsCaravanFleetHireForm(years: Seq[String])(using messages: Messages): Form[Seq[GrossReceiptsCaravanFleetHire]] =
     Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     )

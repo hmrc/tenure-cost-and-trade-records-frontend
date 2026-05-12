@@ -24,10 +24,7 @@ import play.api.i18n.Messages
 
 object PremisesCostsForm:
 
-  def premisesCostsForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[PremisesCosts]] =
+  def premisesCostsForm(years: Seq[String])(using messages: Messages): Form[Seq[PremisesCosts]] =
     Form(
       single(
         "premisesCosts" -> mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))

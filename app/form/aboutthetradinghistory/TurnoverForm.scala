@@ -27,13 +27,8 @@ import scala.util.Try
 
 object TurnoverForm:
 
-  def turnoverForm(
-    expectedNumberOfFinancialYears: Int,
-    financialYearEndDates: Seq[LocalDate]
-  )(using
-    messages: Messages
-  ): Form[Seq[TurnoverSection]] =
-    def averageOccupancyRateMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = optional(
+  private def averageOccupancyRateMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] =
+    optional(
       text
         .transform[BigDecimal](
           s => Try(BigDecimal(s)).getOrElse(BigDecimal(-1)),
@@ -45,7 +40,8 @@ object TurnoverForm:
         )
     ).verifying(messages("error.turnover.averageOccupancyRate.required", year), _.isDefined)
 
-    def columnMapping(year: String)(using messages: Messages): Mapping[TurnoverSection] = mapping(
+  private def columnMapping(year: String)(using messages: Messages): Mapping[TurnoverSection] =
+    mapping(
       "financial-year-end"     -> ignored(LocalDate.EPOCH),
       "weeks"                  -> tradingPeriodWeeks(year),
       "alcoholic-drinks"       -> turnoverSalesMappingWithYear("turnover.alcohol.sales", year),
@@ -55,9 +51,15 @@ object TurnoverForm:
       "average-occupancy-rate" -> averageOccupancyRateMapping(year)
     )(TurnoverSection.apply)(o => Some(Tuple.fromProductTyped(o)))
 
+  def turnoverForm(
+    expectedNumberOfFinancialYears: Int,
+    financialYearEndDates: Seq[LocalDate]
+  )(using
+    messages: Messages
+  ): Form[Seq[TurnoverSection]] =
     val yearMappings = financialYearEndDates.map(date => columnMapping(date.getYear.toString))
 
-    Form {
+    Form(
       expectedNumberOfFinancialYears match
         case 0 =>
           mapping("" -> optional(text))(_ => Seq.empty[TurnoverSection])(_ => Some(None))
@@ -88,4 +90,4 @@ object TurnoverForm:
 
         case _ =>
           throw IllegalArgumentException(s"Unexpected number of financial years: $expectedNumberOfFinancialYears")
-    }
+    )

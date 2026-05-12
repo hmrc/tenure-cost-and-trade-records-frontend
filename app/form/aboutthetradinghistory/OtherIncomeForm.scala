@@ -28,9 +28,10 @@ import play.api.i18n.Messages
   */
 object OtherIncomeForm:
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = single(
-    "otherIncome" -> turnoverSalesMappingWithYear("turnover.6076.otherIncome", year)
-  )
+  private def columnMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] =
+    single(
+      "otherIncome" -> turnoverSalesMappingWithYear("turnover.6076.otherIncome", year)
+    )
 
   private def otherIncomeSeq(years: Seq[String])(using messages: Messages): Mapping[Seq[Option[BigDecimal]]] =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))

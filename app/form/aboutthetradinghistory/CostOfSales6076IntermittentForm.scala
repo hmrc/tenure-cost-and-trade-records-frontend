@@ -26,11 +26,7 @@ import play.api.i18n.Messages
 
 object CostOfSales6076IntermittentForm:
 
-  private def sumIntermittentMapping(
-    year: String
-  )(using
-    messages: Messages
-  ): Mapping[CostOfSales6076IntermittentSum] =
+  private def sumIntermittentMapping(year: String)(using messages: Messages): Mapping[CostOfSales6076IntermittentSum] =
     mapping(
       "importedPower" -> turnoverSalesMappingWithYear("costOfSales6076.importedPower", year),
       "TNuoS"         -> turnoverSalesMappingWithYear("costOfSales6076.TNuoS", year),
@@ -38,17 +34,10 @@ object CostOfSales6076IntermittentForm:
       "otherSales"    -> turnoverSalesMappingWithYear("costOfSales6076.otherSales", year)
     )(CostOfSales6076IntermittentSum.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def costOfSales6076IntermittentMapping(
-    years: Seq[String]
-  )(using
-    messages: Messages
-  ): Mapping[Seq[CostOfSales6076IntermittentSum]] =
+  private def costOfSales6076IntermittentMapping(years: Seq[String])(using messages: Messages): Mapping[Seq[CostOfSales6076IntermittentSum]] =
     mappingPerYear(years, (year, idx) => s"[$idx]" -> sumIntermittentMapping(year))
 
-  def costOfSales6076IntermittentForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[(Seq[CostOfSales6076IntermittentSum], String)] =
+  def costOfSales6076IntermittentForm(years: Seq[String])(using messages: Messages): Form[(Seq[CostOfSales6076IntermittentSum], String)] =
     Form(
       tuple(
         "costOfSales6076"   -> costOfSales6076IntermittentMapping(years),

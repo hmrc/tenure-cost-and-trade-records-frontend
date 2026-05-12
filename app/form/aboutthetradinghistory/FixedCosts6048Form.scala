@@ -37,10 +37,7 @@ object FixedCosts6048Form:
       "rent"                      -> turnoverSalesMappingWithYear("turnover.6048.fixedCosts.rent", year)
     )(FixedCosts6048.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def fixedCosts6048Form(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[FixedCosts6048]] =
+  def fixedCosts6048Form(years: Seq[String])(using messages: Messages): Form[Seq[FixedCosts6048]] =
     Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     )

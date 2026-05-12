@@ -26,24 +26,27 @@ import java.time.LocalDate
 
 object OtherCostsForm:
 
-  val otherCostDetailsRequired: Constraint[OtherCosts] = Constraint("constraints.otherCostDetailsRequired") {
+  private val otherCostDetailsRequired: Constraint[OtherCosts] = Constraint("constraints.otherCostDetailsRequired") {
     otherCosts =>
       if otherCosts.otherCostDetails.isEmpty && otherCosts.otherCosts.exists(_.otherCosts.exists(_ > 0)) then
         Invalid(Seq(ValidationError("error.otherCostDetails.required")))
       else Valid
   }
 
-  val otherCostMapping: Mapping[OtherCost] = mapping(
-    "financialYearEnd"          -> ignored(LocalDate.EPOCH),
-    "contributionsToHeadOffice" -> otherCostValueMapping("otherCosts.contributionsToHeadOffice"),
-    "otherCosts"                -> otherCostValueMapping("otherCosts.otherCosts")
-  )(OtherCost.apply)(o => Some(Tuple.fromProductTyped(o)))
+  private val otherCostMapping: Mapping[OtherCost] =
+    mapping(
+      "financialYearEnd"          -> ignored(LocalDate.EPOCH),
+      "contributionsToHeadOffice" -> otherCostValueMapping("otherCosts.contributionsToHeadOffice"),
+      "otherCosts"                -> otherCostValueMapping("otherCosts.otherCosts")
+    )(OtherCost.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  val otherCostsMapping: Mapping[OtherCosts] = mapping(
-    "otherCosts"       -> seq(otherCostMapping),
-    "otherCostDetails" -> optional(text(maxLength = 2000))
-  )(OtherCosts.apply)(o => Some(Tuple.fromProductTyped(o)))
+  private val otherCostsMapping: Mapping[OtherCosts] =
+    mapping(
+      "otherCosts"       -> seq(otherCostMapping),
+      "otherCostDetails" -> optional(text(maxLength = 2000))
+    )(OtherCosts.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  val form: Form[OtherCosts] = Form(
-    otherCostsMapping.verifying(otherCostDetailsRequired)
-  )
+  val form: Form[OtherCosts] =
+    Form(
+      otherCostsMapping.verifying(otherCostDetailsRequired)
+    )

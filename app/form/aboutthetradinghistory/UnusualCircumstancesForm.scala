@@ -23,10 +23,11 @@ import play.api.data.validation.Constraints.maxLength
 
 object UnusualCircumstancesForm:
 
-  val unusualCircumstancesForm: Form[UnusualCircumstances] = Form(
-    mapping(
-      "unusualCircumstances" -> default(text, "").verifying(
-        maxLength(2000, "error.unusualCircumstances.maxLength")
-      )
-    )(UnusualCircumstances.apply)(o => Some(o.unusualCircumstances))
-  )
+  val unusualCircumstancesForm: Form[UnusualCircumstances] =
+    Form(
+      mapping(
+        "unusualCircumstances" -> default(text, "").verifying(
+          maxLength(2000, "error.unusualCircumstances.maxLength")
+        )
+      )(UnusualCircumstances.apply)(o => Some(o.unusualCircumstances))
+    )

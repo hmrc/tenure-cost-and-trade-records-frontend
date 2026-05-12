@@ -37,10 +37,7 @@ object Income6048Form:
       )(Income6048.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
 
-  def income6048Form(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[(Int, Income6048)]] =
+  def income6048Form(years: Seq[String])(using messages: Messages): Form[Seq[(Int, Income6048)]] =
     Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
     )

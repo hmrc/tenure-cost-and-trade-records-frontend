@@ -42,10 +42,7 @@ object GrossReceiptsForBaseLoadForm:
       "gateIncomeFromWaste"              -> turnoverSalesMappingWithYear("grossReceiptsForBaseLoad.gateIncomeFromWaste", year)
     )(GrossReceiptsForBaseLoad.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def grossReceiptsForBaseLoadForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[GrossReceiptsForBaseLoad]] =
+  def grossReceiptsForBaseLoadForm(years: Seq[String])(using messages: Messages): Form[Seq[GrossReceiptsForBaseLoad]] =
     Form(
       single(
         "grossReceiptsForBaseLoad" -> mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
