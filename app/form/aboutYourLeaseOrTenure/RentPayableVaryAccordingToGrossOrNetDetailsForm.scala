@@ -22,12 +22,13 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object RentPayableVaryAccordingToGrossOrNetDetailsForm:
 
-  val rentPayableVaryAccordingToGrossOrNetInformationForm: Form[String] = Form(
-    single(
-      "rentPayableVaryAccordingToGrossOrNetDetails" ->
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.rentPayableVaryAccordingToGrossOrNetDetails.required"),
-          maxLength(2000, "error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength")
-        )
+  val rentPayableVaryAccordingToGrossOrNetInformationForm: Form[String] =
+    Form(
+      single(
+        "rentPayableVaryAccordingToGrossOrNetDetails" ->
+          default(text, "").verifying(
+            nonEmpty(errorMessage = "error.rentPayableVaryAccordingToGrossOrNetDetails.required"),
+            maxLength(2000, "error.rentPayableVaryAccordingToGrossOrNetDetails.maxLength")
+          )
+      )
     )
-  )

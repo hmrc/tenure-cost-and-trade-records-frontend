@@ -25,11 +25,12 @@ import play.api.i18n.Messages
 
 object CurrentLeaseOrAgreementBeginForm:
 
-  def currentLeaseOrAgreementBeginForm(using messages: Messages): Form[CurrentLeaseOrAgreementBegin] = Form(
-    mapping(
-      "leaseBegin" -> monthYearMapping("leaseBegin", allowPastDates = true),
-      "grantedFor" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.grantedFor.required")
-      )
-    )(CurrentLeaseOrAgreementBegin.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  def currentLeaseOrAgreementBeginForm(using messages: Messages): Form[CurrentLeaseOrAgreementBegin] =
+    Form(
+      mapping(
+        "leaseBegin" -> monthYearMapping("leaseBegin", allowPastDates = true),
+        "grantedFor" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.grantedFor.required")
+        )
+      )(CurrentLeaseOrAgreementBegin.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

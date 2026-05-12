@@ -26,16 +26,17 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object TiedForGoodsDetailsForm:
 
-  val tiedForGoodsDetailsForm: Form[TiedForGoodsInformationDetails] = Form(
-    mapping(
-      "tiedForGoodsDetails"   -> tiedForGoodsDetailsType,
-      "partialTieConditional" -> mandatoryIfEqual(
-        "tiedForGoodsDetails",
-        TiedForGoodsInformationDetailsPartialTie.toString,
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.tiedForGoodsDetailsText.required"),
-          maxLength(100, "error.tiedForGoodsDetailsText.maxLength")
+  val tiedForGoodsDetailsForm: Form[TiedForGoodsInformationDetails] =
+    Form(
+      mapping(
+        "tiedForGoodsDetails"   -> tiedForGoodsDetailsType,
+        "partialTieConditional" -> mandatoryIfEqual(
+          "tiedForGoodsDetails",
+          TiedForGoodsInformationDetailsPartialTie.toString,
+          default(text, "").verifying(
+            nonEmpty(errorMessage = "error.tiedForGoodsDetailsText.required"),
+            maxLength(100, "error.tiedForGoodsDetailsText.maxLength")
+          )
         )
-      )
-    )(TiedForGoodsInformationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+      )(TiedForGoodsInformationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

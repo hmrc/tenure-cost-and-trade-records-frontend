@@ -27,13 +27,14 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object WebsiteForPropertyForm:
 
-  val websiteForPropertyForm: Form[WebsiteForPropertyDetails] = Form(
-    mapping(
-      "buildingOperatingHaveAWebsite" -> createYesNoType(Errors.buildingOperatingHaveAWebsite),
-      "websiteAddressForProperty"     -> mandatoryIfEqual(
-        "buildingOperatingHaveAWebsite",
-        AnswerYes.toString,
-        validateWebAddress
-      )
-    )(WebsiteForPropertyDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val websiteForPropertyForm: Form[WebsiteForPropertyDetails] =
+    Form(
+      mapping(
+        "buildingOperatingHaveAWebsite" -> createYesNoType(Errors.buildingOperatingHaveAWebsite),
+        "websiteAddressForProperty"     -> mandatoryIfEqual(
+          "buildingOperatingHaveAWebsite",
+          AnswerYes.toString,
+          validateWebAddress
+        )
+      )(WebsiteForPropertyDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

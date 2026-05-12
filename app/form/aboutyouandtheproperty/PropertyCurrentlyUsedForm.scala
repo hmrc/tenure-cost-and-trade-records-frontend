@@ -32,14 +32,14 @@ object PropertyCurrentlyUsedForm:
         Valid
     }
 
-  private val propertyCurrentlyUsedMapping: Mapping[PropertyCurrentlyUsed] = mapping(
-    "propertyCurrentlyUsed" -> list(text).verifying(
-      nonEmptyList("error.propertyCurrentlyUsed.required")
-    ),
-    "anotherUseDetails"     -> optional(text)
-      .verifying("error.anotherUseDetails.maxLength", it => it.forall(_.length <= 200))
-  )(PropertyCurrentlyUsed.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-  val propertyCurrentlyUsedForm: Form[PropertyCurrentlyUsed] = Form(
-    propertyCurrentlyUsedMapping.verifying(anotherUseDetailsRequired)
-  )
+  val propertyCurrentlyUsedForm: Form[PropertyCurrentlyUsed] =
+    Form(
+      mapping(
+        "propertyCurrentlyUsed" -> list(text).verifying(
+          nonEmptyList("error.propertyCurrentlyUsed.required")
+        ),
+        "anotherUseDetails"     -> optional(text)
+          .verifying("error.anotherUseDetails.maxLength", it => it.forall(_.length <= 200))
+      )(PropertyCurrentlyUsed.apply)(o => Some(Tuple.fromProductTyped(o)))
+        .verifying(anotherUseDetailsRequired)
+    )

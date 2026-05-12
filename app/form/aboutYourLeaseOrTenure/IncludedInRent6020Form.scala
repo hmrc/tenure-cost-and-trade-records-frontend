@@ -24,14 +24,15 @@ import play.api.data.validation.Constraints.maxLength
 
 object IncludedInRent6020Form:
 
-  val includedInRent6020Form: Form[DoesTheRentPayable] = Form(
-    mapping(
-      "rentPayable"        -> list(text),
-      "rentPayableDetails" -> mandatoryStringIfExists(
-        "rentPayable[0]",
-        "error.rentPayableDetails.required"
-      ).verifying(
-        maxLength(2000, "error.rentPayableDetails.maxLength")
-      )
-    )(DoesTheRentPayable.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val includedInRent6020Form: Form[DoesTheRentPayable] =
+    Form(
+      mapping(
+        "rentPayable"        -> list(text),
+        "rentPayableDetails" -> mandatoryStringIfExists(
+          "rentPayable[0]",
+          "error.rentPayableDetails.required"
+        ).verifying(
+          maxLength(2000, "error.rentPayableDetails.maxLength")
+        )
+      )(DoesTheRentPayable.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

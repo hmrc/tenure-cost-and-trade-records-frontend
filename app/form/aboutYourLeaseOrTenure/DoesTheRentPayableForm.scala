@@ -24,18 +24,19 @@ import play.api.data.validation.Constraints.maxLength
 
 object DoesTheRentPayableForm:
 
-  val doesTheRentPayableForm: Form[DoesTheRentPayable] = Form(
-    mapping(
-      "rentPayable"        -> list(text).verifying(
-        nonEmptyList("error.doesTheRentPayable.required"),
-        noneCantBeSelectedWithOther(
-          "noneOfThese",
-          "error.doesTheRentPayable.noneSelectedWithOther"
-        )
-      ),
-      "detailsToQuestions" ->
-        default(text, "").verifying(
-          maxLength(2000, "error.detailsToQuestions.maxLength")
-        )
-    )(DoesTheRentPayable.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val doesTheRentPayableForm: Form[DoesTheRentPayable] =
+    Form(
+      mapping(
+        "rentPayable"        -> list(text).verifying(
+          nonEmptyList("error.doesTheRentPayable.required"),
+          noneCantBeSelectedWithOther(
+            "noneOfThese",
+            "error.doesTheRentPayable.noneSelectedWithOther"
+          )
+        ),
+        "detailsToQuestions" ->
+          default(text, "").verifying(
+            maxLength(2000, "error.detailsToQuestions.maxLength")
+          )
+      )(DoesTheRentPayable.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

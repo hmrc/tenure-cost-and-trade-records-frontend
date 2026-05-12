@@ -31,11 +31,8 @@ import scala.util.Try
 
 object CommercialLettingAvailabilityWelshForm:
 
-  def commercialLettingAvailabilityWelshForm(
-    years: Seq[String]
-  )(using request: SessionRequest[AnyContent],
-    messages: Messages
-  ): Form[Seq[LettingAvailability]] =
+  def commercialLettingAvailabilityWelshForm(years: Seq[String])(using request: SessionRequest[AnyContent], messages: Messages)
+    : Form[Seq[LettingAvailability]] =
     Form(
       mappingPerYear(years, (year, idx) => "" -> lettingAvailAbilityMapping(year, idx))
     )

@@ -26,16 +26,17 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object UltimatelyResponsibleOutsideRepairsForm:
 
-  val ultimatelyResponsibleOutsideRepairsForm: Form[UltimatelyResponsibleOutsideRepairs] = Form(
-    mapping(
-      "outsideRepairs"           -> outsideRepairsType,
-      "sharedResponsibilitiesOR" -> mandatoryIfEqual(
-        "outsideRepairs",
-        OutsideRepairsBoth.toString,
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.sharedResponsibilitiesOR.required"),
-          maxLength(500, "error.sharedResponsibilitiesOR.maxLength")
+  val ultimatelyResponsibleOutsideRepairsForm: Form[UltimatelyResponsibleOutsideRepairs] =
+    Form(
+      mapping(
+        "outsideRepairs"           -> outsideRepairsType,
+        "sharedResponsibilitiesOR" -> mandatoryIfEqual(
+          "outsideRepairs",
+          OutsideRepairsBoth.toString,
+          default(text, "").verifying(
+            nonEmpty(errorMessage = "error.sharedResponsibilitiesOR.required"),
+            maxLength(500, "error.sharedResponsibilitiesOR.maxLength")
+          )
         )
-      )
-    )(UltimatelyResponsibleOutsideRepairs.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+      )(UltimatelyResponsibleOutsideRepairs.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

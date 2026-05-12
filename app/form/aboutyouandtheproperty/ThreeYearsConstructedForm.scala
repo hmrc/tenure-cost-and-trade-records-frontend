@@ -19,12 +19,13 @@ package form.aboutyouandtheproperty
 import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
 object ThreeYearsConstructedForm:
 
-  val theForm: Form[AnswersYesNo] = Form(
-    mapping(
-      "threeYearsConstructed" -> createYesNoType("error.threeYearsConstructed.required")
-    )(x => x)(b => Some(b))
-  )
+  val theForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "threeYearsConstructed" -> createYesNoType("error.threeYearsConstructed.required")
+      )
+    )

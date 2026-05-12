@@ -24,21 +24,22 @@ import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
 object TypeOfTenureForm:
 
-  val typeOfTenureDetailsRequired: Constraint[TypeOfTenure] = Constraint("constraint.typeOfTenureDetailsRequired") {
+  private val typeOfTenureDetailsRequired: Constraint[TypeOfTenure] = Constraint("constraint.typeOfTenureDetailsRequired") {
     tot =>
       if tot.typeOfTenureDetails.isEmpty && tot.typeOfTenure.length > 1 then
         Invalid(Seq(ValidationError("error.typeOfTenureDetails.required")))
       else Valid
   }
 
-  val typeOfTenureMapping: Mapping[TypeOfTenure] = mapping(
-    "typeOfTenure"        -> list(text).verifying(
-      nonEmptyList("error.typeOfTenure.required")
-    ),
-    "typeOfTenureDetails" -> optional(text)
-      .verifying("error.typeOfTenureDetails.maxLength", it => it.forall(_.length <= 2000))
-  )(TypeOfTenure.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-  val typeOfTenureForm: Form[TypeOfTenure] = Form(
-    typeOfTenureMapping.verifying(typeOfTenureDetailsRequired)
-  )
+  val typeOfTenureForm: Form[TypeOfTenure] =
+    Form(
+      mapping(
+        "typeOfTenure"        -> list(text).verifying(
+          nonEmptyList("error.typeOfTenure.required")
+        ),
+        "typeOfTenureDetails" -> optional(
+          text.verifying("error.typeOfTenureDetails.maxLength", _.length <= 2000)
+        )
+      )(TypeOfTenure.apply)(o => Some(Tuple.fromProductTyped(o)))
+        .verifying(typeOfTenureDetailsRequired)
+    )

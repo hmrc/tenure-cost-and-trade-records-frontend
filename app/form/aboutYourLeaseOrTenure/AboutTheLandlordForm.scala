@@ -22,11 +22,12 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object AboutTheLandlordForm:
 
-  val theForm: Form[String] = Form[String](
-    single(
-      "landlordFullName" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.landlordFullName.required"),
-        maxLength(50, "error.landlordFullName.maxLength")
+  val theForm: Form[String] =
+    Form(
+      single(
+        "landlordFullName" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.landlordFullName.required"),
+          maxLength(50, "error.landlordFullName.maxLength")
+        )
       )
     )
-  )

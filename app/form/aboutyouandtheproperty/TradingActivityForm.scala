@@ -26,15 +26,16 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object TradingActivityForm:
 
-  val tradingActivityForm: Form[TradingActivity] = Form(
-    mapping(
-      "tradingActivityQuestion" -> createYesNoType("error.tradingActivity.missing"),
-      "tradingActivityDetails"  -> mandatoryIfEqual(
-        "tradingActivityQuestion",
-        AnswerYes.toString,
-        text
-          .verifying("error.tradingActivity.details.missing", details => details.nonEmpty)
-          .verifying(maxLength(500, "error.tradingActivity.maxLength"))
-      )
-    )(TradingActivity.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val tradingActivityForm: Form[TradingActivity] =
+    Form(
+      mapping(
+        "tradingActivityQuestion" -> createYesNoType("error.tradingActivity.missing"),
+        "tradingActivityDetails"  -> mandatoryIfEqual(
+          "tradingActivityQuestion",
+          AnswerYes.toString,
+          text
+            .verifying("error.tradingActivity.details.missing", details => details.nonEmpty)
+            .verifying(maxLength(500, "error.tradingActivity.maxLength"))
+        )
+      )(TradingActivity.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

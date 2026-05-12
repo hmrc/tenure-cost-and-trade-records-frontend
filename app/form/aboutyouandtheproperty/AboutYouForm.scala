@@ -24,12 +24,13 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object AboutYouForm:
 
-  val theForm: Form[CustomerDetails] = Form(
-    mapping(
-      "fullName"       -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.fullNameContactDetails.required"),
-        maxLength(50, "error.fullNameContactDetails.maxLength")
-      ),
-      "contactDetails" -> contactDetailsAboutYouMapping
-    )(CustomerDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val theForm: Form[CustomerDetails] =
+    Form(
+      mapping(
+        "fullName"       -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.fullNameContactDetails.required"),
+          maxLength(50, "error.fullNameContactDetails.maxLength")
+        ),
+        "contactDetails" -> contactDetailsAboutYouMapping
+      )(CustomerDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

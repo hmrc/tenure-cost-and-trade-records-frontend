@@ -31,11 +31,7 @@ import scala.util.Try
 
 object CompletedCommercialLettingsWelshForm:
 
-  def completedCommercialLettingsWelshForm(
-    years: Seq[String]
-  )(using request: SessionRequest[AnyContent],
-    messages: Messages
-  ): Form[Seq[CompletedLettings]] =
+  def completedCommercialLettingsWelshForm(years: Seq[String])(using request: SessionRequest[AnyContent], messages: Messages): Form[Seq[CompletedLettings]] =
     Form(
       mappingPerYear(years, (year, idx) => "" -> completedMapping(year, idx))
     )

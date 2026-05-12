@@ -26,11 +26,11 @@ object ServicePaidSeparatelyChargeForm:
       single(
         "annualCharge" ->
           text
-            .verifying("error.servicePaidSeparatelyCharge.required", s => s.nonEmpty)
+            .verifying("error.servicePaidSeparatelyCharge.required", _.nonEmpty)
             .verifying(
               "error.servicePaidSeparatelyCharge.invalidCurrency",
               s => s.isEmpty || (s.matches("^\\d*\\.?\\d+$") && BigDecimal(s) >= BigDecimal(0))
             )
-            .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), v => v.toString)
+            .transform[BigDecimal](s => BigDecimal(s.replace(",", "")), _.toString)
       )
     )
