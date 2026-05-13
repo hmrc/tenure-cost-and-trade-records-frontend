@@ -36,17 +36,16 @@ object AvailableRooms6048Form:
         Valid
     }
 
-  private val availableRooms6048Mapping: Mapping[AvailableRooms] =
-    mapping(
-      "singleBedrooms"                -> nonNegativeNumber("accommodation.singleBedrooms"),
-      "doubleBedrooms"                -> nonNegativeNumber("accommodation.doubleBedrooms"),
-      "bathrooms"                     -> nonNegativeNumber("accommodation.bathrooms"),
-      "otherAccommodationDescription" -> optional(
-        text.verifying(maxLength(200, "error.accommodation.otherAccommodationDescription.maxLength"))
-      ),
-      "maxGuestsNumber"               -> nonNegativeNumber("accommodation.maxGuestsNumber")
-    )(AvailableRooms.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-  val availableRooms6048Form: Form[AvailableRooms] = Form(
-    availableRooms6048Mapping.verifying(singleDoubleZero)
-  )
+  val availableRooms6048Form: Form[AvailableRooms] =
+    Form(
+      mapping(
+        "singleBedrooms"                -> nonNegativeNumber("accommodation.singleBedrooms"),
+        "doubleBedrooms"                -> nonNegativeNumber("accommodation.doubleBedrooms"),
+        "bathrooms"                     -> nonNegativeNumber("accommodation.bathrooms"),
+        "otherAccommodationDescription" -> optional(
+          text.verifying(maxLength(200, "error.accommodation.otherAccommodationDescription.maxLength"))
+        ),
+        "maxGuestsNumber"               -> nonNegativeNumber("accommodation.maxGuestsNumber")
+      )(AvailableRooms.apply)(o => Some(Tuple.fromProductTyped(o)))
+        .verifying(singleDoubleZero)
+    )

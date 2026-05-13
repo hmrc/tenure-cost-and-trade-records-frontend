@@ -19,12 +19,13 @@ package form.connectiontoproperty
 import form.MappingSupport.connectionToThePropertyType
 import models.submissions.connectiontoproperty.ConnectionToProperty
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
 object ConnectionToThePropertyForm:
 
-  private val baseConnectionToThePropertyMapping = mapping(
-    "connectionToTheProperty" -> connectionToThePropertyType
-  )(x => x)(b => Some(b))
-
-  val connectionToThePropertyForm: Form[ConnectionToProperty] = Form(baseConnectionToThePropertyMapping)
+  val connectionToThePropertyForm: Form[ConnectionToProperty] =
+    Form(
+      single(
+        "connectionToTheProperty" -> connectionToThePropertyType
+      )
+    )

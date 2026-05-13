@@ -23,17 +23,18 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object TenantDetailsForm:
 
-  val theForm: Form[TenantDetails] = Form[TenantDetails](
-    mapping(
-      "tenantName"           -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.tenantName.required"),
-        maxLength(50, "error.tenantName.maxLength")
-      ),
-      "descriptionOfLetting" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.descriptionOfLetting.required"),
-        maxLength(50, "error.descriptionOfLetting.maxLength")
-      )
-    )((name, descriptionOfLetting) => TenantDetails(name, descriptionOfLetting, None)) { detail =>
-      Some((detail.name, detail.descriptionOfLetting))
-    }
-  )
+  val theForm: Form[TenantDetails] =
+    Form(
+      mapping(
+        "tenantName"           -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.tenantName.required"),
+          maxLength(50, "error.tenantName.maxLength")
+        ),
+        "descriptionOfLetting" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.descriptionOfLetting.required"),
+          maxLength(50, "error.descriptionOfLetting.maxLength")
+        )
+      )((name, descriptionOfLetting) => TenantDetails(name, descriptionOfLetting, None)) { detail =>
+        Some((detail.name, detail.descriptionOfLetting))
+      }
+    )

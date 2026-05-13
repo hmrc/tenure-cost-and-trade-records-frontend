@@ -37,7 +37,7 @@ object RentalPeriodForm extends RentalPeriodSupport:
     messages: Messages,
     dateUtil: DateUtilLocalised
   ): Form[LocalPeriod] =
-    Form[LocalPeriod](
+    Form(
       mapping(
         "fromDate" -> constrainedLocalDate("lettingHistory.rentalPeriod", "fromDate", effectiveRentalPeriod),
         "toDate"   -> constrainedLocalDate("lettingHistory.rentalPeriod", "toDate", effectiveRentalPeriod)

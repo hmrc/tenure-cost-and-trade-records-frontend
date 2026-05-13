@@ -31,6 +31,8 @@ import models.submissions.requestReferenceNumber.SensitiveRequestReferenceNumber
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
+import scala.language.implicitConversions
+
 case class SensitiveSession(
   referenceNumber: String,
   forType: ForType,

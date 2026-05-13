@@ -22,8 +22,9 @@ import play.api.data.validation.Constraints.min
 
 object HowManyNightsForm:
 
-  val theForm: Form[Int] = Form[Int](
-    single(
-      "nights" -> number.verifying(min(0))
+  val theForm: Form[Int] =
+    Form(
+      single(
+        "nights" -> number.verifying(min(0))
+      )
     )
-  )

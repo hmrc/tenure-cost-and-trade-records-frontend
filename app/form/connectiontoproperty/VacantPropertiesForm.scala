@@ -24,8 +24,9 @@ import play.api.data.Forms.single
 
 object VacantPropertiesForm:
 
-  val theForm: Form[AnswersYesNo] = Form(
-    single(
-      "vacantProperties" -> createYesNoType(Errors.vacantProperties)
+  val theForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "vacantProperties" -> createYesNoType(Errors.vacantProperties)
+      )
     )
-  )

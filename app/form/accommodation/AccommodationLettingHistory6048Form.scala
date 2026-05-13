@@ -32,11 +32,7 @@ import java.time.LocalDate
   */
 object AccommodationLettingHistory6048Form:
 
-  private def columnMapping(
-    year: String
-  )(using request: SessionRequest[AnyContent],
-    messages: Messages
-  ): Mapping[AccommodationLettingHistory] =
+  private def columnMapping(year: String)(using request: SessionRequest[AnyContent], messages: Messages): Mapping[AccommodationLettingHistory] =
     val maxNights = AccountingInformationUtil.maxNightsInFinYear6048(year.toInt)
     val maxWeeks  = AccountingInformationUtil.maxWeeksInFinYear6048(year.toInt)
 
@@ -55,11 +51,8 @@ object AccommodationLettingHistory6048Form:
       )
     )(AccommodationLettingHistory.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def accommodationLettingHistory6048Form(
-    years: Seq[String]
-  )(using request: SessionRequest[AnyContent],
-    messages: Messages
-  ): Form[Seq[AccommodationLettingHistory]] =
+  def accommodationLettingHistory6048Form(years: Seq[String])(using request: SessionRequest[AnyContent], messages: Messages)
+    : Form[Seq[AccommodationLettingHistory]] =
     Form(
       mappingPerYear(years, (year, idx) => s"lettingHistory[$idx]" -> columnMapping(year))
     )

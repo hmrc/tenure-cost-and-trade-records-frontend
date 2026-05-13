@@ -50,4 +50,4 @@ object FieldMappings:
         error = messages(s"$prefix.$field.error", dateUtil.formatDate(period.toDate)),
         constraint = d => d.isBefore(period.toDate) || d.isEqual(period.toDate)
       )
-    else /* unconstrained */ mapping
+    else mapping

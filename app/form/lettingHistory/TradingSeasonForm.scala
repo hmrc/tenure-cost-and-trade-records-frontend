@@ -18,24 +18,17 @@ package form.lettingHistory
 
 import controllers.lettingHistory.RentalPeriodSupport
 import form.DateMappings.dayMonthMapping
-import models.submissions.Form6010.DayMonthsDuration
 import models.submissions.lettingHistory.LocalPeriod
 import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.i18n.Messages
 
-import java.time.{LocalDate, Year}
+import java.time.LocalDate
 
 object TradingSeasonForm extends Object with RentalPeriodSupport:
 
-  private def toLocalDate(dm: DayMonthsDuration): LocalDate =
-    LocalDate.of(Year.now.getValue, dm.months, dm.days)
-
-  private def fromLocalDate(date: LocalDate): DayMonthsDuration =
-    DayMonthsDuration(date.getDayOfMonth, date.getMonthValue)
-
   def theForm(using messages: Messages): Form[LocalPeriod] =
-    Form[LocalPeriod](
+    Form(
       mapping(
         "fromDate" -> dayMonthMapping("fromDate").transform[LocalDate](toLocalDate, fromLocalDate),
         "toDate"   -> dayMonthMapping("toDate").transform[LocalDate](toLocalDate, fromLocalDate)

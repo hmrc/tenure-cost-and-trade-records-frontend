@@ -23,9 +23,10 @@ import play.api.data.Forms.mapping
 
 object OccupierDetailForm:
 
-  val theForm: Form[OccupierDetail] = Form(
-    mapping(
-      "name" -> nonEmptyText(errorMessage = "lettingHistory.occupierDetail.name.required")
-    )(name => OccupierDetail(name, address = None, rentalPeriod = None)): obj =>
-      OccupierDetail.unapply(obj).map(_._1)
-  )
+  val theForm: Form[OccupierDetail] =
+    Form(
+      mapping(
+        "name" -> nonEmptyText(errorMessage = "lettingHistory.occupierDetail.name.required")
+      )(name => OccupierDetail(name, address = None, rentalPeriod = None)): obj =>
+        OccupierDetail.unapply(obj).map(_._1)
+    )

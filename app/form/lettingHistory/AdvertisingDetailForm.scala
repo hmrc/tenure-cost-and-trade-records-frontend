@@ -23,9 +23,10 @@ import play.api.data.Forms.{default, mapping, text}
 
 object AdvertisingDetailForm:
 
-  val theForm: Form[AdvertisingDetail] = Form(
-    mapping(
-      "websiteAddress"          -> validateWebAddress,
-      "propertyReferenceNumber" -> default(text, "")
-    )(AdvertisingDetail.apply)(AdvertisingDetail.unapply)
-  )
+  val theForm: Form[AdvertisingDetail] =
+    Form(
+      mapping(
+        "websiteAddress"          -> validateWebAddress,
+        "propertyReferenceNumber" -> default(text, "")
+      )(AdvertisingDetail.apply)(AdvertisingDetail.unapply)
+    )
