@@ -21,6 +21,8 @@ import models.submissions.common.{AnswersYesNo, CheckYourAnswersAndConfirm, Sens
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
+import scala.language.implicitConversions
+
 case class SensitiveAboutYouAndTheProperty(
   customerDetails: Option[SensitiveCustomerDetails] = None,
   altDetailsQuestion: Option[AnswersYesNo] = None,

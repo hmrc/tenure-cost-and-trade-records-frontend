@@ -21,6 +21,8 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
+import scala.language.implicitConversions
+
 case class SensitiveAddress(
   buildingNameNumber: SensitiveString,
   street1: Option[SensitiveString],

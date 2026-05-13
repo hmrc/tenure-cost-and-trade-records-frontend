@@ -22,6 +22,8 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
+import scala.language.implicitConversions
+
 case class SensitiveYourContactDetails(
   fullName: SensitiveString,
   contactDetails: SensitiveContactDetails,
@@ -40,8 +42,9 @@ object SensitiveYourContactDetails:
 
   implicit def format(using crypto: MongoCrypto): OFormat[SensitiveYourContactDetails] = Json.format
 
-  def apply(yourContactDetails: YourContactDetails): SensitiveYourContactDetails = SensitiveYourContactDetails(
-    SensitiveString(yourContactDetails.fullName),
-    SensitiveContactDetails(yourContactDetails.contactDetails),
-    yourContactDetails.additionalInformation
-  )
+  def apply(yourContactDetails: YourContactDetails): SensitiveYourContactDetails =
+    SensitiveYourContactDetails(
+      SensitiveString(yourContactDetails.fullName),
+      SensitiveContactDetails(yourContactDetails.contactDetails),
+      yourContactDetails.additionalInformation
+    )

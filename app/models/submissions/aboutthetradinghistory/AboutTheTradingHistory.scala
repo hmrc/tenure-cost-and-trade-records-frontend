@@ -56,10 +56,7 @@ object AboutTheTradingHistory:
 
   implicit val format: OFormat[AboutTheTradingHistory] = Json.format
 
-  def updateAboutTheTradingHistory(
-    copy: AboutTheTradingHistory => AboutTheTradingHistory
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateAboutTheTradingHistory(copy: AboutTheTradingHistory => AboutTheTradingHistory)(using sessionRequest: SessionRequest[?]): Session =
     val currentAboutTheTradingHistory = sessionRequest.sessionData.aboutTheTradingHistory
 
     val updateAboutTheTradingHistory = currentAboutTheTradingHistory match
@@ -68,9 +65,7 @@ object AboutTheTradingHistory:
 
     sessionRequest.sessionData.copy(aboutTheTradingHistory = updateAboutTheTradingHistory)
 
-  type TurnoverSectionUnion =
-    TurnoverSection6020 | TurnoverSection6030 | TurnoverSection6045 | TurnoverSection6048 | TurnoverSection6076 |
-      TurnoverSection
+  type TurnoverSectionUnion = TurnoverSection6020 | TurnoverSection6030 | TurnoverSection6045 | TurnoverSection6048 | TurnoverSection6076 | TurnoverSection
 
   class WrappedTurnoverSection(wrapped: TurnoverSectionUnion):
 

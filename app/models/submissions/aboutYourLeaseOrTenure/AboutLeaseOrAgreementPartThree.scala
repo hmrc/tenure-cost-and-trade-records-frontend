@@ -54,10 +54,8 @@ object AboutLeaseOrAgreementPartThree:
 
   implicit val format: OFormat[AboutLeaseOrAgreementPartThree] = Json.format
 
-  def updateAboutLeaseOrAgreementPartThree(
-    copy: AboutLeaseOrAgreementPartThree => AboutLeaseOrAgreementPartThree
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateAboutLeaseOrAgreementPartThree(copy: AboutLeaseOrAgreementPartThree => AboutLeaseOrAgreementPartThree)(using sessionRequest: SessionRequest[?])
+    : Session =
     val currentAboutLeaseOrAgreementPartThree = sessionRequest.sessionData.aboutLeaseOrAgreementPartThree
 
     val updatedAboutLeaseOrAgreementPartThree = currentAboutLeaseOrAgreementPartThree match
@@ -66,18 +64,12 @@ object AboutLeaseOrAgreementPartThree:
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartThree = updatedAboutLeaseOrAgreementPartThree)
 
-  def updateCarParking(
-    update: CarParking => CarParking
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateCarParking(update: CarParking => CarParking)(using sessionRequest: SessionRequest[?]): Session =
     updateAboutLeaseOrAgreementPartThree: aboutLeaseOrAgreementPartThree =>
       val carParking = update(aboutLeaseOrAgreementPartThree.carParking getOrElse CarParking())
       aboutLeaseOrAgreementPartThree.copy(carParking = Some(carParking))
 
-  def updateThroughputAffectsRent(
-    update: ThroughputAffectsRent => ThroughputAffectsRent
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateThroughputAffectsRent(update: ThroughputAffectsRent => ThroughputAffectsRent)(using sessionRequest: SessionRequest[?]): Session =
     updateAboutLeaseOrAgreementPartThree { aboutLeaseOrAgreementPartThree =>
       val throughputAffectsRent = update(
         aboutLeaseOrAgreementPartThree.throughputAffectsRent getOrElse ThroughputAffectsRent(AnswerNo)

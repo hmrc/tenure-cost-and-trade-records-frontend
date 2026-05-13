@@ -51,11 +51,7 @@ object AboutFranchisesOrLettings:
   implicit val format: Format[AboutFranchisesOrLettings] =
     Format(aboutFranchisesOrLettingsReads, Json.writes[AboutFranchisesOrLettings])
 
-  def updateAboutFranchisesOrLettings(
-    copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
-
+  def updateAboutFranchisesOrLettings(copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings)(using sessionRequest: SessionRequest[?]): Session =
     val currentAboutFranchisesOrLettings = sessionRequest.sessionData.aboutFranchisesOrLettings
 
     val updateAboutFranchisesOrLettings = currentAboutFranchisesOrLettings match

@@ -34,6 +34,7 @@ object AdvertisingDetail:
 
   given Format[AdvertisingDetail] = Json.format
 
-  def unapply(obj: AdvertisingDetail): Option[(String, String)] = Some(
-    (obj.websiteAddress, obj.propertyReferenceNumber)
-  )
+  def unapply(obj: AdvertisingDetail): Option[(String, String)] =
+    Some(
+      (obj.websiteAddress, obj.propertyReferenceNumber)
+    )

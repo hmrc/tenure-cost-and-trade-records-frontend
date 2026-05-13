@@ -17,7 +17,7 @@
 package models.submissions.lettingHistory
 
 import models.Session
-import SessionWrapper.{change as changeSession, unchanged as unchangedSession}
+import models.submissions.lettingHistory.SessionWrapper.{change as changeSession, unchanged as unchangedSession}
 
 trait PermanentResidents:
 
@@ -60,12 +60,7 @@ trait PermanentResidents:
       hasPermanentResidents <- lettingHistory.hasPermanentResidents
     yield hasPermanentResidents
 
-  def byAddingOrUpdatingPermanentResident(
-    newResident: ResidentDetail,
-    maybeIndex: Option[Int] = None
-  )(using
-    session: Session
-  ): SessionWrapper =
+  def byAddingOrUpdatingPermanentResident(newResident: ResidentDetail, maybeIndex: Option[Int] = None)(using session: Session): SessionWrapper =
     session.lettingHistory match
       case None                 =>
         changeSession {

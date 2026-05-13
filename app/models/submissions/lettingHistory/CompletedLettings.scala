@@ -17,7 +17,7 @@
 package models.submissions.lettingHistory
 
 import models.Session
-import SessionWrapper.{change as changeSession, unchanged as unchangedSession}
+import models.submissions.lettingHistory.SessionWrapper.{change as changeSession, unchanged as unchangedSession}
 
 trait CompletedLettings:
 
@@ -59,12 +59,7 @@ trait CompletedLettings:
       hasCompletedLettings <- lettingHistory.hasCompletedLettings
     yield hasCompletedLettings
 
-  def byAddingOrUpdatingOccupier(
-    newOccupier: OccupierDetail,
-    maybeIndex: Option[Int] = None
-  )(using
-    session: Session
-  ): (Int, SessionWrapper) =
+  def byAddingOrUpdatingOccupier(newOccupier: OccupierDetail, maybeIndex: Option[Int] = None)(using session: Session): (Int, SessionWrapper) =
     session.lettingHistory match
       case None                 =>
         (

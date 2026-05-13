@@ -21,6 +21,8 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
+import scala.language.implicitConversions
+
 case class SensitiveRemoveConnectionDetails(
   removeConnectionDetails: Option[SensitiveRemoveConnectionsDetails] = None,
   pastConnectionType: Option[AnswersYesNo] = None

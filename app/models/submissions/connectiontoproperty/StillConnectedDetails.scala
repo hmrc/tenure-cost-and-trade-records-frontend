@@ -42,12 +42,10 @@ case class StillConnectedDetails(
 )
 
 object StillConnectedDetails:
+
   implicit val format: OFormat[StillConnectedDetails] = Json.format
 
-  def updateStillConnectedDetails(
-    copy: StillConnectedDetails => StillConnectedDetails
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateStillConnectedDetails(copy: StillConnectedDetails => StillConnectedDetails)(using sessionRequest: SessionRequest[?]): Session =
     val currentStillConnectedDetails = sessionRequest.sessionData.stillConnectedDetails
 
     val updatedStillConnectedDetails = currentStillConnectedDetails match

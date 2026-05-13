@@ -30,11 +30,7 @@ object AdditionalInformation:
 
   implicit val format: OFormat[AdditionalInformation] = Json.format
 
-  def updateAdditionalInformation(
-    copy: AdditionalInformation => AdditionalInformation
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
-
+  def updateAdditionalInformation(copy: AdditionalInformation => AdditionalInformation)(using sessionRequest: SessionRequest[?]): Session =
     val currentAdditionalInformation = sessionRequest.sessionData.additionalInformation
 
     val updateAdditionalInformation = currentAdditionalInformation match

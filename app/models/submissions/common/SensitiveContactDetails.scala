@@ -21,6 +21,8 @@ import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import crypto.MongoCrypto
 
+import scala.language.implicitConversions
+
 case class SensitiveContactDetails(phone: SensitiveString, email: SensitiveString) extends Sensitive[ContactDetails]:
 
   override def decryptedValue: ContactDetails = ContactDetails(

@@ -29,10 +29,7 @@ case class RemoveConnectionDetails(
 object RemoveConnectionDetails:
   implicit val format: OFormat[RemoveConnectionDetails] = Json.format
 
-  def updateRemoveConnectionDetails(
-    copy: RemoveConnectionDetails => RemoveConnectionDetails
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateRemoveConnectionDetails(copy: RemoveConnectionDetails => RemoveConnectionDetails)(using sessionRequest: SessionRequest[?]): Session =
     val currentRemoveConnectionDetails = sessionRequest.sessionData.removeConnectionDetails
 
     val updatedRemoveConnectionDetails = currentRemoveConnectionDetails match

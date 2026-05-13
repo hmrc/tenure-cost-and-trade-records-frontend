@@ -22,6 +22,8 @@ import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import crypto.MongoCrypto
 import models.submissions.common.SensitiveContactDetails
 
+import scala.language.implicitConversions
+
 case class SensitiveCustomerDetails(
   fullName: SensitiveString,
   contactDetails: SensitiveContactDetails
