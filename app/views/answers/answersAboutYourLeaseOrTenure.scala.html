@@ -69,6 +69,9 @@
 @for6011 = @{
     forType == FOR6011
 }
+@for6015 = @{
+    forType == FOR6015
+}
 @for6048 = @{
     forType == FOR6048
 }
@@ -387,7 +390,7 @@
                         "rentPayableVaryAccordingToGrossOrNetDetails"
                     ) ++
                     sectionAnswers2.conditionRow(
-                        _ => for6010,
+                        _ => for6010 || for6015,
                         "checkYourAnswersAboutYourLeaseOrTenure.rentPayableVaryOnQuantityOfDrinks",
                         _.rentPayableVaryOnQuantityOfBeers.map(v => if(v == AnswerYes) messages("label.yes.ydy") else messages("label.no.nac.ydy")),
                         controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show(),
