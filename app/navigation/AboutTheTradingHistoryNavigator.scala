@@ -18,10 +18,10 @@ package navigation
 
 import connectors.Audit
 import controllers.aboutthetradinghistory.routes
-import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
 import models.submissions.aboutyouandtheproperty.RenewablesPlantType.*
+import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import play.api.Logging
 import play.api.mvc.{AnyContent, Call, Request}
@@ -31,16 +31,13 @@ import javax.inject.Inject
 
 class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
-  override def cyaPage: Option[Call] =
-    Some(routes.CheckYourAnswersAboutTheTradingHistoryController.show())
+  override def cyaPage: Option[Call] = Some(routes.CheckYourAnswersAboutTheTradingHistoryController.show())
 
   def cyaPageForTentingPitches: Call = routes.CheckYourAnswersTentingPitchesController.show()
 
-  def cyaPageForOtherHolidayAccommodation: Call =
-    routes.CheckYourAnswersOtherHolidayAccommodationController.show()
+  def cyaPageForOtherHolidayAccommodation: Call = routes.CheckYourAnswersOtherHolidayAccommodationController.show()
 
-  def cyaPageForAdditionalActivities: Call =
-    routes.CheckYourAnswersAdditionalActivitiesController.show()
+  def cyaPageForAdditionalActivities: Call = routes.CheckYourAnswersAdditionalActivitiesController.show()
 
   def nextPage6045(
     id: Identifier,
@@ -67,11 +64,9 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     else
       super.nextPage(id, session)
 
-  private def iesSpecificRoute: Call =
-    routes.IncomeExpenditureSummaryController.show()
+  private def iesSpecificRoute: Call = routes.IncomeExpenditureSummaryController.show()
 
-  private def ies6076SpecificRoute: Call =
-    routes.IncomeExpenditureSummary6076Controller.show()
+  private def ies6076SpecificRoute: Call = routes.IncomeExpenditureSummary6076Controller.show()
 
   override val postponeCYARedirectPages: Set[String] = Set(
     routes.FinancialYearEndController.show(),
@@ -107,7 +102,7 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
   private def financialYearEndDatesRouting: Session => Call =
     _ => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show
 
-  def checkYourAnswersAccountInfoRouting: Session => Call =
+  private def checkYourAnswersAccountInfoRouting: Session => Call =
     _.forType match
       case FOR6020           => routes.TotalFuelSoldController.show()
       case FOR6030           => routes.Turnover6030Controller.show()
@@ -124,17 +119,12 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case _       => routes.CheckYourAnswersAboutTheTradingHistoryController.show()
 
   private def getAddAnotherBunkerFuelCardsDetailRouting(answers: Session): Call =
-    val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails) match {
+    val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.bunkerFuelCardsDetails) match
       case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
       case _                                 => None
-    }
     currentIndex match
-      case Some(idx) =>
-        routes.AddAnotherBunkerFuelCardsDetailsController.show(
-          idx
-        ) // Assuming there's a 'show' method to edit
-      case None      =>
-        routes.AddAnotherBunkerFuelCardsDetailsController.show(0) // Fallback or start new
+      case Some(idx) => routes.AddAnotherBunkerFuelCardsDetailsController.show(idx)
+      case None      => routes.AddAnotherBunkerFuelCardsDetailsController.show(0) // Fallback or start new
 
   private def acceptLowMarginFuelCardsRouting: Session => Call =
     _.aboutTheTradingHistory.flatMap(_.doYouAcceptLowMarginFuelCard) match
@@ -142,23 +132,17 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
       case _               => routes.NonFuelTurnoverController.show()
 
   private def staticCaravansRouting: Session => Call =
-    _.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite) match {
+    _.aboutTheTradingHistoryPartOne.flatMap(_.caravans).flatMap(_.anyStaticLeisureCaravansOnSite) match
       case Some(AnswerYes) => routes.GrossReceiptsCaravanFleetHireController.show()
       case _               => routes.CheckYourAnswersAboutTheTradingHistoryController.show()
-    }
 
   private def getAddAnotherLowMarginFuelCardsDetailRouting(answers: Session): Call =
-    val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails) match {
+    val currentIndex: Option[Int] = answers.aboutTheTradingHistory.flatMap(_.lowMarginFuelCardsDetails) match
       case Some(details) if details.nonEmpty => Some(details.size - 1) // Assuming the last entry is the current one
       case _                                 => None
-    }
     currentIndex match
-      case Some(idx) =>
-        routes.AddAnotherLowMarginFuelCardsDetailsController.show(
-          idx
-        ) // Assuming there's a 'show' method to edit
-      case None      =>
-        routes.AddAnotherLowMarginFuelCardsDetailsController.show(0) // Fallback or start new
+      case Some(idx) => routes.AddAnotherLowMarginFuelCardsDetailsController.show(idx)
+      case None      => routes.AddAnotherLowMarginFuelCardsDetailsController.show(0) // Fallback or start new
 
   private def otherHolidayAccommodationRouting(answers: Session): Call =
     answers.aboutTheTradingHistoryPartOne.flatMap(
@@ -262,21 +246,13 @@ class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator
     TentingPitchesTotalId                       -> (_ => routes.TentingPitchesCertificatedController.show()),
     TentingPitchesCertificatedId                -> (_ => routes.CheckYourAnswersTentingPitchesController.show()),
     CheckYourAnswersOtherHolidayAccommodationId ->
-      (_ =>
-        controllers.routes.TaskListController.show.withFragment("tradingHistory")
-      ),
+      (_ => controllers.routes.TaskListController.show.withFragment("tradingHistory")),
     CheckYourAnswersTentingPitchesId            ->
-      (_ =>
-        controllers.routes.TaskListController.show.withFragment("tradingHistory")
-      ),
+      (_ => controllers.routes.TaskListController.show.withFragment("tradingHistory")),
     CheckYourAnswersAdditionalActivitiesId      ->
-      (_ =>
-        controllers.routes.TaskListController.show.withFragment("tradingHistory")
-      ),
+      (_ => controllers.routes.TaskListController.show.withFragment("tradingHistory")),
     CheckYourAnswersAboutTheTradingHistoryId    ->
-      (_ =>
-        controllers.routes.TaskListController.show.withFragment("tradingHistory")
-      ),
+      (_ => controllers.routes.TaskListController.show.withFragment("tradingHistory")),
     ChangeOccupationAndAccountingId             -> (_ => routes.WhenDidYouFirstOccupyController.show()),
     AreYouVATRegisteredId                       -> (_ => routes.FinancialYearEndController.show()),
     Income6048Id                                -> (_ => routes.FixedCosts6048Controller.show),

@@ -29,13 +29,7 @@ object LoginToBackend:
   type LoginToBackend    = (RefNumber, Postcode) => Future[LoginResult]
   type VerifyCredentials = (RefNumber, Postcode) => Future[FORLoginResponse]
 
-  def apply(
-    v: VerifyCredentials
-  )(
-    rn: RefNumber,
-    pc: Postcode
-  )(using ec: ExecutionContext
-  ): Future[LoginResult] =
+  def apply(v: VerifyCredentials)(rn: RefNumber, pc: Postcode)(using ec: ExecutionContext): Future[LoginResult] =
     for
       lr <- v(rn, pc)
     yield ned(

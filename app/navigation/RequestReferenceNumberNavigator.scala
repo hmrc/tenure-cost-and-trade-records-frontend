@@ -26,20 +26,13 @@ import javax.inject.Inject
 
 class RequestReferenceNumberNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
-  override def cyaPage: Option[Call] =
-    Some(controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show())
+  override def cyaPage: Option[Call] = Some(controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show())
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     NoReferenceNumberPageId                      ->
-      (_ =>
-        controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()
-      ),
+      (_ => controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show()),
     NoReferenceNumberContactDetailsPageId        ->
-      (_ =>
-        controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show()
-      ),
+      (_ => controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show()),
     CheckYourAnswersRequestReferenceNumberPageId ->
-      (_ =>
-        controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation()
-      )
+      (_ => controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.confirmation())
   )

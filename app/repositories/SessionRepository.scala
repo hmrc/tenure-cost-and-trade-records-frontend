@@ -33,6 +33,7 @@ import java.time.Instant
 import javax.inject.Inject
 import scala.concurrent.duration.*
 import scala.concurrent.{ExecutionContext, Future}
+import scala.language.implicitConversions
 
 @Singleton
 class SessionRepository @Inject() (

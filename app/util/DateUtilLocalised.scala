@@ -56,7 +56,7 @@ class DateUtilLocalised @Inject() (langUtil: LanguageUtils):
 
   private def createDateFormatForPattern(pattern: String, langCode: String): SimpleDateFormat =
     val uLocale         = ULocale(langCode)
-    val locale: ULocale = if (ULocale.getAvailableLocales.contains(uLocale)) uLocale else ULocale.getDefault
+    val locale: ULocale = if ULocale.getAvailableLocales.contains(uLocale) then uLocale else ULocale.getDefault
     val sdf             = SimpleDateFormat(pattern, locale)
     sdf.setTimeZone(ibmTimeZone)
     sdf

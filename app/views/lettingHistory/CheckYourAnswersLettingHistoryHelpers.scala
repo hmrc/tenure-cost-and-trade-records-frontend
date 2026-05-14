@@ -32,11 +32,7 @@ import scala.collection.mutable
 object CheckYourAnswersLettingHistoryHelpers:
   import views.CheckYourAnswersHelpers.*
 
-  def permanentResidentsCardsData(
-    fragment: String
-  )(using request: SessionRequest[AnyContent],
-    messages: Messages
-  ): Seq[CardData] =
+  def permanentResidentsCardsData(fragment: String)(using request: SessionRequest[AnyContent], messages: Messages): Seq[CardData] =
     LettingHistory.permanentResidents(request.sessionData).zipWithIndex.map: (resident, index) =>
       CardData(
         index = index,
@@ -51,11 +47,7 @@ object CheckYourAnswersLettingHistoryHelpers:
         )
       )
 
-  def completedLettingsCardsData(
-    fragment: String
-  )(using request: SessionRequest[AnyContent],
-    messages: Messages
-  ): Seq[CardData] =
+  def completedLettingsCardsData(fragment: String)(using request: SessionRequest[AnyContent], messages: Messages): Seq[CardData] =
     LettingHistory.completedLettings(request.sessionData).zipWithIndex.map { (occupier, index) =>
       CardData(
         index = index,
@@ -74,11 +66,7 @@ object CheckYourAnswersLettingHistoryHelpers:
       )
     }
 
-  def onlineAdvertisingCardsData(
-    fragment: String
-  )(using request: SessionRequest[AnyContent],
-    messages: Messages
-  ): Seq[CardData] =
+  def onlineAdvertisingCardsData(fragment: String)(using request: SessionRequest[AnyContent], messages: Messages): Seq[CardData] =
     LettingHistory.onlineAdvertising(request.sessionData).zipWithIndex.map { (advertising, index) =>
       CardData(
         index = index,
@@ -94,12 +82,8 @@ object CheckYourAnswersLettingHistoryHelpers:
       )
     }
 
-  def intendedLettingsSummaryData(
-    dateUtil: DateUtilLocalised,
-    fragment: String
-  )(using request: SessionRequest[AnyContent],
-    messages: Messages
-  ): Seq[SummaryEntry] =
+  def intendedLettingsSummaryData(dateUtil: DateUtilLocalised, fragment: String)(using request: SessionRequest[AnyContent], messages: Messages)
+    : Seq[SummaryEntry] =
     val data = mutable.Buffer(
       SummaryEntry(
         key = messages("lettingHistory.checkYourAnswers.intendedLettings.nights"),
@@ -160,18 +144,17 @@ object CheckYourAnswersLettingHistoryHelpers:
       data.toSeq
     else data.toSeq
 
-  def mapBool2String(maybeBool: Option[Boolean])(using messages: Messages): Option[String] =
-    maybeBool.map {
+  private def mapBool2String(maybeBool: Option[Boolean])(using messages: Messages): Option[String] =
+    maybeBool.map:
       case true  => messages("label.yes")
       case false => messages("label.no")
-    }
 
-  def mapInt2String(int: Option[Int]): Option[String] =
+  private def mapInt2String(int: Option[Int]): Option[String] =
     int
       .map(i => i.toString)
       .orElse(Some(""))
 
-  def mapDate2String(date: Option[LocalDate], dateUtil: DateUtilLocalised)(using messages: Messages): Option[String] =
+  private def mapDate2String(date: Option[LocalDate], dateUtil: DateUtilLocalised)(using messages: Messages): Option[String] =
     date
       .map(d => dateUtil.formatDate(d))
       .orElse(Some(""))

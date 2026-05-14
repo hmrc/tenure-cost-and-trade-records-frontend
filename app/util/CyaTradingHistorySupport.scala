@@ -40,36 +40,24 @@ class CyaTradingHistorySupport @Inject() (
     val weeksSuffix = if tradingPeriod == 1 then "turnover.week" else "turnover.weeks"
     s"$tradingPeriod ${messages(weeksSuffix)}"
 
-  def sectionAnswers(
-    using
-    request: SessionRequest[?],
-    messages: Messages
-  ): SectionAnswersRowBuilder[AboutTheTradingHistory] =
+  def sectionAnswers(using request: SessionRequest[?], messages: Messages): SectionAnswersRowBuilder[AboutTheTradingHistory] =
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistory)
 
-  def sectionAnswers1(
-    using
-    request: SessionRequest[?],
-    messages: Messages
-  ): SectionAnswersRowBuilder[AboutTheTradingHistoryPartOne] =
+  def sectionAnswers1(using request: SessionRequest[?], messages: Messages): SectionAnswersRowBuilder[AboutTheTradingHistoryPartOne] =
     SectionAnswersRowBuilder(request.sessionData.aboutTheTradingHistoryPartOne)
 
   def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
-  def table6045(valuesGrid: Seq[Seq[String]]): Html = Html(
-    valuesGrid.map { values =>
-      s"""<div class="hmrc-turnover-table-column">
+  def table6045(valuesGrid: Seq[Seq[String]]): Html =
+    Html(
+      valuesGrid.map { values =>
+        s"""<div class="hmrc-turnover-table-column">
        ${values.map(value => s"<p class=\"govuk-body\">$value</p>").mkString}
        </div>"""
-    }.mkString
-  )
+      }.mkString
+    )
 
-  def table(
-    valuesGrid: Seq[Seq[String]],
-    financialYearEnds: Seq[LocalDate],
-    messageKeys: Option[Seq[String]] = None
-  )(using messages: Messages
-  ): Html =
+  def table(valuesGrid: Seq[Seq[String]], financialYearEnds: Seq[LocalDate], messageKeys: Option[Seq[String]] = None)(using messages: Messages): Html =
     Html(
       valuesGrid
         .zip(financialYearEnds)
@@ -92,24 +80,21 @@ class CyaTradingHistorySupport @Inject() (
         .mkString
     )
 
-  def tableRow(values: Seq[String]): Html = Html(
-    values.map { value =>
-      s"""<div class="hmrc-turnover-table-column">$value</div>"""
-    }.mkString
-  )
+  def tableRow(values: Seq[String]): Html =
+    Html(
+      values.map { value =>
+        s"""<div class="hmrc-turnover-table-column">$value</div>"""
+      }.mkString
+    )
 
-  def optionalParagraph(textOpt: Option[String]): Html = Html(
-    textOpt.filterNot(_.trim.isEmpty).fold("") { text =>
-      s"""<p class="govuk-body">$text</p>"""
-    }
-  )
+  def optionalParagraph(textOpt: Option[String]): Html =
+    Html(
+      textOpt.filterNot(_.trim.isEmpty).fold("") { text =>
+        s"""<p class="govuk-body">$text</p>"""
+      }
+    )
 
-  def answerOpt(
-    valueLabelKey: String,
-    valueOpt: Option[String],
-    classes: String = "no-border-bottom"
-  )(using messages: Messages
-  ): SummaryListRow =
+  def answerOpt(valueLabelKey: String, valueOpt: Option[String], classes: String = "no-border-bottom")(using messages: Messages): SummaryListRow =
     answer(valueLabelKey, Seq(valueOpt.getOrElse("")), None, classes)
 
   def answer(
@@ -135,28 +120,20 @@ class CyaTradingHistorySupport @Inject() (
       .flatMap(_.financialYearEndHasChanged)
       .contains(true)
 
-  def financialYearEndDatesTable(
-    financialYearEndDates: Seq[LocalDate],
-    dateUtil: DateUtilLocalised
-  )(using messages: Messages
-  ): Html =
+  def financialYearEndDatesTable(financialYearEndDates: Seq[LocalDate], dateUtil: DateUtilLocalised)(using messages: Messages): Html =
     table(
       financialYearEndDates.map(financialYearEnd => Seq(dateUtil.formatDayMonthAbbrYear(financialYearEnd))),
       financialYearEndDates
     )
 
-  def financialYearEndDates(
-    aboutTheTradingHistory: AboutTheTradingHistory
-  )(using request: SessionRequest[?]
-  ): Seq[LocalDate] =
-    forType match {
+  def financialYearEndDates(aboutTheTradingHistory: AboutTheTradingHistory)(using request: SessionRequest[?]): Seq[LocalDate] =
+    forType match
       case FOR6020           => aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty).map(_.financialYearEnd)
       case FOR6030           => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
       case FOR6045 | FOR6046 => request.sessionData.financialYearEndDates6045.map(_._1)
       case FOR6048           => request.sessionData.financialYearEndDates6048.map(_._1)
       case FOR6076           => request.sessionData.financialYearEndDates6076.map(_._1)
       case _                 => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
-    }
 
   def actions(using messages: Messages): Option[Actions] =
     Option(
@@ -174,13 +151,7 @@ class CyaTradingHistorySupport @Inject() (
       )
     )
 
-  def financialYearEndRow(
-    pageHeadingKey: String,
-    editPage: Call
-  )(using
-    request: SessionRequest[?],
-    messages: Messages
-  ): SummaryListRow =
+  def financialYearEndRow(pageHeadingKey: String, editPage: Call)(using request: SessionRequest[?], messages: Messages): SummaryListRow =
     SummaryListRow(
       key = Key(Text(messages("turnover.financialYearEnd"))),
       value = Value(
@@ -207,14 +178,7 @@ class CyaTradingHistorySupport @Inject() (
       classes = "no-border-bottom"
     )
 
-  def pageAnswers(
-    pageHeadingKey: String,
-    editPage: Call,
-    answerRows: SummaryListRow*
-  )(using
-    request: SessionRequest[?],
-    messages: Messages
-  ): Html =
+  def pageAnswers(pageHeadingKey: String, editPage: Call, answerRows: SummaryListRow*)(using request: SessionRequest[?], messages: Messages): Html =
     val rows = financialYearEndRow(pageHeadingKey, editPage) +: answerRows.init :+ answerRows.last.copy(classes = "")
 
     Html(
@@ -292,11 +256,7 @@ class CyaTradingHistorySupport @Inject() (
       messageKeys = Some(turnoverMessageKeys60156016)
     ).body
 
-  def accountingInformation(
-    using
-    request: SessionRequest[?],
-    messages: Messages
-  ): Html =
+  def accountingInformation(using request: SessionRequest[?], messages: Messages): Html =
     Html(
       govukSummaryList(
         SummaryList(rows =
@@ -310,7 +270,7 @@ class CyaTradingHistorySupport @Inject() (
             )
             .map(_.copy(classes = "no-border-bottom"))
             ++
-              (if (forType != FOR6048) {
+              (if forType != FOR6048 then
                  sectionAnswers
                    .row(
                      messageKey = "checkYourAnswersAboutTheTradingHistory.occupationDate",
@@ -321,18 +281,16 @@ class CyaTradingHistorySupport @Inject() (
                      editField = ""
                    )
                    .map(_.copy(classes = "no-border-bottom"))
-               } else {
-                 None
-               }) ++
+               else None) ++
               answerOpt(
                 valueLabelKey = "checkYourAnswersAboutTheTradingHistory.financialYearEnd",
                 valueOpt = sectionAnswers.answers
                   .flatMap(_.occupationAndAccountingInformation)
                   .flatMap(_.currentFinancialYearEnd.map(_.toMonthDay))
                   .map(dateUtil.formatMonthDay),
-                classes = if (!yearEndChanged) "" else "no-border-bottom"
+                classes = if !yearEndChanged then "" else "no-border-bottom"
               ) ++
-              (if (yearEndChanged)
+              (if yearEndChanged then
                  Seq(
                    SummaryListRow(
                      key = Key(Text(messages("checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates"))),
@@ -351,11 +309,7 @@ class CyaTradingHistorySupport @Inject() (
       ).body
     )
 
-  def occupationDetails(
-    using
-    request: SessionRequest[?],
-    messages: Messages
-  ): Html =
+  def occupationDetails(using request: SessionRequest[?], messages: Messages): Html =
     govukSummaryList(
       SummaryList(rows =
         sectionAnswers.row(
@@ -375,11 +329,12 @@ class CyaTradingHistorySupport @Inject() (
           sectionAnswers.row(
             "checkYourAnswersAboutTheTradingHistory.financialYearEndUpdates",
             _.fold("")(t => financialYearEndDatesTable(financialYearEndDates(t), dateUtil).body),
-            forType match {
+            forType match
               case FOR6020 | FOR6030 | FOR6076 =>
                 controllers.aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show()
-              case _                           => controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
-            },
+              case _                           =>
+                controllers.aboutthetradinghistory.routes.FinancialYearEndDatesController.show()
+            ,
             "",
             ("valueAsHtml", _ => None)
           )

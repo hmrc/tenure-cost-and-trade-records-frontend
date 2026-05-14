@@ -101,10 +101,7 @@ case class SectionAnswersRowBuilder[T](answers: Option[T])(using messages: Messa
   /**
     * Render [[uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow SummaryListRow]] without actions.
     */
-  def rowWithoutActions(
-    messageKey: String,
-    getAnswerValue: T => Option[String]
-  ): Seq[SummaryListRow] =
+  def rowWithoutActions(messageKey: String, getAnswerValue: T => Option[String]): Seq[SummaryListRow] =
     Seq(
       SummaryListRow(
         key = Key(Text(messages(messageKey))),

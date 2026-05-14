@@ -68,9 +68,9 @@ trait BackwardNavigation:
       Some(routes.HasStoppedLettingController.show)
     },
     IsYearlyAvailablePageId     -> { (session, _) =>
-      for {
+      for
         intendedLettings <- intendedLettings(session.data)
-      } yield
+      yield
         if intendedLettings.hasStopped.isEmpty
         then routes.HowManyNightsController.show
         else
@@ -84,9 +84,9 @@ trait BackwardNavigation:
       Some(routes.IsYearlyAvailableController.show)
     },
     HasOnlineAdvertisingPageId  -> { (session, _) =>
-      for {
+      for
         intendedLettings <- intendedLettings(session.data)
-      } yield
+      yield
         if intendedLettings.isYearlyAvailable.isEmpty
         then routes.HowManyNightsController.show
         else

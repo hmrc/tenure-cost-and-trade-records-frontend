@@ -50,20 +50,14 @@ object AccountingInformationUtil:
   def previousFinancialYearFromTo6048: Seq[LocalDate] =
     Seq(previousFinancialYearStart6048, previousFinancialYearEnd6048)
 
-  def financialYearsRequiredAccommodation6048(
-    firstOccupy: Option[MonthsYearDuration],
-    isWales: Boolean
-  ): Seq[LocalDate] =
+  def financialYearsRequiredAccommodation6048(firstOccupy: Option[MonthsYearDuration], isWales: Boolean): Seq[LocalDate] =
     if isWales then
       Some(deriveFinancialYearEndDatesFrom(firstOccupy.getOrElse(defaultStart), financialYearEndOfMarch))
         .filter(_.nonEmpty)
         .getOrElse(Seq(previousFinancialYearEnd6048))
     else Seq(previousFinancialYearEnd6048)
 
-  def deriveFinancialYearEndDatesFrom(
-    firstOccupy: MonthsYearDuration,
-    financialYear: DayMonthsDuration
-  ): Seq[LocalDate] =
+  def deriveFinancialYearEndDatesFrom(firstOccupy: MonthsYearDuration, financialYear: DayMonthsDuration): Seq[LocalDate] =
     val now     = LocalDate.now
     val yearNow = now.getYear
 
@@ -73,10 +67,10 @@ object AccountingInformationUtil:
       if (!now.isAfter(financialYearEndDate)) yearNow - 1
       else yearNow
 
-    if (firstOccupy.years >= lastCompleteFinancialYear) Seq.empty
-    else {
+    if firstOccupy.years >= lastCompleteFinancialYear then Seq.empty
+    else
       val firstFinancialYearEnd =
-        if (firstOccupy.months > financialYear.months || (firstOccupy.months == financialYear.months && 1 > financialYear.days))
+        if firstOccupy.months > financialYear.months || (firstOccupy.months == financialYear.months && 1 > financialYear.days) then
           firstOccupy.years + 1
         else
           firstOccupy.years
@@ -89,7 +83,6 @@ object AccountingInformationUtil:
           LocalDate.of(lastCompleteFinancialYear - i, financialYear.months, financialYear.days)
         }
         .filterNot(_.isBefore(LocalDate.of(firstOccupy.years, firstOccupy.months, 1)))
-    }
 
   def maxNightsInFinYear6048(year: Int)(using request: SessionRequest[AnyContent]): Int =
     val commercialLetFirstAvailableDate = request.sessionData.aboutYouAndThePropertyPartTwo
@@ -140,8 +133,7 @@ object AccountingInformationUtil:
   ): Session =
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
-    val originalTurnoverSections6045  =
-      request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).getOrElse(Seq.empty)
+    val originalTurnoverSections6045  = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6045).getOrElse(Seq.empty)
     val isFinancialYearsListUnchanged = financialYearsList(newOccupationAndAccounting) == previousFinancialYears6045
 
     val turnoverSections6045 =
@@ -179,8 +171,7 @@ object AccountingInformationUtil:
   ): Session =
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
-    val originalTurnoverSections6048  =
-      request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).getOrElse(Seq.empty)
+    val originalTurnoverSections6048  = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6048).getOrElse(Seq.empty)
     val isFinancialYearsListUnchanged = financialYearsList(newOccupationAndAccounting) == previousFinancialYears6048
 
     val turnoverSections6048 =
@@ -218,8 +209,7 @@ object AccountingInformationUtil:
   ): Session =
     val firstOccupy                   = newOccupationAndAccounting.firstOccupy
     val financialYear                 = newOccupationAndAccounting.currentFinancialYearEnd.get
-    val originalTurnoverSections6076  =
-      request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
+    val originalTurnoverSections6076  = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.turnoverSections6076).getOrElse(Seq.empty)
     val isFinancialYearsListUnchanged = financialYearsList(newOccupationAndAccounting) == previousFinancialYears6076
 
     val turnoverSections6076 =
@@ -261,10 +251,7 @@ object AccountingInformationUtil:
   )(using request: SessionRequest[AnyContent]
   ): String =
     navigator.from match
-      case "CYA" =>
-        navigator.cyaPage
-          .getOrElse(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show())
-          .url
+      case "CYA" => navigator.cyaPage.getOrElse(aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show()).url
       case _     =>
         request.sessionData.aboutTheTradingHistory
           .flatMap(_.occupationAndAccountingInformation)

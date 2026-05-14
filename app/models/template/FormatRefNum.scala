@@ -16,7 +16,8 @@
 
 package models.template
 
-import useCases.ReferenceNumber
-
 object FormatRefNum:
+
+  type ReferenceNumber = String
+
   def apply(r: ReferenceNumber): ReferenceNumber = r.take(r.length - 3) + "/" + r.drop(r.length - 3)

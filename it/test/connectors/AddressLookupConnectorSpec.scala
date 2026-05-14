@@ -21,6 +21,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.*
 import connectors.addressLookup.*
 import models.ForType.FOR6048
 import models.Session
+import models.submissions.common.Address
 import play.api.Configuration
 import play.api.mvc.{AnyContent, Call}
 import play.api.test.FakeRequest
@@ -38,8 +39,7 @@ class AddressLookupConnectorSpec extends TCTRServerSpec:
     Session(
       referenceNumber = "99996010004",
       forType = FOR6048,
-      address = models.submissions.common
-        .Address("001", Some("GORING ROAD"), "GORING-BY-SEA, LONDON", Some("WEST SUSSEX"), "BN12 4AX"),
+      address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, LONDON", Some("WEST SUSSEX"), "BN12 4AX"),
       token = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
       isWelsh = false
     ),
