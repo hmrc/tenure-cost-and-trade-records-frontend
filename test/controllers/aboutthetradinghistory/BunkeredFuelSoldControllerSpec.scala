@@ -28,16 +28,17 @@ class BunkeredFuelSoldControllerSpec extends TestBaseSpec:
 
   def bunkeredFuelSoldController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ): BunkeredFuelSoldController = BunkeredFuelSoldController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    bunkeredFuelSoldView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): BunkeredFuelSoldController =
+    BunkeredFuelSoldController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      bunkeredFuelSoldView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
-  "Bunkered fuel sold controller" should {
+  "GET /" should {
     "return 200" in {
       val result = bunkeredFuelSoldController().show(fakeRequest)
       status(result) shouldBe OK
@@ -55,11 +56,11 @@ class BunkeredFuelSoldControllerSpec extends TestBaseSpec:
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = bunkeredFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = bunkeredFuelSoldController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
   }

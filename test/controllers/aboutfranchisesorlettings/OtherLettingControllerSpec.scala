@@ -49,8 +49,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         aboutFranchisesOrLettings = Some(
           prefilledAboutFranchiseOrLettingsWith6020LettingsAll.copy(
             lettings =
-              if havingNoLettings
-              then None
+              if havingNoLettings then None
               else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
           )
         )
@@ -66,6 +65,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
+
         val page: Document = contentAsJsoup(result)
         page.heading            shouldBe "label.otherLetting.heading"
         page.input("lettingType") should beEmpty
@@ -93,9 +93,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         page.error("lettingType") shouldBe "error.lettingType.required"
         page.error("tenantName")  shouldBe "error.tenantName.required"
       }
-      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
-        true
-      ) {
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings = true) {
         val lettingType            = "New garage"
         val tenantName             = "Henry VIII"
         val result: Future[Result] = controller.submit(index = Some(0))(
@@ -124,6 +122,7 @@ class OtherLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
+
         val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(3)) { case record: OtherLetting =>

@@ -64,7 +64,6 @@ class CalculatingTheRentControllerSpec extends TestBaseSpec:
           val html   = Jsoup.parse(contentAsString(result))
           Option(html.getElementById("dateInput.month").`val`()).value shouldBe "1"
           Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2021"
-
         }
       }
     }

@@ -71,8 +71,7 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res =
-        franchiseOrLettingsTiedToPropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      val res = franchiseOrLettingsTiedToPropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

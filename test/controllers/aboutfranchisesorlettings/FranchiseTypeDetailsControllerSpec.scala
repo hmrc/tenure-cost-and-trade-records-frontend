@@ -40,6 +40,7 @@ class FranchiseTypeDetailsControllerSpec extends TestBaseSpec with FranchiseType
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
+
         val page: Document = contentAsJsoup(result)
         page.heading shouldBe "cateringOperationOrLettingAccommodationOperator.heading"
       }
@@ -72,6 +73,7 @@ class FranchiseTypeDetailsControllerSpec extends TestBaseSpec with FranchiseType
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(result) shouldBe BAD_REQUEST
+
         val page: Document = contentAsJsoup(result)
         page.error("operatorName")   shouldBe "error.operatorName.required"
         page.error("typeOfBusiness") shouldBe "error.typeOfBusiness.required"
@@ -123,6 +125,7 @@ trait FranchiseTypeDetailsControllerBehaviours:
       )
       status(result) shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe "/on-ramp"
+
       val session: ArgumentCaptor[Session] = captor[Session]
       verify(repository, once).saveOrUpdate(session.capture())(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
@@ -132,7 +135,6 @@ trait FranchiseTypeDetailsControllerBehaviours:
         case record: FranchiseIncomeRecord      =>
           record.businessDetails.value.operatorName   shouldBe operatorName
           record.businessDetails.value.typeOfBusiness shouldBe typeOfBusiness
-
       }
 
   def retrievingConfirmedAddressFromAddressLookupService(index: Int): Unit =

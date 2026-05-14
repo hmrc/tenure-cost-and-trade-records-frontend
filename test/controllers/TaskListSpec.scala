@@ -112,6 +112,5 @@ class TaskListSpec extends TestBaseSpec:
       val result = taskListController.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
-
     }
   }

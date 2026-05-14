@@ -84,7 +84,6 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec:
       val content = contentAsString(result)
       content should include("/additional-catering")
     }
-
   }
 
   "SUBMIT /" should {
@@ -114,7 +113,6 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for invalid gross receipts" in {
-
       val formData = Map("additionalBarsClubs[0].grossBar" -> "xxx")
 
       val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
@@ -126,7 +124,6 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for empty gross receipts" in {
-
       val formData = Map("additionalBarsClubs[1].grossBar" -> "")
 
       val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
@@ -138,7 +135,6 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for negative gross receipts" in {
-
       val formData = Map("additionalBarsClubs[2].grossBar" -> "-1")
 
       val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
@@ -150,7 +146,6 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for invalid cost of purchase" in {
-
       val formData = Map("additionalBarsClubs[0].costBar" -> "xxx")
 
       val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
@@ -162,7 +157,6 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for empty cost of purchase" in {
-
       val formData = Map("additionalBarsClubs[1].costBar" -> "")
 
       val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)
@@ -174,7 +168,6 @@ class AdditionalBarsClubsControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for negative cost of purchase" in {
-
       val formData = Map("additionalBarsClubs[2].costBar" -> "-1")
 
       val form = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages).bind(formData)

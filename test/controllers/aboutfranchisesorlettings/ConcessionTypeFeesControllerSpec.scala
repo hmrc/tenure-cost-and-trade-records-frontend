@@ -60,7 +60,6 @@ class ConcessionTypeFeesControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
-
       val res = controller.submit(0)(
         FakeRequest().withFormUrlEncodedBody()
       )

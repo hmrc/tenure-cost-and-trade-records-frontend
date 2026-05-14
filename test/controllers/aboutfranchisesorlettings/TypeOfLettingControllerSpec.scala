@@ -29,9 +29,7 @@ class TypeOfLettingControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def typeOfLettingController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
-      prefilledAboutFranchiseOrLettingsWith6020LettingsAll
-    )
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettingsWith6020LettingsAll)
   ): TypeOfLettingController =
     TypeOfLettingController(
       stubMessagesControllerComponents(),
@@ -63,7 +61,6 @@ class TypeOfLettingControllerSpec extends TestBaseSpec:
   }
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
-
       val res = typeOfLettingController().submit(Some(0))(
         FakeRequest().withFormUrlEncodedBody()
       )

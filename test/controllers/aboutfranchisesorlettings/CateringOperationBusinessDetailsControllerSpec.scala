@@ -40,6 +40,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
+
         val html: Document = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()    shouldBe "concessionTypeDetails.heading"
         html.getElementById("operatorName6030").value shouldBe ""
@@ -52,6 +53,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
+
         val html: Document = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()    shouldBe "concessionTypeDetails.heading"
         html.getElementById("operatorName6030").value shouldBe ""
@@ -63,6 +65,7 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
       "reply 400 and error messages when the form is submitted with invalid data" in new ControllerFixture {
         val result: Future[Result] = controller.submit(index = None)(fakePostRequest)
         val content: String        = contentAsString(result)
+
         status(result) shouldBe BAD_REQUEST
         content          should include("error.operatorName6030.required")
         content          should include("error.typeOfBusiness.required")
@@ -81,7 +84,6 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.FeeReceivedController.show(0).url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-
       }
 
       "reply 303 when the 6030 form is submitted with good data missing index" in new ControllerFixture {
@@ -95,10 +97,12 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.FeeReceivedController.show(0).url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        val updatedCateringOperationDetails: ConcessionBusinessDetails = data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
-          .asInstanceOf[ConcessionIncomeRecord]
-          .businessDetails
-          .value
+
+        val updatedCateringOperationDetails: ConcessionBusinessDetails =
+          data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
+            .asInstanceOf[ConcessionIncomeRecord]
+            .businessDetails
+            .value
         updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
         updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
         reset(repository)

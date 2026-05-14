@@ -30,8 +30,7 @@ import utils.TestBaseSpec
 
 class RentalIncomeIncludedControllerSpec extends TestBaseSpec:
 
-  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
-    mock[AboutFranchisesOrLettingsNavigator]
+  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
   val controllerComponents: MessagesControllerComponents                         = stubMessagesControllerComponents()
   override val messagesApi: MessagesApi                                          = controllerComponents.messagesApi
   override val messages: Messages                                                = messagesApi.preferred(fakeRequest)
@@ -62,7 +61,6 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec:
     }
 
     "render a page with necessary content" in {
-
       val result = controller().show(0)(fakeRequest)
 
       val html = Jsoup.parse(contentAsString(result))
@@ -85,12 +83,10 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec:
       checkboxes.get(4).text                         shouldBe messages(
         "checkbox.cateringOperationOrLettingAccommodationCheckboxesDetails.noneOfThese"
       )
-
     }
   }
 
   "render back link to CYA if come from CYA" in {
-
     val result  = controller().show(0)(fakeRequestFromCYA)
     val content = contentAsString(result)
     content should include("/check-your-answers-about-franchise-or-lettings")
@@ -103,6 +99,7 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec:
     val content        = contentAsString(result)
     content should include("/rental-income-rent?idx=0")
   }
+
   "render a correct back link to letting type details if no query parameters in the url for 6010 " in {
     // letting is on index 1
     val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010))

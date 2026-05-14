@@ -49,8 +49,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         aboutFranchisesOrLettings = Some(
           prefilledAboutFranchiseOrLettingsWith6020LettingsAll.copy(
             lettings =
-              if havingNoLettings
-              then None
+              if havingNoLettings then None
               else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
           )
         )
@@ -66,6 +65,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
+
         val page: Document = contentAsJsoup(result)
         page.heading              shouldBe "label.atmLetting.heading"
         page.input("bankOrCompany") should beEmpty
@@ -87,6 +87,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(result) shouldBe BAD_REQUEST
+
         val page: Document = contentAsJsoup(result)
         page.error("bankOrCompany") shouldBe "error.bankOrCompany.required"
       }
@@ -101,6 +102,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
+
         val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: ATMLetting =>
@@ -116,6 +118,7 @@ class AtmLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
+
         val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) { case record: ATMLetting =>

@@ -30,17 +30,16 @@ class RentDetailsControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def rentDetailsController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
-      prefilledAboutFranchiseOrLettingsWith6020LettingsAll
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettingsWith6020LettingsAll)
+  ): RentDetailsController =
+    RentDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutFranchisesOrLettingsNavigator,
+      rentDetailsView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
+      mockSessionRepo
     )
-  ): RentDetailsController = RentDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutFranchisesOrLettingsNavigator,
-    rentDetailsView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-    mockSessionRepo
-  )
 
   "GET /" should {
     "return 200 for ATM rent details" in {
@@ -72,14 +71,13 @@ class RentDetailsControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
-
       val res = rentDetailsController().submit(0)(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
-    "throw a BAD_REQUEST on empty form submission from CYA" in {
 
+    "throw a BAD_REQUEST on empty form submission from CYA" in {
       val res = rentDetailsController().submit(0)(
         FakeRequest().withFormUrlEncodedBody("from" -> "CYA")
       )
@@ -102,7 +100,6 @@ class RentDetailsControllerSpec extends TestBaseSpec:
     redirectLocation(result) shouldBe Some(
       "/send-trade-and-cost-information/add-another-letting?idx=3"
     ) // Adjust according to your actual redirect
-
   }
 
   "handle form submission with valid telco rent details and update the session" in {
@@ -120,7 +117,6 @@ class RentDetailsControllerSpec extends TestBaseSpec:
     redirectLocation(result) shouldBe Some(
       "/send-trade-and-cost-information/add-another-letting?idx=3"
     ) // Adjust according to your actual redirect
-
   }
 
   "handle form submission with valid advertising right rent details and update the session" in {
@@ -138,7 +134,6 @@ class RentDetailsControllerSpec extends TestBaseSpec:
     redirectLocation(result) shouldBe Some(
       "/send-trade-and-cost-information/add-another-letting?idx=3"
     ) // Adjust according to your actual redirect
-
   }
 
   "handle form submission with valid other rent details and update the session" in {

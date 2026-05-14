@@ -25,10 +25,9 @@ import utils.TestBaseSpec
 class AccountingCosts6048ControllerSpec extends TestBaseSpec:
 
   private val previousPage = aboutthetradinghistory.routes.FixedCosts6048Controller.show.url
+  private val nextPage     = aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show.url
+  private val cyaPage      = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
-  private val nextPage = aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show.url
-
-  private val cyaPage  = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
   val mockAudit: Audit = mock[Audit]
 
   def accountingCosts6048Controller: AccountingCosts6048Controller =
@@ -58,7 +57,6 @@ class AccountingCosts6048ControllerSpec extends TestBaseSpec:
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include cyaPage
-
     }
 
     "render back link to CYA if come from CYA" in {

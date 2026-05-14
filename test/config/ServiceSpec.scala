@@ -30,5 +30,4 @@ class ServiceSpec extends TCTRAppSpec:
       internalAuth.baseUrl                  shouldBe "http://localhost:8470"
       internalAuth.toString                 shouldBe "http://localhost:8470"
       Service.convertToString(internalAuth) shouldBe "http://localhost:8470"
-
     }

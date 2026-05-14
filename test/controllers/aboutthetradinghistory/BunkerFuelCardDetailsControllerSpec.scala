@@ -59,12 +59,10 @@ class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec:
       val html   = Jsoup.parse(contentAsString(result))
       Option(html.getElementById("name").`val`()).value shouldBe "Card 1"
     }
-
   }
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = createBunkerFuelCardDetailsController().submit(None)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )

@@ -133,13 +133,12 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
         ""             -> routes.TaskListController.show.url
       )
 
-      for ((src, expectedBackLink) <- testCases) {
+      for (src, expectedBackLink) <- testCases do
         val result = maxOfLettingsReachedController.show(Option(src))(fakeRequest)
         status(result) shouldBe OK
 
         val htmlContent = contentAsString(result)
         htmlContent should include(expectedBackLink)
-      }
     }
   }
 

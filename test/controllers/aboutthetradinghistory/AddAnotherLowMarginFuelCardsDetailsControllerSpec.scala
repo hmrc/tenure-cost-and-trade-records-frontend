@@ -22,8 +22,8 @@ import form.aboutthetradinghistory.AddAnotherLowMarginFuelCardsDetailsForm.theFo
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers.{POST, contentType, status, stubMessagesControllerComponents}
+import play.api.test.{FakeRequest, Helpers}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -37,15 +37,16 @@ class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec:
 
   def createAddAnotherLowMarginFuelCardsDetailsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory)
-  ): AddAnotherLowMarginFuelCardsDetailsController = AddAnotherLowMarginFuelCardsDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    addAnotherLowMarginFuelCardsDetailsView,
-    genericRemoveConfirmationView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): AddAnotherLowMarginFuelCardsDetailsController =
+    AddAnotherLowMarginFuelCardsDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      addAnotherLowMarginFuelCardsDetailsView,
+      genericRemoveConfirmationView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "AddAnotherLowMarginFuelCardsDetailsController GET /" should {
     "return 200 and HTML with Can Rent Be Reduced On Review in the session  return 200" in {
@@ -87,29 +88,26 @@ class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec:
 
   "Remove LowMargin fuel card details" should {
     "render the removal confirmation page on remove" in {
-      val controller     =
-        createAddAnotherLowMarginFuelCardsDetailsController(prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails)
+      val controller     = createAddAnotherLowMarginFuelCardsDetailsController(prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails)
       val idxToRemove    = 0
       val sessionRequest = SessionRequest(aboutYourTradingHistoryWithLowMarginFuelCardsDetailsSession, fakeRequest)
       val result         = controller.remove(idxToRemove)(sessionRequest)
+
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "handle form submission with 'Yes' and perform removal" in {
-      val controller      =
-        createAddAnotherLowMarginFuelCardsDetailsController(prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails)
+      val controller      = createAddAnotherLowMarginFuelCardsDetailsController(prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails)
       val idxToRemove     = 0
       val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
       val sessionRequest  = SessionRequest(aboutYourTradingHistoryWithLowMarginFuelCardsDetailsSession, requestWithForm)
       val result          = controller.performRemove(idxToRemove)(sessionRequest)
       status(result) shouldBe BAD_REQUEST
-
     }
 
     "handle form submission with 'No' and cancel removal" in {
-      val controller      =
-        createAddAnotherLowMarginFuelCardsDetailsController(prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails)
+      val controller      = createAddAnotherLowMarginFuelCardsDetailsController(prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails)
       val idxToRemove     = 0
       val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
@@ -122,8 +120,6 @@ class AddAnotherLowMarginFuelCardsDetailsControllerSpec extends TestBaseSpec:
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey:
-
-      val addAnotherLowMarginFuelCardsDetails: String =
-        "addAnotherLowMarginFuelCardsDetails"
+      val addAnotherLowMarginFuelCardsDetails: String = "addAnotherLowMarginFuelCardsDetails"
 
     val baseFormData: Map[String, String] = Map("addAnotherLowMarginFuelCardsDetails" -> "yes")

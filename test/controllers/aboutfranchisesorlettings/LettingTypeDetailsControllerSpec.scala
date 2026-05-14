@@ -40,6 +40,7 @@ class LettingTypeDetailsControllerSpec extends TestBaseSpec with LettingTypeDeta
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
+
         val page: Document = contentAsJsoup(result)
         page.heading shouldBe "lettingOtherPartOfPropertyDetailsTenants.heading"
       }
@@ -112,6 +113,7 @@ trait LettingTypeDetailsControllerBehaviours:
       )
       status(result) shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe "/on-ramp"
+
       val session: ArgumentCaptor[Session] = captor[Session]
       verify(repository, once).saveOrUpdate(session.capture())(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {

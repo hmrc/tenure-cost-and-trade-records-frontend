@@ -59,7 +59,6 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec:
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include cyaPage
-
     }
 
     "render back link to CYA if come from CYA" in {

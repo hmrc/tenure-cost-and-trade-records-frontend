@@ -28,8 +28,7 @@ import utils.TestBaseSpec
 
 class RentReceivedFromControllerSpec extends TestBaseSpec:
 
-  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
-    mock[AboutFranchisesOrLettingsNavigator]
+  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
   val mockAudit: Audit                                                           = mock[Audit]
 
   def controller(

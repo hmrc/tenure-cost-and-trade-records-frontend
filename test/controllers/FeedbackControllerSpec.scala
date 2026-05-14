@@ -28,14 +28,15 @@ class FeedbackControllerSpec extends TCTRAppSpec:
 
   def feedbackController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ): FeedbackController = FeedbackController(
-    stubMessagesControllerComponents(),
-    feedbackView,
-    feedbackThx,
-    confirmation,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-    auditServiceMock
-  )
+  ): FeedbackController =
+    FeedbackController(
+      stubMessagesControllerComponents(),
+      feedbackView,
+      feedbackThx,
+      confirmation,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      auditServiceMock
+    )
 
   val comments = "Really amazing bro, wow!"
   val rating   = "5"

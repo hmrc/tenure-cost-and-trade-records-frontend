@@ -87,7 +87,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
       val content = contentAsString(result)
       content should include("/additional-amusements")
     }
-
   }
 
   "SUBMIT /" should {
@@ -117,7 +116,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for invalid gross leisure Receipts" in {
-
       val formData = Map("additionalMisc.[0].leisureReceipts" -> "xxx")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -129,7 +127,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for empty gross leisure Receipts" in {
-
       val formData = Map("additionalMisc.[1].leisureReceipts" -> "")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -141,7 +138,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for negative gross leisure Receipts" in {
-
       val formData = Map("additionalMisc.[2].leisureReceipts" -> "-1")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -153,7 +149,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for gross leisure winter storage receipt" in {
-
       val formData = Map("additionalMisc.[0].winterStorageReceipts" -> "xxx")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -165,7 +160,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for empty gross leisure winter storage receipt" in {
-
       val formData = Map("additionalMisc.[1].winterStorageReceipts" -> "")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -177,7 +171,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for negative gross leisure winter storage receipt" in {
-
       val formData = Map("additionalMisc.[2].winterStorageReceipts" -> "-1")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -189,7 +182,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for gross other activities receipts" in {
-
       val formData = Map("additionalMisc.[0].otherActivitiesReceipts" -> "xxx")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -201,7 +193,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for empty gross other activities receipts" in {
-
       val formData = Map("additionalMisc.[1].otherActivitiesReceipts" -> "")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -213,7 +204,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for negative gross other activities receipts" in {
-
       val formData = Map("additionalMisc.[2].otherActivitiesReceipts" -> "-1")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -224,7 +214,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
       )
     }
     "return 400 and error message for incorrect number of vans" in {
-
       val formData = Map("additionalMisc.[0].numberOfVans" -> "xxx")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -236,7 +225,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for empty number of vans" in {
-
       val formData = Map("additionalMisc.[1].numberOfVans" -> "")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -248,7 +236,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for negative number of vans" in {
-
       val formData = Map("additionalMisc.[2].numberOfVans" -> "-1")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -260,7 +247,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for incorrect other services receipts" in {
-
       val formData = Map("additionalMisc.[0].otherServicesReceipts" -> "xxx")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -272,7 +258,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for empty other services receipts" in {
-
       val formData = Map("additionalMisc.[1].otherServicesReceipts" -> "")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -284,7 +269,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for negative other services receipts" in {
-
       val formData = Map("additionalMisc.[2].otherServicesReceipts" -> "-1")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -296,7 +280,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for incorrect bottled gas receipts" in {
-
       val formData = Map("additionalMisc.[0].bottledGasReceipts" -> "xxx")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -308,7 +291,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for empty bottled gas receipts" in {
-
       val formData = Map("additionalMisc.[1].bottledGasReceipts" -> "")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)
@@ -320,7 +302,6 @@ class AdditionalMiscControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for negative bottled gas receipts" in {
-
       val formData = Map("additionalMisc.[2].bottledGasReceipts" -> "-1")
 
       val form = AdditionalMiscForm.additionalMiscForm(years)(using messages).bind(formData)

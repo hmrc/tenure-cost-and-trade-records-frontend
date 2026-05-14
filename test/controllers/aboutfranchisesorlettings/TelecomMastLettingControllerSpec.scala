@@ -49,8 +49,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         aboutFranchisesOrLettings = Some(
           prefilledAboutFranchiseOrLettingsWith6020LettingsAll.copy(
             lettings =
-              if havingNoLettings
-              then None
+              if havingNoLettings then None
               else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
           )
         )
@@ -66,6 +65,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF_8.charset
+
         val page: Document = contentAsJsoup(result)
         page.heading                     shouldBe "label.telecomMastLetting.heading"
         page.input("operatingCompanyName") should beEmpty
@@ -93,9 +93,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         page.error("operatingCompanyName") shouldBe "error.operatingCompanyName.required"
         page.error("siteOfMast")           shouldBe "error.siteOfMast.required"
       }
-      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings =
-        true
-      ) {
+      "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings = true) {
         val operatingCompanyName   = "New Bread and Butter Ltd"
         val siteOfMast             = "Terrace"
         val result: Future[Result] = controller.submit(index = Some(0))(
@@ -126,6 +124,7 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         )
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe "/on-ramp"
+
         val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {

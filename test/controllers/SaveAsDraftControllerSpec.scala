@@ -115,8 +115,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
       status(result) shouldBe OK
       checkFinalPageDraftSaved(contentAsString(result))
 
-      val session =
-        backendConnector.loadSubmissionDraft(prefilledBaseSession.referenceNumber, hc).futureValue.get.session
+      val session = backendConnector.loadSubmissionDraft(prefilledBaseSession.referenceNumber, hc).futureValue.get.session
       session.address shouldBe submissionDraft.session.address
 
       val passwordHash = session.saveAsDraftPassword.getOrElse("")
@@ -212,9 +211,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
       val refNum = submissionDraft.session.referenceNumber
       backendConnector.saveAsDraft(refNum, submissionDraft, hc)
 
-      backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(
-        submissionDraft
-      ) // SubmissionDraft exists
+      backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(submissionDraft) // SubmissionDraft exists
 
       val result = saveAsDraftController.startAgain(fakeRequest)
       status(result)           shouldBe SEE_OTHER
@@ -242,8 +239,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
     "show session timeout page with generated password and draft expiration date" in {
       val generatedPassword = "2345xyz"
 
-      val result =
-        saveAsDraftController.sessionTimeout(fakeRequest.withSession("generatedPassword" -> generatedPassword))
+      val result = saveAsDraftController.sessionTimeout(fakeRequest.withSession("generatedPassword" -> generatedPassword))
       status(result) shouldBe OK
 
       val content = contentAsString(result)

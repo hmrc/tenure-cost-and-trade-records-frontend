@@ -26,14 +26,15 @@ class BunkeredFuelQuestionControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  val bunkeredFuelQuestionController: BunkeredFuelQuestionController = BunkeredFuelQuestionController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    bunkeredFuelQuestionView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
-    mockSessionRepo
-  )
+  val bunkeredFuelQuestionController: BunkeredFuelQuestionController =
+    BunkeredFuelQuestionController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      bunkeredFuelQuestionView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {

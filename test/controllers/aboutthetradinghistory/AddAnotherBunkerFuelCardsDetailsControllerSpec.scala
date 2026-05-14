@@ -22,8 +22,8 @@ import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.theForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers.{POST, contentType, status, stubMessagesControllerComponents}
+import play.api.test.{FakeRequest, Helpers}
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
@@ -37,15 +37,16 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec:
 
   def createAddAnotherBunkerFuelCardsDetailsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutTheTradingHistory)
-  ): AddAnotherBunkerFuelCardsDetailsController = AddAnotherBunkerFuelCardsDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    addAnotherBunkerFuelCardsDetailsView,
-    genericRemoveConfirmationView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): AddAnotherBunkerFuelCardsDetailsController =
+    AddAnotherBunkerFuelCardsDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      addAnotherBunkerFuelCardsDetailsView,
+      genericRemoveConfirmationView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
@@ -92,29 +93,26 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec:
 
   "Remove bunker fuel card details" should {
     "render the removal confirmation page on remove" in {
-      val controller     =
-        createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
+      val controller     = createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
       val idxToRemove    = 0
       val sessionRequest = SessionRequest(aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession, fakeRequest)
       val result         = controller.remove(idxToRemove)(sessionRequest)
+
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "handle form submission with 'Yes' and perform removal" in {
-      val controller      =
-        createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
+      val controller      = createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
       val idxToRemove     = 0
       val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
       val sessionRequest  = SessionRequest(aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession, requestWithForm)
       val result          = controller.performRemove(idxToRemove)(sessionRequest)
       status(result) shouldBe BAD_REQUEST
-
     }
 
     "handle form submission with 'No' and cancel removal" in {
-      val controller      =
-        createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
+      val controller      = createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
       val idxToRemove     = 0
       val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
@@ -127,8 +125,6 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec:
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey:
-
-      val addAnotherBunkerFuelCardsDetails: String =
-        "addAnotherBunkerFuelCardsDetails"
+      val addAnotherBunkerFuelCardsDetails: String = "addAnotherBunkerFuelCardsDetails"
 
     val baseFormData: Map[String, String] = Map("addAnotherBunkerFuelCardsDetails" -> "yes")

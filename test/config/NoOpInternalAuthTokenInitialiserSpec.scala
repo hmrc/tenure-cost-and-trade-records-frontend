@@ -28,5 +28,4 @@ class NoOpInternalAuthTokenInitialiserSpec extends BaseSpec:
       val result      = await(initialiser.initialised)
 
       result shouldBe Done
-
     }

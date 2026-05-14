@@ -27,22 +27,23 @@ import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 class RentalIncomeListControllerSpec extends TestBaseSpec:
+
   import TestData.*
+
   val mockAudit: Audit = mock[Audit]
 
   def controller(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
-      prefilledAboutFranchiseOrLettings6045
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
+  ): RentalIncomeListController =
+    RentalIncomeListController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutFranchisesOrLettingsNavigator,
+      rentalIncomeListView,
+      genericRemoveConfirmationView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
+      mockSessionRepo
     )
-  ): RentalIncomeListController = RentalIncomeListController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutFranchisesOrLettingsNavigator,
-    rentalIncomeListView,
-    genericRemoveConfirmationView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-    mockSessionRepo
-  )
 
   "GET /" should {
     "return 200" in {
@@ -62,8 +63,7 @@ class RentalIncomeListControllerSpec extends TestBaseSpec:
         status(result) shouldBe BAD_REQUEST
       }
       "throw a BAD_REQUEST if an empty form is submitted via CYA" in {
-        val result =
-          controller().submit(1)(FakeRequest().withFormUrlEncodedBody("from" -> "CYA"))
+        val result = controller().submit(1)(FakeRequest().withFormUrlEncodedBody("from" -> "CYA"))
         status(result) shouldBe BAD_REQUEST
       }
     }
@@ -88,7 +88,6 @@ class RentalIncomeListControllerSpec extends TestBaseSpec:
   }
 
   "ensure maximum limit for records is respected" in {
-
     val rentalIncomeWithMaxEntries = AboutFranchisesOrLettings(
       rentalIncome = Some(
         IndexedSeq(
@@ -160,8 +159,6 @@ class RentalIncomeListControllerSpec extends TestBaseSpec:
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey:
-
-      val rentalIncomeList: String =
-        "rentalIncomeList"
+      val rentalIncomeList: String = "rentalIncomeList"
 
     val baseFormData: Map[String, String] = Map("rentalIncomeList" -> "yes")
