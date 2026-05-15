@@ -35,20 +35,19 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def controller(
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
-      prefilledAboutYouAndThePropertyPartTwo6048
+    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo6048)
+  ): OccupiersDetailsListController =
+    OccupiersDetailsListController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      occupiersDetailsListView,
+      genericRemoveConfirmationView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
+      mockSessionRepo
     )
-  ): OccupiersDetailsListController = OccupiersDetailsListController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    occupiersDetailsListView,
-    genericRemoveConfirmationView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-    mockSessionRepo
-  )
 
-  "Occupiers details List  GET /" should {
+  "GET /" should {
     "return 200 and HTML with Trade Services List in the session" in {
       val result = controller().show(0)(fakeRequest)
       status(result)      shouldBe Status.OK
@@ -63,50 +62,50 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = controller().submit(1)(fakeRequest)
-        status(result) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val result = controller().submit(1)(fakeRequest)
+      status(result) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = controller().submit(0)(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("occupiersDetailsList" -> "yes")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
-      "Redirect when form data submitted even it starts with empty occupiers" in {
-        val res = controller(
-          aboutYouAndThePropertyPartTwo = Some(
-            prefilledAboutYouAndThePropertyPartTwo6048.copy(
-              occupiersList = IndexedSeq(OccupiersDetails("Mike", "Bristol"))
-            )
+    "Redirect when form data submitted" in {
+      val res = controller().submit(0)(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("occupiersDetailsList" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "Redirect when form data submitted even it starts with empty occupiers" in {
+      val res = controller(
+        aboutYouAndThePropertyPartTwo = Some(
+          prefilledAboutYouAndThePropertyPartTwo6048.copy(
+            occupiersList = IndexedSeq(OccupiersDetails("Mike", "Bristol"))
           )
-        ).submit(0)(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("occupiersDetailsList" -> "yes")
         )
-        status(res) shouldBe SEE_OTHER
-      }
-      "Redirect when form data submitted even if it starts with no data at all" in {
-        val res = controller(aboutYouAndThePropertyPartTwo = None).submit(0)(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("occupiersDetailsList" -> "yes")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+      ).submit(0)(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("occupiersDetailsList" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
 
-    "REMOVE /" should {
-      "redirect if an empty form is submitted" in {
-        val result = controller().remove(1)(fakeRequest)
-        status(result) shouldBe SEE_OTHER
-      }
+    "Redirect when form data submitted even if it starts with no data at all" in {
+      val res = controller(aboutYouAndThePropertyPartTwo = None).submit(0)(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("occupiersDetailsList" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
+  }
 
+  "REMOVE /" should {
+    "redirect if an empty form is submitted" in {
+      val result = controller().remove(1)(fakeRequest)
+      status(result) shouldBe SEE_OTHER
+    }
   }
 
   "Remove details" should {
-
     "render the removal confirmation page on remove" in {
       val partTwo        =
         prefilledAboutYouAndThePropertyPartTwo6048.copy(occupiersList = IndexedSeq(OccupiersDetails("Mike", "Bristol")))
@@ -126,7 +125,6 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
       redirectLocation(result) shouldBe Some(
         controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0).url
       )
-
     }
 
     "handle form submission with 'No' and cancel removal" in {
@@ -137,18 +135,15 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
       redirectLocation(result) shouldBe Some(
         controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0).url
       )
-
     }
-
   }
-  "OccupiersDetails" should {
 
+  "OccupiersDetails" should {
     "serialize and deserialize correctly" in {
       val occupiersDetails = OccupiersDetails("Mike", "Bristol")
       val json             = Json.toJson(occupiersDetails)
       json.as[OccupiersDetails] shouldBe occupiersDetails
     }
-
   }
 
   "Occupiers details list form" should {

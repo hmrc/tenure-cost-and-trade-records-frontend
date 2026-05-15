@@ -34,28 +34,28 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def controller(
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
-      prefilledAboutYouAndThePropertyPartTwo6048
+    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo6048)
+  ): OccupiersDetailsController =
+    OccupiersDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      occupiersDetailsView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
+      mockSessionRepo
     )
-  ): OccupiersDetailsController = OccupiersDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    occupiersDetailsView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-    mockSessionRepo
-  )
 
-  def aboutYouControllerNone(): OccupiersDetailsController = OccupiersDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    occupiersDetailsView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
-    mockSessionRepo
-  )
+  def aboutYouControllerNone(): OccupiersDetailsController =
+    OccupiersDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      occupiersDetailsView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
+      mockSessionRepo
+    )
 
-  "Occupiers details controller" should {
+  "GET /" should {
     "GET / return 200 about you in the session" in {
       val result = controller().show(None)(fakeRequest)
       status(result) shouldBe Status.OK
@@ -87,51 +87,48 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
       )
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = controller().submit(None)(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
-      "update session data correctly on successful form submission" in {
-
-        val request        = FakeRequest(POST, "/submit-path")
-          .withFormUrlEncodedBody("occupiersDetailsName" -> "John Doe", "occupiersDetailsAddress" -> "123 Test Street")
-        val sessionRequest = SessionRequest(baseFilled6048Session, request)
-        val result         = controller().submit(Option(0))(sessionRequest)
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/occupiers-details-list?idx=0")
-
-      }
-
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = controller().submit(None)(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
 
-    "Occupiers details form" should {
+    "update session data correctly on successful form submission" in {
+      val request        = FakeRequest(POST, "/submit-path")
+        .withFormUrlEncodedBody("occupiersDetailsName" -> "John Doe", "occupiersDetailsAddress" -> "123 Test Street")
+      val sessionRequest = SessionRequest(baseFilled6048Session, request)
+      val result         = controller().submit(Option(0))(sessionRequest)
 
-      "error if occupiers name is missing" in {
-        val formData = baseFormData - errorKey.name
-        val form     = occupiersDetailsForm.bind(formData)
-        mustContainError(errorKey.name, "error.aboutYou.occupiersDetails.name.required", form)
-      }
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/occupiers-details-list?idx=0")
+    }
+  }
 
-      "error if occupiers address is missing" in {
-        val formData = baseFormData - errorKey.address
-        val form     = occupiersDetailsForm.bind(formData)
-        mustContainError(errorKey.address, "error.aboutYou.occupiersDetails.address.required", form)
-      }
+  "Occupiers details form" should {
+    "error if occupiers name is missing" in {
+      val formData = baseFormData - errorKey.name
+      val form     = occupiersDetailsForm.bind(formData)
+      mustContainError(errorKey.name, "error.aboutYou.occupiersDetails.name.required", form)
+    }
 
-      "error if occupiers name exceeds max length" in {
-        val invalidFormData = baseFormData.updated(errorKey.name, "A" * 101)
-        val form            = occupiersDetailsForm.bind(invalidFormData)
-        mustContainError(errorKey.name, "error.aboutYou.occupiersDetails.name.maxLength", form)
-      }
+    "error if occupiers address is missing" in {
+      val formData = baseFormData - errorKey.address
+      val form     = occupiersDetailsForm.bind(formData)
+      mustContainError(errorKey.address, "error.aboutYou.occupiersDetails.address.required", form)
+    }
 
-      "error if occupiers address exceeds max length" in {
-        val invalidFormData = baseFormData.updated(errorKey.address, "B" * 2001)
-        val form            = occupiersDetailsForm.bind(invalidFormData)
-        mustContainError(errorKey.address, "error.aboutYou.occupiersDetails.address.maxLength", form)
-      }
+    "error if occupiers name exceeds max length" in {
+      val invalidFormData = baseFormData.updated(errorKey.name, "A" * 101)
+      val form            = occupiersDetailsForm.bind(invalidFormData)
+      mustContainError(errorKey.name, "error.aboutYou.occupiersDetails.name.maxLength", form)
+    }
+
+    "error if occupiers address exceeds max length" in {
+      val invalidFormData = baseFormData.updated(errorKey.address, "B" * 2001)
+      val form            = occupiersDetailsForm.bind(invalidFormData)
+      mustContainError(errorKey.address, "error.aboutYou.occupiersDetails.address.maxLength", form)
     }
   }
 

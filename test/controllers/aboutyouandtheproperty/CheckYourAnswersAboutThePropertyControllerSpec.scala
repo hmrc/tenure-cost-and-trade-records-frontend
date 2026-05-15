@@ -28,141 +28,156 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec:
 
   def checkYourAnswersAboutThePropertyController6010Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def checkYourAnswersAboutThePropertyController6010No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def checkYourAnswersAboutThePropertyController6010None(): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def checkYourAnswersAboutThePropertyController6010None(): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
   def checkYourAnswersAboutThePropertyController6015Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def checkYourAnswersAboutThePropertyController6015No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def checkYourAnswersAboutThePropertyController6015None(): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def checkYourAnswersAboutThePropertyController6015None(): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6015, aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
   def checkYourAnswersAboutThePropertyController6030Yes(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def checkYourAnswersAboutThePropertyController6030No(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def checkYourAnswersAboutThePropertyController6030None(): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def checkYourAnswersAboutThePropertyController6030None(): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
   def checkYourAnswersAboutThePropertyController6020(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6020, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6020, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def checkYourAnswersAboutThePropertyController6076(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6076, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6076, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def checkYourAnswersAboutThePropertyControllerYes6045(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def checkYourAnswersAboutThePropertyControllerNo6045(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def checkYourAnswersAboutThePropertyControllerNone(): CheckYourAnswersAboutThePropertyController = CheckYourAnswersAboutThePropertyController(
-    stubMessagesControllerComponents(),
-    aboutYouAndThePropertyNavigator,
-    checkYourAnswersAboutThePropertyView,
-    preEnrichedActionRefiner(forType = FOR6010, aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def checkYourAnswersAboutThePropertyControllerNone(): CheckYourAnswersAboutThePropertyController =
+    CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(forType = FOR6010, aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "GET / CheckYourAnswersAboutThePropertyController" should {
+  "GET /" should {
     "return 200 6010 about you and the property CYA with tied goods yes in the session" in {
       val result = checkYourAnswersAboutThePropertyController6010Yes().show(fakeRequest)
       status(result) shouldBe Status.OK
     }
+
     "return HTML" in {
       val result = checkYourAnswersAboutThePropertyController6010Yes().show(fakeRequest)
       contentType(result)   shouldBe Some("text/html")
@@ -171,6 +186,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url
       )
     }
+
     "return 200 6010 about you and the property CYA with tied goods no in the session" in {
       val result = checkYourAnswersAboutThePropertyController6010No().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -180,6 +196,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
       )
     }
+
     "return 200 6010 about you and the property CYA with no tied goods in the session" in {
       val result = checkYourAnswersAboutThePropertyController6010None().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -199,6 +216,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show().url
       )
     }
+
     "return 200 6015 about you and the property CYA with premises license granted no in the session" in {
       val result = checkYourAnswersAboutThePropertyController6015No().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -208,6 +226,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
       )
     }
+
     "return 200 6015 about you and the property CYA with no premises license granted in the session" in {
       val result = checkYourAnswersAboutThePropertyController6015None().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -227,6 +246,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.TradingActivityController.show().url
       )
     }
+
     "return 200 6030 about you and the property CYA with charity question no in the session" in {
       val result = checkYourAnswersAboutThePropertyController6030No().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -236,6 +256,7 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.CharityQuestionController.show().url
       )
     }
+
     "return 200 6030 about you and the property CYA with no charity question in the session" in {
       val result = checkYourAnswersAboutThePropertyController6030None().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -285,53 +306,52 @@ class CheckYourAnswersAboutThePropertyControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
-    "return correct backLinks for FOR6048" when {
-      def controller(
-        partTwo: AboutYouAndThePropertyPartTwo,
-        isPossibleWelsh: Boolean
-      ) = CheckYourAnswersAboutThePropertyController(
-        stubMessagesControllerComponents(),
-        aboutYouAndThePropertyNavigator,
-        checkYourAnswersAboutThePropertyView,
-        preEnrichedActionRefiner(
-          forType = FOR6048,
-          aboutYouAndThePropertyPartTwo = Option(partTwo),
-          isWelsh = isPossibleWelsh
-        ),
-        mockSessionRepo
+
+    def controller(
+      partTwo: AboutYouAndThePropertyPartTwo,
+      isPossibleWelsh: Boolean
+    ) = CheckYourAnswersAboutThePropertyController(
+      stubMessagesControllerComponents(),
+      aboutYouAndThePropertyNavigator,
+      checkYourAnswersAboutThePropertyView,
+      preEnrichedActionRefiner(
+        forType = FOR6048,
+        aboutYouAndThePropertyPartTwo = Option(partTwo),
+        isWelsh = isPossibleWelsh
+      ),
+      mockSessionRepo
+    )
+
+    "return correct backLinks for FOR6048 when some occupiers - family members in the property" in {
+      val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(
+        partsUnavailable = Option(AnswerYes)
       )
+      val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
 
-      "some occupiers - family members in the property" in {
-        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(
-          partsUnavailable = Option(AnswerYes)
-        )
-        val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
-
-        status(result)        shouldBe Status.OK
-        contentAsString(result) should include(
-          controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0).url
-        )
-      }
-      "no occupiers  - family members in the property" in {
-        val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(
-          partsUnavailable = Option(AnswerNo)
-        )
-        val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
-
-        status(result)        shouldBe Status.OK
-        contentAsString(result) should include(
-          controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
-        )
-      }
-
+      status(result)        shouldBe Status.OK
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0).url
+      )
     }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = checkYourAnswersAboutThePropertyController6010Yes().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+    "return correct backLinks when no occupiers  - family members in the property" in {
+      val partTwo = prefilledAboutYouAndThePropertyPartTwo6048.copy(
+        partsUnavailable = Option(AnswerNo)
+      )
+      val result  = controller(partTwo, isPossibleWelsh = false).show(fakeRequest)
+
+      status(result)        shouldBe Status.OK
+      contentAsString(result) should include(
+        controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
+      )
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = checkYourAnswersAboutThePropertyController6010Yes().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
   }

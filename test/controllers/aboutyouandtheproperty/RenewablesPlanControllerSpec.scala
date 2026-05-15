@@ -38,29 +38,29 @@ class RenewablesPlanControllerSpec extends TestBaseSpec:
 
   def renewablesPlantController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): RenewablesPlantController = RenewablesPlantController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    renewablesPlantView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): RenewablesPlantController =
+    RenewablesPlantController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      renewablesPlantView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def renewablesPlantControllerNone(
-    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(
-      prefilledAboutYouAndThePropertyYes.copy(renewablesPlant = None)
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes.copy(renewablesPlant = None))
+  ): RenewablesPlantController =
+    RenewablesPlantController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      renewablesPlantView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
     )
-  ): RenewablesPlantController = RenewablesPlantController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    renewablesPlantView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
 
-  "Renewables Plan Controller" should {
+  "GET /" should {
     "return 200 when renewables plant in the session" in {
       val result = renewablesPlantController().show(fakeRequest)
       status(result)      shouldBe Status.OK
@@ -74,6 +74,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec:
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
     "return correct backLink when 'from=TL' query param is present" in {
       val request = FakeRequest(GET, "/path?from=TL")
       val result  = renewablesPlantController().show(request)
@@ -91,6 +92,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
+
     "return correct backLink when altDetailsQuestion is AnswerYes" in {
       val aboutYouAndThePropertyWithAltDetails =
         prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(AnswerYes))
@@ -117,24 +119,25 @@ class RenewablesPlanControllerSpec extends TestBaseSpec:
 
       html should include(controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url)
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = renewablesPlantController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = renewablesPlantController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = renewablesPlantController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "renewablesPlant" -> "intermittent"
-          )
+    "redirect when form data submitted" in {
+      val res = renewablesPlantController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "renewablesPlant" -> "intermittent"
         )
-        status(res) shouldBe SEE_OTHER
-      }
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
-  "Form"                       should {
+
+  "Form" should {
     "error if tiedForGoods is missing" in {
       val formData = baseFormData - errorKey.renewablesPlant
       val form     = theForm.bind(formData)

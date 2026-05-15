@@ -35,21 +35,20 @@ class CompletedCommercialLettingsControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def controller(
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
-      prefilledAboutYouAndThePropertyPartTwo6048
+    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo6048)
+  ): CompletedCommercialLettingsController =
+    CompletedCommercialLettingsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      completedCommercialLettingsView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
+      mockSessionRepo
     )
-  ): CompletedCommercialLettingsController = CompletedCommercialLettingsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    completedCommercialLettingsView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-    mockSessionRepo
-  )
 
   given SessionRequest[AnyContent] = SessionRequest(stillConnectedDetails6048YesSession, fakeRequest)
 
-  "Completed commercial letting controller" should {
+  "GET /" should {
     "return 200" in {
       val result = controller().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -75,6 +74,7 @@ class CompletedCommercialLettingsControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
+
     "return correct backLink when no query param is present" in {
       val result = controller().show()(fakeRequest)
       contentAsString(result) should include(
@@ -89,7 +89,7 @@ class CompletedCommercialLettingsControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = controller().submit(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "completedCommercialLettings" -> "4"

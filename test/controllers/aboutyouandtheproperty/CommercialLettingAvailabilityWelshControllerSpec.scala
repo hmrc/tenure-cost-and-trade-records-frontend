@@ -48,9 +48,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec:
       validFormDataPerYear(2)
 
   private def controller(
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
-      prefilledAboutYouAndThePropertyPartTwo6048
-    )
+    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo6048)
   ) = CommercialLettingAvailabilityWelshController(
     stubMessagesControllerComponents(),
     mockAudit,
@@ -63,7 +61,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec:
   private val sessionRequest: SessionRequest[AnyContent] =
     SessionRequest[AnyContent](stillConnectedDetails6048YesSession, fakeRequest)
 
-  "Commercial letting availability welsh controller GET" should {
+  "GET /" should {
     "return 200" in {
       val result = controller().show(fakeRequest)
       status(result) shouldBe OK
@@ -81,6 +79,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
+
     "return correct backLink when no query param is present" in {
       val result = controller().show()(fakeRequest)
       contentAsString(result) should include(
@@ -89,7 +88,7 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec:
     }
   }
 
-  "Commercial letting availability welsh controller SUBMIT /" should {
+  "SUBMIT /" should {
     "return 400 for form with errors" in {
       val res = controller().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
@@ -106,13 +105,12 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for invalid character" in {
-
       val formData = Map("lettingAvailability-0" -> "xxx")
 
-      val form =
-        CommercialLettingAvailabilityWelshForm
-          .commercialLettingAvailabilityWelshForm(years)(using sessionRequest, messages)
-          .bind(formData)
+      val form = CommercialLettingAvailabilityWelshForm
+        .commercialLettingAvailabilityWelshForm(years)(using sessionRequest, messages)
+        .bind(formData)
+
       mustContainError(
         "lettingAvailability-0",
         messages("error.commercialLettingAvailability.welsh.range", 2024.toString, 365),
@@ -121,13 +119,12 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for empty input" in {
-
       val formData = Map("lettingAvailability-1" -> "")
 
-      val form =
-        CommercialLettingAvailabilityWelshForm
-          .commercialLettingAvailabilityWelshForm(years)(using sessionRequest, messages)
-          .bind(formData)
+      val form = CommercialLettingAvailabilityWelshForm
+        .commercialLettingAvailabilityWelshForm(years)(using sessionRequest, messages)
+        .bind(formData)
+
       mustContainError(
         "lettingAvailability-1",
         messages("error.commercialLettingAvailability.welsh.required", 2023.toString),
@@ -136,20 +133,18 @@ class CommercialLettingAvailabilityWelshControllerSpec extends TestBaseSpec:
     }
 
     "return 400 and error message for invalid number" in {
-
       val formData = Map("lettingAvailability-2" -> "366")
 
-      val form =
-        CommercialLettingAvailabilityWelshForm
-          .commercialLettingAvailabilityWelshForm(years)(using sessionRequest, messages)
-          .bind(formData)
+      val form = CommercialLettingAvailabilityWelshForm
+        .commercialLettingAvailabilityWelshForm(years)(using sessionRequest, messages)
+        .bind(formData)
+
       mustContainError(
         "lettingAvailability-2",
         messages("error.commercialLettingAvailability.welsh.range", 2022.toString, 365),
         form
       )
     }
-
   }
 
   "LettingAvailability" should {

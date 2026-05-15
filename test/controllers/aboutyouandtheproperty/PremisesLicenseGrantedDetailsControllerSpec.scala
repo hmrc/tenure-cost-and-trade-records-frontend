@@ -17,6 +17,7 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
+import form.aboutyouandtheproperty.PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
@@ -29,29 +30,30 @@ import scala.language.reflectiveCalls
 class PremisesLicenseGrantedDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import form.aboutyouandtheproperty.PremisesLicenseGrantedDetailsForm.premisesLicenseGrantedInformationDetailsForm
 
   val mockAudit: Audit = mock[Audit]
 
   def premisesLicenseGrantedDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): PremisesLicenseGrantedDetailsController = PremisesLicenseGrantedDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    premisesLicenceGrantedDetailsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): PremisesLicenseGrantedDetailsController =
+    PremisesLicenseGrantedDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      premisesLicenceGrantedDetailsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def premisesLicenseGrantedDetailsControllerNone(): PremisesLicenseGrantedDetailsController = PremisesLicenseGrantedDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    premisesLicenceGrantedDetailsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def premisesLicenseGrantedDetailsControllerNone(): PremisesLicenseGrantedDetailsController =
+    PremisesLicenseGrantedDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      premisesLicenceGrantedDetailsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200 license granted details in the session" in {
@@ -71,12 +73,12 @@ class PremisesLicenseGrantedDetailsControllerSpec extends TestBaseSpec:
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = premisesLicenseGrantedDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = premisesLicenseGrantedDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
 
     "Redirect when form data submitted" in {

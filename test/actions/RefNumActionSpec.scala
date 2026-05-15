@@ -17,7 +17,7 @@
 package actions
 
 import play.api.mvc.Results.*
-import play.api.mvc.{AnyContent, Result}
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import test.TCTRAppSpec
 

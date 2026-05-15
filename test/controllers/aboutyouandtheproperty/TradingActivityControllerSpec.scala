@@ -22,6 +22,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -29,29 +30,30 @@ import scala.language.reflectiveCalls
 class TradingActivityControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def tradingActivityController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): TradingActivityController = TradingActivityController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    tradingActivityView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): TradingActivityController =
+    TradingActivityController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      tradingActivityView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def tradingActivityControllerNone(): TradingActivityController = TradingActivityController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    tradingActivityView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def tradingActivityControllerNone(): TradingActivityController =
+    TradingActivityController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      tradingActivityView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
   "TradingActivityController controller" should {
     "return 200 trading activity in the session" in {
@@ -71,20 +73,20 @@ class TradingActivityControllerSpec extends TestBaseSpec:
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = tradingActivityController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = tradingActivityController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = tradingActivityController().submit(
-          FakeRequest(POST, "/")
-            .withFormUrlEncodedBody("tradingActivityQuestion" -> "yes", "tradingActivityDetails" -> "test")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+    "redirect when form data submitted" in {
+      val res = tradingActivityController().submit(
+        FakeRequest(POST, "/")
+          .withFormUrlEncodedBody("tradingActivityQuestion" -> "yes", "tradingActivityDetails" -> "test")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

@@ -23,31 +23,32 @@ import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def propertyCurrentlyUsedController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  ): PropertyCurrentlyUsedController = PropertyCurrentlyUsedController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    propertyCurrentlyUsedView,
-    preEnrichedActionRefiner(
-      aboutYouAndTheProperty = aboutYouAndTheProperty,
-      aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
-    ),
-    mockSessionRepo
-  )
+  ): PropertyCurrentlyUsedController =
+    PropertyCurrentlyUsedController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      propertyCurrentlyUsedView,
+      preEnrichedActionRefiner(
+        aboutYouAndTheProperty = aboutYouAndTheProperty,
+        aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
+      ),
+      mockSessionRepo
+    )
 
-  "PropertyCurrentlyUsedController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Property Currently Used with yes in the session" in {
       val result = propertyCurrentlyUsedController().show(fakeRequest)
       status(result)          shouldBe Status.OK
@@ -98,7 +99,6 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = propertyCurrentlyUsedController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )

@@ -23,6 +23,7 @@ import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -30,31 +31,32 @@ import scala.language.reflectiveCalls
 class BatteriesCapacityControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
 
   def batteriesCapacityController(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  ): BatteriesCapacityController = BatteriesCapacityController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    batteriesCapacityView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-    mockSessionRepo
-  )
+  ): BatteriesCapacityController =
+    BatteriesCapacityController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      batteriesCapacityView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
+      mockSessionRepo
+    )
 
-  def batteriesCapacityControllerNone(): BatteriesCapacityController = BatteriesCapacityController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    batteriesCapacityView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
-    mockSessionRepo
-  )
+  def batteriesCapacityControllerNone(): BatteriesCapacityController =
+    BatteriesCapacityController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      batteriesCapacityView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
+      mockSessionRepo
+    )
 
-  "GET / batteries capacity" should {
+  "GET /" should {
     "GET / return 200 about you in the session" in {
       val result = batteriesCapacityController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -74,7 +76,7 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec:
     }
   }
 
-  "SUBMIT / batteries capacity" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = batteriesCapacityController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -82,7 +84,7 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec:
       status(result) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = batteriesCapacityController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "batteriesCapacity" -> "test capacity"
@@ -92,7 +94,7 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec:
     }
   }
 
-  "generator capacity form" should {
+  "Generator capacity form" should {
     "error if  value is missing" in {
       val empty = baseFormData.updated(TestData.errorKey.batteriesCapacity, "")
       val form  = batteriesCapacityForm.bind(empty)

@@ -51,110 +51,112 @@ class ContactDetailsQuestionControllerSpec extends TestBaseSpec with JsoupHelper
         repository
       )
 
-  "the ContactDetailsQuestion controller" when {
-    "handling GET /"                   should {
-      "reply 200 with an empty form" in new ControllerFixture {
-        val result: Future[Result] = controller.show(fakeRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
-        val page: Document = contentAsJsoup(result)
-        page.heading                        shouldBe "contactDetailsQuestion.heading"
-        page.backLink                       shouldBe routes.AboutYouController.show().url
-        page.radios("contactDetailsQuestion") should haveNoneChecked
-      }
-      "reply 200 with a pre-filled form" in new ControllerFixture(
-        aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(AnswerYes)))
-      ) {
-        val result: Future[Result] = controller.show(fakeRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
-        val page: Document = contentAsJsoup(result)
-        page.heading                        shouldBe "contactDetailsQuestion.heading"
-        page.backLink                       shouldBe routes.AboutYouController.show().url
-        page.radios("contactDetailsQuestion") should haveChecked("yes")
-      }
+  "GET /" should {
+    "reply 200 with an empty form" in new ControllerFixture {
+      val result: Future[Result] = controller.show(fakeRequest)
+      status(result)            shouldBe OK
+      contentType(result).value shouldBe HTML
+      charset(result).value     shouldBe UTF8
 
-      "GET / return HTML" in new ControllerFixture {
-        val result: Future[Result] = controller.show(fakeRequest)
-        contentType(result)     shouldBe Some("text/html")
-        Helpers.charset(result) shouldBe Some("utf-8")
-      }
-
-      "GET / return 200 no contact details in the session" in new ControllerFixture(aboutYouAndTheProperty = None) {
-        val result: Future[Result] = controller.show(fakeRequest)
-        status(result)          shouldBe OK
-        contentType(result)     shouldBe Some("text/html")
-        Helpers.charset(result) shouldBe Some("utf-8")
-      }
-
-      "return correct backLink when 'from=TL' query param is present" in new ControllerFixture {
-        val result: Future[Result] = controller.show()(FakeRequest(GET, "/path?from=TL"))
-        contentAsString(result) should include(controllers.routes.TaskListController.show.url)
-      }
-
-      "SUBMIT /" should {
-        "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
-          val res: Future[Result] = controller.submit(
-            FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-          )
-          status(res) shouldBe BAD_REQUEST
-        }
-      }
-
-      "Redirect when form data submitted" in new ControllerFixture {
-        val res: Future[Result] = controller.submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "contactDetailsQuestion" -> "yes"
-          )
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+      val page: Document = contentAsJsoup(result)
+      page.heading                        shouldBe "contactDetailsQuestion.heading"
+      page.backLink                       shouldBe routes.AboutYouController.show().url
+      page.radios("contactDetailsQuestion") should haveNoneChecked
     }
-    "handling POST /"                  should {
-      "reply 404 if the submitted data is invalid" in new ControllerFixture {
-        val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
-            "contactDetailsQuestion" -> "" // missing
-          )
-        )
-        status(result) shouldBe BAD_REQUEST
-        val page: Document         = contentAsJsoup(result)
-        page.error("contactDetailsQuestion") shouldBe "error.contactDetailsQuestion.missing"
-      }
-      "reply 303 redirect to the address lookup page" in new ControllerFixture {
-        val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
-            "contactDetailsQuestion" -> "yes"
-          )
-        )
-        status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/on-ramp"
-        val session: ArgumentCaptor[Session] = captor[Session]
-        verify(repository, once).saveOrUpdate(session.capture())(using any)
-        session.getValue.aboutYouAndTheProperty.value.altDetailsQuestion.value shouldBe AnswerYes
-      }
+
+    "reply 200 with a pre-filled form" in new ControllerFixture(
+      aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(AnswerYes)))
+    ) {
+      val result: Future[Result] = controller.show(fakeRequest)
+      status(result)            shouldBe OK
+      contentType(result).value shouldBe HTML
+      charset(result).value     shouldBe UTF8
+
+      val page: Document = contentAsJsoup(result)
+      page.heading                        shouldBe "contactDetailsQuestion.heading"
+      page.backLink                       shouldBe routes.AboutYouController.show().url
+      page.radios("contactDetailsQuestion") should haveChecked("yes")
     }
-    "retrieving the confirmed address" should {
-      "reply 303 redirect to the next page" in new ControllerFixture {
-        val result: Future[Result] = controller.addressLookupCallback("confirmedAddress")(fakeRequest)
-        status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.AboutThePropertyController.show().url
 
-        val id: ArgumentCaptor[String] = captor[String]
-        verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
-        id.getValue shouldBe "confirmedAddress"
+    "GET / return HTML" in new ControllerFixture {
+      val result: Future[Result] = controller.show(fakeRequest)
+      contentType(result)     shouldBe Some("text/html")
+      Helpers.charset(result) shouldBe Some("utf-8")
+    }
 
-        val session: ArgumentCaptor[Session] = captor[Session]
-        verify(repository, once).saveOrUpdate(session)(using any)
-        session.getValue.aboutYouAndTheProperty.value.alternativeContactAddress.value shouldBe Address(
-          buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
-          street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
-          town = addressLookupConfirmedAddress.address.lines.get.last,
-          county = None,
-          postcode = addressLookupConfirmedAddress.address.postcode.get
+    "GET / return 200 no contact details in the session" in new ControllerFixture(aboutYouAndTheProperty = None) {
+      val result: Future[Result] = controller.show(fakeRequest)
+      status(result)          shouldBe OK
+      contentType(result)     shouldBe Some("text/html")
+      Helpers.charset(result) shouldBe Some("utf-8")
+    }
+
+    "return correct backLink when 'from=TL' query param is present" in new ControllerFixture {
+      val result: Future[Result] = controller.show()(FakeRequest(GET, "/path?from=TL"))
+      contentAsString(result) should include(controllers.routes.TaskListController.show.url)
+    }
+  }
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
+      val res: Future[Result] = controller.submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "edirect when form data submitted" in new ControllerFixture {
+      val res: Future[Result] = controller.submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "contactDetailsQuestion" -> "yes"
         )
-      }
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "reply 404 if the submitted data is invalid" in new ControllerFixture {
+      val result: Future[Result] = controller.submit(
+        fakePostRequest.withFormUrlEncodedBody(
+          "contactDetailsQuestion" -> "" // missing
+        )
+      )
+      status(result) shouldBe BAD_REQUEST
+      val page: Document         = contentAsJsoup(result)
+      page.error("contactDetailsQuestion") shouldBe "error.contactDetailsQuestion.missing"
+    }
+
+    "reply 303 redirect to the address lookup page" in new ControllerFixture {
+      val result: Future[Result] = controller.submit(
+        fakePostRequest.withFormUrlEncodedBody(
+          "contactDetailsQuestion" -> "yes"
+        )
+      )
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe "/on-ramp"
+      val session: ArgumentCaptor[Session] = captor[Session]
+      verify(repository, once).saveOrUpdate(session.capture())(using any)
+      session.getValue.aboutYouAndTheProperty.value.altDetailsQuestion.value shouldBe AnswerYes
+    }
+  }
+
+  "addressLookupCallback" should {
+    "reply 303 redirect to the next page" in new ControllerFixture {
+      val result: Future[Result] = controller.addressLookupCallback("confirmedAddress")(fakeRequest)
+      status(result)                 shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe routes.AboutThePropertyController.show().url
+
+      val id: ArgumentCaptor[String] = captor[String]
+      verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
+      id.getValue shouldBe "confirmedAddress"
+
+      val session: ArgumentCaptor[Session] = captor[Session]
+      verify(repository, once).saveOrUpdate(session)(using any)
+      session.getValue.aboutYouAndTheProperty.value.alternativeContactAddress.value shouldBe Address(
+        buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
+        street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
+        town = addressLookupConfirmedAddress.address.lines.get.last,
+        county = None,
+        postcode = addressLookupConfirmedAddress.address.postcode.get
+      )
     }
   }

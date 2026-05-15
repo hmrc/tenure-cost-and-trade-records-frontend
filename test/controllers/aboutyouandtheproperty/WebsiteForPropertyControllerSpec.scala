@@ -18,11 +18,13 @@ package controllers.aboutyouandtheproperty
 
 import connectors.Audit
 import form.Errors
+import form.aboutyouandtheproperty.WebsiteForPropertyForm.*
 import models.ForType.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -30,43 +32,44 @@ import scala.language.reflectiveCalls
 class WebsiteForPropertyControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import form.aboutyouandtheproperty.WebsiteForPropertyForm.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def websiteForPropertyController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): WebsiteForPropertyController = WebsiteForPropertyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    websiteForPropertyView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): WebsiteForPropertyController =
+    WebsiteForPropertyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      websiteForPropertyView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def websiteForPropertyController6030(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyBlank)
-  ): WebsiteForPropertyController = WebsiteForPropertyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    websiteForPropertyView,
-    preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): WebsiteForPropertyController =
+    WebsiteForPropertyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      websiteForPropertyView,
+      preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def websiteForPropertyController6045(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyBlank)
-  ): WebsiteForPropertyController = WebsiteForPropertyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    websiteForPropertyView,
-    preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): WebsiteForPropertyController =
+    WebsiteForPropertyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      websiteForPropertyView,
+      preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   "WebsiteForProperty controller" should {
     "GET / return 200 website present in session" in {
@@ -102,19 +105,19 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show().url
       )
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = websiteForPropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = websiteForPropertyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = websiteForPropertyController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("buildingOperatingHaveAWebsite" -> "no")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+    "redirect when form data submitted" in {
+      val res = websiteForPropertyController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("buildingOperatingHaveAWebsite" -> "no")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

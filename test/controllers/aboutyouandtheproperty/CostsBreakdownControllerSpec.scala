@@ -23,6 +23,7 @@ import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -30,31 +31,32 @@ import scala.language.reflectiveCalls
 class CostsBreakdownControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
 
   def costsBreakdownController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): CostsBreakdownController = CostsBreakdownController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    costsBreakdownView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): CostsBreakdownController =
+    CostsBreakdownController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      costsBreakdownView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def costsBreakdownControllerNone(): CostsBreakdownController = CostsBreakdownController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    costsBreakdownView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def costsBreakdownControllerNone(): CostsBreakdownController =
+    CostsBreakdownController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      costsBreakdownView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "GET / costs breakdown" should {
+  "GET /" should {
     "GET / return 200 about you in the session" in {
       val result = costsBreakdownController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -74,7 +76,7 @@ class CostsBreakdownControllerSpec extends TestBaseSpec:
     }
   }
 
-  "SUBMIT / costs breakdown" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = costsBreakdownController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -92,7 +94,7 @@ class CostsBreakdownControllerSpec extends TestBaseSpec:
     }
   }
 
-  "costs breakdown form" should {
+  "Costs breakdown form" should {
     "error if  value is missing" in {
       val empty = baseFormData.updated(TestData.errorKey.costsBreakdown, "")
       val form  = costsBreakdownForm.bind(empty)

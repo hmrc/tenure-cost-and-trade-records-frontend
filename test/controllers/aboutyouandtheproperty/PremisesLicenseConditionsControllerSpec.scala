@@ -17,10 +17,12 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
+import form.aboutyouandtheproperty.PremisesLicenseConditionsForm.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -28,43 +30,44 @@ import scala.language.reflectiveCalls
 class PremisesLicenseConditionsControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import form.aboutyouandtheproperty.PremisesLicenseConditionsForm.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def premisesLicenseController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): PremisesLicenseConditionsController = PremisesLicenseConditionsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    premisesLicensableView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): PremisesLicenseConditionsController =
+    PremisesLicenseConditionsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      premisesLicensableView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def premisesLicenseControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): PremisesLicenseConditionsController = PremisesLicenseConditionsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    premisesLicensableView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): PremisesLicenseConditionsController =
+    PremisesLicenseConditionsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      premisesLicensableView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def premisesLicenseControllerNone(): PremisesLicenseConditionsController = PremisesLicenseConditionsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    premisesLicensableView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def premisesLicenseControllerNone(): PremisesLicenseConditionsController =
+    PremisesLicenseConditionsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      premisesLicensableView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "Premises licence conditions controller" should {
+  "GET /" should {
     "GET / return 200 license conditions yes in the session" in {
       val result = premisesLicenseController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -98,20 +101,19 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec:
         controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
       )
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = premisesLicenseController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = premisesLicenseController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = premisesLicenseController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("premisesLicenseConditions" -> "yes")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
-
+    "Redirect when form data submitted" in {
+      val res = premisesLicenseController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("premisesLicenseConditions" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

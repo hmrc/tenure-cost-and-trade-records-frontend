@@ -35,25 +35,27 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec:
 
   def licensableActivitiesDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): LicensableActivitiesDetailsController = LicensableActivitiesDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    licensableActivitiesDetailsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): LicensableActivitiesDetailsController =
+    LicensableActivitiesDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      licensableActivitiesDetailsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def licensableActivitiesDetailsControllerNone(): LicensableActivitiesDetailsController = LicensableActivitiesDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    licensableActivitiesDetailsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def licensableActivitiesDetailsControllerNone(): LicensableActivitiesDetailsController =
+    LicensableActivitiesDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      licensableActivitiesDetailsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "Licensable activities details controller" should {
+  "GET /" should {
     "GET / return 200 licensable activities details in the session" in {
       val result = licensableActivitiesDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -71,21 +73,21 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec:
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = licensableActivitiesDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = licensableActivitiesDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = licensableActivitiesDetailsController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "licensableActivitiesDetails" -> "Test content"
-          )
+    "Redirect when form data submitted" in {
+      val res = licensableActivitiesDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "licensableActivitiesDetails" -> "Test content"
         )
-        status(res) shouldBe SEE_OTHER
-      }
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 

@@ -35,36 +35,39 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec:
 
   def aboutThePropertyStringController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYesString)
-  ): AboutThePropertyStringController = AboutThePropertyStringController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    aboutThePropertyStringView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): AboutThePropertyStringController =
+    AboutThePropertyStringController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      aboutThePropertyStringView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def aboutThePropertyStringControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNoString)
-  ): AboutThePropertyStringController = AboutThePropertyStringController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    aboutThePropertyStringView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): AboutThePropertyStringController =
+    AboutThePropertyStringController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      aboutThePropertyStringView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def aboutThePropertyStringControllerNone(): AboutThePropertyStringController = AboutThePropertyStringController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    aboutThePropertyStringView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def aboutThePropertyStringControllerNone(): AboutThePropertyStringController =
+    AboutThePropertyStringController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      aboutThePropertyStringView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "About the property controller" should {
+  "GET /" should {
     "GET / return 200 about the property string with yes in the session" in {
       val result = aboutThePropertyStringController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -119,10 +122,9 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec:
       )
       status(res) shouldBe SEE_OTHER
     }
-
   }
 
-  "property currently used string form" should {
+  "Property currently used string form" should {
     "error if choice is missing " in {
       val formData = baseFormData - errorKey.propertyCurrentlyUsedString
       val form     = aboutThePropertyStringForm.bind(formData)
