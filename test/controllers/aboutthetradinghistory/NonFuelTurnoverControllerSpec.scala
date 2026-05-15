@@ -29,14 +29,15 @@ class NonFuelTurnoverControllerSpec extends TestBaseSpec:
 
   def nonFuelTurnoverController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ): NonFuelTurnoverController = NonFuelTurnoverController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    turnover6020View,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): NonFuelTurnoverController =
+    NonFuelTurnoverController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      turnover6020View,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "NonFuelTurnoverController" should {
     "return 200" in {

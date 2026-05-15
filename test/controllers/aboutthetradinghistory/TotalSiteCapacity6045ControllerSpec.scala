@@ -28,17 +28,16 @@ class TotalSiteCapacity6045ControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def totalSiteCapacity6045Controller(
-    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
-      prefilledAboutTheTradingHistoryPartOne
+    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
+  ): TotalSiteCapacity6045Controller =
+    TotalSiteCapacity6045Controller(
+      totalSiteCapacity6045View,
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): TotalSiteCapacity6045Controller = TotalSiteCapacity6045Controller(
-    totalSiteCapacity6045View,
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
   "TotalSiteCapacity6045Controller GET /" should {
     "return 200 and HTML with is parking rent paid separately is present in session" in {
@@ -67,7 +66,6 @@ class TotalSiteCapacity6045ControllerSpec extends TestBaseSpec:
         controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show().url
       )
     }
-
   }
 
   "TotalSiteCapacity6045Controller SUBMIT /" should {

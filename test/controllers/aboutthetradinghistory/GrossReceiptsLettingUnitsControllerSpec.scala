@@ -26,8 +26,7 @@ import utils.TestBaseSpec
 class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec:
 
   private val previousPage = aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
-
-  private val nextPage = aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url
 
   val mockAudit: Audit = mock[Audit]
 

@@ -29,14 +29,15 @@ class TotalFuelSoldControllerSpec extends TestBaseSpec:
 
   def totalFuelSoldController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ): TotalFuelSoldController = TotalFuelSoldController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    totalFuelSoldView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): TotalFuelSoldController =
+    TotalFuelSoldController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      totalFuelSoldView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "Total fuel question controller" should {
     "return 200" in {
@@ -61,7 +62,6 @@ class TotalFuelSoldControllerSpec extends TestBaseSpec:
       val result = totalFuelSoldController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
-
   }
 
   "SUBMIT /" should {

@@ -39,6 +39,7 @@ import scala.language.reflectiveCalls
 class FinancialYearEndControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
+
   val mockAudit: Audit = mock[Audit]
 
   trait ControllerFixture:
@@ -46,16 +47,17 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
     def financialYearEndController(
       forType: ForType = FOR6010,
       aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-    ): FinancialYearEndController = FinancialYearEndController(
-      stubMessagesControllerComponents(),
-      mockAudit,
-      aboutYourTradingHistoryNavigator,
-      financialYearEndView,
-      preEnrichedActionRefiner(forType = forType, aboutTheTradingHistory = aboutTheTradingHistory),
-      mockSessionRepo
-    )
+    ): FinancialYearEndController =
+      FinancialYearEndController(
+        stubMessagesControllerComponents(),
+        mockAudit,
+        aboutYourTradingHistoryNavigator,
+        financialYearEndView,
+        preEnrichedActionRefiner(forType = forType, aboutTheTradingHistory = aboutTheTradingHistory),
+        mockSessionRepo
+      )
 
-  "About your trading history controller" should {
+  "GET /" should {
     "return 200" in new ControllerFixture {
       val result: Future[Result] = financialYearEndController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -66,12 +68,12 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
-        val res: Future[Result] = financialYearEndController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
+      val res: Future[Result] = financialYearEndController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
   }
 
@@ -151,8 +153,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
         .thenReturn(Future.unit)
 
       // Act
-      val result: Future[Result] =
-        financialYearEndController(FOR6030, Some(prefilledAboutYourTradingHistory6030)).submit(sessionRequest)
+      val result: Future[Result] = financialYearEndController(FOR6030, Some(prefilledAboutYourTradingHistory6030)).submit(sessionRequest)
 
       // Assert
       status(result)                 shouldBe SEE_OTHER
@@ -172,8 +173,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
         .thenReturn(Future.unit)
 
       // Act
-      val result: Future[Result] =
-        financialYearEndController(FOR6020, Some(prefilledAboutYourTradingHistory6020)).submit(sessionRequest)
+      val result: Future[Result] = financialYearEndController(FOR6020, Some(prefilledAboutYourTradingHistory6020)).submit(sessionRequest)
 
       // Assert
       status(result)                 shouldBe SEE_OTHER
@@ -193,8 +193,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
       when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
-      val result: Future[Result] =
-        financialYearEndController(session6045.forType, session6045.aboutTheTradingHistory).submit(sessionRequest)
+      val result: Future[Result] = financialYearEndController(session6045.forType, session6045.aboutTheTradingHistory).submit(sessionRequest)
 
       status(result)                 shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
@@ -213,8 +212,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
       when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
-      val result: Future[Result] =
-        financialYearEndController(session6048.forType, session6048.aboutTheTradingHistory).submit(sessionRequest)
+      val result: Future[Result] = financialYearEndController(session6048.forType, session6048.aboutTheTradingHistory).submit(sessionRequest)
 
       status(result)                 shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
@@ -233,8 +231,7 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
       when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
-      val result: Future[Result] =
-        financialYearEndController(session6076.forType, session6076.aboutTheTradingHistory).submit(sessionRequest)
+      val result: Future[Result] = financialYearEndController(session6076.forType, session6076.aboutTheTradingHistory).submit(sessionRequest)
 
       status(result)                 shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url

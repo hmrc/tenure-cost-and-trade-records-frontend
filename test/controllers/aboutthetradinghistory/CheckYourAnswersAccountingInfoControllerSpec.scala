@@ -35,20 +35,21 @@ class CheckYourAnswersAccountingInfoControllerSpec extends TestBaseSpec:
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: ForType = FOR6045,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ): CheckYourAnswersAccountingInfoController = CheckYourAnswersAccountingInfoController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    checkYourAnswersAccountingInfoView,
-    preEnrichedActionRefiner(
-      aboutTheTradingHistory = aboutTheTradingHistory,
-      aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
-      forType = forType
-    ),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAccountingInfoController =
+    CheckYourAnswersAccountingInfoController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      checkYourAnswersAccountingInfoView,
+      preEnrichedActionRefiner(
+        aboutTheTradingHistory = aboutTheTradingHistory,
+        aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
+        forType = forType
+      ),
+      mockSessionRepo
+    )
 
-  "CheckYourAnswersAccountingInfoController" should {
+  "GET /" should {
     "return 200" in {
       val result = controller().show()(FakeRequest())
       status(result) shouldBe Status.OK
@@ -76,126 +77,123 @@ class CheckYourAnswersAccountingInfoControllerSpec extends TestBaseSpec:
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       )
     }
+  }
 
-    "SUBMIT /" should {
-      "return redirect 400 for empty request" in {
-        val res = controller().submit()(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "return redirect 400 for empty request" in {
+      val res = controller().submit()(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
 
-    "SUBMIT with correct data" should {
-      "return 303 " in {
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "isFinancialYearsCorrect" -> "true"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6045YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = controller().submit()(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.StaticCaravansController.show().url)
-      }
-
-      "return to CYA " in {
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "isFinancialYearsCorrect" -> "true",
-            "from"                    -> "CYA"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6045YesSession,
-            requestWithForm
-          )
-        val result          = controller().submit()(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    "return 303 for correct data" in {
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "isFinancialYearsCorrect" -> "true"
         )
-      }
-
-      "redirect to the next page for 6045 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearsCorrect" -> "true"
-          )
-        val session6045     = aboutYourTradingHistory6045YesSession
-        val sessionRequest  = SessionRequest(session6045, requestWithForm)
-
-        val result =
-          controller(session6045.aboutTheTradingHistory, session6045.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.StaticCaravansController.show().url
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6045YesSession,
+          requestWithForm
         )
-      }
+      val result          = controller().submit()(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(aboutthetradinghistory.routes.StaticCaravansController.show().url)
+    }
 
-      "redirect to CYA for 6045 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearsCorrect" -> "true",
-            "from"                    -> "CYA"
-          )
-        val session6045     = aboutYourTradingHistory6045YesSession
-        val sessionRequest  = SessionRequest(session6045, requestWithForm)
-
-        val result =
-          controller(session6045.aboutTheTradingHistory, session6045.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    "return to CYA " in {
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "isFinancialYearsCorrect" -> "true",
+          "from"                    -> "CYA"
         )
-      }
-
-      "redirect to the next page for 6048 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearsCorrect" -> "true"
-          )
-        val session6048     = aboutYourTradingHistory6048YesSession
-        val sessionRequest  = SessionRequest(session6048, requestWithForm)
-
-        val result =
-          controller(session6048.aboutTheTradingHistory, session6048.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.Income6048Controller.show.url
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6045YesSession,
+          requestWithForm
         )
-      }
+      val result          = controller().submit()(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
 
-      "redirect to CYA for 6048 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearsCorrect" -> "true",
-            "from"                    -> "CYA"
-          )
-        val session6048     = aboutYourTradingHistory6048YesSession
-        val sessionRequest  = SessionRequest(session6048, requestWithForm)
-
-        val result =
-          controller(session6048.aboutTheTradingHistory, session6048.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    "redirect to the next page for 6045 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearsCorrect" -> "true"
         )
-      }
+      val session6045     = aboutYourTradingHistory6045YesSession
+      val sessionRequest  = SessionRequest(session6045, requestWithForm)
 
+      val result =
+        controller(session6045.aboutTheTradingHistory, session6045.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.StaticCaravansController.show().url
+      )
+    }
+
+    "redirect to CYA for 6045 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearsCorrect" -> "true",
+          "from"                    -> "CYA"
+        )
+      val session6045     = aboutYourTradingHistory6045YesSession
+      val sessionRequest  = SessionRequest(session6045, requestWithForm)
+
+      val result =
+        controller(session6045.aboutTheTradingHistory, session6045.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "redirect to the next page for 6048 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearsCorrect" -> "true"
+        )
+      val session6048     = aboutYourTradingHistory6048YesSession
+      val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+      val result =
+        controller(session6048.aboutTheTradingHistory, session6048.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.Income6048Controller.show.url
+      )
+    }
+
+    "redirect to CYA for 6048 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearsCorrect" -> "true",
+          "from"                    -> "CYA"
+        )
+      val session6048     = aboutYourTradingHistory6048YesSession
+      val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+      val result =
+        controller(session6048.aboutTheTradingHistory, session6048.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
     }
 
   }

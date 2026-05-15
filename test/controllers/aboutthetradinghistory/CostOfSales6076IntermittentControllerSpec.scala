@@ -67,7 +67,6 @@ class CostOfSales6076IntermittentControllerSpec extends TestBaseSpec:
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       )
     }
-
   }
 
   "SUBMIT /" should {

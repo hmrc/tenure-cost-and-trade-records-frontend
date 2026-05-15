@@ -30,16 +30,17 @@ class TurnoverControllerSpec extends TestBaseSpec:
 
   def turnoverController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ): TurnoverController = TurnoverController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    turnoverView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): TurnoverController =
+    TurnoverController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      turnoverView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
-  "About your trading history controller" should {
+  "GET /" should {
     "return 200" in {
       val result = turnoverController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -64,11 +65,11 @@ class TurnoverControllerSpec extends TestBaseSpec:
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
       )
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = turnoverController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = turnoverController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
   }

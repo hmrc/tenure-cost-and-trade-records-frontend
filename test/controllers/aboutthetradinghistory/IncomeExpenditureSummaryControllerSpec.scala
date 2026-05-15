@@ -26,13 +26,14 @@ class IncomeExpenditureSummaryControllerSpec extends TestBaseSpec:
 
   def incomeExpenditureSummaryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ): IncomeExpenditureSummaryController = IncomeExpenditureSummaryController(
-    stubMessagesControllerComponents(),
-    aboutYourTradingHistoryNavigator,
-    incomeExpenditureSummaryView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): IncomeExpenditureSummaryController =
+    IncomeExpenditureSummaryController(
+      stubMessagesControllerComponents(),
+      aboutYourTradingHistoryNavigator,
+      incomeExpenditureSummaryView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {

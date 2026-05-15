@@ -27,10 +27,8 @@ class FixedCosts6048ControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   private val previousPage = aboutthetradinghistory.routes.Income6048Controller.show.url
-
-  private val nextPage = aboutthetradinghistory.routes.AccountingCosts6048Controller.show.url
-
-  private val cyaPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.AccountingCosts6048Controller.show.url
+  private val cyaPage      = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
   def fixedCosts6048Controller: FixedCosts6048Controller =
     FixedCosts6048Controller(

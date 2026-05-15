@@ -29,12 +29,9 @@ class StaticCaravansControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  private val previousPage =
-    aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-
+  private val previousPage  = aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
   private val nextPageOnYes = aboutthetradinghistory.routes.GrossReceiptsCaravanFleetHireController.show().url
-
-  private val nextPageOnNo = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+  private val nextPageOnNo  = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
   def staticCaravansController: StaticCaravansController =
     StaticCaravansController(
@@ -63,7 +60,6 @@ class StaticCaravansControllerSpec extends TestBaseSpec:
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include "/check-your-answers-about-the-trading-history"
-
     }
 
     "render back link to CYA if come from CYA" in {

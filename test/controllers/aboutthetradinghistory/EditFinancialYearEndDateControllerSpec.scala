@@ -20,8 +20,8 @@ import actions.SessionRequest
 import connectors.Audit
 import controllers.aboutthetradinghistory
 import models.ForType.*
-import models.{ForType, Session}
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
+import models.{ForType, Session}
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
@@ -35,18 +35,19 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec:
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: ForType = FOR6010,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = None
-  ): EditFinancialYearEndDateController = EditFinancialYearEndDateController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    editFinancialYearEndDateView,
-    preEnrichedActionRefiner(
-      aboutTheTradingHistory = aboutTheTradingHistory,
-      aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
-      forType = forType
-    ),
-    mockSessionRepo
-  )
+  ): EditFinancialYearEndDateController =
+    EditFinancialYearEndDateController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      editFinancialYearEndDateView,
+      preEnrichedActionRefiner(
+        aboutTheTradingHistory = aboutTheTradingHistory,
+        aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
+        forType = forType
+      ),
+      mockSessionRepo
+    )
 
   def editFinancialYearEndDateController(session: Session): EditFinancialYearEndDateController =
     editFinancialYearEndDateController(
@@ -55,7 +56,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec:
       session.aboutTheTradingHistoryPartOne
     )
 
-  "EditFinancialYearEndDateController" should {
+  "GET /" should {
     "return 200" in {
       val result = editFinancialYearEndDateController().show(0)(FakeRequest())
       status(result) shouldBe Status.OK
@@ -82,267 +83,263 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec:
       ).show(0)(FakeRequest())
       status(result) shouldBe Status.OK
     }
+  }
 
-    "SUBMIT /" should {
-      "return redirect 400 for empty request" in {
-        val res = editFinancialYearEndDateController().submit(0)(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "return redirect 400 for empty request" in {
+      val res = editFinancialYearEndDateController().submit(0)(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
 
-    "SUBMIT with correct data" should {
-      "return 303" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "2",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6010YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = editFinancialYearEndDateController().submit(index)(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+    "return 303 for correct data" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "2",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022"
         )
-      }
-
-      "return to CYA" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "2",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022",
-            "from"                   -> "CYA"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6010YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = editFinancialYearEndDateController().submit(index)(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "return 303 for 6020" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "2",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6020YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = editFinancialYearEndDateController(
-          aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
-          forType = FOR6020
-        ).submit(index)(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
-        )
-      }
-
-      "return to CYA for 6020" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "2",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022",
-            "from"                   -> "CYA"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6020YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = editFinancialYearEndDateController(
-          aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
-          forType = FOR6020
-        ).submit(index)(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "return 303 for 6030" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "2",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6030YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = editFinancialYearEndDateController(
-          aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
-          forType = FOR6030
-        ).submit(index)(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
-        )
-      }
-
-      "return to CYA for 6030" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "2",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022",
-            "from"                   -> "CYA"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6030YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = editFinancialYearEndDateController(
-          aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
-          forType = FOR6030
-        ).submit(index)(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "redirect to the next page for 6045" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "22",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022"
-          )
-        val session6045     = aboutYourTradingHistory6045YesSession
-        val sessionRequest  = SessionRequest(session6045, requestWithForm)
-
-        val result = editFinancialYearEndDateController(session6045).submit(index)(sessionRequest)
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
-        )
-      }
-
-      "redirect to CYA for 6045" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "22",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022",
-            "from"                   -> "CYA"
-          )
-        val session6045     = aboutYourTradingHistory6045YesSession
-        val sessionRequest  = SessionRequest(session6045, requestWithForm)
-
-        val result = editFinancialYearEndDateController(session6045).submit(index)(sessionRequest)
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "redirect to the next page for 6048" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "22",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022"
-          )
-        val session6048     = aboutYourTradingHistory6048YesSession
-        val sessionRequest  = SessionRequest(session6048, requestWithForm)
-
-        val result = editFinancialYearEndDateController(session6048).submit(index)(sessionRequest)
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
-        )
-      }
-
-      "redirect to CYA for 6048" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "22",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022",
-            "from"                   -> "CYA"
-          )
-        val session6048     = aboutYourTradingHistory6048YesSession
-        val sessionRequest  = SessionRequest(session6048, requestWithForm)
-
-        val result = editFinancialYearEndDateController(session6048).submit(index)(sessionRequest)
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "redirect to the next page for 6076" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "2",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022"
-          )
-        val session6076     = aboutYourTradingHistory6076YesSession
-        val sessionRequest  = SessionRequest(session6076, requestWithForm)
-
-        val result = editFinancialYearEndDateController(session6076).submit(index)(sessionRequest)
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
-        )
-      }
-
-      "redirect to CYA for 6076" in {
-        val index           = 0
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "financialYearEnd.day"   -> "2",
-            "financialYearEnd.month" -> "2",
-            "financialYearEnd.year"  -> "2022",
-            "from"                   -> "CYA"
-          )
-        val session6076     = aboutYourTradingHistory6076YesSession
-        val sessionRequest  = SessionRequest(session6076, requestWithForm)
-
-        val result = editFinancialYearEndDateController(session6076).submit(index)(sessionRequest)
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6010YesSession,
+          requestWithForm
+        ) // aboutYourTradingHistory6010YesSession
+      val result          = editFinancialYearEndDateController().submit(index)(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+      )
     }
 
+    "return to CYA" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "2",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022",
+          "from"                   -> "CYA"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6010YesSession,
+          requestWithForm
+        ) // aboutYourTradingHistory6010YesSession
+      val result          = editFinancialYearEndDateController().submit(index)(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "return 303 for 6020" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "2",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6020YesSession,
+          requestWithForm
+        ) // aboutYourTradingHistory6010YesSession
+      val result          = editFinancialYearEndDateController(
+        aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
+        forType = FOR6020
+      ).submit(index)(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+      )
+    }
+
+    "return to CYA for 6020" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "2",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022",
+          "from"                   -> "CYA"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6020YesSession,
+          requestWithForm
+        ) // aboutYourTradingHistory6010YesSession
+      val result          = editFinancialYearEndDateController(
+        aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
+        forType = FOR6020
+      ).submit(index)(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "return 303 for 6030" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "2",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6030YesSession,
+          requestWithForm
+        ) // aboutYourTradingHistory6010YesSession
+      val result          = editFinancialYearEndDateController(
+        aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
+        forType = FOR6030
+      ).submit(index)(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+      )
+    }
+
+    "return to CYA for 6030" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "2",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022",
+          "from"                   -> "CYA"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6030YesSession,
+          requestWithForm
+        ) // aboutYourTradingHistory6010YesSession
+      val result          = editFinancialYearEndDateController(
+        aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
+        forType = FOR6030
+      ).submit(index)(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "redirect to the next page for 6045" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "22",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022"
+        )
+      val session6045     = aboutYourTradingHistory6045YesSession
+      val sessionRequest  = SessionRequest(session6045, requestWithForm)
+
+      val result = editFinancialYearEndDateController(session6045).submit(index)(sessionRequest)
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+      )
+    }
+
+    "redirect to CYA for 6045" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "22",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022",
+          "from"                   -> "CYA"
+        )
+      val session6045     = aboutYourTradingHistory6045YesSession
+      val sessionRequest  = SessionRequest(session6045, requestWithForm)
+
+      val result = editFinancialYearEndDateController(session6045).submit(index)(sessionRequest)
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "redirect to the next page for 6048" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "22",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022"
+        )
+      val session6048     = aboutYourTradingHistory6048YesSession
+      val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+      val result = editFinancialYearEndDateController(session6048).submit(index)(sessionRequest)
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+      )
+    }
+
+    "redirect to CYA for 6048" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "22",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022",
+          "from"                   -> "CYA"
+        )
+      val session6048     = aboutYourTradingHistory6048YesSession
+      val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+      val result = editFinancialYearEndDateController(session6048).submit(index)(sessionRequest)
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "redirect to the next page for 6076" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "2",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022"
+        )
+      val session6076     = aboutYourTradingHistory6076YesSession
+      val sessionRequest  = SessionRequest(session6076, requestWithForm)
+
+      val result = editFinancialYearEndDateController(session6076).submit(index)(sessionRequest)
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.FinancialYearEndDatesSummaryController.show().url
+      )
+    }
+
+    "redirect to CYA for 6076" in {
+      val index           = 0
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "financialYearEnd.day"   -> "2",
+          "financialYearEnd.month" -> "2",
+          "financialYearEnd.year"  -> "2022",
+          "from"                   -> "CYA"
+        )
+      val session6076     = aboutYourTradingHistory6076YesSession
+      val sessionRequest  = SessionRequest(session6076, requestWithForm)
+
+      val result = editFinancialYearEndDateController(session6076).submit(index)(sessionRequest)
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
   }

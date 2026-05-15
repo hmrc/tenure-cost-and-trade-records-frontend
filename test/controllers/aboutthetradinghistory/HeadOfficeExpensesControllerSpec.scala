@@ -70,7 +70,6 @@ class HeadOfficeExpensesControllerSpec extends TestBaseSpec:
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       )
     }
-
   }
 
   "SUBMIT /" should {

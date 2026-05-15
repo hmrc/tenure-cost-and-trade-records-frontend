@@ -57,7 +57,6 @@ class RallyAreasControllerSpec extends TestBaseSpec:
       val content = contentAsString(result)
       content should include("/check-your-answers-tenting-pitches")
     }
-
   }
 
   "SUBMIT /" should {

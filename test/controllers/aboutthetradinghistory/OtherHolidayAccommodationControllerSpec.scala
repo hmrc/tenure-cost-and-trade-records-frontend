@@ -37,14 +37,15 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec:
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  ): OtherHolidayAccommodationController = OtherHolidayAccommodationController(
-    otherHolidayAccommodationView,
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
+  ): OtherHolidayAccommodationController =
+    OtherHolidayAccommodationController(
+      otherHolidayAccommodationView,
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
+    )
 
   "OtherHolidayAccommodationController GET /" should {
     "return 200 and HTML with is parking rent paid separately is present in session" in {
@@ -66,7 +67,6 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec:
       val result = otherHolidayAccommodationController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
-
   }
 
   "OtherHolidayAccommodationController SUBMIT /" should {

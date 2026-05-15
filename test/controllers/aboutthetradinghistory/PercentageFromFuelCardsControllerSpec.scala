@@ -29,14 +29,15 @@ class PercentageFromFuelCardsControllerSpec extends TestBaseSpec:
 
   def percentageFromFuelCards(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ): PercentageFromFuelCardsController = PercentageFromFuelCardsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    percentageFromFuelCardsView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): PercentageFromFuelCardsController =
+    PercentageFromFuelCardsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      percentageFromFuelCardsView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "Percentage from fuel cards controller" should {
     "return 200" in {

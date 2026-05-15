@@ -27,32 +27,35 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  def unusualCircumstancesController6015: UnusualCircumstancesController = UnusualCircumstancesController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    unusualCircumstancesView,
-    preEnrichedActionRefiner(forType = FOR6015),
-    mockSessionRepo
-  )
+  def unusualCircumstancesController6015: UnusualCircumstancesController =
+    UnusualCircumstancesController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      unusualCircumstancesView,
+      preEnrichedActionRefiner(forType = FOR6015),
+      mockSessionRepo
+    )
 
-  def unusualCircumstancesController6030: UnusualCircumstancesController = UnusualCircumstancesController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    unusualCircumstancesView,
-    preEnrichedActionRefiner(forType = FOR6030),
-    mockSessionRepo
-  )
+  def unusualCircumstancesController6030: UnusualCircumstancesController =
+    UnusualCircumstancesController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      unusualCircumstancesView,
+      preEnrichedActionRefiner(forType = FOR6030),
+      mockSessionRepo
+    )
 
-  def unusualCircumstancesControllerNone: UnusualCircumstancesController = UnusualCircumstancesController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    unusualCircumstancesView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = None),
-    mockSessionRepo
-  )
+  def unusualCircumstancesControllerNone: UnusualCircumstancesController =
+    UnusualCircumstancesController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      unusualCircumstancesView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = None),
+      mockSessionRepo
+    )
 
   "UnusualCircumstancesController GET /" should {
     "return 200 and HTML for 6015 with unusual circumstances in the session" in {
@@ -104,5 +107,4 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec:
         "/send-trade-and-cost-information/check-your-answers-about-the-trading-history"
       )
     }
-
   }

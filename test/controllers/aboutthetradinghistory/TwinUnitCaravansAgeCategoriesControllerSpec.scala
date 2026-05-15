@@ -27,8 +27,7 @@ import utils.TestBaseSpec
 class TwinUnitCaravansAgeCategoriesControllerSpec extends TestBaseSpec:
 
   private val previousPage = aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show().url
-
-  private val nextPage = aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show().url
 
   val mockAudit: Audit = mock[Audit]
 

@@ -32,17 +32,16 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def tentingPitchesOnSiteController(
-    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
-      prefilledAboutTheTradingHistoryPartOne
+    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
+  ): TentingPitchesOnSiteController =
+    TentingPitchesOnSiteController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      tentingPitchesOnSiteView,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo
     )
-  ): TentingPitchesOnSiteController = TentingPitchesOnSiteController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    tentingPitchesOnSiteView,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo
-  )
 
   "TentingPitchesOnSiteController GET /" should {
     "return 200 and HTML when data present in session" in {
@@ -71,7 +70,6 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec:
         controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
       )
     }
-
   }
 
   "TentingPitchesOnSiteController SUBMIT /" should {

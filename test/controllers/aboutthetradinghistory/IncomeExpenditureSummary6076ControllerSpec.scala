@@ -30,14 +30,15 @@ class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec:
 
   def controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ): IncomeExpenditureSummary6076Controller = IncomeExpenditureSummary6076Controller(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    incomeExpenditureSummary6076View,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo
-  )
+  ): IncomeExpenditureSummary6076Controller =
+    IncomeExpenditureSummary6076Controller(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      incomeExpenditureSummary6076View,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {

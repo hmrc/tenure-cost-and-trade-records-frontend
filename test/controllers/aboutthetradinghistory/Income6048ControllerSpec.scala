@@ -26,8 +26,7 @@ class Income6048ControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  private val previousPage =
-    aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+  private val previousPage = aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
   private val nextPage     = aboutthetradinghistory.routes.FixedCosts6048Controller.show.url
   private val cyaPage      = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
@@ -58,7 +57,6 @@ class Income6048ControllerSpec extends TestBaseSpec:
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include cyaPage
-
     }
 
     "render back link to CYA if come from CYA" in {

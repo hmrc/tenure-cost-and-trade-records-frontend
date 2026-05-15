@@ -29,25 +29,27 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec:
 
   def customerCreditAccountsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ): CustomerCreditAccountsController = CustomerCreditAccountsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    customerCreditAccountsView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): CustomerCreditAccountsController =
+    CustomerCreditAccountsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      customerCreditAccountsView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   def customerCreditAccountsControllerNoBunkered(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistoryNoBunkered)
-  ): CustomerCreditAccountsController = CustomerCreditAccountsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    customerCreditAccountsView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): CustomerCreditAccountsController =
+    CustomerCreditAccountsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      customerCreditAccountsView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "Customer credit account controller" should {
     "return 200" in {
@@ -83,7 +85,6 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec:
       val result = customerCreditAccountsController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
-
   }
 
   "SUBMIT /" should {

@@ -69,7 +69,6 @@ class OperationalExpensesControllerSpec extends TestBaseSpec:
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       )
     }
-
   }
 
   private def operationalExpensesForYear(idx: Int): Seq[(String, String)] =

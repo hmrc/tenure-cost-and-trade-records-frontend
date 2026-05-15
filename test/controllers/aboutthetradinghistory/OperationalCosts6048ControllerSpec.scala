@@ -27,10 +27,8 @@ class OperationalCosts6048ControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   private val previousPage = aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show.url
-
-  private val nextPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-
-  private val cyaPage = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+  private val cyaPage      = aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
 
   def operationalCosts6048Controller: OperationalCosts6048Controller =
     OperationalCosts6048Controller(
@@ -59,7 +57,6 @@ class OperationalCosts6048ControllerSpec extends TestBaseSpec:
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include cyaPage
-
     }
 
     "render back link to CYA if come from CYA" in {

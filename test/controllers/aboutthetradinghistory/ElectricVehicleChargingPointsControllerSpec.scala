@@ -29,16 +29,17 @@ class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec:
 
   def electricVehicleChargingPointsController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ): ElectricVehicleChargingPointsController = ElectricVehicleChargingPointsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    electricVehicleChargingPointsView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): ElectricVehicleChargingPointsController =
+    ElectricVehicleChargingPointsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      electricVehicleChargingPointsView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
-  "ElectricVehicleChargingPoints controller" should {
+  "GET /" should {
     "return 200" in {
       val result = electricVehicleChargingPointsController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -61,7 +62,6 @@ class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec:
       val result = electricVehicleChargingPointsController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
-
   }
 
   "SUBMIT /" should {
