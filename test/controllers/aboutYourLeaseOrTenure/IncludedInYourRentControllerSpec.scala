@@ -20,10 +20,6 @@ import connectors.Audit
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.data.Form
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class IncludedInYourRentControllerSpec extends TestBaseSpec:
@@ -34,16 +30,17 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec:
 
   def includedInYourRentController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): IncludedInYourRentController = IncludedInYourRentController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    includedInYourRentView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): IncludedInYourRentController =
+    IncludedInYourRentController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      includedInYourRentView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "IncludedInYourRentController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Included In Your Rent Details in the session" in {
       val result = includedInYourRentController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -71,13 +68,13 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec:
     }
   }
 
-  "IncludedInYourRentController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = includedInYourRentController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data includedInYourRent submitted" in {
+    "redirect when form data includedInYourRent submitted" in {
       val res = includedInYourRentController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "includedInYourRent[0]" -> "nondomesticRates",
@@ -89,7 +86,6 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec:
   }
 
   "Form validation" should {
-
     val baseData: Map[String, String] = Map(
       "includedInYourRent[0]" -> "vat"
     )

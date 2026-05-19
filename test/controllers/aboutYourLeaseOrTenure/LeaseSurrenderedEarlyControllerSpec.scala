@@ -18,9 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec:
@@ -29,22 +26,21 @@ class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec:
 
   def leaseSurrenderedEarlyController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): LeaseSurrenderedEarlyController =
+    LeaseSurrenderedEarlyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      leaseSurrenderedEarlyView,
+      preEnrichedActionRefiner(
+        aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+      ),
+      mockSessionRepo
     )
-  ): LeaseSurrenderedEarlyController = LeaseSurrenderedEarlyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    leaseSurrenderedEarlyView,
-    preEnrichedActionRefiner(
-      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
-      aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
-    ),
-    mockSessionRepo
-  )
 
-  "LeaseSurrenderedEarlyController GET /" should {
+  "GET /" should {
     "return 200 and HTML with additional disregarded yes in the session" in {
       val result = leaseSurrenderedEarlyController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -80,7 +76,7 @@ class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec:
     }
   }
 
-  "LeaseSurrenderedEarlyController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = leaseSurrenderedEarlyController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -88,7 +84,7 @@ class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = leaseSurrenderedEarlyController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("leaseSurrenderedEarly" -> "yes")
       )

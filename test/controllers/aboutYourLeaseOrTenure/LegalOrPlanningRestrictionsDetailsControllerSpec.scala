@@ -18,9 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec:
@@ -29,16 +26,17 @@ class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec:
 
   def legalOrPlanningRestrictionsDetailsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): LegalOrPlanningRestrictionsDetailsController = LegalOrPlanningRestrictionsDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    legalOrPlanningRestrictionsDetailsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-    mockSessionRepo
-  )
+  ): LegalOrPlanningRestrictionsDetailsController =
+    LegalOrPlanningRestrictionsDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      legalOrPlanningRestrictionsDetailsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
 
-  "LegalOrPlanningRestrictionsDetailsController GET" should {
+  "GET" should {
     "return 200 and HTML with legal or planing restrictions details in the session" in {
       val result = legalOrPlanningRestrictionsDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -61,7 +59,7 @@ class LegalOrPlanningRestrictionsDetailsControllerSpec extends TestBaseSpec:
     }
   }
 
-  "LegalOrPlanningRestrictionsDetailsController SUBMIT" should {
+  "SUBMIT" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = legalOrPlanningRestrictionsDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)

@@ -21,26 +21,19 @@ import form.aboutYourLeaseOrTenure.PropertyUpdatesForm.propertyUpdatesForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
-
-import scala.language.reflectiveCalls
 
 class PropertyUpdatesControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def propertyUpdateController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
   ): PropertyUpdatesController =
     PropertyUpdatesController(
       stubMessagesControllerComponents(),
@@ -55,7 +48,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "PropertyUpdatesController GET /" should {
+  "GET /" should {
     "return 200 and HTML with property updates in the session" in {
       val result = propertyUpdateController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -112,7 +105,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec:
     }
   }
 
-  "PropertyUpdatesController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = propertyUpdateController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -120,7 +113,7 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = propertyUpdateController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("propertyUpdates" -> "yes")
       )

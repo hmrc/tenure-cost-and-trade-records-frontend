@@ -30,6 +30,7 @@ import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
 class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
+
   import TestData.*
 
   val mockAudit: Audit = mock[Audit]
@@ -47,7 +48,7 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "PropertyUseLeasebackArrangementController GET /" should {
+  "GET /" should {
     "return 200 and HTML with property use lease back yes in the session" in {
       val result = propertyUseLeasebackAgreementController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -100,7 +101,7 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
     }
   }
 
-  "PropertyUseLeasebackArrangementController POST /" should {
+  "POST /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = propertyUseLeasebackAgreementController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -108,24 +109,22 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = propertyUseLeasebackAgreementController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("propertyUseLeasebackArrangement" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
 
-    "Trading Name own the property form" should {
-      "error if areYouThirdParty is missing" in {
-        val formData = baseFormData - propertyUseLeasebackArrangementErrorKey
-        val form     = propertyUseLeasebackArrangementForm.bind(formData)
+    "trading Name own the property form error if areYouThirdParty is missing" in {
+      val formData = baseFormData - propertyUseLeasebackArrangementErrorKey
+      val form     = propertyUseLeasebackArrangementForm.bind(formData)
 
-        mustContainError(
-          propertyUseLeasebackArrangementErrorKey,
-          "error.propertyUseLeasebackArrangement.missing",
-          form
-        )
-      }
+      mustContainError(
+        propertyUseLeasebackArrangementErrorKey,
+        "error.propertyUseLeasebackArrangement.missing",
+        form
+      )
     }
   }
 

@@ -19,9 +19,6 @@ package controllers.aboutYourLeaseOrTenure
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
@@ -30,19 +27,20 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): CheckYourAnswersAboutYourLeaseOrTenureController = CheckYourAnswersAboutYourLeaseOrTenureController(
-    stubMessagesControllerComponents(),
-    aboutYourLeaseOrTenureNavigator,
-    checkYourAnswersAboutLeaseAndTenureView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
-    ),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAboutYourLeaseOrTenureController =
+    CheckYourAnswersAboutYourLeaseOrTenureController(
+      stubMessagesControllerComponents(),
+      aboutYourLeaseOrTenureNavigator,
+      checkYourAnswersAboutLeaseAndTenureView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+        aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
+      ),
+      mockSessionRepo
+    )
 
-  "CheckYourAnswersAboutYourLeaseOrTenureController GET /" should {
+  "GET /" should {
     "return 200 and HTML with CYA and Legal Planning Restrictions (Yes) in the session" in {
       val result = cYAAboutYourLeaseOrTenureController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -141,7 +139,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
 
   }
 
-  "CheckYourAnswersAboutYourLeaseOrTenureController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = cYAAboutYourLeaseOrTenureController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -149,7 +147,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = cYAAboutYourLeaseOrTenureController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("checkYourAnswersLeaseOrTenure" -> "yes")
       )

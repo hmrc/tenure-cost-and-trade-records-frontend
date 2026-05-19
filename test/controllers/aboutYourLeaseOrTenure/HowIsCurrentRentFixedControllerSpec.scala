@@ -21,9 +21,6 @@ import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import org.jsoup.Jsoup
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec:
@@ -34,20 +31,21 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec:
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): HowIsCurrentRentFixedController = HowIsCurrentRentFixedController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    howIsCurrentRentFixedView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
-    ),
-    mockSessionRepo
-  )
+  ): HowIsCurrentRentFixedController =
+    HowIsCurrentRentFixedController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      howIsCurrentRentFixedView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+        aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
+      ),
+      mockSessionRepo
+    )
 
-  "HowIsCurrentRentFixedController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Rent Payable Vary On Quantity Of Beers Details Yes in the session for 6010" in {
       val result = howIsCurrentRentFixedController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -175,23 +173,23 @@ class HowIsCurrentRentFixedControllerSpec extends TestBaseSpec:
     }
   }
 
-  "HowIsCurrentRentFixedController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = howIsCurrentRentFixedController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
-  }
 
-  "Redirect when form data doesRentIncludeParking submitted" in {
-    val res = howIsCurrentRentFixedController().submit(
-      FakeRequest(POST, "/").withFormUrlEncodedBody(
-        "howIsCurrentRentFixed"    -> "newLeaseAgreement",
-        "rentActuallyAgreed.day"   -> "27",
-        "rentActuallyAgreed.month" -> "09",
-        "rentActuallyAgreed.year"  -> "2017"
+    "redirect when form data doesRentIncludeParking submitted" in {
+      val res = howIsCurrentRentFixedController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "howIsCurrentRentFixed"    -> "newLeaseAgreement",
+          "rentActuallyAgreed.day"   -> "27",
+          "rentActuallyAgreed.month" -> "09",
+          "rentActuallyAgreed.year"  -> "2017"
+        )
       )
-    )
-    status(res) shouldBe SEE_OTHER
+      status(res) shouldBe SEE_OTHER
+    }
   }

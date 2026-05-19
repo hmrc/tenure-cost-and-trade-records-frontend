@@ -19,13 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBeginForm.currentLeaseOrAgreementBeginForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-
-import scala.language.reflectiveCalls
 
 class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec:
 
@@ -35,16 +30,17 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec:
 
   def currentLeaseOrAgreementBeginController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): CurrentLeaseOrAgreementBeginController = CurrentLeaseOrAgreementBeginController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    currentLeaseOrAgreementBeginView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): CurrentLeaseOrAgreementBeginController =
+    CurrentLeaseOrAgreementBeginController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      currentLeaseOrAgreementBeginView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "CurrentLeaseOrAgreementBeginController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Current Lease Or Agreement Begin in the session" in {
       val result = currentLeaseOrAgreementBeginController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -67,16 +63,15 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec:
     }
   }
 
-  "CurrentLeaseOrAgreementBeginController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = currentLeaseOrAgreementBeginController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data leaseBegin and grantedFor submitted" in {
+    "redirect when form data leaseBegin and grantedFor submitted" in {
       val res = currentLeaseOrAgreementBeginController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "leaseBegin.month" -> "09",

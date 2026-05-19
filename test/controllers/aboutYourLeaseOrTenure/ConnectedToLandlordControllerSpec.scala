@@ -19,12 +19,7 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.TestBaseSpec
-
-import scala.language.reflectiveCalls
 
 class ConnectedToLandlordControllerSpec extends TestBaseSpec:
 
@@ -35,16 +30,17 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec:
 
   def connectedToLandlordController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): ConnectedToLandlordController = ConnectedToLandlordController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    connectedToLandlordView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): ConnectedToLandlordController =
+    ConnectedToLandlordController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      connectedToLandlordView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "ConnectedToLandlordController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Connected To Landlord in the session" in {
       val result = connectedToLandlordController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -67,9 +63,8 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec:
     }
   }
 
-  "ConnectedToLandlordController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = connectedToLandlordController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )

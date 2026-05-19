@@ -44,7 +44,7 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "IntervalsOfRentReviewController GET /" should {
+  "GET /" should {
     "return 200 and HTML with vacant property start date present in session" in {
       val result = intervalsOfRentReviewController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -79,18 +79,16 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec:
       )
     }
 
-    "display the page with the fields prefilled in" when {
-      "exists within the session" in {
-        val result = intervalsOfRentReviewController().show()(fakeRequest)
-        val html   = Jsoup.parse(contentAsString(result))
-        Option(html.getElementById("nextReview.day").`val`()).value   shouldBe "1"
-        Option(html.getElementById("nextReview.month").`val`()).value shouldBe "6"
-        Option(html.getElementById("nextReview.year").`val`()).value  shouldBe "2022"
-      }
+    "display the page with the fields prefilled when exists within the session" in {
+      val result = intervalsOfRentReviewController().show()(fakeRequest)
+      val html   = Jsoup.parse(contentAsString(result))
+      Option(html.getElementById("nextReview.day").`val`()).value   shouldBe "1"
+      Option(html.getElementById("nextReview.month").`val`()).value shouldBe "6"
+      Option(html.getElementById("nextReview.year").`val`()).value  shouldBe "2022"
     }
   }
 
-  "IntervalsOfRentReviewController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a See_Other if an empty form is submitted" in {
       val res = intervalsOfRentReviewController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)

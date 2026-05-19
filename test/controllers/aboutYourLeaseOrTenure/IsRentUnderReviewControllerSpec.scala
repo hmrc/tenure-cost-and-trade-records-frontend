@@ -20,8 +20,6 @@ import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 /**
@@ -33,19 +31,18 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec:
 
   def isRentUnderReviewController(
     forType: ForType = FOR6010,
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): IsRentUnderReviewController =
+    IsRentUnderReviewController(
+      isRentUnderReviewView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): IsRentUnderReviewController = IsRentUnderReviewController(
-    isRentUnderReviewView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "IsRentUnderReviewController GET /" should {
+  "GET /" should {
     "return 200 and HTML with is rent under review is present in session" in {
       val result = isRentUnderReviewController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -79,7 +76,7 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec:
     }
   }
 
-  "IsRentUnderReviewController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = isRentUnderReviewController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -87,7 +84,7 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = isRentUnderReviewController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("isRentUnderReview" -> "yes")
       )

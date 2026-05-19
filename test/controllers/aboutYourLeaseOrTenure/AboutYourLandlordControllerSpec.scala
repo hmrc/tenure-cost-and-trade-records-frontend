@@ -26,6 +26,7 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.concurrent.Future.successful
@@ -34,7 +35,6 @@ import scala.language.reflectiveCalls
 class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLookup:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   private val audit = mock[Audit]
 
@@ -56,7 +56,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
     mockSessionRepo
   )
 
-  "AboutYourLandlordController GET /" should {
+  "GET /" should {
     "return 200 and HTML with About Your Landlord in the session" in {
       val result = aboutYourLandlordController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -100,13 +100,14 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
     }
   }
 
-  "AboutYourLandlordController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = aboutYourLandlordController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
+
     "redirect to the next page if a valid form is submitted" in {
       when(addressLookupConnector.initJourney(any[AddressLookupConfig])(using any))
         .thenReturn(successful(Some("/on-ramp")))

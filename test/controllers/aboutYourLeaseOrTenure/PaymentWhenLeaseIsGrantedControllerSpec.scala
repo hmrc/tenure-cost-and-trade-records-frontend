@@ -42,7 +42,7 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "PaymentWhenLeaseIsGrantedController GET /" should {
+  "GET /" should {
     "return 200 and HTML with pay capital sum details yes in the session" in {
       val result = paymentWhenLeaseIsGrantedController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -94,7 +94,7 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec:
     }
   }
 
-  "PaymentWhenLeaseIsGrantedController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = paymentWhenLeaseIsGrantedController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -102,7 +102,7 @@ class PaymentWhenLeaseIsGrantedControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = paymentWhenLeaseIsGrantedController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("receivePaymentWhenLeaseGranted" -> "yes")
       )

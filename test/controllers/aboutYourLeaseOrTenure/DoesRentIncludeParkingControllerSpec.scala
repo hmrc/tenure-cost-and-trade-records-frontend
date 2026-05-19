@@ -18,9 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -34,16 +31,17 @@ class DoesRentIncludeParkingControllerSpec extends TestBaseSpec:
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ): DoesRentIncludeParkingController = DoesRentIncludeParkingController(
-    doesRentIncludeParkingView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
+  ): DoesRentIncludeParkingController =
+    DoesRentIncludeParkingController(
+      doesRentIncludeParkingView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
+    )
 
-  "DoesRentIncludeParkingController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Services Paid entry in the session" in {
       val result = doesRentIncludeParkingController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -73,13 +71,13 @@ class DoesRentIncludeParkingControllerSpec extends TestBaseSpec:
     }
   }
 
-  "DoesRentIncludeParkingController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = doesRentIncludeParkingController().submit(FakeRequest().withFormUrlEncodedBody())
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data doesRentIncludeParking submitted" in {
+    "redirect when form data doesRentIncludeParking submitted" in {
       val res = doesRentIncludeParkingController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("doesRentIncludeParking" -> "yes")
       )

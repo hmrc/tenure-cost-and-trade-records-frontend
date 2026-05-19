@@ -19,13 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm.connectedToLandlordDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
-
-import scala.language.reflectiveCalls
 
 class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec:
 
@@ -35,16 +30,17 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec:
 
   def connectedToLandlordDetailsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): ConnectedToLandlordDetailsController = ConnectedToLandlordDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    connectedToLandlordDetailsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): ConnectedToLandlordDetailsController =
+    ConnectedToLandlordDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      connectedToLandlordDetailsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "ConnectedToLandlordDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Connected To Landlord Details in the session" in {
       val result = connectedToLandlordDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -67,9 +63,8 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec:
     }
   }
 
-  "ConnectedToLandlordDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = connectedToLandlordDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )

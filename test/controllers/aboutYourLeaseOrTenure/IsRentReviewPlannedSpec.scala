@@ -20,8 +20,6 @@ import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 /**
@@ -33,19 +31,18 @@ class IsRentReviewPlannedSpec extends TestBaseSpec:
 
   def isRentReviewPlannedController(
     forType: ForType = FOR6030,
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
-      prefilledAboutLeaseOrAgreementPartTwo
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
+  ): IsRentReviewPlannedController =
+    IsRentReviewPlannedController(
+      isRentReviewPlannedView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): IsRentReviewPlannedController = IsRentReviewPlannedController(
-    isRentReviewPlannedView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "IsRentReviewPlannedController GET /" should {
+  "GET /" should {
     "return 200 and HTML with isRentReviewPlanned is present in session" in {
       val result = isRentReviewPlannedController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -66,10 +63,9 @@ class IsRentReviewPlannedSpec extends TestBaseSpec:
         controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController.show().url
       )
     }
-
   }
 
-  "IsRentReviewPlannedController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = isRentReviewPlannedController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -77,7 +73,7 @@ class IsRentReviewPlannedSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = isRentReviewPlannedController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("isRentReviewPlanned" -> "yes")
       )

@@ -19,34 +19,28 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.RentDevelopedLandForm.rentDevelopedLandForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
-
-import scala.language.reflectiveCalls
 
 class RentDevelopedLandControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def rentDevelopedLandController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): RentDevelopedLandController =
+    RentDevelopedLandController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      rentDevelopedLandView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo
     )
-  ): RentDevelopedLandController = RentDevelopedLandController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    rentDevelopedLandView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo
-  )
 
-  "RentDevelopedLandController GET /" should {
+  "GET /" should {
     "return 200 and HTML with rent developed land in the session" in {
       val result = rentDevelopedLandController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -69,7 +63,7 @@ class RentDevelopedLandControllerSpec extends TestBaseSpec:
     }
   }
 
-  "ConnectedToLandlordController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = rentDevelopedLandController().submit(
@@ -78,7 +72,7 @@ class RentDevelopedLandControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data rentDevelopedLand submitted" in {
+    "redirect when form data rentDevelopedLand submitted" in {
       val res = rentDevelopedLandController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentDevelopedLand" -> "yes")
       )

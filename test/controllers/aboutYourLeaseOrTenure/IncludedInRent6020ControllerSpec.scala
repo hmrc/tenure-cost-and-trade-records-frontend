@@ -18,9 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -32,16 +29,17 @@ class IncludedInRent6020ControllerSpec extends TestBaseSpec:
 
   def includedInRent6020Controller(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): IncludedInRent6020Controller = IncludedInRent6020Controller(
-    mockAudit,
-    includedInRent6020View,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
+  ): IncludedInRent6020Controller =
+    IncludedInRent6020Controller(
+      mockAudit,
+      includedInRent6020View,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
+    )
 
-  "IncludedInRent6020Controller GET /" should {
+  "GET /" should {
     "return 200 and HTML with Rented Equipment Details in the session" in {
       val result = includedInRent6020Controller().show(fakeRequest)
       status(result)        shouldBe OK
@@ -64,7 +62,7 @@ class IncludedInRent6020ControllerSpec extends TestBaseSpec:
     }
   }
 
-  "IncludedInRent6020Controller SUBMIT /" should {
+  "SUBMIT /" should {
     "redirect to the next page if an empty form is submitted" in {
       val res = includedInRent6020Controller().submit(
         FakeRequest("POST", "/").withFormUrlEncodedBody()

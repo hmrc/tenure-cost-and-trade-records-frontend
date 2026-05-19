@@ -18,9 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
-import play.api.test.FakeRequest
-import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec:
@@ -40,9 +37,7 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec:
     )
 
   def payACapitalSumAmountDetailsNoPremiumController(
-    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(
-      prefilledAboutLeaseOrAgreementPartTwoNoPremiumSum
-    )
+    aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwoNoPremiumSum)
   ): PayACapitalSumAmountDetailsController =
     PayACapitalSumAmountDetailsController(
       stubMessagesControllerComponents(),
@@ -53,7 +48,7 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "payACapitalSumAmountDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with pay a capital sum amount in the session" in {
       val result = payACapitalSumAmountDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -81,20 +76,20 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec:
         controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-amount-details"
       )
     }
+  }
 
-    "Pay a capital sum amount details SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = payACapitalSumAmountDetailsController().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = payACapitalSumAmountDetailsController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data currentAnnualRent submitted" in {
-        val res = payACapitalSumAmountDetailsController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("capitalSumPaidDetails" -> "1234")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+    "redirect when form data currentAnnualRent submitted" in {
+      val res = payACapitalSumAmountDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("capitalSumPaidDetails" -> "1234")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }

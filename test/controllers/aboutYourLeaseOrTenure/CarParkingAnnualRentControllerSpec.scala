@@ -18,9 +18,6 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**
@@ -31,9 +28,7 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def carParkingAnnualRentController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
   ): CarParkingAnnualRentController =
     CarParkingAnnualRentController(
       mockAudit,
@@ -44,7 +39,7 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec:
       stubMessagesControllerComponents()
     )
 
-  "CarParkingAnnualRentController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Car Parking Annual Rent in the session" in {
       val result = carParkingAnnualRentController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -72,7 +67,7 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec:
     }
   }
 
-  "CarParkingAnnualRentController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = carParkingAnnualRentController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -80,7 +75,7 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data annualRent and fixedRentFrom submitted" in {
+    "redirect when form data annualRent and fixedRentFrom submitted" in {
       val res = carParkingAnnualRentController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "annualRent"          -> "2200",
