@@ -19,7 +19,11 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyForm.isParkingRentPaidSeparatelyForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
+
+import scala.language.reflectiveCalls
 
 /**
   * @author Yuriy Tumakha

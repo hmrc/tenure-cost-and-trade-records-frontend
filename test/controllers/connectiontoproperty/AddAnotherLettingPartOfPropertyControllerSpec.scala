@@ -62,7 +62,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
       status(result) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = addAnotherLettingPartOfPropertyController().submit(0)(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody("addAnotherLettingPartOfProperty" -> "yes")
       )
@@ -103,7 +103,6 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
       status(result) shouldBe BAD_REQUEST
     }
-
   }
 
   "Letting part of property form" should {

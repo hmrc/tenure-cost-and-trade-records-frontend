@@ -18,6 +18,9 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
+import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
+import play.api.test.FakeRequest
+import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
 /**

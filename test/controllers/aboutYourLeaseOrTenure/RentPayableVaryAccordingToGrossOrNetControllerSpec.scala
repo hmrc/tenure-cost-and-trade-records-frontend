@@ -37,24 +37,23 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec:
 
   def rentPayableVaryAccordingToGrossOrNetController(
     forType: ForType = FOR6010,
-    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(
-      prefilledAboutLeaseOrAgreementPartOneNoOpenMarket
-    ),
+    aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOneNoOpenMarket),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): RentPayableVaryAccordingToGrossOrNetController = RentPayableVaryAccordingToGrossOrNetController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    rentPayableVaryAccordingToGrossOrNetView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
-    ),
-    mockSessionRepo
-  )
+  ): RentPayableVaryAccordingToGrossOrNetController =
+    RentPayableVaryAccordingToGrossOrNetController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      rentPayableVaryAccordingToGrossOrNetView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+        aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
+      ),
+      mockSessionRepo
+    )
 
-  "RentPayableVaryAccordingToGrossOrNet controller GET /" should {
+  "GET /" should {
     "return 200 and HTML with Rent Payable Vary Gross or Net and 6010 in the sessions" in {
       val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -88,7 +87,7 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec:
     }
   }
 
-  "RentPayableVaryAccordingToGrossOrNetControllerSUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentPayableVaryAccordingToGrossOrNetController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -96,13 +95,12 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = rentPayableVaryAccordingToGrossOrNetController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentPayableVaryAccordingToGrossOrNet" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
-
   }
 
   "Rent payable vary according to gross or net form" should {

@@ -23,6 +23,7 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -30,7 +31,6 @@ import scala.language.reflectiveCalls
 class AreYouStillConnectedControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
 
@@ -55,10 +55,16 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
         controllers.routes.LoginController.show.url
       )
     }
+
+    "return 200 for empty session" in {
+      val result = areYouStillConnectedController(None).show(fakeRequest)
+      status(result)      shouldBe Status.OK
+      contentType(result) shouldBe Some("text/html")
+      charset(result)     shouldBe Some(UTF8)
+    }
   }
 
   "calculateBackLink" should {
-
     "return back link to CYA page when 'from=CYA' query param is present and user is connected to the property" in {
       val result = areYouStillConnectedController(
         stillConnectedDetails = Some(prefilledStillConnectedDetailsYes)
@@ -92,13 +98,6 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
     }
   }
 
-  "return 200 for empty session" in {
-    val result = areYouStillConnectedController(None).show(fakeRequest)
-    status(result)      shouldBe Status.OK
-    contentType(result) shouldBe Some("text/html")
-    charset(result)     shouldBe Some(UTF8)
-  }
-
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = areYouStillConnectedController().submit(
@@ -107,7 +106,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data yes submitted without CYA param" in {
+    "redirect when form data yes submitted without CYA param" in {
       val res = areYouStillConnectedController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "isRelated" -> "yes"
@@ -116,7 +115,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data no submitted without CYA param" in {
+    "redirect when form data no submitted without CYA param" in {
       val res = areYouStillConnectedController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "isRelated" -> "no"
@@ -125,7 +124,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted with CYA param" in {
+    "redirect when form data submitted with CYA param" in {
       val res = areYouStillConnectedController().submit()(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "isRelated" -> "yes"

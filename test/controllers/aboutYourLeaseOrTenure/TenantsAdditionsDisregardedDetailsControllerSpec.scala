@@ -39,7 +39,7 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "TenantsAdditionsDisregardedDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Tenants Additional Disregard Details in the session" in {
       val result = tenantsAdditionsDisregardedDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -62,7 +62,7 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec:
     }
   }
 
-  "TenantsAdditionsDisregardedDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = tenantsAdditionsDisregardedDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -70,7 +70,7 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = tenantsAdditionsDisregardedDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("tenantsAdditionsDisregardedDetails" -> "Tenants Details")
       )

@@ -32,24 +32,23 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec:
   def rentIncludeFixtureAndFittingsDetailsController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): RentIncludeFixtureAndFittingsDetailsController =
+    RentIncludeFixtureAndFittingsDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      rentIncludeFixtureAndFittingsDetailsView,
+      rentIncludeFixtureAndFittingsDetailsTextAreaView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+      ),
+      mockSessionRepo
     )
-  ): RentIncludeFixtureAndFittingsDetailsController = RentIncludeFixtureAndFittingsDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    rentIncludeFixtureAndFittingsDetailsView,
-    rentIncludeFixtureAndFittingsDetailsTextAreaView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-      aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
-    ),
-    mockSessionRepo
-  )
 
-  "RentIncludeFixtureAndFittingsDetailsController GET /" should {
+  "GET /" should {
     "return 200 data" in {
       val result = rentIncludeFixtureAndFittingsDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -96,7 +95,7 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec:
     }
   }
 
-  "RentIncludeFixtureAndFittingsDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a See_Other if an empty form is submitted" in {
       val res = rentIncludeFixtureAndFittingsDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -110,7 +109,7 @@ class RentIncludeFixtureAndFittingsDetailsControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted for 6045" in {
+    "redirect when form data submitted for 6045" in {
       val res = rentIncludeFixtureAndFittingsDetailsController(forType = FOR6045).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "describeFittingsTextArea" -> "Rent include fixture and fitting details"

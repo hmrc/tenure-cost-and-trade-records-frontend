@@ -21,8 +21,13 @@ import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
+
+import scala.language.reflectiveCalls
 
 class PayACapitalSumControllerSpec extends TestBaseSpec:
 

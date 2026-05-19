@@ -32,23 +32,22 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
   def rentIncludeFixtureAndFittingsController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): RentIncludeFixtureAndFittingsController =
+    RentIncludeFixtureAndFittingsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      rentIncludeFixtureAndFittingsView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+      ),
+      mockSessionRepo
     )
-  ): RentIncludeFixtureAndFittingsController = RentIncludeFixtureAndFittingsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    rentIncludeFixtureAndFittingsView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-      aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
-    ),
-    mockSessionRepo
-  )
 
-  "RentIncludeFixtureAndFittings controller" should {
+  "GET /" should {
     "return 200 and HTML with Rent Includes trade services with yes in the session" in {
       val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -151,7 +150,7 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = rentIncludeFixtureAndFittingsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentIncludeFixturesAndFittings" -> "yes")
       )

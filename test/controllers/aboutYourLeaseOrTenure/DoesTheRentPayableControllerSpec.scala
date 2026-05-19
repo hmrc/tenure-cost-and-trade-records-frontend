@@ -18,6 +18,9 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class DoesTheRentPayableControllerSpec extends TestBaseSpec:

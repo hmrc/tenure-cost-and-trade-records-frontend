@@ -19,12 +19,17 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
+
+import scala.language.reflectiveCalls
 
 class ConnectedToLandlordControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 

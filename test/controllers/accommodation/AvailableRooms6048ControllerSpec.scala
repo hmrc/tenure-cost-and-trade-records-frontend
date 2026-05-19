@@ -67,5 +67,4 @@ class AvailableRooms6048ControllerSpec extends TestBaseSpec:
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
     }
-
   }

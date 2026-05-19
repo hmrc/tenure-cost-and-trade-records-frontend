@@ -27,19 +27,18 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def servicePaidSeparatelyChargeController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): ServicePaidSeparatelyChargeController =
+    ServicePaidSeparatelyChargeController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      servicePaidSeparatelyChargeView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo
     )
-  ): ServicePaidSeparatelyChargeController = ServicePaidSeparatelyChargeController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    servicePaidSeparatelyChargeView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo
-  )
 
-  "Service paid separately charge controller" should {
+  "GET /" should {
     "return 200 and HTML with Service Paid Separately Charge in the session" in {
       val result = servicePaidSeparatelyChargeController().show(0)(fakeRequest)
       status(result)        shouldBe OK
@@ -68,20 +67,20 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec:
       val result     = controller.show(0)(fakeRequest)
       status(result) shouldBe SEE_OTHER
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = servicePaidSeparatelyChargeController().submit(0)(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(result) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val result = servicePaidSeparatelyChargeController().submit(0)(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(result) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data servicePaidSeparatelyCharge submitted" in {
-        val res = servicePaidSeparatelyChargeController().submit(0)(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("annualCharge" -> "1000")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+    "redirect when form data servicePaidSeparatelyCharge submitted" in {
+      val res = servicePaidSeparatelyChargeController().submit(0)(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("annualCharge" -> "1000")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }

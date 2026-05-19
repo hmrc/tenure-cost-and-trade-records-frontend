@@ -49,57 +49,55 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec:
       status(result) shouldBe OK
 
     }
+  }
 
-    "SUBMIT /" should {
-      "return BAD_REQUEST if an empty form is submitted" in {
-        val res = accommodationUnitList6048Controller.submit(
-          FakeRequest().withFormUrlEncodedBody()
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
-
-      "save the form data and redirect to the next page" in {
-        val res = accommodationUnitList6048Controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(validFormData*)
-        )
-        status(res)           shouldBe SEE_OTHER
-        redirectLocation(res) shouldBe Some(nextPage)
-      }
-
+  "SUBMIT /" should {
+    "return BAD_REQUEST if an empty form is submitted" in {
+      val res = accommodationUnitList6048Controller.submit(
+        FakeRequest().withFormUrlEncodedBody()
+      )
+      status(res) shouldBe BAD_REQUEST
     }
 
-    "GET /accommodation-unit-remove" should {
-      "redirect to units list ignoring wrong idx" in {
-        val res = accommodationUnitList6048Controller.remove(
-          fakeRequest.withTarget(
-            RequestTarget("", "", Map("idx" -> Seq("6")))
-          )
+    "save the form data and redirect to the next page" in {
+      val res = accommodationUnitList6048Controller.submit(
+        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+      )
+      status(res)           shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(nextPage)
+    }
+  }
+
+  "GET /accommodation-unit-remove" should {
+    "redirect to units list ignoring wrong idx" in {
+      val res = accommodationUnitList6048Controller.remove(
+        fakeRequest.withTarget(
+          RequestTarget("", "", Map("idx" -> Seq("6")))
         )
-        status(res) shouldBe SEE_OTHER
-        redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)
-      }
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)
+    }
+  }
+
+  "POST /accommodation-unit-remove" should {
+    "redirect to units list on answer No" in {
+      val res = accommodationUnitList6048Controller.removeLast(
+        fakeRequest.withTarget(
+          RequestTarget("", "", Map("removeLastUnit" -> Seq("no"), "idx" -> Seq("8")))
+        )
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)
     }
 
-    "POST /accommodation-unit-remove" should {
-      "redirect to units list on answer No" in {
-        val res = accommodationUnitList6048Controller.removeLast(
-          fakeRequest.withTarget(
-            RequestTarget("", "", Map("removeLastUnit" -> Seq("no"), "idx" -> Seq("8")))
-          )
+    "redirect to units list on answer Yes ignoring wrong idx" in {
+      val res = accommodationUnitList6048Controller.removeLast(
+        fakeRequest.withTarget(
+          RequestTarget("", "", Map("removeLastUnit" -> Seq("yes"), "idx" -> Seq("8")))
         )
-        status(res) shouldBe SEE_OTHER
-        redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)
-      }
-
-      "redirect to units list on answer Yes ignoring wrong idx" in {
-        val res = accommodationUnitList6048Controller.removeLast(
-          fakeRequest.withTarget(
-            RequestTarget("", "", Map("removeLastUnit" -> Seq("yes"), "idx" -> Seq("8")))
-          )
-        )
-        status(res) shouldBe SEE_OTHER
-        redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)
-      }
+      )
+      status(res) shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)
     }
-
   }

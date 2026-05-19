@@ -49,7 +49,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "WhatIsYourRentBasedOnController GET /" should {
+  "GET /" should {
     "return 200 and HTML with What Is Your Rent Based On in the session" in {
       val result = whatIsYourRentBasedOnController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -72,7 +72,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec:
     }
   }
 
-  "WhatIsYourRentBasedOnController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = whatIsYourRentBasedOnController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -107,7 +107,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data currentRentBasedOn submitted" in {
+    "redirect when form data currentRentBasedOn submitted" in {
       val res = whatIsYourRentBasedOnController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "currentRentBasedOn" -> "fixed"

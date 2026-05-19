@@ -19,8 +19,13 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseForm.provideDetailsOfYourLeaseForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
+
+import scala.language.reflectiveCalls
 
 class ProvideDetailsOfYourLeaseControllerSpec extends TestBaseSpec:
 

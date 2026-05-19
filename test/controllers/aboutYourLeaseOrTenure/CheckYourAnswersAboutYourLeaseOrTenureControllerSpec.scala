@@ -19,6 +19,9 @@ package controllers.aboutYourLeaseOrTenure
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:

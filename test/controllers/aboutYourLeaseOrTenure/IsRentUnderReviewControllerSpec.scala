@@ -20,6 +20,8 @@ import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 /**

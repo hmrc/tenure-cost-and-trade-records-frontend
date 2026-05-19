@@ -19,6 +19,9 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import org.jsoup.Jsoup
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec:

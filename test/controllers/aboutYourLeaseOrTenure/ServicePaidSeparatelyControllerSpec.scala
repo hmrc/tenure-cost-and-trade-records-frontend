@@ -30,19 +30,18 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def servicePaidSeparatelyController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): ServicePaidSeparatelyController =
+    ServicePaidSeparatelyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      inject[AboutYourLeaseOrTenureNavigator],
+      servicePaidSeparatelyView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo
     )
-  ): ServicePaidSeparatelyController = ServicePaidSeparatelyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    inject[AboutYourLeaseOrTenureNavigator],
-    servicePaidSeparatelyView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo
-  )
 
-  "Service paid separately controller" should {
+  "GET /" should {
     "return 200 and HTML with Services Paid Separately in the session" in {
       val result = servicePaidSeparatelyController().show(Some(0))(fakeRequest)
       status(result)      shouldBe OK
@@ -50,63 +49,57 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec:
       charset(result)     shouldBe Some(UTF8)
     }
 
-    "render a page with an empty form" when {
-      "not given an index" in {
-        val result = servicePaidSeparatelyController().show(None)(fakeRequest)
-        val html   = Jsoup.parse(contentAsString(result))
+    "render a page with an empty form when not given an index" in {
+      val result = servicePaidSeparatelyController().show(None)(fakeRequest)
+      val html   = Jsoup.parse(contentAsString(result))
 
-        Option(html.getElementById("description").`val`()).value shouldBe ""
-      }
-
-      "given an index" which {
-        "doesn't already exist in the session" in {
-          val result = servicePaidSeparatelyController().show(Some(2))(fakeRequest)
-          val html   = Jsoup.parse(contentAsString(result))
-
-          Option(html.getElementById("description").`val`()).value shouldBe ""
-
-        }
-      }
+      Option(html.getElementById("description").`val`()).value shouldBe ""
     }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = servicePaidSeparatelyController().submit(None)(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+    "given an index which doesn't already exist in the session" in {
+      val result = servicePaidSeparatelyController().show(Some(2))(fakeRequest)
+      val html   = Jsoup.parse(contentAsString(result))
 
-      "Redirect when form data submitted" in {
-        val res = servicePaidSeparatelyController().submit(Some(0))(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("description" -> "Description")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+      Option(html.getElementById("description").`val`()).value shouldBe ""
+    }
+  }
 
-      "throw a BAD_REQUEST if description is greater than max length is submitted" in {
-        val res = servicePaidSeparatelyController().submit(Some(0))(
-          FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "description" -> "x" * 2001
-          )
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = servicePaidSeparatelyController().submit(None)(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
     }
 
-    "getBackLink" should {
+    "redirect when form data submitted" in {
+      val res = servicePaidSeparatelyController().submit(Some(0))(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("description" -> "Description")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
 
-      "return the correct backLink" in {
-        val controller = servicePaidSeparatelyController()
-        val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, fakeRequest), 1)
-        result shouldBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
-      }
-      "return the correct backLink if view was accessed via 'Change' link" in {
-        val controller        = servicePaidSeparatelyController()
-        val requestWithChange = requestWithQueryParam(fakeRequest, "from=Change")
-        val result            = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, requestWithChange), 1)
-        result shouldBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(1).url
-      }
+    "throw a BAD_REQUEST if description is greater than max length is submitted" in {
+      val res = servicePaidSeparatelyController().submit(Some(0))(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "description" -> "x" * 2001
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+  }
 
+  "getBackLink" should {
+    "return the correct backLink" in {
+      val controller = servicePaidSeparatelyController()
+      val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, fakeRequest), 1)
+      result shouldBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+    }
+
+    "return the correct backLink if view was accessed via 'Change' link" in {
+      val controller        = servicePaidSeparatelyController()
+      val requestWithChange = requestWithQueryParam(fakeRequest, "from=Change")
+      val result            = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, requestWithChange), 1)
+      result shouldBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(1).url
     }
   }

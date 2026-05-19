@@ -28,16 +28,17 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  def rentedSeparatelyParkingSpacesController: RentedSeparatelyParkingSpacesController = RentedSeparatelyParkingSpacesController(
-    rentedSeparatelyParkingSpacesView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
+  def rentedSeparatelyParkingSpacesController: RentedSeparatelyParkingSpacesController =
+    RentedSeparatelyParkingSpacesController(
+      rentedSeparatelyParkingSpacesView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
+    )
 
-  "RentedSeparatelyParkingSpacesController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Rented Separate parking spaces in the session" in {
       val result = rentedSeparatelyParkingSpacesController.show(fakeRequest)
       status(result)        shouldBe OK
@@ -64,7 +65,7 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec:
     }
   }
 
-  "RentedSeparatelyParkingSpacesController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = rentedSeparatelyParkingSpacesController.submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -72,7 +73,7 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = rentedSeparatelyParkingSpacesController.submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "openSpaces"    -> "30",

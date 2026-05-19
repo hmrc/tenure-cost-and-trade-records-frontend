@@ -17,7 +17,6 @@
 package controllers.connectiontoproperty
 
 import connectors.Audit
-import controllers.connectiontoproperty.TestData.{baseFormData, errorKey}
 import form.connectiontoproperty.AreYouThirdPartyForm.theForm
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -30,6 +29,8 @@ import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
 class AreYouThirdPartyControllerSpec extends TestBaseSpec:
+
+  import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
 
@@ -45,8 +46,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "AreYouThirdPartyController GET /" should {
-
+  "GET /" should {
     "return 200 and HTML with are you third party in session" in {
       val result = areYouThirdPartyController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -78,8 +78,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
     }
   }
 
-  "AreYouThirdPartyController POST /" should {
-
+  "POST /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = areYouThirdPartyController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -87,7 +86,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted without CYA param" in {
+    "redirect when form data submitted without CYA param" in {
       val res = areYouThirdPartyController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "areYouThirdParty" -> "yes"
@@ -96,7 +95,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted with CYA param" in {
+    "redirect when form data submitted with CYA param" in {
       val res = areYouThirdPartyController().submit()(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "areYouThirdParty" -> "yes"
@@ -105,30 +104,28 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Are you third party form" should {
-      "error if areYouThirdParty is missing" in {
-        val formData = baseFormData - errorKey.areYouThirdParty
-        val form     = theForm.bind(formData)
-
-        mustContainError(errorKey.areYouThirdParty, "error.areYouThirdParty.missing", form)
-      }
-    }
-  }
-
-  "SUBMIT /" should {
-    "Throw a bad request if an empty form is submitted" in {
+    "throw a bad request if an empty form is submitted" in {
       val result = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(result) shouldBe BAD_REQUEST
     }
 
-    "Throw a bad request if not empty form submitted and save data in the session" in {
+    "throw a bad request if not empty form submitted and save data in the session" in {
       val testData = Map("areYouThirdParty" -> "yes")
       val result   = areYouThirdPartyController().submit(FakeRequest().withFormUrlEncodedBody(testData.toSeq*))
 
       status(result) shouldBe BAD_REQUEST
     }
-
   }
+
+  "Are you third party form" should {
+    "error if areYouThirdParty is missing" in {
+      val formData = baseFormData - errorKey.areYouThirdParty
+      val form     = theForm.bind(formData)
+
+      mustContainError(errorKey.areYouThirdParty, "error.areYouThirdParty.missing", form)
+    }
+  }
+
   "getBackLink" should {
     "return back link to CYA page if query param present" in {
       val result = areYouThirdPartyController().show(fakeRequestFromCYA)
@@ -172,12 +169,12 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
     }
   }
 
-object TestData:
-  val errorKey = new ErrorKey
+  object TestData:
+    val errorKey = new ErrorKey
 
-  class ErrorKey:
-    val areYouThirdParty = "areYouThirdParty"
+    class ErrorKey:
+      val areYouThirdParty = "areYouThirdParty"
 
-  val baseFormData: Map[String, String] = Map(
-    "areYouThirdParty" -> "yes"
-  )
+    val baseFormData: Map[String, String] = Map(
+      "areYouThirdParty" -> "yes"
+    )

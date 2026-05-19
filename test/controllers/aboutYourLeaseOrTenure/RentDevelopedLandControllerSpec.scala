@@ -19,8 +19,13 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.RentDevelopedLandForm.rentDevelopedLandForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
+
+import scala.language.reflectiveCalls
 
 class RentDevelopedLandControllerSpec extends TestBaseSpec:
 

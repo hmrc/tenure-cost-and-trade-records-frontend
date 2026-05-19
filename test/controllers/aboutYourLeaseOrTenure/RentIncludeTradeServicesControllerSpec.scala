@@ -30,16 +30,17 @@ class RentIncludeTradeServicesControllerSpec extends TestBaseSpec:
 
   def rentIncludeTradeServicesController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): RentIncludeTradeServicesController = RentIncludeTradeServicesController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    inject[AboutYourLeaseOrTenureNavigator],
-    rentIncludeTradeServicesView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): RentIncludeTradeServicesController =
+    RentIncludeTradeServicesController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      inject[AboutYourLeaseOrTenureNavigator],
+      rentIncludeTradeServicesView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "RentIncludetradeServices controller" should {
+  "GET /" should {
     "return 200 and HTML with Rent Include Trade Services in the session" in {
       val result = rentIncludeTradeServicesController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -70,7 +71,7 @@ class RentIncludeTradeServicesControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = rentIncludeTradeServicesController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentIncludeTradeServices" -> "yes")
       )

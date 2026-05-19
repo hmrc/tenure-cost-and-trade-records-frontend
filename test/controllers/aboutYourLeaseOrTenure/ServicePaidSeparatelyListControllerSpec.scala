@@ -36,9 +36,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def servicePaidSeparatelyListController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
   ): ServicePaidSeparatelyListController =
     ServicePaidSeparatelyListController(
       stubMessagesControllerComponents(),
@@ -50,7 +48,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "ServicePaidSeparatelyListController" should {
+  "GET /" should {
     "return 200 and HTML with Services Paid Separately List in the session 0" in {
       val result = servicePaidSeparatelyListController().show(0)(fakeRequest)
       status(result)      shouldBe OK
@@ -65,28 +63,27 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = servicePaidSeparatelyListController().submit(1)(fakeRequest)
-        status(result) shouldBe BAD_REQUEST
-      }
-
-      "Redirect when form data servicePaidSeparatelyList submitted" in {
-        val res = servicePaidSeparatelyListController().submit(0)(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("servicePaidSeparatelyList" -> "yes")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val result = servicePaidSeparatelyListController().submit(1)(fakeRequest)
+      status(result) shouldBe BAD_REQUEST
     }
 
-    "REMOVE /" should {
-      "redirect if an empty form is submitted" in {
-        val result = servicePaidSeparatelyListController().remove(1)(fakeRequest)
-        status(result) shouldBe SEE_OTHER
-      }
+    "redirect when form data servicePaidSeparatelyList submitted" in {
+      val res = servicePaidSeparatelyListController().submit(0)(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("servicePaidSeparatelyList" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
+  }
 
+  "REMOVE /" should {
+    "redirect if an empty form is submitted" in {
+      val result = servicePaidSeparatelyListController().remove(1)(fakeRequest)
+      status(result) shouldBe SEE_OTHER
+    }
   }
 
   "Remove service" should {
@@ -115,7 +112,6 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
       status(result) shouldBe BAD_REQUEST
     }
-
   }
 
   "Trade services list form" should {
@@ -135,8 +131,6 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
     val errorKey: ErrorKey = new ErrorKey
 
     class ErrorKey:
-
-      val addService: String =
-        "servicePaidSeparatelyList"
+      val addService: String = "servicePaidSeparatelyList"
 
     val baseFormData: Map[String, String] = Map("servicePaidSeparatelyList" -> "yes")

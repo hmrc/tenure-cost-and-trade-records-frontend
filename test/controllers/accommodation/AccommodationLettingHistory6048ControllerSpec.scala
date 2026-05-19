@@ -52,23 +52,21 @@ class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec:
       status(result) shouldBe OK
 
     }
+  }
 
-    "SUBMIT /" should {
-      "return BAD_REQUEST if an empty form is submitted" in {
-        val res = accommodationLettingHistory6048Controller.submit(
-          FakeRequest().withFormUrlEncodedBody()
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
-
-      "save the form data and redirect to the next page" in {
-        val res = accommodationLettingHistory6048Controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(validFormData*)
-        )
-        status(res)           shouldBe SEE_OTHER
-        redirectLocation(res) shouldBe Some(nextPage)
-      }
-
+  "SUBMIT /" should {
+    "return BAD_REQUEST if an empty form is submitted" in {
+      val res = accommodationLettingHistory6048Controller.submit(
+        FakeRequest().withFormUrlEncodedBody()
+      )
+      status(res) shouldBe BAD_REQUEST
     }
 
+    "save the form data and redirect to the next page" in {
+      val res = accommodationLettingHistory6048Controller.submit(
+        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+      )
+      status(res)           shouldBe SEE_OTHER
+      redirectLocation(res) shouldBe Some(nextPage)
+    }
   }

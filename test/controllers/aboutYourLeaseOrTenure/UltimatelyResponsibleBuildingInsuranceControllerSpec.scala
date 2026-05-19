@@ -22,6 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -29,22 +30,22 @@ import scala.language.reflectiveCalls
 class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def ultimatelyResponsibleBuildingInsuranceController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): UltimatelyResponsibleBuildingInsuranceController = UltimatelyResponsibleBuildingInsuranceController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    ultimatelyResponsibleBuildingInsuranceView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-    mockSessionRepo
-  )
+  ): UltimatelyResponsibleBuildingInsuranceController =
+    UltimatelyResponsibleBuildingInsuranceController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      ultimatelyResponsibleBuildingInsuranceView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
 
-  "UltimatelyResponsibleBuildingInsuranceController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Ultimately Responsible Building Insurance in the session" in {
       val result = ultimatelyResponsibleBuildingInsuranceController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -67,9 +68,8 @@ class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec:
     }
   }
 
-  "UltimatelyResponsibleBuildingInsuranceController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = ultimatelyResponsibleBuildingInsuranceController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )

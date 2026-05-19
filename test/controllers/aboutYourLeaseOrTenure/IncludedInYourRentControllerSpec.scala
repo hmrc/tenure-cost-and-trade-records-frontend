@@ -20,6 +20,10 @@ import connectors.Audit
 import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
+import play.api.data.Form
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
 class IncludedInYourRentControllerSpec extends TestBaseSpec:

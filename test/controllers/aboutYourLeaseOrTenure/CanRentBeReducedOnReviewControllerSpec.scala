@@ -21,12 +21,18 @@ import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReduced
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
+import play.api.http.Status
+import play.api.test.FakeRequest
+import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
+
+import scala.language.reflectiveCalls
 
 class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
+
   val mockAudit: Audit = mock[Audit]
 
   def canRentBeReducedOnReviewController(

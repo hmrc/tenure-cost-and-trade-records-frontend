@@ -31,19 +31,18 @@ class RentedEquipmentDetailsControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def rentedEquipmentDetailsController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): RentedEquipmentDetailsController =
+    RentedEquipmentDetailsController(
+      rentedEquipmentDetailsView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): RentedEquipmentDetailsController = RentedEquipmentDetailsController(
-    rentedEquipmentDetailsView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "RentedEquipmentDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Rented Equipment Details in the session" in {
       val result = rentedEquipmentDetailsController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -83,5 +82,4 @@ class RentedEquipmentDetailsControllerSpec extends TestBaseSpec:
         controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
       )
     }
-
   }

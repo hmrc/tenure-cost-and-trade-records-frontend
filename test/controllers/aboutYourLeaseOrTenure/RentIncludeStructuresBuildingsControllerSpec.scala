@@ -22,6 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour,
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.{TestBaseSpec, toOpt}
 
 import scala.language.reflectiveCalls
@@ -29,29 +30,26 @@ import scala.language.reflectiveCalls
 class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
+
   val mockAudit: Audit = mock[Audit]
 
   def rentIncludeStructuresBuildingsController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    ),
-    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
-      prefilledAboutLeaseOrAgreementPartFour
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree),
+    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
+  ): RentIncludeStructuresBuildingsController =
+    RentIncludeStructuresBuildingsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      rentIncludeStructuresBuildingsView,
+      preEnrichedActionRefiner(
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
+        aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour
+      ),
+      mockSessionRepo
     )
-  ): RentIncludeStructuresBuildingsController = RentIncludeStructuresBuildingsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    rentIncludeStructuresBuildingsView,
-    preEnrichedActionRefiner(
-      aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
-      aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour
-    ),
-    mockSessionRepo
-  )
 
-  "RentDevelopedLandController GET /" should {
+  "GET /" should {
     "return 200 and HTML with rent Include Structures Buildings in the session" in {
       val result = rentIncludeStructuresBuildingsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -96,7 +94,7 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
     }
   }
 
-  "rentIncludeStructuresBuildingsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = rentIncludeStructuresBuildingsController().submit(
@@ -105,7 +103,7 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data rentIncludeStructuresBuildings submitted" in {
+    "redirect when form data rentIncludeStructuresBuildings submitted" in {
       val res = rentIncludeStructuresBuildingsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentIncludeStructuresBuildings" -> "yes")
       )
