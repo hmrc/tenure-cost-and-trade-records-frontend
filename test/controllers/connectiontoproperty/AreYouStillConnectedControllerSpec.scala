@@ -36,14 +36,15 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
 
   def areYouStillConnectedController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ): AreYouStillConnectedController = AreYouStillConnectedController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    connectedToPropertyNavigator,
-    areYouStillConnectedView,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-    mockSessionRepo
-  )
+  ): AreYouStillConnectedController =
+    AreYouStillConnectedController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      connectedToPropertyNavigator,
+      areYouStillConnectedView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200 and HTML with are you still connected in session" in {

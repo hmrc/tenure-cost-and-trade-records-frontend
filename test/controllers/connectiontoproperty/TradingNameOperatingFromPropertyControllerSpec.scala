@@ -147,7 +147,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
     }
   }
 
-  "TradingNameOperatingFromPropertyController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = tradingNameOperatingFromPropertyController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -162,7 +162,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted without CYA param" in {
+    "redirect when form data submitted without CYA param" in {
       val res = tradingNameOperatingFromPropertyController().submit(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "tradingNameFromProperty" -> "Trading name"
@@ -171,7 +171,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted without CYA param for 6048" in {
+    "redirect when form data submitted without CYA param for 6048" in {
       val res = tradingNameOperatingFromPropertyController(forType = FOR6048).submit(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "tradingNameFromProperty" -> "Trading name"
@@ -180,7 +180,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted with CYA param" in {
+    "redirect when form data submitted with CYA param" in {
       val res = tradingNameOperatingFromPropertyController().submit(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "tradingNameFromProperty" -> "Trading name"
@@ -189,7 +189,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Bad request when string exceeds 50 char" in {
+    "bad request when string exceeds 50 char" in {
       val res = tradingNameOperatingFromPropertyController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "capitalSumDescription" -> "X" * 51

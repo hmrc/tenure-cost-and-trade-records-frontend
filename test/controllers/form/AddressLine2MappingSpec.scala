@@ -29,7 +29,6 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
     val form: Form[String] = Form(single("line2" -> validateAddressLineTwo))
 
   "Address line 2 mapping" should {
-
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
         ("address", "validity"),

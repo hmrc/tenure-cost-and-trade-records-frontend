@@ -40,7 +40,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "VacantPropertiesController GET /" should {
+  "GET /" should {
     "return 200 and HTML with vacant property is present in session" in {
       val result = vacantPropertiesController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -64,7 +64,6 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
   }
 
   "calculateBackLink" should {
-
     "return back link to CYA page when 'from=CYA' query param is present for vacant properties" in {
       val result = vacantPropertiesController(
         stillConnectedDetails = Some(prefilledStillConnectedVacantYes)
@@ -91,7 +90,6 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
     }
 
     "return Edit Address page URL when addressConnectionType is AddressConnectionTypeYesChangeAddress and 'from' is not set" in {
-
       val prefilledStillConnectedChangedAddress: StillConnectedDetails = prefilledStillConnectedDetailsYes.copy(
         addressConnectionType = Some(AddressConnectionTypeYesChangeAddress)
       )
@@ -112,19 +110,17 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
         controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
       )
     }
-
   }
 
-  "VacantPropertiesController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = vacantPropertiesController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = vacantPropertiesController().submit(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "vacantProperties" -> "yes"

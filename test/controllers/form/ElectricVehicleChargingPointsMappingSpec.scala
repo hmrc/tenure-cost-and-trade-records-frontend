@@ -29,7 +29,6 @@ class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with shou
     val form: Form[Int] = Form(single("electricVehicleChargingPoints" -> validateSpacesOrBays))
 
   "Web address validation" should {
-
     "catch mandatory condition" in new Setup {
       val isInput: TableFor2[String, Boolean] = Table(
         ("number", "validity"),

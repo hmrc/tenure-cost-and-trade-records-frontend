@@ -36,7 +36,7 @@ import scala.concurrent.Future
 class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
 
   "the OccupierDetail controller" when {
-    "the user session is fresh"                        should {
+    "the user session is fresh" should {
       "be handling GET by replying 200 with the form showing empty name" in new ControllerFixture {
         val result: Future[Result] = controller.show(maybeIndex = None)(fakeGetRequest)
         status(result)            shouldBe OK
@@ -47,6 +47,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         page.backLink    shouldBe routes.HasCompletedLettingsController.show.url
         page.input("name") should beEmpty
       }
+
       "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture {
         val name                                             = "Mr. First"
         val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
@@ -68,8 +69,9 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         )
       }
     }
+
     "the user session is stale" when {
-      "regardless of the given number residents"             should {
+      "regardless of the given number residents" should {
         "be handling GET ?index=0 by replying 200 with the form pre-filled with name" in new ControllerFixture(
           oneOccupier
         ) {
@@ -80,6 +82,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           val page: Document = contentAsJsoup(result)
           page.input("name") should haveValue(oneOccupier.head.name)
         }
+
         "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture(
           oneOccupier
         ) {
@@ -100,6 +103,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           completedLettings(session)(0)      shouldBe oneOccupier.head
           completedLettings(session)(1).name shouldBe name
         }
+
         "be handling POST known by replying 303 redirect to 'Rental Period' page" in new ControllerFixture(
           twoOccupiers
         ) {
@@ -135,6 +139,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
           completedLettings(session)(1).rentalPeriod shouldBe twoOccupiers.last.rentalPeriod
         }
       }
+
       "and the maximum number of occupiers has been reached" should {
         "be handling GET by replying 303 redirect to the 'Occupiers List' page" in new ControllerFixture(
           fiveOccupiers
@@ -145,6 +150,7 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         }
       }
     }
+
     "regardless of what the user might have submitted" should {
       "be handling invalid POST by replying 400 with error messages" in new ControllerFixture {
         val result: Future[Result] = controller.submit()(
@@ -157,7 +163,8 @@ class OccupierDetailControllerSpec extends LettingHistoryControllerSpec:
         page.error("name") shouldBe "lettingHistory.occupierDetail.name.required"
       }
     }
-    "retrieving the confirmed address"                 should {
+
+    "retrieving the confirmed address" should {
       "save record and reply 303 redirect to the next page" in new ControllerFixture(
         twoOccupiers
       ) {

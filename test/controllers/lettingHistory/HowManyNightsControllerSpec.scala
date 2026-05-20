@@ -32,7 +32,7 @@ import scala.language.implicitConversions
 class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
 
   "the HowManyNights controller" when {
-    "the user has not specified any number of nights yet"     should {
+    "the user has not specified any number of nights yet" should {
       "be handling GET requests by replying 200 with the form showing just the nights field" in new ControllerFixture(
         hasCompletedLettings = Some(false)
       ) {
@@ -45,6 +45,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         page.backLink      shouldBe routes.HasCompletedLettingsController.show.url
         page.input("nights") should beEmpty
       }
+
       "be handling good POST by replying 303 redirect to the 'Yearly availability' page" in new ControllerFixture(
         isWelsh = false,
         hasStopped = Some(true)
@@ -60,6 +61,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         intendedLettings(data).value.hasStopped   shouldBe None
       }
     }
+
     "the user has already specified a given number of nights" should {
       "be handling GET by replying 200 with the form pre-filled with the nights" in new ControllerFixture(
         isWelsh = true,
@@ -75,6 +77,7 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         page.backLink      shouldBe routes.OccupierListController.show.url
         page.input("nights") should haveValue("100")
       }
+
       "be handling good POST by replying 303 redirect to the 'Has stopped letting?' page" in new ControllerFixture(
         isWelsh = true,
         nights = Some(100),
@@ -91,7 +94,8 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         intendedLettings(data).value.hasStopped.value shouldBe false
       }
     }
-    "regardless of what users might have submitted"           should {
+
+    "regardless of what users might have submitted" should {
       "be handling invalid POST by replying 400 with error messages" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(

@@ -28,6 +28,7 @@ import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
 class TradingNamePayingRentControllerSpec extends TestBaseSpec:
+
   import TestData.*
 
   val mockAudit: Audit = mock[Audit]
@@ -44,7 +45,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "AreYouThirdPartyController GET /" should {
+  "GET /" should {
     "return 200 and HTML with trading name paying rent present in session" in {
       val result = tradingNamePayingRentController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -68,8 +69,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec:
     }
   }
 
-  "AreYouThirdPartyController POST /" should {
-
+  "POST /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = tradingNamePayingRentController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -77,7 +77,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted without CYA param" in {
+    "redirect when form data submitted without CYA param" in {
       val res = tradingNamePayingRentController().submit(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "tradingNamePayingRent" -> "yes"
@@ -86,7 +86,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted with CYA param" in {
+    "redirect when form data submitted with CYA param" in {
       val res = tradingNamePayingRentController().submit(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "tradingNamePayingRent" -> "yes"
@@ -95,7 +95,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Trading Name paying rent form" should {
+    "trading Name paying rent form" should {
       "error if areYouThirdParty is missing" in {
         val formData = baseFormData - errorKey.tradingNamePayingRent
         val form     = theForm.bind(formData)
@@ -112,6 +112,7 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec:
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       )
     }
+
     "return back link to does (...) own the property page if 'from' query param is not present" in {
       val result = tradingNamePayingRentController().show(fakeRequest)
       contentAsString(result) should include(

@@ -31,7 +31,7 @@ import scala.concurrent.Future.{failed, successful}
 class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpers:
 
   "the GuidanceReferenceNumber controller" when {
-    "the user has not provided any reference number yet"   should {
+    "the user has not provided any reference number yet" should {
       "be handling GET and reply 200 with an empty HTML from" in new ControllerFixture {
         val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
@@ -43,6 +43,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         page.input("referenceNumber") should beEmpty
       }
     }
+
     "the user has already provided their reference number" should {
       "be handling GET and reply 200 with prefilled HTML form" in new ControllerFixture {
         val result: Future[Result] = controller.show(
@@ -60,7 +61,8 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         page.input("referenceNumber").value shouldBe "99996076012"
       }
     }
-    "regardless of the user providing answers"             should {
+
+    "regardless of the user providing answers" should {
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest
@@ -72,6 +74,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         val page: Document         = contentAsJsoup(result)
         page.error("referenceNumber") shouldBe "error.referenceNumber.required"
       }
+
       "be handling POST referenceNumber by replying 303 redirect to the 'GuidancePage' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest
@@ -85,6 +88,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         verify(connector, once).retrieveFORType(arg0, any[HeaderCarrier])
         arg0.getValue shouldBe "99996076012"
       }
+
       "be handling POST referenceNumber by replying 404 if it fails to retrieve FOR type" in new ControllerFixture {
         when(connector.retrieveFORType(anyString, any[HeaderCarrier]))
           .thenReturn(failed(Exception("Failed to retrieve FOR type")))

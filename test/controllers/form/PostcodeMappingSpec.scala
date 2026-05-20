@@ -18,12 +18,12 @@ package controllers.form
 
 import form.{Errors, PostcodeMapping}
 import org.scalatest.EitherValues
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
 import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.data.{Form, FormError}
 
-class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherValues with TableDrivenPropertyChecks:
+class PostcodeMappingSpec extends AnyWordSpec with should.Matchers with EitherValues with TableDrivenPropertyChecks:
 
   private val positiveTestData = Table(
     ("raw postcode", "formated postcode"),
@@ -47,20 +47,22 @@ class PostcodeMappingSpec extends AnyFlatSpec with should.Matchers with EitherVa
 
   private val postcode = PostcodeMapping.postcode()
 
-  "PostcodeMapper" should "Map correct postcode" in {
-    val formData = Map("" -> "BN12 4AX")
-    postcode.bind(formData).value shouldBe "BN12 4AX"
+  "PostcodeMapper" should {
+    "Map correct postcode" in {
+      val formData = Map("" -> "BN12 4AX")
+      postcode.bind(formData).value shouldBe "BN12 4AX"
+    }
+
+    "format and validate all correct postcodes" in
+      forAll(positiveTestData) { (rawPostcode: String, formattedPostcode: String) =>
+        val form   = Form("postcode" -> PostcodeMapping.postcode())
+        val result = form.bind(Map("postcode" -> rawPostcode)).value
+        result shouldBe Some(formattedPostcode)
+      }
+
+    "produce an error for each invalid postcode" in
+      forAll(negativeTestData) { (rawPostcode: String, _, errorMessage: String) =>
+        val result = Form("postcode" -> PostcodeMapping.postcode()).bind(Map("postcode" -> rawPostcode))
+        result.errors should contain oneElementOf List(FormError("postcode", errorMessage))
+      }
   }
-
-  it should "sucessfully format and validate all correct postcodes" in
-    forAll(positiveTestData) { (rawPostcode: String, formattedPostcode: String) =>
-      val form   = Form("postcode" -> PostcodeMapping.postcode())
-      val result = form.bind(Map("postcode" -> rawPostcode)).value
-      result shouldBe Some(formattedPostcode)
-    }
-
-  it should "produce an error for each invalid postcode" in
-    forAll(negativeTestData) { (rawPostcode: String, _, errorMessage: String) =>
-      val result = Form("postcode" -> PostcodeMapping.postcode()).bind(Map("postcode" -> rawPostcode))
-      result.errors should contain oneElementOf List(FormError("postcode", errorMessage))
-    }

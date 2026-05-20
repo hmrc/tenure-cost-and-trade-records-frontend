@@ -29,7 +29,6 @@ class AlternativePhoneNumberMappingSpec extends AnyWordSpecLike with should.Matc
     val form: Form[String] = Form(single("phone" -> validateAlternativePhoneNumber))
 
   "Phone number validation" should {
-
     "catch invalid length error" in new Setup {
       private val lengths = Table(
         ("phone number", "validity"),

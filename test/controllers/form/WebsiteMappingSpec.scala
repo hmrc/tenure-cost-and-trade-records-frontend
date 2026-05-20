@@ -29,7 +29,6 @@ class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with Table
     val form: Form[String] = Form(single("websiteAddressForProperty" -> validateWebAddress))
 
   "Web address validation" should {
-
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
         ("websiteAddressForProperty", "validity"),

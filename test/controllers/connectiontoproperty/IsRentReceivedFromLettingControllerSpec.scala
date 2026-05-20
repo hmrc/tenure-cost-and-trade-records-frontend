@@ -28,6 +28,7 @@ import utils.TestBaseSpec
 import scala.language.reflectiveCalls
 
 class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
+
   import TestData.*
 
   val mockAudit: Audit = mock[Audit]
@@ -44,8 +45,7 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "IsRentReceivedFromLettingController GET /" should {
-
+  "GET /" should {
     "return 200 and HTML with Is rent received from letting in session" in {
       val result = isRentReceivedFromLettingController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -69,8 +69,7 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
     }
   }
 
-  "IsRentReceivedFromLettingController POST /" should {
-
+  "POST /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = isRentReceivedFromLettingController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -78,21 +77,21 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted without CYA param" in {
+    "redirect when form data submitted without CYA param" in {
       val result = isRentReceivedFromLettingController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody("isRentReceivedFromLetting" -> "yes")
       )
       status(result) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted with CYA param" in {
+    "redirect when form data submitted with CYA param" in {
       val result = isRentReceivedFromLettingController().submit()(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody("isRentReceivedFromLetting" -> "yes")
       )
       status(result) shouldBe SEE_OTHER
     }
 
-    "Is rent received from letting form" should {
+    "is rent received from letting form" should {
       "error if isRentReceivedFromLetting is missing" in {
         val formData = baseFormData - errorKey.isRentReceivedFromLetting
         val form     = isRentReceivedFromLettingForm.bind(formData)
@@ -109,6 +108,7 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       )
     }
+
     "return back link to is the property vacant start date page if 'from' query param is not present" in {
       val result = isRentReceivedFromLettingController().show(fakeRequest)
       contentAsString(result) should include(

@@ -23,6 +23,7 @@ import play.api.data.FormError
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
@@ -30,17 +31,17 @@ import scala.language.reflectiveCalls
 class RemoveConnectionControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   def removeConnectionController(
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
-  ): RemoveConnectionController = RemoveConnectionController(
-    stubMessagesControllerComponents(),
-    removeConnectionNavigator,
-    removeConnectionView,
-    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
-    mockSessionRepo
-  )
+  ): RemoveConnectionController =
+    RemoveConnectionController(
+      stubMessagesControllerComponents(),
+      removeConnectionNavigator,
+      removeConnectionView,
+      preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
+      mockSessionRepo
+    )
 
   "Remove connection controller" should {
     "return 200" in {
@@ -61,23 +62,23 @@ class RemoveConnectionControllerSpec extends TestBaseSpec:
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = removeConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = removeConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data connectedToLandlord submitted" in {
-        val res = removeConnectionController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "removeConnectionFullName"      -> "Mr John Smith",
-            "removeConnectionDetails.phone" -> "01234567890",
-            "removeConnectionDetails.email" -> "blah.blah@test.com"
-          )
+    "redirect when form data connectedToLandlord submitted" in {
+      val res = removeConnectionController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "removeConnectionFullName"      -> "Mr John Smith",
+          "removeConnectionDetails.phone" -> "01234567890",
+          "removeConnectionDetails.email" -> "blah.blah@test.com"
         )
-        status(res) shouldBe SEE_OTHER
-      }
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
@@ -96,7 +97,6 @@ class RemoveConnectionControllerSpec extends TestBaseSpec:
   }
 
   "Remove connection form" should {
-
     "error if phone is missing" in {
       val formData = baseFormData + (errorKey.phone -> "")
       val form     = removeConnectionForm.bind(formData)

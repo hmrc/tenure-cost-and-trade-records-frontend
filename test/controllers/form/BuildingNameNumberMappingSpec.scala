@@ -29,7 +29,6 @@ class BuildingNameNumberMappingSpec extends AnyWordSpecLike with should.Matchers
     val form: Form[String] = Form(single("buildingNameNumber" -> validateBuildingNameNumber))
 
   "BuildingNameNumber validation" should {
-
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
         ("buildingNameNumber", "validity"),

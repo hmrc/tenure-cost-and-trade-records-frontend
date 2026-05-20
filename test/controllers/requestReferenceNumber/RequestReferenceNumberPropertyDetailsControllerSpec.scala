@@ -44,9 +44,9 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
         redirectLocation(
           result
         ).value        shouldBe routes.RequestReferenceNumberPropertyDetailsController.show().url
-
       }
-      "handling GET /"                   should {
+
+      "handling GET /" should {
         "reply 200 with an empty form" in new ControllerFixture {
           val result: Future[Result] = controller.show(fakeRequest)
           status(result)            shouldBe OK
@@ -57,6 +57,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
           page.backLink                   shouldBe controllers.routes.LoginController.show.url
           page.input("businessTradingName") should beEmpty
         }
+
         "reply 200 with a pre-filled form" in new ControllerFixture(
           requestReferenceNumberDetails = Some(
             RequestReferenceNumberDetails(
@@ -80,7 +81,8 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
           page.input("businessTradingName") should haveValue("Wombles Inc")
         }
       }
-      "handling POST /"                  should {
+
+      "handling POST /" should {
         "reply 404 if the submitted data is invalid" in new ControllerFixture {
           val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
@@ -91,6 +93,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
           val page: Document         = contentAsJsoup(result)
           page.error("businessTradingName") shouldBe "error.requestReferenceNumber.businessTradingName.required"
         }
+
         "throw exception if the address lookup service did not provide the /on-ramp location" in new ControllerFixture {
           when(addressLookupConnector.initJourney(any[AddressLookupConfig])(using any))
             .thenReturn(successful(None))
@@ -104,6 +107,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
             exception should have message "The AddressLookupConnector did not receive the on-ramp location from the ADDRESS_LOOKUP_FRONTEND service"
           }
         }
+
         "reply 303 redirect to the address lookup page" in new ControllerFixture {
           val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
@@ -116,6 +120,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
           verify(repository, once).saveOrUpdate(session.capture())(using any)
           session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Wombles Inc"
         }
+
         "reply 303 redirect to the address lookup page if updating the trading name" in new ControllerFixture(
           requestReferenceNumberDetails = Some(
             RequestReferenceNumberDetails(
@@ -141,6 +146,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
           session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Round Wombles Limited"
         }
       }
+
       "retrieving the confirmed address" should {
         "reply 303 redirect to the next page" in new ControllerFixture(
           requestReferenceNumberDetails = Some(

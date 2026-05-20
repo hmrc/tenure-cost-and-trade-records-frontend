@@ -90,7 +90,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
   }
 
   "SUBMIT /" should {
-    "handle positive confirmation scenarios"          should {
+    "handle positive confirmation scenarios" should {
       "return 303 and audit the successful outcome" in new ControllerWithMockedSubmissionConnectorFixture(
         prefilledRequestRefNumCYA
       ) {
@@ -111,6 +111,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
             .url
       }
     }
+
     "handle exception and return InternalServerError" should {
       "return 500 and audit the failure" in new ControllerWithMockedSubmissionConnectorFixture(
         prefilledRequestRefNumCYA

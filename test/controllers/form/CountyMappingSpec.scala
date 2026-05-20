@@ -29,7 +29,6 @@ class CountyMappingSpec extends AnyWordSpecLike with should.Matchers with TableD
     val form: Form[String] = Form(single("county" -> validateCounty))
 
   "county validation" should {
-
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
         ("county", "validity"),

@@ -29,7 +29,6 @@ class EmailMappingSpec extends AnyWordSpecLike with should.Matchers with TableDr
     val form: Form[String] = Form(single("emailFormat" -> validateEmail))
 
   "Email address validation" should {
-
     "catch mandatory condition" in new Setup {
       val isInput: TableFor2[String, Boolean] = Table(
         ("web address", "validity"),

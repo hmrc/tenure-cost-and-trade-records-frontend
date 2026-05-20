@@ -42,6 +42,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         page.heading  shouldBe "lettingHistory.checkYourAnswers.heading"
         page.backLink shouldBe routes.HasOnlineAdvertisingController.show.url
       }
+
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -53,7 +54,8 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         page.error("answer") shouldBe "error.checkYourAnswersRadio.required"
       }
     }
-    "the user has already answered"            should {
+
+    "the user has already answered" should {
       "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
         isYearlyAvailable = Some(false),
         hasOnlineAdvertising = Some(true)
@@ -63,6 +65,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
       }
+
       "be handling POST answer='yes' by replying 303 redirect to the 'TaskList' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -106,7 +109,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
                 tradingSeason = None
               )
             ),
-            onlineAdvertising = if hasOnlineAdvertising.contains(true) then List.empty else twoAdvertisings,
+            onlineAdvertising = if hasOnlineAdvertising.contains(true) then List.empty else twoAdvertising,
             sectionCompleted = sectionCompleted
           )
         )

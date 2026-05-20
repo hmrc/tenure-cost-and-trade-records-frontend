@@ -132,7 +132,6 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       )
-
     }
 
     "return back link to TradingNameOwnTheProperty page when tradingNameOwnTheProperty is 'yes'" in {

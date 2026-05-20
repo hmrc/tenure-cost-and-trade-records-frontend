@@ -33,7 +33,7 @@ import scala.language.implicitConversions
 class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
 
   "the ResidentDetail controller" when {
-    "the user session is fresh"                        should {
+    "the user session is fresh" should {
       "be handling GET /detail by replying 200 with the form showing name and address fields" in new ControllerFixture {
         val result: Future[Result] = controller.show(maybeIndex = None)(fakeGetRequest)
         status(result)            shouldBe OK
@@ -45,6 +45,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         page.input("name")       should beEmpty
         page.textarea("address") should beEmpty
       }
+
       "be handling good POST /detail by replying 303 redirect to the 'Residents List' page" in new ControllerFixture {
         val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "name"    -> "Mr. Unknown",
@@ -61,6 +62,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         )
       }
     }
+
     "the user session is stale" when {
       "regardless of the given number residents" should {
         "be handling GET /detail?index=0 by replying 200 with the form pre-filled with name and address values" in new ControllerFixture(
@@ -72,8 +74,8 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           charset(result).value     shouldBe UTF8
           val page: Document = contentAsJsoup(result)
           page.input("name") should haveValue("Mr. One")
-          // TODO page.textarea("address")   should haveValue("Address One")
         }
+
         "be handling POST /detail?unknown by replying 303 redirect to 'Residents List' page" in new ControllerFixture(
           oneResident
         ) {
@@ -91,6 +93,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           permanentResidents(data)(1).name    shouldBe "Mr. Unknown"
           permanentResidents(data)(1).address shouldBe "Neverland"
         }
+
         "be handling POST /detail?overwrite by replying 303 redirect to 'Residents List' page" in new ControllerFixture(
           twoResidents
         ) {
@@ -122,8 +125,8 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
           val page: Document = contentAsJsoup(result)
           page.error("duplicate") shouldBe "lettingHistory.residentDetail.duplicate"
         }
-
       }
+
       "and the maximum number of residents has been reached" should {
         "be handling GET /detail by replying 303 redirect to the 'Residents List' page" in new ControllerFixture(
           fiveResidents
@@ -134,6 +137,7 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
         }
       }
     }
+
     "regardless of what the user might have submitted" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
         val result: Future[Result] = controller.submit()(
@@ -151,13 +155,11 @@ class ResidentDetailControllerSpec extends LettingHistoryControllerSpec:
   }
 
   "ResidentDetail" should {
-
     "serialize and deserialize correctly" in {
       val residentDetail = residentDetails
       val json           = Json.toJson(residentDetail)
       json.as[ResidentDetail] shouldBe residentDetail
     }
-
   }
 
   trait ControllerFixture(permanentResidents: List[ResidentDetail] = Nil) extends MockRepositoryFixture with SessionCapturingFixture:

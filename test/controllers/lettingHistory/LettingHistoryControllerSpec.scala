@@ -96,11 +96,11 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
     AdvertisingDetail(websiteAddress = "123.com", propertyReferenceNumber = "aaa123")
   )
 
-  val twoAdvertisings: List[AdvertisingDetail] = oneAdvertising ++ List(
+  val twoAdvertising: List[AdvertisingDetail] = oneAdvertising ++ List(
     AdvertisingDetail(websiteAddress = "456.com", propertyReferenceNumber = "aaa456")
   )
 
-  val fiveAdvertisings: List[AdvertisingDetail] = twoAdvertisings ++ List(
+  val fiveAdvertising: List[AdvertisingDetail] = twoAdvertising ++ List(
     AdvertisingDetail(websiteAddress = "789.com", propertyReferenceNumber = "aaa789"),
     AdvertisingDetail(websiteAddress = "111.com", propertyReferenceNumber = "aaa111"),
     AdvertisingDetail(websiteAddress = "112.com", propertyReferenceNumber = "aaa112")
@@ -115,12 +115,12 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
   trait SessionCapturingFixture:
 
     given argumentCaptorToSession: Conversion[ArgumentCaptor[Session], Session] with
-      def apply(c: ArgumentCaptor[Session]) = c.getValue
+      def apply(c: ArgumentCaptor[Session]): Session = c.getValue
 
   extension (r: FakeRequest[AnyContent])
 
-    def withQueryParams(params: (String, String)*) =
+    def withQueryParams(params: (String, String)*): FakeRequest[AnyContent] =
       r.withTarget(RequestTarget(r.uri, r.path, queryString = Map(params.map((k, v) => k -> Seq(v))*)))
 
-    def withFragment(fragment: String) =
+    def withFragment(fragment: String): FakeRequest[AnyContent] =
       r.withTarget(RequestTarget(r.uri, r.path + "#" + fragment, r.queryString))

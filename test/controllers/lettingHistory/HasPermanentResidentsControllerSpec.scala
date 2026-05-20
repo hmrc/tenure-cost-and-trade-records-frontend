@@ -43,6 +43,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
+
       "be handling POST answer='yes' by replying 303 redirect to the 'PermanentResidentDetail' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -55,7 +56,8 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         hasPermanentResidents(data).value shouldBe true
       }
     }
-    "the user has already answered"            should {
+
+    "the user has already answered" should {
       "regardless of the given number of permanent residents" should {
         "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
           permanentResidents = oneResident
@@ -69,6 +71,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           page.radios("answer")    should haveChecked("yes")
           page.radios("answer") shouldNot haveChecked("no")
         }
+
         "be handling POST answer='yes' by replying 303 redirect to the 'PermanentResidentDetail' page" in new ControllerFixture(
           permanentResidents = oneResident
         ) {
@@ -83,6 +86,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           hasPermanentResidents(data).value shouldBe true
           permanentResidents(data)          shouldBe oneResident
         }
+
         "be handling POST answer='no' by replying 303 redirect to the 'HasCompletedLettings' page" in new ControllerFixture(
           permanentResidents = fiveResidents,
           mayHaveMorePermanentResidents = Some(true)
@@ -101,7 +105,8 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           mayHaveMoreEntitiesOf(kind = "permanentResidents", data.getValue) shouldBe None
         }
       }
-      "and the maximum number of residents has been reached"  should {
+
+      "and the maximum number of residents has been reached" should {
         "be handling POST answer='yes' by replying 303 redirect to the 'PermanentResidentList' page" in new ControllerFixture(
           permanentResidents = fiveResidents
         ) {
@@ -118,6 +123,7 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         }
       }
     }
+
     "regardless of the user providing answers" should {
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(

@@ -35,18 +35,19 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec:
 
   def checkYourAdditionalInformationController(
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
-  ): CheckYourAnswersNotConnectedController = CheckYourAnswersNotConnectedController(
-    stubMessagesControllerComponents(),
-    mockSubmissionConnector,
-    checkYourAnswersNotConnectedView,
-    confirmation,
-    errorHandler,
-    mockAudit,
-    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersNotConnectedController =
+    CheckYourAnswersNotConnectedController(
+      stubMessagesControllerComponents(),
+      mockSubmissionConnector,
+      checkYourAnswersNotConnectedView,
+      confirmation,
+      errorHandler,
+      mockAudit,
+      preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
+      mockSessionRepo
+    )
 
-  "Not connected CYA controller" should {
+  "GET /" should {
     "return 200 and HTML with CYA with yes in the session" in {
       val result = checkYourAdditionalInformationController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -56,7 +57,9 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec:
         controllers.notconnected.routes.RemoveConnectionController.show().url
       )
     }
+  }
 
+  "POST /" should {
     "handle submit form with all sections" in {
       mockSessionRepo.saveOrUpdate(prefilledBaseSession)
       when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(using any[HeaderCarrier]))
@@ -84,5 +87,4 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec:
       content should include("confirmation.heading")
       content should include("print-link")
     }
-
   }

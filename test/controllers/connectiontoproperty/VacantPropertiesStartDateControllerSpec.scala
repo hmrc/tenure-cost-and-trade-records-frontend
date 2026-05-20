@@ -40,7 +40,7 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
       mockSessionRepo
     )
 
-  "VacantPropertiesStartDateController GET /" should {
+  "GET /" should {
     "return 200 and HTML with vacant property start date present in session" in {
       val result = vacantPropertiesStartDateController().show()(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -62,18 +62,16 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
       )
     }
 
-    "display the page with the fields prefilled in" when {
-      "exists within the session" in {
-        val result = vacantPropertiesStartDateController().show()(fakeRequest)
-        val html   = Jsoup.parse(contentAsString(result))
-        Option(html.getElementById("startDateOfVacantProperty.day").`val`()).value   shouldBe "1"
-        Option(html.getElementById("startDateOfVacantProperty.month").`val`()).value shouldBe "6"
-        Option(html.getElementById("startDateOfVacantProperty.year").`val`()).value  shouldBe "2022"
-      }
+    "display the page with the fields prefilled in when exists within the session" in {
+      val result = vacantPropertiesStartDateController().show()(fakeRequest)
+      val html   = Jsoup.parse(contentAsString(result))
+      Option(html.getElementById("startDateOfVacantProperty.day").`val`()).value   shouldBe "1"
+      Option(html.getElementById("startDateOfVacantProperty.month").`val`()).value shouldBe "6"
+      Option(html.getElementById("startDateOfVacantProperty.year").`val`()).value  shouldBe "2022"
     }
   }
 
-  "VacantPropertiesStartDateController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = vacantPropertiesStartDateController().submit()(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -81,7 +79,7 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted without CYA param" in {
+    "redirect when form data submitted without CYA param" in {
       val res = vacantPropertiesStartDateController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "startDateOfVacantProperty.day"   -> "20",
@@ -92,7 +90,7 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted with CYA param" in {
+    "redirect when form data submitted with CYA param" in {
       val res = vacantPropertiesStartDateController().submit(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "startDateOfVacantProperty.day"   -> "20",
@@ -111,6 +109,7 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       )
     }
+
     "return back link to is the property vacant page if 'from' query param is not present" in {
       val result = vacantPropertiesStartDateController().show(fakeRequest)
       contentAsString(result) should include(

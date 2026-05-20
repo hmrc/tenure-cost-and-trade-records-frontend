@@ -50,7 +50,6 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec:
     )
 
   "Submit method" when {
-
     "submission is successful" should {
       "redirect (HTTP 303)" in {
         when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
@@ -70,14 +69,11 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec:
         status(result) shouldBe Status.INTERNAL_SERVER_ERROR
       }
     }
-
   }
 
   "Confirmation method" should {
-
     "display the confirmation view" in {
       val result = connectionToPropertySubmissionController().confirmation(fakeRequest)
       status(result) shouldBe Status.OK
     }
-
   }

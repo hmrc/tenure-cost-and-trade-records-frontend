@@ -29,7 +29,6 @@ class AboutYouEmailMappingSpec extends AnyWordSpecLike with should.Matchers with
     val form: Form[String] = Form(single("emailFormat" -> validateAboutYouEmail))
 
   "Email address validation" should {
-
     "catch mandatory condition" in new Setup {
       val isInput: TableFor2[String, Boolean] = Table(
         ("web address", "validity"),

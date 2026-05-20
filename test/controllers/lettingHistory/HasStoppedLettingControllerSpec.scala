@@ -43,6 +43,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
+
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -53,6 +54,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.intendedLettings.hasStoppedLetting.required"
       }
+
       "be handling POST answer='yes' by replying 303 redirect to the 'Last Rent' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -65,7 +67,8 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         intendedLettings(data).value.hasStopped.value shouldBe true
       }
     }
-    "the user has already provided an answer"  should {
+
+    "the user has already provided an answer" should {
       "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
         hasStopped = Some(true)
       ) {
@@ -78,6 +81,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
         page.radios("answer")    should haveChecked(value = "yes")
         page.radios("answer") shouldNot haveChecked(value = "no")
       }
+
       "be handling POST answer='no' by replying 303 redirect to the 'Commercial Lettings' page" in new ControllerFixture(
         hasStopped = Some(true)
       ) {

@@ -31,7 +31,7 @@ import scala.language.reflectiveCalls
 class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
 
   "the DownloadPDFReferenceNumber controller" when {
-    "handling GET /"  should {
+    "handling GET /" should {
       "reply 200 with the HTML form" in new ControllerAndConnectorFixture {
         val result: Future[Result] = controller.show(fakeRequest)
         val content: String        = contentAsString(result)
@@ -41,12 +41,14 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
         content                     should include("referenceNumber.heading")
       }
     }
+
     "handling POST /" should {
       "reply 400 with error message when downloadPdfReferenceNumber is missing" in new ControllerAndConnectorFixture {
         val result: Future[Result] = controller.submit(fakePostRequest)
         status(result)        shouldBe BAD_REQUEST
         contentAsString(result) should include("error.referenceNumber.required")
       }
+
       "reply 303 redirect to the 'Download PDF' page when downloadPdfReferenceNumber is unknown" in new ControllerAndConnectorFixture {
         when(connector.retrieveFORType(any[String], any[HeaderCarrier]))
           .thenReturn(failed(Exception("cannot determine forType")))
@@ -60,6 +62,7 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
         verify(connector, once).retrieveFORType(givenReferenceNumber.capture(), any[HeaderCarrier])
         givenReferenceNumber.getValue  shouldBe "unknown"
       }
+
       "reply 303 redirect to the 'Download PDF' page when downloadPdfReferenceNumber is good" in new ControllerAndConnectorFixture {
         when(connector.retrieveFORType(any[String], any[HeaderCarrier])).thenReturn(successful("FOR6010"))
         val result: Future[Result] = controller.submit(
