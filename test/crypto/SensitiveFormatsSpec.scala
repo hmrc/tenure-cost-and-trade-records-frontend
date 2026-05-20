@@ -24,6 +24,8 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
 
+import scala.language.implicitConversions
+
 class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
 
   import SensitiveFormatsSpec.*

@@ -21,13 +21,12 @@ import util.NumberUtil.*
 import utils.TestBaseSpec
 
 class CurrentAnnualRentFormSpec extends TestBaseSpec:
-  "CurrentAnnualRentForm" should {
 
+  "CurrentAnnualRentForm" should {
     "bind valid data correctly" in {
       val data = Map(
         "currentAnnualRent" -> "5000.00"
       )
-
       val form = CurrentAnnualRentForm.currentAnnualRentForm().bind(data)
 
       form.errors shouldBe empty
@@ -39,8 +38,7 @@ class CurrentAnnualRentFormSpec extends TestBaseSpec:
       val data             = Map(
         "currentAnnualRent" -> "5000.00"
       )
-
-      val form = CurrentAnnualRentForm.currentAnnualRentForm(includedPartsSum).bind(data)
+      val form             = CurrentAnnualRentForm.currentAnnualRentForm(includedPartsSum).bind(data)
 
       form.errors  should contain(
         FormError(
@@ -56,7 +54,6 @@ class CurrentAnnualRentFormSpec extends TestBaseSpec:
       val data = Map(
         "currentAnnualRent" -> "invalid"
       )
-
       val form = CurrentAnnualRentForm.currentAnnualRentForm().bind(data)
 
       form.errors  should contain(FormError("currentAnnualRent", "error.invalid_currency.annualRent"))
@@ -72,7 +69,6 @@ class CurrentAnnualRentFormSpec extends TestBaseSpec:
 
     "fail to bind when no data is provided" in {
       val data = Map.empty[String, String]
-
       val form = CurrentAnnualRentForm.currentAnnualRentForm().bind(data)
 
       form.errors  should contain(FormError("currentAnnualRent", "error.required.annualRentExcludingVat"))

@@ -21,13 +21,13 @@ import models.submissions.common.AnswersYesNo.*
 import models.submissions.common.{AnswersYesNo, ContactDetails}
 import models.submissions.notconnected.RemoveConnectionsDetails.*
 import org.scalatest.OptionValues
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.{JsSuccess, Json}
 
-class SensitiveRemoveConnectionDetailsSpec extends AnyFlatSpec with Matchers with OptionValues with MongoCryptoSupport:
+class SensitiveRemoveConnectionDetailsSpec extends AnyWordSpec with Matchers with OptionValues with MongoCryptoSupport:
 
-  val clearEnvelope: RemoveConnectionDetails = RemoveConnectionDetails(
+  private val clearEnvelope: RemoveConnectionDetails = RemoveConnectionDetails(
     removeConnectionDetails = Some(
       RemoveConnectionsDetails(
         removeConnectionFullName = "fullName",
@@ -41,27 +41,30 @@ class SensitiveRemoveConnectionDetailsSpec extends AnyFlatSpec with Matchers wit
     pastConnectionType = Some(AnswerYes)
   )
 
-  it should "encrypt and decrypt sensitive fields correctly" in:
-    val encryptedDetails = SensitiveRemoveConnectionDetails(clearEnvelope)
-    encryptedDetails.decryptedValue shouldBe clearEnvelope
+  "SensitiveRemoveConnectionDetails" should {
+    "encrypt and decrypt sensitive fields correctly" in {
+      val encryptedDetails = SensitiveRemoveConnectionDetails(clearEnvelope)
+      encryptedDetails.decryptedValue shouldBe clearEnvelope
+    }
 
-  it should "serialize to encrypted JSON" in {
-    val encryptedValue = SensitiveRemoveConnectionDetails(clearEnvelope)
-    val jsValue        = Json.toJson(encryptedValue)
+    "serialize to encrypted JSON" in {
+      val encryptedValue = SensitiveRemoveConnectionDetails(clearEnvelope)
+      val jsValue        = Json.toJson(encryptedValue)
 
-    val removeConnectionsDetails = (jsValue \ "removeConnectionDetails").as[RemoveConnectionsDetails]
-    removeConnectionsDetails.removeConnectionFullName         should not be clearEnvelope.removeConnectionDetails.get.removeConnectionFullName
-    removeConnectionsDetails.removeConnectionDetails.email    should not be clearEnvelope.removeConnectionDetails.get.removeConnectionDetails.email
-    removeConnectionsDetails.removeConnectionDetails.phone    should not be clearEnvelope.removeConnectionDetails.get.removeConnectionDetails.phone
-    removeConnectionsDetails.removeConnectionAdditionalInfo shouldBe clearEnvelope.removeConnectionDetails.get.removeConnectionAdditionalInfo
+      val removeConnectionsDetails = (jsValue \ "removeConnectionDetails").as[RemoveConnectionsDetails]
+      removeConnectionsDetails.removeConnectionFullName         should not be clearEnvelope.removeConnectionDetails.get.removeConnectionFullName
+      removeConnectionsDetails.removeConnectionDetails.email    should not be clearEnvelope.removeConnectionDetails.get.removeConnectionDetails.email
+      removeConnectionsDetails.removeConnectionDetails.phone    should not be clearEnvelope.removeConnectionDetails.get.removeConnectionDetails.phone
+      removeConnectionsDetails.removeConnectionAdditionalInfo shouldBe clearEnvelope.removeConnectionDetails.get.removeConnectionAdditionalInfo
 
-    val pastConnectionType = (jsValue \ "pastConnectionType").as[AnswersYesNo]
-    pastConnectionType shouldBe clearEnvelope.pastConnectionType.value
-  }
+      val pastConnectionType = (jsValue \ "pastConnectionType").as[AnswersYesNo]
+      pastConnectionType shouldBe clearEnvelope.pastConnectionType.value
+    }
 
-  it should "deserialize from encrypted JSON" in {
-    val encryptedDetails = SensitiveRemoveConnectionDetails(clearEnvelope)
-    val jsValue          = Json.toJson(encryptedDetails)
-    val deserialized     = Json.fromJson[SensitiveRemoveConnectionDetails](jsValue)
-    deserialized shouldBe JsSuccess(encryptedDetails)
+    "deserialize from encrypted JSON" in {
+      val encryptedDetails = SensitiveRemoveConnectionDetails(clearEnvelope)
+      val jsValue          = Json.toJson(encryptedDetails)
+      val deserialized     = Json.fromJson[SensitiveRemoveConnectionDetails](jsValue)
+      deserialized shouldBe JsSuccess(encryptedDetails)
+    }
   }

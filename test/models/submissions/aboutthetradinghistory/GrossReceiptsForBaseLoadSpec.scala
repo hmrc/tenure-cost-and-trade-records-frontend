@@ -30,7 +30,9 @@ class GrossReceiptsForBaseLoadSpec extends PlaySpec:
         Some(4),
         Some(5)
       )
-      val json                         = Json.toJson(grossReceiptsForBaseLoadSpec: GrossReceiptsForBaseLoad)
+
+      val json = Json.toJson(grossReceiptsForBaseLoadSpec: GrossReceiptsForBaseLoad)
+
       json.as[GrossReceiptsForBaseLoad] mustBe grossReceiptsForBaseLoadSpec
     }
 

@@ -19,13 +19,13 @@ package models.submissions.requestReferenceNumber
 import models.submissions.MongoCryptoSupport
 import models.submissions.common.{Address, ContactDetails}
 import org.scalatest.OptionValues
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.{JsSuccess, Json}
 
-class SensitiveRequestReferenceNumberDetailsSpec extends AnyFlatSpec with Matchers with OptionValues with MongoCryptoSupport:
+class SensitiveRequestReferenceNumberDetailsSpec extends AnyWordSpec with Matchers with OptionValues with MongoCryptoSupport:
 
-  val clearDetails: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
+  private val clearDetails: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
     propertyDetails = Some(
       RequestReferenceNumberPropertyDetails(
         businessTradingName = "Business Name",
@@ -52,16 +52,16 @@ class SensitiveRequestReferenceNumberDetailsSpec extends AnyFlatSpec with Matche
     )
   )
 
-  it should "encrypt and decrypt sensitive fields correctly" in:
-    val encryptedDetails = SensitiveRequestReferenceNumberDetails(clearDetails)
-    encryptedDetails.decryptedValue shouldBe clearDetails
+  "SensitiveRequestReferenceNumberDetails" should {
+    "encrypt and decrypt sensitive fields correctly" in {
+      val encryptedDetails = SensitiveRequestReferenceNumberDetails(clearDetails)
+      encryptedDetails.decryptedValue shouldBe clearDetails
+    }
 
-  it should "serialize to encrypted JSON" in
-    pending
-
-  it should "deserialize from encrypted JSON" in {
-    val encryptedDetails = SensitiveRequestReferenceNumberDetails(clearDetails)
-    val jsValue          = Json.toJson(encryptedDetails)
-    val deserialized     = Json.fromJson[SensitiveRequestReferenceNumberDetails](jsValue)
-    deserialized shouldBe JsSuccess(encryptedDetails)
+    "deserialize from encrypted JSON" in {
+      val encryptedDetails = SensitiveRequestReferenceNumberDetails(clearDetails)
+      val jsValue          = Json.toJson(encryptedDetails)
+      val deserialized     = Json.fromJson[SensitiveRequestReferenceNumberDetails](jsValue)
+      deserialized shouldBe JsSuccess(encryptedDetails)
+    }
   }

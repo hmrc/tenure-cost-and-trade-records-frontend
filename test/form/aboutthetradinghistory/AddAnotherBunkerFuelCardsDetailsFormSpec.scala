@@ -24,7 +24,6 @@ import play.api.data.FormError
 class AddAnotherBunkerFuelCardsDetailsFormSpec extends PlaySpec:
 
   "AddAnotherBunkerFuelCardsDetailsForm" should {
-
     "bind a 'yes' value correctly" in {
       val data = Map("addAnotherBunkerFuelCardsDetails" -> "yes")
       val form = theForm.bind(data)

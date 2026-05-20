@@ -39,6 +39,5 @@ class AddressLookupConfirmedAddressSpec extends TestBaseSpec:
     "return correct string format when passed asString from Json" in {
       val address = testAddress.as[AddressLookupConfirmedAddress]
       address.auditRef shouldBe "e9e2fb3f-268f-4c4c-b928-3dc0b17259f2"
-
     }
   }

@@ -29,7 +29,5 @@ class GrossReceiptsSubLetUnitsSpec extends PlaySpec:
       )
       val json                     = Json.toJson(grossReceiptsSubLetUnits)
       json.as[GrossReceiptsSubLetUnits] mustBe grossReceiptsSubLetUnits
-
     }
-
   }

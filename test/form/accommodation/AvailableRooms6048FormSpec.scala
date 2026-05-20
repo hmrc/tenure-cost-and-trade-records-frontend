@@ -21,8 +21,8 @@ import play.api.data.FormError
 import utils.TestBaseSpec
 
 class AvailableRooms6048FormSpec extends TestBaseSpec:
-  "AvailableRooms6048Form" should {
 
+  "AvailableRooms6048Form" should {
     "fail to bind when single and double bedrooms are zero" in {
       val data = Map(
         "singleBedrooms"                -> "0",
@@ -31,11 +31,9 @@ class AvailableRooms6048FormSpec extends TestBaseSpec:
         "otherAccommodationDescription" -> "",
         "maxGuestsNumber"               -> "10"
       )
-
       val form = AvailableRooms6048Form.availableRooms6048Form.bind(data)
 
       form.errors  should contain(FormError("", "error.accommodation.singleBedrooms.zero"))
       form.value shouldBe None
-
     }
   }

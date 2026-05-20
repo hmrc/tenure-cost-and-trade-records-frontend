@@ -111,6 +111,7 @@ class LocalDateFormatterSpec extends TestBaseSpec:
         errors.exists(_.message == "error.date.invalid") shouldBe true
       }
     }
+
     "allow a past date when allowPastDates is true" in {
       val pastDate  = LocalDate.now.minusYears(1)
       val formData  = Map(

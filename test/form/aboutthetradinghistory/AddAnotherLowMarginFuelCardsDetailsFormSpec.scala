@@ -24,7 +24,6 @@ import play.api.data.FormError
 class AddAnotherLowMarginFuelCardsDetailsFormSpec extends PlaySpec:
 
   "AddAnotherLowMarginFuelCardsDetailsForm" should {
-
     "bind a 'yes' value correctly" in {
       val data = Map("addAnotherLowMarginFuelCardsDetails" -> "yes")
       val form = theForm.bind(data)
@@ -49,5 +48,4 @@ class AddAnotherLowMarginFuelCardsDetailsFormSpec extends PlaySpec:
         FormError("addAnotherLowMarginFuelCardsDetails", "error.addAnotherLowMarginFuelCardsDetails.required")
       )
     }
-
   }

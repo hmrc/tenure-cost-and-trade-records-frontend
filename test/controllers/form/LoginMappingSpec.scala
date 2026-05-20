@@ -17,11 +17,9 @@
 package controllers.form
 
 import controllers.LoginController.loginForm
-import controllers.LoginDetails
 import form.Errors
 import org.scalatest.matchers.should
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.data.Form
 import utils.FormBindingTestAssertions.*
 
 import java.time.{ZoneOffset, ZonedDateTime}

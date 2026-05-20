@@ -23,7 +23,6 @@ import utils.TestBaseSpec
 class BunkeredFuelQuestionFormSpec extends TestBaseSpec:
 
   "BunkeredFuelQuestionForm" should {
-
     "bind valid data correctly" in {
       val data = Map(
         "bunkeredFuelQuestion" -> "yes"
@@ -37,7 +36,6 @@ class BunkeredFuelQuestionFormSpec extends TestBaseSpec:
 
     "fail to bind when no data is provided" in {
       val data = Map.empty[String, String]
-
       val form = BunkeredFuelQuestionForm.bunkeredFuelQuestionForm.bind(data)
 
       form.errors  should contain(FormError("bunkeredFuelQuestion", "error.bunkeredFuelQuestion.required"))
@@ -48,7 +46,6 @@ class BunkeredFuelQuestionFormSpec extends TestBaseSpec:
       val data = Map(
         "bunkeredFuelQuestion" -> "invalid"
       )
-
       val form = BunkeredFuelQuestionForm.bunkeredFuelQuestionForm.bind(data)
 
       form.errors  should contain(FormError("bunkeredFuelQuestion", "error.bunkeredFuelQuestion.required"))

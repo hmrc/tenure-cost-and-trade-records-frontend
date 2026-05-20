@@ -25,11 +25,11 @@ import utils.SensitiveTestHelper
 
 class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
 
-  val testConfig: Configuration    = loadTestConfig()
+  val testConfig: Configuration = loadTestConfig()
+
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveAboutLeaseOrAgreementPartOne" should {
-
     "encrypt and decrypt sensitive fields correctly" in {
       val originalAboutLeaseOrAgreementPartOne  = AboutLeaseOrAgreementPartOne(
         aboutTheLandlord = Some(
@@ -56,6 +56,5 @@ class SensitiveAboutLeaseOrAgreementPartOneSpec extends AnyWordSpecLike with Mat
       sensitiveAboutLeaseOrAgreementPartOne.connectedToLandlordDetails.isInstanceOf[Option[String]] shouldBe true
 
       sensitiveAboutLeaseOrAgreementPartOne.decryptedValue shouldBe originalAboutLeaseOrAgreementPartOne
-
     }
   }

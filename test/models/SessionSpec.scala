@@ -16,7 +16,7 @@
 
 package models
 
-import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 import test.TestObjects
@@ -24,38 +24,41 @@ import test.TestObjects
 /**
   * @author Yuriy Tumakha
   */
-class SessionSpec extends AnyFlatSpec with Matchers with TestObjects:
+class SessionSpec extends AnyWordSpec with Matchers with TestObjects:
 
-  "Session" should "be serialized/deserialized from JSON - 6010" in:
-    val json = Json.toJson(aboutYourTradingHistory6010YesSession)
-    json.as[Session] shouldBe aboutYourTradingHistory6010YesSession
+  "Session" should {
+    "be serialized/deserialized from JSON - 6010" in {
+      val json = Json.toJson(aboutYourTradingHistory6010YesSession)
+      json.as[Session] shouldBe aboutYourTradingHistory6010YesSession
+    }
 
-  it should "be serialized/deserialized from JSON - 6020" in {
-    val json = Json.toJson(prefilledFull6020Session)
-    json.as[Session] shouldBe prefilledFull6020Session
-  }
+    "be serialized/deserialized from JSON - 6020" in {
+      val json = Json.toJson(prefilledFull6020Session)
+      json.as[Session] shouldBe prefilledFull6020Session
+    }
 
-  it should "be serialized/deserialized from JSON - 6030" in {
-    val json = Json.toJson(prefilledFull6030Session)
-    json.as[Session] shouldBe prefilledFull6030Session
-  }
+    "be serialized/deserialized from JSON - 6030" in {
+      val json = Json.toJson(prefilledFull6030Session)
+      json.as[Session] shouldBe prefilledFull6030Session
+    }
 
-  it should "be serialized/deserialized from JSON - 6045 Trading History" in {
-    val json = Json.toJson(aboutYourTradingHistory6045YesSession)
-    json.as[Session] shouldBe aboutYourTradingHistory6045YesSession
-  }
+    "be serialized/deserialized from JSON - 6045 Trading History" in {
+      val json = Json.toJson(aboutYourTradingHistory6045YesSession)
+      json.as[Session] shouldBe aboutYourTradingHistory6045YesSession
+    }
 
-  it should "be serialized/deserialized from JSON - 6045 Franchise or Letting" in {
-    val json = Json.toJson(sessionAboutFranchiseOrLetting6045)
-    json.as[Session] shouldBe sessionAboutFranchiseOrLetting6045
-  }
+    "be serialized/deserialized from JSON - 6045 Franchise or Letting" in {
+      val json = Json.toJson(sessionAboutFranchiseOrLetting6045)
+      json.as[Session] shouldBe sessionAboutFranchiseOrLetting6045
+    }
 
-  it should "be serialized/deserialized from JSON - 6048" in {
-    val json = Json.toJson(aboutYouAndTheProperty6048YesSession)
-    json.as[Session] shouldBe aboutYouAndTheProperty6048YesSession
-  }
+    "be serialized/deserialized from JSON - 6048" in {
+      val json = Json.toJson(aboutYouAndTheProperty6048YesSession)
+      json.as[Session] shouldBe aboutYouAndTheProperty6048YesSession
+    }
 
-  it should "be serialized/deserialized from JSON - 6076" in {
-    val json = Json.toJson(aboutYourTradingHistory6076YesSession)
-    json.as[Session] shouldBe aboutYourTradingHistory6076YesSession
+    "be serialized/deserialized from JSON - 6076" in {
+      val json = Json.toJson(aboutYourTradingHistory6076YesSession)
+      json.as[Session] shouldBe aboutYourTradingHistory6076YesSession
+    }
   }

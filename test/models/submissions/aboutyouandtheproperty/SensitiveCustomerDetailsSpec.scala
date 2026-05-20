@@ -26,11 +26,11 @@ import utils.SensitiveTestHelper
 
 class SensitiveCustomerDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
 
-  val testConfig: Configuration    = loadTestConfig()
+  val testConfig: Configuration = loadTestConfig()
+
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveCustomerDetails" should {
-
     "encrypt and decrypt customer details correctly" in {
       val originalCustomerDetails = CustomerDetails(
         fullName = "John Doe",
@@ -46,6 +46,5 @@ class SensitiveCustomerDetailsSpec extends AnyWordSpecLike with Matchers with Se
       sensitiveCustomerDetails.contactDetails.isInstanceOf[SensitiveContactDetails] shouldBe true
 
       sensitiveCustomerDetails.decryptedValue shouldBe originalCustomerDetails
-
     }
   }

@@ -17,8 +17,8 @@
 package models.submissions
 
 import models.submissions.common.{Address, ContactDetails}
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.Json
 import test.TestObjects
 
@@ -27,33 +27,39 @@ import java.time.Instant
 /**
   * @author Yuriy Tumakha
   */
-class RequestReferenceNumberSubmissionSpec extends AnyFlatSpec with should.Matchers with TestObjects:
+class RequestReferenceNumberSubmissionSpec extends AnyWordSpec with should.Matchers with TestObjects:
 
-  "RequestReferenceNumberSubmission model" should "be serialized/deserialized from json" in:
+  "RequestReferenceNumberSubmission model" should {
+    "be serialized/deserialized from json" in {
+      val requestReferenceNumberSubmissionModel = RequestReferenceNumberSubmission(
+        "12345",
+        "BusinessTradingName",
+        Address(
+          buildingNameNumber = "123",
+          street1 = Some("Main Street"),
+          town = "Bristol",
+          county = Some("Bristol"),
+          postcode = "AN12 3YZ"
+        ),
+        "Full Name",
+        ContactDetails(
+          "07711122233345",
+          "test@email.co.uk"
+        ),
+        None,
+        Instant.ofEpochMilli(1745326680),
+        Some("en")
+      )
 
-    val requestReferenceNumberSubmissionModel = RequestReferenceNumberSubmission(
-      "12345",
-      "BusinessTradingName",
-      Address(
-        buildingNameNumber = "123",
-        street1 = Some("Main Street"),
-        town = "Bristol",
-        county = Some("Bristol"),
-        postcode = "AN12 3YZ"
-      ),
-      "Full Name",
-      ContactDetails(
-        "07711122233345",
-        "test@email.co.uk"
-      ),
-      None,
-      Instant.ofEpochMilli(1745326680),
-      Some("en")
-    )
+      val jsonString =
+        """{"id":"12345","businessTradingName":"BusinessTradingName",
+          |"address":{"buildingNameNumber":"123","street1":"Main Street","town":"Bristol","county":"Bristol","postcode":"AN12 3YZ"},
+          |"fullName":"Full Name","contactDetails":{"phone":"07711122233345","email":"test@email.co.uk"},
+          |"createdAt":"1970-01-21T04:48:46.680Z","lang":"en"}""".stripMargin
 
-    val jsonString =
-      """{"id":"12345","businessTradingName":"BusinessTradingName","address":{"buildingNameNumber":"123","street1":"Main Street","town":"Bristol","county":"Bristol","postcode":"AN12 3YZ"},"fullName":"Full Name","contactDetails":{"phone":"07711122233345","email":"test@email.co.uk"},"createdAt":"1970-01-21T04:48:46.680Z","lang":"en"}"""
-
-    val json = Json.toJson(requestReferenceNumberSubmissionModel)
-    json.as[RequestReferenceNumberSubmission] shouldBe requestReferenceNumberSubmissionModel
-    Json.stringify(json)                      shouldBe jsonString
+      val json = Json.toJson(requestReferenceNumberSubmissionModel)
+      json.as[RequestReferenceNumberSubmission]                             shouldBe requestReferenceNumberSubmissionModel
+      Json.parse(Json.stringify(json)).as[RequestReferenceNumberSubmission] shouldBe requestReferenceNumberSubmissionModel
+      Json.parse(jsonString).as[RequestReferenceNumberSubmission]           shouldBe requestReferenceNumberSubmissionModel
+    }
+  }

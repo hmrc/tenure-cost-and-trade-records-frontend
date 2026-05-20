@@ -19,33 +19,36 @@ package form
 import form.ReferenceNumberForm.theForm
 import models.submissions.ReferenceNumber
 import org.scalatest.OptionValues
-import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.must.Matchers
 
-class ReferenceNumberFormSpec extends AnyFlatSpec with Matchers with OptionValues:
+class ReferenceNumberFormSpec extends AnyWordSpec with Matchers with OptionValues:
 
-  it should "bind good data as expected" in:
-    val data  = Map(
-      "referenceNumber" -> "0123456789"
-    )
-    val bound = theForm.bind(data)
-    bound.hasErrors mustBe false
-    bound.data mustBe data
+  "ReferenceNumberForm" should {
+    "bind good data as expected" in {
+      val data  = Map(
+        "referenceNumber" -> "0123456789"
+      )
+      val bound = theForm.bind(data)
+      bound.hasErrors mustBe false
+      bound.data mustBe data
+    }
 
-  it should "unbind good data as expected" in {
-    val referenceNumber = ReferenceNumber(
-      value = "0123456789"
-    )
-    val filled          = theForm.fill(referenceNumber)
-    filled.hasErrors mustBe false
-    filled.data mustBe Map(
-      "referenceNumber" -> "0123456789"
-    )
-  }
+    "unbind good data as expected" in {
+      val referenceNumber = ReferenceNumber(
+        value = "0123456789"
+      )
+      val filled          = theForm.fill(referenceNumber)
+      filled.hasErrors mustBe false
+      filled.data mustBe Map(
+        "referenceNumber" -> "0123456789"
+      )
+    }
 
-  it should "detect errors" in {
-    val bound = theForm.bind(Map.empty)
-    bound.hasErrors mustBe true
-    bound.errors must have size 1
-    bound.error("referenceNumber").value.message mustBe "error.referenceNumber.required"
+    "detect errors" in {
+      val bound = theForm.bind(Map.empty)
+      bound.hasErrors mustBe true
+      bound.errors must have size 1
+      bound.error("referenceNumber").value.message mustBe "error.referenceNumber.required"
+    }
   }

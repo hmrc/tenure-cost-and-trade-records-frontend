@@ -17,7 +17,7 @@
 package models
 
 import models.submissions.NotConnectedSubmission
-import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 import test.TestObjects
@@ -25,8 +25,11 @@ import test.TestObjects
 /**
   * @author Yuriy Tumakha
   */
-class NotConnectedSubmissionSpec extends AnyFlatSpec with Matchers with TestObjects:
+class NotConnectedSubmissionSpec extends AnyWordSpec with Matchers with TestObjects:
 
-  "NotConnectedSubmission" should "be serialized/deserialized from JSON" in:
-    val json = Json.toJson(notConnectedSubmission)
-    json.as[NotConnectedSubmission] shouldBe notConnectedSubmission
+  "NotConnectedSubmission" should {
+    "be serialized/deserialized from JSON" in {
+      val json = Json.toJson(notConnectedSubmission)
+      json.as[NotConnectedSubmission] shouldBe notConnectedSubmission
+    }
+  }

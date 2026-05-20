@@ -17,8 +17,8 @@
 package form
 
 import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.data.Forms.{list, mapping, single, text}
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, FormError, Mapping}
@@ -30,88 +30,92 @@ import scala.util.Try
 /**
   * @author Yuriy Tumakha
   */
-class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyFlatSpec with should.Matchers:
+class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyWordSpec with should.Matchers:
 
-  private def columnMapping: Mapping[BigDecimal] = single(
-    "otherIncome" ->
-      text
-        .verifying("error.otherIncome.range", s => Try(BigDecimal(s)).isSuccess)
-        .transform[BigDecimal](BigDecimal(_), _.toString)
-  )
+  private def columnMapping: Mapping[BigDecimal] =
+    single(
+      "otherIncome" ->
+        text
+          .verifying("error.otherIncome.range", s => Try(BigDecimal(s)).isSuccess)
+          .transform[BigDecimal](BigDecimal(_), _.toString)
+    )
 
-  private val form: Form[NonZeroSumModel] = Form(
-    mapping(
-      "turnover"           -> list(columnMapping),
-      "otherIncomeDetails" -> mandatoryStringIfNonZeroSum(
-        ".otherIncome",
-        "error.otherIncomeDetails.required"
-      ).verifying(
-        maxLength(2000, "error.otherIncomeDetails.maxLength")
+  private val form: Form[NonZeroSumModel] =
+    Form(
+      mapping(
+        "turnover"           -> list(columnMapping),
+        "otherIncomeDetails" -> mandatoryStringIfNonZeroSum(
+          ".otherIncome",
+          "error.otherIncomeDetails.required"
+        ).verifying(
+          maxLength(2000, "error.otherIncomeDetails.maxLength")
+        )
+      )(NonZeroSumModel.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )
+
+  "mandatoryStringIfNonZeroSum" should {
+    "bind all mapped values" in {
+      val data = Map(
+        "turnover[0].otherIncome" -> "1000",
+        "otherIncomeDetails"      -> "otherIncome details",
+        "unknown"                 -> "value"
       )
-    )(NonZeroSumModel.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+      val res  = form.bind(data)
 
-  "mandatoryStringIfNonZeroSum" should "bind all mapped values" in {
-    val data = Map(
-      "turnover[0].otherIncome" -> "1000",
-      "otherIncomeDetails"      -> "otherIncome details",
-      "unknown"                 -> "value"
-    )
-    val res  = form.bind(data)
+      res.errors shouldBe empty
+      res.value  shouldBe Some(NonZeroSumModel(List(BigDecimal("1000")), "otherIncome details"))
+    }
 
-    res.errors shouldBe empty
-    res.value  shouldBe Some(NonZeroSumModel(List(BigDecimal("1000")), "otherIncome details"))
-  }
+    "make mandatory `otherIncomeDetails` field if other income for any year is not 0" in {
+      val data = Map(
+        "turnover[0].otherIncome" -> "0",
+        "turnover[1].otherIncome" -> "2000"
+      )
+      val res  = form.bind(data)
 
-  it should "make mandatory `otherIncomeDetails` field if other income for any year is not 0" in {
-    val data = Map(
-      "turnover[0].otherIncome" -> "0",
-      "turnover[1].otherIncome" -> "2000"
-    )
-    val res  = form.bind(data)
+      res.errors shouldBe List(FormError("otherIncomeDetails", List("error.otherIncomeDetails.required"), List.empty))
+      res.value  shouldBe None
+    }
 
-    res.errors shouldBe List(FormError("otherIncomeDetails", List("error.otherIncomeDetails.required"), List.empty))
-    res.value  shouldBe None
-  }
+    "make optional `otherIncomeDetails` field if `otherIncome` fields sum is zero" in {
+      val data = Map(
+        "turnover[0].otherIncome" -> "0",
+        "turnover[1].otherIncome" -> "0"
+      )
+      val res  = form.bind(data)
 
-  it should "make optional `otherIncomeDetails` field if `otherIncome` fields sum is zero" in {
-    val data = Map(
-      "turnover[0].otherIncome" -> "0",
-      "turnover[1].otherIncome" -> "0"
-    )
-    val res  = form.bind(data)
+      res.errors shouldBe empty
+      res.value  shouldBe Some(NonZeroSumModel(List(zeroBigDecimal, zeroBigDecimal), ""))
+    }
 
-    res.errors shouldBe empty
-    res.value  shouldBe Some(NonZeroSumModel(List(zeroBigDecimal, zeroBigDecimal), ""))
-  }
+    "make optional `otherIncomeDetails` field if no values for `otherIncome` fields are supplied" in {
+      val res = form.bind(Map.empty[String, String])
 
-  it should "make optional `otherIncomeDetails` field if no values for `otherIncome` fields are supplied" in {
-    val res = form.bind(Map.empty[String, String])
+      res.errors shouldBe empty
+      res.value  shouldBe Some(NonZeroSumModel(List.empty, ""))
+    }
 
-    res.errors shouldBe empty
-    res.value  shouldBe Some(NonZeroSumModel(List.empty, ""))
-  }
+    "bind value for optional `otherIncomeDetails` field if no values for `otherIncome` fields are supplied" in {
+      val data = Map(
+        "otherIncomeDetails" -> "No other income"
+      )
+      val res  = form.bind(data)
 
-  it should "bind value for optional `otherIncomeDetails` field if no values for `otherIncome` fields are supplied" in {
-    val data = Map(
-      "otherIncomeDetails" -> "No other income"
-    )
-    val res  = form.bind(data)
+      res.errors shouldBe empty
+      res.value  shouldBe Some(NonZeroSumModel(List.empty, "No other income"))
+    }
 
-    res.errors shouldBe empty
-    res.value  shouldBe Some(NonZeroSumModel(List.empty, "No other income"))
-  }
+    "return maxLength error for too big `otherIncomeDetails`" in {
+      val data = Map[String, String](
+        "otherIncomeDetails" -> ("Too big other income details." + "x" * 2000)
+      )
+      val res  = form.bind(data)
 
-  it should "return maxLength error for too big `otherIncomeDetails`" in {
-    val data = Map[String, String](
-      "otherIncomeDetails" -> ("Too big other income details." + "x" * 2000)
-    )
-    val res  = form.bind(data)
-
-    res.errors shouldBe List(
-      FormError("otherIncomeDetails", List("error.otherIncomeDetails.maxLength"), ArraySeq(2000))
-    )
-    res.value  shouldBe None
+      res.errors shouldBe List(
+        FormError("otherIncomeDetails", List("error.otherIncomeDetails.maxLength"), ArraySeq(2000))
+      )
+      res.value  shouldBe None
+    }
   }
 
   case class NonZeroSumModel(
