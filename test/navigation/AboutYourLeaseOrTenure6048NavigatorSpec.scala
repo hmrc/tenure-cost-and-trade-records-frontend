@@ -73,7 +73,6 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec:
     }
 
     "return a function that goes to work carried out condition page when property updates answer is no123" in {
-
       val session = session6048.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6048.aboutLeaseOrAgreementPartTwo.getOrElse(

@@ -200,7 +200,6 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec:
           )
         )
       )
-
       navigator
         .nextPage(TenantsAdditionsDisregardedDetailsId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
@@ -214,7 +213,6 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec:
           )
         )
       )
-
       navigator
         .nextPage(IncentivesPaymentsConditionsId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
@@ -229,7 +227,6 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec:
           )
         )
       )
-
       navigator
         .nextPage(IncentivesPaymentsConditionsId, answers)
         .apply(answers) shouldBe
@@ -246,7 +243,6 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec:
           )
         )
       )
-
       navigator
         .nextPage(TenantsAdditionsDisregardedId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()

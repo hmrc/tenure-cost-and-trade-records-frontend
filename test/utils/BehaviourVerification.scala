@@ -17,11 +17,12 @@
 package utils
 
 import org.scalatest.matchers.should
-import security.ArgumentsDidNotMatch
 
 import scala.concurrent.Future
 
 trait BehaviourVerification extends should.Matchers:
+
+  case class ArgumentsDidNotMatch(es: Seq[Any], as: Seq[Any]) extends Exception(s"Expected: $es but got: $as")
 
   def respondWith[A, B](a: A)(b: B): A => Future[B] =
     aa => if a == aa then Future.successful(b) else throw ArgumentsDidNotMatch(Seq(a), Seq(aa))

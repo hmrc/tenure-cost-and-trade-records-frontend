@@ -34,12 +34,12 @@ import scala.concurrent.ExecutionContext
 class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   private val navigator = AboutYourLeaseOrTenureNavigator(audit)
 
-  private val session6016 =
-    Session("99996016004", FOR6016, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
+  private val session6016 = Session("99996016004", FOR6016, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -58,7 +58,6 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec:
       )
       val result  = navigator.connectedToLandlordRouting(answers)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
-
     }
 
     "return a function that goes to connected to landlord details page when connected to landlord and answer is 'no'" in {
@@ -67,7 +66,6 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec:
       )
       val result  = navigator.connectedToLandlordRouting(answers)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show()
-
     }
 
     "return a function that goes to current annual rent agreement page when current rent first paid has been completed" in {
@@ -176,7 +174,6 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec:
     }
 
     "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
-
       val session = session6016.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6016.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -196,7 +193,6 @@ class AboutYourLeaseOrTenure6016NavigatorSpec extends TestBaseSpec:
     }
 
     "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {
-
       val session = session6016.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6016.aboutLeaseOrAgreementPartTwo.getOrElse(

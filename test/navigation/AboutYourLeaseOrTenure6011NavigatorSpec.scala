@@ -32,12 +32,12 @@ import scala.concurrent.ExecutionContext
 class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   private val navigator = AboutYourLeaseOrTenureNavigator(audit)
 
-  private val session6011 =
-    Session("99996010004", FOR6011, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
+  private val session6011 = Session("99996010004", FOR6011, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -112,7 +112,6 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec:
     }
 
     "return a function that goes to Tenancy lease agreement page when What is your current rent has been completed" in {
-
       val session = session6011.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6011.aboutLeaseOrAgreementPartTwo.getOrElse(

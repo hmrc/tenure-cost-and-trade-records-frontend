@@ -20,6 +20,8 @@ import play.api.data.Form
 import play.api.data.Forms.*
 import utils.TestBaseSpec
 
+import scala.language.implicitConversions
+
 class OptionalCurrencyMappingSpec extends TestBaseSpec:
 
   private val testMapping = OptionalCurrencyMapping.partOfAnnualRent("test", Some(BigDecimal(100)), 20)

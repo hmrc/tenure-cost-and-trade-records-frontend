@@ -31,24 +31,22 @@ class LoginToBackendSpec extends UnitTest:
 
   type ReferenceNumber = String
 
-  "Login to HOD with valid credentials" when {
+  private val l: (RefNumber, Postcode) => Future[LoginResult] = LoginToBackend(
+    respondWith(refNum, postcode)(loginResponse)
+  )
 
-    "there is no previously stored document" should {
-      val l: (RefNumber, Postcode) => Future[LoginResult] = LoginToBackend(
-        respondWith(refNum, postcode)(loginResponse)
-      )
-      val r                                               = await(l(refNum, postcode))
+  private val r = await(l(refNum, postcode))
 
-      "indicate there is no saved document" in
-        assert(
-          r === NoExistingDocument(
-            loginResponse.forAuthToken,
-            loginResponse.forType,
-            loginResponse.address,
-            loginResponse.isWelsh
-          )
+  "Login to HOD with valid credentials when there is no previously stored document" should {
+    "indicate there is no saved document" in
+      assert(
+        r === NoExistingDocument(
+          loginResponse.forAuthToken,
+          loginResponse.forType,
+          loginResponse.address,
+          loginResponse.isWelsh
         )
-    }
+      )
   }
 
   object TestData:
@@ -59,5 +57,3 @@ class LoginToBackendSpec extends UnitTest:
     val forType: String                 = FOR6010.toString
     val auth                            = "YouAreLoggedInNow"
     val loginResponse: FORLoginResponse = FORLoginResponse(auth, forType, testAddress, isWelsh = false)
-
-case class ArgumentsDidNotMatch(es: Seq[Any], as: Seq[Any]) extends Exception(s"Expected: $es but got: $as")

@@ -248,6 +248,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec:
       itemsIncluded: List[String] = List("item1", "item2")
     ): LettingPartOfPropertyDetails =
       LettingPartOfPropertyDetails(tenantDetails, rentDetails, itemsIncluded)
+
     "return the correct Call when tenantDetails is null" in {
       val detail = createLettingDetails(tenantDetails = null)
       val result = navigator.getIncompleteSectionCall(detail, 0)
@@ -292,7 +293,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec:
 
   "redirect to LettingPartOfPropertyDetails when details are incomplete" in {
     val incompleteDetails = IndexedSeq(
-      testlettingPartOfPropertyDetails.copy(tenantDetails = null)
+      testLettingPartOfPropertyDetails.copy(tenantDetails = null)
     )
     val session           = stillConnectedDetailsYesToAllSession.copy(
       stillConnectedDetails = Some(
@@ -325,7 +326,7 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec:
 
   "redirect to ProvideContactDetails when section is complete and addAnother is No" in {
     val completeDetails = IndexedSeq(
-      testlettingPartOfPropertyDetails.copy(
+      testLettingPartOfPropertyDetails.copy(
         tenantDetails = testTenantDetails,
         lettingPartOfPropertyRentDetails = testLettingDetails,
         itemsIncludedInRent = List("test"),
@@ -350,9 +351,10 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec:
 
   "redirect to LettingPartOfPropertyDetails page when section is complete and addAnother is Yes" in {
     val completeDetails = IndexedSeq(
-      testlettingPartOfPropertyDetails.copy(addAnotherLettingToProperty = Some(AnswerYes))
+      testLettingPartOfPropertyDetails.copy(addAnotherLettingToProperty = Some(AnswerYes))
     )
-    val session         = stillConnectedDetailsYesToAllSession.copy(
+
+    val session = stillConnectedDetailsYesToAllSession.copy(
       stillConnectedDetails = Some(
         prefilledStillConnectedDetailsYesToAll.copy(
           lettingPartOfPropertyDetails = completeDetails,

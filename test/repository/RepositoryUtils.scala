@@ -26,6 +26,7 @@ trait RepositoryUtils:
   this: MockitoExtendedSugar =>
 
   val mockSessionRepo: SessionRepo = mock[SessionRepo]
+
   when(mockSessionRepo.start(any[Session])(using any)).thenReturn(Future.successful(()))
   when(mockSessionRepo.saveOrUpdate(any[Session])(using any)).thenReturn(Future.successful(()))
   when(mockSessionRepo.remove()(using any)).thenReturn(Future.successful(()))

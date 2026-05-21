@@ -16,6 +16,7 @@
 
 package test
 
+import controllers.toOpt
 import models.ForType.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
@@ -47,13 +48,15 @@ import models.{Session, SubmissionDraft}
 
 import java.time.temporal.ChronoUnit.MILLIS
 import java.time.{Instant, LocalDate}
+import scala.language.implicitConversions
 
 trait TestObjects:
 
-  val referenceNumber: String = "99996010004"
+  given intToBigDecimal: Conversion[Int, BigDecimal]            = BigDecimal(_)
+  given intToBigDecimalOpt: Conversion[Int, Option[BigDecimal]] = intToBigDecimal(_)
 
-  val prefilledAddress: Address =
-    Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
+  val referenceNumber: String   = "99996010004"
+  val prefilledAddress: Address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
   val token: String             = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik="
 
   val prefilledContactDetails: ContactDetails = ContactDetails("1234567890", "TestEmail@gmail.com")
@@ -181,13 +184,6 @@ trait TestObjects:
     Some(AnswerYes)
   )
 
-  val testlettingPartOfPropertyDetails: LettingPartOfPropertyDetails = LettingPartOfPropertyDetails(
-    testTenantDetails,
-    testLettingDetails,
-    List("Other"),
-    addAnotherLettingToProperty = None
-  )
-
   val testTenantDetails: TenantDetails =
     TenantDetails(
       "name",
@@ -197,6 +193,13 @@ trait TestObjects:
 
   val testLettingDetails: Option[LettingPartOfPropertyRentDetails] = Some(
     LettingPartOfPropertyRentDetails(2000, prefilledDateInput)
+  )
+
+  val testLettingPartOfPropertyDetails: LettingPartOfPropertyDetails = LettingPartOfPropertyDetails(
+    testTenantDetails,
+    testLettingDetails,
+    List("Other"),
+    addAnotherLettingToProperty = None
   )
 
   val prefilledStillConnectedDetailsYesToAll: StillConnectedDetails = StillConnectedDetails(

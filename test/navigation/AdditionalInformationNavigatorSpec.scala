@@ -30,7 +30,7 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec:
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator: AdditionalInformationNavigator = AdditionalInformationNavigator(audit)
+  private val navigator: AdditionalInformationNavigator = AdditionalInformationNavigator(audit)
 
   "Additional information navigator" when {
 

@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec:
 
-  val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
+  private val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
 
   "About you and the property navigator for 6020" should {
 
@@ -55,7 +55,6 @@ class AboutYouAndTheProperty6020NavigatorSpec extends TestBaseSpec:
       val answers = aboutYouAndTheProperty6020YesSession.copy(
         aboutYouAndTheProperty = Some(AboutYouAndTheProperty(charityQuestion = Some(AnswerNo)))
       )
-
       navigator
         .nextPage(CharityQuestionPageId, answers)
         .apply(answers) shouldBe

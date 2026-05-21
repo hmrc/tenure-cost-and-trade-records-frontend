@@ -104,4 +104,5 @@ class LettingHistoryIdentifiersSpec extends TestBaseSpec:
       "advertisingRemovePage".asPageIdentifier     shouldBe Some(AdvertisingRemovePageId)
       "checkYourAnswers".asPageIdentifier          shouldBe Some(CheckYourAnswersPageId)
     }
+
   }

@@ -30,7 +30,7 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec:
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator: RequestReferenceNumberNavigator = RequestReferenceNumberNavigator(audit)
+  private val navigator: RequestReferenceNumberNavigator = RequestReferenceNumberNavigator(audit)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 

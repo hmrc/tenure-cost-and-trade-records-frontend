@@ -35,6 +35,7 @@ import scala.concurrent.ExecutionContext
 class RemoveConnectionNavigatorSpec extends TestBaseSpec:
 
   val audit: Audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   val navigator: RemoveConnectionNavigator = RemoveConnectionNavigator(audit)

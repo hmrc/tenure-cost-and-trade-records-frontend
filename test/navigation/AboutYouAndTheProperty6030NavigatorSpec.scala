@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 
 class AboutYouAndTheProperty6030NavigatorSpec extends TestBaseSpec:
 
-  val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
+  private val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
 
   "About you and the property navigator for 6030" when {
 

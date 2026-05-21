@@ -23,12 +23,11 @@ import utils.TestBaseSpec
 
 class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach:
 
-  val repository: SessionRepo = inject[SessionRepo]
+  private val repository: SessionRepo = inject[SessionRepo]
 
   "session repository" should {
 
     "start by saving or updating data" in {
-
       repository.start(baseFilled6010Session).futureValue
 
       val returnedSessionData: SessionData = repository.findSession.futureValue // shouldBe session
@@ -46,7 +45,6 @@ class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach:
       inside(returnedSessionData) { case Some(session) =>
         session.referenceNumber shouldBe referenceNumber
       }
-
     }
 
     "remove data from current session" in {
@@ -56,7 +54,6 @@ class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach:
       val returnedSessionData = repository.get.futureValue
 
       returnedSessionData shouldBe None
-
     }
   }
 

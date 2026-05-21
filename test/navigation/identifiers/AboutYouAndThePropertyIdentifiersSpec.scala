@@ -84,6 +84,7 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec:
 
     "Identifier for plants and technologies page" in
       assert(BatteriesCapacityId.toString.equals("batteriesCapacityPage"))
+
     "Identifier for commercial letting question  page" in
       assert(CommercialLettingQuestionId.toString.equals("commercialLettingQuestionPage"))
 
@@ -92,6 +93,7 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec:
 
     "Identifier for commercial letting availability welsh  page" in
       assert(CommercialLettingAvailabilityWelshId.toString.equals("commercialLettingAvailabilityWelshPage"))
+
     "Identifier for  Occupiers Details  page" in
       assert(OccupiersDetailsId.toString.equals("occupiersDetailsPage"))
 

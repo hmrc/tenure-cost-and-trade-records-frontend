@@ -28,11 +28,11 @@ import scala.concurrent.ExecutionContext
 
 class AboutYouAndThePropertyNavigator6076Spec extends TestBaseSpec:
 
-  val audit: Audit = mock[Audit]
+  private val audit: Audit = mock[Audit]
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
+  private val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
 
   "About you and the property navigator for form 6076" when {
 
