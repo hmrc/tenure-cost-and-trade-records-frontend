@@ -16,27 +16,29 @@
 
 package util
 
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
+import org.scalatest.wordspec.AnyWordSpec
 import util.AlphanumericPasswordGenerator.passwordLength
 
 /**
   * @author Yuriy Tumakha
   */
-class AlphanumericPasswordGeneratorSpec extends AnyFlatSpec with should.Matchers:
+class AlphanumericPasswordGeneratorSpec extends AnyWordSpec with should.Matchers:
 
-  "AlphanumericPasswordGenerator" should s"generate passwords with length $passwordLength" in {
-    AlphanumericPasswordGenerator.generatePassword should have length passwordLength
-  }
+  "AlphanumericPasswordGenerator" should {
+    s"generate passwords with length $passwordLength" in {
+      AlphanumericPasswordGenerator.generatePassword should have length passwordLength
+    }
 
-  it should "generate password using only allowed digits and chars" in {
-    AlphanumericPasswordGenerator.generatePassword should fullyMatch regex s"^[abcdefghjkmnpqrstuvwxyz23456789]{$passwordLength}$$"
-  }
+    "generate password using only allowed digits and chars" in {
+      AlphanumericPasswordGenerator.generatePassword should fullyMatch regex s"^[abcdefghjkmnpqrstuvwxyz23456789]{$passwordLength}$$"
+    }
 
-  it should "generate different password each time" in {
-    AlphanumericPasswordGenerator.generatePassword should not be AlphanumericPasswordGenerator.generatePassword
-  }
+    "generate different password each time" in {
+      AlphanumericPasswordGenerator.generatePassword should not be AlphanumericPasswordGenerator.generatePassword
+    }
 
-  it should "have at least 4 different chars in password" in {
-    AlphanumericPasswordGenerator.generatePassword.toSet.size should be >= 4
+    "have at least 4 different chars in password" in {
+      AlphanumericPasswordGenerator.generatePassword.toSet.size should be >= 4
+    }
   }

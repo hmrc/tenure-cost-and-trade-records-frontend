@@ -24,14 +24,13 @@ import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotConnectedContactDetails]:
 
-  val messageKeyPrefix = "checkYourAnswersNotConnected"
+  private val messageKeyPrefix = "checkYourAnswersNotConnected"
 
   override val form: Form[NotConnectedContactDetails] = NotConnectedForm.notConnectedForm
 
-  def createView: () => Html = () =>
-    checkYourAnswersNotConnectedView(notConnected6010NoSession)(using fakeRequest, messages)
+  private def createView: () => Html = () => checkYourAnswersNotConnectedView(notConnected6010NoSession)(using fakeRequest, messages)
 
-  "Check Your Answers Additional Information view" must {
+  "Check Your Answers Additional Information view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

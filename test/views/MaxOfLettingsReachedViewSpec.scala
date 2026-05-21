@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.ViewBehaviours
 
-class maxOfLettingsReachedViewSpec extends ViewBehaviours:
+class MaxOfLettingsReachedViewSpec extends ViewBehaviours:
 
   private val messageKeyPrefix     = "maxOf5Lettings"
   private val messageKeyPrefix6015 = "maxOf5Lettings.businessOrConcession"
@@ -35,7 +35,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours:
 
   private val sessionRequest6030 = SessionRequest(baseFilled6030Session, fakeRequest)
 
-  val form: Form[Boolean] = MaxOfLettingsForm.maxOfLettingsForm(using messages)
+  private val form: Form[Boolean] = MaxOfLettingsForm.maxOfLettingsForm(using messages)
 
   private def createView = () =>
     maxOfLettingsReachedView(
@@ -58,7 +58,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours:
       "connection"
     )(using sessionRequest, messages)
 
-  "max of Lettings reached view" must {
+  "max of Lettings reached view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -68,6 +68,7 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours:
       assert(doc.toString.contains(messages("maxOf5Lettings.confirm")))
       assert(doc.toString.contains(messages("maxOf5Lettings.link")))
     }
+
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
@@ -80,13 +81,15 @@ class maxOfLettingsReachedViewSpec extends ViewBehaviours:
       assert(loginButton == messages("button.save.label"))
     }
   }
-  "max of Lettings franchise reached view for 6010" must {
+
+  "max of Lettings franchise reached view for 6010" should {
     behave like normalPage(prepareViewFranchise(sessionRequest), messageKeyPrefix6010)
   }
 
-  "max of Lettings reached franchise  view for 6015" must {
+  "max of Lettings reached franchise  view for 6015" should {
     behave like normalPage(prepareViewFranchise(sessionRequest6015), messageKeyPrefix6015)
   }
-  "max of Lettings reached franchise  view for 6030" must {
+
+  "max of Lettings reached franchise  view for 6030" should {
     behave like normalPage(prepareViewFranchise(sessionRequest6030), messageKeyPrefix6030)
   }

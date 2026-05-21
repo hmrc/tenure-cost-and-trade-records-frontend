@@ -37,7 +37,7 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
   private def createViewUsingForm: Form[RemoveConnectionsDetails] => Html = (form: Form[RemoveConnectionsDetails]) =>
     removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  "Past connection view" must {
+  "Past connection view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

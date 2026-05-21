@@ -31,7 +31,7 @@ class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviou
   private def createViewUsingForm = (form: Form[String]) =>
     requestReferenceNumberPropertyDetailsView(form)(using fakeRequest, messages)
 
-  "No reference number view" must {
+  "No reference number view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

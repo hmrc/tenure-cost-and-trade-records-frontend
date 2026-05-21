@@ -365,5 +365,5 @@ class ConnectionToPropertyNavigatorSpec extends TestBaseSpec:
 
     navigator
       .nextPage(AddAnotherLettingPartOfPropertyPageId, session)
-      .apply(session) shouldBe routes.LettingPartOfPropertyDetailsController.show(Some(0))
+      .apply(session) shouldBe routes.LettingPartOfPropertyDetailsController.show(Some(1))
   }

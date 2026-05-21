@@ -29,7 +29,8 @@ object FormBindingTestAssertions extends should.Matchers:
     if f.value.isEmpty then
       fail("Form did not bind")
 
-  def mustContainRequiredErrorFor[T](field: String, f: Form[T]): Unit = mustContainError(field, Errors.required, f)
+  def mustContainRequiredErrorFor[T](field: String, f: Form[T]): Unit =
+    mustContainError(field, Errors.required, f)
 
   def mustContainInvalidCurrencyErrorFor[T](field: String, f: Form[T]): Unit =
     mustContainError(field, Errors.invalidCurrency, f)
@@ -62,7 +63,8 @@ object FormBindingTestAssertions extends should.Matchers:
   def mustContainPrefixedError[T](field: String, error: String, f: Form[T]): Unit =
     mustContainError(field, s"$field.$error", f)
 
-  def mustContainMaxLengthErrorFor[T](field: String, f: Form[T]): Unit = mustContainError(field, Errors.maxLength, f)
+  def mustContainMaxLengthErrorFor[T](field: String, f: Form[T]): Unit =
+    mustContainError(field, Errors.maxLength, f)
 
   def mustOnlyContainError[T](field: String, error: String, f: Form[T]): Unit =
     mustContainError(field, error, f)

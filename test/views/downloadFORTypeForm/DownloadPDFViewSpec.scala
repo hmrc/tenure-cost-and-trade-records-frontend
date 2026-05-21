@@ -38,7 +38,7 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[String]:
   private def createView6076      = () => downloadPDFView("FOR6076", testReferenceNumber)(using fakeRequest, messages)
   private def createViewNoForType = () => downloadPDFView("", testReferenceNumber)(using fakeRequest, messages)
 
-  "download pdf view" must {
+  "download pdf view" should {
 
     behave like normalPage(createView6010, messageKeyPrefix)
 

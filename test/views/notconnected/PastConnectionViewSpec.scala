@@ -38,7 +38,7 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
   private def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  "Past connection view" must {
+  "Past connection view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

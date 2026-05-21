@@ -31,7 +31,7 @@ class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehavio
   private def createView = () =>
     requestReferenceNumberCheckYourAnswersView(notConnected6010NoSession)(using sessionRequest, messages)
 
-  "Check Your Answers Additional Information view" must {
+  "Check Your Answers Additional Information view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

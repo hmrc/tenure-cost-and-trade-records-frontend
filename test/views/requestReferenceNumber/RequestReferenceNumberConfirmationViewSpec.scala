@@ -32,7 +32,7 @@ class RequestReferenceNumberConfirmationViewSpec extends ViewBehaviours:
   val form: Form[Feedback]   = FeedbackFormMapper.feedbackForm
   def createView: () => Html = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
 
-  "confirmation request reference number view" must {
+  "confirmation request reference number view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

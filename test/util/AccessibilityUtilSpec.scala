@@ -23,8 +23,9 @@ import java.time.LocalDate
 
 class AccessibilityUtilSpec extends TestBaseSpec:
 
-  private val mockDateUtilLocalised       = mock[DateUtilLocalised]
-  private val accessibilityUtil           = AccessibilityUtil(mockDateUtilLocalised)
+  private val mockDateUtilLocalised = mock[DateUtilLocalised]
+  private val accessibilityUtil     = AccessibilityUtil(mockDateUtilLocalised)
+
   implicit private val messages: Messages = mock[Messages]
 
   "ariaBuilder" should {
@@ -39,6 +40,5 @@ class AccessibilityUtilSpec extends TestBaseSpec:
       when(mockDateUtilLocalised.formatDayMonthAbbrYear(financialYearEnd)(using messages)).thenReturn(formattedDate)
 
       accessibilityUtil.ariaBuilder(messageKey, financialYearEnd) shouldBe expectedMessage
-
     }
   }

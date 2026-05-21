@@ -24,13 +24,11 @@ class JsonParseErrorSpec extends ViewBehaviours:
   private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
   private def createView     = () => jsonErrorView(Some("backlinktologinpage"))(using sessionRequest, messages)
 
-  "JsonErrorView" must {
+  "JsonErrorView" should {
     "contain text " in {
       val doc = asDocument(createView())
       assert(doc.toString.contains(messages("error.json.page.heading")))
       assert(doc.toString.contains(messages("error.json.page.p1")))
       assert(doc.toString.contains(messages("error.json.page.start")))
-
     }
-
   }

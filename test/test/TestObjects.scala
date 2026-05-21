@@ -50,10 +50,10 @@ import java.time.temporal.ChronoUnit.MILLIS
 import java.time.{Instant, LocalDate}
 import scala.language.implicitConversions
 
-trait TestObjects:
+given intToBigDecimal: Conversion[Int, BigDecimal]            = BigDecimal(_)
+given intToBigDecimalOpt: Conversion[Int, Option[BigDecimal]] = intToBigDecimal(_)
 
-  given intToBigDecimal: Conversion[Int, BigDecimal]            = BigDecimal(_)
-  given intToBigDecimalOpt: Conversion[Int, Option[BigDecimal]] = intToBigDecimal(_)
+trait TestObjects:
 
   val referenceNumber: String   = "99996010004"
   val prefilledAddress: Address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")

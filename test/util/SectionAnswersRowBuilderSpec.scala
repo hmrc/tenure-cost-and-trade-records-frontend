@@ -26,8 +26,7 @@ import utils.TestBaseSpec
   */
 class SectionAnswersRowBuilderSpec extends TestBaseSpec:
 
-  private def sectionAnswers =
-    SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)(using messages)
+  private def sectionAnswers = SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)(using messages)
 
   private val expectedRow = Seq(
     SummaryListRow(
@@ -97,5 +96,4 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec:
         "fullName"
       ) shouldBe Seq.empty
     }
-
   }

@@ -34,7 +34,7 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
   private def createViewUsingForm = (form: Form[ReferenceNumber]) =>
     referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using fakeRequest, messages)
 
-  "Download PDF reference number view" must {
+  "Download PDF reference number view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

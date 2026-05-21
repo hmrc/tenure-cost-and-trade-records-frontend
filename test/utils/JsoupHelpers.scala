@@ -55,10 +55,6 @@ trait JsoupHelpers:
   def contentAsJsoup(result: Future[Result])(using timeout: Timeout, mat: Materializer = NoMaterializer): Document =
     Jsoup.parse(contentAsString(result))
 
-  // --------------------------------------------------------
-  //  S C A L A T E S T     M A T C H E R s
-  // --------------------------------------------------------
-
   def beChecked: CheckboxElementMatcher    = CheckboxElementMatcher(expectedCheck = true)
   def notBeChecked: CheckboxElementMatcher = CheckboxElementMatcher(expectedCheck = false)
 

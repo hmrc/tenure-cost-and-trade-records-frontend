@@ -24,7 +24,7 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails]:
 
   private def login = inject[views.html.login]
 
-  val messageKeyPrefix = "login"
+  private val messageKeyPrefix = "login"
 
   override val form: Form[LoginDetails] = LoginController.loginForm
 
@@ -32,7 +32,7 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails]:
 
   private def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(using fakeRequest, messages)
 
-  "Login view" must {
+  "Login view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -42,6 +42,5 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails]:
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
       assert(loginButton == messages("button.continue.label"))
-
     }
   }
