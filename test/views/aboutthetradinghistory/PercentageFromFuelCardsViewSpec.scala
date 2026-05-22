@@ -68,50 +68,48 @@ class PercentageFromFuelCardsViewSpec extends QuestionViewBehaviours[Seq[Percent
       assert(loginButton == messages("button.continue.label"))
     }
 
-    "Percentage from fuel form" should {
-      "reject empty values" in {
-        val form         = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022", "2021"))(using messages)
-        val formData     = Map(
-          "percentageFromFuelCards-0" -> "",
-          "percentageFromFuelCards-1" -> "100"
-        )
-        val formWithData = form.bind(formData)
+    "reject empty values" in {
+      val form         = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022", "2021"))(using messages)
+      val formData     = Map(
+        "percentageFromFuelCards-0" -> "",
+        "percentageFromFuelCards-1" -> "100"
+      )
+      val formWithData = form.bind(formData)
 
-        formWithData.errors.size shouldBe 1
-        formWithData.errors.head shouldBe FormError(
-          "percentageFromFuelCards-0",
-          messages("error.percentageFromFuelCards.required", 2022.toString)
-        )
-      }
+      formWithData.errors.size shouldBe 1
+      formWithData.errors.head shouldBe FormError(
+        "percentageFromFuelCards-0",
+        messages("error.percentageFromFuelCards.required", 2022.toString)
+      )
+    }
 
-      "reject non-numeric values" in {
-        val form     = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022"))(using messages)
-        val formData = Map(
-          "percentageFromFuelCards-0" -> "abc"
-        )
+    "reject non-numeric values" in {
+      val form     = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022"))(using messages)
+      val formData = Map(
+        "percentageFromFuelCards-0" -> "abc"
+      )
 
-        val formWithData = form.bind(formData)
+      val formWithData = form.bind(formData)
 
-        formWithData.errors.size shouldBe 1
-        formWithData.errors.head shouldBe FormError(
-          "percentageFromFuelCards-0",
-          messages("error.percentageFromFuelCards.range", 2022.toString)
-        )
-      }
+      formWithData.errors.size shouldBe 1
+      formWithData.errors.head shouldBe FormError(
+        "percentageFromFuelCards-0",
+        messages("error.percentageFromFuelCards.range", 2022.toString)
+      )
+    }
 
-      "reject  values greater than 100 " in {
-        val form     = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022"))(using messages)
-        val formData = Map(
-          "percentageFromFuelCards-0" -> "111"
-        )
+    "reject  values greater than 100 " in {
+      val form     = PercentageFromFuelCardsForm.percentageFromFuelCardsForm(Seq("2022"))(using messages)
+      val formData = Map(
+        "percentageFromFuelCards-0" -> "111"
+      )
 
-        val formWithData = form.bind(formData)
+      val formWithData = form.bind(formData)
 
-        formWithData.errors.size shouldBe 1
-        formWithData.errors.head shouldBe FormError(
-          "percentageFromFuelCards-0",
-          messages("error.percentage", 2022.toString)
-        )
-      }
+      formWithData.errors.size shouldBe 1
+      formWithData.errors.head shouldBe FormError(
+        "percentageFromFuelCards-0",
+        messages("error.percentage", 2022.toString)
+      )
     }
   }

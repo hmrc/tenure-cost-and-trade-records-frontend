@@ -24,17 +24,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class PlantAndTechnologyViewSpec extends QuestionViewBehaviours[String]:
 
-  val messageKeyPrefix = "plantAndTechnology"
+  private val messageKeyPrefix = "plantAndTechnology"
 
   override val form: Form[String] = PlantAndTechnologyForm.plantAndTechnologyForm
 
-  val backLink: String = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
+  private val backLink: String = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
 
-  def createView: () => Html = () =>
-    plantAndTechnologyView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => plantAndTechnologyView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    plantAndTechnologyView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[String] => Html =
+    form => plantAndTechnologyView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
 
   "Plant and technology view" should {
 

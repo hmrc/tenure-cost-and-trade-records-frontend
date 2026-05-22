@@ -40,7 +40,7 @@ class Turnover6030ViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection603
   private def createViewUsingForm = (form: Form[Seq[TurnoverSection6030]]) =>
     turnover6030View(form)(using sessionRequest, messages)
 
-  "Turnover 6030 view" must {
+  "Turnover 6030 view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

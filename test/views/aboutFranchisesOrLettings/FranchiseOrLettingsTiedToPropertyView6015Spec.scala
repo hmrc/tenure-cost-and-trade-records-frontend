@@ -27,19 +27,19 @@ import views.behaviours.QuestionViewBehaviours
 
 class FranchiseOrLettingsTiedToPropertyView6015Spec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "franchiseLettings"
+  private val messageKeyPrefix = "franchiseLettings"
 
-  val backLink: String = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
+  private val backLink: String = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
 
   override val form: Form[AnswersYesNo] = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 
-  def createView: () => Html = () =>
-    franchiseOrLettingsTiedToPropertyView(form, FOR6015, backLink, Summary("99996015001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => franchiseOrLettingsTiedToPropertyView(form, FOR6015, backLink, Summary("99996015001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    franchiseOrLettingsTiedToPropertyView(form, FOR6015, backLink, Summary("99996015001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => franchiseOrLettingsTiedToPropertyView(form, FOR6015, backLink, Summary("99996015001"))(using fakeRequest, messages)
 
-  "Franchise or lettings tied to property view" must {
+  "Franchise or lettings tied to property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

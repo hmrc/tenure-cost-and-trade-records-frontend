@@ -26,19 +26,19 @@ import views.behaviours.QuestionViewBehaviours
 
 class TiedForGoodsViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "tiedForGoods"
+  private val messageKeyPrefix = "tiedForGoods"
 
   override val form: Form[AnswersYesNo] = TiedForGoodsForm.tiedForGoodsForm
 
   val backLink: String = controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
 
-  def createView: () => Html = () =>
-    tiedForGoodsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  def createView: () => Html =
+    () => tiedForGoodsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    tiedForGoodsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => tiedForGoodsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Tied for goods view" must {
+  "Tied for goods view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

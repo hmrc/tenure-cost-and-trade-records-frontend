@@ -37,7 +37,7 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]]:
   private def createViewUsingForm = (form: Form[Seq[CostOfSales]]) =>
     costOfSalesView(form)(using sessionRequest, messages)
 
-  "costOfSales view" must {
+  "costOfSales view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

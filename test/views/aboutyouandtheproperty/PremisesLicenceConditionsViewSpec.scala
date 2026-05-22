@@ -26,19 +26,19 @@ import views.behaviours.QuestionViewBehaviours
 
 class PremisesLicenceConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "premisesLicenseConditions"
+  private val messageKeyPrefix = "premisesLicenseConditions"
 
   override val form: Form[AnswersYesNo] = PremisesLicenseConditionsForm.premisesLicenseConditionsForm
 
-  val backLink: String = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
+  private val backLink: String = controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show().url
 
-  def createView: () => Html = () =>
-    premisesLicensableView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => premisesLicensableView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    premisesLicensableView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => premisesLicensableView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Property licence conditions view" must {
+  "Property licence conditions view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

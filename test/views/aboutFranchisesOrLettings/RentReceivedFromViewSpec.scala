@@ -27,8 +27,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class RentReceivedFromViewSpec extends QuestionViewBehaviours[RentReceivedFrom]:
 
-  override val form: Form[RentReceivedFrom] =
-    RentReceivedFromForm.rentReceivedFromForm(using messages)
+  override val form: Form[RentReceivedFrom] = RentReceivedFromForm.rentReceivedFromForm(using messages)
 
   private val fakeSessionRequest = SessionRequest[AnyContent](
     sessionData = Session(

@@ -26,8 +26,7 @@ class StaffCostsViewSpec extends QuestionViewBehaviours[Seq[StaffCosts]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
-  val form: Form[Seq[StaffCosts]] =
-    StaffCostsForm.staffCostsForm(Seq("2026", "2025", "2024"))(using messages)
+  val form: Form[Seq[StaffCosts]] = StaffCostsForm.staffCostsForm(Seq("2026", "2025", "2024"))(using messages)
 
   private def createView = () => staffCostsView(form, "")(using sessionRequest, messages)
 

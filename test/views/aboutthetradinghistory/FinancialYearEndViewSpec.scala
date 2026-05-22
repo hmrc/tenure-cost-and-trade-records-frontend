@@ -26,18 +26,19 @@ import views.behaviours.QuestionViewBehaviours
 
 class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration, Boolean)]:
 
-  val messageKeyPrefix = "financialYearEnd"
+  private val messageKeyPrefix = "financialYearEnd"
 
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
   override val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(using messages)
 
-  def createView: () => Html = () => financialYearEndView(form)(using sessionRequest, messages)
+  private def createView: () => Html =
+    () => financialYearEndView(form)(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[(DayMonthsDuration, Boolean)] => Html =
-    (form: Form[(DayMonthsDuration, Boolean)]) => financialYearEndView(form)(using sessionRequest, messages)
+  private def createViewUsingForm: Form[(DayMonthsDuration, Boolean)] => Html =
+    form => financialYearEndView(form)(using sessionRequest, messages)
 
-  "financialYearEnd view" must {
+  "financialYearEnd view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

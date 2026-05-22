@@ -32,13 +32,13 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
 
   override val form: Form[WebsiteForPropertyDetails] = WebsiteForPropertyForm.websiteForPropertyForm
 
-  private def createView: () => Html = () =>
-    websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  private def createViewUsingForm: Form[WebsiteForPropertyDetails] => Html = (form: Form[WebsiteForPropertyDetails]) =>
-    websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[WebsiteForPropertyDetails] => Html =
+    form => websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  "Property website view" must {
+  "Property website view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

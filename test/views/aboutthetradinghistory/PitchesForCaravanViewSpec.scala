@@ -26,8 +26,7 @@ class PitchesForCaravanViewSpec extends QuestionViewBehaviours[Seq[TentingPitche
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  val form: Form[Seq[TentingPitchesTradingData]] =
-    tentingPitchesTradingDataForm(Seq("2026", "2025", "2024"))(using messages)
+  val form: Form[Seq[TentingPitchesTradingData]] = tentingPitchesTradingDataForm(Seq("2026", "2025", "2024"))(using messages)
 
   private def createView = () => pitchesForCaravansView(form, "")(using sessionRequest, messages)
 

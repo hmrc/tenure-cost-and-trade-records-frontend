@@ -28,12 +28,12 @@ class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[String]:
   override val form: Form[String] = IncomeExpenditureSummaryForm.incomeExpenditureSummaryForm
 
   private def createView = () =>
-    incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(using fakeRequest, messages)
+    incomeExpenditureSummaryView(form, Summary("99996010001"), createEntries)(using fakeRequest, messages)
 
   private def createViewUsingForm = (form: Form[String]) =>
-    incomeExpenditureSummaryView(form, Summary("99996010001"), createEnteries)(using fakeRequest, messages)
+    incomeExpenditureSummaryView(form, Summary("99996010001"), createEntries)(using fakeRequest, messages)
 
-  "income and expenditure summary view" must {
+  "income and expenditure summary view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -64,7 +64,7 @@ class IncomeExpenditureSummaryViewSpec extends QuestionViewBehaviours[String]:
     }
   }
 
-  def createEnteries: Seq[IncomeExpenditureEntry] = Seq(
+  def createEntries: Seq[IncomeExpenditureEntry] = Seq(
     IncomeExpenditureEntry(
       "2023-03-01",
       10,

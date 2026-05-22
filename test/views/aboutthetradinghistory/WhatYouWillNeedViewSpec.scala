@@ -34,7 +34,8 @@ class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String]:
   private val sessionRequest6048 = SessionRequest(baseFilled6048Session, fakeRequest)
   private val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)
 
-  val messageKeyPrefix            = "whatYouWillNeed"
+  private val messageKeyPrefix = "whatYouWillNeed"
+
   override val form: Form[String] = WhatYouWillNeedForm.whatYouWillNeedForm
 
   private def createView = () => whatYouWillNeedView(form, Summary("99996076001"))(using sessionRequest, messages)
@@ -66,7 +67,7 @@ class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String]:
   private def createViewUsingForm = (form: Form[String]) =>
     whatYouWillNeedView(form, Summary("99996076001"))(using sessionRequest, messages)
 
-  "What you will need view" must {
+  "What you will need view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

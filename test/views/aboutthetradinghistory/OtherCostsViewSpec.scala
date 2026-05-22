@@ -34,7 +34,7 @@ class OtherCostsViewSpec extends QuestionViewBehaviours[OtherCosts]:
 
   private def createViewUsingForm = (form: Form[OtherCosts]) => otherCostsView(form)(using sessionRequest, messages)
 
-  "Other Costs view" must {
+  "Other Costs view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

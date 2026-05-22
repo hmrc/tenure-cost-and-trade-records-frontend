@@ -26,12 +26,12 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[Big
 
   private val years = Seq("2023", "2022", "2021")
 
-  val messageKeyPrefix = "additionalAmusements"
+  private val messageKeyPrefix = "additionalAmusements"
 
   override val form: Form[Seq[Option[BigDecimal]]] =
     AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages)
 
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
   private val backLink = controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show().url
 
@@ -40,7 +40,7 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[Big
   private def createViewUsingForm = (form: Form[Seq[Option[BigDecimal]]]) =>
     additionalAmusementsView(form, backLink)(using sessionRequest, messages)
 
-  "Additional amusements 6045 view" must {
+  "Additional amusements 6045 view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

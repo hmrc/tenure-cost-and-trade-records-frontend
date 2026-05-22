@@ -28,8 +28,7 @@ class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalB
 
   private val messageKeyPrefix = "additionalBarsClubs"
 
-  override val form: Form[Seq[AdditionalBarsClubs]] =
-    AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages)
+  override val form: Form[Seq[AdditionalBarsClubs]] = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages)
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
@@ -40,7 +39,7 @@ class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalB
   private def createViewUsingForm = (form: Form[Seq[AdditionalBarsClubs]]) =>
     additionalBarsClubsView(form, backLink)(using sessionRequest, messages)
 
-  "Additional bars and clubs 6045 view" must {
+  "Additional bars and clubs 6045 view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

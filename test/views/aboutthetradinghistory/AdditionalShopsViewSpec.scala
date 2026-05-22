@@ -39,7 +39,7 @@ class AdditionalShopsViewSpec extends QuestionViewBehaviours[Seq[AdditionalShops
   private def createViewUsingForm = (form: Form[Seq[AdditionalShops]]) =>
     additionalShopsView(form, backLink)(using sessionRequest, messages)
 
-  "Additional bars and clubs 6045 view" must {
+  "Additional bars and clubs 6045 view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

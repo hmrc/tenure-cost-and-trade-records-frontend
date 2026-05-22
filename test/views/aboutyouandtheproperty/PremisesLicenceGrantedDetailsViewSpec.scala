@@ -33,11 +33,11 @@ class PremisesLicenceGrantedDetailsViewSpec extends QuestionViewBehaviours[Strin
   private def createViewUsingForm = (form: Form[String]) =>
     premisesLicenceGrantedDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Property licence granted view" must {
+  "Property licence granted view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the licencable activities Page" in {
+    "has a link marked with back.link.label leading to the licensable activities Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")

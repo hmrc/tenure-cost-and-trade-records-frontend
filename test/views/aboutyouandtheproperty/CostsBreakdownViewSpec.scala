@@ -24,16 +24,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class CostsBreakdownViewSpec extends QuestionViewBehaviours[String]:
 
-  val messageKeyPrefix = "costsBreakdown"
+  private val messageKeyPrefix = "costsBreakdown"
 
   override val form: Form[String] = CostsBreakdownForm.costsBreakdownForm
 
-  val backLink: String = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
+  private val backLink: String = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
 
-  def createView: () => Html = () => costsBreakdownView(form, Summary("99996076001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => costsBreakdownView(form, Summary("99996076001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    costsBreakdownView(form, Summary("99996076001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[String] => Html =
+    form => costsBreakdownView(form, Summary("99996076001"))(using fakeRequest, messages)
 
   "costs breakdown view" should {
 
@@ -54,7 +55,7 @@ class CostsBreakdownViewSpec extends QuestionViewBehaviours[String]:
     }
 
     "Page heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
       assert(sectionText == messages("costsBreakdown.heading"))
     }

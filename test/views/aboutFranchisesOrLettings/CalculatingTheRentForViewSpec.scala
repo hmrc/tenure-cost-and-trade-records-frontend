@@ -24,8 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTheRent]:
 
-  override val form: Form[CalculatingTheRent] =
-    CalculatingTheRentForm.calculatingTheRentForm(using messages)
+  override val form: Form[CalculatingTheRent] = CalculatingTheRentForm.calculatingTheRentForm(using messages)
 
   private def createView = () =>
     calculatingTheRentView(

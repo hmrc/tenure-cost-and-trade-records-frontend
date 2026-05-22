@@ -26,17 +26,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "contactDetailsQuestion"
+  private val messageKeyPrefix = "contactDetailsQuestion"
 
   override val form: Form[AnswersYesNo] = ContactDetailsQuestionForm.theForm
 
-  val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
+  private val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
 
-  def createView: () => Html = () =>
-    contactDetailsQuestionView(form, Summary("99996010001"), false)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => contactDetailsQuestionView(form, Summary("99996010001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    contactDetailsQuestionView(form, Summary("99996010001"), false)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => contactDetailsQuestionView(form, Summary("99996010001"), false)(using fakeRequest, messages)
 
   "Contact details question view" should {
 

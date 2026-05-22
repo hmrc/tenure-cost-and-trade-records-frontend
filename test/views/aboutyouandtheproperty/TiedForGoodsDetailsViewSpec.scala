@@ -26,17 +26,16 @@ import views.behaviours.QuestionViewBehaviours
 
 class TiedForGoodsDetailsViewSpec extends QuestionViewBehaviours[TiedForGoodsInformationDetails]:
 
-  val messageKeyPrefix = "tiedForGoodsDetails"
+  private val messageKeyPrefix = "tiedForGoodsDetails"
 
   override val form: Form[TiedForGoodsInformationDetails] = TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 
   def createView: () => Html = () => tiedForGoodsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[TiedForGoodsInformationDetails] => Html =
-    (form: Form[TiedForGoodsInformationDetails]) =>
-      tiedForGoodsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+    form => tiedForGoodsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Tied for goods details view" must {
+  "Tied for goods details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

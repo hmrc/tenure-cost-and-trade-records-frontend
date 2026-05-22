@@ -45,7 +45,7 @@ class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircums
   private def createViewUsingForm6030 = (form: Form[UnusualCircumstances]) =>
     unusualCircumstancesView(form, FOR6030, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  "Unusual Circumstances view" must {
+  "Unusual Circumstances view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -68,13 +68,14 @@ class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircums
       val loginButton = doc.getElementById("continue-button").text()
       assert(loginButton == messages("button.continue.label"))
     }
+
     "contain an input for unusualCircumstances" in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "unusualCircumstances")
     }
   }
 
-  "Unusual Circumstances 6030 view" must {
+  "Unusual Circumstances 6030 view" should {
 
     behave like normalPage(createView6030, messageKeyPrefix6030)
 
@@ -97,6 +98,7 @@ class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircums
       val loginButton = doc.getElementById("continue-button").text()
       assert(loginButton == messages("button.continue.label"))
     }
+
     "contain an input for unusualCircumstances" in {
       val doc = asDocument(createViewUsingForm6030(form))
       assertRenderedById(doc, "unusualCircumstances")

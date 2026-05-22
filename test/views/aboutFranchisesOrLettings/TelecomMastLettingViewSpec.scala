@@ -37,7 +37,7 @@ class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetti
   private def createViewUsingForm = (form: Form[TelecomMastLetting]) =>
     TelecomMastLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Telecom Mast letting view" must {
+  "Telecom Mast letting view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

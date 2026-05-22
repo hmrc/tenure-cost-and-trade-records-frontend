@@ -24,18 +24,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class LicenceActivitiesDetailsViewSpec extends QuestionViewBehaviours[String]:
 
-  val messageKeyPrefix = "licensableActivitiesDetails"
+  private val messageKeyPrefix = "licensableActivitiesDetails"
 
-  override val form: Form[String] =
-    LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
+  override val form: Form[String] = LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 
-  def createView: () => Html = () =>
-    licensableActivitiesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => licensableActivitiesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[String] => Html =
-    (form: Form[String]) => licensableActivitiesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[String] => Html =
+    form => licensableActivitiesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Licence Activities details view" must {
+  "Licence Activities details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

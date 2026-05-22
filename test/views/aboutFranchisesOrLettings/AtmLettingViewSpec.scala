@@ -37,7 +37,7 @@ class AtmLettingViewSpec extends QuestionViewBehaviours[ATMLetting]:
   private def createViewUsingForm = (form: Form[ATMLetting]) =>
     AtmLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "ATM Letting view" must {
+  "ATM Letting view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

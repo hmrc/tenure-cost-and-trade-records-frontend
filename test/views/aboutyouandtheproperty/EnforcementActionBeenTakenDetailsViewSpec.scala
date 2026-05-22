@@ -24,18 +24,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class EnforcementActionBeenTakenDetailsViewSpec extends QuestionViewBehaviours[String]:
 
-  val messageKeyPrefix = "enforcementActionHasBeenTakenDetails"
+  private val messageKeyPrefix = "enforcementActionHasBeenTakenDetails"
 
   override val form: Form[String] = EnforcementActionDetailsForm.enforcementActionDetailsForm
 
-  def createView: () => Html = () =>
-    enforcementActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => enforcementActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[String] => Html =
-    (form: Form[String]) =>
-      enforcementActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[String] => Html =
+    form => enforcementActionBeenTakenDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Enforcement action taken details view" must {
+  "Enforcement action taken details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

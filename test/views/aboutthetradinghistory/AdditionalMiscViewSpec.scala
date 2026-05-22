@@ -40,7 +40,7 @@ class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc]
   private def createViewUsingForm = (form: Form[(Seq[AdditionalMisc], AdditionalMiscDetails)]) =>
     additionalMiscView(form, backLink)(using sessionRequest, messages)
 
-  "Additional misc view" must {
+  "Additional misc view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

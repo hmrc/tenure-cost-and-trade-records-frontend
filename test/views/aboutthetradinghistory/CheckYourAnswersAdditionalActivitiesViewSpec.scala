@@ -20,29 +20,27 @@ import actions.SessionRequest
 import form.aboutthetradinghistory.CheckYourAnswersAdditionalActivitiesForm
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.AnyContent
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAdditionalActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "cYa.additionalActivities"
+  private val messageKeyPrefix = "cYa.additionalActivities"
 
-  override val form: Form[AnswersYesNo] =
-    CheckYourAnswersAdditionalActivitiesForm.checkYourAnswersAdditionalActivitiesForm
+  override val form: Form[AnswersYesNo] = CheckYourAnswersAdditionalActivitiesForm.checkYourAnswersAdditionalActivitiesForm
 
-  val backLink: String = controllers.aboutthetradinghistory.routes.AdditionalMiscController.show().url
+  private val backLink: String = controllers.aboutthetradinghistory.routes.AdditionalMiscController.show().url
 
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] =
-    SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  def createView: () => Html = () =>
-    checkYourAnswersAdditionalActivities(form, backLink)(using sessionRequest, messages)
+  private def createView: () => Html =
+    () => checkYourAnswersAdditionalActivities(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html =
-    (form: Form[AnswersYesNo]) => checkYourAnswersAdditionalActivities(form, backLink)(using sessionRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => checkYourAnswersAdditionalActivities(form, backLink)(using sessionRequest, messages)
 
-  "Check Your Answers Additional Activities view" must {
+  "Check Your Answers Additional Activities view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -53,6 +51,7 @@ class CheckYourAnswersAdditionalActivitiesViewSpec extends QuestionViewBehaviour
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.AdditionalMiscController.show().url
     }
+
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()

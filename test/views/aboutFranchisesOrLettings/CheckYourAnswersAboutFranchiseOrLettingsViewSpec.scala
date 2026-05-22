@@ -24,8 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class CheckYourAnswersAboutFranchiseOrLettingsViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  private def cyaFranchiseOrLettingsView =
-    inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
+  private def cyaFranchiseOrLettingsView = inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
 
   private val messageKeyPrefix = "checkYourAnswersAboutFranchiseOrLettings"
 
@@ -42,7 +41,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec extends QuestionViewBehav
 
   private def createView6045 = () => cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
 
-  "Check Your Answers About Franchise Or Lettings view" must {
+  "Check Your Answers About Franchise Or Lettings view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -60,6 +59,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsViewSpec extends QuestionViewBehav
       assert(loginButton == messages("button.continue.label"))
     }
   }
-  "Check Your Answers About The Property view for 6045" must {
+
+  "Check Your Answers About The Property view for 6045" should {
     behave like normalPage(createView6045, messageKeyPrefix)
   }

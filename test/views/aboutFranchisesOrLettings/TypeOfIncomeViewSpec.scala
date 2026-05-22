@@ -29,19 +29,17 @@ class TypeOfIncomeViewSpec extends QuestionViewBehaviours[TypeOfIncome]:
 
   private val messageKeyPrefix = "typeOfIncome"
 
-  private val backLink =
-    controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+  private val backLink = controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
 
   override val form: Form[TypeOfIncome] = TypeOfIncomeForm.typeOfIncomeForm
 
-  private def createView: () => Html = () =>
-    typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(using fakeRequest, messages)
 
   private def createViewUsingForm: Form[TypeOfIncome] => Html =
-    (form: Form[TypeOfIncome]) =>
-      typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(using fakeRequest, messages)
+    form => typeOfIncomeView(form, None, Summary("99996045001"), backLink, FOR6045)(using fakeRequest, messages)
 
-  "Type of income view" must {
+  "Type of income view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

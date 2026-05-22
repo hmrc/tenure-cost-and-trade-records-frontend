@@ -50,9 +50,9 @@ class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOpe
   private def createView = () => fixedOperatingExpensesView(form)(using sessionRequest, messages)
 
   private def createViewUsingForm: Form[Seq[FixedOperatingExpenses]] => Html =
-    (form: Form[Seq[FixedOperatingExpenses]]) => fixedOperatingExpensesView(form)(using sessionRequest, messages)
+    form => fixedOperatingExpensesView(form)(using sessionRequest, messages)
 
-  "Fixed Operating Expenses view" must {
+  "Fixed Operating Expenses view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

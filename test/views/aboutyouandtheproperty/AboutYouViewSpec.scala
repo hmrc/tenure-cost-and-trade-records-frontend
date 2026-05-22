@@ -33,7 +33,7 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails]:
   private def createViewUsingForm = (form: Form[CustomerDetails]) =>
     aboutYouView(form, Summary("99996010001"), false)(using fakeRequest, messages)
 
-  "About you view" must {
+  "About you view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

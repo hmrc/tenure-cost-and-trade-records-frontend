@@ -32,14 +32,13 @@ class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlantType
 
   override val form: Form[RenewablesPlantType] = RenewablesPlantForm.theForm
 
-  private def createView: () => Html = () =>
-    renewablesPlantView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => renewablesPlantView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
 
   private def createViewUsingForm: Form[RenewablesPlantType] => Html =
-    (form: Form[RenewablesPlantType]) =>
-      renewablesPlantView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
+    form => renewablesPlantView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
 
-  "Renewables plant view" must {
+  "Renewables plant view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

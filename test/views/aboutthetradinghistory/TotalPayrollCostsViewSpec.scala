@@ -36,7 +36,7 @@ class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[Seq[TotalPayrollC
   private def createViewUsingForm = (form: Form[Seq[TotalPayrollCost]]) =>
     totalPayrollCostsView(form)(using sessionRequest, messages)
 
-  "Total Payroll Costs view" must {
+  "Total Payroll Costs view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

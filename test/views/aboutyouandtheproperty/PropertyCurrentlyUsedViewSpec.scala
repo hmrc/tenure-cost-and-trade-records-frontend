@@ -25,17 +25,17 @@ import views.behaviours.QuestionViewBehaviours
 
 class PropertyCurrentlyUsedViewSpec extends QuestionViewBehaviours[PropertyCurrentlyUsed]:
 
-  val messageKeyPrefix = "propertyCurrentlyUsed"
+  private val messageKeyPrefix = "propertyCurrentlyUsed"
 
   override val form: Form[PropertyCurrentlyUsed] = propertyCurrentlyUsedForm
 
-  def createView: () => Html = () =>
-    propertyCurrentlyUsedView(form, Summary("99996045001"), "backLink")(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => propertyCurrentlyUsedView(form, Summary("99996045001"), "backLink")(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[PropertyCurrentlyUsed] => Html = (form: Form[PropertyCurrentlyUsed]) =>
-    propertyCurrentlyUsedView(form, Summary("99996045001"), "backLink")(using fakeRequest, messages)
+  private def createViewUsingForm: Form[PropertyCurrentlyUsed] => Html =
+    form => propertyCurrentlyUsedView(form, Summary("99996045001"), "backLink")(using fakeRequest, messages)
 
-  "Property currently used view" must {
+  "Property currently used view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

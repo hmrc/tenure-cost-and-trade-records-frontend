@@ -35,7 +35,7 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
   private def createViewUsingForm = (form: Form[VariableOperatingExpensesSections]) =>
     variableOperatingExpensesView(form)(using sessionRequest, messages)
 
-  "Variable Operating Expenses view" must {
+  "Variable Operating Expenses view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
