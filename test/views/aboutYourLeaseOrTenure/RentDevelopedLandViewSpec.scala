@@ -33,7 +33,7 @@ class RentDevelopedLandViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentDevelopedLandView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Connected to landlord view" must {
+  "Connected to landlord view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

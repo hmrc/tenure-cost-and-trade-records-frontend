@@ -37,7 +37,7 @@ class PaymentWhenLeaseGrantedViewSpec extends QuestionViewBehaviours[AnswersYesN
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     paymentWhenLeaseIsGrantedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Payment when lease is granted view" must {
+  "Payment when lease is granted view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

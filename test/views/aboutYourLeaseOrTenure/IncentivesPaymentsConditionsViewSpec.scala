@@ -35,7 +35,7 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Answer
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     incentivesPaymentsConditionsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Incentives payment conditions view" must {
+  "Incentives payment conditions view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

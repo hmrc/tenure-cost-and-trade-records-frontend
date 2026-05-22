@@ -32,11 +32,11 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   override val form: Form[AnswersYesNo] = PastConnectionForm.pastConnectionForm
 
-  private def createView: () => Html = () =>
-    pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  private def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
   "Past connection view" should {
 

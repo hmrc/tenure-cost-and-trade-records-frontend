@@ -37,7 +37,7 @@ class PayACapitalSumDetailsViewSpec extends QuestionViewBehaviours[PayACapitalSu
   private def createViewUsingForm = (form: Form[PayACapitalSumInformationDetails]) =>
     payACapitalSumDetailsView(form, backLink, Summary("99996030001"))(using fakeRequest, messages)
 
-  "capital sum or premium view" must {
+  "capital sum or premium view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

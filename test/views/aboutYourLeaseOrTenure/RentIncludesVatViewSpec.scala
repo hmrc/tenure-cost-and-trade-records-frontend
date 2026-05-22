@@ -33,7 +33,7 @@ class RentIncludesVatViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludesVatView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent includes VAT view" must {
+  "Rent includes VAT view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

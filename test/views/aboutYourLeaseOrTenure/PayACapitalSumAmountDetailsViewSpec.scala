@@ -38,7 +38,7 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDeci
   private def createViewUsingForm = (form: Form[BigDecimal]) =>
     payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(using sessionRequest, messages)
 
-  "capital sum or premium view" must {
+  "capital sum or premium view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

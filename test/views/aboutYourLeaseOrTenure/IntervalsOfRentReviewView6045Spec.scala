@@ -35,7 +35,7 @@ class IntervalsOfRentReviewView6045Spec extends QuestionViewBehaviours[Intervals
   private def createViewUsingForm = (form: Form[IntervalsOfRentReview]) =>
     intervalsOfRentReviewView(form)(using sessionRequest, messages)
 
-  "Intervals of rent reviews view" must {
+  "Intervals of rent reviews view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

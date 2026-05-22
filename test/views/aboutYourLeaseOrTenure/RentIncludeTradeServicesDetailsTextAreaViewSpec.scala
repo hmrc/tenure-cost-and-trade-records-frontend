@@ -35,7 +35,7 @@ class RentIncludeTradeServicesDetailsTextAreaViewSpec extends QuestionViewBehavi
   private def createViewUsingForm = (form: Form[String]) =>
     rentIncludeTradeServicesDetailsTextAreaView(form)(using sessionRequest, messages)
 
-  "Rent include trade services details" must {
+  "Rent include trade services details" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

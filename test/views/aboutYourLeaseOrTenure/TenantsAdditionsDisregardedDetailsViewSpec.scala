@@ -33,7 +33,7 @@ class TenantsAdditionsDisregardedDetailsViewSpec extends QuestionViewBehaviours[
   private def createViewUsingForm = (form: Form[String]) =>
     tenantsAdditionsDisregardedDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Tenants additions disregarded details view" must {
+  "Tenants additions disregarded details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

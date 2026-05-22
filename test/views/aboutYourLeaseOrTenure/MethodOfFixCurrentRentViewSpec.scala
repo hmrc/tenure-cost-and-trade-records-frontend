@@ -34,7 +34,7 @@ class MethodOfFixCurrentRentViewSpec extends QuestionViewBehaviours[MethodToFixC
   private def createViewUsingForm = (form: Form[MethodToFixCurrentRent]) =>
     methodToFixCurrentRentView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Method of fix current rent view" must {
+  "Method of fix current rent view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

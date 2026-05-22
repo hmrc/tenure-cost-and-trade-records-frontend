@@ -22,15 +22,15 @@ import form.Feedback
 import play.api.data.Form
 import views.behaviours.ViewBehaviours
 
-class confirmationVacantPropertyViewSpec extends ViewBehaviours:
+class ConfirmationVacantPropertyViewSpec extends ViewBehaviours:
 
   private val messageKeyPrefix = "label.connectionToProperty.confirm"
   private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  val form: Form[Feedback] = FeedbackFormMapper.feedbackForm
-  private def createView   = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
+  private val form: Form[Feedback] = FeedbackFormMapper.feedbackForm
+  private def createView           = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
 
-  "confirmation request reference number view" must {
+  "confirmation request reference number view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -43,6 +43,5 @@ class confirmationVacantPropertyViewSpec extends ViewBehaviours:
       assert(doc.toString.contains(messages("list.connectionToProperty.p1")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p2")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p3")))
-
     }
   }

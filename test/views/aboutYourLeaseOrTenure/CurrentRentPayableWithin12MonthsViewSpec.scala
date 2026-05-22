@@ -36,7 +36,7 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
   private def createViewUsingForm = (form: Form[CurrentRentPayableWithin12Months]) =>
     currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Lease or agreement years view" must {
+  "Lease or agreement years view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

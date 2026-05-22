@@ -35,7 +35,7 @@ class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[Ans
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(using fakeRequest, messages)
 
-  "property use leaseback arrangement view" must {
+  "property use leaseback arrangement view" should {
 
     "has a link marked with back.link.label leading to pay capital sum Page" in {
       val doc          = asDocument(createView())

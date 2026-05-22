@@ -34,7 +34,7 @@ class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewB
   private def createViewUsingForm = (form: Form[String]) =>
     rentIncludeFixtureAndFittingsDetailsTextAreaView(form, Summary("99996076001"))(using fakeRequest, messages)
 
-  "Fixture and fittings details" must {
+  "Fixture and fittings details" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

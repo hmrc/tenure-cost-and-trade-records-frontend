@@ -32,7 +32,7 @@ class WorkCarriedOutDetailsViewSpec extends QuestionViewBehaviours[String]:
   private def createViewUsingForm = (form: Form[String]) =>
     workCarriedOutDetailsView(form, Summary("99996020001"))(using fakeRequest, messages)
 
-  "Work carried out details details" must {
+  "Work carried out details details" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

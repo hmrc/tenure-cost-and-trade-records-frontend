@@ -33,8 +33,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
 
   override val form: Form[HowIsCurrentRentFixed] = HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm(using messages)
 
-  private val backLink =
-    controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
 
   private def createView = () =>
     howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
@@ -45,7 +44,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
   private def createViewUsingForm = (form: Form[HowIsCurrentRentFixed]) =>
     howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "How is current rennt fixed view" must {
+  "How is current rennt fixed view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

@@ -38,7 +38,7 @@ class ConnectedToLandlordViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
   private def createViewUsingForm6020 = (form: Form[AnswersYesNo]) =>
     connectedToLandlordView(form, Summary("99996020001"), FOR6020)(using fakeRequest, messages)
 
-  "Connected to landlord view" must {
+  "Connected to landlord view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

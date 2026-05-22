@@ -35,7 +35,7 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
   private def createViewUsingForm = (form: Form[WhatIsYourCurrentRentBasedOnDetails]) =>
     whatIsYourRentBasedOnView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Current rent based on details view" must {
+  "Current rent based on details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

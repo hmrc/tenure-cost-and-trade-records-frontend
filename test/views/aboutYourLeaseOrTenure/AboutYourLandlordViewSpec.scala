@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String]:
 
-  private def aboutYourLandordView = inject[views.html.aboutYourLeaseOrTenure.aboutYourLandlord]
+  private def aboutYourLandlordView = inject[views.html.aboutYourLeaseOrTenure.aboutYourLandlord]
 
   private val messageKeyPrefix = "aboutYourLandlord6010"
   private val backLink         = controllers.routes.TaskListController.show.url
@@ -34,12 +34,12 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String]:
   private val sessionRequest = SessionRequest(stillConnectedDetailsYesToAllSession, fakeRequest)
 
   private def createView = () =>
-    aboutYourLandordView(form, Summary("99996010001"), backLink)(using sessionRequest, messages)
+    aboutYourLandlordView(form, Summary("99996010001"), backLink)(using sessionRequest, messages)
 
   private def createViewUsingForm = (form: Form[String]) =>
-    aboutYourLandordView(form, Summary("99996010001"), backLink)(using sessionRequest, messages)
+    aboutYourLandlordView(form, Summary("99996010001"), backLink)(using sessionRequest, messages)
 
-  "About the landlord view" must {
+  "About the landlord view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

@@ -26,16 +26,15 @@ class FurtherInformationOrRemarksViewSpec extends QuestionViewBehaviours[String]
 
   val messageKeyPrefix = "furtherInformationOrRemarks"
 
-  override val form: Form[String] =
-    FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
+  override val form: Form[String] = FurtherInformationOrRemarksForm.furtherInformationOrRemarksForm
 
-  def createView: () => Html = () =>
-    furtherInformationOrRemarksView(form, Summary("99996010001"))(using fakeRequest, messages)
+  def createView: () => Html =
+    () => furtherInformationOrRemarksView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html =
-    (form: Form[String]) => furtherInformationOrRemarksView(form, Summary("99996010001"))(using fakeRequest, messages)
+    form => furtherInformationOrRemarksView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Further Information or Remarks view" must {
+  "Further Information or Remarks view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

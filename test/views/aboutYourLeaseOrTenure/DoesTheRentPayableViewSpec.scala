@@ -47,7 +47,7 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
   private def createViewUsingForm6048 = (form: Form[DoesTheRentPayable]) =>
     doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using fakeRequest, messages)
 
-  "Rent payable view" must {
+  "Rent payable view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

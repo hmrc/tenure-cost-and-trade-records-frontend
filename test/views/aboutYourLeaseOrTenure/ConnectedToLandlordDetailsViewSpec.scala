@@ -34,7 +34,7 @@ class ConnectedToLandlordDetailsViewSpec extends QuestionViewBehaviours[String]:
   private def createViewUsingForm = (form: Form[String]) =>
     connectedToLandlordDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Connected to landlord details view" must {
+  "Connected to landlord details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

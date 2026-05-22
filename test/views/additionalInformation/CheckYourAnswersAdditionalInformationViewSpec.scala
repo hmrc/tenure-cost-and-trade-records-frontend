@@ -26,8 +26,7 @@ class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviou
 
   private val messageKeyPrefix = "checkYourAnswersAdditionalInformation"
 
-  override val form: Form[AnswersYesNo] =
-    CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
+  override val form: Form[AnswersYesNo] = CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 
   private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
@@ -37,7 +36,7 @@ class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviou
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(using sessionRequest, messages)
 
-  "Check Your Answers Additional Information view" must {
+  "Check Your Answers Additional Information view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

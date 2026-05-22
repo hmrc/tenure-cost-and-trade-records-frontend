@@ -35,7 +35,7 @@ class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[Curren
   private def createViewUsingForm = (form: Form[CurrentLeaseOrAgreementBegin]) =>
     currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Current rent first paid view" must {
+  "Current rent first paid view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

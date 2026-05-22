@@ -37,7 +37,7 @@ class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[Answers
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     legalOrPlanningRestrictionsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Legal or planning restrictions view" must {
+  "Legal or planning restrictions view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

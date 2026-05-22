@@ -32,13 +32,13 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val backLink: String = controllers.connectiontoproperty.routes.EditAddressController.show().url
 
-  def createView: () => Html = () =>
-    vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
+  def createView: () => Html =
+    () => vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
 
-  "Vacant properties view" must {
+  "Vacant properties view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

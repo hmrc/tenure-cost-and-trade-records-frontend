@@ -33,7 +33,7 @@ class ProvideDetailsOfYourLeaseViewSpec extends QuestionViewBehaviours[String]:
   private def createViewUsingForm = (form: Form[String]) =>
     provideDetailsOfYourLeaseView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Provide details of your lease view" must {
+  "Provide details of your lease view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

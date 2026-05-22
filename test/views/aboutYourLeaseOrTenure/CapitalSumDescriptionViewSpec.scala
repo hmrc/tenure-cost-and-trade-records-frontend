@@ -39,7 +39,6 @@ class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[String]:
     behave like normalPage(createView, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to pay capital sum question Page" in {
-
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")

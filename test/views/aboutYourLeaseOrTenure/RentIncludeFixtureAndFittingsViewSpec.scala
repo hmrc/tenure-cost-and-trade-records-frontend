@@ -37,7 +37,7 @@ class RentIncludeFixtureAndFittingsViewSpec extends QuestionViewBehaviours[Answe
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeFixtureAndFittingsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent include fixture and fittings view" must {
+  "Rent include fixture and fittings view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

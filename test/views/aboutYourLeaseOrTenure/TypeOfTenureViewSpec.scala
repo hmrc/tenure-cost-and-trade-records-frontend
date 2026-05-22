@@ -31,10 +31,10 @@ class TypeOfTenureViewSpec extends QuestionViewBehaviours[TypeOfTenure]:
 
   def createView: () => Html = () => typeOfTenureView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[TypeOfTenure] => Html = (form: Form[TypeOfTenure]) =>
-    typeOfTenureView(form, Summary("99996010001"))(using fakeRequest, messages)
+  def createViewUsingForm: Form[TypeOfTenure] => Html =
+    form => typeOfTenureView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Type of Tenure view" must {
+  "Type of Tenure view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

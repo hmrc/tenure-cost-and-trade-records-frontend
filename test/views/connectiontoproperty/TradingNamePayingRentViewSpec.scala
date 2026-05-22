@@ -30,14 +30,13 @@ class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo]
 
   override val form: Form[AnswersYesNo] = TradingNamePayingRentForm.theForm
 
-  private def createView: () => Html = () =>
-    tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
 
   private def createViewUsingForm: Form[AnswersYesNo] => Html =
-    (form: Form[AnswersYesNo]) =>
-      tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
+    form => tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
 
-  "Trading name operating from property view" must {
+  "Trading name operating from property view" should {
 
     "has a link marked with back.link.label leading to has enforcement action been taken Page" in {
       val doc          = asDocument(createView())

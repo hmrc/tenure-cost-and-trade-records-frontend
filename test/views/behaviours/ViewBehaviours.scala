@@ -33,7 +33,7 @@ trait ViewBehaviours extends ViewSpecBase:
 
   def normalPage(view: () => HtmlFormat.Appendable, messageKeyPrefix: String, expectedGuidanceKeys: String*): Unit =
     "behave like a normal page" when {
-      "rendered" must {
+      "rendered" should {
         "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
 
@@ -69,7 +69,7 @@ trait ViewBehaviours extends ViewSpecBase:
     expectedGuidanceKeys: String*
   ): Unit =
     "behave like a normal page" when {
-      "rendered" must {
+      "rendered" should {
         "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
 
@@ -109,7 +109,7 @@ trait ViewBehaviours extends ViewSpecBase:
     expectedGuidanceKeys: String*
   ): Unit =
     "behave like a normal page" when {
-      "rendered" must {
+      "rendered" should {
         "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
 
@@ -150,7 +150,7 @@ trait ViewBehaviours extends ViewSpecBase:
     expectedGuidanceKeys: String*
   ): Unit =
     "behave like a normal page" when {
-      "rendered" must {
+      "rendered" should {
         "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
 
@@ -189,7 +189,7 @@ trait ViewBehaviours extends ViewSpecBase:
     expectedGuidanceKeys: String*
   ): Unit =
     "behave like a normal page" when {
-      "rendered" must {
+      "rendered" should {
         "have the correct banner title" in
           checkServiceNameInHeaderBanner(view())
 

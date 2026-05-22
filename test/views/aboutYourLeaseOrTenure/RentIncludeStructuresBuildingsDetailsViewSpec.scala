@@ -33,7 +33,7 @@ class RentIncludeStructuresBuildingsDetailsViewSpec extends QuestionViewBehaviou
   private def createViewUsingForm = (form: Form[String]) =>
     rentIncludeStructuresBuildingsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "rentIncludeStructuresBuildingsDetailsView view" must {
+  "rentIncludeStructuresBuildingsDetailsView view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

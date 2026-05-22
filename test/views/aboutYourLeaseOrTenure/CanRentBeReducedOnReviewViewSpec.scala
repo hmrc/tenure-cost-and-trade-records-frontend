@@ -36,7 +36,7 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[AnswersYes
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     canRentBeReducedOnReviewView(form, backLink)(using sessionRequest, messages)
 
-  "Can rent be reduced on review view" must {
+  "Can rent be reduced on review view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

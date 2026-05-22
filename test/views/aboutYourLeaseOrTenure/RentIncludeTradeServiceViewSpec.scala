@@ -39,7 +39,7 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesN
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeTradeServicesView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent include trade services view" must {
+  "Rent include trade services view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

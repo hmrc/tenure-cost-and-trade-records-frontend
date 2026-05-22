@@ -35,7 +35,7 @@ class RentIncludeStructuresBuildingsViewSpec extends QuestionViewBehaviours[Answ
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeStructuresBuildingsView(form, "")(using sessionRequest, messages)
 
-  "rent Include Structures BuildingsView view" must {
+  "rent Include Structures BuildingsView view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

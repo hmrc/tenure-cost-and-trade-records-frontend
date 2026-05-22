@@ -37,7 +37,7 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
   private def createViewUsingForm = (form: Form[LeaseOrAgreementYearsDetails]) =>
     leaseOrAgreementYearsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Lease or agreement years view" must {
+  "Lease or agreement years view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

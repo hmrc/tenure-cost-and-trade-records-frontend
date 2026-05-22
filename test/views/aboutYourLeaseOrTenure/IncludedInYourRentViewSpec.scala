@@ -41,7 +41,7 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
   private def createViewUsingForm6045 = (form: Form[IncludedInYourRentDetails]) =>
     includedInYourRentView(form, Summary("99996045001"), forType6045)(using fakeRequest, messages)
 
-  "Included in rent view" must {
+  "Included in rent view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

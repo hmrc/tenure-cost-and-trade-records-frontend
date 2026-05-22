@@ -29,7 +29,7 @@ class ConfirmationRequestReferenceNumberViewSpec extends ViewBehaviours:
   private val form       = FeedbackFormMapper.feedbackForm
   private def createView = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
 
-  "confirmation request reference number view" must {
+  "confirmation request reference number view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -42,6 +42,5 @@ class ConfirmationRequestReferenceNumberViewSpec extends ViewBehaviours:
       assert(doc.toString.contains(messages("list.connectionToProperty.p1")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p2")))
       assert(doc.toString.contains(messages("list.connectionToProperty.p3")))
-
     }
   }

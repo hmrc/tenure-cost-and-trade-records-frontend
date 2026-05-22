@@ -37,7 +37,7 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate]:
   private def createViewUsingForm = (form: Form[LocalDate]) =>
     currentRentFirstPaidView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Current rent first paid view" must {
+  "Current rent first paid view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

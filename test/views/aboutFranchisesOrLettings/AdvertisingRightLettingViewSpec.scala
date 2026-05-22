@@ -37,7 +37,7 @@ class AdvertisingRightLettingViewSpec extends QuestionViewBehaviours[Advertising
   private def createViewUsingForm = (form: Form[AdvertisingRightLetting]) =>
     advertisingRightLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Advertising right letting view" must {
+  "Advertising right letting view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

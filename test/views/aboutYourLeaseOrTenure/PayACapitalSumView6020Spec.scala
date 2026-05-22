@@ -38,7 +38,7 @@ class PayACapitalSumView6020Spec extends QuestionViewBehaviours[AnswersYesNo]:
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     payACapitalSumView(form, FOR6020, backLink, Summary("99996020001"))(using fakeRequest, messages)
 
-  "capital sum or premium view" must {
+  "Capital sum or premium view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

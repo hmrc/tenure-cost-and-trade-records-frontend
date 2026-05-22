@@ -35,10 +35,10 @@ class isParkingRentPaidSeparatelyViewSpec extends QuestionViewBehaviours[Answers
   def createView: () => Html = () =>
     isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "isParkingRentPaidSeparately view" must {
+  "isParkingRentPaidSeparately view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

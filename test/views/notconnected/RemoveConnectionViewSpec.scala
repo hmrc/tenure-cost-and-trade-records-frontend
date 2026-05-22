@@ -31,11 +31,11 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
 
   override val form: Form[RemoveConnectionsDetails] = RemoveConnectionForm.removeConnectionForm
 
-  private def createView: () => Html = () =>
-    removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  private def createViewUsingForm: Form[RemoveConnectionsDetails] => Html = (form: Form[RemoveConnectionsDetails]) =>
-    removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[RemoveConnectionsDetails] => Html =
+    form => removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
   "Past connection view" should {
 

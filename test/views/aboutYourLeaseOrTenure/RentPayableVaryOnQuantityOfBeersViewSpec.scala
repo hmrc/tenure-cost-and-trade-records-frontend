@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
+class RentPayableVaryOnQuantityOfBeersViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentPayableVaryOnQuantityOfBeers"
 
@@ -36,7 +36,7 @@ class RentPayableVaryonQuantityOfBeersViewSpec extends QuestionViewBehaviours[An
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentPayableVaryOnQuantityOfBeersView(form, "BACK_LINK")(using sessionRequest, messages)
 
-  "Rent payable vary on quantity beers view" must {
+  "Rent payable vary on quantity beers view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

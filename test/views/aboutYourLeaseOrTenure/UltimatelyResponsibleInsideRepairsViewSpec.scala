@@ -28,8 +28,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
 
   private val messageKeyPrefix = "ultimatelyResponsibleIR"
 
-  override val form: Form[UltimatelyResponsibleInsideRepairs] =
-    UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
+  override val form: Form[UltimatelyResponsibleInsideRepairs] = UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 
   private def createView = () =>
     ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
@@ -37,7 +36,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
   private def createViewUsingForm = (form: Form[UltimatelyResponsibleInsideRepairs]) =>
     ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Ultimately responsible view" must {
+  "Ultimately responsible view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

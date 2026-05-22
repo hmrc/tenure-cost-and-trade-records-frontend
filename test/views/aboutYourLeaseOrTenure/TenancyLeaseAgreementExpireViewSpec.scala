@@ -37,7 +37,7 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDa
   private def createViewUsingForm = (form: Form[LocalDate]) =>
     tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Tenancy lease agreement expire view" must {
+  "Tenancy lease agreement expire view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

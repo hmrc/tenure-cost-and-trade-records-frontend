@@ -35,7 +35,7 @@ class EditAddressViewSpec extends QuestionViewBehaviours[Address]:
   private def createViewUsingForm = (form: Form[Address]) =>
     editAddressView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  "Edit Address view" must {
+  "Edit Address view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

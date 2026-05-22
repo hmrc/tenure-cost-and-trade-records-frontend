@@ -32,13 +32,13 @@ class IsRentReceivedFromLettingViewSpec extends QuestionViewBehaviours[AnswersYe
 
   val backLink: String = controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
 
-  def createView: () => Html = () =>
-    isRentReceivedFromLettingView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  def createView: () => Html =
+    () => isRentReceivedFromLettingView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    isRentReceivedFromLettingView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => isRentReceivedFromLettingView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Is rent received from letting view" must {
+  "Is rent received from letting view" should {
 
     "has a link marked with back.link.label leading to premises license conditions Page" in {
       val doc          = asDocument(createView())

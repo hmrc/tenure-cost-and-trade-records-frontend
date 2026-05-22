@@ -34,7 +34,8 @@ class CurrentAnnualRentViewSpec extends QuestionViewBehaviours[BigDecimal]:
 
   private def createViewUsingForm = (form: Form[BigDecimal]) =>
     currentAnnualRentView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
-  "Current annual rent view" must {
+
+  "Current annual rent view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

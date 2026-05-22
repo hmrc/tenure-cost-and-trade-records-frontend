@@ -45,7 +45,7 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent open market view" must {
+  "Rent open market view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 

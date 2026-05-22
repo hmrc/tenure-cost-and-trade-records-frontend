@@ -28,8 +28,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehavio
 
   private val messageKeyPrefix = "checkYourAnswersAboutYourLeaseOrTenure"
 
-  override val form: Form[AnswersYesNo] =
-    CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
+  override val form: Form[AnswersYesNo] = CheckYourAnswersAboutYourLeaseOrTenureForm.checkYourAnswersAboutYourLeaseOrTenureForm
 
   private val backLink = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
 
@@ -56,7 +55,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehavio
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  "Check Your Answers About The Property view" must {
+  "Check Your Answers About The Property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
