@@ -45,7 +45,7 @@ class RentalIncomeRentController @Inject() (
 ) extends FORDataCaptureController(mcc)
   with FranchiseAndLettingSupport
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails = getIncomeRecord(index).collect {
@@ -82,34 +82,31 @@ class RentalIncomeRentController @Inject() (
             request.sessionData.forType
           )
         ),
-      data => {
+      data =>
         val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
-          if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
+          if aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx)) then
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
               records.updated(
                 idx,
-                records(idx) match {
+                records(idx) match
                   case franchise: FranchiseIncomeRecord => franchise.copy(rent = Some(data))
                   case letting: LettingIncomeRecord     => letting.copy(rent = Some(data))
                   case _                                => throw IllegalStateException("Unknown income record type")
-                }
               )
             }
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
-          } else {
+          else
             aboutFranchisesOrLettings
-          }
         }(using request)
 
         session.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(RentalIncomeRentId, updatedSession).apply(updatedSession))
         }
-      }
     )
   }
 
   private def calculateBackLink(idx: Int)(using request: SessionRequest[AnyContent]) =
-    request.getQueryString("from") match {
+    request.getQueryString("from") match
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       case _           =>
@@ -117,5 +114,3 @@ class RentalIncomeRentController @Inject() (
           case Some(TypeLetting) =>
             controllers.aboutfranchisesorlettings.routes.LettingTypeDetailsController.show(idx).url
           case _                 => controllers.aboutfranchisesorlettings.routes.FranchiseTypeDetailsController.show(idx).url
-    }
-}

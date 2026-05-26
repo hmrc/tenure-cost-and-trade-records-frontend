@@ -28,28 +28,27 @@ import play.api.test.Helpers.{POST, charset, contentAsString, contentType, statu
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class CommercialLettingAvailabilityControllerSpec extends TestBaseSpec {
+class CommercialLettingAvailabilityControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
 
   def controller(
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
-      prefilledAboutYouAndThePropertyPartTwo6048
+    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo6048)
+  ): CommercialLettingAvailabilityController =
+    CommercialLettingAvailabilityController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      commercialLettingAvailabilityView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
+      mockSessionRepo
     )
-  ): CommercialLettingAvailabilityController = CommercialLettingAvailabilityController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    commercialLettingAvailabilityView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-    mockSessionRepo
-  )
 
   given SessionRequest[AnyContent] = SessionRequest(stillConnectedDetails6048YesSession, fakeRequest)
 
-  "Commercial letting availability controller" should {
+  "GET /" should {
     "return 200" in {
       val result = controller().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -83,7 +82,7 @@ class CommercialLettingAvailabilityControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = controller().submit(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "commercialLettingAvailability" -> "4"
@@ -126,16 +125,12 @@ class CommercialLettingAvailabilityControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val numberOfDays = "commercialLettingAvailability"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "commercialLettingAvailability" -> "9"
     )
-
-  }
-}

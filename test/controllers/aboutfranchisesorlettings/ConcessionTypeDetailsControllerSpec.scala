@@ -24,7 +24,7 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, status, stu
 import utils.JsoupHelpers.contentAsJsoup
 import utils.TestBaseSpec
 
-class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
+class ConcessionTypeDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -40,7 +40,7 @@ class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "GET /"    should {
+  "GET /" should {
     "return 200" in {
       val result = controller().show(0)(fakeRequest)
       status(result) shouldBe OK
@@ -70,7 +70,6 @@ class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
     }
 
     "render back link to CYA if come from CYA" in {
-
       val result  = controller().show(0)(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-franchise-or-lettings")
@@ -82,14 +81,12 @@ class ConcessionTypeDetailsControllerSpec extends TestBaseSpec {
       content should include("/type-of-income")
     }
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = controller().submit(0)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
+class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
 
   import TestData.*
 
@@ -62,7 +62,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
       status(result) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = addAnotherLettingPartOfPropertyController().submit(0)(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody("addAnotherLettingPartOfProperty" -> "yes")
       )
@@ -103,7 +103,6 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
       status(result) shouldBe BAD_REQUEST
     }
-
   }
 
   "Letting part of property form" should {
@@ -111,23 +110,14 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec {
       val formData = baseFormData - errorKey.addAnotherLettingPartOfProperty
       val form     = theForm.bind(formData)
 
-      mustContainError(
-        errorKey.addAnotherLettingPartOfProperty,
-        "error.addAnotherLetting.required",
-        form
-      )
+      mustContainError(errorKey.addAnotherLettingPartOfProperty, "error.addAnotherLetting.required", form)
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
-
-      val addAnotherLettingPartOfProperty: String =
-        "addAnotherLettingPartOfProperty"
-    }
+    class ErrorKey:
+      val addAnotherLettingPartOfProperty: String = "addAnotherLettingPartOfProperty"
 
     val baseFormData: Map[String, String] = Map("addAnotherLettingPartOfProperty" -> "yes")
-  }
-}

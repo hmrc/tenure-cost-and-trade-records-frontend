@@ -19,12 +19,13 @@ package form.aboutyouandtheproperty
 import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
 object LicensableActivitiesForm:
 
-  private val baseLicensableActivitiesMapping = mapping(
-    "licensableActivities" -> createYesNoType("error.licensableActivities.missing")
-  )(x => x)(b => Some(b))
-
-  val licensableActivitiesForm: Form[AnswersYesNo] = Form(baseLicensableActivitiesMapping)
+  val licensableActivitiesForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "licensableActivities" -> createYesNoType("error.licensableActivities.missing")
+      )
+    )

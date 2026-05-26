@@ -16,21 +16,19 @@
 
 package controllers.form
 
-import form.WebsiteMapping.validateWebaddress
+import form.WebsiteMapping.validateWebAddress
 import org.scalatest.matchers.should
 import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
 import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
 
-class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
+class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
 
-  trait Setup {
-    val form: Form[String] = Form(single("websiteAddressForProperty" -> validateWebaddress))
-  }
+  trait Setup:
+    val form: Form[String] = Form(single("websiteAddressForProperty" -> validateWebAddress))
 
-  "web address validation" should {
-
+  "Web address validation" should {
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
         ("websiteAddressForProperty", "validity"),
@@ -43,11 +41,10 @@ class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with Table
       TableDrivenPropertyChecks.forAll(lengths) { (websiteAddressForProperty, isValid) =>
         val res: Form[String] = form.bind(Map("websiteAddressForProperty" -> websiteAddressForProperty))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.webaddressFormat.required"
-        }
       }
     }
 
@@ -65,12 +62,10 @@ class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with Table
       TableDrivenPropertyChecks.forAll(isInput) { (websiteAddressForProperty, isValid) =>
         val res: Form[String] = form.bind(Map("websiteAddressForProperty" -> websiteAddressForProperty))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.websiteAddressForProperty.required"
-        }
       }
     }
   }
-}

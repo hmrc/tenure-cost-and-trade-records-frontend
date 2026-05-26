@@ -22,13 +22,12 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec {
+class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   private val previousPage = aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show().url
-
-  private val nextPage = aboutthetradinghistory.routes.CaravansPerServiceController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.CaravansPerServiceController.show().url
 
   def caravansTotalSiteCapacityController: CaravansTotalSiteCapacityController =
     CaravansTotalSiteCapacityController(
@@ -57,7 +56,6 @@ class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include "/check-your-answers-about-the-trading-history"
-
     }
 
     "render back link to CYA if come from CYA" in {
@@ -112,5 +110,3 @@ class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

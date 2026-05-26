@@ -43,17 +43,16 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       view(
         request.sessionData.aboutTheTradingHistoryPartOne
-          .flatMap(_.additionalActivities.flatMap(_.checkYourAnswersAdditionalActivities)) match {
-          case Some(cYaAnswer) =>
-            checkYourAnswersAdditionalActivitiesForm.fill(cYaAnswer)
+          .flatMap(_.additionalActivities.flatMap(_.checkYourAnswersAdditionalActivities)) match
+          case Some(cYaAnswer) => checkYourAnswersAdditionalActivitiesForm.fill(cYaAnswer)
           case _               => checkYourAnswersAdditionalActivitiesForm
-        },
+        ,
         calculateBackLink
       )
     )
@@ -69,8 +68,7 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
             calculateBackLink
           )
         ),
-      data => {
-
+      data =>
         val updatedSession = AboutTheTradingHistoryPartOne.updateAdditionalActivities { additionalActivities =>
           additionalActivities.copy(checkYourAnswersAdditionalActivities = Some(data))
         }
@@ -87,17 +85,13 @@ class CheckYourAnswersAdditionalActivitiesController @Inject() (
                 .apply(updatedSession)
             )
           }
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
     request.sessionData.aboutTheTradingHistoryPartOne.flatMap(
       _.additionalActivities.flatMap(_.additionalActivitiesOnSite)
-    ) match {
+    ) match
       case Some(AnswerYes) => controllers.aboutthetradinghistory.routes.AdditionalMiscController.show().url
       case Some(AnswerNo)  => controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
       case _               => controllers.routes.TaskListController.show.url
-    }
-
-}

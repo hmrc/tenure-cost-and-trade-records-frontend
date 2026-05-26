@@ -22,12 +22,11 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "checkYourAnswersAdditionalInformation"
 
-  override val form: Form[AnswersYesNo] =
-    CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
+  override val form: Form[AnswersYesNo] = CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 
   private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
 
@@ -37,7 +36,7 @@ class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviou
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     checkYourAnswersAdditionalInformationView(form, notConnected6010NoSession)(using sessionRequest, messages)
 
-  "Check Your Answers Additional Information view" must {
+  "Check Your Answers Additional Information view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -55,4 +54,3 @@ class CheckYourAnswersAdditionalInformationViewSpec extends QuestionViewBehaviou
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

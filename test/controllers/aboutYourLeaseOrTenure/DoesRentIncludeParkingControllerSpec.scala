@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class DoesRentIncludeParkingControllerSpec extends TestBaseSpec {
+class DoesRentIncludeParkingControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -34,16 +34,17 @@ class DoesRentIncludeParkingControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
       prefilledAboutLeaseOrAgreementPartThree
     )
-  ): DoesRentIncludeParkingController = DoesRentIncludeParkingController(
-    doesRentIncludeParkingView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
+  ): DoesRentIncludeParkingController =
+    DoesRentIncludeParkingController(
+      doesRentIncludeParkingView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
+    )
 
-  "DoesRentIncludeParkingController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Services Paid entry in the session" in {
       val result = doesRentIncludeParkingController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -73,18 +74,16 @@ class DoesRentIncludeParkingControllerSpec extends TestBaseSpec {
     }
   }
 
-  "DoesRentIncludeParkingController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = doesRentIncludeParkingController().submit(FakeRequest().withFormUrlEncodedBody())
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data doesRentIncludeParking submitted" in {
+    "redirect when form data doesRentIncludeParking submitted" in {
       val res = doesRentIncludeParkingController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("doesRentIncludeParking" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

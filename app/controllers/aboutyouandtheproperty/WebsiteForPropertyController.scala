@@ -46,17 +46,17 @@ class WebsiteForPropertyController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("WebsiteForProperty")
 
     Ok(
       websiteForPropertyView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.websiteForPropertyDetails) match
           case Some(websiteForPropertyDetails) => websiteForPropertyForm.fill(websiteForPropertyDetails)
           case _                               => websiteForPropertyForm
-        },
+        ,
         request.sessionData.toSummary,
         backLink(request.sessionData)
       )
@@ -66,30 +66,17 @@ class WebsiteForPropertyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[WebsiteForPropertyDetails](
       websiteForPropertyForm,
-      formWithErrors =>
-        BadRequest(
-          websiteForPropertyView(
-            formWithErrors,
-            request.sessionData.toSummary,
-            backLink(request.sessionData)
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(websiteForPropertyView(formWithErrors, request.sessionData.toSummary, backLink(request.sessionData))),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(websiteForPropertyDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(WebsiteForPropertyPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def backLink(answers: Session): String =
-    answers.forType match {
-      case FOR6030 | FOR6020 =>
-        controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
-      case FOR6045 | FOR6046 =>
-        controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show().url
+    answers.forType match
+      case FOR6030 | FOR6020 => controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
+      case FOR6045 | FOR6046 => controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show().url
       case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show().url
-    }
-}

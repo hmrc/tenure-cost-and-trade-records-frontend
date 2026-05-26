@@ -23,7 +23,7 @@ import play.api.data.validation.Constraints.maxLength
 /**
   * @author Yuriy Tumakha
   */
-object RentFreePeriodDetailsForm {
+object RentFreePeriodDetailsForm:
 
   val rentFreePeriodDetailsForm: Form[Option[String]] =
     Form(
@@ -35,5 +35,3 @@ object RentFreePeriodDetailsForm {
         )
       )
     )
-
-}

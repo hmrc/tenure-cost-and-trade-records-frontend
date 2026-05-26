@@ -43,17 +43,17 @@ class WorkCarriedOutDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("WorkCarriedOutDetails")
 
     Ok(
       view(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.workCarriedOutDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.workCarriedOutDetails) match
           case Some(data) => workCarriedOutDetailsForm.fill(data)
           case _          => workCarriedOutDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -63,13 +63,11 @@ class WorkCarriedOutDetailsController @Inject() (
     continueOrSaveAsDraft[String](
       workCarriedOutDetailsForm,
       formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(workCarriedOutDetails = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(WorkCarriedOutDetailsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
-}

@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpec {
+class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,7 +39,7 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
       mockSessionRepo
     )
 
-  "LettingPartOfPropertyItemsIncludedInRentController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Letting Part of PropertyItems Included in session" in {
       val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -57,7 +57,7 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
     }
   }
 
-  "LettingPartOfPropertyItemsIncludedInRentController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = lettingPartOfPropertyItemsIncludedInRentController().submit(0)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -65,7 +65,7 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted without CYA param" in {
+    "redirect when form data submitted without CYA param" in {
       val res = lettingPartOfPropertyItemsIncludedInRentController().submit(0)(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "itemsInRent[0]" -> "rates"
@@ -74,7 +74,7 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted with CYA param" in {
+    "redirect when form data submitted with CYA param" in {
       val res = lettingPartOfPropertyItemsIncludedInRentController().submit(0)(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "itemsInRent[0]" -> "rates"
@@ -85,19 +85,17 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
   }
 
   "calculateBackLink" should {
-
     "return back link to CYA page when 'from=CYA' query param is present and user is connected to the property" in {
       val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequestFromCYA)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       )
     }
-  }
-  "return correct back link with corresponding index" in {
-    val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
-    contentAsString(result) should include(
-      controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(0).url
-    )
-  }
 
-}
+    "return correct back link with corresponding index" in {
+      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
+      contentAsString(result) should include(
+        controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(0).url
+      )
+    }
+  }

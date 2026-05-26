@@ -22,13 +22,14 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status.*
 import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class CharityQuestionControllerSpec extends TestBaseSpec {
+class CharityQuestionControllerSpec extends TestBaseSpec:
+
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -44,16 +45,17 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  def charityQuestionControllerNone(): CharityQuestionController = CharityQuestionController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    charityQuestionView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def charityQuestionControllerNone(): CharityQuestionController =
+    CharityQuestionController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      charityQuestionView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "CharityQuestion controller" should {
+  "GET /" should {
     "GET / return 200 charity question in the session" in {
       val result = charityQuestionController().show(fakeRequest)
       status(result) shouldBe OK
@@ -76,21 +78,21 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
       val result = charityQuestionController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = charityQuestionController().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = charityQuestionController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = charityQuestionController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("charityQuestion" -> "yes")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+    "Redirect when form data submitted" in {
+      val res = charityQuestionController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("charityQuestion" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
@@ -103,14 +105,10 @@ class CharityQuestionControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val charityQuestion: String = "charityQuestion"
-    }
 
     val baseFormData: Map[String, String] = Map("charityQuestion" -> "yes")
-  }
-
-}

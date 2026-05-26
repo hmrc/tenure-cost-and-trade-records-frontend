@@ -14,11 +14,18 @@
  * limitations under the License.
  */
 
-import scala.concurrent.Future
-import scala.language.implicitConversions
+package views
 
-package object test:
-  implicit def toFut[A](a: A): Future[A]                     = Future.successful(a)
-  implicit def toOpt[A](a: A): Option[A]                     = Some(a)
-  implicit def toBigDecimal(num: Int): BigDecimal            = BigDecimal(num)
-  implicit def toBigDecimalOpt(num: Int): Option[BigDecimal] = toBigDecimal(num)
+import views.behaviours.ViewBehaviours
+
+class TestSignViewSpec extends ViewBehaviours:
+
+  private def createView = () => testSignView()(using fakeRequest, messages)
+
+  "testSign view" should {
+    "contain text " in {
+      val doc = asDocument(createView())
+      assert(doc.toString.contains(messages("test.heading")))
+      assert(doc.toString.contains(messages("test.text")))
+    }
+  }

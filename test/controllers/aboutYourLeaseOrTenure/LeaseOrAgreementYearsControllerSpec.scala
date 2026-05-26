@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
+class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec:
 
   val mockAboutYourLeaseOrTenureNavigator: AboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
@@ -42,7 +42,7 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "LeaseOrAgreementYearsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with yes data in the session" in {
       val result = leaseOrAgreementYearsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -54,8 +54,7 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
     }
 
     "return 200 and HTML with no data in the session" in {
-      val controller =
-        leaseOrAgreementYearsController(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo))
+      val controller = leaseOrAgreementYearsController(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo))
       val result     = controller.show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -92,7 +91,7 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = leaseOrAgreementYearsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "commenceWithinThreeYears"        -> "no",
@@ -103,4 +102,3 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

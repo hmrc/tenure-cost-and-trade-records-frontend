@@ -30,14 +30,12 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, ExecutionContext, Future}
 
-abstract class InternalAuthTokenInitialiser {
+abstract class InternalAuthTokenInitialiser:
   val initialised: Future[Done]
-}
 
 @Singleton
-class NoOpInternalAuthTokenInitialiser @Inject() () extends InternalAuthTokenInitialiser {
+class NoOpInternalAuthTokenInitialiser @Inject() () extends InternalAuthTokenInitialiser:
   override val initialised: Future[Done] = Future.successful(Done)
-}
 
 @Singleton
 class InternalAuthTokenInitialiserImpl @Inject() (
@@ -45,7 +43,7 @@ class InternalAuthTokenInitialiserImpl @Inject() (
   httpClientV2: HttpClientV2
 )(using ec: ExecutionContext
 ) extends InternalAuthTokenInitialiser
-  with Logging {
+  with Logging:
 
   private val internalAuthService: Service = configuration.get[Service]("microservice.services.internal-auth")
   private val internalAuthToken            = configuration.get[String]("internalAuthToken")
@@ -59,15 +57,14 @@ class InternalAuthTokenInitialiserImpl @Inject() (
 
   private def ensureAuthToken(): Future[Done] =
     authTokenIsValid().flatMap { isValid =>
-      if (isValid) {
+      if isValid then
         logger.info("Auth token is already valid")
         Future.successful(Done)
-      } else {
+      else
         createClientAuthToken()
-      }
     }
 
-  private def createClientAuthToken(): Future[Done] = {
+  private def createClientAuthToken(): Future[Done] =
     logger.info("Initialising auth token")
 
     httpClientV2
@@ -87,14 +84,12 @@ class InternalAuthTokenInitialiserImpl @Inject() (
       )
       .execute[HttpResponse]
       .flatMap { response =>
-        if (response.status == CREATED) {
+        if response.status == CREATED then
           logger.info("Auth token initialised")
           Future.successful(Done)
-        } else {
+        else
           Future.failed(RuntimeException("Unable to initialise internal-auth token"))
-        }
       }
-  }
 
   private def authTokenIsValid(): Future[Boolean] =
     httpClientV2
@@ -102,5 +97,3 @@ class InternalAuthTokenInitialiserImpl @Inject() (
       .setHeader(authorisation -> internalAuthToken)
       .execute[HttpResponse]
       .map(_.status == OK)
-
-}

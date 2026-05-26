@@ -17,8 +17,8 @@
 package form
 
 import form.ConditionalConstraintMappings.mandatoryStringIfExists
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.data.Forms.{list, mapping, text}
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, FormError}
@@ -28,64 +28,65 @@ import scala.collection.immutable.ArraySeq
 /**
   * @author Yuriy Tumakha
   */
-class ConditionalConstraintMappingsSpec extends AnyFlatSpec with should.Matchers {
+class ConditionalConstraintMappingsSpec extends AnyWordSpec with should.Matchers:
 
-  private val form: Form[Model] = Form(
-    mapping(
-      "items"       -> list(text),
-      "description" -> mandatoryStringIfExists(
-        "items[0]",
-        "error.itemsDescription.required"
-      ).verifying(
-        maxLength(2000, "error.itemsDescription.maxLength")
-      )
-    )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
-
-  "mandatoryStringIfExists" should "bind all mapped values" in {
-    val data = Map("items[0]" -> "landOnly", "description" -> "Selected items details", "unknown" -> "value")
-    val res  = form.bind(data)
-
-    res.errors shouldBe empty
-    res.value  shouldBe Some(Model(List("landOnly"), "Selected items details"))
-  }
-
-  it should "make mandatory `description` field if any value selected for `items` field" in {
-    val data = Map("items[0]" -> "property")
-    val res  = form.bind(data)
-
-    res.errors shouldBe List(FormError("description", List("error.itemsDescription.required"), List.empty))
-    res.value  shouldBe None
-  }
-
-  it should "make optional `description` field if no value for `items` field is supplied" in {
-    val res = form.bind(Map.empty[String, String])
-
-    res.errors shouldBe empty
-    res.value  shouldBe Some(Model(List.empty, ""))
-  }
-
-  it should "bind value for optional `description` field if no value for `items` field is supplied" in {
-    val data = Map("description" -> "Selected items details")
-    val res  = form.bind(data)
-
-    res.errors shouldBe empty
-    res.value  shouldBe Some(Model(List.empty, "Selected items details"))
-  }
-
-  it should "return maxLength error for too big `description`" in {
-    val data = Map[String, String](
-      "description" -> ("Too big selected items details." + "x" * 2000)
+  private val form: Form[Model] =
+    Form(
+      mapping(
+        "items"       -> list(text),
+        "description" -> mandatoryStringIfExists(
+          "items[0]",
+          "error.itemsDescription.required"
+        ).verifying(
+          maxLength(2000, "error.itemsDescription.maxLength")
+        )
+      )(Model.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
-    val res  = form.bind(data)
 
-    res.errors shouldBe List(FormError("description", List("error.itemsDescription.maxLength"), ArraySeq(2000)))
-    res.value  shouldBe None
+  "mandatoryStringIfExists" should {
+    "bind all mapped values" in {
+      val data = Map("items[0]" -> "landOnly", "description" -> "Selected items details", "unknown" -> "value")
+      val res  = form.bind(data)
+
+      res.errors shouldBe empty
+      res.value  shouldBe Some(Model(List("landOnly"), "Selected items details"))
+    }
+
+    "make mandatory `description` field if any value selected for `items` field" in {
+      val data = Map("items[0]" -> "property")
+      val res  = form.bind(data)
+
+      res.errors shouldBe List(FormError("description", List("error.itemsDescription.required"), List.empty))
+      res.value  shouldBe None
+    }
+
+    "make optional `description` field if no value for `items` field is supplied" in {
+      val res = form.bind(Map.empty[String, String])
+
+      res.errors shouldBe empty
+      res.value  shouldBe Some(Model(List.empty, ""))
+    }
+
+    "bind value for optional `description` field if no value for `items` field is supplied" in {
+      val data = Map("description" -> "Selected items details")
+      val res  = form.bind(data)
+
+      res.errors shouldBe empty
+      res.value  shouldBe Some(Model(List.empty, "Selected items details"))
+    }
+
+    "return maxLength error for too big `description`" in {
+      val data = Map[String, String](
+        "description" -> ("Too big selected items details." + "x" * 2000)
+      )
+      val res  = form.bind(data)
+
+      res.errors shouldBe List(FormError("description", List("error.itemsDescription.maxLength"), ArraySeq(2000)))
+      res.value  shouldBe None
+    }
   }
 
   case class Model(
     items: List[String] = List.empty,
     description: String
   )
-
-}

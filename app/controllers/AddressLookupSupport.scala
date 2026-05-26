@@ -34,11 +34,10 @@ trait AddressLookupSupport(connector: AddressLookupConnector)(using ec: Executio
   ): Future[Result] =
     connector
       .initJourney(config)
-      .flatMap {
+      .flatMap:
         case Some(onRampUrl) => SeeOther(onRampUrl)
         case None            =>
           failed(Exception("The AddressLookupConnector did not receive the on-ramp location from the ADDRESS_LOOKUP_FRONTEND service"))
-      }
 
   def getConfirmedAddress(id: String)(using hc: HeaderCarrier): Future[AddressLookupConfirmedAddress] =
     connector.getConfirmedAddress(id)

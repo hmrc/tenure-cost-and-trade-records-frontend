@@ -47,7 +47,7 @@ class ThroughputAffectsRentDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ThroughputAffectsRentDetails")
@@ -67,13 +67,12 @@ class ThroughputAffectsRentDetailsController @Inject() (
     continueOrSaveAsDraft[String](
       throughputAffectsRentDetailsForm,
       formWithErrors => BadRequest(throughputAffectsRentDetailsView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateThroughputAffectsRent(_.copy(throughputAffectsRentDetails = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(ThroughputAffectsRentDetailsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
@@ -84,5 +83,3 @@ class ThroughputAffectsRentDetailsController @Inject() (
 
   private def getBackLink: String =
     controllers.aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show().url
-
-}

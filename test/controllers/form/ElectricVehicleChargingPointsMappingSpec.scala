@@ -23,14 +23,12 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
 
-class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
+class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
 
-  trait Setup {
+  trait Setup:
     val form: Form[Int] = Form(single("electricVehicleChargingPoints" -> validateSpacesOrBays))
-  }
 
-  "web address validation" should {
-
+  "Web address validation" should {
     "catch mandatory condition" in new Setup {
       val isInput: TableFor2[String, Boolean] = Table(
         ("number", "validity"),
@@ -41,11 +39,10 @@ class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with shou
       TableDrivenPropertyChecks.forAll(isInput) { (electricVehicleChargingPoints, isValid) =>
         val res: Form[Int] = form.bind(Map("electricVehicleChargingPoints" -> electricVehicleChargingPoints))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.spacesOrBaysNumber.nonNumeric"
-        }
       }
     }
 
@@ -59,11 +56,10 @@ class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with shou
       TableDrivenPropertyChecks.forAll(isInput) { (electricVehicleChargingPoints, isValid) =>
         val res: Form[Int] = form.bind(Map("electricVehicleChargingPoints" -> electricVehicleChargingPoints))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.spacesOrBaysNumber.negative"
-        }
       }
     }
 
@@ -77,12 +73,10 @@ class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with shou
       TableDrivenPropertyChecks.forAll(isInput) { (electricVehicleChargingPoints, isValid) =>
         val res: Form[Int] = form.bind(Map("electricVehicleChargingPoints" -> electricVehicleChargingPoints))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.spacesOrBaysNumber.required"
-        }
       }
     }
   }
-}

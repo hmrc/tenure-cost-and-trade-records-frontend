@@ -44,17 +44,17 @@ class PropertyCurrentlyUsedController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PropertyCurrentlyUsed")
 
     Ok(
       view(
-        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed) match {
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.propertyCurrentlyUsed) match
           case Some(propertyDetails) => propertyCurrentlyUsedForm.fill(propertyDetails)
           case _                     => propertyCurrentlyUsedForm
-        },
+        ,
         request.sessionData.toSummary,
         backLink
       )
@@ -64,28 +64,17 @@ class PropertyCurrentlyUsedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PropertyCurrentlyUsed](
       propertyCurrentlyUsedForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            request.sessionData.toSummary,
-            backLink
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, backLink)),
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(propertyCurrentlyUsed = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(PropertyCurrentlyUsedPageId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
   private def backLink(using request: Request[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL"  => controllers.routes.TaskListController.show.url
       case "CYA" => routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-    }
-
-}

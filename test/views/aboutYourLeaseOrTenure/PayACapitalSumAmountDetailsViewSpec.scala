@@ -22,7 +22,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDecimal] {
+class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDecimal]:
 
   private val messageKeyPrefix = "capitalSumPaidDetails6048"
 
@@ -38,7 +38,7 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDeci
   private def createViewUsingForm = (form: Form[BigDecimal]) =>
     payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(using sessionRequest, messages)
 
-  "capital sum or premium view" must {
+  "capital sum or premium view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -67,4 +67,3 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDeci
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

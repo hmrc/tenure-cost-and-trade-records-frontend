@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.RentIncludeTradeServicesInforma
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeTradeServicesDetailsViewSpec extends QuestionViewBehaviours[RentIncludeTradeServicesInformationDetails] {
+class RentIncludeTradeServicesDetailsViewSpec extends QuestionViewBehaviours[RentIncludeTradeServicesInformationDetails]:
 
   private val messageKeyPrefix = "rentIncludeTradeServicesDetails"
 
@@ -35,7 +35,7 @@ class RentIncludeTradeServicesDetailsViewSpec extends QuestionViewBehaviours[Ren
   private def createViewUsingForm = (form: Form[RentIncludeTradeServicesInformationDetails]) =>
     rentIncludeTradeServicesDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent include trade services details" must {
+  "Rent include trade services details" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -66,4 +66,3 @@ class RentIncludeTradeServicesDetailsViewSpec extends QuestionViewBehaviours[Ren
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

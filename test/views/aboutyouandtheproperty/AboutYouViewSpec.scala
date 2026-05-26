@@ -22,7 +22,7 @@ import models.submissions.aboutyouandtheproperty.CustomerDetails
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
+class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails]:
 
   private val messageKeyPrefix = "aboutYou"
 
@@ -33,7 +33,7 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
   private def createViewUsingForm = (form: Form[CustomerDetails]) =>
     aboutYouView(form, Summary("99996010001"), false)(using fakeRequest, messages)
 
-  "About you view" must {
+  "About you view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -85,4 +85,3 @@ class AboutYouViewSpec extends QuestionViewBehaviours[CustomerDetails] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

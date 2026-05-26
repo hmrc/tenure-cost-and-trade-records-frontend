@@ -42,21 +42,23 @@ class CateringOperationBusinessDetailsController @Inject() ( // 6030 only
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
-    val existingDetails: Option[ConcessionBusinessDetails] = for {
-      requestedIndex            <- index
-      allRecords                <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
-      concessionBusinessDetails <- allRecords
-                                     .lift(requestedIndex)
-                                     .collect[Option[ConcessionBusinessDetails]] {
-                                       case concession: ConcessionIncomeRecord => concession.businessDetails
-                                     }
-                                     .flatten
-    } yield concessionBusinessDetails
+    val existingDetails: Option[ConcessionBusinessDetails] =
+      for
+        requestedIndex            <- index
+        allRecords                <- request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome)
+        concessionBusinessDetails <- allRecords
+                                       .lift(requestedIndex)
+                                       .collect[Option[ConcessionBusinessDetails]] {
+                                         case concession: ConcessionIncomeRecord => concession.businessDetails
+                                       }
+                                       .flatten
+      yield concessionBusinessDetails
 
     audit.sendChangeLink("ConcessionBusinessDetails")
+
     Ok(
       cateringOperationDetailsView(
         existingDetails.fold(cateringOperationBusinessDetails6030Form)(cateringOperationBusinessDetails6030Form.fill),
@@ -81,27 +83,23 @@ class CateringOperationBusinessDetailsController @Inject() ( // 6030 only
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val idx         = index.getOrElse(0)
         val updatedData = updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
-          if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
-            val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
+          if aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx)) then
+            val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map(records =>
               records.updated(idx, records(idx).asInstanceOf[ConcessionIncomeRecord].copy(businessDetails = Some(data)))
-            }
+            )
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome, rentalIncomeIndex = idx)
-          } else {
+          else
             aboutFranchisesOrLettings
-          }
         }
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CateringOperationBusinessPageId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
   private def getBackLink(index: Option[Int]): String =
     controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show(index).url
-
-}

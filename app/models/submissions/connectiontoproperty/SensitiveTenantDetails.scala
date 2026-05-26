@@ -21,11 +21,13 @@ import models.submissions.common.SensitiveAddress
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
+import scala.language.implicitConversions
+
 case class SensitiveTenantDetails(
   name: String,
   descriptionOfLetting: String,
   correspondenceAddress: Option[SensitiveAddress]
-) extends Sensitive[TenantDetails] {
+) extends Sensitive[TenantDetails]:
 
   override def decryptedValue: TenantDetails = TenantDetails(
     name,
@@ -33,14 +35,13 @@ case class SensitiveTenantDetails(
     correspondenceAddress.map(_.decryptedValue)
   )
 
-}
+object SensitiveTenantDetails:
 
-object SensitiveTenantDetails {
   implicit def format(using crypto: MongoCrypto): OFormat[SensitiveTenantDetails] = Json.format
 
-  def apply(tenantDetails: TenantDetails): SensitiveTenantDetails = SensitiveTenantDetails(
-    tenantDetails.name,
-    tenantDetails.descriptionOfLetting,
-    tenantDetails.correspondenceAddress.map(SensitiveAddress(_))
-  )
-}
+  def apply(tenantDetails: TenantDetails): SensitiveTenantDetails =
+    SensitiveTenantDetails(
+      tenantDetails.name,
+      tenantDetails.descriptionOfLetting,
+      tenantDetails.correspondenceAddress.map(SensitiveAddress(_))
+    )

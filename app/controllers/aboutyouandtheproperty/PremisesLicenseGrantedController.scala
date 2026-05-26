@@ -42,18 +42,18 @@ class PremisesLicenseGrantedController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PremisesLicenseGranted")
 
     Ok(
       premisesLicenseGrantedView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match
           case Some(premisesLicenseGrantedDetail) =>
             premisesLicenseGrantedForm.fill(premisesLicenseGrantedDetail)
           case _                                  => premisesLicenseGrantedForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -62,20 +62,11 @@ class PremisesLicenseGrantedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       premisesLicenseGrantedForm,
-      formWithErrors =>
-        BadRequest(
-          premisesLicenseGrantedView(
-            formWithErrors,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(premisesLicenseGrantedView(formWithErrors, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(premisesLicenseGrantedDetail = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PremisesLicenseGrantedId, updatedData).apply(updatedData)))
-      }
     )
   }
-
-}

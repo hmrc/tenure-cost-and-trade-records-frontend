@@ -44,17 +44,17 @@ class VacantPropertiesStartDateController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("VacantPropertiesStartDate")
 
     Ok(
       vacantPropertyStartDateView(
-        request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match {
+        request.sessionData.stillConnectedDetails.flatMap(_.vacantPropertyStartDate) match
           case Some(vacantPropertyStartDate) => vacantPropertyStartDateForm.fill(vacantPropertyStartDate)
           case _                             => vacantPropertyStartDateForm
-        },
+        ,
         request.sessionData.toSummary,
         calculateBackLink
       )
@@ -65,31 +65,18 @@ class VacantPropertiesStartDateController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[LocalDate](
       vacantPropertyStartDateForm,
-      formWithErrors =>
-        BadRequest(
-          vacantPropertyStartDateView(
-            formWithErrors,
-            request.sessionData.toSummary,
-            calculateBackLink
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(vacantPropertyStartDateView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(vacantPropertyStartDate = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from == "CYA")
-          val nextPage      =
-            redirectToCYA.getOrElse(navigator.nextPage(PropertyBecomeVacantPageId, updatedData).apply(updatedData))
+          val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(PropertyBecomeVacantPageId, updatedData).apply(updatedData))
           Redirect(nextPage)
         }
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+    navigator.from match
+      case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       case _     => controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
-    }
-
-}

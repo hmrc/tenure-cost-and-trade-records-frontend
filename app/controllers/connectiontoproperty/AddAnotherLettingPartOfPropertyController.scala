@@ -19,7 +19,7 @@ package controllers.connectiontoproperty
 import actions.{SessionRequest, WithSessionRefiner}
 import connectors.Audit
 import controllers.FORDataCaptureController
-import form.confirmableActionForm.confirmableActionForm
+import form.ConfirmableActionForm.confirmableActionForm
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
@@ -64,29 +64,22 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
   }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    if (request.sessionData.stillConnectedDetails.exists(_.lettingPartOfPropertyDetailsIndex >= 4)) {
-
+    if request.sessionData.stillConnectedDetails.exists(_.lettingPartOfPropertyDetailsIndex >= 4) then
       val redirectUrl = controllers.routes.MaxOfLettingsReachedController.show(Some("connection")).url
       Redirect(redirectUrl)
-    } else {
+    else
       continueOrSaveAsDraft[AnswersYesNo](
         theForm,
-        formWithErrors =>
-          BadRequest(
-            theListView(
-              formWithErrors,
-              index
-            )
-          ),
+        formWithErrors => BadRequest(theListView(formWithErrors, index)),
         formData =>
           request.sessionData.stillConnectedDetails
             .map(_.lettingPartOfPropertyDetails)
             .filter(_.nonEmpty)
             .fold[Future[Result]](
               Redirect(
-                if (formData == AnswerYes) {
+                if formData == AnswerYes then
                   routes.LettingPartOfPropertyDetailsController.show()
-                } else {
+                else
                   navigator
                     .cyaPageDependsOnSession(request.sessionData)
                     .filter(_ => navigator.from == "CYA" && formData == AnswerNo)
@@ -95,7 +88,6 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
                         .nextWithoutRedirectToCYA(AddAnotherLettingPartOfPropertyPageId, request.sessionData)
                         .apply(request.sessionData)
                     )
-                }
               )
             ) { existingSections =>
               val updatedSections = existingSections.updated(
@@ -118,7 +110,6 @@ class AddAnotherLettingPartOfPropertyController @Inject() (
                 .map(Redirect)
             }
       )
-    }
   }
 
   def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

@@ -34,7 +34,7 @@ import scala.language.implicitConversions
 class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
 
   "the LastRental controller" when {
-    "the user has not entered any date yet"         should {
+    "the user has not entered any date yet" should {
       "be handling GET / by replying 200 with the form showing the date field" in new ControllerFixture {
         val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
@@ -47,6 +47,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         page.input("date.month") should beEmpty
         page.input("date.year")  should beEmpty
       }
+
       "be handling POST / by replying 303 redirect to the 'Yearly Available' page" in new ControllerFixture {
         val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "date.day"   -> "1",
@@ -60,7 +61,8 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         intendedLettings(data).value.whenWasLastLet.value shouldBe LocalDate.of(2024, 4, 1)
       }
     }
-    "the user has already entered a date"           should {
+
+    "the user has already entered a date" should {
       "be handling GET / by replying 200 with the pre-filled form showing the date value" in new ControllerFixture(
         whenWasLastLet = Some(LocalDate.of(2024, 12, 25))
       ) {
@@ -76,6 +78,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
         page.input("date.year")  should haveValue("2024")
       }
     }
+
     "regardless the user had entered a date or not" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
         val result: Future[Result] = controller.submit(

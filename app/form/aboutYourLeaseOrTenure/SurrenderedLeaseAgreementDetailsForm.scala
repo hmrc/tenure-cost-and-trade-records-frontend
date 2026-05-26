@@ -22,16 +22,15 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.nonEmpty
 
-object SurrenderedLeaseAgreementDetailsForm {
+object SurrenderedLeaseAgreementDetailsForm:
 
-  def surrenderedLeaseAgreementDetailsForm: Form[SurrenderedLeaseAgreementDetails] = Form(
-    mapping(
-      "surrenderedLeaseAgreementAmount" -> currencyMapping(".surrenderedLeaseAgreementAmount"),
-      "surrenderedLeaseAgreementMonths" ->
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.surrenderedLeaseAgreementMonths.required")
-        )
-    )(SurrenderedLeaseAgreementDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
-
-}
+  def surrenderedLeaseAgreementDetailsForm: Form[SurrenderedLeaseAgreementDetails] =
+    Form(
+      mapping(
+        "surrenderedLeaseAgreementAmount" -> currencyMapping(".surrenderedLeaseAgreementAmount"),
+        "surrenderedLeaseAgreementMonths" ->
+          default(text, "").verifying(
+            nonEmpty(errorMessage = "error.surrenderedLeaseAgreementMonths.required")
+          )
+      )(SurrenderedLeaseAgreementDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

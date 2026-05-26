@@ -22,18 +22,19 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TotalPayrollCostsControllerSpec extends TestBaseSpec {
+class TotalPayrollCostsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  val aboutYourTradingHistoryController: TotalPayrollCostsController = TotalPayrollCostsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    totalPayrollCostsView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
-    mockSessionRepo
-  )
+  val aboutYourTradingHistoryController: TotalPayrollCostsController =
+    TotalPayrollCostsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      totalPayrollCostsView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
@@ -70,5 +71,3 @@ class TotalPayrollCostsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

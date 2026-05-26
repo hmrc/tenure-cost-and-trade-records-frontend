@@ -47,7 +47,7 @@ class HeadOfficeExpensesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("HeadOfficeExpenses")
@@ -75,7 +75,7 @@ class HeadOfficeExpensesController @Inject() (
       continueOrSaveAsDraft[(Seq[Option[BigDecimal]], Option[String])](
         headOfficeExpensesForm(years),
         formWithErrors => BadRequest(headOfficeExpensesView(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections      = (success._1 zip turnoverSections6076).map { case (headOfficeExpenses, previousSection) =>
             previousSection.copy(headOfficeExpenses = headOfficeExpenses)
           }
@@ -96,7 +96,6 @@ class HeadOfficeExpensesController @Inject() (
                 .getOrElse(navigator.nextPage(HeadOfficeExpensesId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }
@@ -111,13 +110,7 @@ class HeadOfficeExpensesController @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-      case "IES" =>
-        controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
-      case _     =>
-        aboutthetradinghistory.routes.OperationalExpensesController.show().url
-    }
-
-}
+    navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+      case _     => aboutthetradinghistory.routes.OperationalExpensesController.show().url

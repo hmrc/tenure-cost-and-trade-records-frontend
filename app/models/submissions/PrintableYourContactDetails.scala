@@ -22,7 +22,7 @@ import uk.gov.hmrc.govukfrontend.views.Aliases
 /**
   * @author Yuriy Tumakha
   */
-trait PrintableYourContactDetails {
+trait PrintableYourContactDetails:
 
   def fullName: String
 
@@ -37,7 +37,6 @@ trait PrintableYourContactDetails {
       Some(contactDetails.email),
       additionalInformation
     ).flatten
-}
 
 object PrintableYourContactDetails extends Aliases:
 

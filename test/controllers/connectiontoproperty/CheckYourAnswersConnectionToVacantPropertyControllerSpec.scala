@@ -21,7 +21,7 @@ import play.api.http.Status
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class CheckYourAnswersConnectionToVacantPropertyControllerSpec extends TestBaseSpec {
+class CheckYourAnswersConnectionToVacantPropertyControllerSpec extends TestBaseSpec:
 
   def checkYourAnswersConnectionToVacantPropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
@@ -45,4 +45,3 @@ class CheckYourAnswersConnectionToVacantPropertyControllerSpec extends TestBaseS
       charset(result)     shouldBe Some(UTF8)
     }
   }
-}

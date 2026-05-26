@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
+class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec:
 
   private val previousPage = aboutthetradinghistory.routes.StaticCaravansController.show().url
   private val nextPage     = aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show().url
@@ -106,5 +106,3 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

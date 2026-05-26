@@ -26,30 +26,29 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
+class CurrentRentFirstPaidControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def currentRentFirstPaidController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): CurrentRentFirstPaidController =
+    CurrentRentFirstPaidController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      currentRentFirstPaidView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+      ),
+      mockSessionRepo
     )
-  ): CurrentRentFirstPaidController = CurrentRentFirstPaidController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    currentRentFirstPaidView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-      aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
-    ),
-    mockSessionRepo
-  )
 
-  "CurrentRentFirstPaidController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Current Rent First Paid in the session" in {
       val result = currentRentFirstPaidController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -117,16 +116,15 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
     }
   }
 
-  "CurrentRentFirstPaidController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = currentRentFirstPaidController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data currentRentFirstPaid submitted" in {
+    "redirect when form data currentRentFirstPaid submitted" in {
       val res = currentRentFirstPaidController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "currentRentFirstPaid.day"   -> "27",
@@ -137,4 +135,3 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

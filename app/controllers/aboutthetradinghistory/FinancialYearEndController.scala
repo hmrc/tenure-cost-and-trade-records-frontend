@@ -60,14 +60,13 @@ class FinancialYearEndController @Inject() (
 
         Ok(
           financialYearEndView(
-            aboutTheTradingHistory.occupationAndAccountingInformation.flatMap(_.currentFinancialYearEnd) match {
+            aboutTheTradingHistory.occupationAndAccountingInformation.flatMap(_.currentFinancialYearEnd) match
               case Some(financialYear) =>
                 val yearEndChanged = aboutTheTradingHistory.occupationAndAccountingInformation
                   .flatMap(_.financialYearEndHasChanged)
                   .getOrElse(false)
                 accountingInformationForm.fill((financialYear, yearEndChanged))
               case _                   => accountingInformationForm
-            }
           )
         )
       }
@@ -80,7 +79,7 @@ class FinancialYearEndController @Inject() (
         continueOrSaveAsDraft[(DayMonthsDuration, Boolean)](
           accountingInformationForm,
           formWithErrors => BadRequest(financialYearEndView(formWithErrors)),
-          (newCurrentFinancialYearEnd, newFinancialYearEndHasChanged) => {
+          (newCurrentFinancialYearEnd, newFinancialYearEndHasChanged) =>
             assert(aboutTheTradingHistory.occupationAndAccountingInformation.isDefined)
             val oldOccupationAndAccountingInfo = aboutTheTradingHistory.occupationAndAccountingInformation.get
             val newOccupationAndAccountingInfo = OccupationalAndAccountingInformation(
@@ -94,7 +93,7 @@ class FinancialYearEndController @Inject() (
               oldOccupationAndAccountingInfo.currentFinancialYearEnd.contains(newCurrentFinancialYearEnd)
             val financialYearsUnchanged        = financialYearEndDates.map(_.getYear) == previousFinancialYears
 
-            val updatedData: Session = request.sessionData.forType match {
+            val updatedData: Session = request.sessionData.forType match
               case FOR6020           =>
                 buildUpdateData6020(
                   aboutTheTradingHistory,
@@ -136,7 +135,7 @@ class FinancialYearEndController @Inject() (
                   newFinancialYearEndSameAsOld,
                   financialYearsUnchanged
                 )
-            }
+
             repository
               .saveOrUpdate(updatedData)
               .map(_ =>
@@ -166,7 +165,6 @@ class FinancialYearEndController @Inject() (
                   .getOrElse(navigator.nextPage(FinancialYearEndPageId, updatedData).apply(updatedData))
               )
               .map(Redirect)
-          }
         )
       }
   }
@@ -175,8 +173,7 @@ class FinancialYearEndController @Inject() (
     financialYearsUnchanged: Boolean,
     aboutTheTradingHistory: AboutTheTradingHistory
   ): Option[AnswersYesNo] =
-    if financialYearsUnchanged then aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory
-    else None
+    aboutTheTradingHistory.checkYourAnswersAboutTheTradingHistory.filter(_ => financialYearsUnchanged)
 
   private def buildUpdateData(
     firstOccupy: MonthsYearDuration,
@@ -186,22 +183,20 @@ class FinancialYearEndController @Inject() (
     isFinancialYearEndDayUnchanged: Boolean,
     isFinancialYearsListUnchanged: Boolean
   )(using request: SessionRequest[AnyContent]
-  ) = {
+  ) =
     val turnoverSections =
-      if (isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged) {
-        if (!newOccupationAndAccounting.financialYearEndHasChanged.get) {
+      if isFinancialYearEndDayUnchanged && isFinancialYearsListUnchanged then
+        if !newOccupationAndAccounting.financialYearEndHasChanged.get then
           (aboutTheTradingHistory.turnoverSections zip deriveFinancialYearEndDatesFrom(firstOccupy, financialYear))
             .map { case (turnoverSection, finYearEnd) =>
               turnoverSection.copy(financialYearEnd = finYearEnd)
             }
-        } else {
-          aboutTheTradingHistory.turnoverSections
-        }
-      } else if (isFinancialYearsListUnchanged) {
+        else aboutTheTradingHistory.turnoverSections
+      else if isFinancialYearsListUnchanged then
         (aboutTheTradingHistory.turnoverSections zip deriveFinancialYearEndDatesFrom(firstOccupy, financialYear)).map {
           case (turnoverSection, finYearEnd) => turnoverSection.copy(financialYearEnd = finYearEnd)
         }
-      } else {
+      else
         deriveFinancialYearEndDatesFrom(firstOccupy, financialYear).map { finYearEnd =>
           TurnoverSection(
             financialYearEnd = finYearEnd,
@@ -213,25 +208,22 @@ class FinancialYearEndController @Inject() (
             averageOccupancyRate = None
           )
         }
-      }
 
-    val costOfSales = if (aboutTheTradingHistory.costOfSales.size == turnoverSections.size) {
+    val costOfSales = if aboutTheTradingHistory.costOfSales.size == turnoverSections.size then
       (aboutTheTradingHistory.costOfSales zip turnoverSections.map(_.financialYearEnd)).map {
         case (costOfSales, finYearEnd) => costOfSales.copy(financialYearEnd = finYearEnd)
       }
-    } else {
+    else
       turnoverSections.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
-    }
 
-    val totalPayrollCosts = if (aboutTheTradingHistory.totalPayrollCostSections.size == turnoverSections.size) {
+    val totalPayrollCosts = if aboutTheTradingHistory.totalPayrollCostSections.size == turnoverSections.size then
       (aboutTheTradingHistory.totalPayrollCostSections zip turnoverSections.map(_.financialYearEnd)).map {
         case (totalPayrollCosts, finYearEnd) => totalPayrollCosts.copy(financialYearEnd = finYearEnd)
       }
-    } else {
+    else
       turnoverSections.map(_.financialYearEnd).map(TotalPayrollCost(_, None, None))
-    }
 
-    val updatedData = updateAboutTheTradingHistory(
+    updateAboutTheTradingHistory(
       _.copy(
         occupationAndAccountingInformation = Some(newOccupationAndAccounting),
         turnoverSections = turnoverSections,
@@ -240,8 +232,6 @@ class FinancialYearEndController @Inject() (
         checkYourAnswersAboutTheTradingHistory = sectionCompleted(isFinancialYearsListUnchanged, aboutTheTradingHistory)
       )
     )
-    updatedData
-  }
 
   private def buildUpdateData6020(
     aboutTheTradingHistory: AboutTheTradingHistory,
@@ -249,8 +239,7 @@ class FinancialYearEndController @Inject() (
     newOccupationAndAccountingInfo: OccupationalAndAccountingInformation,
     newFinancialYearEndSameAsOld: Boolean
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
-
+  ): Session =
     val financialYearEndHasChanged    = newOccupationAndAccountingInfo.financialYearEndHasChanged.getOrElse(false)
     val originalTurnoverSections      = aboutTheTradingHistory.turnoverSections6020.getOrElse(Seq.empty)
     val originalFinancialYearEndDates = originalTurnoverSections.map(_.financialYearEnd)
@@ -267,15 +256,13 @@ class FinancialYearEndController @Inject() (
           )
         }
 
-    val updatedSession = updateAboutTheTradingHistory(
+    updateAboutTheTradingHistory(
       _.copy(
         occupationAndAccountingInformation = Some(newOccupationAndAccountingInfo),
         turnoverSections6020 = Some(turnoverSections),
         checkYourAnswersAboutTheTradingHistory = sectionCompleted(financialYearsUnchanged, aboutTheTradingHistory)
       )
     )
-    updatedSession
-  }
 
   private def buildUpdateData6030(
     aboutTheTradingHistory: AboutTheTradingHistory,
@@ -283,8 +270,7 @@ class FinancialYearEndController @Inject() (
     newOccupationAndAccountingInfo: OccupationalAndAccountingInformation,
     newFinancialYearEndSameAsOld: Boolean
   )(using request: SessionRequest[AnyContent]
-  ): Session = {
-
+  ): Session =
     val financialYearEndHasChanged    = newOccupationAndAccountingInfo.financialYearEndHasChanged.getOrElse(false)
     val originalTurnoverSections      = aboutTheTradingHistory.turnoverSections6030
     val originalFinancialYearEndDates = originalTurnoverSections.map(_.financialYearEnd)
@@ -304,12 +290,10 @@ class FinancialYearEndController @Inject() (
           )
         }
 
-    val updatedData = updateAboutTheTradingHistory(
+    updateAboutTheTradingHistory(
       _.copy(
         occupationAndAccountingInformation = Some(newOccupationAndAccountingInfo),
         turnoverSections6030 = turnoverSections,
         checkYourAnswersAboutTheTradingHistory = sectionCompleted(financialYearsUnchanged, aboutTheTradingHistory)
       )
     )
-    updatedData
-  }

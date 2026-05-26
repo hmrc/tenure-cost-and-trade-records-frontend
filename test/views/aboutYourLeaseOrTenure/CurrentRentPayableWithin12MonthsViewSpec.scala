@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[CurrentRentPayableWithin12Months] {
+class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[CurrentRentPayableWithin12Months]:
 
   private val messageKeyPrefix = "currentRentPayableWithin12Months"
 
@@ -36,7 +36,7 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
   private def createViewUsingForm = (form: Form[CurrentRentPayableWithin12Months]) =>
     currentRentPayableWithin12MonthsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Lease or agreement years view" must {
+  "Lease or agreement years view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -101,4 +101,3 @@ class CurrentRentPayableWithin12MonthsViewSpec extends QuestionViewBehaviours[Cu
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

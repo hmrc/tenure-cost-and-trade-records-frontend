@@ -20,6 +20,5 @@ import play.api.libs.json.{Json, OFormat}
 
 case class ChangeLinkAudit(forType: String, cyaURL: String, cyaField: String)
 
-object ChangeLinkAudit {
+object ChangeLinkAudit:
   implicit val format: OFormat[ChangeLinkAudit] = Json.format
-}

@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.{AdditionalMisc, AdditionalMisc
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc], AdditionalMiscDetails)] {
+class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc], AdditionalMiscDetails)]:
 
   private val years = Seq("2023", "2022", "2021")
 
@@ -40,7 +40,7 @@ class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc]
   private def createViewUsingForm = (form: Form[(Seq[AdditionalMisc], AdditionalMiscDetails)]) =>
     additionalMiscView(form, backLink)(using sessionRequest, messages)
 
-  "Additional misc view" must {
+  "Additional misc view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -121,4 +121,3 @@ class AdditionalMiscViewSpec extends QuestionViewBehaviours[(Seq[AdditionalMisc]
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

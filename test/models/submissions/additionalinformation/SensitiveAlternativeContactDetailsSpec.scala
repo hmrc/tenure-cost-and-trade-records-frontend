@@ -23,13 +23,13 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.Configuration
 import utils.SensitiveTestHelper
 
-class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
+class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
 
-  val testConfig: Configuration    = loadTestConfig()
+  val testConfig: Configuration = loadTestConfig()
+
   implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
 
   "SensitiveAlternativeContactDetails" should {
-
     "encrypt and decrypt sensitive fields correctly" in {
       val clearData     =
         Address(
@@ -43,4 +43,3 @@ class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matche
       encryptedData.decryptedValue shouldBe clearData
     }
   }
-}

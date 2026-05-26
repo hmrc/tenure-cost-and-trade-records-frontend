@@ -43,18 +43,18 @@ class RentIncludeStructuresBuildingsDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeStructuresBuildingsDetails")
 
     Ok(
       rentIncludeStructuresBuildingsDetailsView(
-        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildingsDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.rentIncludeStructuresBuildingsDetails) match
           case Some(rentIncludeStructuresBuildingsDetails) =>
             rentIncludeStructuresBuildingsDetailsForm.fill(rentIncludeStructuresBuildingsDetails)
           case _                                           => rentIncludeStructuresBuildingsDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -63,16 +63,11 @@ class RentIncludeStructuresBuildingsDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       rentIncludeStructuresBuildingsDetailsForm,
-      formWithErrors =>
-        BadRequest(rentIncludeStructuresBuildingsDetailsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
-        val updatedData =
-          updateAboutLeaseOrAgreementPartFour(_.copy(rentIncludeStructuresBuildingsDetails = Some(data)))
+      formWithErrors => BadRequest(rentIncludeStructuresBuildingsDetailsView(formWithErrors, request.sessionData.toSummary)),
+      data =>
+        val updatedData = updateAboutLeaseOrAgreementPartFour(_.copy(rentIncludeStructuresBuildingsDetails = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(RentIncludeStructuresBuildingsDetailsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
-
-}

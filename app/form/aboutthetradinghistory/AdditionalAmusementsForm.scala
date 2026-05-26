@@ -28,10 +28,7 @@ object AdditionalAmusementsForm:
       "receipts" -> turnoverSalesMappingWithYear("additionalAmusements.receipts", year)
     )
 
-  def additionalAmusementsForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[Option[BigDecimal]]] =
-    Form {
+  def additionalAmusementsForm(years: Seq[String])(using messages: Messages): Form[Seq[Option[BigDecimal]]] =
+    Form(
       mappingPerYear(years, (year, idx) => s"additionalAmusements[$idx]" -> columnMapping(year))
-    }
+    )

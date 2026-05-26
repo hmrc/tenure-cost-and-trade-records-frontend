@@ -24,14 +24,12 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TypeOfLettingControllerSpec extends TestBaseSpec {
+class TypeOfLettingControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def typeOfLettingController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
-      prefilledAboutFranchiseOrLettingsWith6020LettingsAll
-    )
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettingsWith6020LettingsAll)
   ): TypeOfLettingController =
     TypeOfLettingController(
       stubMessagesControllerComponents(),
@@ -63,7 +61,6 @@ class TypeOfLettingControllerSpec extends TestBaseSpec {
   }
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
-
       val res = typeOfLettingController().submit(Some(0))(
         FakeRequest().withFormUrlEncodedBody()
       )
@@ -126,4 +123,3 @@ class TypeOfLettingControllerSpec extends TestBaseSpec {
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/other-letting?idx=0")
   }
-}

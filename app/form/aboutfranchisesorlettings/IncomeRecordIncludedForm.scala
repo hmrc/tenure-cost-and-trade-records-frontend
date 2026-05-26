@@ -23,18 +23,17 @@ import play.api.data.Forms.{list, single, text}
 /**
   * @author Yuriy Tumakha
   */
-object IncomeRecordIncludedForm {
+object IncomeRecordIncludedForm:
 
-  val incomeRecordIncludedForm: Form[List[String]] = Form(
-    single(
-      "itemsInRent" -> list(text).verifying(
-        nonEmptyList("error.cateringOperationOrLettingAccommodationCheckboxesDetails.required"),
-        noneCantBeSelectedWithOther(
-          "noneOfThese",
-          "error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther"
+  val incomeRecordIncludedForm: Form[List[String]] =
+    Form(
+      single(
+        "itemsInRent" -> list(text).verifying(
+          nonEmptyList("error.cateringOperationOrLettingAccommodationCheckboxesDetails.required"),
+          noneCantBeSelectedWithOther(
+            "noneOfThese",
+            "error.cateringOperationOrLettingAccommodationCheckboxesDetails.noneSelectedWithOther"
+          )
         )
       )
     )
-  )
-
-}

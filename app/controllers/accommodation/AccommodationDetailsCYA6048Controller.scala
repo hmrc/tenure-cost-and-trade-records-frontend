@@ -47,7 +47,7 @@ class AccommodationDetailsCYA6048Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -65,11 +65,7 @@ class AccommodationDetailsCYA6048Controller @Inject() (
       formWithErrors => BadRequest(accommodationDetailsCYAView(formWithErrors)),
       data =>
         if accommodationUnits.isEmpty && data == AnswerYes then
-          BadRequest(
-            accommodationDetailsCYAView(
-              accommodationDetailsCYA6048Form.withError("sectionCompleted", "error.accommodationUnits.isEmpty")
-            )
-          )
+          BadRequest(accommodationDetailsCYAView(accommodationDetailsCYA6048Form.withError("sectionCompleted", "error.accommodationUnits.isEmpty")))
         else
           val updatedData = updateAccommodationDetails(
             _.copy(
@@ -85,15 +81,8 @@ class AccommodationDetailsCYA6048Controller @Inject() (
     )
   }
 
-  private def accommodationDetails(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] =
+    request.sessionData.accommodationDetails
 
-  private def accommodationUnits(
-    using
-    request: SessionRequest[AnyContent]
-  ): List[AccommodationUnit] =
+  private def accommodationUnits(using request: SessionRequest[AnyContent]): List[AccommodationUnit] =
     accommodationDetails.fold(List.empty)(_.accommodationUnits)
-
-}

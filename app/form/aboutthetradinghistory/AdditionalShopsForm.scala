@@ -22,7 +22,7 @@ import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object AdditionalShopsForm {
+object AdditionalShopsForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[AdditionalShops] =
     mapping(
@@ -31,12 +31,7 @@ object AdditionalShopsForm {
       "costOfPurchase" -> turnoverSalesMappingWithYear("additionalShops.costOfPurchase", year)
     )(AdditionalShops.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def additionalShopsForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[AdditionalShops]] =
-    Form {
+  def additionalShopsForm(years: Seq[String])(using messages: Messages): Form[Seq[AdditionalShops]] =
+    Form(
       mappingPerYear(years, (year, idx) => s"additionalShops[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

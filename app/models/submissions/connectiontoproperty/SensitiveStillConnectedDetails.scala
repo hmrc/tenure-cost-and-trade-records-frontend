@@ -22,6 +22,7 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
 import java.time.LocalDate
+import scala.language.implicitConversions
 
 case class SensitiveStillConnectedDetails(
   addressConnectionType: Option[AddressConnectionType] = None,

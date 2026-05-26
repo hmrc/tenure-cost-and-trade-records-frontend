@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForPropertyDetails] {
+class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForPropertyDetails]:
 
   private val messageKeyPrefix = "buildingOperatingHaveAWebsite"
 
@@ -32,13 +32,13 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
 
   override val form: Form[WebsiteForPropertyDetails] = WebsiteForPropertyForm.websiteForPropertyForm
 
-  private def createView: () => Html = () =>
-    websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  private def createViewUsingForm: Form[WebsiteForPropertyDetails] => Html = (form: Form[WebsiteForPropertyDetails]) =>
-    websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[WebsiteForPropertyDetails] => Html =
+    form => websiteForPropertyView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  "Property website view" must {
+  "Property website view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -97,4 +97,3 @@ class WebsiteForPropertyViewSpec extends QuestionViewBehaviours[WebsiteForProper
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

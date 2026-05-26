@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec {
+class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,7 +39,7 @@ class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "RentPayableVaryOnQuantityOfBeers controller" should {
+  "GET /" should {
     "return 200 and HTML for rent payable vary on quantity of beer" in {
       val result = rentPayableVaryOnQuantityOfBeersController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -70,11 +70,10 @@ class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = rentPayableVaryOnQuantityOfBeersController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentPayableVaryOnQuantityOfBeers" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
   }
-}

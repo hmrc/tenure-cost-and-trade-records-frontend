@@ -20,7 +20,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object RentIncludeTradeServicesDetailsTextAreaForm {
+object RentIncludeTradeServicesDetailsTextAreaForm:
 
   val rentIncludeTradeServicesDetailsTextAreaForm: Form[String] =
     Form(
@@ -31,5 +31,3 @@ object RentIncludeTradeServicesDetailsTextAreaForm {
         )
       )
     )
-
-}

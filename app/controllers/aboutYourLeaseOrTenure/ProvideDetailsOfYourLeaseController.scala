@@ -44,7 +44,7 @@ class ProvideDetailsOfYourLeaseController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ProvideDetailsOfYourLease")
@@ -63,13 +63,11 @@ class ProvideDetailsOfYourLeaseController @Inject() (
     continueOrSaveAsDraft[String](
       provideDetailsOfYourLeaseForm,
       formWithErrors => BadRequest(provideDetailsOfYourLeaseView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(provideDetailsOfYourLease = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(ProvideDetailsOfYourLeasePageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
@@ -77,5 +75,3 @@ class ProvideDetailsOfYourLeaseController @Inject() (
     using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
-
-}

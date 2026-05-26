@@ -25,6 +25,5 @@ case class CustomerCreditAccounts(
   percentage: Option[BigDecimal]
 )
 
-object CustomerCreditAccounts {
+object CustomerCreditAccounts:
   implicit val format: OFormat[CustomerCreditAccounts] = Json.format
-}

@@ -49,10 +49,8 @@ class AddressLookupConnector @Inject() (
       else ""
 
     val separator =
-      if additionalParameter.isEmpty
-      then ""
-      else if config.offRampCall.url.contains("?")
-      then "&"
+      if additionalParameter.isEmpty then ""
+      else if config.offRampCall.url.contains("?") then "&"
       else "?"
 
     val messages = mcc.messagesApi

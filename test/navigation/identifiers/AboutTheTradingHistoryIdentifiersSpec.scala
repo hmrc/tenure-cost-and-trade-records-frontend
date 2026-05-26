@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
+class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec:
 
   "About your trading history identifiers" when {
 
@@ -66,6 +66,7 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for electric Vehicle Charging Points page" in
       assert(ElectricVehicleChargingPointsId.toString.equals("electricVehicleChargingPoints"))
+
     "Identifier for Electricity Generated  page" in
       assert(ElectricityGeneratedId.toString.equals("electricityGeneratedPage"))
 
@@ -83,16 +84,22 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for PremisesCosts page" in
       assert(PremisesCostsId.toString.equals("premisesCostsPage"))
+
     "Identifier for tenting Pitches On Site page" in
       assert(TentingPitchesOnSiteId.toString.equals("tentingPitchesOnSitePage"))
+
     "Identifier for pitches for caravans page" in
       assert(PitchesForCaravansId.toString.equals("pitchesForCaravansPage"))
+
     "Identifier for pitches for glamping  page" in
       assert(PitchesForGlampingId.toString.equals("pitchesForGlampingPage"))
+
     "Identifier for rally areas  page" in
       assert(RallyAreasId.toString.equals("rallyAreasPage"))
+
     "Identifier for tenting Pitches  total" in
       assert(TentingPitchesTotalId.toString.equals("tentingPitchesTotalPage"))
+
     "Identifier for tenting Pitches  certificated" in
       assert(TentingPitchesCertificatedId.toString.equals("tentingPitchesCertificatedPage"))
 
@@ -104,6 +111,7 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for additional activities catering" in
       assert(AdditionalCateringId.toString.equals("additionalCateringPage"))
+
     "Identifier for additional activities bars" in
       assert(AdditionalBarsClubsId.toString.equals("additionalBarsClubsPage"))
 
@@ -127,10 +135,13 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for single caravan sublet page  " in
       assert(SingleCaravansSubletId.toString.equals("singleCaravansSubletPage"))
+
     "Identifier for total site capacity page  " in
       assert(TotalSiteCapacityId.toString.equals("TotalSiteCapacityPage"))
+
     "Identifier for twin caravan owned by operator page  " in
       assert(TwinCaravansOwnedByOperatorId.toString.equals("twinCaravansOwnedByOperatorPage"))
+
     "Identifier for twin caravan sublet page  " in
       assert(TwinCaravansSubletId.toString.equals("twinCaravansSubletPage"))
 
@@ -151,28 +162,40 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for total fuel sold page" in
       assert(TotalFuelSoldId.toString.equals("totalFuelSold"))
+
     "Identifier for bunkered fuel question" in
       assert(BunkeredFuelQuestionId.toString.equals("bunkeredFuelQuestionPage"))
+
     "Identifier for bunkered fuel sold page" in
       assert(BunkeredFuelSoldId.toString.equals("bunkeredFuelSoldPage"))
+
     "Identifier for customer credit accounts page" in
       assert(CustomerCreditAccountsId.toString.equals("customerCreditAccountsPage"))
+
     "Identifier for percentage from fuel cards page" in
       assert(PercentageFromFuelCardsId.toString.equals("percentageFromFuelCardsPage"))
+
     "Identifier for add bunker fuel cards page" in
       assert(AddAnotherBunkerFuelCardsDetailsId.toString.equals("addAnotherBunkerFuelCardsDetailsPage"))
+
     "Identifier for accept low margin fuel cards page" in
       assert(AcceptLowMarginFuelCardsId.toString.equals("acceptLowMarginFuelCardsPage"))
+
     "Identifier for AccommodationUnit page" in
       assert(AccommodationUnitPageId.toString.equals("accommodationUnitPage"))
+
     "Identifier for AvailableRooms page" in
       assert(AvailableRoomsPageId.toString.equals("availableRoomsPage"))
+
     "Identifier for add lm fuel cards page" in
       assert(AddAnotherLowMarginFuelCardsDetailsId.toString.equals("addAnotherLowMarginFuelCardsDetailsPage"))
+
     "Identifier for lm fuel cards page" in
       assert(LowMarginFuelCardsDetailsId.toString.equals("lowMarginFuelCardsDetailsPage"))
+
     "Identifier for bunker fuel card details page" in
       assert(BunkerFuelCardsDetailsId.toString.equals("bunkerFuelCardsDetailsPage"))
+
     "Identifier for other CYA holiday accommodation details page" in
       assert(CheckYourAnswersOtherHolidayAccommodationId.toString.equals("checkYourAnswersOtherHolidayAccommodation"))
 
@@ -225,4 +248,3 @@ class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec {
       assert(OperationalCosts6048Id.toString.equals("operationalCostsPage"))
 
   }
-}

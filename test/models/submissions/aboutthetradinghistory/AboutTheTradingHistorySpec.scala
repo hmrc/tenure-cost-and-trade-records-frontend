@@ -16,27 +16,27 @@
 
 package models.submissions.aboutthetradinghistory
 
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.Json
 import test.TestObjects
 
 /**
   * @author Yuriy Tumakha
   */
-class AboutTheTradingHistorySpec extends AnyFlatSpec with Matchers with TestObjects {
+class AboutTheTradingHistorySpec extends AnyWordSpec with Matchers with TestObjects:
 
-  "AboutTheTradingHistory" should "handle turnover models" in {
-    val tradingHistory = prefilledAboutYourTradingHistory
-    tradingHistory.costOfSales.map(_.total).sum                                                shouldBe 12
-    tradingHistory.fixedOperatingExpensesSections.map(_.total).sum                             shouldBe 15
-    tradingHistory.otherCosts.map(_.otherCosts.map(_.total).sum)                               shouldBe Some(6)
-    tradingHistory.variableOperatingExpenses.map(_.variableOperatingExpenses.map(_.total).sum) shouldBe Some(24)
+  "AboutTheTradingHistory" should {
+    "handle turnover models" in {
+      val tradingHistory = prefilledAboutYourTradingHistory
+      tradingHistory.costOfSales.map(_.total).sum                                                shouldBe 12
+      tradingHistory.fixedOperatingExpensesSections.map(_.total).sum                             shouldBe 15
+      tradingHistory.otherCosts.map(_.otherCosts.map(_.total).sum)                               shouldBe Some(6)
+      tradingHistory.variableOperatingExpenses.map(_.variableOperatingExpenses.map(_.total).sum) shouldBe Some(24)
+    }
+
+    "be serialized/deserialized from JSON" in {
+      val json = Json.toJson(prefilledAboutYourTradingHistory)
+      json.as[AboutTheTradingHistory] shouldBe prefilledAboutYourTradingHistory
+    }
   }
-
-  it should "be serialized/deserialized from JSON" in {
-    val json = Json.toJson(prefilledAboutYourTradingHistory)
-    json.as[AboutTheTradingHistory] shouldBe prefilledAboutYourTradingHistory
-  }
-
-}

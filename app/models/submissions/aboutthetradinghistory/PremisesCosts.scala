@@ -25,7 +25,7 @@ case class PremisesCosts(
   rent: Option[BigDecimal],
   businessRates: Option[BigDecimal],
   buildingInsurance: Option[BigDecimal]
-) {
+):
 
   def total: BigDecimal = Seq(
     energyAndUtilities,
@@ -35,8 +35,6 @@ case class PremisesCosts(
     businessRates,
     buildingInsurance
   ).flatten.sum
-}
 
-object PremisesCosts {
+object PremisesCosts:
   implicit val format: OFormat[PremisesCosts] = Json.format
-}

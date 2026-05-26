@@ -42,17 +42,17 @@ class EditAddressController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("EditAddress")
 
     Ok(
       editAddressView(
-        request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match {
+        request.sessionData.stillConnectedDetails.flatMap(_.editAddress) match
           case Some(editAddress) => editAddressForm.fill(editAddress)
           case _                 => editAddressForm
-        },
+        ,
         request.sessionData.toSummary,
         calculateBackLink
       )
@@ -63,7 +63,7 @@ class EditAddressController @Inject() (
     continueOrSaveAsDraft[Address](
       editAddressForm,
       formWithErrors => BadRequest(editAddressView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
-      data => {
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(editAddress = Some(data)))
         session
           .saveOrUpdate(updatedData)
@@ -74,14 +74,10 @@ class EditAddressController @Inject() (
               .getOrElse(navigator.nextWithoutRedirectToCYA(EditAddressPageId, updatedData).apply(updatedData))
           )
           .map(Redirect)
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     => controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
-    }
-
-}

@@ -17,19 +17,18 @@
 package navigation
 
 import connectors.Audit
-import models.submissions.common.AnswersYesNo.*
 import models.ForType.*
 import models.Session
-import navigation.identifiers._
+import models.submissions.common.AnswersYesNo.*
+import navigation.identifiers.*
 import play.api.Logging
 import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
-  override def cyaPage: Option[Call] =
-    Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show())
+  override def cyaPage: Option[Call] = Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show())
 
   override val postponeCYARedirectPages: Set[String] = Set(
     controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show(),
@@ -45,42 +44,33 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show()
     else controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show()
 
-  private def aboutThePropertyDescriptionRouting: Session => Call = answers => {
-    val answersForType = answers.forType
-    if (answersForType.equals(FOR6020)) {
-      controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    } else
-      controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
-  }
+  private def aboutThePropertyDescriptionRouting: Session => Call =
+    answers =>
+      val answersForType = answers.forType
+      if answersForType.equals(FOR6020) then
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      else
+        controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
 
   private def websiteForPropertyRouting: Session => Call = answers =>
-    answers.forType match {
-      case FOR6015 | FOR6016 =>
-        controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
+    answers.forType match
+      case FOR6015 | FOR6016 => controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
       case FOR6030           => controllers.aboutyouandtheproperty.routes.CharityQuestionController.show()
-      case FOR6045 | FOR6046 =>
-        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+      case FOR6045 | FOR6046 => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
       case _                 => controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
 
-    }
-
   private def charityQuestionRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
+    answers.aboutYouAndTheProperty.flatMap(_.charityQuestion) match
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.TradingActivityController.show()
       case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    }
 
   private def premisesLicenseGrantedRouting: Session => Call = answers =>
-    if (answers.forType.equals(FOR6015) || answers.forType.equals(FOR6016)) {
-      answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
-        case Some(AnswerYes) =>
-          controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
-        case _               =>
-          controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-      }
-    } else {
+    if answers.forType.equals(FOR6015) || answers.forType.equals(FOR6016) then
+      answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match
+        case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
+        case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    else
       controllers.routes.LoginController.show
-    }
 
   private def premisesLicenseGrantedDetailsRouting: Session => Call = answers =>
     if (answers.forType == FOR6015 || answers.forType == FOR6016)
@@ -89,49 +79,40 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
 
   private def licensableActivityRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.licensableActivities) match {
+    answers.aboutYouAndTheProperty.flatMap(_.licensableActivities) match
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show()
       case _               => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
-    }
 
   private def premisesLicenceConditionsRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match {
-      case Some(AnswerYes) =>
-        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show()
+    answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show()
       case _               => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
-    }
 
   private def enforcementActionTakenRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction) match {
-      case Some(AnswerYes) =>
-        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
-      case _               =>
-        controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
-    }
+    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction) match
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
+      case _               => controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
 
   private def tiedGoodsRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
+    answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
       case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    }
 
   private def contactDetailsQuestionRouting: Session => Call =
-    _.forType match {
+    _.forType match
       case FOR6020 | FOR6030 => controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show()
       case FOR6076           => controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show()
       case FOR6045 | FOR6046 => controllers.aboutyouandtheproperty.routes.PropertyCurrentlyUsedController.show()
       case FOR6048           => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
       case _                 => controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-    }
 
   private def completedCommercialLettingsRouting: Session => Call = _ =>
     controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
 
   private def partsUnavailableRouting: Session => Call = answers =>
-    answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
+    answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
       case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-    }
 
   private def getOccupiersIndex: Session => Int = answers =>
     answers.aboutYouAndThePropertyPartTwo.fold(0)(_.occupiersListIndex)
@@ -145,23 +126,18 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
       case _               => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
 
   private def threeYearsConstructedRouting: Session => Call = answers =>
-    answers.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
+    answers.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match
       case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show()
       case _               => controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()
-    }
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     AboutYouPageId                          -> (_ => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()),
     ContactDetailsQuestionId                -> contactDetailsQuestionRouting,
     CommercialLettingQuestionId             -> commercialLettingQuestionRouting,
     CommercialLettingAvailabilityId         ->
-      (_ =>
-        controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show()
-      ),
+      (_ => controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show()),
     CommercialLettingAvailabilityWelshId    ->
-      (_ =>
-        controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show()
-      ),
+      (_ => controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show()),
     CompletedCommercialLettingsId           -> completedCommercialLettingsRouting,
     CompletedCommercialLettingsWelshId      -> completedCommercialLettingsRouting,
     PartsUnavailableId                      -> partsUnavailableRouting,
@@ -172,40 +148,27 @@ class AboutYouAndThePropertyNavigator @Inject() (audit: Audit) extends Navigator
     WebsiteForPropertyPageId                -> websiteForPropertyRouting,
     CharityQuestionPageId                   -> charityQuestionRouting,
     TradingActivityPageId                   ->
-      (_ =>
-        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-      ),
+      (_ => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()),
     PremisesLicenseGrantedId                -> premisesLicenseGrantedRouting,
     PremisesLicenseGrantedDetailsId         -> premisesLicenseGrantedDetailsRouting,
     LicensableActivityPageId                -> licensableActivityRouting,
     LicensableActivityDetailsPageId         ->
-      (_ =>
-        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
-      ),
+      (_ => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()),
     PremisesLicenceConditionsPageId         -> premisesLicenceConditionsRouting,
     PremisesLicenceConditionsDetailsPageId  ->
-      (_ =>
-        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
-      ),
+      (_ => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()),
     EnforcementActionBeenTakenPageId        -> enforcementActionTakenRouting,
     EnforcementActionBeenTakenDetailsPageId ->
-      (_ =>
-        controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
-      ),
+      (_ => controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()),
     TiedForGoodsPageId                      -> tiedGoodsRouting,
     TiedForGoodsDetailsPageId               ->
-      (_ =>
-        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-      ),
+      (_ => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()),
     RenewablesPlantPageId                   -> (_ => controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show()),
     ThreeYearsConstructedPageId             -> threeYearsConstructedRouting,
     CostsBreakdownId                        -> (_ => controllers.aboutyouandtheproperty.routes.PlantAndTechnologyController.show()),
     PlantAndTechnologyId                    -> (_ => controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show()),
     GeneratorCapacityId                     -> (_ => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show()),
     BatteriesCapacityId                     ->
-      (_ =>
-        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-      ),
+      (_ => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()),
     CheckYourAnswersAboutThePropertyPageId  -> (_ => controllers.routes.TaskListController.show)
   )
-}

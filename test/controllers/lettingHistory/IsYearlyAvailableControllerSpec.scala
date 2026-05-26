@@ -43,6 +43,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
+
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -53,6 +54,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.required"
       }
+
       "be handling POST answer='yes' by replying 303 redirect to the 'Do you advert online' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -65,7 +67,8 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         intendedLettings(data).value.isYearlyAvailable.value shouldBe true
       }
     }
-    "the user has already answered"            should {
+
+    "the user has already answered" should {
       "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
         hasStopped = Some(true),
         isYearlyAvailable = Some(true)
@@ -81,6 +84,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         page.radios("answer")    should haveChecked("yes")
         page.radios("answer") shouldNot haveChecked("no")
       }
+
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture(
         hasStopped = Some(false),
         isYearlyAvailable = Some(true)
@@ -94,6 +98,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         val page: Document         = contentAsJsoup(result)
         page.error("answer") shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.required"
       }
+
       "be handling POST answer='no' by replying 303 redirect to the 'Give lenght of trading session' page" in new ControllerFixture(
         hasStopped = Some(false),
         isYearlyAvailable = Some(true)

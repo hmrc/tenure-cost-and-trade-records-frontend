@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object PartsUnavailableForm {
+object PartsUnavailableForm:
 
   val partsUnavailableForm: Form[AnswersYesNo] =
     Form(
@@ -29,4 +29,3 @@ object PartsUnavailableForm {
         "partsUnavailable" -> createYesNoType("error.partsUnavailable.required")
       )
     )
-}

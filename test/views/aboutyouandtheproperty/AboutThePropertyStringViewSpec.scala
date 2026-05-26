@@ -23,24 +23,24 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[String] {
+class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[String]:
 
-  val messageKeyPrefix = "aboutProperty"
+  private val messageKeyPrefix = "aboutProperty"
 
-  val backLink: String = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
+  private val backLink: String = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
 
   override val form: Form[String] = AboutThePropertyStringForm.aboutThePropertyStringForm
 
-  def createView: () => Html = () =>
-    aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[String] => Html =
+    form => aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm6020: Form[String] => Html = (form: Form[String]) =>
-    aboutThePropertyStringView(form, FOR6020, Summary("99996020001"), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm6020: Form[String] => Html =
+    form => aboutThePropertyStringView(form, FOR6020, Summary("99996020001"), backLink)(using fakeRequest, messages)
 
-  "About the property view" must {
+  "About the property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -74,4 +74,3 @@ class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

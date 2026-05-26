@@ -45,7 +45,7 @@ class IncludedTariffItems6048Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -63,7 +63,7 @@ class IncludedTariffItems6048Controller @Inject() (
     continueOrSaveAsDraft[Seq[AccommodationTariffItem]](
       includedTariffItems6048Form,
       formWithErrors => BadRequest(includedTariffItems6048View(formWithErrors, currentUnitName, backLink)),
-      data => {
+      data =>
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
@@ -78,32 +78,18 @@ class IncludedTariffItems6048Controller @Inject() (
               navigator.nextPageWithParam(IncludedTariffItemsPageId, updatedData, s"idx=${navigator.idx}")
             )
           }
-      }
     )
   }
 
-  private def accommodationDetails(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] =
+    request.sessionData.accommodationDetails
 
-  private def currentUnit(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationUnit] =
+  private def currentUnit(using request: SessionRequest[AnyContent]): Option[AccommodationUnit] =
     accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
-  private def currentUnitName(
-    using
-    request: SessionRequest[AnyContent]
-  ): String =
+  private def currentUnitName(using request: SessionRequest[AnyContent]): String =
     currentUnit.fold("")(_.unitName)
 
-  private def backLink(
-    using
-    request: SessionRequest[AnyContent]
-  ): String =
+  private def backLink(using request: SessionRequest[AnyContent]): String =
     s"${controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url}?idx=${navigator.idx}"
-
-}

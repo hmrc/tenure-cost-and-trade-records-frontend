@@ -20,7 +20,7 @@ import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
 import utils.TestBaseSpec
 
-class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
+class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec:
 
   "About franchise or lettings navigator" when {
 
@@ -66,6 +66,7 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController
           .show()
     }
+
     "return a function that goes to rental income included page when rent received from page has been completed" in {
       aboutFranchisesOrLettingsNavigator
         .nextPage(CalculatingTheRentForPageId, sessionAboutFranchiseOrLetting6015YesSession)
@@ -103,7 +104,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     // TEST FOR SINGLE RENTAL INCOME LOOP LOOP 6010
 
     "return a function that goes to rental income rent page when franchise type details page has been completed" in {
-
       aboutFranchisesOrLettingsNavigator
         .nextPage(FranchiseTypeDetailsId, sessionAboutFranchiseOrLetting6010YesSession)
         .apply(
@@ -112,7 +112,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to rental income rent page when letting type details page has been completed" in {
-
       aboutFranchisesOrLettingsNavigator
         .nextPage(LettingTypeDetailsId, sessionAboutFranchiseOrLetting6010YesSession)
         .apply(
@@ -121,7 +120,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to rental income included page when rental income rent page has been completed" in {
-
       aboutFranchisesOrLettingsNavigator
         .nextPage(RentalIncomeRentId, sessionAboutFranchiseOrLetting6010YesSession)
         .apply(
@@ -130,7 +128,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to rental income list page when rental income rent page has been completed" in {
-
       aboutFranchisesOrLettingsNavigator
         .nextPage(RentalIncomeIncludedId, sessionAboutFranchiseOrLetting6010YesSession)
         .apply(
@@ -141,7 +138,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     // TEST FOR SINGLE RENTAL INCOME LOOP LOOP 6015 AND 6015
 
     "return a function that goes to rent received from page when concession type details page has been completed" in {
-
       aboutFranchisesOrLettingsNavigator
         .nextPage(FranchiseTypeDetailsId, sessionAboutFranchiseOrLetting6015YesSession)
         .apply(
@@ -150,7 +146,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to calculating rent for when rent received from page has been completed" in {
-
       aboutFranchisesOrLettingsNavigator
         .nextPage(RentReceivedFromPageId, sessionAboutFranchiseOrLetting6015YesSession)
         .apply(
@@ -159,7 +154,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to rental income included when rent calculating the rent for  page has been completed" in {
-
       aboutFranchisesOrLettingsNavigator
         .nextPage(CalculatingTheRentForPageId, sessionAboutFranchiseOrLetting6015YesSession)
         .apply(
@@ -172,7 +166,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
     "About franchise or lettings navigator for forms 6045/6046" when {
 
       "return a function that goes to source of income page when concession page has been completed yes" in {
-
         aboutFranchisesOrLettingsNavigator
           .nextPage(FranchiseOrLettingsTiedToPropertyId, sessionAboutFranchiseOrLetting6045)
           .apply(
@@ -181,7 +174,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
       }
       "return a function that goes to CYA page when concession page has been completed no" in {
-
         val updatedSession = sessionAboutFranchiseOrLetting6045.copy(
           aboutFranchisesOrLettings = sessionAboutFranchiseOrLetting6045.aboutFranchisesOrLettings.map(
             _.copy(
@@ -200,7 +192,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       }
 
       "return a function that goes to concession type fees page when  concession type details finished" in {
-
         aboutFranchisesOrLettingsNavigator
           .nextPage(ConcessionTypeDetailsId, sessionAboutFranchiseOrLetting6045)
           .apply(
@@ -210,7 +201,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       }
 
       "return a function that goes to add another income page when  concession type fees finished" in {
-
         aboutFranchisesOrLettingsNavigator
           .nextPage(ConcessionTypeFeesId, sessionAboutFranchiseOrLetting6045)
           .apply(
@@ -219,7 +209,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
 
       }
       "return a function that goes to rental  income rent page rent when  letting type details finished" in {
-
         aboutFranchisesOrLettingsNavigator
           .nextPage(LettingTypeDetailsId, sessionAboutFranchiseOrLetting6045)
           .apply(
@@ -229,7 +218,6 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       }
 
       "return a function that goes to rental income  included page rent when  rental  income rent page finished" in {
-
         aboutFranchisesOrLettingsNavigator
           .nextPage(RentalIncomeRentId, sessionAboutFranchiseOrLetting6045)
           .apply(
@@ -239,13 +227,13 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       }
 
       "return a function that goes to add another income page when  letting type included finished" in {
-
         aboutFranchisesOrLettingsNavigator
           .nextPage(RentalIncomeIncludedId, sessionAboutFranchiseOrLetting6045)
           .apply(
             sessionAboutFranchiseOrLetting6045
           ) shouldBe controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0)
       }
+
       "return a function that goes to TypeOfLettingController for form 6020" in {
         val session = sessionAboutFranchiseOrLetting6020Session.copy(
           aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettingsWith6020LettingsAll)
@@ -257,4 +245,3 @@ class AboutFranchisesOrLettingsNavigatorSpec extends TestBaseSpec {
       }
     }
   }
-}

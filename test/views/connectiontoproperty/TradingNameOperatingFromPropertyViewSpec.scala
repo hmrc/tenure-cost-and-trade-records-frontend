@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[String] {
+class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[String]:
 
   private val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
 
@@ -30,13 +30,13 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[St
 
   override val form: Form[String] = TradingNameOperatingFromPropertyForm.tradingNameOperatingFromPropertyForm
 
-  private def createView: () => Html = () =>
-    tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
+  private def createView: () => Html =
+    () => tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
 
   private def createViewUsingForm: Form[String] => Html =
-    (form: Form[String]) => tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
+    form => tradingNameOperatingFromProperty(form, backLink, false)(using sessionRequest, messages)
 
-  "Trading name operating from property view" must {
+  "Trading name operating from property view" should {
 
     "has a link marked with back.link.label leading to has enforcement action been taken Page" in {
       val doc          = asDocument(createView())
@@ -69,4 +69,3 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[St
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

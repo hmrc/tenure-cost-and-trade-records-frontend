@@ -24,20 +24,19 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
   override val form: Form[AnswersYesNo] = TradingNamePayingRentForm.theForm
 
-  private def createView: () => Html = () =>
-    tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
 
   private def createViewUsingForm: Form[AnswersYesNo] => Html =
-    (form: Form[AnswersYesNo]) =>
-      tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
+    form => tradingNamePayRentView(form, backLink, "Womble's Inc", Summary("99996010001"), false)(using fakeRequest, messages)
 
-  "Trading name operating from property view" must {
+  "Trading name operating from property view" should {
 
     "has a link marked with back.link.label leading to has enforcement action been taken Page" in {
       val doc          = asDocument(createView())
@@ -89,4 +88,3 @@ class TradingNamePayingRentViewSpec extends QuestionViewBehaviours[AnswersYesNo]
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

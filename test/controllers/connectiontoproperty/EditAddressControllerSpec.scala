@@ -22,14 +22,14 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class EditAddressControllerSpec extends TestBaseSpec {
+class EditAddressControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
 
@@ -148,17 +148,14 @@ class EditAddressControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val buildingNameNumber = "editAddress.buildingNameNumber"
       val postcode           = "editAddress.postcode"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "editAddress.buildingNameNumber" -> "",
       "editAddress.postcode"           -> "BN12 4AX"
     )
-  }
-}

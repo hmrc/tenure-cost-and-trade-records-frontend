@@ -24,20 +24,21 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec {
+class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ): IncomeExpenditureSummary6076Controller = IncomeExpenditureSummary6076Controller(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    incomeExpenditureSummary6076View,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo
-  )
+  ): IncomeExpenditureSummary6076Controller =
+    IncomeExpenditureSummary6076Controller(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      incomeExpenditureSummary6076View,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
@@ -58,4 +59,3 @@ class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

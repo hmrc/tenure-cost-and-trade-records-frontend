@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object AreYouVATRegisteredForm {
+object AreYouVATRegisteredForm:
 
   val areYouVATRegisteredForm: Form[AnswersYesNo] =
     Form(
@@ -29,5 +29,3 @@ object AreYouVATRegisteredForm {
         "areYouVATRegistered" -> createYesNoType("error.areYouVATRegistered.required")
       )
     )
-
-}

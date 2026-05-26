@@ -42,17 +42,17 @@ class TiedForGoodsDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TiedForGoodsDetails")
 
     Ok(
       tiedForGoodsDetailsView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoodsDetails) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoodsDetails) match
           case Some(tiedForGoodsDetails) => tiedForGoodsDetailsForm.fill(tiedForGoodsDetails)
           case _                         => tiedForGoodsDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -61,21 +61,11 @@ class TiedForGoodsDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TiedForGoodsInformationDetails](
       tiedForGoodsDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          tiedForGoodsDetailsView(
-            formWithErrors,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(tiedForGoodsDetailsView(formWithErrors, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoodsDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TiedForGoodsDetailsPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

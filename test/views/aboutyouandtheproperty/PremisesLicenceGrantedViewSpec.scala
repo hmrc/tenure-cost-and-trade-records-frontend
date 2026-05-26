@@ -24,19 +24,19 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "premisesLicenseGranted"
+  private val messageKeyPrefix = "premisesLicenseGranted"
 
   override val form: Form[AnswersYesNo] = PremisesLicenseGrantedForm.premisesLicenseGrantedForm
 
-  def createView: () => Html = () =>
-    premisesLicenceGrantedView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => premisesLicenceGrantedView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    premisesLicenceGrantedView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => premisesLicenceGrantedView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Property licence conditions view" must {
+  "Property licence conditions view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -96,4 +96,3 @@ class PremisesLicenceGrantedViewSpec extends QuestionViewBehaviours[AnswersYesNo
       assert(doc.toString.contains(messages("help.premisesLicenseGranted.text")))
     }
   }
-}

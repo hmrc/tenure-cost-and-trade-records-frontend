@@ -19,12 +19,13 @@ package form.aboutyouandtheproperty
 import form.MappingSupport
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
 object PremisesLicenseGrantedForm:
 
-  private val basePremisesLicenseGrantedMapping = mapping(
-    "premisesLicenseGranted" -> MappingSupport.createYesNoType("error.premisesLicenseGranted.missing")
-  )(x => x)(b => Some(b))
-
-  val premisesLicenseGrantedForm: Form[AnswersYesNo] = Form(basePremisesLicenseGrantedMapping)
+  val premisesLicenseGrantedForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "premisesLicenseGranted" -> MappingSupport.createYesNoType("error.premisesLicenseGranted.missing")
+      )
+    )

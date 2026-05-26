@@ -48,7 +48,7 @@ class AreYouVATRegisteredController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AreYouVATRegistered")
@@ -66,7 +66,7 @@ class AreYouVATRegisteredController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       areYouVATRegisteredForm,
       formWithErrors => BadRequest(areYouVATRegisteredView(formWithErrors)),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistoryPartOne(_.copy(areYouVATRegistered = Some(data)))
 
         session
@@ -74,13 +74,11 @@ class AreYouVATRegisteredController @Inject() (
           .map { _ =>
             Redirect(navigator.nextPage(AreYouVATRegisteredId, updatedData).apply(updatedData))
           }
-      }
     )
   }
 
   private def tradingHistoryPartOne(
     using
     request: SessionRequest[AnyContent]
-  ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
-
-}
+  ): Option[AboutTheTradingHistoryPartOne] =
+    request.sessionData.aboutTheTradingHistoryPartOne

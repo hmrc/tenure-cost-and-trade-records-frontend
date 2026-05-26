@@ -44,7 +44,7 @@ class BunkeredFuelQuestionController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("BunkeredFuelQuestion")
@@ -71,21 +71,16 @@ class BunkeredFuelQuestionController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistory(_.copy(bunkeredFuelQuestion = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(BunkeredFuelQuestionId, updatedData).apply(updatedData)))
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#bunkered-fuel"
       case _     => controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
-    }
-
-}

@@ -26,15 +26,16 @@ object CurrentAnnualRentForm:
 
   val cdbMaxCurrencyAmount = 9999999.99
 
-  def currentAnnualRentForm(includedPartsSum: BigDecimal = 0): Form[BigDecimal] = Form(
-    single(
-      "currentAnnualRent" -> currencyMapping()
-        .verifying(
-          Constraint[BigDecimal] { (rent: BigDecimal) =>
-            if rent < includedPartsSum then
-              Invalid(ValidationError("error.currentAnnualRent.lessThanIncludedPartsSum", includedPartsSum.asMoney))
-            else Valid
-          }
-        )
+  def currentAnnualRentForm(includedPartsSum: BigDecimal = 0): Form[BigDecimal] =
+    Form(
+      single(
+        "currentAnnualRent" -> currencyMapping()
+          .verifying(
+            Constraint[BigDecimal] { (rent: BigDecimal) =>
+              if rent < includedPartsSum then
+                Invalid(ValidationError("error.currentAnnualRent.lessThanIncludedPartsSum", includedPartsSum.asMoney))
+              else Valid
+            }
+          )
+      )
     )
-  )

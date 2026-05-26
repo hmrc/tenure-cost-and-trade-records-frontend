@@ -44,18 +44,18 @@ class ConnectedToLandlordController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ConnectedToLandlord")
 
     Ok(
       connectedToLandlordView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match
           case Some(connectedToLandlord) =>
             connectedToLandlordForm.fill(connectedToLandlord)
           case _                         => connectedToLandlordForm
-        },
+        ,
         request.sessionData.toSummary,
         request.sessionData.forType
       )
@@ -67,14 +67,10 @@ class ConnectedToLandlordController @Inject() (
       connectedToLandlordForm,
       formWithErrors =>
         BadRequest(connectedToLandlordView(formWithErrors, request.sessionData.toSummary, request.sessionData.forType)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(connectedToLandlord = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(ConnectedToLandlordPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

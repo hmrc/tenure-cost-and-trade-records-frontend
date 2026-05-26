@@ -45,7 +45,7 @@ class AvailableRooms6048Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -63,7 +63,7 @@ class AvailableRooms6048Controller @Inject() (
     continueOrSaveAsDraft[AvailableRooms](
       availableRooms6048Form,
       formWithErrors => BadRequest(availableRoomsView(formWithErrors, currentUnitName, backLink)),
-      data => {
+      data =>
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
@@ -76,11 +76,11 @@ class AvailableRooms6048Controller @Inject() (
           .map { _ =>
             Redirect(navigator.nextPageWithParam(AvailableRoomsPageId, updatedData, s"idx=${navigator.idx}"))
           }
-      }
     )
   }
 
-  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] =
+    request.sessionData.accommodationDetails
 
   private def currentUnit(using request: SessionRequest[AnyContent]): Option[AccommodationUnit] =
     accommodationDetails
@@ -91,5 +91,3 @@ class AvailableRooms6048Controller @Inject() (
 
   private def backLink(using request: SessionRequest[AnyContent]): String =
     s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=${navigator.idx}"
-
-}

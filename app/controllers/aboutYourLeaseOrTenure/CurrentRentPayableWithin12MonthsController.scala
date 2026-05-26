@@ -42,7 +42,7 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CurrentRentPayableWithin12Months")
@@ -61,16 +61,12 @@ class CurrentRentPayableWithin12MonthsController @Inject() (
     continueOrSaveAsDraft[CurrentRentPayableWithin12Months](
       currentRentPayableWithin12MonthsForm,
       formWithErrors => BadRequest(currentRentPayableWithin12MonthsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentPayableWithin12Months = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ =>
             Redirect(navigator.nextPage(CurrentRentPayableWithin12monthsPageId, updatedData).apply(updatedData))
           )
-
-      }
     )
   }
-
-}

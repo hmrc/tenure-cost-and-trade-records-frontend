@@ -42,7 +42,7 @@ class CostOfSales6076IntermittentController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CostOfSales6076Intermittent")
@@ -52,6 +52,7 @@ class CostOfSales6076IntermittentController @Inject() (
       val costOfSales6076                = turnoverSections6076.flatMap(_.costOfSales6076IntermittentSum)
       val costOfSales6076Details: String =
         request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherSalesDetails).getOrElse("")
+
       Ok(
         view(
           costOfSales6076IntermittentForm(years).fill((costOfSales6076, costOfSales6076Details)),
@@ -103,13 +104,10 @@ class CostOfSales6076IntermittentController @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" =>
         aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "IES" =>
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       case _     =>
         aboutthetradinghistory.routes.OtherIncomeController.show().url
-    }
-
-}

@@ -43,6 +43,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
+
       "be handling POST answer='yes' by replying 303 redirect to 'CompletedLettingsDetail' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -55,8 +56,9 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         hasCompletedLettings(data).value shouldBe true
       }
     }
-    "the user has already provided an answer"  should {
-      "regardless of the given number of occupiers"          should {
+
+    "the user has already provided an answer" should {
+      "regardless of the given number of occupiers" should {
         "be handling GET by replying 200 with the HTML form having checked radios" in new ControllerFixture(
           permanentResidents = twoResidents,
           completedLettings = twoOccupiers
@@ -71,6 +73,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           page.radios("answer")    should haveChecked(value = "yes")
           page.radios("answer") shouldNot haveChecked(value = "no")
         }
+
         "be handling POST answer='yes' by replying 303 redirect to the 'CompletedLettingDetail' page" in new ControllerFixture(
           completedLettings = twoOccupiers
         ) {
@@ -85,6 +88,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           hasCompletedLettings(data).value shouldBe true
           completedLettings(data)          shouldBe twoOccupiers
         }
+
         "be handling POST answer='no' by replying 303 redirect to the 'LettingIntention' page" in new ControllerFixture(
           completedLettings = fiveOccupiers,
           mayHaveMoreCompletedLettings = Some(true)
@@ -103,6 +107,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           mayHaveMoreEntitiesOf(kind = "completedLettings", data.getValue) shouldBe None
         }
       }
+
       "and the maximum number of occupiers has been reached" should {
         "be handling POST hasCompletedLettings='yes' and reply 303 redirect to the 'CompletedLettingList' page" in new ControllerFixture(
           completedLettings = fiveOccupiers
@@ -120,6 +125,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         }
       }
     }
+
     "regardless of the user providing answers" should {
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(

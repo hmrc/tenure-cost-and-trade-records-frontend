@@ -46,17 +46,17 @@ class IsRentReceivedFromLettingController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsRentReceivedFromLetting")
 
     Ok(
       isRentReceivedFromLettingView(
-        request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+        request.sessionData.stillConnectedDetails.flatMap(_.isAnyRentReceived) match
           case Some(isAnyRentReceived) => isRentReceivedFromLettingForm.fill(isAnyRentReceived)
           case _                       => isRentReceivedFromLettingForm
-        },
+        ,
         getBackLink,
         request.sessionData.toSummary
       )
@@ -75,7 +75,7 @@ class IsRentReceivedFromLettingController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(isAnyRentReceived = Some(data)))
         session
           .saveOrUpdate(updatedData)
@@ -91,14 +91,10 @@ class IsRentReceivedFromLettingController @Inject() (
               .getOrElse(navigator.nextWithoutRedirectToCYA(LettingIncomePageId, updatedData).apply(updatedData))
           }
           .map(Redirect)
-      }
     )
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
+    navigator.from match
+      case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       case _     => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
-    }
-}

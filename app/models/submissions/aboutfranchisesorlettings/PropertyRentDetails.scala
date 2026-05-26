@@ -25,6 +25,5 @@ case class PropertyRentDetails(
   dateInput: LocalDate
 )
 
-object PropertyRentDetails {
+object PropertyRentDetails:
   implicit val format: OFormat[PropertyRentDetails] = Json.format
-}

@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "legalOrPlanningRestrictions"
 
@@ -37,7 +37,7 @@ class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[Answers
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     legalOrPlanningRestrictionsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Legal or planning restrictions view" must {
+  "Legal or planning restrictions view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -85,4 +85,3 @@ class LegalOrPlanningRestrictionsViewSpec extends QuestionViewBehaviours[Answers
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

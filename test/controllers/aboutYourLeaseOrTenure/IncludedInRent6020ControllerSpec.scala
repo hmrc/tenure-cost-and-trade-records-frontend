@@ -26,22 +26,23 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IncludedInRent6020ControllerSpec extends TestBaseSpec {
+class IncludedInRent6020ControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def includedInRent6020Controller(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): IncludedInRent6020Controller = IncludedInRent6020Controller(
-    mockAudit,
-    includedInRent6020View,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
+  ): IncludedInRent6020Controller =
+    IncludedInRent6020Controller(
+      mockAudit,
+      includedInRent6020View,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
+    )
 
-  "IncludedInRent6020Controller GET /" should {
+  "GET /" should {
     "return 200 and HTML with Rented Equipment Details in the session" in {
       val result = includedInRent6020Controller().show(fakeRequest)
       status(result)        shouldBe OK
@@ -64,7 +65,7 @@ class IncludedInRent6020ControllerSpec extends TestBaseSpec {
     }
   }
 
-  "IncludedInRent6020Controller SUBMIT /" should {
+  "SUBMIT /" should {
     "redirect to the next page if an empty form is submitted" in {
       val res = includedInRent6020Controller().submit(
         FakeRequest("POST", "/").withFormUrlEncodedBody()
@@ -83,5 +84,3 @@ class IncludedInRent6020ControllerSpec extends TestBaseSpec {
       redirectLocation(res) shouldBe None
     }
   }
-
-}

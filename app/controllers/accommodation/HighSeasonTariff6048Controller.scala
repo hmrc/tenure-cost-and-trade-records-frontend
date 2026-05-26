@@ -47,7 +47,7 @@ class HighSeasonTariff6048Controller @Inject() (
   dateUtil: DateUtilLocalised
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
@@ -64,7 +64,7 @@ class HighSeasonTariff6048Controller @Inject() (
     continueOrSaveAsDraft[HighSeasonTariff](
       highSeasonTariff6048Form,
       formWithErrors => BadRequest(highSeasonTariff6048View(formWithErrors, backLink)),
-      data => {
+      data =>
         val updatedData = updateAccommodationUnit(
           navigator.idx,
           _.copy(
@@ -75,25 +75,14 @@ class HighSeasonTariff6048Controller @Inject() (
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
-            Redirect(
-              navigator.nextPageWithParam(HighSeasonTariffPageId, updatedData, s"idx=${navigator.idx}")
-            )
+            Redirect(navigator.nextPageWithParam(HighSeasonTariffPageId, updatedData, s"idx=${navigator.idx}"))
           }
-      }
     )
   }
 
-  private def currentUnit(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationUnit] =
+  private def currentUnit(using request: SessionRequest[AnyContent]): Option[AccommodationUnit] =
     request.sessionData.accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
-  private def backLink(
-    using
-    request: SessionRequest[AnyContent]
-  ): String =
+  private def backLink(using request: SessionRequest[AnyContent]): String =
     s"${controllers.accommodation.routes.AccommodationLettingHistory6048Controller.show.url}?idx=${navigator.idx}"
-
-}

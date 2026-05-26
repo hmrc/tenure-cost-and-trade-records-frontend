@@ -27,8 +27,8 @@ import play.api.data.Forms.single
 object RemoveLastUnit6048Form:
 
   val removeLastUnit6048Form: Form[AnswersYesNo] =
-    Form {
+    Form(
       single(
         "removeLastUnit" -> createYesNoType("error.accommodation.removeLastUnit.required")
       )
-    }
+    )

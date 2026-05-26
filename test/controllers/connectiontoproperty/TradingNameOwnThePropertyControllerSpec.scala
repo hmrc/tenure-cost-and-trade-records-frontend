@@ -27,7 +27,8 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
+class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec:
+
   import TestData.*
 
   val mockAudit: Audit = mock[Audit]
@@ -44,7 +45,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "AreYouThirdPartyController GET /" should {
+  "GET /" should {
     "return 200 and HTML with owner of the property present in session" in {
       val result = tradingNameOwnThePropertyController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -68,8 +69,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  "AreYouThirdPartyController POST /" should {
-
+  "POST /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = tradingNameOwnThePropertyController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -77,7 +77,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted without CYA param" in {
+    "redirect when form data submitted without CYA param" in {
       val res = tradingNameOwnThePropertyController().submit(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "tradingNameOwnTheProperty" -> "yes"
@@ -86,7 +86,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted with CYA param" in {
+    "redirect when form data submitted with CYA param" in {
       val res = tradingNameOwnThePropertyController().submit(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "tradingNameOwnTheProperty" -> "yes"
@@ -94,14 +94,14 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe SEE_OTHER
     }
+  }
 
-    "Trading Name own the property form" should {
-      "error if areYouThirdParty is missing" in {
-        val formData = baseFormData - errorKey.tradingNameOwnTheProperty
-        val form     = theForm.bind(formData)
+  "trading Name own the property form" should {
+    "error if areYouThirdParty is missing" in {
+      val formData = baseFormData - errorKey.tradingNameOwnTheProperty
+      val form     = theForm.bind(formData)
 
-        mustContainError(errorKey.tradingNameOwnTheProperty, "error.tradingNameOwnTheProperty.missing", form)
-      }
+      mustContainError(errorKey.tradingNameOwnTheProperty, "error.tradingNameOwnTheProperty.missing", form)
     }
   }
 
@@ -112,6 +112,7 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       )
     }
+
     "return back link to trading name of the business page if 'from' query param is not present" in {
       val result = tradingNameOwnThePropertyController().show(fakeRequest)
       contentAsString(result) should include(
@@ -120,15 +121,12 @@ class TradingNameOwnThePropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val tradingNameOwnTheProperty = "tradingNameOwnTheProperty"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "tradingNameOwnTheProperty" -> "yes"
     )
-  }
-}

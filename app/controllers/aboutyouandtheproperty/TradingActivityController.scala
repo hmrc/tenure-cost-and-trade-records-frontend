@@ -44,17 +44,17 @@ class TradingActivityController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TradingActivity")
 
     Ok(
       tradingActivityView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.tradingActivity) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.tradingActivity) match
           case Some(answer) => tradingActivityForm.fill(answer)
           case _            => tradingActivityForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -63,19 +63,11 @@ class TradingActivityController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[TradingActivity](
       tradingActivityForm,
-      formWithErrors =>
-        BadRequest(
-          tradingActivityView(
-            formWithErrors,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(tradingActivityView(formWithErrors, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(tradingActivity = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TradingActivityPageId, updatedData).apply(updatedData)))
-      }
     )
   }
-}

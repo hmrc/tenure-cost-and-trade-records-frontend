@@ -35,6 +35,5 @@ case class CaravansAnnualPitchFee(
   otherPitchFeeDetails: Option[String] = None
 )
 
-object CaravansAnnualPitchFee {
+object CaravansAnnualPitchFee:
   implicit val format: OFormat[CaravansAnnualPitchFee] = Json.format
-}

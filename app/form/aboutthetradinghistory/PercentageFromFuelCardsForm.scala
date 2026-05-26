@@ -25,22 +25,14 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 import scala.util.Try
 
-object PercentageFromFuelCardsForm {
+object PercentageFromFuelCardsForm:
 
-  def percentageFromFuelCardsForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[PercentageFromFuelCards]] =
-    Form {
-      mappingPerYear(years, (year, idx) => "" -> percentageFromFuelCardsMapping(year, idx))
-    }
+  def percentageFromFuelCardsForm(years: Seq[String])(using messages: Messages): Form[Seq[PercentageFromFuelCards]] =
+    Form(
+      mappingPerYear(years, (year, idx) => "" -> percentageFuelCards(year, idx))
+    )
 
-  private def percentageFromFuelCardsMapping(
-    year: String,
-    idx: Int
-  )(using
-    messages: Messages
-  ): Mapping[PercentageFromFuelCards] =
+  private def percentageFuelCards(year: String, idx: Int)(using messages: Messages): Mapping[PercentageFromFuelCards] =
     mapping(
       "financial-year-end"            -> ignored(LocalDate.EPOCH),
       s"percentageFromFuelCards-$idx" -> optional(
@@ -54,5 +46,3 @@ object PercentageFromFuelCardsForm {
           .verifying(messages("error.percentage", year), _ <= 100)
       ).verifying(messages("error.percentageFromFuelCards.required", year), _.isDefined)
     )(PercentageFromFuelCards.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-}

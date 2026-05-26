@@ -40,15 +40,15 @@ class RemoveConnectionController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       removeConnectionView(
-        request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match {
+        request.sessionData.removeConnectionDetails.flatMap(_.removeConnectionDetails) match
           case Some(removeConnectionDetails) => removeConnectionForm.fill(removeConnectionDetails)
           case _                             => removeConnectionForm
-        },
+        ,
         request.sessionData.toSummary,
         calculateBackLink
       )
@@ -58,22 +58,16 @@ class RemoveConnectionController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[RemoveConnectionsDetails](
       removeConnectionForm,
-      formWithErrors =>
-        BadRequest(removeConnectionView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
-      data => {
+      formWithErrors => BadRequest(removeConnectionView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
+      data =>
         val updatedData = updateRemoveConnectionDetails(_.copy(removeConnectionDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RemoveConnectionId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
       case _     => controllers.notconnected.routes.PastConnectionController.show().url
-    }
-
-}

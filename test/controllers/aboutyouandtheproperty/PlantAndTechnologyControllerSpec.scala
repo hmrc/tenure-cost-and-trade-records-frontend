@@ -24,42 +24,44 @@ import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PlantAndTechnologyControllerSpec extends TestBaseSpec {
+class PlantAndTechnologyControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
 
   def plantAndTechnologyController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes),
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  ): PlantAndTechnologyController = PlantAndTechnologyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    plantAndTechnologyView,
-    preEnrichedActionRefiner(
-      aboutYouAndTheProperty = aboutYouAndTheProperty,
-      aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
-    ),
-    mockSessionRepo
-  )
+  ): PlantAndTechnologyController =
+    PlantAndTechnologyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      plantAndTechnologyView,
+      preEnrichedActionRefiner(
+        aboutYouAndTheProperty = aboutYouAndTheProperty,
+        aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
+      ),
+      mockSessionRepo
+    )
 
-  def plantAndTechnologyControllerNone(): PlantAndTechnologyController = PlantAndTechnologyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    plantAndTechnologyView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
-    mockSessionRepo
-  )
+  def plantAndTechnologyControllerNone(): PlantAndTechnologyController =
+    PlantAndTechnologyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      plantAndTechnologyView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
+      mockSessionRepo
+    )
 
-  "GET / Plant and technologies" should {
+  "GET /" should {
     "GET / return 200 about you in the session" in {
       val result = plantAndTechnologyController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -95,6 +97,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
+
     "return correct backLink when threeYearsConstructed is AnswerYes" in {
       val aboutYouAndThePropertyWith3YData =
         prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = Some(AnswerYes))
@@ -123,7 +126,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT / plant and technology" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = plantAndTechnologyController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -141,7 +144,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
     }
   }
 
-  "plant and technology form" should {
+  "Plant and technology form" should {
     "error if  value is missing" in {
       val empty = baseFormData.updated(TestData.errorKey.plantAndTechnology, "")
       val form  = plantAndTechnologyForm.bind(empty)
@@ -150,16 +153,12 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val plantAndTechnology = "plantAndTechnology"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "plantAndTechnology" -> "xxx"
     )
-  }
-
-}

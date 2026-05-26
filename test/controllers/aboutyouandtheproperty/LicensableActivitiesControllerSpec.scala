@@ -17,43 +17,45 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
+import form.aboutyouandtheproperty.LicensableActivitiesForm.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class LicensableActivitiesControllerSpec extends TestBaseSpec {
+class LicensableActivitiesControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import form.aboutyouandtheproperty.LicensableActivitiesForm.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def licensableActivitiesController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): LicensableActivitiesController = LicensableActivitiesController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    licensableActivitiesView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): LicensableActivitiesController =
+    LicensableActivitiesController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      licensableActivitiesView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def licensableActivitiesControllerNone(): LicensableActivitiesController = LicensableActivitiesController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    licensableActivitiesView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def licensableActivitiesControllerNone(): LicensableActivitiesController =
+    LicensableActivitiesController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      licensableActivitiesView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "License Activities Controller" should {
+  "GET /" should {
     "GET / return 200 licensable activities in the session" in {
       val result = licensableActivitiesController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -76,21 +78,21 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
       val result = licensableActivitiesController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = licensableActivitiesController().submit(
-          fakeRequest.withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = licensableActivitiesController().submit(
+        fakeRequest.withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = licensableActivitiesController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("licensableActivities" -> "yes")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+    "Redirect when form data submitted" in {
+      val res = licensableActivitiesController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("licensableActivities" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
@@ -103,13 +105,10 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val licensableActivities: String = "licensableActivities"
-    }
 
     val baseFormData: Map[String, String] = Map("licensableActivities" -> "yes")
-  }
-}

@@ -47,26 +47,26 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   private def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeFixtureAndFittingsDetails")
 
-    if (forType == FOR6045 || forType == FOR6046) {
+    if forType == FOR6045 || forType == FOR6046 then
       Ok(
         rentIncludeFixtureAndFittingsDetailsTextAreaView(
           request.sessionData.aboutLeaseOrAgreementPartThree
-            .flatMap(_.rentIncludeFixtureAndFittingsDetailsTextArea) match {
+            .flatMap(_.rentIncludeFixtureAndFittingsDetailsTextArea) match
             case Some(rentIncludeFixtureAndFittingsDetailsTextArea) =>
               rentIncludeFixtureAndFittingsDetailsTextAreaForm.fill(rentIncludeFixtureAndFittingsDetailsTextArea)
             case _                                                  => rentIncludeFixtureAndFittingsDetailsTextAreaForm
-          },
+          ,
           request.sessionData.toSummary
         )
       )
-    } else {
+    else
       Ok(
         rentIncludeFixtureAndFittingsDetailsView(
           rentIncludeFixtureAndFittingsDetailsForm().fill(
@@ -75,7 +75,6 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
           request.sessionData.toSummary
         )
       )
-    }
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -85,33 +84,24 @@ class RentIncludeFixtureAndFittingsDetailsController @Inject() (
       .flatMap(_.rentIncludeTradeServicesInformation.flatMap(_.sumIncludedInRent))
       .getOrElse(zeroBigDecimal)
 
-    if (forType == FOR6045 || forType == FOR6046) {
+    if forType == FOR6045 || forType == FOR6046 then
       continueOrSaveAsDraft[String](
         rentIncludeFixtureAndFittingsDetailsTextAreaForm,
-        formWithErrors =>
-          BadRequest(rentIncludeFixtureAndFittingsDetailsTextAreaView(formWithErrors, request.sessionData.toSummary)),
-        data => {
-          val updatedData =
-            updateAboutLeaseOrAgreementPartThree(_.copy(rentIncludeFixtureAndFittingsDetailsTextArea = Some(data)))
+        formWithErrors => BadRequest(rentIncludeFixtureAndFittingsDetailsTextAreaView(formWithErrors, request.sessionData.toSummary)),
+        data =>
+          val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(rentIncludeFixtureAndFittingsDetailsTextArea = Some(data)))
           session.saveOrUpdate(updatedData).map { _ =>
             Redirect(navigator.nextPage(RentFixtureAndFittingsDetailsPageId, updatedData).apply(updatedData))
           }
-        }
       )
-    } else {
+    else
       continueOrSaveAsDraft[Option[BigDecimal]](
         rentIncludeFixtureAndFittingsDetailsForm(annualRent, otherIncludedPartsSum),
-        formWithErrors =>
-          BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors, request.sessionData.toSummary)),
-        data => {
-          val updatedData =
-            updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsAmount = data))
+        formWithErrors => BadRequest(rentIncludeFixtureAndFittingsDetailsView(formWithErrors, request.sessionData.toSummary)),
+        data =>
+          val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittingsAmount = data))
           session.saveOrUpdate(updatedData).map { _ =>
             Redirect(navigator.nextPage(RentFixtureAndFittingsDetailsPageId, updatedData).apply(updatedData))
           }
-        }
       )
-    }
   }
-
-}

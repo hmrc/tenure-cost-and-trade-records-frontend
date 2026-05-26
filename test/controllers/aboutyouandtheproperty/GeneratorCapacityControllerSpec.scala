@@ -23,38 +23,40 @@ import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class GeneratorCapacityControllerSpec extends TestBaseSpec {
+class GeneratorCapacityControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
 
   def generatorCapacityController(
     aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo)
-  ): GeneratorCapacityController = GeneratorCapacityController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    generatorCapacityView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-    mockSessionRepo
-  )
+  ): GeneratorCapacityController =
+    GeneratorCapacityController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      generatorCapacityView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
+      mockSessionRepo
+    )
 
-  def generatorCapacityControllerNone(): GeneratorCapacityController = GeneratorCapacityController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    generatorCapacityView,
-    preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
-    mockSessionRepo
-  )
+  def generatorCapacityControllerNone(): GeneratorCapacityController =
+    GeneratorCapacityController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      generatorCapacityView,
+      preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
+      mockSessionRepo
+    )
 
-  "GET / generator capacity" should {
+  "GET /" should {
     "GET / return 200 about you in the session" in {
       val result = generatorCapacityController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -74,7 +76,7 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
     }
   }
 
-  "SUBMIT / generator capacity" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val result = generatorCapacityController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -92,7 +94,7 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
     }
   }
 
-  "generator capacity form" should {
+  "Generator capacity form" should {
     "error if  value is missing" in {
       val empty = baseFormData.updated(TestData.errorKey.generatorCapacity, "")
       val form  = theForm.bind(empty)
@@ -101,16 +103,12 @@ class GeneratorCapacityControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val generatorCapacity = "generatorCapacity"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "generatorCapacity" -> "test capacity"
     )
-  }
-
-}

@@ -22,18 +22,19 @@ import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, s
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
-class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {
+class BunkeredFuelQuestionControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  val bunkeredFuelQuestionController: BunkeredFuelQuestionController = BunkeredFuelQuestionController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    bunkeredFuelQuestionView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
-    mockSessionRepo
-  )
+  val bunkeredFuelQuestionController: BunkeredFuelQuestionController =
+    BunkeredFuelQuestionController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      bunkeredFuelQuestionView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
@@ -77,5 +78,3 @@ class BunkeredFuelQuestionControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

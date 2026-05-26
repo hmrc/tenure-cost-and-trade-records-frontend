@@ -24,15 +24,15 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
+class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec:
 
   // This suite tests all generic paths based on form type 6010
 
-  val audit: Audit = mock[Audit]
+  private val audit: Audit = mock[Audit]
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
+  private val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
 
   "About you and the property navigator" when {
 
@@ -186,4 +186,3 @@ class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec {
       }
     }
   }
-}

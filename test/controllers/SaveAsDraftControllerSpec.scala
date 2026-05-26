@@ -31,7 +31,7 @@ import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, 
 /**
   * @author Yuriy Tumakha
   */
-class SaveAsDraftControllerSpec extends TestBaseSpec {
+class SaveAsDraftControllerSpec extends TestBaseSpec:
 
   private val sessionRepo      = StubSessionRepo()
   private val backendConnector = StubBackendConnector()
@@ -115,8 +115,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       status(result) shouldBe OK
       checkFinalPageDraftSaved(contentAsString(result))
 
-      val session =
-        backendConnector.loadSubmissionDraft(prefilledBaseSession.referenceNumber, hc).futureValue.get.session
+      val session = backendConnector.loadSubmissionDraft(prefilledBaseSession.referenceNumber, hc).futureValue.get.session
       session.address shouldBe submissionDraft.session.address
 
       val passwordHash = session.saveAsDraftPassword.getOrElse("")
@@ -212,9 +211,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
       val refNum = submissionDraft.session.referenceNumber
       backendConnector.saveAsDraft(refNum, submissionDraft, hc)
 
-      backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(
-        submissionDraft
-      ) // SubmissionDraft exists
+      backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(submissionDraft) // SubmissionDraft exists
 
       val result = saveAsDraftController.startAgain(fakeRequest)
       status(result)           shouldBe SEE_OTHER
@@ -242,8 +239,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     "show session timeout page with generated password and draft expiration date" in {
       val generatedPassword = "2345xyz"
 
-      val result =
-        saveAsDraftController.sessionTimeout(fakeRequest.withSession("generatedPassword" -> generatedPassword))
+      val result = saveAsDraftController.sessionTimeout(fakeRequest.withSession("generatedPassword" -> generatedPassword))
       status(result) shouldBe OK
 
       val content = contentAsString(result)
@@ -252,7 +248,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     }
   }
 
-  private def checkCustomUserPasswordForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit = {
+  private def checkCustomUserPasswordForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit =
     content should include("saveAsDraft.createPassword.header")
     content should include("""name="password"""")
     content should include("""name="confirmPassword"""")
@@ -260,23 +256,18 @@ class SaveAsDraftControllerSpec extends TestBaseSpec {
     expectedErrors.foreach { expectedError =>
       content should include(expectedError)
     }
-  }
 
-  private def checkFinalPageDraftSaved(content: String): Unit = {
+  private def checkFinalPageDraftSaved(content: String): Unit =
     content    should include("saveAsDraft.preHeader")
     content    should include("saveAsDraft.logout")
     content shouldNot include(password)
     content shouldNot include("saveAsDraft.createPassword.header")
     content shouldNot include("""name="password"""")
-  }
 
-  private def checkSaveAsDraftLoginForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit = {
+  private def checkSaveAsDraftLoginForm(content: String, expectedErrors: Seq[String] = Seq.empty): Unit =
     content should include("saveAsDraft.retrieveYourDraft")
     content should include("""name="password"""")
     content should include("saveAsDraft.startAgain")
     expectedErrors.foreach { expectedError =>
       content should include(expectedError)
     }
-  }
-
-}

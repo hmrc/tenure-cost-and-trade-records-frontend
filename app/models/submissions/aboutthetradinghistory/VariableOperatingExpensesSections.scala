@@ -26,6 +26,5 @@ case class VariableOperatingExpensesSections(
   otherExpensesDetails: Option[String] = None
 )
 
-object VariableOperatingExpensesSections {
+object VariableOperatingExpensesSections:
   implicit val format: OFormat[VariableOperatingExpensesSections] = Json.format
-}

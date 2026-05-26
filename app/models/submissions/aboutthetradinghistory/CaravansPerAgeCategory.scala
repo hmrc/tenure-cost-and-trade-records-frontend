@@ -26,10 +26,8 @@ case class CaravansPerAgeCategory(
   years6_10: Int = 0,
   years11_15: Int = 0,
   years15plus: Int = 0
-) {
+):
   def total: Int = years0_5 + years6_10 + years11_15 + years15plus
-}
 
-object CaravansPerAgeCategory {
+object CaravansPerAgeCategory:
   implicit val format: OFormat[CaravansPerAgeCategory] = Json.format
-}

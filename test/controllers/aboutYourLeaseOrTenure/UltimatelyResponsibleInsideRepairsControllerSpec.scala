@@ -22,29 +22,30 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
+class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def ultimatelyResponsibleInsideRepairsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): UltimatelyResponsibleInsideRepairsController = UltimatelyResponsibleInsideRepairsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    ultimatelyResponsibleInsideRepairsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-    mockSessionRepo
-  )
+  ): UltimatelyResponsibleInsideRepairsController =
+    UltimatelyResponsibleInsideRepairsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      ultimatelyResponsibleInsideRepairsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
 
-  "UltimatelyResponsibleInsideRepairsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Ultimately Responsible Inside Repairs in the session" in {
       val result = ultimatelyResponsibleInsideRepairsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -69,14 +70,13 @@ class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = ultimatelyResponsibleInsideRepairsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = ultimatelyResponsibleInsideRepairsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("insideRepairs" -> "landlord")
       )
@@ -93,13 +93,10 @@ class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val ultimatelyResponsibleIR: String = "insideRepairs"
-    }
 
     val baseFormData: Map[String, String] = Map("insideRepairs" -> "tenant")
-  }
-}

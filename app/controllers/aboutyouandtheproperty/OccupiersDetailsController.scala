@@ -41,18 +41,18 @@ class OccupiersDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OccupiersDetails")
 
     val existingDetails: Option[OccupiersDetails] =
-      for {
+      for
         requestedIndex <- index
         occupiers      <-
           request.sessionData.aboutYouAndThePropertyPartTwo.map(_.occupiersList)
         requestedData  <- occupiers.lift(requestedIndex)
-      } yield requestedData
+      yield requestedData
 
     Ok(
       view(
@@ -67,27 +67,18 @@ class OccupiersDetailsController @Inject() (
   def submit(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[OccupiersDetails](
       occupiersDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            index,
-            getBackLink,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, index, getBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedAboutYouAndTheProperty =
           request.sessionData.aboutYouAndThePropertyPartTwo.fold(
             AboutYouAndThePropertyPartTwo(occupiersList = IndexedSeq(data))
           ) { aboutProperty =>
             val existingOccupiersList = aboutProperty.occupiersList
 
-            val updatedList = index match {
+            val updatedList = index match
               case Some(index) if existingOccupiersList.isDefinedAt(index) =>
                 existingOccupiersList.updated(index, data)
               case _                                                       => existingOccupiersList :+ data
-            }
 
             aboutProperty.copy(occupiersList = updatedList, occupiersListIndex = updatedList.length - 1)
           }
@@ -98,15 +89,10 @@ class OccupiersDetailsController @Inject() (
         session.saveOrUpdate(updatedSessionData).map { _ =>
           Redirect(navigator.nextPage(OccupiersDetailsId, updatedSessionData).apply(updatedSessionData))
         }
-      }
     )
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
-      case _     =>
-        controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
-    }
-}
+    navigator.from match
+      case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
+      case _     => controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url

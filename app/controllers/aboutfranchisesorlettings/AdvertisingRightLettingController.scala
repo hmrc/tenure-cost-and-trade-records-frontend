@@ -57,10 +57,9 @@ class AdvertisingRightLettingController @Inject() (
         lettings                  <- aboutFranchisesOrLettings.lettings
         requestedIndex            <- index
         requestedLetting          <- lettings.lift(requestedIndex)
-        letting                   <- requestedLetting match {
+        letting                   <- requestedLetting match
                                        case letting: AdvertisingRightLetting => Some(letting)
                                        case _                                => None
-                                     }
       yield theForm.fill(letting)
 
     Ok(
@@ -85,7 +84,7 @@ class AdvertisingRightLettingController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      formData => {
+      formData =>
         var updatedIndex: Int = -1
         val updatedSession    = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { about =>
           val (updatedLettings, idx) = updateOrAddAdvertisingRightLetting(about.lettings, formData, index)
@@ -108,7 +107,6 @@ class AdvertisingRightLettingController @Inject() (
                               )
                             )
         yield redirectResult
-      }
     )
   }
 
@@ -116,14 +114,14 @@ class AdvertisingRightLettingController @Inject() (
     lettingsOpt: Option[IndexedSeq[LettingPartOfProperty]],
     advertisingRightLetting: AdvertisingRightLetting,
     index: Option[Int]
-  ): (IndexedSeq[LettingPartOfProperty], Int) = {
+  ): (IndexedSeq[LettingPartOfProperty], Int) =
     var updatedIndex: Int = -1
-    val updatedLetting    = lettingsOpt match {
+    val updatedLetting    = lettingsOpt match
       case Some(lettings) =>
-        index match {
+        index match
           case Some(idx) if idx < lettings.length =>
             updatedIndex = idx
-            lettings(idx) match {
+            lettings(idx) match
               case existingOther: AdvertisingRightLetting =>
                 lettings.updated(
                   idx,
@@ -135,17 +133,13 @@ class AdvertisingRightLettingController @Inject() (
                 )
               case _                                      =>
                 lettings.updated(idx, advertisingRightLetting)
-            }
           case _                                  =>
             updatedIndex = lettings.length
             lettings :+ advertisingRightLetting
-        }
       case None           =>
         updatedIndex = 0
         IndexedSeq(advertisingRightLetting)
-    }
     (updatedLetting, updatedIndex)
-  }
 
   private def backLink(idx: Option[Int])(using request: SessionRequest[AnyContent]): String =
     if navigator.from == "CYA"

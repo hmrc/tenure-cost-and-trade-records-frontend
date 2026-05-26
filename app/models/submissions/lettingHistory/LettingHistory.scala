@@ -17,7 +17,7 @@
 package models.submissions.lettingHistory
 
 import models.Session
-import SessionWrapper.{change as changeSession, unchanged as unchangedSession}
+import models.submissions.lettingHistory.SessionWrapper.{change as changeSession, unchanged as unchangedSession}
 import play.api.libs.json.{Format, Json}
 
 case class LettingHistory(
@@ -43,12 +43,7 @@ object LettingHistory extends Object with PermanentResidents with CompletedLetti
   val MaxNumberOfOnlineAdvertising  = 5
 
   @deprecated
-  def withoutTheAbilityToDetectChanges(
-    ifEmpty: LettingHistory,
-    copyFunc: LettingHistory => LettingHistory
-  )(using
-    session: Session
-  ): SessionWrapper =
+  def withoutTheAbilityToDetectChanges(ifEmpty: LettingHistory, copyFunc: LettingHistory => LettingHistory)(using session: Session): SessionWrapper =
     SessionWrapper(
       data = session.copy(lettingHistory =
         Some(
@@ -64,7 +59,7 @@ object LettingHistory extends Object with PermanentResidents with CompletedLetti
   def withMayHaveMoreOf(kind: String, understand: Boolean)(using session: Session): SessionWrapper =
     withoutTheAbilityToDetectChanges(
       ifEmpty = LettingHistory(),
-      copyFunc = { lettingHistory =>
+      copyFunc = lettingHistory =>
         kind match
           case "permanentResidents" =>
             lettingHistory.copy(mayHaveMorePermanentResidents = Some(understand))
@@ -74,43 +69,39 @@ object LettingHistory extends Object with PermanentResidents with CompletedLetti
             lettingHistory.copy(mayHaveMoreOnlineAdvertising = Some(understand))
           case _                    =>
             lettingHistory
-      }
     )
 
   def mayHaveMoreEntitiesOf(kind: String, session: Session): Option[Boolean] =
     for
       lettingHistory <- session.lettingHistory
-      mayHaveMore    <- {
+      mayHaveMore    <-
         kind match
           case "permanentResidents" => lettingHistory.mayHaveMorePermanentResidents
           case "completedLettings"  => lettingHistory.mayHaveMoreCompletedLettings
           case "onlineAdvertising"  => lettingHistory.mayHaveMoreOnlineAdvertising
           case _                    => None
-      }
     yield mayHaveMore
 
   def hasEntitiesOf(kind: String, session: Session): Option[Boolean] =
     for
       lettingHistory <- session.lettingHistory
-      hasEntries     <- {
+      hasEntries     <-
         kind match
           case "permanentResidents" => lettingHistory.hasPermanentResidents
           case "completedLettings"  => lettingHistory.hasCompletedLettings
           case "onlineAdvertising"  => lettingHistory.hasOnlineAdvertising
           case _                    => None
-      }
     yield hasEntries
 
   def countEntitiesOf(kind: String, session: Session): Option[Int] =
     for
       lettingHistory <- session.lettingHistory
-      count          <- {
+      count          <-
         kind match
           case "permanentResidents" => Some(lettingHistory.permanentResidents.size)
           case "completedLettings"  => Some(lettingHistory.completedLettings.size)
           case "onlineAdvertising"  => Some(lettingHistory.onlineAdvertising.size)
           case _                    => Some(0)
-      }
     yield count
 
   def hasBeenAlreadyEntered(entry: Entry, at: Option[Int])(using session: Session): Boolean =

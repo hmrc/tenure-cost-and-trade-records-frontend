@@ -22,26 +22,24 @@ import play.api.data.*
 import play.api.data.Forms.*
 import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 
-object PropertyCurrentlyUsedForm {
+object PropertyCurrentlyUsedForm:
 
   private val anotherUseDetailsRequired: Constraint[PropertyCurrentlyUsed] =
     Constraint("constraint.anotherUseDetailsRequired") { pcu =>
-      if (pcu.propertyCurrentlyUsed.contains("other") && pcu.anotherUseDetails.forall(_.trim.isEmpty)) {
+      if pcu.propertyCurrentlyUsed.contains("other") && pcu.anotherUseDetails.forall(_.trim.isEmpty) then
         Invalid(Seq(ValidationError("error.anotherUseDetails.required")))
-      } else {
+      else
         Valid
-      }
     }
 
-  private val propertyCurrentlyUsedMapping: Mapping[PropertyCurrentlyUsed] = mapping(
-    "propertyCurrentlyUsed" -> list(text).verifying(
-      nonEmptyList("error.propertyCurrentlyUsed.required")
-    ),
-    "anotherUseDetails"     -> optional(text)
-      .verifying("error.anotherUseDetails.maxLength", it => it.forall(_.length <= 200))
-  )(PropertyCurrentlyUsed.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-  val propertyCurrentlyUsedForm: Form[PropertyCurrentlyUsed] = Form(
-    propertyCurrentlyUsedMapping.verifying(anotherUseDetailsRequired)
-  )
-}
+  val propertyCurrentlyUsedForm: Form[PropertyCurrentlyUsed] =
+    Form(
+      mapping(
+        "propertyCurrentlyUsed" -> list(text).verifying(
+          nonEmptyList("error.propertyCurrentlyUsed.required")
+        ),
+        "anotherUseDetails"     -> optional(text)
+          .verifying("error.anotherUseDetails.maxLength", it => it.forall(_.length <= 200))
+      )(PropertyCurrentlyUsed.apply)(o => Some(Tuple.fromProductTyped(o)))
+        .verifying(anotherUseDetailsRequired)
+    )

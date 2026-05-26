@@ -23,24 +23,25 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object TelecomMastLettingForm:
 
-  val theForm: Form[TelecomMastLetting] = Form[TelecomMastLetting](
-    mapping(
-      "operatingCompanyName" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.operatingCompanyName.required"),
-        maxLength(500, "error.operatingCompanyName.maxLength")
-      ),
-      "siteOfMast"           -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.siteOfMast.required"),
-        maxLength(500, "error.siteOfMast.maxLength")
-      )
-    )((operatingCompanyName, siteOfMast) =>
-      TelecomMastLetting(Some(operatingCompanyName), Some(siteOfMast), None, None)
-    )(telecomMastLetting =>
-      Some(
-        (
-          telecomMastLetting.operatingCompanyName.getOrElse(""),
-          telecomMastLetting.siteOfMast.getOrElse("")
+  val theForm: Form[TelecomMastLetting] =
+    Form(
+      mapping(
+        "operatingCompanyName" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.operatingCompanyName.required"),
+          maxLength(500, "error.operatingCompanyName.maxLength")
+        ),
+        "siteOfMast"           -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.siteOfMast.required"),
+          maxLength(500, "error.siteOfMast.maxLength")
+        )
+      )((operatingCompanyName, siteOfMast) =>
+        TelecomMastLetting(Some(operatingCompanyName), Some(siteOfMast), None, None)
+      )(telecomMastLetting =>
+        Some(
+          (
+            telecomMastLetting.operatingCompanyName.getOrElse(""),
+            telecomMastLetting.siteOfMast.getOrElse("")
+          )
         )
       )
     )
-  )

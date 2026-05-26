@@ -47,17 +47,17 @@ class RentOpenMarketValueController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentOpenMarketValue")
 
     Ok(
       rentOpenMarketValueView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match
           case Some(answer) => rentOpenMarketValuesForm.fill(answer)
           case _            => rentOpenMarketValuesForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -67,40 +67,25 @@ class RentOpenMarketValueController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       rentOpenMarketValuesForm,
-      formWithErrors =>
-        BadRequest(
-          rentOpenMarketValueView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(rentOpenMarketValueView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentOpenMarketValue = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentOpenMarketPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url + "#rent-open-market-value"
       case _    =>
-        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match {
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match
           case Some(AnswerYes) =>
-            answers.forType match {
-              case FOR6020 =>
-                controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
-              case _       =>
-                controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
-            }
+            answers.forType match
+              case FOR6020 => controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
+              case _       => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsDetailsController.show().url
           case _               =>
-            answers.forType match {
-              case FOR6020 =>
-                controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
-              case _       =>
-                controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
-            }
-        }
-    }
-
-}
+            answers.forType match
+              case FOR6020 => controllers.aboutYourLeaseOrTenure.routes.IncludedInRent6020Controller.show().url
+              case _       => controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url

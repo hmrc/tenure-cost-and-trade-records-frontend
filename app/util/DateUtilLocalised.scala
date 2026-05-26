@@ -26,7 +26,7 @@ import java.time.{LocalDate, MonthDay, YearMonth}
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class DateUtilLocalised @Inject() (langUtil: LanguageUtils) {
+class DateUtilLocalised @Inject() (langUtil: LanguageUtils):
 
   private val ibmTimeZone: TimeZone = TimeZone.getTimeZone(defaultTimeZoneId)
 
@@ -54,13 +54,12 @@ class DateUtilLocalised @Inject() (langUtil: LanguageUtils) {
     "cy" -> dayMonthAbbrYearFormatCY
   ).withDefaultValue(dayMonthAbbrYearFormatEN)
 
-  private def createDateFormatForPattern(pattern: String, langCode: String): SimpleDateFormat = {
+  private def createDateFormatForPattern(pattern: String, langCode: String): SimpleDateFormat =
     val uLocale         = ULocale(langCode)
-    val locale: ULocale = if (ULocale.getAvailableLocales.contains(uLocale)) uLocale else ULocale.getDefault
+    val locale: ULocale = if ULocale.getAvailableLocales.contains(uLocale) then uLocale else ULocale.getDefault
     val sdf             = SimpleDateFormat(pattern, locale)
     sdf.setTimeZone(ibmTimeZone)
     sdf
-  }
 
   /**
     * Date format "d MMMM y".
@@ -88,5 +87,3 @@ class DateUtilLocalised @Inject() (langUtil: LanguageUtils) {
   def formatDayMonthAbbrYear(date: LocalDate)(using messages: Messages): String =
     dayMonthAbbrYearFormat(messages.lang.code)
       .format(date.toEpochMilli)
-
-}

@@ -23,20 +23,19 @@ import models.submissions.connectiontoproperty.AddressConnectionType.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnectionType] {
+class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnectionType]:
 
   override val form: Form[AddressConnectionType] = AreYouStillConnectedForm.theForm
 
-  private def createView = () =>
-    areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
+  private def createView = () => areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
 
   private def createViewUsingForm = (form: Form[AddressConnectionType]) =>
     areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
 
-  "Are you still connected view" must {
+  "Are you still connected view" should {
 
     "behave like a normal page" when {
-      "rendered" must {
+      "rendered" should {
         "have the correct banner title" in
           checkServiceNameInHeaderBanner(createView())
 
@@ -98,4 +97,3 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

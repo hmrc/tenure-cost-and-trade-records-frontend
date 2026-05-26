@@ -20,15 +20,18 @@ import crypto.MongoCrypto
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
+import scala.language.implicitConversions
+
 case class SensitiveRequestReferenceNumberDetails(
   requestReferenceNumberPropertyDetails: Option[SensitiveRequestReferenceNumberPropertyDetails] = None,
   requestReferenceContactDetails: Option[RequestReferenceNumberContactDetails] = None
 ) extends Sensitive[RequestReferenceNumberDetails]:
 
-  override def decryptedValue: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
-    requestReferenceNumberPropertyDetails.map(_.decryptedValue),
-    requestReferenceContactDetails
-  )
+  override def decryptedValue: RequestReferenceNumberDetails =
+    RequestReferenceNumberDetails(
+      requestReferenceNumberPropertyDetails.map(_.decryptedValue),
+      requestReferenceContactDetails
+    )
 
 object SensitiveRequestReferenceNumberDetails:
 

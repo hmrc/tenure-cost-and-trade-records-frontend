@@ -23,27 +23,28 @@ import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
+class ConnectionToThePropertyControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
 
   def connectionToThePropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ): ConnectionToThePropertyController = ConnectionToThePropertyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    connectedToPropertyNavigator,
-    connectionToThePropertyView,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-    mockSessionRepo
-  )
+  ): ConnectionToThePropertyController =
+    ConnectionToThePropertyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      connectedToPropertyNavigator,
+      connectionToThePropertyView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200 and HTML with connection to the property in session" in {
@@ -86,7 +87,7 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = connectionToThePropertyController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody("connectionToTheProperty" -> "occupierTrustee")
       )
@@ -94,7 +95,7 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  "connection to property form" should {
+  "Connection to property form" should {
     "error if isRelated is missing" in {
       val formData = baseFormData - errorKey.connectionToTheProperty
       val form     = connectionToThePropertyForm.bind(formData)
@@ -103,15 +104,12 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val connectionToTheProperty = "connectionToTheProperty"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "connectionToTheProperty" -> "ownerTrustee"
     )
-  }
-}

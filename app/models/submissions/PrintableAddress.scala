@@ -21,7 +21,7 @@ import uk.gov.hmrc.govukfrontend.views.Aliases
 /**
   * @author Yuriy Tumakha
   */
-trait PrintableAddress {
+trait PrintableAddress:
 
   def buildingNameNumber: String
 
@@ -45,8 +45,6 @@ trait PrintableAddress {
   def singleLine: String = addressLines.mkString(", ")
 
   def multiLine: String = addressLines.mkString("<br/> ")
-
-}
 
 object PrintableAddress extends Aliases:
 

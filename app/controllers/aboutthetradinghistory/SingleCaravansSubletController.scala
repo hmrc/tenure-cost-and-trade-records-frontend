@@ -40,7 +40,7 @@ class SingleCaravansSubletController @Inject() (
   @Named("session") val session: SessionRepo,
   mcc: MessagesControllerComponents,
   audit: Audit
-) extends CaravansTrading6045Controller(SingleCaravansSublet, mcc, audit) {
+) extends CaravansTrading6045Controller(SingleCaravansSublet, mcc, audit):
 
   def getSavedAnswer: TurnoverSection6045 => Option[CaravansTrading6045] =
     _.singleCaravansSublet
@@ -49,5 +49,3 @@ class SingleCaravansSubletController @Inject() (
     caravansTrading6045: CaravansTrading6045
   ): TurnoverSection6045 => TurnoverSection6045 =
     _.copy(singleCaravansSublet = Some(caravansTrading6045))
-
-}

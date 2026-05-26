@@ -22,17 +22,17 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String] {
+class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String]:
 
-  val messageKeyPrefix = "batteriesCapacity"
+  private val messageKeyPrefix = "batteriesCapacity"
 
   override val form: Form[String] = BatteriesCapacityForm.batteriesCapacityForm
 
-  def createView: () => Html = () =>
-    batteriesCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => batteriesCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    batteriesCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[String] => Html =
+    form => batteriesCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
 
   "Batteries capacity view" should {
 
@@ -75,4 +75,3 @@ class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

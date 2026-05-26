@@ -24,6 +24,5 @@ case class ConcessionBusinessDetails(
   howBusinessPropertyIsUsed: String
 )
 
-object ConcessionBusinessDetails {
+object ConcessionBusinessDetails:
   implicit val format: OFormat[ConcessionBusinessDetails] = Json.format
-}

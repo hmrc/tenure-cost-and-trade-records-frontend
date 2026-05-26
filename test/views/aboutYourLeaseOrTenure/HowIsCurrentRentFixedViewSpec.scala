@@ -25,7 +25,7 @@ import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
-class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentRentFixed] {
+class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentRentFixed]:
 
   private val messageKeyPrefix = "howIsCurrentRentFixed"
 
@@ -33,8 +33,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
 
   override val form: Form[HowIsCurrentRentFixed] = HowIsCurrentRentFixedForm.howIsCurrentRentFixedForm(using messages)
 
-  private val backLink =
-    controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
+  private val backLink = controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
 
   private def createView = () =>
     howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
@@ -45,7 +44,7 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
   private def createViewUsingForm = (form: Form[HowIsCurrentRentFixed]) =>
     howIsCurrentRentFixedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "How is current rennt fixed view" must {
+  "How is current rennt fixed view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -162,4 +161,3 @@ class HowIsCurrentRentFixedViewSpec extends QuestionViewBehaviours[HowIsCurrentR
       assert(doc.toString.contains(messages("help.rentActuallyAgreed.p2")))
     }
   }
-}

@@ -22,7 +22,7 @@ import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object GrossReceiptsSubLetUnitsForm {
+object GrossReceiptsSubLetUnitsForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[GrossReceiptsSubLetUnits] =
     mapping(
@@ -30,11 +30,7 @@ object GrossReceiptsSubLetUnitsForm {
       "numberOfUnits" -> nonNegativeNumberWithYear("subLetUnits.numberOfUnits", year)
     )(GrossReceiptsSubLetUnits.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def grossReceiptsSubLetUnitsForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[GrossReceiptsSubLetUnits]] =
-    Form {
+  def grossReceiptsSubLetUnitsForm(years: Seq[String])(using messages: Messages): Form[Seq[GrossReceiptsSubLetUnits]] =
+    Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
-    }
-}
+    )

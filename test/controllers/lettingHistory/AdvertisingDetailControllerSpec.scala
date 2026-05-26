@@ -34,7 +34,7 @@ import scala.language.implicitConversions
 class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
 
   "the AdvertisingDetail controller" when {
-    "the user session is fresh"                        should {
+    "the user session is fresh" should {
       "be handling GET /detail by replying 200 with the form showing name and address fields" in new ControllerFixture {
         val result: Future[Result] = controller.show(None)(fakeGetRequest)
         status(result)            shouldBe OK
@@ -46,6 +46,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         page.input("websiteAddress")          should beEmpty
         page.input("propertyReferenceNumber") should beEmpty
       }
+
       "be handling good POST /detail by replying 303 redirect to the 'Advertising Online List' page" in new ControllerFixture {
         val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "websiteAddress"          -> "123.uk",
@@ -63,7 +64,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
       }
     }
     "the user session is stale" when {
-      "regardless of the given number residents"                              should {
+      "regardless of the given number residents" should {
         "be handling GET /detail?index=0 by replying 200 with the form pre-filled values" in new ControllerFixture(
           oneAdvertising
         ) {
@@ -75,6 +76,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           page.input("websiteAddress") should haveValue("123.com")
 
         }
+
         "be handling POST by replying 303 redirect to 'Advertising Online List' page" in new ControllerFixture(
           oneAdvertising
         ) {
@@ -92,6 +94,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           onlineAdvertising(data)(1).websiteAddress          shouldBe "test.pl"
           onlineAdvertising(data)(1).propertyReferenceNumber shouldBe "1234ref"
         }
+
         "be handling POST duplicate entry by replying 400" in new ControllerFixture(
           oneAdvertising
         ) {
@@ -105,11 +108,12 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           val page: Document = contentAsJsoup(result)
           page.error("duplicate") shouldBe "lettingHistory.advertisingDetail.duplicate"
         }
+
         "be handling POST /detail?overwrite by replying 303 redirect to 'Advertising Online List' page" in new ControllerFixture(
-          twoAdvertisings
+          twoAdvertising
         ) {
           val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
-            "websiteAddress"          -> twoAdvertisings.last.websiteAddress,
+            "websiteAddress"          -> twoAdvertising.last.websiteAddress,
             "propertyReferenceNumber" -> "otherReference123"
           )
           val result: Future[Result]                           = controller.submit(None)(request)
@@ -122,9 +126,10 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           onlineAdvertising(data)(1).propertyReferenceNumber shouldBe "aaa456"
         }
       }
+
       "and the maximum number of advertising online details has been reached" should {
         "be handling GET /detail by replying 303 redirect to the 'Advertising Online List' page" in new ControllerFixture(
-          fiveAdvertisings
+          fiveAdvertising
         ) {
           val result: Future[Result] = controller.show(maybeIndex = None)(fakeGetRequest)
           status(result)                 shouldBe SEE_OTHER
@@ -132,6 +137,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         }
       }
     }
+
     "regardless of what the user might have submitted" should {
       "be handling invalid POST /detail by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(None)(

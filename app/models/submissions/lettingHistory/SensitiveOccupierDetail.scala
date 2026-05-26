@@ -35,9 +35,11 @@ case class SensitiveOccupierDetail(
     )
 
 object SensitiveOccupierDetail:
+
   import crypto.MongoCrypto
   import crypto.SensitiveFormats.sensitiveStringFormat
   import play.api.libs.json.{Format, Json}
+
   implicit def format(using crypto: MongoCrypto): Format[SensitiveOccupierDetail] = Json.format
 
   // encryption method

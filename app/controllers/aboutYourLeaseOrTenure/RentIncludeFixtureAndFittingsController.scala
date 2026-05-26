@@ -47,17 +47,17 @@ class RentIncludeFixtureAndFittingsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeFixtureAndFittings")
 
     Ok(
       rentIncludeFixtureAndFittingsView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings) match
           case Some(answer) => rentIncludeFixturesAndFittingsForm.fill(answer)
           case _            => rentIncludeFixturesAndFittingsForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -75,42 +75,31 @@ class RentIncludeFixtureAndFittingsController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData =
           updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeFixturesAndFittings = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentFixtureAndFittingsPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
-  private def getBackLink(answers: Session): String = {
-
+  private def getBackLink(answers: Session): String =
     val index = answers.aboutLeaseOrAgreementPartThree.map(_.servicesPaidIndex).getOrElse(0)
 
-    answers.forType match {
+    answers.forType match
       case FOR6020 =>
-        answers.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.isRentPaidSeparately) match {
+        answers.aboutLeaseOrAgreementPartThree.flatMap(_.carParking).flatMap(_.isRentPaidSeparately) match
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CarParkingAnnualRentController.show().url
           case _               => aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController.show().url
-        }
       case FOR6030 =>
-        answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match {
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
+        answers.aboutLeaseOrAgreementPartThree.flatMap(_.paymentForTradeServices) match
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index).url
           case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
           case _               =>
             logger.warn("Back link for fixture and fittings page reached with unknown payment trade services value")
             controllers.routes.TaskListController.show.url
-        }
       case _       =>
-        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show().url
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
-        }
-    }
-  }
-}

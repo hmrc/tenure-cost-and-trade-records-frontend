@@ -57,29 +57,14 @@ class VacantPropertiesController @Inject() (
         isPropertyVacant      <- stillConnectedDetails.isPropertyVacant
       yield theForm.fill(isPropertyVacant)
 
-    Ok(
-      theView(
-        filledForm.getOrElse(freshForm),
-        calculateBackLink,
-        request.sessionData.toSummary,
-        isReadOnly
-      )
-    )
+    Ok(theView(filledForm.getOrElse(freshForm), calculateBackLink, request.sessionData.toSummary, isReadOnly))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(
-            formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary,
-            isReadOnly
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(theView(formWithErrors, calculateBackLink, request.sessionData.toSummary, isReadOnly)),
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(isPropertyVacant = Some(data)))
         repo
           .saveOrUpdate(updatedData)
@@ -95,17 +80,14 @@ class VacantPropertiesController @Inject() (
               .getOrElse(navigator.nextWithoutRedirectToCYA(VacantPropertiesPageId, updatedData).apply(updatedData))
           )
           .map(Redirect)
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case "TL"  => controllers.routes.TaskListController.show.url + "#vacant-properties"
       case _     =>
-        request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+        request.sessionData.stillConnectedDetails.flatMap(_.addressConnectionType) match
           case Some(AddressConnectionTypeYesChangeAddress) => routes.EditAddressController.show().url
           case _                                           => routes.AreYouStillConnectedController.show().url
-        }
-    }

@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class StaffCostsControllerSpec extends TestBaseSpec {
+class StaffCostsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -98,7 +98,6 @@ class StaffCostsControllerSpec extends TestBaseSpec {
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       )
     }
-
   }
 
   "SUBMIT /" should {
@@ -107,5 +106,3 @@ class StaffCostsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

@@ -17,7 +17,7 @@
 package form.lettingHistory
 
 import controllers.lettingHistory.RentalPeriodSupport
-import form.DateMappings.requiredDateMapping as requiredDate
+import form.DateMappings.requiredDateMapping
 import play.api.data.Form
 import play.api.data.Forms.single
 import play.api.i18n.Messages
@@ -27,8 +27,8 @@ import java.time.LocalDate
 object WhenWasLastLetForm extends Object with RentalPeriodSupport:
 
   def theForm(using messages: Messages): Form[LocalDate] =
-    Form[LocalDate](
+    Form(
       single(
-        "date" -> requiredDate(fieldNameKey = "lettingHistory.date", allowPastDates = true)
+        "date" -> requiredDateMapping(fieldNameKey = "lettingHistory.date", allowPastDates = true)
       )
     )

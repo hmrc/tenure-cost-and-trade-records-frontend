@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class TentingPitchesTotalControllerSpec extends TestBaseSpec {
+class TentingPitchesTotalControllerSpec extends TestBaseSpec:
 
   import utils.FormBindingTestAssertions.*
 
@@ -32,14 +32,15 @@ class TentingPitchesTotalControllerSpec extends TestBaseSpec {
 
   def tentingPitchesTotalController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
-  ): TentingPitchesTotalController = TentingPitchesTotalController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    tentingPitchesTotalView,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo
-  )
+  ): TentingPitchesTotalController =
+    TentingPitchesTotalController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      tentingPitchesTotalView,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo
+    )
 
   "TentingPitchesTotalController GET /" should {
     "return 200 and HTML when data present in session" in {
@@ -63,7 +64,6 @@ class TentingPitchesTotalControllerSpec extends TestBaseSpec {
         controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
       )
     }
-
   }
 
   "TentingPitchesTotalController SUBMIT /" should {
@@ -88,5 +88,3 @@ class TentingPitchesTotalControllerSpec extends TestBaseSpec {
       mustContainError("tentingPitchesTotal", "error.tentingPitchesTotal.missing", form)
     }
   }
-
-}

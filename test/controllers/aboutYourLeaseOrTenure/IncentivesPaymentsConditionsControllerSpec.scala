@@ -23,22 +23,23 @@ import play.api.test.*
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
+class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def incentivesPaymentsConditionsController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): IncentivesPaymentsConditionsController = IncentivesPaymentsConditionsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    incentivesPaymentsConditionsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-    mockSessionRepo
-  )
+  ): IncentivesPaymentsConditionsController =
+    IncentivesPaymentsConditionsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      incentivesPaymentsConditionsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
 
-  "IncentivesPaymentsConditionsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Incentives Payments Conditions in the session" in {
       val result = incentivesPaymentsConditionsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -59,20 +60,18 @@ class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec {
         controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show().url
       )
     }
-
   }
 
-  "IncentivesPaymentsConditionsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = incentivesPaymentsConditionsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = incentivesPaymentsConditionsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("formerLeaseSurrendered" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
   }
-}

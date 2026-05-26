@@ -44,17 +44,17 @@ class PartsUnavailableController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PartsUnavailable")
 
     Ok(
       view(
-        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match {
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match
           case Some(tiedForGoods) => partsUnavailableForm.fill(tiedForGoods)
           case _                  => partsUnavailableForm
-        },
+        ,
         calculateBackLink,
         request.sessionData.toSummary
       )
@@ -64,32 +64,21 @@ class PartsUnavailableController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       partsUnavailableForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            calculateBackLink,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, calculateBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(partsUnavailable = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PartsUnavailableId, updatedData).apply(updatedData)))
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => s"${controllers.routes.TaskListController.show.url}#family-usage"
       case _     =>
-        if (request.sessionData.isWelsh) {
+        if request.sessionData.isWelsh then
           controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url
-        } else {
+        else
           controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show().url
-        }
-    }
-}

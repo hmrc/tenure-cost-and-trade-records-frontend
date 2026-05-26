@@ -57,8 +57,7 @@ class PastConnectionController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       pastConnectionForm,
-      formWithErrors =>
-        BadRequest(pastConnectionView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
+      formWithErrors => BadRequest(pastConnectionView(formWithErrors, request.sessionData.toSummary, calculateBackLink)),
       data =>
         val updatedData = updateRemoveConnectionDetails(_.copy(pastConnectionType = Some(data)))
         session

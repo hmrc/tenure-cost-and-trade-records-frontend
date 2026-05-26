@@ -27,22 +27,23 @@ import utils.TestBaseSpec
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit.DAYS
 
-class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
+class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def tenancyLeaseAgreementExpireController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): TenancyLeaseAgreementExpireController = TenancyLeaseAgreementExpireController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    tenantsLeaseAgreementExpireView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-    mockSessionRepo
-  )
+  ): TenancyLeaseAgreementExpireController =
+    TenancyLeaseAgreementExpireController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      tenantsLeaseAgreementExpireView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
 
-  "TenancyLeaseAgreementExpireController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Tenancy Lease Agreement Expire in the session" in {
       val result = tenancyLeaseAgreementExpireController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -86,26 +87,25 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec {
         Option(html.getElementById("tenancyLeaseAgreementExpire.year").`val`()).value  shouldBe "2022"
       }
     }
+  }
 
-    "TenancyLeaseAgreementExpireController SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = tenancyLeaseAgreementExpireController().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = tenancyLeaseAgreementExpireController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data rentOpenMarketValue submitted" in {
-        val tomorrow = LocalDate.now().plus(1, DAYS)
-        val res      = tenancyLeaseAgreementExpireController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "tenancyLeaseAgreementExpire.day"   -> tomorrow.getDayOfMonth.toString,
-            "tenancyLeaseAgreementExpire.month" -> tomorrow.getMonthValue.toString,
-            "tenancyLeaseAgreementExpire.year"  -> tomorrow.getYear.toString
-          )
+    "redirect when form data rentOpenMarketValue submitted" in {
+      val tomorrow = LocalDate.now().plus(1, DAYS)
+      val res      = tenancyLeaseAgreementExpireController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "tenancyLeaseAgreementExpire.day"   -> tomorrow.getDayOfMonth.toString,
+          "tenancyLeaseAgreementExpire.month" -> tomorrow.getMonthValue.toString,
+          "tenancyLeaseAgreementExpire.year"  -> tomorrow.getYear.toString
         )
-        status(res) shouldBe SEE_OTHER
-      }
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
-}

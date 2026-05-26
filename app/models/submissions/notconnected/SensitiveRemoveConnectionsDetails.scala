@@ -22,21 +22,24 @@ import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 
+import scala.language.implicitConversions
+
 case class SensitiveRemoveConnectionsDetails(
   removeConnectionFullName: SensitiveString,
   removeConnectionDetails: SensitiveContactDetails,
   removeConnectionAdditionalInfo: Option[String]
-) extends Sensitive[RemoveConnectionsDetails] {
+) extends Sensitive[RemoveConnectionsDetails]:
 
   override def decryptedValue: RemoveConnectionsDetails = RemoveConnectionsDetails(
     removeConnectionFullName.decryptedValue,
     removeConnectionDetails.decryptedValue,
     removeConnectionAdditionalInfo
   )
-}
 
-object SensitiveRemoveConnectionsDetails {
-  import crypto.SensitiveFormats._
+object SensitiveRemoveConnectionsDetails:
+
+  import crypto.SensitiveFormats.*
+
   implicit def format(using crypto: MongoCrypto): OFormat[SensitiveRemoveConnectionsDetails] = Json.format
 
   def apply(removeConnectionsDetails: RemoveConnectionsDetails): SensitiveRemoveConnectionsDetails =
@@ -45,4 +48,3 @@ object SensitiveRemoveConnectionsDetails {
       SensitiveContactDetails(removeConnectionsDetails.removeConnectionDetails),
       removeConnectionsDetails.removeConnectionAdditionalInfo
     )
-}

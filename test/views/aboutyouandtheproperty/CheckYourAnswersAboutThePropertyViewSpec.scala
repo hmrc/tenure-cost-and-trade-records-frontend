@@ -23,7 +23,7 @@ import models.submissions.common.CheckYourAnswersAndConfirm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm] {
+class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm]:
 
   private val messageKeyPrefix = "checkYourAnswersAboutTheProperty"
 
@@ -69,7 +69,7 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
   private def createViewUsingForm = (form: Form[CheckYourAnswersAndConfirm]) =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  "Check Your Answers About The Property view" must {
+  "Check Your Answers About The Property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -86,51 +86,46 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
       val loginButton = doc.getElementById("continue-button").text()
       assert(loginButton == messages("button.continue.label"))
     }
-    "Answers About The Property component for 6020 type" must {
+  }
 
-      "render the view correctly" in {
-        val doc = asDocument(createView6020())
-        doc.text()    should include(messages("checkYourAnswersAboutTheProperty.propertyUsage"))
-        doc.text() shouldNot include(messages("checkYourAnswersAboutTheProperty.hasWebsite"))
-      }
-    }
-    "Answers About The Property component for 6030 type" must {
-
-      "render the view correctly" in {
-        val doc = asDocument(createView6030())
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.charity"))
-      }
-    }
-
-    "Answers About The Property component for 6048 type" must {
-
-      "render the view correctly" in {
-        val doc = asDocument(createView6048())
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.firstAvailable"))
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.availabilityCommercial"))
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.completedCommercial"))
-      }
-    }
-
-    "Answers About The Property component for 6048 type Welsh" must {
-
-      "render the view correctly" in {
-        val doc = asDocument(createView6048Welsh())
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.firstAvailable"))
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.availabilityCommercial"))
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.completedCommercial"))
-      }
-    }
-
-    "Answers About The Property component for 6076 type" must {
-
-      "render the h2 headers in component correctly" in {
-        val doc = asDocument(createView6076())
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.aboutYou.heading"))
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.aboutProperty.technologyType"))
-        doc.text() should include(messages("checkYourAnswersAboutTheProperty.aboutProperty.siteConstructionDtls"))
-      }
-
+  "Answers About The Property component for 6020 type" should {
+    "render the view correctly" in {
+      val doc = asDocument(createView6020())
+      doc.text()    should include(messages("checkYourAnswersAboutTheProperty.propertyUsage"))
+      doc.text() shouldNot include(messages("checkYourAnswersAboutTheProperty.hasWebsite"))
     }
   }
-}
+
+  "Answers About The Property component for 6030 type" should {
+    "render the view correctly" in {
+      val doc = asDocument(createView6030())
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.charity"))
+    }
+  }
+
+  "Answers About The Property component for 6048 type" should {
+    "render the view correctly" in {
+      val doc = asDocument(createView6048())
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.firstAvailable"))
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.availabilityCommercial"))
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.completedCommercial"))
+    }
+  }
+
+  "Answers About The Property component for 6048 type Welsh" should {
+    "render the view correctly" in {
+      val doc = asDocument(createView6048Welsh())
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.firstAvailable"))
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.availabilityCommercial"))
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.completedCommercial"))
+    }
+  }
+
+  "Answers About The Property component for 6076 type" should {
+    "render the h2 headers in component correctly" in {
+      val doc = asDocument(createView6076())
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.aboutYou.heading"))
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.aboutProperty.technologyType"))
+      doc.text() should include(messages("checkYourAnswersAboutTheProperty.aboutProperty.siteConstructionDtls"))
+    }
+  }

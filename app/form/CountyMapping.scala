@@ -19,21 +19,17 @@ package form
 import play.api.data.Forms.text
 import play.api.data.Mapping
 
-object CountyMapping {
+object CountyMapping:
 
-  def validateCounty: Mapping[String] = {
+  private val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
 
-    val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
+  private def validCountyLength(county: String) = county.length <= 50
 
-    def validCountyLength(county: String) = county.length <= 50
-
+  def validateCounty: Mapping[String] =
     text
-      .verifying(Errors.addressCountyRequired, county => county.nonEmpty)
+      .verifying(Errors.addressCountyRequired, _.nonEmpty)
       .verifying(Errors.addressCountyLength, county => if county.nonEmpty then validCountyLength(county) else true)
       .verifying(
         Errors.invalidCharAddressCounty,
         county => if county.nonEmpty && validCountyLength(county) then county.matches(invalidCharRegex) else true
       )
-  }
-
-}

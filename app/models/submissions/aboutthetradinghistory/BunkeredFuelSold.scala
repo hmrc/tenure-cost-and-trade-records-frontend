@@ -25,6 +25,5 @@ case class BunkeredFuelSold(
   fuelPerLiter: Option[BigDecimal]
 )
 
-object BunkeredFuelSold {
+object BunkeredFuelSold:
   implicit val format: OFormat[BunkeredFuelSold] = Json.format
-}

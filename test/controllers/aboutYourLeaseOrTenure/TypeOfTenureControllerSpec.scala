@@ -23,14 +23,12 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TypeOfTenureControllerSpec extends TestBaseSpec {
+class TypeOfTenureControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def typeOfTenureController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
   ): TypeOfTenureController =
     TypeOfTenureController(
       stubMessagesControllerComponents(),
@@ -41,7 +39,7 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "TypeOfTenureController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Type of Tenure in the session" in {
       val result = typeOfTenureController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -69,16 +67,15 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
     }
   }
 
-  "TypeOfTenureController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = typeOfTenureController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = typeOfTenureController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "typeOfTenure[0]"     -> "leasehold",
@@ -97,4 +94,3 @@ class TypeOfTenureControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

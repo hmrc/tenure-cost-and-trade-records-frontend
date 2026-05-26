@@ -22,12 +22,11 @@ import models.submissions.aboutthetradinghistory.StaffCosts
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class StaffCostsViewSpec extends QuestionViewBehaviours[Seq[StaffCosts]] {
+class StaffCostsViewSpec extends QuestionViewBehaviours[Seq[StaffCosts]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
-  val form: Form[Seq[StaffCosts]] =
-    StaffCostsForm.staffCostsForm(Seq("2026", "2025", "2024"))(using messages)
+  val form: Form[Seq[StaffCosts]] = StaffCostsForm.staffCostsForm(Seq("2026", "2025", "2024"))(using messages)
 
   private def createView = () => staffCostsView(form, "")(using sessionRequest, messages)
 
@@ -54,5 +53,3 @@ class StaffCostsViewSpec extends QuestionViewBehaviours[Seq[StaffCosts]] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

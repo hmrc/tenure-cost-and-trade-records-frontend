@@ -21,7 +21,7 @@ import models.submissions.requestReferenceNumber.RequestReferenceNumberContactDe
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[RequestReferenceNumberContactDetails] {
+class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[RequestReferenceNumberContactDetails]:
 
   private val messageKeyPrefix = "requestReferenceNumberContactDetails"
 
@@ -32,7 +32,7 @@ class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[Re
   private def createViewUsingForm = (form: Form[RequestReferenceNumberContactDetails]) =>
     requestReferenceNumberContactDetailsView(form)(using fakeRequest, messages)
 
-  "No reference number view" must {
+  "No reference number view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -75,4 +75,3 @@ class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[Re
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

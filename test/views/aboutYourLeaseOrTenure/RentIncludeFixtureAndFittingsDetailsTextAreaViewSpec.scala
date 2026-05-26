@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewBehaviours[String] {
+class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "describeFittingsTextArea"
 
@@ -34,7 +34,7 @@ class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewB
   private def createViewUsingForm = (form: Form[String]) =>
     rentIncludeFixtureAndFittingsDetailsTextAreaView(form, Summary("99996076001"))(using fakeRequest, messages)
 
-  "Fixture and fittings details" must {
+  "Fixture and fittings details" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -58,4 +58,3 @@ class RentIncludeFixtureAndFittingsDetailsTextAreaViewSpec extends QuestionViewB
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

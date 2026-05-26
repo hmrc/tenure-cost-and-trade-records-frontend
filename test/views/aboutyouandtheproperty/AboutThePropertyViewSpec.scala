@@ -25,27 +25,27 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
+class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails]:
 
-  val messageKeyPrefix = "aboutProperty"
+  private val messageKeyPrefix = "aboutProperty"
 
-  val backLink: String = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
+  private val backLink: String = controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
 
   override val form: Form[PropertyDetails] = AboutThePropertyForm.aboutThePropertyForm
 
-  def createView: () => Html = () =>
+  private def createView: () => Html = () =>
     aboutThePropertyView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
+  private def createViewUsingForm: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
     aboutThePropertyView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createView6015: () => Html = () =>
+  private def createView6015: () => Html = () =>
     aboutThePropertyView(form, FOR6015, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  def createViewUsingForm6015: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
+  private def createViewUsingForm6015: Form[PropertyDetails] => Html = (form: Form[PropertyDetails]) =>
     aboutThePropertyView(form, FOR6015, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  "About the property view" must {
+  "About the property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -172,7 +172,7 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
     }
   }
 
-  "About the property view 6015" must {
+  "About the property view 6015" should {
 
     behave like normalPage(createView6015, messageKeyPrefix)
 
@@ -262,4 +262,3 @@ class AboutThePropertyViewSpec extends QuestionViewBehaviours[PropertyDetails] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

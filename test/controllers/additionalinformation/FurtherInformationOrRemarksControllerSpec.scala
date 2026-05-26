@@ -23,31 +23,33 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
+class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def furtherInformationOrRemarksController(
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
-  ): FurtherInformationOrRemarksController = FurtherInformationOrRemarksController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    additionalInformationNavigator,
-    furtherInformationOrRemarksView,
-    preEnrichedActionRefiner(additionalInformation = additionalInformation),
-    mockSessionRepo
-  )
+  ): FurtherInformationOrRemarksController =
+    FurtherInformationOrRemarksController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      additionalInformationNavigator,
+      furtherInformationOrRemarksView,
+      preEnrichedActionRefiner(additionalInformation = additionalInformation),
+      mockSessionRepo
+    )
 
   def furtherInformationOrRemarksControllerEmpty(
     additionalInformation: Option[AdditionalInformation] = None
-  ): FurtherInformationOrRemarksController = FurtherInformationOrRemarksController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    additionalInformationNavigator,
-    furtherInformationOrRemarksView,
-    preEnrichedActionRefiner(additionalInformation = additionalInformation),
-    mockSessionRepo
-  )
+  ): FurtherInformationOrRemarksController =
+    FurtherInformationOrRemarksController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      additionalInformationNavigator,
+      furtherInformationOrRemarksView,
+      preEnrichedActionRefiner(additionalInformation = additionalInformation),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
@@ -88,6 +90,4 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec {
       )
       status(result) shouldBe SEE_OTHER
     }
-
   }
-}

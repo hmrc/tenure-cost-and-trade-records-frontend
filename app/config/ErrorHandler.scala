@@ -31,7 +31,7 @@ class ErrorHandler @Inject() (
   val messagesApi: MessagesApi
 )(using
   val ec: ExecutionContext
-) extends FrontendErrorHandler {
+) extends FrontendErrorHandler:
 
   def standardErrorTemplate(
     pageTitle: String,
@@ -46,5 +46,3 @@ class ErrorHandler @Inject() (
 
   private def render(template: Request[?] => Html)(using rh: RequestHeader): Future[Html] =
     Future.successful(template(Request(rh, "")))
-
-}

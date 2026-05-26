@@ -19,7 +19,7 @@ package models.submissions.connectiontoproperty
 import models.submissions.common.Address
 import uk.gov.hmrc.govukfrontend.views.Aliases
 
-trait PrintableTenantDetails {
+trait PrintableTenantDetails:
 
   def name: String
 
@@ -37,7 +37,6 @@ trait PrintableTenantDetails {
       correspondenceAddress.flatMap(_.county),
       correspondenceAddress.map(_.postcode)
     ).flatten
-}
 
 object PrintableTenantDetails extends Aliases:
 

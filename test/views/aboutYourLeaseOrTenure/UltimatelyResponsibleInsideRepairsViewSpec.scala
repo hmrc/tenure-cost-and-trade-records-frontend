@@ -24,12 +24,11 @@ import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleInsideRepairs] {
+class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[UltimatelyResponsibleInsideRepairs]:
 
   private val messageKeyPrefix = "ultimatelyResponsibleIR"
 
-  override val form: Form[UltimatelyResponsibleInsideRepairs] =
-    UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
+  override val form: Form[UltimatelyResponsibleInsideRepairs] = UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 
   private def createView = () =>
     ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
@@ -37,7 +36,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
   private def createViewUsingForm = (form: Form[UltimatelyResponsibleInsideRepairs]) =>
     ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Ultimately responsible view" must {
+  "Ultimately responsible view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -138,4 +137,3 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

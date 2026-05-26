@@ -24,13 +24,13 @@ import utils.TestBaseSpec
 
 import scala.concurrent.ExecutionContext
 
-class AdditionalInformationNavigatorSpec extends TestBaseSpec {
+class AdditionalInformationNavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
 
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
-  val navigator: AdditionalInformationNavigator = AdditionalInformationNavigator(audit)
+  private val navigator: AdditionalInformationNavigator = AdditionalInformationNavigator(audit)
 
   "Additional information navigator" when {
 
@@ -70,4 +70,3 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec {
       )
     }
   }
-}

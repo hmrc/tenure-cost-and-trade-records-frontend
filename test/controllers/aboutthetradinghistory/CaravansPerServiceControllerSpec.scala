@@ -22,13 +22,12 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class CaravansPerServiceControllerSpec extends TestBaseSpec {
+class CaravansPerServiceControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   private val previousPage = aboutthetradinghistory.routes.CaravansTotalSiteCapacityController.show().url
-
-  private val nextPage = aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.CaravansAnnualPitchFeeController.show().url
 
   def caravansPerServiceController: CaravansPerServiceController =
     CaravansPerServiceController(
@@ -57,7 +56,6 @@ class CaravansPerServiceControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include "/check-your-answers-about-the-trading-history"
-
     }
 
     "render back link to CYA if come from CYA" in {
@@ -108,5 +106,3 @@ class CaravansPerServiceControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

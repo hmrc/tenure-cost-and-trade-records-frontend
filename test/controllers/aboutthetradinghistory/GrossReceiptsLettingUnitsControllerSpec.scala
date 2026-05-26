@@ -23,11 +23,10 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
+class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec:
 
   private val previousPage = aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
-
-  private val nextPage = aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url
 
   val mockAudit: Audit = mock[Audit]
 
@@ -108,5 +107,3 @@ class GrossReceiptsLettingUnitsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

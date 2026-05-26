@@ -23,18 +23,19 @@ import play.api.http.Status
 import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class WhatYouWillNeedControllerSpec extends TestBaseSpec {
+class WhatYouWillNeedControllerSpec extends TestBaseSpec:
 
-  def whatYouWillNeedController(forType: ForType = FOR6010): WhatYouWillNeedController = WhatYouWillNeedController(
-    stubMessagesControllerComponents(),
-    aboutYourTradingHistoryNavigator,
-    whatYouWillNeedView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)
-    ),
-    mockSessionRepo
-  )
+  def whatYouWillNeedController(forType: ForType = FOR6010): WhatYouWillNeedController =
+    WhatYouWillNeedController(
+      stubMessagesControllerComponents(),
+      aboutYourTradingHistoryNavigator,
+      whatYouWillNeedView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)
+      ),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
@@ -122,15 +123,10 @@ class WhatYouWillNeedControllerSpec extends TestBaseSpec {
   }
 
   "SUBMIT /" should {
-
     "redirect if a form is submitted" in {
-      val res =
-        whatYouWillNeedController().submit(fakePostRequest.withFormUrlEncodedBody("whatYouWillNeed" -> "confirmed"))
+      val res = whatYouWillNeedController().submit(fakePostRequest.withFormUrlEncodedBody("whatYouWillNeed" -> "confirmed"))
       status(res) shouldBe Status.SEE_OTHER
 
       redirectLocation(res) shouldBe Some(aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show().url)
-
     }
   }
-
-}

@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class GrossReceiptsForBaseLoadControllerSpec extends TestBaseSpec {
+class GrossReceiptsForBaseLoadControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -75,5 +75,3 @@ class GrossReceiptsForBaseLoadControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

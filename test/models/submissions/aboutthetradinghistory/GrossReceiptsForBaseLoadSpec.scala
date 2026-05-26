@@ -19,7 +19,8 @@ package models.submissions.aboutthetradinghistory
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.Json
 
-class GrossReceiptsForBaseLoadSpec extends PlaySpec {
+class GrossReceiptsForBaseLoadSpec extends PlaySpec:
+
   "GrossReceiptsForBaseLoad" should {
     "serialize and deserialize correctly" in {
       val grossReceiptsForBaseLoadSpec = GrossReceiptsForBaseLoad(
@@ -29,7 +30,9 @@ class GrossReceiptsForBaseLoadSpec extends PlaySpec {
         Some(4),
         Some(5)
       )
-      val json                         = Json.toJson(grossReceiptsForBaseLoadSpec: GrossReceiptsForBaseLoad)
+
+      val json = Json.toJson(grossReceiptsForBaseLoadSpec: GrossReceiptsForBaseLoad)
+
       json.as[GrossReceiptsForBaseLoad] mustBe grossReceiptsForBaseLoadSpec
     }
 
@@ -44,4 +47,3 @@ class GrossReceiptsForBaseLoadSpec extends PlaySpec {
       grossReceiptsForBaseLoadSpec.total mustBe 15
     }
   }
-}

@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
+class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec:
 
   "About franchise or lettings identifiers" when {
 
@@ -36,6 +36,7 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for concession type  details received page" in
       assert(ConcessionTypeDetailsId.toString.equals("concessionTypeDetailsPage"))
+
     "Identifier for concession type  fee received page" in
       assert(ConcessionTypeFeesId.toString.equals("concessionTypeFeesPage"))
 
@@ -70,4 +71,3 @@ class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec {
       assert(CheckYourAnswersAboutFranchiseOrLettingsId.toString.equals("checkYourAnswersAboutFranchiseOrLettingsPage"))
 
   }
-}

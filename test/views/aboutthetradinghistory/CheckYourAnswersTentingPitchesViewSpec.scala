@@ -20,28 +20,26 @@ import actions.SessionRequest
 import form.aboutthetradinghistory.CheckYourAnswersTentingPitchesForm
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.AnyContent
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersTentingPitchesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CheckYourAnswersTentingPitchesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "cYa.touringAndTentingPitches"
+  private val messageKeyPrefix = "cYa.touringAndTentingPitches"
 
-  override val form: Form[AnswersYesNo] =
-    CheckYourAnswersTentingPitchesForm.checkYourAnswersTentingPitchesForm
+  override val form: Form[AnswersYesNo] = CheckYourAnswersTentingPitchesForm.checkYourAnswersTentingPitchesForm
 
-  val backLink: String = controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show().url
+  private val backLink: String = controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show().url
 
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] =
-    SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  def createView: () => Html = () => checkYourAnswersTentingPitches(form, backLink)(using sessionRequest, messages)
+  private def createView: () => Html = () => checkYourAnswersTentingPitches(form, backLink)(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html =
-    (form: Form[AnswersYesNo]) => checkYourAnswersTentingPitches(form, backLink)(using sessionRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => checkYourAnswersTentingPitches(form, backLink)(using sessionRequest, messages)
 
-  "Check Your Answers Additional Activities view" must {
+  "Check Your Answers Additional Activities view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -52,6 +50,7 @@ class CheckYourAnswersTentingPitchesViewSpec extends QuestionViewBehaviours[Answ
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show().url
     }
+
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
@@ -64,4 +63,3 @@ class CheckYourAnswersTentingPitchesViewSpec extends QuestionViewBehaviours[Answ
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

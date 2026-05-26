@@ -17,13 +17,12 @@
 package form.aboutfranchisesorlettings
 
 import form.MappingSupport.typeOfLettingMapping
-import models.submissions.aboutfranchisesorlettings.*
+import models.submissions.aboutfranchisesorlettings.TypeOfLetting
 import play.api.data.Form
 
-object TypeOfLettingForm {
+object TypeOfLettingForm:
 
-  val typeOfLettingForm: Form[TypeOfLetting] = Form(
-    "typeOfLetting" -> typeOfLettingMapping
-  )
-
-}
+  val typeOfLettingForm: Form[TypeOfLetting] =
+    Form(
+      "typeOfLetting" -> typeOfLettingMapping
+    )

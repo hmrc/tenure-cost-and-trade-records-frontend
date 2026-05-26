@@ -19,14 +19,13 @@ package form
 import play.api.data.Forms.text
 import play.api.data.Mapping
 
-object TownMapping {
+object TownMapping:
 
-  def validateTown: Mapping[String] = {
+  private val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
 
-    val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
+  private def validTownLength(town: String) = town.length <= 50
 
-    def validTownLength(town: String) = town.length <= 50
-
+  def validateTown: Mapping[String] =
     text
       .verifying(Errors.addressTownCityRequired, town => town.nonEmpty)
       .verifying(Errors.addressTownLength, town => if town.nonEmpty then validTownLength(town) else true)
@@ -34,6 +33,3 @@ object TownMapping {
         Errors.invalidCharAddressTownCity,
         town => if town.nonEmpty && validTownLength(town) then town.matches(invalidCharRegex) else true
       )
-  }
-
-}

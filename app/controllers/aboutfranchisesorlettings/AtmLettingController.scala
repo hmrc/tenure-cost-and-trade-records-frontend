@@ -57,10 +57,9 @@ class AtmLettingController @Inject() (
         lettings                  <- aboutFranchisesOrLettings.lettings
         requestedIndex            <- index
         requestedLetting          <- lettings.lift(requestedIndex)
-        letting                   <- requestedLetting match {
+        letting                   <- requestedLetting match
                                        case letting: ATMLetting => Some(letting)
                                        case _                   => None
-                                     }
       yield theForm.fill(letting)
 
     Ok(
@@ -85,7 +84,7 @@ class AtmLettingController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      formData => {
+      formData =>
         var updatedIndex: Int = -1
         val updatedSession    = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { about =>
           val (updatedLettings, idx) = updateOrAddATMLetting(about.lettings, formData, index)
@@ -107,7 +106,6 @@ class AtmLettingController @Inject() (
                               )
                             )
         yield redirectResult
-      }
     )
   }
 
@@ -115,14 +113,14 @@ class AtmLettingController @Inject() (
     lettingsOpt: Option[IndexedSeq[LettingPartOfProperty]],
     atmLetting: ATMLetting,
     index: Option[Int]
-  ): (IndexedSeq[LettingPartOfProperty], Int) = {
+  ): (IndexedSeq[LettingPartOfProperty], Int) =
     var updatedIndex: Int = -1
-    val updatedLetting    = lettingsOpt match {
+    val updatedLetting    = lettingsOpt match
       case Some(lettings) =>
-        index match {
+        index match
           case Some(idx) if idx < lettings.length =>
             updatedIndex = idx
-            lettings(idx) match {
+            lettings(idx) match
               case existingATM: ATMLetting =>
                 lettings.updated(
                   idx,
@@ -133,17 +131,13 @@ class AtmLettingController @Inject() (
                 )
               case _                       =>
                 lettings.updated(idx, atmLetting)
-            }
           case _                                  =>
             updatedIndex = lettings.length
             lettings :+ atmLetting
-        }
       case None           =>
         updatedIndex = 0
         IndexedSeq(atmLetting)
-    }
     (updatedLetting, updatedIndex)
-  }
 
   def addressLookupCallback(idx: Int, id: String): Action[AnyContent] = (Action andThen withSessionRefiner).async {
     implicit request =>

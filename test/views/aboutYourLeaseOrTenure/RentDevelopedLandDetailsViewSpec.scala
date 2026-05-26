@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentDevelopedLandDetailsViewSpec extends QuestionViewBehaviours[String] {
+class RentDevelopedLandDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "rentDevelopedLandDetails"
 
@@ -32,7 +32,7 @@ class RentDevelopedLandDetailsViewSpec extends QuestionViewBehaviours[String] {
   private def createViewUsingForm = (form: Form[String]) =>
     rentDevelopedLandDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "rented Equipment Details view" must {
+  "rented Equipment Details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -61,4 +61,3 @@ class RentDevelopedLandDetailsViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -17,54 +17,57 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
+import form.aboutyouandtheproperty.EnforcementActionForm.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
+class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import form.aboutyouandtheproperty.EnforcementActionForm.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def enforcementActionBeenTakenController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): EnforcementActionBeenTakenController = EnforcementActionBeenTakenController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    enforcementActionsTakenView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): EnforcementActionBeenTakenController =
+    EnforcementActionBeenTakenController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      enforcementActionsTakenView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def enforcementActionBeenTakenControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): EnforcementActionBeenTakenController = EnforcementActionBeenTakenController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    enforcementActionsTakenView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): EnforcementActionBeenTakenController =
+    EnforcementActionBeenTakenController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      enforcementActionsTakenView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def enforcementActionBeenTakenControllerNone(): EnforcementActionBeenTakenController = EnforcementActionBeenTakenController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    enforcementActionsTakenView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def enforcementActionBeenTakenControllerNone(): EnforcementActionBeenTakenController =
+    EnforcementActionBeenTakenController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      enforcementActionsTakenView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "Enforcement action been taken controller" should {
+  "GET /" should {
     "GET / return 200 enforcement action taken with yes in the session" in {
       val result = enforcementActionBeenTakenController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -98,19 +101,19 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
       )
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = enforcementActionBeenTakenController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = enforcementActionBeenTakenController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = enforcementActionBeenTakenController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("enforcementActionBeenTaken" -> "yes")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+    "Redirect when form data submitted" in {
+      val res = enforcementActionBeenTakenController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("enforcementActionBeenTaken" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
@@ -123,13 +126,10 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val enforcementAction: String = "enforcementActionBeenTaken"
-    }
 
     val baseFormData: Map[String, String] = Map("enforcementActionBeenTaken" -> "yes")
-  }
-}

@@ -24,7 +24,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PayACapitalSumViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PayACapitalSumViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "payACapitalSum"
 
@@ -38,7 +38,7 @@ class PayACapitalSumViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     payACapitalSumView(form, FOR6010, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "capital sum or premium view" must {
+  "capital sum or premium view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -86,4 +86,3 @@ class PayACapitalSumViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

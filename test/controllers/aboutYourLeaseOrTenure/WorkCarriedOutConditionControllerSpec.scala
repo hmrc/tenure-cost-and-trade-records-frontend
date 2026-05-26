@@ -27,26 +27,25 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
+class WorkCarriedOutConditionControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
 
   def workCarriedOutConditionController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): WorkCarriedOutConditionController =
+    WorkCarriedOutConditionController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      workCarriedOutConditionView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo
     )
-  ): WorkCarriedOutConditionController = WorkCarriedOutConditionController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    workCarriedOutConditionView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo
-  )
 
-  "WorkCarriedOutConditionController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Work Carried Out Conditions with yes in the session" in {
       val result = workCarriedOutConditionController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -82,7 +81,7 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
     }
   }
 
-  "WorkCarriedOutConditionController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = workCarriedOutConditionController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -101,7 +100,7 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
       )
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = workCarriedOutConditionController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("workCarriedOutCondition" -> "yes")
       )
@@ -109,15 +108,12 @@ class WorkCarriedOutConditionControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val workCarriedOutCondition: String = "workCarriedOutCondition"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "workCarriedOutCondition" -> "Test content"
     )
-  }
-}

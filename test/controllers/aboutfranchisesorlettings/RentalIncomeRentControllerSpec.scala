@@ -26,10 +26,9 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class RentalIncomeRentControllerSpec extends TestBaseSpec {
+class RentalIncomeRentControllerSpec extends TestBaseSpec:
 
-  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
-    mock[AboutFranchisesOrLettingsNavigator]
+  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
   val mockAudit: Audit                                                           = mock[Audit]
 
   def controller(
@@ -79,12 +78,10 @@ class RentalIncomeRentControllerSpec extends TestBaseSpec {
           Option(html.getElementById("dateInput.day").`val`()).value   shouldBe "1"
           Option(html.getElementById("dateInput.month").`val`()).value shouldBe "1"
           Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2021"
-
         }
       }
     }
     "render back link to CYA if come from CYA" in {
-
       val result  = controller().show(0)(fakeRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-franchise-or-lettings")
@@ -97,6 +94,7 @@ class RentalIncomeRentControllerSpec extends TestBaseSpec {
       val content        = contentAsString(result)
       content should include("/franchise-type-details?idx=0")
     }
+
     "render a correct back link to letting type details if no query parameters in the url for 6010 " in {
       // letting on index 1
       val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010))
@@ -121,5 +119,3 @@ class RentalIncomeRentControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

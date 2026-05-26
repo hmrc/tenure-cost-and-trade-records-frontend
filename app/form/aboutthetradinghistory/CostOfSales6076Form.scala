@@ -24,7 +24,7 @@ import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object CostOfSales6076Form {
+object CostOfSales6076Form:
 
   private def sumMapping(year: String)(using messages: Messages): Mapping[CostOfSales6076Sum] =
     mapping(
@@ -35,11 +35,11 @@ object CostOfSales6076Form {
       "otherSales"      -> turnoverSalesMappingWithYear("costOfSales6076.otherSales", year)
     )(CostOfSales6076Sum.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def costOfSales6076Mapping(years: Seq[String])(using messages: Messages): Mapping[Seq[CostOfSales6076Sum]] =
+  private def costOfSales6076Mapping(years: Seq[String])(using messages: Messages): Mapping[Seq[CostOfSales6076Sum]] =
     mappingPerYear(years, (year, idx) => s"[$idx]" -> sumMapping(year))
 
   def costOfSales6076Form(years: Seq[String])(using messages: Messages): Form[(Seq[CostOfSales6076Sum], String)] =
-    Form {
+    Form(
       tuple(
         "costOfSales6076"   -> costOfSales6076Mapping(years),
         "otherSalesDetails" -> mandatoryStringIfNonZeroSum(
@@ -49,6 +49,4 @@ object CostOfSales6076Form {
           maxLength(2000, "error.costOfSales6076.otherSalesDetails.maxLength")
         )
       )
-    }
-
-}
+    )

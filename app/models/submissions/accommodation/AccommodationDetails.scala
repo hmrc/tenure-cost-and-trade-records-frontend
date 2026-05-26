@@ -36,20 +36,13 @@ object AccommodationDetails:
   private val initialAccommodationUnit    = AccommodationUnit("", "")
   private val initialAccommodationDetails = AccommodationDetails(List(initialAccommodationUnit))
 
-  def updateAccommodationDetails(
-    copy: AccommodationDetails => AccommodationDetails
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateAccommodationDetails(copy: AccommodationDetails => AccommodationDetails)(using sessionRequest: SessionRequest[?]): Session =
     val accommodationDetails = copy(
       sessionRequest.sessionData.accommodationDetails.getOrElse(initialAccommodationDetails)
     )
     sessionRequest.sessionData.copy(accommodationDetails = Some(accommodationDetails))
 
-  def updateAccommodationUnit(
-    idx: Int,
-    update: AccommodationUnit => AccommodationUnit
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateAccommodationUnit(idx: Int, update: AccommodationUnit => AccommodationUnit)(using sessionRequest: SessionRequest[?]): Session =
     updateAccommodationDetails { accommodationDetails =>
       val accommodationUnits =
         if accommodationDetails.accommodationUnits.size == idx then

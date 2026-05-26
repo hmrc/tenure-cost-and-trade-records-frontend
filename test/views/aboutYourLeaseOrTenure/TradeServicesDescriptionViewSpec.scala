@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TradeServicesDescriptionViewSpec extends QuestionViewBehaviours[String] {
+class TradeServicesDescriptionViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "tradeServiceDescription"
 
@@ -64,4 +64,3 @@ class TradeServicesDescriptionViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -20,6 +20,5 @@ import play.api.libs.json.{Json, OFormat}
 
 case class DownloadPDFAudit(refNum: String, forType: String, url: String)
 
-object DownloadPDFAudit {
+object DownloadPDFAudit:
   implicit val format: OFormat[DownloadPDFAudit] = Json.format
-}

@@ -28,14 +28,12 @@ import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redir
 import test.TestObjects
 import utils.TestBaseSpec
 
-class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects {
+class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects:
 
   val mockAudit: Audit = mock[Audit]
 
   def typeOfIncomeController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
-      prefilledAboutFranchiseOrLettings6045
-    )
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
   ): TypeOfIncomeController =
     TypeOfIncomeController(
       stubMessagesControllerComponents(),
@@ -144,7 +142,6 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects {
   }
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
-
       val res = typeOfIncomeController().submit(Some(0))(
         FakeRequest().withFormUrlEncodedBody()
       )
@@ -217,7 +214,6 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects {
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Option("/send-trade-and-cost-information/max-lettings?src=typeOfIncome")
-
   }
 
   "redirect to MaxOfLettingsReachedController when rental income records exceed the limit for concession" in {
@@ -238,4 +234,3 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects {
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Option("/send-trade-and-cost-information/max-lettings?src=typeOfIncome")
   }
-}

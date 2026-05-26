@@ -19,8 +19,8 @@ package controllers.aboutyouandtheproperty
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.{FORDataCaptureController, toOpt}
+import form.ConfirmableActionForm.confirmableActionForm
 import form.aboutyouandtheproperty.OccupiersDetailsListForm.theForm
-import form.confirmableActionForm.confirmableActionForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo.updateAboutYouAndThePropertyPartTwo
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
@@ -46,46 +46,30 @@ class OccupiersDetailsListController @Inject() (
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OccupiersDetailsList")
 
-    Ok(
-      theListView(
-        theForm,
-        index
-      )
-    )
+    Ok(theListView(theForm, index))
   }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theListView(
-            formWithErrors,
-            index
-          )
-        ),
+      formWithErrors => BadRequest(theListView(formWithErrors, index)),
       formData =>
         request.sessionData.aboutYouAndThePropertyPartTwo
           .map(_.occupiersList)
           .fold[Future[Result]] {
-            if (formData == AnswerYes) {
+            if formData == AnswerYes then
               Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
-            } else {
-              Redirect(
-                navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData)
-              )
-            }
+            else
+              Redirect(navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData))
           } { existingEntries =>
-            if (existingEntries.isEmpty) {
-              Redirect(
-                navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData)
-              )
-            } else {
+            if existingEntries.isEmpty then
+              Redirect(navigator.nextPage(OccupiersDetailsListId, request.sessionData).apply(request.sessionData))
+            else
               val updatedServices = existingEntries.updated(
                 index,
                 existingEntries(index)
@@ -97,13 +81,11 @@ class OccupiersDetailsListController @Inject() (
                 )
               )
               repository.saveOrUpdate(updatedData).map { _ =>
-                if (formData == AnswerYes) {
+                if formData == AnswerYes then
                   Redirect(controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show())
-                } else {
+                else
                   Redirect(navigator.nextPage(OccupiersDetailsListId, updatedData).apply(updatedData))
-                }
               }
-            }
           }
     )
   }
@@ -157,4 +139,3 @@ class OccupiersDetailsListController @Inject() (
       }
     )
   }
-}

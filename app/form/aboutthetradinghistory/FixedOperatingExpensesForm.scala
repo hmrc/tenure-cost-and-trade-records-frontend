@@ -24,20 +24,19 @@ import play.api.i18n.Messages
 
 import java.time.LocalDate
 
-object FixedOperatingExpensesForm {
+object FixedOperatingExpensesForm:
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[FixedOperatingExpenses] = mapping(
-    "financial-year-end" -> ignored(LocalDate.EPOCH),
-    "rent"               -> turnoverSalesMappingWithYear("fixedExpenses.rent", year),
-    "business-rates"     -> turnoverSalesMappingWithYear("fixedExpenses.businessRates", year),
-    "insurance"          -> turnoverSalesMappingWithYear("fixedExpenses.insurance", year),
-    "loan-interest"      -> turnoverSalesMappingWithYear("fixedExpenses.loanInterest", year),
-    "depreciation"       -> turnoverSalesMappingWithYear("fixedExpenses.depreciation", year)
-  )(FixedOperatingExpenses.apply)(o => Some(Tuple.fromProductTyped(o)))
+  private def columnMapping(year: String)(using messages: Messages): Mapping[FixedOperatingExpenses] =
+    mapping(
+      "financial-year-end" -> ignored(LocalDate.EPOCH),
+      "rent"               -> turnoverSalesMappingWithYear("fixedExpenses.rent", year),
+      "business-rates"     -> turnoverSalesMappingWithYear("fixedExpenses.businessRates", year),
+      "insurance"          -> turnoverSalesMappingWithYear("fixedExpenses.insurance", year),
+      "loan-interest"      -> turnoverSalesMappingWithYear("fixedExpenses.loanInterest", year),
+      "depreciation"       -> turnoverSalesMappingWithYear("fixedExpenses.depreciation", year)
+    )(FixedOperatingExpenses.apply)(o => Some(Tuple.fromProductTyped(o)))
 
   def fixedOperatingExpensesForm(years: Seq[String])(using messages: Messages): Form[Seq[FixedOperatingExpenses]] =
-    Form {
+    Form(
       mappingPerYear(years, (year, idx) => s"fixedOperatingExpenses[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

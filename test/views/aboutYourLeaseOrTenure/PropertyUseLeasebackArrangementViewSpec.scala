@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val backLink = controllers.aboutYourLeaseOrTenure.routes.LeaseOrAgreementYearsController.show().url
 
@@ -35,7 +35,7 @@ class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[Ans
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     propertyUseLeasebackArrangementView(form, backLink, "{0}", Summary("99996010001"))(using fakeRequest, messages)
 
-  "property use leaseback arrangement view" must {
+  "property use leaseback arrangement view" should {
 
     "has a link marked with back.link.label leading to pay capital sum Page" in {
       val doc          = asDocument(createView())
@@ -81,4 +81,3 @@ class PropertyUseLeasebackArrangementViewSpec extends QuestionViewBehaviours[Ans
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

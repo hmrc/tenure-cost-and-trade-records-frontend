@@ -45,60 +45,42 @@ case class AboutTheTradingHistoryPartOne(
   areYouVATRegistered: Option[AnswersYesNo] = None
 )
 
-object AboutTheTradingHistoryPartOne {
+object AboutTheTradingHistoryPartOne:
   implicit val format: OFormat[AboutTheTradingHistoryPartOne] = Json.format
 
-  def updateAboutTheTradingHistoryPartOne(
-    copy: AboutTheTradingHistoryPartOne => AboutTheTradingHistoryPartOne
-  )(using sessionRequest: SessionRequest[?]
-  ): Session = {
-
+  def updateAboutTheTradingHistoryPartOne(copy: AboutTheTradingHistoryPartOne => AboutTheTradingHistoryPartOne)(using sessionRequest: SessionRequest[?])
+    : Session =
     val currentAboutTheTradingHistoryPartOne = sessionRequest.sessionData.aboutTheTradingHistoryPartOne
 
-    val updateAboutTheTradingHistoryPartOne = currentAboutTheTradingHistoryPartOne match {
+    val updateAboutTheTradingHistoryPartOne = currentAboutTheTradingHistoryPartOne match
       case Some(_) => sessionRequest.sessionData.aboutTheTradingHistoryPartOne.map(copy)
       case _       => Some(copy(AboutTheTradingHistoryPartOne()))
-    }
 
     sessionRequest.sessionData.copy(aboutTheTradingHistoryPartOne = updateAboutTheTradingHistoryPartOne)
-  }
 
-  def updateCaravans(
-    update: Caravans => Caravans
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateCaravans(update: Caravans => Caravans)(using sessionRequest: SessionRequest[?]): Session =
     updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
       val caravans = update(aboutTheTradingHistoryPartOne.caravans getOrElse Caravans())
       aboutTheTradingHistoryPartOne.copy(caravans = Some(caravans))
     }
 
-  def updateOtherHolidayAccommodation(
-    update: OtherHolidayAccommodation => OtherHolidayAccommodation
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateOtherHolidayAccommodation(update: OtherHolidayAccommodation => OtherHolidayAccommodation)(using sessionRequest: SessionRequest[?]): Session =
     updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
       val otherHolidayAccommodation =
         update(aboutTheTradingHistoryPartOne.otherHolidayAccommodation.getOrElse(OtherHolidayAccommodation()))
       aboutTheTradingHistoryPartOne.copy(otherHolidayAccommodation = Some(otherHolidayAccommodation))
     }
 
-  def updateTouringAndTentingPitches(
-    update: TouringAndTentingPitches => TouringAndTentingPitches
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateTouringAndTentingPitches(update: TouringAndTentingPitches => TouringAndTentingPitches)(using sessionRequest: SessionRequest[?]): Session =
     updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
       val touringAndTentingPitches =
         update(aboutTheTradingHistoryPartOne.touringAndTentingPitches.getOrElse(TouringAndTentingPitches()))
       aboutTheTradingHistoryPartOne.copy(touringAndTentingPitches = Some(touringAndTentingPitches))
     }
 
-  def updateAdditionalActivities(
-    update: AdditionalActivities => AdditionalActivities
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateAdditionalActivities(update: AdditionalActivities => AdditionalActivities)(using sessionRequest: SessionRequest[?]): Session =
     updateAboutTheTradingHistoryPartOne { aboutTheTradingHistoryPartOne =>
       val additionalActivities =
         update(aboutTheTradingHistoryPartOne.additionalActivities.getOrElse(AdditionalActivities()))
       aboutTheTradingHistoryPartOne.copy(additionalActivities = Some(additionalActivities))
     }
-}

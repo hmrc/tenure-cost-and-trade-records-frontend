@@ -22,25 +22,21 @@ import play.api.data.Forms.*
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object GrossReceiptsExcludingVATForm {
+object GrossReceiptsExcludingVATForm:
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[GrossReceiptsExcludingVAT] = mapping(
-    "electricitySales"      -> turnoverSalesMappingWithYear("grossReceipts.electricitySales.sales", year),
-    "feedInTariff"          -> turnoverSalesMappingWithYear("grossReceipts.feedInTariff.sales", year),
-    "rocBuyout"             -> turnoverSalesMappingWithYear("grossReceipts.rocBuyout.sales", year),
-    "rocRecycle"            -> turnoverSalesMappingWithYear("grossReceipts.rocRecycle.sales", year),
-    "contractForDifference" -> turnoverSalesMappingWithYear("grossReceipts.contractForDifference.sales", year),
-    "capacityMarket"        -> turnoverSalesMappingWithYear("grossReceipts.capacityMarket.sales", year),
-    "balancingServices"     -> turnoverSalesMappingWithYear("grossReceipts.balancingServices.sales", year),
-    "embeddedBenefits"      -> turnoverSalesMappingWithYear("grossReceipts.embeddedBenefits.sales", year)
-  )(GrossReceiptsExcludingVAT.apply)(o => Some(Tuple.fromProductTyped(o)))
+  private def columnMapping(year: String)(using messages: Messages): Mapping[GrossReceiptsExcludingVAT] =
+    mapping(
+      "electricitySales"      -> turnoverSalesMappingWithYear("grossReceipts.electricitySales.sales", year),
+      "feedInTariff"          -> turnoverSalesMappingWithYear("grossReceipts.feedInTariff.sales", year),
+      "rocBuyout"             -> turnoverSalesMappingWithYear("grossReceipts.rocBuyout.sales", year),
+      "rocRecycle"            -> turnoverSalesMappingWithYear("grossReceipts.rocRecycle.sales", year),
+      "contractForDifference" -> turnoverSalesMappingWithYear("grossReceipts.contractForDifference.sales", year),
+      "capacityMarket"        -> turnoverSalesMappingWithYear("grossReceipts.capacityMarket.sales", year),
+      "balancingServices"     -> turnoverSalesMappingWithYear("grossReceipts.balancingServices.sales", year),
+      "embeddedBenefits"      -> turnoverSalesMappingWithYear("grossReceipts.embeddedBenefits.sales", year)
+    )(GrossReceiptsExcludingVAT.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def grossReceiptsExcludingVATForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[GrossReceiptsExcludingVAT]] =
-    Form {
+  def grossReceiptsExcludingVATForm(years: Seq[String])(using messages: Messages): Form[Seq[GrossReceiptsExcludingVAT]] =
+    Form(
       mappingPerYear(years, (year, idx) => s"grossReceiptsExcludingVAT[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

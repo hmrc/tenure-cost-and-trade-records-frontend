@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
+class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -35,14 +35,15 @@ class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  ): AdditionalActivitiesOnSiteController = AdditionalActivitiesOnSiteController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    additionalActivitiesOnSiteView,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo
-  )
+  ): AdditionalActivitiesOnSiteController =
+    AdditionalActivitiesOnSiteController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      additionalActivitiesOnSiteView,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo
+    )
 
   "AdditionalActivitiesOnSiteController GET /" should {
     "return 200 and HTML when data present in session" in {
@@ -101,10 +102,7 @@ class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val additionalActivitiesOnSiteErrorKey: String = "additionalActivitiesOnSite"
 
     val baseFormData: Map[String, String] = Map("additionalActivitiesOnSite" -> "yes")
-  }
-
-}

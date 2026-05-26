@@ -42,7 +42,7 @@ class AdditionalShopsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AdditionalShops")
@@ -68,7 +68,7 @@ class AdditionalShopsController @Inject() (
       continueOrSaveAsDraft[Seq[AdditionalShops]](
         additionalShopsForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(additionalShops = Some(data))
           }
@@ -90,7 +90,6 @@ class AdditionalShopsController @Inject() (
                 .apply(updatedData)
             )
           }
-        }
       )
     }
   }
@@ -105,9 +104,6 @@ class AdditionalShopsController @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageForAdditionalActivities.url
       case _     => controllers.aboutthetradinghistory.routes.AdditionalActivitiesOnSiteController.show().url
-    }
-
-}

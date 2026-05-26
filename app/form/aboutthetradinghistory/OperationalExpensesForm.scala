@@ -27,7 +27,7 @@ import play.api.i18n.Messages
 /**
   * @author Yuriy Tumakha
   */
-object OperationalExpensesForm {
+object OperationalExpensesForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[OperationalExpenses] =
     mapping(
@@ -39,18 +39,11 @@ object OperationalExpensesForm {
       "other"          -> turnoverSalesMappingWithYear("turnover.6076.expenses.other", year)
     )(OperationalExpenses.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  private def operationalExpensesSeq(
-    years: Seq[String]
-  )(using
-    messages: Messages
-  ): Mapping[Seq[OperationalExpenses]] =
+  private def operationalExpensesSeq(years: Seq[String])(using messages: Messages): Mapping[Seq[OperationalExpenses]] =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
-  def operationalExpensesForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[(Seq[OperationalExpenses], String)] =
-    Form {
+  def operationalExpensesForm(years: Seq[String])(using messages: Messages): Form[(Seq[OperationalExpenses], String)] =
+    Form(
       tuple(
         "operationalExpensesSeq" -> operationalExpensesSeq(years),
         "otherExpensesDetails"   -> mandatoryStringIfNonZeroSum(
@@ -60,6 +53,4 @@ object OperationalExpensesForm {
           maxLength(2000, "error.turnover.6076.otherExpensesDetails.maxLength")
         )
       )
-    }
-
-}
+    )

@@ -31,7 +31,7 @@ import scala.language.implicitConversions
 class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
 
   "the HasOnlineAdvertising controller" when {
-    "the user session is fresh"                should {
+    "the user session is fresh" should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture(
         isYearlyAvailable = Some(true)
       ) {
@@ -45,6 +45,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveNoneChecked
       }
+
       "be handling POST answer='yes' and reply 303 redirect to the 'OnlineAdvertisingDetail' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
           fakePostRequest.withFormUrlEncodedBody(
@@ -57,7 +58,8 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         hasOnlineAdvertising(data).value shouldBe true
       }
     }
-    "the user has already answered"            should {
+
+    "the user has already answered" should {
       "regardless of the given number of online advertising" should {
         "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
           onlineAdvertising = oneAdvertising
@@ -71,6 +73,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           page.radios("answer")    should haveChecked("yes")
           page.radios("answer") shouldNot haveChecked("no")
         }
+
         "be handling POST answer='yes' and reply 303 redirect to the 'OnlineAdvertisingDetail' page" in new ControllerFixture(
           onlineAdvertising = oneAdvertising
         ) {
@@ -85,8 +88,9 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           hasOnlineAdvertising(data).value shouldBe true
           onlineAdvertising(data)          shouldBe oneAdvertising
         }
+
         "be handling POST answer='no' and reply 303 redirect to the 'CheckYourAnswers' page" in new ControllerFixture(
-          onlineAdvertising = fiveAdvertisings,
+          onlineAdvertising = fiveAdvertising,
           mayHaveMoreOnlineAdvertising = Some(true)
         ) {
           // Answering 'no' will clear out all online advertising
@@ -103,9 +107,10 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           mayHaveMoreEntitiesOf(kind = "onlineAdvertising", data.getValue) shouldBe None
         }
       }
+
       "and the maximum number of residents has been reached" should {
         "be handling POST answer='yes' by replying 303 redirect to the 'OnlineAdvertisingList' page" in new ControllerFixture(
-          onlineAdvertising = fiveAdvertisings
+          onlineAdvertising = fiveAdvertising
         ) {
           val result: Future[Result] = controller.submit(
             fakePostRequest.withFormUrlEncodedBody(
@@ -120,6 +125,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         }
       }
     }
+
     "regardless of the user providing answers" should {
       "be handling invalid POST answer=null and reply 400 with error message" in new ControllerFixture(
         isYearlyAvailable = Some(false)

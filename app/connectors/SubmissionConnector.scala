@@ -88,11 +88,10 @@ class HodSubmissionConnector @Inject() (
       .withBody(Json.toJson(submission))
       .execute[HttpResponse]
       .flatMap { response =>
-        response.status match {
+        response.status match
           case 201    => Future.successful(response)
           case 400    => Future.failed(BadRequestException(response.body))
           case status => Future.failed(Exception(s"Unexpected response: $status"))
-        }
       }
 
 @ImplementedBy(classOf[HodSubmissionConnector])

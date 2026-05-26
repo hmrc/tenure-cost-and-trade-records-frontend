@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object CheckYourAnswerForm {
+object CheckYourAnswerForm:
 
   val theForm: Form[AnswersYesNo] =
     Form(
@@ -29,4 +29,3 @@ object CheckYourAnswerForm {
         "answer" -> createYesNoType("error.checkYourAnswersRadio.required")
       )
     )
-}

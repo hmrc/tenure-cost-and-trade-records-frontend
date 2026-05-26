@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class ElectricityGeneratedControllerSpec extends TestBaseSpec {
+class ElectricityGeneratedControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -103,5 +103,3 @@ class ElectricityGeneratedControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

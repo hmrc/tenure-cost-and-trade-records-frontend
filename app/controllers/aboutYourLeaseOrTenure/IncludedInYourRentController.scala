@@ -43,7 +43,7 @@ class IncludedInYourRentController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   private def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
@@ -52,10 +52,10 @@ class IncludedInYourRentController @Inject() (
 
     Ok(
       includedInYourRentView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.includedInYourRentDetails) match
           case Some(includedInYourRentDetails) => includedInYourRentForm(forType).fill(includedInYourRentDetails)
           case _                               => includedInYourRentForm(forType)
-        },
+        ,
         request.sessionData.toSummary,
         forType,
         navigator.from
@@ -66,22 +66,11 @@ class IncludedInYourRentController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[IncludedInYourRentDetails](
       includedInYourRentForm(forType),
-      formWithErrors =>
-        BadRequest(
-          includedInYourRentView(
-            formWithErrors,
-            request.sessionData.toSummary,
-            forType
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(includedInYourRentView(formWithErrors, request.sessionData.toSummary, forType)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(includedInYourRentDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(IncludedInYourRentPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

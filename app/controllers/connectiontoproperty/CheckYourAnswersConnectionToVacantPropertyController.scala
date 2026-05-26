@@ -34,14 +34,11 @@ class CheckYourAnswersConnectionToVacantPropertyController @Inject() (
   @Named("session") val session: SessionRepo
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(
-      checkYourAnswersConnectionToVacantPropertyView(getBackLink)
-    )
+    Ok(checkYourAnswersConnectionToVacantPropertyView(getBackLink))
   }
 
   private def getBackLink: String =
     controllers.connectiontoproperty.routes.ProvideContactDetailsController.show().url
-}

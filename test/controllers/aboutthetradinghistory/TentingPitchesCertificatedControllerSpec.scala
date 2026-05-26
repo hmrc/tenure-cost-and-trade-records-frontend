@@ -24,24 +24,23 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class TentingPitchesCertificatedControllerSpec extends TestBaseSpec {
+class TentingPitchesCertificatedControllerSpec extends TestBaseSpec:
 
   import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def tentingPitchesCertificatedController(
-    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
-      prefilledAboutTheTradingHistoryPartOne
+    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
+  ): TentingPitchesCertificatedController =
+    TentingPitchesCertificatedController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      tentingPitchesCertificatedView,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo
     )
-  ): TentingPitchesCertificatedController = TentingPitchesCertificatedController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    tentingPitchesCertificatedView,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo
-  )
 
   "TentingPitchesCertificatedController GET /" should {
     "return 200 and HTML when data present in session" in {
@@ -65,7 +64,6 @@ class TentingPitchesCertificatedControllerSpec extends TestBaseSpec {
         controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
       )
     }
-
   }
 
   "TentingPitchesCertificatedController SUBMIT /" should {
@@ -78,12 +76,9 @@ class TentingPitchesCertificatedControllerSpec extends TestBaseSpec {
   }
 
   "Form validation" should {
-
     "error if tentingPitchesTotal is missing" in {
       val formData = Map("tentingPitchesCertificated" -> "")
       val form     = TentingPitchesCertificatedForm.tentingPitchesCertificatedForm.bind(formData)
       mustContainError("tentingPitchesCertificated", "error.tentingPitchesCertificated.missing", form)
     }
   }
-
-}

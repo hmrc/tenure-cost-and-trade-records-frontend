@@ -33,6 +33,5 @@ case class CarParking(
   fixedRentFrom: Option[LocalDate] = None
 )
 
-object CarParking {
+object CarParking:
   implicit val format: OFormat[CarParking] = Json.format
-}

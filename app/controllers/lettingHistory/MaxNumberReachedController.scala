@@ -46,6 +46,7 @@ class MaxNumberReachedController @Inject() (
     val freshForm      = theForm
     val filledForm     = hasEvenMoreEntries(kind).map(bool => freshForm.fill(bool))
     val alreadyChecked = filledForm.exists(_.data("understood").toBoolean)
+
     Ok(theView(filledForm.getOrElse(freshForm), alreadyChecked, kind, backLinkUrl(kind)))
   }
 
@@ -54,14 +55,13 @@ class MaxNumberReachedController @Inject() (
       theForm,
       theFormWithErrors =>
         BadRequest(theView(theFormWithErrors, alreadyChecked = false, kind, backLinkUrl(kind))),
-      understand => {
+      understand =>
         given Session = request.sessionData
         for
           newSession    <- withMayHaveMoreOf(kind, understand)
           savedSession  <- repository.saveOrUpdateSession(newSession)
           navigationData = Map("kind" -> kind)
         yield navigator.redirect(currentPage = MaxNumberReachedPageId, savedSession, navigationData)
-      }
     )
   }
 
@@ -71,10 +71,9 @@ class MaxNumberReachedController @Inject() (
 
   private def hasEvenMoreEntries(kind: String)(using request: SessionRequest[AnyContent]): Option[Boolean] =
     request.sessionData.lettingHistory.flatMap { lettingHistory =>
-      kind match {
+      kind match
         case "permanentResidents" => lettingHistory.mayHaveMorePermanentResidents
         case "completedLettings"  => lettingHistory.mayHaveMoreCompletedLettings
         case "onlineAdvertising"  => lettingHistory.mayHaveMoreOnlineAdvertising
         case _                    => None
-      }
     }

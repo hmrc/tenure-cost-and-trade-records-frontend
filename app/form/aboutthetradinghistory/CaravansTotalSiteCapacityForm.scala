@@ -24,10 +24,10 @@ import play.api.data.Forms.mapping
 /**
   * @author Yuriy Tumakha
   */
-object CaravansTotalSiteCapacityForm {
+object CaravansTotalSiteCapacityForm:
 
   val caravansTotalSiteCapacityForm: Form[CaravansTotalSiteCapacity] =
-    Form {
+    Form(
       mapping(
         "ownedByOperatorForFleetHire"     -> nonNegativeNumber("caravans.ownedByOperatorForFleetHire"),
         "privatelyOwnedForOwnerAndFamily" -> nonNegativeNumber("caravans.privatelyOwnedForOwnerAndFamily"),
@@ -36,6 +36,4 @@ object CaravansTotalSiteCapacityForm {
         "charitablePurposes"              -> nonNegativeNumber("caravans.charitablePurposes"),
         "seasonalStaff"                   -> nonNegativeNumber("caravans.seasonalStaff")
       )(CaravansTotalSiteCapacity.apply)(o => Some(Tuple.fromProductTyped(o)))
-    }
-
-}
+    )

@@ -23,13 +23,14 @@ import play.api.http.Status.*
 import play.api.test.Helpers.{POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
 import uk.gov.hmrc.http.HttpVerbs.GET
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
+class ThreeYearsConstructedControllerSpec extends TestBaseSpec:
+
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -46,19 +47,18 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
     )
 
   def threeYearsConstructedControllerNone(
-    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(
-      prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = None)
+    aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = None))
+  ): ThreeYearsConstructedController =
+    ThreeYearsConstructedController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      threeYearsConstructedView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
     )
-  ): ThreeYearsConstructedController = ThreeYearsConstructedController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    threeYearsConstructedView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
 
-  "Controller" should {
+  "GET /" should {
     "GET / return 200 three years constructed in the session" in {
       val result = threeYearsConstructedController().show(fakeRequest)
       status(result) shouldBe OK
@@ -76,33 +76,35 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }
+
     "return correct back link if query param from=TL is present" in {
       val result = threeYearsConstructedController().show(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
+
     "return correct back link if query param from=CYA is present" in {
       val result = threeYearsConstructedController().show(FakeRequest(GET, "/path?from=CYA"))
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = threeYearsConstructedController().submit(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = threeYearsConstructedController().submit(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = threeYearsConstructedController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "threeYearsConstructed" -> "yes"
-          )
+    "redirect when form data submitted" in {
+      val res = threeYearsConstructedController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "threeYearsConstructed" -> "yes"
         )
-        status(res) shouldBe SEE_OTHER
-      }
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
@@ -115,14 +117,10 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val threeYearsConstructed: String = "threeYearsConstructed"
-    }
 
     val baseFormData: Map[String, String] = Map("threeYearsConstructed" -> "yes")
-  }
-
-}

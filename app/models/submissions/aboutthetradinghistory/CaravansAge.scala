@@ -26,6 +26,5 @@ case class CaravansAge(
   privateSublet: CaravansPerAgeCategory
 )
 
-object CaravansAge {
+object CaravansAge:
   implicit val format: OFormat[CaravansAge] = Json.format
-}

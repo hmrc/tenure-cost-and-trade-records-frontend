@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class Turnover6030ViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection6030]] {
+class Turnover6030ViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection6030]]:
 
   private val messageKeyPrefix = "turnover"
 
@@ -40,7 +40,7 @@ class Turnover6030ViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection603
   private def createViewUsingForm = (form: Form[Seq[TurnoverSection6030]]) =>
     turnover6030View(form)(using sessionRequest, messages)
 
-  "Turnover 6030 view" must {
+  "Turnover 6030 view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -90,4 +90,3 @@ class Turnover6030ViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection603
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

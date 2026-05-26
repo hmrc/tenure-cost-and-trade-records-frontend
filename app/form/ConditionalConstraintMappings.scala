@@ -28,7 +28,7 @@ import scala.util.Try
 /**
   * @author Yuriy Tumakha
   */
-object ConditionalConstraintMappings {
+object ConditionalConstraintMappings:
 
   def applyConstraintsOnCondition[T](
     condition: Condition,
@@ -108,5 +108,3 @@ object ConditionalConstraintMappings {
         _.fold(Invalid(errorRequired))(_ => Valid)
       }
     )
-
-}

@@ -152,17 +152,13 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
-
-      val checkYourAnswersAboutFranchiseOrLettings: String =
-        "checkYourAnswersAboutFranchiseOrLettings"
-    }
+    class ErrorKey:
+      val checkYourAnswersAboutFranchiseOrLettings: String = "checkYourAnswersAboutFranchiseOrLettings"
 
     val baseFormData: Map[String, String] = Map("checkYourAnswersAboutFranchiseOrLettings" -> "yes")
-  }
 
   trait ControllerFixture(forType: ForType) extends TestBaseSpec:
     val repository: SessionRepo = mock[SessionRepo]
@@ -181,7 +177,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
               checkYourAnswersAboutFranchiseOrLettings = None,
               fromCYA = None,
               lettings = None,
-              rentalIncome = forType match {
+              rentalIncome = forType match
                 case FOR6010 =>
                   Some(
                     IndexedSeq( // Franchise or Lettings
@@ -269,8 +265,9 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
                       )
                     )
                   )
-                case _       => None
-              },
+                case _       =>
+                  None
+              ,
               rentalIncomeIndex = 0,
               lettingCurrentIndex = 0,
               rentalIncomeMax = None

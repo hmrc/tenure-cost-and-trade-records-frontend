@@ -27,19 +27,21 @@ import org.scalatest.wordspec.AnyWordSpec
 class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
 
   "the OnlineAdvertising trait" when {
-    "copying the session withHasOnlineAdvertising"            should {
+    "copying the session withHasOnlineAdvertising" should {
       "set a boolean value although lettingHistory was None" in new SessionWithNoLettingHistory {
         val session: SessionWrapper = withHasOnlineAdvertising(true)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         hasOnlineAdvertising(session.data).value mustBe true
       }
+
       "set a boolean value although lettingHistory.hasOnlineAdvertising was None" in new SessionWithSomeLettingHistory {
         val session: SessionWrapper = withHasOnlineAdvertising(true)
         session.changed mustBe true
         hasOnlineAdvertising(session.data).value mustBe true
         // onlineAdvertising(session.data) must be(empty)
       }
+
       "confirm the boolean value which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
         List(niceApartment)
       ) {
@@ -48,6 +50,7 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
         hasOnlineAdvertising(session.data).value mustBe true
         onlineAdvertising(session.data) mustNot be(empty)
       }
+
       "negate the boolean value which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
         List(niceApartment)
       ) {
@@ -56,6 +59,7 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
         hasOnlineAdvertising(session.data).value mustBe false
         onlineAdvertising(session.data) mustBe empty
       }
+
       "double negate the boolean value which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
         List(niceApartment)
       ) {
@@ -65,6 +69,7 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
         hasOnlineAdvertising(session2.data).value mustBe true
       }
     }
+
     "copying the session byAddingOrUpdatingOnlineAdvertising" should {
       "set a non-empty onlineAdvertising list although the lettingHistory was None" in new SessionWithNoLettingHistory {
         val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = None, niceApartment)
@@ -74,6 +79,7 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
         onlineAdvertising(session.data) must have size 1
         onlineAdvertising(session.data).head mustBe niceApartment
       }
+
       "set the very first list value when lettingHistory is not None" in new SessionWithSomeLettingHistory {
         val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = None, niceApartment)
         session.changed mustBe true
@@ -81,6 +87,7 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
         onlineAdvertising(session.data) must have size 1
         onlineAdvertising(session.data).head mustBe niceApartment
       }
+
       "confirm online advert which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
         List(niceApartment)
       ) {
@@ -91,6 +98,7 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
         onlineAdvertising(session.data) must have size 1
         onlineAdvertising(session.data).head mustBe niceApartment
       }
+
       "change online advert which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
         List(niceApartment)
       ) {
@@ -100,6 +108,7 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
         onlineAdvertising(session.data) must have size 1
         onlineAdvertising(session.data).head mustBe uglyApartment
       }
+
       "append a online advert to the existing list" in new SessionWithSomeLettingHistory(onlineAdvertising =
         List(niceApartment)
       ) {
@@ -111,7 +120,6 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
         onlineAdvertising(session.data).last mustBe uglyApartment
       }
     }
-    "copying the session byAddingOrUpdatingOnlineAdvertising" should {}
   }
 
   val session: Session = Session(

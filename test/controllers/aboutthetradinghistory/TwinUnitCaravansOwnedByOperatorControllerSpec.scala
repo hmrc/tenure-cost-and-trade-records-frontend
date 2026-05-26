@@ -22,11 +22,10 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
+class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec:
 
   private val previousPage = aboutthetradinghistory.routes.SingleCaravansAgeCategoriesController.show().url
-
-  private val nextPage = aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.TwinUnitCaravansSubletController.show().url
 
   val mockAudit: Audit = mock[Audit]
 
@@ -107,5 +106,3 @@ class TwinUnitCaravansOwnedByOperatorControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

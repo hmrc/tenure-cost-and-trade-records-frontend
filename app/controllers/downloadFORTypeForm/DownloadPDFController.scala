@@ -31,16 +31,11 @@ class DownloadPDFController @Inject() (
   audit: Audit,
   downloadPDFView: downloadPDF
 )(using ec: ExecutionContext
-) extends FrontendController(mcc) {
+) extends FrontendController(mcc):
 
   def show(forType: String): Action[AnyContent] = Action { implicit request =>
     val referenceNumber = request.session.get("referenceNumber").getOrElse("")
 
-    audit.sendExplicitAudit(
-      "ForRequestedFromReference",
-      DownloadPDFAudit(referenceNumber, forType, request.uri)
-    )
+    audit.sendExplicitAudit("ForRequestedFromReference", DownloadPDFAudit(referenceNumber, forType, request.uri))
     Ok(downloadPDFView(forType, referenceNumber))
   }
-
-}

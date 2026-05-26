@@ -18,7 +18,7 @@ package controllers.lettingHistory
 
 import actions.{SessionRequest, WithSessionRefiner}
 import controllers.FORDataCaptureController
-import form.confirmableActionForm.confirmableActionForm as theRemoveConfirmationForm
+import form.ConfirmableActionForm.confirmableActionForm as theRemoveConfirmationForm
 import form.lettingHistory.OccupierListForm.theForm as theListForm
 import models.Session
 import models.submissions.common.AnswersYesNo
@@ -66,8 +66,7 @@ class OccupierListController @Inject() (
       theRemoveConfirmationForm
         .bindFromRequest()
         .fold(
-          formWithErrors =>
-            BadRequest(renderTheConfirmationViewWith(formWithErrors, occupierDetail, index)),
+          formWithErrors => BadRequest(renderTheConfirmationViewWith(formWithErrors, occupierDetail, index)),
           answer =>
             val eventuallySavedSession: Future[SessionWrapper] =
               if answer == AnswerYes then
@@ -89,10 +88,7 @@ class OccupierListController @Inject() (
   def submit: Action[AnyContent] = (Action andThen sessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theListForm,
-      theFormWithErrors =>
-        BadRequest(
-          theListView(theFormWithErrors, effectiveRentalPeriod, completedLettings(request.sessionData), backLinkUrl)
-        ),
+      theFormWithErrors => BadRequest(theListView(theFormWithErrors, effectiveRentalPeriod, completedLettings(request.sessionData), backLinkUrl)),
       formData =>
         val answerBool = formData.toBoolean
         given Session  = request.sessionData
@@ -109,11 +105,10 @@ class OccupierListController @Inject() (
     hc: HeaderCarrier,
     ec: ExecutionContext
   ): Future[SessionWrapper] =
-    if !hadMoreOccupier && completedLettings(session).isEmpty
-    then {
+    if !hadMoreOccupier && completedLettings(session).isEmpty then
       val newSession = withHasCompletedLettings(false)
       repository.saveOrUpdateSession(newSession)
-    } else session.withChangedData(false)
+    else session.withChangedData(false)
 
   private def renderTheConfirmationViewWith(
     theForm: Form[AnswersYesNo],

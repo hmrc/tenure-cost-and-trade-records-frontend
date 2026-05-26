@@ -29,7 +29,7 @@ import utils.TestBaseSpec
 import scala.concurrent.Future
 import scala.language.reflectiveCalls
 
-class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec {
+class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
 
   trait ControllerWithInjectedSubmissionConnectorFixture(
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
@@ -90,7 +90,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
   }
 
   "SUBMIT /" should {
-    "handle positive confirmation scenarios"          should {
+    "handle positive confirmation scenarios" should {
       "return 303 and audit the successful outcome" in new ControllerWithMockedSubmissionConnectorFixture(
         prefilledRequestRefNumCYA
       ) {
@@ -111,6 +111,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
             .url
       }
     }
+
     "handle exception and return InternalServerError" should {
       "return 500 and audit the failure" in new ControllerWithMockedSubmissionConnectorFixture(
         prefilledRequestRefNumCYA
@@ -134,5 +135,3 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec 
       }
     }
   }
-
-}

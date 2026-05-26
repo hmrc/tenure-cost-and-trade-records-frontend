@@ -42,7 +42,7 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("LettingPartOfPropertyDetailsRent")
@@ -64,7 +64,6 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
           )
         )
     }
-
   }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -92,9 +91,7 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
           val updatedData      = updateStillConnectedDetails(_.copy(lettingPartOfPropertyDetails = updatedSections))
           session.saveOrUpdate(updatedData).map { _ =>
             val redirectToCYA = navigator.cyaPageVacant.filter(_ => navigator.from(using request) == "CYA")
-            val nextPage      =
-              redirectToCYA
-                .getOrElse(navigator.nextPage(LettingPartOfPropertyRentDetailsPageId, updatedData).apply(updatedData))
+            val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(LettingPartOfPropertyRentDetailsPageId, updatedData).apply(updatedData))
             Redirect(nextPage)
           }
         }
@@ -105,5 +102,3 @@ class LettingPartOfPropertyDetailsRentController @Inject() (
     navigator.from match
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(index)).url
-
-}

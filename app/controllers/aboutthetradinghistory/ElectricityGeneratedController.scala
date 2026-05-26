@@ -47,7 +47,7 @@ class ElectricityGeneratedController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ElectricityGenerated")
@@ -73,7 +73,7 @@ class ElectricityGeneratedController @Inject() (
       continueOrSaveAsDraft[Seq[(Option[Int], String)]](
         electricityGeneratedForm(years),
         formWithErrors => BadRequest(electricityGeneratedView(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6076).map { case (data, previousSection) =>
             previousSection.copy(tradingPeriod = data._1, electricityGenerated = Some(data._2))
           }
@@ -92,7 +92,6 @@ class ElectricityGeneratedController @Inject() (
                 .getOrElse(navigator.nextPage(ElectricityGeneratedId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }
@@ -107,11 +106,7 @@ class ElectricityGeneratedController @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#electricity-generated"
       case _     => controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-    }
-
-}

@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
+class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec:
 
   import TestData.*
 
@@ -91,15 +91,10 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
-
-      val checkYourAnswersConnectionToProperty: String =
-        "answersChecked"
-    }
+    class ErrorKey:
+      val checkYourAnswersConnectionToProperty: String = "answersChecked"
 
     val baseFormData: Map[String, String] = Map("answersChecked" -> "yes")
-  }
-}

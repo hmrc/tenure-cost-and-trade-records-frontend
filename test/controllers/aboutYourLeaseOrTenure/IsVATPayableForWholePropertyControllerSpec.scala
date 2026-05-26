@@ -25,24 +25,23 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
+class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def isVATPayableForWholePropertyController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): IsVATPayableForWholePropertyController =
+    IsVATPayableForWholePropertyController(
+      isVATPayableForWholePropertyView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): IsVATPayableForWholePropertyController = IsVATPayableForWholePropertyController(
-    isVATPayableForWholePropertyView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "IsVATPayableForWholePropertyController GET /" should {
+  "GET /" should {
     "return 200 and HTML with is VAT payable for whole property is present in session" in {
       val result = isVATPayableForWholePropertyController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -65,7 +64,7 @@ class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  "IsVATPayableForWholePropertyController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = isVATPayableForWholePropertyController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -73,7 +72,7 @@ class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data isVATPayableForWholeProperty submitted" in {
+    "redirect when form data isVATPayableForWholeProperty submitted" in {
       val res = isVATPayableForWholePropertyController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "isVatPayableForWholeProperty" -> "yes"
@@ -82,5 +81,3 @@ class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

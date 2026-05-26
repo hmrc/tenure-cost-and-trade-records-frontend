@@ -22,6 +22,5 @@ case class UnusualCircumstances(
   unusualCircumstances: String
 )
 
-object UnusualCircumstances {
+object UnusualCircumstances:
   implicit val format: OFormat[UnusualCircumstances] = Json.format
-}

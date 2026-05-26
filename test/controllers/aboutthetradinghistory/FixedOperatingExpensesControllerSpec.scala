@@ -22,18 +22,19 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class FixedOperatingExpensesControllerSpec extends TestBaseSpec {
+class FixedOperatingExpensesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  val fixedOperatingExpensesController: FixedOperatingExpensesController = FixedOperatingExpensesController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    fixedOperatingExpensesView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
-    mockSessionRepo
-  )
+  val fixedOperatingExpensesController: FixedOperatingExpensesController =
+    FixedOperatingExpensesController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      fixedOperatingExpensesView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
@@ -70,5 +71,3 @@ class FixedOperatingExpensesControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

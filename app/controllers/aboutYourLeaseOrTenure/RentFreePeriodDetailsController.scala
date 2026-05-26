@@ -47,31 +47,24 @@ class RentFreePeriodDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentFreePeriodDetails")
 
-    Ok(
-      rentFreePeriodDetailsView(
-        rentFreePeriodDetailsForm.fill(
-          leaseOrAgreementPartFour.flatMap(_.rentFreePeriodDetails)
-        )
-      )
-    )
+    Ok(rentFreePeriodDetailsView(rentFreePeriodDetailsForm.fill(leaseOrAgreementPartFour.flatMap(_.rentFreePeriodDetails))))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[Option[String]](
       rentFreePeriodDetailsForm,
       formWithErrors => BadRequest(rentFreePeriodDetailsView(formWithErrors)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartFour(_.copy(rentFreePeriodDetails = data))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(RentFreePeriodDetailsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
@@ -79,5 +72,3 @@ class RentFreePeriodDetailsController @Inject() (
     using
     request: SessionRequest[AnyContent]
   ): Option[AboutLeaseOrAgreementPartFour] = request.sessionData.aboutLeaseOrAgreementPartFour
-
-}

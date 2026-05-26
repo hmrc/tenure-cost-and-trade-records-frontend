@@ -24,22 +24,23 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
+class CapitalSumDescriptionControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def capitalSumDescriptionController(
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): CapitalSumDescriptionController = CapitalSumDescriptionController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    capitalSumDescriptionView,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-    mockSessionRepo
-  )
+  ): CapitalSumDescriptionController =
+    CapitalSumDescriptionController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      capitalSumDescriptionView,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
 
-  "CapitalSumDescriptionController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Capital Sum Description in the session" in {
       val result = capitalSumDescriptionController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -62,7 +63,7 @@ class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
     }
   }
 
-  "CapitalSumDescriptionController SUBMIT /" should {
+  "SUBMIT /" should {
     "accept an empty form when submitted" in {
       val res = capitalSumDescriptionController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -80,4 +81,3 @@ class CapitalSumDescriptionControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

@@ -24,30 +24,31 @@ import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, St
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class ProvideContactDetailsControllerSpec extends TestBaseSpec {
+class ProvideContactDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
 
   def provideContactDetailsController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYesToAll)
-  ): ProvideContactDetailsController = ProvideContactDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    connectedToPropertyNavigator,
-    provideContactDetailsView,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-    mockSessionRepo
-  )
+  ): ProvideContactDetailsController =
+    ProvideContactDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      connectedToPropertyNavigator,
+      provideContactDetailsView,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      mockSessionRepo
+    )
 
-  "Provide contact details controller" should {
-    "GET / return 200 and HTML with Contact Details in session" in {
+  "GET /" should {
+    "return 200 and HTML with Contact Details in session" in {
       val result = provideContactDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
@@ -57,7 +58,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
       )
     }
 
-    "GET / return 200 and HTML no rent received and no lettings in session" in {
+    "return 200 and HTML no rent received and no lettings in session" in {
       val controller = provideContactDetailsController(
         stillConnectedDetails = Some(prefilledStillConnectedDetailsYesRentReceivedNoLettings)
       )
@@ -70,7 +71,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
       )
     }
 
-    "GET / return 200 and HTML with no rent received in session" in {
+    "return 200 and HTML with no rent received in session" in {
       val controller = provideContactDetailsController(
         stillConnectedDetails = Some(prefilledStillConnectedDetailsNoToAll)
       )
@@ -83,22 +84,22 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
       )
     }
 
-    "GET / return exception with none for rent received" in {
+    "return exception with none for rent received" in {
       val controller = provideContactDetailsController(stillConnectedDetails = None)
       val result     = controller.show(fakeRequest)
       result.failed.recover { case e: Exception =>
         e.getMessage shouldBe " Navigation for provide your contact details page reached with error Unknown connection to property back link"
       }
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = provideContactDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = provideContactDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
 
-    "SUBMIT / Redirect when form data submitted without CYA param" in {
+    "redirect when form data submitted without CYA param" in {
       val res = provideContactDetailsController().submit(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "yourContactDetails.fullName"              -> "Full name",
@@ -110,7 +111,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
 
-    "SUBMIT / Redirect when form data submitted with CYA param" in {
+    "redirect when form data submitted with CYA param" in {
       val res = provideContactDetailsController().submit(
         FakeRequest(POST, "/path?from=CYA").withFormUrlEncodedBody(
           "yourContactDetails.fullName"              -> "Full name",
@@ -124,7 +125,6 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
   }
 
   "getBackLink" should {
-
     "return back link to CYA vacant when from is 'CYA'" in {
       val result = provideContactDetailsController().show(fakeRequestFromCYA)
       contentAsString(result) should include(
@@ -165,7 +165,6 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
       )
-
     }
   }
 
@@ -183,6 +182,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
 
       mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
     }
+
     "error if phone number is too short" in {
       val formData = baseFormData + (errorKey.phone -> "12345")
       val form     = provideContactDetailsForm.bind(formData)
@@ -212,15 +212,14 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val fullName: String = "yourContactDetails.fullName"
       val phone            = "yourContactDetails.contactDetails.phone"
       val email            = "yourContactDetails.contactDetails.email"
       val email1TooLong    = "yourContactDetails.contactDetails.email.email.tooLong"
-    }
 
     val tooLongEmail = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
 
@@ -230,6 +229,3 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec {
       "contactDetails.email1" -> "blah.blah@test.com",
       "fullName"              -> "Mr John Smith"
     )
-
-  }
-}

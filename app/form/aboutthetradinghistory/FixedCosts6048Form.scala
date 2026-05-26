@@ -25,7 +25,7 @@ import play.api.i18n.Messages
 /**
   * @author Yuriy Tumakha
   */
-object FixedCosts6048Form {
+object FixedCosts6048Form:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[FixedCosts6048] =
     mapping(
@@ -37,12 +37,7 @@ object FixedCosts6048Form {
       "rent"                      -> turnoverSalesMappingWithYear("turnover.6048.fixedCosts.rent", year)
     )(FixedCosts6048.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def fixedCosts6048Form(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[FixedCosts6048]] =
-    Form {
+  def fixedCosts6048Form(years: Seq[String])(using messages: Messages): Form[Seq[FixedCosts6048]] =
+    Form(
       mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

@@ -20,15 +20,14 @@ import models.submissions.aboutthetradinghistory.BunkerFuelCardDetails
 import play.api.data.FormError
 import utils.TestBaseSpec
 
-class BunkerFuelCardDetailsFormSpec extends TestBaseSpec {
-  "BunkerFuelCardDetailsForm" should {
+class BunkerFuelCardDetailsFormSpec extends TestBaseSpec:
 
+  "BunkerFuelCardDetailsForm" should {
     "bind valid data correctly" in {
       val data = Map(
         "name"        -> "Valid Name",
         "handlingFee" -> "100.50"
       )
-
       val form = BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm.bind(data)
 
       form.errors shouldBe empty
@@ -40,7 +39,6 @@ class BunkerFuelCardDetailsFormSpec extends TestBaseSpec {
         "name"        -> "",
         "handlingFee" -> "100.50"
       )
-
       val form = BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm.bind(data)
 
       form.errors  should contain(FormError("name", "error.bunkerFuelCard.name.required"))
@@ -52,7 +50,6 @@ class BunkerFuelCardDetailsFormSpec extends TestBaseSpec {
         "name"        -> ("a" * 101),
         "handlingFee" -> "100.50"
       )
-
       val form = BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm.bind(data)
 
       form.errors  should contain(FormError("name", "error.bunkerFuelCardName.maxLength", Seq(100)))
@@ -64,7 +61,6 @@ class BunkerFuelCardDetailsFormSpec extends TestBaseSpec {
         "name"        -> "Valid Name",
         "handlingFee" -> "invalid"
       )
-
       val form = BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm.bind(data)
 
       form.errors  should contain(FormError("handlingFee", "error.bunkerFuelCard.handlingFee.invalidFormat"))
@@ -76,7 +72,6 @@ class BunkerFuelCardDetailsFormSpec extends TestBaseSpec {
         "name"        -> "Valid Name",
         "handlingFee" -> "-100.50"
       )
-
       val form = BunkerFuelCardDetailsForm.bunkerFuelCardDetailsForm.bind(data)
 
       form.errors  should contain(FormError("handlingFee", "error.handlingFee.mustBeNonNegative"))
@@ -91,4 +86,3 @@ class BunkerFuelCardDetailsFormSpec extends TestBaseSpec {
       form.data should contain("handlingFee" -> "100.5")
     }
   }
-}

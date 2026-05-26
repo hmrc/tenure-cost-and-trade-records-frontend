@@ -43,17 +43,17 @@ class AboutThePropertyStringController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AboutThePropertyString")
 
     Ok(
       aboutThePropertyStringView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetailsString) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.propertyDetailsString) match
           case Some(propertyDetails) => aboutThePropertyStringForm.fill(propertyDetails)
           case _                     => aboutThePropertyStringForm
-        },
+        ,
         request.sessionData.forType,
         request.sessionData.toSummary,
         backLink
@@ -73,19 +73,15 @@ class AboutThePropertyStringController @Inject() (
             backLink
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(propertyDetailsString = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(AboutThePropertyPageId, updatedData).apply(updatedData)))
-      }
     )
   }
 
   private def backLink(using request: Request[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url + "#about-the-property"
       case _    => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-    }
-
-}

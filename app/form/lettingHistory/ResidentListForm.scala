@@ -16,15 +16,16 @@
 
 package form.lettingHistory
 
-import form.MappingSupport.createYesNoType as answerYesNo
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
 object ResidentListForm:
 
-  val theForm: Form[AnswersYesNo] = Form[AnswersYesNo](
-    single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.residentList.hasMoreResidents.required")
+  val theForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "answer" -> createYesNoType(errorMessage = "lettingHistory.residentList.hasMoreResidents.required")
+      )
     )
-  )

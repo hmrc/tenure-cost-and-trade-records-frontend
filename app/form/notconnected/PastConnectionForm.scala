@@ -24,8 +24,9 @@ import play.api.data.Forms.single
 
 object PastConnectionForm:
 
-  val pastConnectionForm: Form[AnswersYesNo] = Form(
-    single(
-      "pastConnectionType" -> createYesNoType(Errors.isPastConnected)
+  val pastConnectionForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "pastConnectionType" -> createYesNoType(Errors.isPastConnected)
+      )
     )
-  )

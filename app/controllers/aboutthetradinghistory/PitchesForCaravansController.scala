@@ -42,7 +42,7 @@ class PitchesForCaravansController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PitchesForCaravans")
@@ -68,7 +68,7 @@ class PitchesForCaravansController @Inject() (
       continueOrSaveAsDraft[Seq[TentingPitchesTradingData]](
         tentingPitchesTradingDataForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6045).map { case (data, previousSection) =>
             previousSection.copy(pitchesForCaravans = Some(data))
           }
@@ -90,7 +90,6 @@ class PitchesForCaravansController @Inject() (
                 .apply(updatedData)
             )
           }
-        }
       )
     }
   }
@@ -105,9 +104,6 @@ class PitchesForCaravansController @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageForTentingPitches.url
       case _     => controllers.aboutthetradinghistory.routes.TentingPitchesOnSiteController.show().url
-    }
-
-}

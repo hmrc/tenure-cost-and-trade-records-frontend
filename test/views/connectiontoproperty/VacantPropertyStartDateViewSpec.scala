@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate] {
+class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate]:
 
   private val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
@@ -32,13 +32,13 @@ class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate] 
 
   override val form: Form[LocalDate] = VacantPropertyStartDateForm.vacantPropertyStartDateForm(using messages)
 
-  private def createView: () => Html = () =>
-    vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  private def createViewUsingForm: Form[LocalDate] => Html = (form: Form[LocalDate]) =>
-    vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[LocalDate] => Html =
+    form => vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  "Vacant property start date view" must {
+  "Vacant property start date view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -86,4 +86,3 @@ class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate] 
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

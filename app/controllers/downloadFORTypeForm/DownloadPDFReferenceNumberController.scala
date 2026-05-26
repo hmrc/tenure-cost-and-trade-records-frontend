@@ -44,8 +44,7 @@ class DownloadPDFReferenceNumberController @Inject() (
     theForm
       .bindFromRequest()
       .fold(
-        formWithErrors =>
-          BadRequest(referenceNumberView(formWithErrors, call = routes.DownloadPDFReferenceNumberController.submit())),
+        formWithErrors => BadRequest(referenceNumberView(formWithErrors, call = routes.DownloadPDFReferenceNumberController.submit())),
         referenceNumber =>
           connector
             .retrieveFORType(referenceNumber.value, hc)

@@ -27,7 +27,7 @@ import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redir
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
+class CommercialLettingQuestionControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -35,19 +35,18 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
 
   def controller(
     isWelsh: Boolean = false,
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(
-      prefilledAboutYouAndThePropertyPartTwo6048
+    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo6048)
+  ): CommercialLettingQuestionController =
+    CommercialLettingQuestionController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      commercialLettingQuestionView,
+      preEnrichedActionRefiner(isWelsh = isWelsh, aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
+      mockSessionRepo
     )
-  ): CommercialLettingQuestionController = CommercialLettingQuestionController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    commercialLettingQuestionView,
-    preEnrichedActionRefiner(isWelsh = isWelsh, aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-    mockSessionRepo
-  )
 
-  "Controller - commercial letting question" should {
+  "GET /" should {
     "return 200" in {
       val result = controller().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -71,6 +70,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
       val result = controller().show()(fakeRequestFromTL)
       contentAsString(result) should include(controllers.routes.TaskListController.show.url + "#about-the-property")
     }
+
     "return correct backLink when 'from=CYA' query param is present" in {
       val result = controller().show()(fakeRequestFromCYA)
       contentAsString(result) should include(
@@ -85,7 +85,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = controller().submit(
         FakeRequest(POST, "").withFormUrlEncodedBody(
           "commercialLettingQuestion.month" -> "4",
@@ -96,8 +96,7 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
     }
 
     "redirect to the next page for Welsh property" in {
-      def welshController =
-        controller(isWelsh = true, aboutYouAndThePropertyPartTwo = Some(prefilledAboutYouAndThePropertyPartTwo6048))
+      def welshController = controller(isWelsh = true, aboutYouAndThePropertyPartTwo = Some(prefilledAboutYouAndThePropertyPartTwo6048))
 
       val requestWithForm = FakeRequest(POST, "")
         .withFormUrlEncodedBody(baseFormData.toSeq*)
@@ -152,18 +151,14 @@ class CommercialLettingQuestionControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val occupyMonth = "commercialLettingQuestion.month"
       val occupyYear  = "commercialLettingQuestion.year"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "commercialLettingQuestion.month" -> "9",
       "commercialLettingQuestion.year"  -> "2022"
     )
-
-  }
-}

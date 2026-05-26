@@ -17,7 +17,7 @@
 package actions
 
 import play.api.mvc.Results.*
-import play.api.mvc.{AnyContent, Result}
+import play.api.mvc.Result
 import play.api.test.Helpers.*
 import test.TCTRAppSpec
 
@@ -31,7 +31,7 @@ class RefNumActionSpec extends TCTRAppSpec:
     "return a Redirect result when 'refNum' is not present in session" in {
       val sessionRequest = getRequest.withSession()
 
-      val result: Future[Result] = refNumAction.invokeBlock(sessionRequest, (_: RefNumRequest[AnyContent]) => Future.successful(Ok("")))
+      val result: Future[Result] = refNumAction.invokeBlock(sessionRequest, _ => Future.successful(Ok("")))
 
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(controllers.routes.LoginController.show.url)
@@ -43,7 +43,7 @@ class RefNumActionSpec extends TCTRAppSpec:
 
       val result: Future[Result] = refNumAction.invokeBlock(
         requestWithRefNum,
-        (refNumRequest: RefNumRequest[AnyContent]) => Future.successful(Ok(s"RefNum: ${refNumRequest.refNum}"))
+        refNumRequest => Future.successful(Ok(s"RefNum: ${refNumRequest.refNum}"))
       )
 
       status(result) shouldBe OK

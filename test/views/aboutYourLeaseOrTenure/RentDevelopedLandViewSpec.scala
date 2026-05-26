@@ -22,7 +22,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentDevelopedLandViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class RentDevelopedLandViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentDevelopedLand"
 
@@ -33,7 +33,7 @@ class RentDevelopedLandViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentDevelopedLandView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Connected to landlord view" must {
+  "Connected to landlord view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -81,4 +81,3 @@ class RentDevelopedLandViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

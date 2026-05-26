@@ -30,16 +30,11 @@ object AdditionalInformation:
 
   implicit val format: OFormat[AdditionalInformation] = Json.format
 
-  def updateAdditionalInformation(
-    copy: AdditionalInformation => AdditionalInformation
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
-
+  def updateAdditionalInformation(copy: AdditionalInformation => AdditionalInformation)(using sessionRequest: SessionRequest[?]): Session =
     val currentAdditionalInformation = sessionRequest.sessionData.additionalInformation
 
-    val updateAdditionalInformation = currentAdditionalInformation match {
+    val updateAdditionalInformation = currentAdditionalInformation match
       case Some(_) => sessionRequest.sessionData.additionalInformation.map(copy)
       case _       => Some(copy(AdditionalInformation()))
-    }
 
     sessionRequest.sessionData.copy(additionalInformation = updateAdditionalInformation)

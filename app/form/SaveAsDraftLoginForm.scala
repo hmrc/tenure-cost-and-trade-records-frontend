@@ -24,16 +24,13 @@ import util.AlphanumericPasswordGenerator.passwordLength
 /**
   * @author Yuriy Tumakha
   */
-object SaveAsDraftLoginForm {
+object SaveAsDraftLoginForm:
 
-  val saveAsDraftLoginForm: Form[String] = Form(
-    single(
-      "password" ->
-        text
-          .verifying(
-            minLength(passwordLength, "error.password.minLength")
-          )
+  val saveAsDraftLoginForm: Form[String] =
+    Form(
+      single(
+        "password" -> text.verifying(
+          minLength(passwordLength, "error.password.minLength")
+        )
+      )
     )
-  )
-
-}

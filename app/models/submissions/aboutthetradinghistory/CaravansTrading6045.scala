@@ -28,6 +28,5 @@ case class CaravansTrading6045(
   vans: Option[Int] = None
 )
 
-object CaravansTrading6045 {
+object CaravansTrading6045:
   implicit val format: OFormat[CaravansTrading6045] = Json.format
-}

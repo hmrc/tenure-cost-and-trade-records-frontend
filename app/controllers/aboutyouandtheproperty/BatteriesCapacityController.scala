@@ -41,17 +41,17 @@ class BatteriesCapacityController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with ReadOnlySupport
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("BatteriesCapacity")
 
     Ok(
       view(
-        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.batteriesCapacity) match {
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.batteriesCapacity) match
           case Some(data) => batteriesCapacityForm.fill(data)
           case _          => batteriesCapacityForm
-        },
+        ,
         request.sessionData.toSummary,
         isReadOnly
       )
@@ -61,20 +61,11 @@ class BatteriesCapacityController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       batteriesCapacityForm,
-      formWithErrors =>
-        BadRequest(
-          view(
-            formWithErrors,
-            request.sessionData.toSummary,
-            isReadOnly
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(view(formWithErrors, request.sessionData.toSummary, isReadOnly)),
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(batteriesCapacity = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(BatteriesCapacityId, updatedData).apply(updatedData)))
-      }
     )
   }
-}

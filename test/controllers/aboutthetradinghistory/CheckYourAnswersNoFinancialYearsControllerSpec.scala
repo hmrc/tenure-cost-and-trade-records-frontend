@@ -54,46 +54,47 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
         repository = repository
       )
 
-  "the CheckYourAnswersNoFinancialYears controller" when {
-    "handling GET / requests"  should {
-      "reply 200 with unchecked form" in new ControllerFixture {
-        val result: Future[Result] = controller().show()(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
-        val page: Document = contentAsJsoup(result)
-        page.heading  shouldBe "checkYourAnswersAboutTheTradingHistory.heading"
-        page.backLink shouldBe routes.FinancialYearEndController.show().url
-      }
-    }
-    "handling POST / requests" should {
-      "reply with 303 redirect to the next page" in new ControllerFixture {
+  "GET /" should {
+    "reply 200 with unchecked form" in new ControllerFixture {
+      val result: Future[Result] = controller().show()(fakeGetRequest)
+      status(result)            shouldBe OK
+      contentType(result).value shouldBe HTML
+      charset(result).value     shouldBe UTF8
 
-        val result: Future[Result] = controller().submit()(
-          fakePostRequest.withFormUrlEncodedBody(
-            "correct"   -> "true",
-            "completed" -> "yes"
-          )
+      val page: Document = contentAsJsoup(result)
+      page.heading  shouldBe "checkYourAnswersAboutTheTradingHistory.heading"
+      page.backLink shouldBe routes.FinancialYearEndController.show().url
+    }
+  }
+
+  "POST /" should {
+    "reply with 303 redirect to the next page" in new ControllerFixture {
+      val result: Future[Result] = controller().submit()(
+        fakePostRequest.withFormUrlEncodedBody(
+          "correct"   -> "true",
+          "completed" -> "yes"
         )
-        status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe
-          controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
-        val newSession: ArgumentCaptor[Session] = captor[Session]
-        verify(repository).saveOrUpdate(newSession.capture())(using any)
-        newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
-      }
-      "eventually reset turnover section" in new ControllerFixture {
-        val result: Future[Result] = controller(emptyTurnoverSections = true).submit()(
-          fakePostRequest.withFormUrlEncodedBody(
-            "correct"   -> "true",
-            "completed" -> "yes"
-          )
+      )
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
+
+      val newSession: ArgumentCaptor[Session] = captor[Session]
+      verify(repository).saveOrUpdate(newSession.capture())(using any)
+      newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
+    }
+
+    "eventually reset turnover section" in new ControllerFixture {
+      val result: Future[Result] = controller(emptyTurnoverSections = true).submit()(
+        fakePostRequest.withFormUrlEncodedBody(
+          "correct"   -> "true",
+          "completed" -> "yes"
         )
-        status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
-        val newSession: ArgumentCaptor[Session] = captor[Session]
-        verify(repository).saveOrUpdate(newSession.capture())(using any)
-        newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
-      }
+      )
+      status(result) shouldBe SEE_OTHER
+      redirectLocation(result).value shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
+
+      val newSession: ArgumentCaptor[Session] = captor[Session]
+      verify(repository).saveOrUpdate(newSession.capture())(using any)
+      newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
     }
   }

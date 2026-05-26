@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class isParkingRentPaidSeparatelyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class isParkingRentPaidSeparatelyViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "isParkingRentPaidSeparately"
 
@@ -35,10 +35,10 @@ class isParkingRentPaidSeparatelyViewSpec extends QuestionViewBehaviours[Answers
   def createView: () => Html = () =>
     isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => isParkingRentPaidSeparatelyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "isParkingRentPaidSeparately view" must {
+  "isParkingRentPaidSeparately view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -92,4 +92,3 @@ class isParkingRentPaidSeparatelyViewSpec extends QuestionViewBehaviours[Answers
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

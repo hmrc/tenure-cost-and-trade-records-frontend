@@ -29,16 +29,14 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class TradeServicesListControllerSpec extends TestBaseSpec {
+class TradeServicesListControllerSpec extends TestBaseSpec:
 
   import TestData.*
 
   val mockAudit: Audit = mock[Audit]
 
   def tradeServicesListController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
   ): TradeServicesListController =
     TradeServicesListController(
       stubMessagesControllerComponents(),
@@ -61,7 +59,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "TradeServicesListController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Trade Services List in the session" in {
       val result = tradeServicesListController().show(0)(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -79,28 +77,27 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = tradeServicesListController().submit(1)(fakeRequest)
-        status(result) shouldBe BAD_REQUEST
-      }
-
-      "Redirect when form data submitted" in {
-        val res = tradeServicesListController().submit(0)(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("tradeServicesList" -> "yes")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val result = tradeServicesListController().submit(1)(fakeRequest)
+      status(result) shouldBe BAD_REQUEST
     }
 
-    "REMOVE /" should {
-      "redirect if an empty form is submitted" in {
-        val result = tradeServicesListController().remove(1)(fakeRequest)
-        status(result) shouldBe SEE_OTHER
-      }
+    "redirect when form data submitted" in {
+      val res = tradeServicesListController().submit(0)(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("tradeServicesList" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
+  }
 
+  "REMOVE /" should {
+    "redirect if an empty form is submitted" in {
+      val result = tradeServicesListController().remove(1)(fakeRequest)
+      status(result) shouldBe SEE_OTHER
+    }
   }
 
   "Remove service" should {
@@ -129,7 +126,6 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
       status(result) shouldBe BAD_REQUEST
     }
-
   }
 
   "Trade services list form" should {
@@ -145,15 +141,10 @@ class TradeServicesListControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
-
-      val addTradeService: String =
-        "tradeServicesList"
-    }
+    class ErrorKey:
+      val addTradeService: String = "tradeServicesList"
 
     val baseFormData: Map[String, String] = Map("tradeServicesList" -> "yes")
-  }
-}

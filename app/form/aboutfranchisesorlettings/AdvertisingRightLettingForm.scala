@@ -21,27 +21,27 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object AdvertisingRightLettingForm {
+object AdvertisingRightLettingForm:
 
-  val theForm: Form[AdvertisingRightLetting] = Form(
-    mapping(
-      "descriptionOfSpace"     -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.descriptionOfSpace.required"),
-        maxLength(500, "error.descriptionOfSpace.maxLength")
-      ),
-      "advertisingCompanyName" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.advertisingCompanyName.required"),
-        maxLength(500, "error.advertisingCompanyName.maxLength")
-      )
-    )((descriptionOfSpace, advertisingCompanyName) =>
-      AdvertisingRightLetting(Some(descriptionOfSpace), Some(advertisingCompanyName), None, None)
-    )(advertisingRightLetting =>
-      Some(
-        (
-          advertisingRightLetting.descriptionOfSpace.getOrElse(""),
-          advertisingRightLetting.advertisingCompanyName.getOrElse("")
+  val theForm: Form[AdvertisingRightLetting] =
+    Form(
+      mapping(
+        "descriptionOfSpace"     -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.descriptionOfSpace.required"),
+          maxLength(500, "error.descriptionOfSpace.maxLength")
+        ),
+        "advertisingCompanyName" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.advertisingCompanyName.required"),
+          maxLength(500, "error.advertisingCompanyName.maxLength")
+        )
+      )((descriptionOfSpace, advertisingCompanyName) =>
+        AdvertisingRightLetting(Some(descriptionOfSpace), Some(advertisingCompanyName), None, None)
+      )(advertisingRightLetting =>
+        Some(
+          (
+            advertisingRightLetting.descriptionOfSpace.getOrElse(""),
+            advertisingRightLetting.advertisingCompanyName.getOrElse("")
+          )
         )
       )
     )
-  )
-}

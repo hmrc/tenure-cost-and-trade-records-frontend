@@ -23,20 +23,21 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class NonFuelTurnoverControllerSpec extends TestBaseSpec {
+class NonFuelTurnoverControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def nonFuelTurnoverController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ): NonFuelTurnoverController = NonFuelTurnoverController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    turnover6020View,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): NonFuelTurnoverController =
+    NonFuelTurnoverController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      turnover6020View,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "NonFuelTurnoverController" should {
     "return 200" in {
@@ -71,4 +72,3 @@ class NonFuelTurnoverControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

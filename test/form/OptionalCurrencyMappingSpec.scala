@@ -20,12 +20,13 @@ import play.api.data.Form
 import play.api.data.Forms.*
 import utils.TestBaseSpec
 
-class OptionalCurrencyMappingSpec extends TestBaseSpec {
+import scala.language.implicitConversions
+
+class OptionalCurrencyMappingSpec extends TestBaseSpec:
+
+  private val testMapping = OptionalCurrencyMapping.partOfAnnualRent("test", Some(BigDecimal(100)), 20)
 
   "currencyMappingOptional" should {
-
-    val testMapping = OptionalCurrencyMapping.partOfAnnualRent("test", Some(BigDecimal(100)), 20)
-
     "evaluate empty input as valid" in {
       val form   = Form(single("amount" -> testMapping))
       val result = form.bind(Map("amount" -> ""))
@@ -65,7 +66,4 @@ class OptionalCurrencyMappingSpec extends TestBaseSpec {
       result.errors                should not be empty
       result.errors.head.message shouldBe "error.includedPartsSum.graterThanAnnualRent"
     }
-
   }
-
-}

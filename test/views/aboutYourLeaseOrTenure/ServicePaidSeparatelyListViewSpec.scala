@@ -22,7 +22,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class ServicePaidSeparatelyListViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class ServicePaidSeparatelyListViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   override val form: Form[AnswersYesNo] = ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 
@@ -69,4 +69,3 @@ class ServicePaidSeparatelyListViewSpec extends QuestionViewBehaviours[AnswersYe
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

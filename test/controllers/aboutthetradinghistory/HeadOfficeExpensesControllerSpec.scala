@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
+class HeadOfficeExpensesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -70,7 +70,6 @@ class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       )
     }
-
   }
 
   "SUBMIT /" should {
@@ -79,5 +78,3 @@ class HeadOfficeExpensesControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

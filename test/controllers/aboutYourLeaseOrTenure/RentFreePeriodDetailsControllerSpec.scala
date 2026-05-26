@@ -25,23 +25,22 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class RentFreePeriodDetailsControllerSpec extends TestBaseSpec {
+class RentFreePeriodDetailsControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   def rentFreePeriodDetailsController(
-    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
-      prefilledAboutLeaseOrAgreementPartFour
+    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
+  ): RentFreePeriodDetailsController =
+    RentFreePeriodDetailsController(
+      rentFreePeriodDetailsView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): RentFreePeriodDetailsController = RentFreePeriodDetailsController(
-    rentFreePeriodDetailsView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "RentFreePeriodDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with rentFreePeriodDetails in the session" in {
       val result = rentFreePeriodDetailsController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -64,7 +63,7 @@ class RentFreePeriodDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "RentFreePeriodDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "redirect to the next page if field `rentFreePeriodDetails` is not filled (optional field)" in {
       val res = rentFreePeriodDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -93,7 +92,4 @@ class RentFreePeriodDetailsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe BAD_REQUEST
     }
-
   }
-
-}

@@ -23,7 +23,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationUnit6048ControllerSpec extends TestBaseSpec {
+class AccommodationUnit6048ControllerSpec extends TestBaseSpec:
 
   private val nextPage = controllers.accommodation.routes.AvailableRooms6048Controller.show.url + "?idx=0"
 
@@ -64,7 +64,4 @@ class AccommodationUnit6048ControllerSpec extends TestBaseSpec {
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
     }
-
   }
-
-}

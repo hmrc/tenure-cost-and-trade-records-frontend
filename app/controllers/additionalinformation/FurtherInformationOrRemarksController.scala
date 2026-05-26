@@ -41,18 +41,18 @@ class FurtherInformationOrRemarksController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("FurtherInformationOrRemarks")
 
     Ok(
       furtherInformationOrRemarksView(
-        request.sessionData.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails) match {
+        request.sessionData.additionalInformation.flatMap(_.furtherInformationOrRemarksDetails) match
           case Some(furtherInformationOrRemarksDetails) =>
             furtherInformationOrRemarksForm.fill(furtherInformationOrRemarksDetails)
           case _                                        => furtherInformationOrRemarksForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -62,7 +62,7 @@ class FurtherInformationOrRemarksController @Inject() (
     continueOrSaveAsDraft[String](
       furtherInformationOrRemarksForm,
       formWithErrors => BadRequest(furtherInformationOrRemarksView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAdditionalInformation(_.copy(furtherInformationOrRemarksDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
@@ -73,8 +73,5 @@ class FurtherInformationOrRemarksController @Inject() (
                 .apply(updatedData)
             )
           )
-      }
     )
   }
-
-}

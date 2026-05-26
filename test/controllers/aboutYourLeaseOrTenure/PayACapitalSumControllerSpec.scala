@@ -24,23 +24,21 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour,
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PayACapitalSumControllerSpec extends TestBaseSpec {
+class PayACapitalSumControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def payACapitalSumController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    ),
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree),
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
   ): PayACapitalSumController =
     PayACapitalSumController(
@@ -57,7 +55,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "PayACapitalSumController GET /" should {
+  "GET /" should {
     "return 200 and HTML with tenant additional disregarded with yes in the session" in {
       val result = payACapitalSumController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -155,7 +153,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
   }
 
-  "PayACapitalSumController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = payACapitalSumController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -163,14 +161,14 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = payACapitalSumController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when 6020 form Yes answer submitted" in {
+    "redirect when 6020 form Yes answer submitted" in {
       val res = payACapitalSumController(FOR6020).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
       )
@@ -180,7 +178,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       )
     }
 
-    "Redirect when 6020 form No answer submitted" in {
+    "redirect when 6020 form No answer submitted" in {
       val res = payACapitalSumController(FOR6020).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
       )
@@ -190,7 +188,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       )
     }
 
-    "Redirect when 6030 form Yes answer submitted" in {
+    "redirect when 6030 form Yes answer submitted" in {
       val res = payACapitalSumController(FOR6030).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
       )
@@ -200,7 +198,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       )
     }
 
-    "Redirect when 6030 form No answer submitted" in {
+    "redirect when 6030 form No answer submitted" in {
       val res = payACapitalSumController(FOR6030).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
       )
@@ -210,7 +208,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       )
     }
 
-    "Redirect when 6045 form Yes answer submitted" in {
+    "redirect when 6045 form Yes answer submitted" in {
       val res = payACapitalSumController(FOR6045).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "yes")
       )
@@ -220,7 +218,7 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
       )
     }
 
-    "Redirect when 6045 form No answer submitted" in {
+    "redirect when 6045 form No answer submitted" in {
       val res = payACapitalSumController(FOR6045).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("payACapitalSum" -> "no")
       )
@@ -229,7 +227,6 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
         controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
       )
     }
-
   }
 
   "Pay a capital sum form" should {
@@ -241,13 +238,10 @@ class PayACapitalSumControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val payACapitalSum: String = "payACapitalSum"
-    }
 
     val baseFormData: Map[String, String] = Map("payACapitalSum" -> "yes")
-  }
-}

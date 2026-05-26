@@ -25,22 +25,23 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class FinancialYearEndDatesControllerSpec extends TestBaseSpec {
+class FinancialYearEndDatesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
-  def financialYearEndDatesController(session: Session): FinancialYearEndDatesController = FinancialYearEndDatesController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    financialYearEndDatesView,
-    preEnrichedActionRefiner(
-      forType = session.forType,
-      aboutTheTradingHistory = session.aboutTheTradingHistory,
-      aboutTheTradingHistoryPartOne = session.aboutTheTradingHistoryPartOne
-    ),
-    mockSessionRepo
-  )
+  def financialYearEndDatesController(session: Session): FinancialYearEndDatesController =
+    FinancialYearEndDatesController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      financialYearEndDatesView,
+      preEnrichedActionRefiner(
+        forType = session.forType,
+        aboutTheTradingHistory = session.aboutTheTradingHistory,
+        aboutTheTradingHistoryPartOne = session.aboutTheTradingHistoryPartOne
+      ),
+      mockSessionRepo
+    )
 
   private def sessionRequest6010(request: FakeRequest[AnyContent] = fakeRequest) =
     SessionRequest(aboutYourTradingHistory6010YesSession, request)
@@ -85,5 +86,3 @@ class FinancialYearEndDatesControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

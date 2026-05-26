@@ -25,24 +25,23 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
+class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def isGivenRentFreePeriodController(
-    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
-      prefilledAboutLeaseOrAgreementPartFour
+    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
+  ): IsGivenRentFreePeriodController =
+    IsGivenRentFreePeriodController(
+      isGivenRentFreePeriodView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): IsGivenRentFreePeriodController = IsGivenRentFreePeriodController(
-    isGivenRentFreePeriodView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "IsGivenRentFreePeriodController GET /" should {
+  "GET /" should {
     "return 200 and HTML with isGivenRentFreePeriod is present in session" in {
       val result = isGivenRentFreePeriodController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -65,7 +64,7 @@ class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
     }
   }
 
-  "IsGivenRentFreePeriodController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = isGivenRentFreePeriodController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -73,7 +72,7 @@ class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data isGivenRentFreePeriod submitted" in {
+    "redirect when form data isGivenRentFreePeriod submitted" in {
       val res = isGivenRentFreePeriodController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "rentFreePeriod" -> "yes"
@@ -82,5 +81,3 @@ class IsGivenRentFreePeriodControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

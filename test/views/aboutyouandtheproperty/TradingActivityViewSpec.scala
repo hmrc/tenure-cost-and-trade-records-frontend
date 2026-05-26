@@ -24,19 +24,19 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TradingActivityViewSpec extends QuestionViewBehaviours[TradingActivity] {
+class TradingActivityViewSpec extends QuestionViewBehaviours[TradingActivity]:
 
   private val messageKeyPrefix = "tradingActivity"
 
   override val form: Form[TradingActivity] = TradingActivityForm.tradingActivityForm
 
-  private def createView: () => Html = () =>
-    tradingActivityView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => tradingActivityView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  private def createViewUsingForm: Form[TradingActivity] => Html = (form: Form[TradingActivity]) =>
-    tradingActivityView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[TradingActivity] => Html =
+    form => tradingActivityView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Trading activity view" must {
+  "Trading activity view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -95,4 +95,3 @@ class TradingActivityViewSpec extends QuestionViewBehaviours[TradingActivity] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

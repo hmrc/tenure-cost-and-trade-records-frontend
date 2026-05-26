@@ -27,16 +27,14 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
+class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
 
   def workCarriedOutDetailsController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
   ): WorkCarriedOutDetailsController =
     WorkCarriedOutDetailsController(
       stubMessagesControllerComponents(),
@@ -47,7 +45,7 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "WorkCarriedOutDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Work Carried Out Details in the session" in {
       val result = workCarriedOutDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -70,7 +68,7 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "WorkCarriedOutDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = workCarriedOutDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -89,7 +87,7 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
       )
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = workCarriedOutDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("workCarriedOutDetails" -> "yes")
       )
@@ -97,15 +95,12 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val workCarriedOutDetails: String = "workCarriedOutDetails"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "workCarriedOutDetails" -> "Test content"
     )
-  }
-}

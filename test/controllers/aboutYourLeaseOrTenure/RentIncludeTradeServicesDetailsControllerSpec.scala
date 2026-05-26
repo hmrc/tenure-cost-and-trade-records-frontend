@@ -25,31 +25,30 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
+class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def rentIncludeTradeServicesDetailsController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): RentIncludeTradeServicesDetailsController =
+    RentIncludeTradeServicesDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      rentIncludeTradeServicesDetailsView,
+      rentIncludeTradeServicesDetailsTextAreaView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+        aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
+      ),
+      mockSessionRepo
     )
-  ): RentIncludeTradeServicesDetailsController = RentIncludeTradeServicesDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    rentIncludeTradeServicesDetailsView,
-    rentIncludeTradeServicesDetailsTextAreaView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-      aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
-    ),
-    mockSessionRepo
-  )
 
-  "RentIncludeTradeServicesDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Rent Include Trade Services Details in the session" in {
       val result = rentIncludeTradeServicesDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -96,7 +95,7 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "RentIncludeTradeServicesDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentIncludeTradeServicesDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -111,18 +110,17 @@ class RentIncludeTradeServicesDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = rentIncludeTradeServicesDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("describeServices" -> "text")
       )
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted for 6045" in {
+    "redirect when form data submitted for 6045" in {
       val res = rentIncludeTradeServicesDetailsController(forType = FOR6045).submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("describeServicesTextArea" -> "text")
       )
       status(res) shouldBe SEE_OTHER
     }
   }
-}

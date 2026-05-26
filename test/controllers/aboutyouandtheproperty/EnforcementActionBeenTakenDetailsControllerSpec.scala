@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
+class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -35,25 +35,27 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
 
   def enforcementActionBeenTakenDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): EnforcementActionBeenTakenDetailsController = EnforcementActionBeenTakenDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    enforcementActionBeenTakenDetailsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): EnforcementActionBeenTakenDetailsController =
+    EnforcementActionBeenTakenDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      enforcementActionBeenTakenDetailsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def enforcementActionBeenTakenDetailsControllerNone(): EnforcementActionBeenTakenDetailsController = EnforcementActionBeenTakenDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    enforcementActionBeenTakenDetailsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def enforcementActionBeenTakenDetailsControllerNone(): EnforcementActionBeenTakenDetailsController =
+    EnforcementActionBeenTakenDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      enforcementActionBeenTakenDetailsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "Enforcement action been taken details controller" should {
+  "GET /" should {
     "GET / return 200 c" in {
       val result = enforcementActionBeenTakenDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -71,22 +73,21 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res =
-          enforcementActionBeenTakenDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = enforcementActionBeenTakenDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = enforcementActionBeenTakenDetailsController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "enforcementActionHasBeenTakenDetails" -> "Test content"
-          )
+    "Redirect when form data submitted" in {
+      val res = enforcementActionBeenTakenDetailsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "enforcementActionHasBeenTakenDetails" -> "Test content"
         )
-        status(res) shouldBe SEE_OTHER
-      }
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
@@ -103,15 +104,12 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val enforcementActionHasBeenTakenDetails: String = "enforcementActionHasBeenTakenDetails"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "enforcementActionHasBeenTakenDetails" -> "Test content"
     )
-  }
-}

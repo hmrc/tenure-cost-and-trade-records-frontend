@@ -51,10 +51,10 @@ class CanRentBeReducedOnReviewController @Inject() (
 
     Ok(
       canRentBeReducedOnReviewView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReview) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.canRentBeReducedOnReview) match
           case Some(data) => canRentBeReducedOnReviewForm.fill(data)
           case _          => canRentBeReducedOnReviewForm
-        },
+        ,
         getBackLink
       )
     )
@@ -64,32 +64,26 @@ class CanRentBeReducedOnReviewController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       canRentBeReducedOnReviewForm,
       formWithErrors => BadRequest(canRentBeReducedOnReviewView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(canRentBeReducedOnReview = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CanRentBeReducedOnReviewId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6020                                         =>
-        if (
-          request.sessionData.aboutLeaseOrAgreementPartTwo
+        if request.sessionData.aboutLeaseOrAgreementPartTwo
             .flatMap(_.intervalsOfRentReview)
             .exists(_.intervalsOfRentReview.isDefined)
-        ) {
+        then
           controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
-        } else {
+        else
           controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
-        }
       case FOR6010 | FOR6011 | FOR6015 | FOR6016 | FOR6030 =>
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.isRentReviewPlanned) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.isRentReviewPlanned) match
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show().url
-        }
       case _                                               => controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
-    }

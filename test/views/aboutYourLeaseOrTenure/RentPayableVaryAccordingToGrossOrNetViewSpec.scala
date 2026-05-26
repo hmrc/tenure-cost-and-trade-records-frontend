@@ -23,12 +23,11 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentPayableVaryAccordingToGrossOrNet"
 
-  override val form: Form[AnswersYesNo] =
-    RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
+  override val form: Form[AnswersYesNo] = RentPayableVaryAccordingToGrossOrNetForm.rentPayableVaryAccordingToGrossOrNetForm
 
   private val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
 
@@ -38,7 +37,7 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviour
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent payable vary on gross or net turnover view" must {
+  "Rent payable vary on gross or net turnover view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -86,4 +85,3 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviour
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

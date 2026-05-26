@@ -28,14 +28,15 @@ class FeedbackControllerSpec extends TCTRAppSpec:
 
   def feedbackController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledStillConnectedDetailsYes)
-  ): FeedbackController = FeedbackController(
-    stubMessagesControllerComponents(),
-    feedbackView,
-    feedbackThx,
-    confirmation,
-    preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-    auditServiceMock
-  )
+  ): FeedbackController =
+    FeedbackController(
+      stubMessagesControllerComponents(),
+      feedbackView,
+      feedbackThx,
+      confirmation,
+      preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
+      auditServiceMock
+    )
 
   val comments = "Really amazing bro, wow!"
   val rating   = "5"
@@ -163,7 +164,7 @@ class FeedbackControllerSpec extends TCTRAppSpec:
 
     "feedback-comments is too long" should {
       "fails with BAD_REQUEST" in {
-        val tooLongComment = (1 to 1200).toList.mkString("")
+        val tooLongComment = "c" * 2001
         val result         = feedbackController().feedbackRequestReferenceNumber()(
           postRequest.withFormUrlEncodedBody(
             "feedback-comments" -> tooLongComment,

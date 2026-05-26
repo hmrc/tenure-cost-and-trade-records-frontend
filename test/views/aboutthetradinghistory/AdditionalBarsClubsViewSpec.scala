@@ -22,14 +22,13 @@ import models.submissions.aboutthetradinghistory.AdditionalBarsClubs
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalBarsClubs]] {
+class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalBarsClubs]]:
 
   private val years = Seq("2023", "2022", "2021")
 
   private val messageKeyPrefix = "additionalBarsClubs"
 
-  override val form: Form[Seq[AdditionalBarsClubs]] =
-    AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages)
+  override val form: Form[Seq[AdditionalBarsClubs]] = AdditionalBarsClubsForm.additionalBarsClubsForm(years)(using messages)
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
@@ -40,7 +39,7 @@ class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalB
   private def createViewUsingForm = (form: Form[Seq[AdditionalBarsClubs]]) =>
     additionalBarsClubsView(form, backLink)(using sessionRequest, messages)
 
-  "Additional bars and clubs 6045 view" must {
+  "Additional bars and clubs 6045 view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -101,4 +100,3 @@ class AdditionalBarsClubsViewSpec extends QuestionViewBehaviours[Seq[AdditionalB
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

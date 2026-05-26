@@ -24,12 +24,13 @@ import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
 object ResidentDetailForm:
 
-  val theForm: Form[ResidentDetail] = Form(
-    mapping(
-      "name"    -> nonEmptyText(errorMessage = "lettingHistory.residentDetail.name.required"),
-      "address" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "lettingHistory.residentDetail.address.required"),
-        maxLength(2000, "lettingHistory.residentDetail.address.maxLength")
-      )
-    )(ResidentDetail.apply)(ResidentDetail.unapply)
-  )
+  val theForm: Form[ResidentDetail] =
+    Form(
+      mapping(
+        "name"    -> nonEmptyText(errorMessage = "lettingHistory.residentDetail.name.required"),
+        "address" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "lettingHistory.residentDetail.address.required"),
+          maxLength(2000, "lettingHistory.residentDetail.address.maxLength")
+        )
+      )(ResidentDetail.apply)(ResidentDetail.unapply)
+    )

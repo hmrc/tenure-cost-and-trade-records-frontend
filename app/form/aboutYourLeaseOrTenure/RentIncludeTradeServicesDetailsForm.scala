@@ -23,22 +23,21 @@ import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 import play.api.i18n.Messages
 
-object RentIncludeTradeServicesDetailsForm {
+object RentIncludeTradeServicesDetailsForm:
 
   def rentIncludeTradeServicesDetailsForm(
     annualRent: Option[BigDecimal] = None,
     otherIncludedPartsSum: BigDecimal = 0
   )(using messages: Messages
-  ): Form[RentIncludeTradeServicesInformationDetails] = Form(
-    mapping(
-      "sumIncludedInRent" ->
-        partOfAnnualRent(messages("error.rentIncludeTradeServicesDetails.title"), annualRent, otherIncludedPartsSum),
-      "describeServices"  ->
-        default(text, "").verifying(
-          nonEmpty(errorMessage = "error.describeServices.required"),
-          maxLength(2000, "error.describeServices.maxLength")
-        )
-    )(RentIncludeTradeServicesInformationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
-
-}
+  ): Form[RentIncludeTradeServicesInformationDetails] =
+    Form(
+      mapping(
+        "sumIncludedInRent" ->
+          partOfAnnualRent(messages("error.rentIncludeTradeServicesDetails.title"), annualRent, otherIncludedPartsSum),
+        "describeServices"  ->
+          default(text, "").verifying(
+            nonEmpty(errorMessage = "error.describeServices.required"),
+            maxLength(2000, "error.describeServices.maxLength")
+          )
+      )(RentIncludeTradeServicesInformationDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

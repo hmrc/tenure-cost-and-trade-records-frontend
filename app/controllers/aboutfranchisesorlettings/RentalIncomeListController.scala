@@ -20,7 +20,7 @@ import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
 import form.aboutfranchisesorlettings.RentalIncomeListForm.theForm
-import form.confirmableActionForm.confirmableActionForm
+import form.ConfirmableActionForm.confirmableActionForm
 import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
@@ -112,12 +112,11 @@ class RentalIncomeListController @Inject() (
   private def update(
     incomeRecord: IncomeRecord,
     answer: Option[AnswersYesNo]
-  ): IncomeRecord = incomeRecord match {
+  ): IncomeRecord = incomeRecord match
     case franchise: FranchiseIncomeRecord           => franchise.copy(addAnotherRecord = answer)
     case concession: ConcessionIncomeRecord         => concession.copy(addAnotherRecord = answer)
     case concession6015: Concession6015IncomeRecord => concession6015.copy(addAnotherRecord = answer)
     case letting: LettingIncomeRecord               => letting.copy(addAnotherRecord = answer)
-  }
 
   def remove(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Some(getOperatorName(idx))
@@ -169,10 +168,8 @@ class RentalIncomeListController @Inject() (
               )
             }
           else
-
             Redirect(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(0))
-
-        case AnswerNo =>
+        case AnswerNo  =>
           Redirect(controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(idx))
       }
     )

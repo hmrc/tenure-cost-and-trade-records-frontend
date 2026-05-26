@@ -23,7 +23,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate] {
+class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate]:
 
   private val messageKeyPrefix = "currentRentFirstPaid"
 
@@ -37,7 +37,7 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate] {
   private def createViewUsingForm = (form: Form[LocalDate]) =>
     currentRentFirstPaidView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Current rent first paid view" must {
+  "Current rent first paid view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -78,4 +78,3 @@ class CurrentRentFirstPaidViewSpec extends QuestionViewBehaviours[LocalDate] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -39,7 +39,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOperatingExpenses]] {
+class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOperatingExpenses]]:
 
   private val messageKeyPrefix = "fixedOperatingExpenses"
   private val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
@@ -50,9 +50,9 @@ class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOpe
   private def createView = () => fixedOperatingExpensesView(form)(using sessionRequest, messages)
 
   private def createViewUsingForm: Form[Seq[FixedOperatingExpenses]] => Html =
-    (form: Form[Seq[FixedOperatingExpenses]]) => fixedOperatingExpensesView(form)(using sessionRequest, messages)
+    form => fixedOperatingExpensesView(form)(using sessionRequest, messages)
 
-  "Fixed Operating Expenses view" must {
+  "Fixed Operating Expenses view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -82,5 +82,3 @@ class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOpe
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

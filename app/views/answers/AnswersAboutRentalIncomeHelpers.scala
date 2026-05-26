@@ -198,7 +198,7 @@ object AnswersAboutRentalIncomeHelpers:
                |""".stripMargin
           },
           changeAction = {
-            if (request.sessionData.forType == FOR6030)
+            if request.sessionData.forType == FOR6030 then
               routes.CateringOperationBusinessDetailsController.show(index)
             else
               routes.ConcessionTypeDetailsController.show(index)
@@ -208,7 +208,7 @@ object AnswersAboutRentalIncomeHelpers:
           label = messages("feeReceived.concessionOrFranchiseFee"),
           value = "",
           changeAction = {
-            if (request.sessionData.forType == FOR6030)
+            if request.sessionData.forType == FOR6030 then
               routes.FeeReceivedController.show(index)
             else
               routes.ConcessionTypeFeesController.show(index)
@@ -260,7 +260,7 @@ object AnswersAboutRentalIncomeHelpers:
     index: Int,
     dateUtil: DateUtilLocalised
   )(using messages: Messages
-  ) = {
+  ) =
     val fragment = "franchiseOperatorName"
     CardData(
       index = businessCounter,
@@ -284,7 +284,6 @@ object AnswersAboutRentalIncomeHelpers:
         itemsIncludedCardEntry(record.itemsIncluded, index)
       )
     )
-  }
 
   def cardsData(
     rentalIncome: Seq[IncomeRecord],
@@ -292,11 +291,11 @@ object AnswersAboutRentalIncomeHelpers:
   )(using
     request: SessionRequest[?],
     messages: Messages
-  ): Seq[CardData] = {
+  ): Seq[CardData] =
     var businessCounter = -1
     var lettingCounter  = -1
     for ((r, index) <- rentalIncome.zipWithIndex)
-      yield r match {
+      yield r match
         case record: FranchiseIncomeRecord      =>
           businessCounter = businessCounter + 1
           franchiseCardsData(record, businessCounter, index, dateUtil)
@@ -309,5 +308,3 @@ object AnswersAboutRentalIncomeHelpers:
         case record: ConcessionIncomeRecord     =>
           businessCounter = businessCounter + 1
           concessionCardsData(record, businessCounter, index, dateUtil)
-      }
-  }

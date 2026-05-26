@@ -48,7 +48,7 @@ class IncludedInRent6020Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IncludedInRent6020")
@@ -67,13 +67,12 @@ class IncludedInRent6020Controller @Inject() (
     continueOrSaveAsDraft[DoesTheRentPayable](
       includedInRent6020Form,
       formWithErrors => BadRequest(includedInRent6020View(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(doesTheRentPayable = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(IncludedInRent6020Id, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
@@ -83,10 +82,7 @@ class IncludedInRent6020Controller @Inject() (
   ): Option[AboutLeaseOrAgreementPartOne] = request.sessionData.aboutLeaseOrAgreementPartOne
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    if (request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings).contains(AnswerYes)) {
+    if request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeFixturesAndFittings).contains(AnswerYes) then
       controllers.aboutYourLeaseOrTenure.routes.RentedEquipmentDetailsController.show().url
-    } else {
+    else
       controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
-    }
-
-}

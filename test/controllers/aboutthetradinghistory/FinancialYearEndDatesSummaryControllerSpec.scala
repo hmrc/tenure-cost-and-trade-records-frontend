@@ -26,25 +26,26 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
+class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec:
 
   def financialYearEndDatesSummaryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
     forType: ForType = FOR6010,
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledTurnoverSections6076)
-  ): FinancialYearEndDatesSummaryController = FinancialYearEndDatesSummaryController(
-    stubMessagesControllerComponents(),
-    aboutYourTradingHistoryNavigator,
-    financialYearEndDatesSummaryView,
-    preEnrichedActionRefiner(
-      aboutTheTradingHistory = aboutTheTradingHistory,
-      aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
-      forType = forType
-    ),
-    mockSessionRepo
-  )
+  ): FinancialYearEndDatesSummaryController =
+    FinancialYearEndDatesSummaryController(
+      stubMessagesControllerComponents(),
+      aboutYourTradingHistoryNavigator,
+      financialYearEndDatesSummaryView,
+      preEnrichedActionRefiner(
+        aboutTheTradingHistory = aboutTheTradingHistory,
+        aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
+        forType = forType
+      ),
+      mockSessionRepo
+    )
 
-  "FinancialYearEndDatesSummaryController" should {
+  "GET /" should {
     "return 200" in {
       val result = financialYearEndDatesSummaryController().show()(FakeRequest())
       status(result) shouldBe Status.OK
@@ -71,238 +72,233 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec {
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       )
     }
-
-    "SUBMIT /" should {
-      "return redirect 400 for empty request" in {
-        val res = financialYearEndDatesSummaryController().submit()(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
-    }
-
-    "SUBMIT with correct data" should {
-      "return 303 " in {
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6010YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-        )
-      }
-
-      "return to CYA " in {
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true",
-            "from"                           -> "CYA"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6010YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "return 303 for 6020 " in {
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6020YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = financialYearEndDatesSummaryController(forType = FOR6020).submit()(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-        )
-      }
-
-      "return CYA for 6020 " in {
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true",
-            "from"                           -> "CYA"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6020YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = financialYearEndDatesSummaryController(forType = FOR6020).submit()(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "return 303 for 6030 " in {
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true"
-          )
-        val sessionRequest  =
-          SessionRequest(
-            aboutYourTradingHistory6030YesSession,
-            requestWithForm
-          ) // aboutYourTradingHistory6010YesSession
-        val result          = financialYearEndDatesSummaryController(forType = FOR6030).submit()(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-        )
-      }
-
-      "return to CYA for 6030 " in {
-        val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true",
-            "from"                           -> "CYA"
-          )
-        val sessionRequest  =
-          SessionRequest(aboutYourTradingHistory6030YesSession, requestWithForm)
-        val result          = financialYearEndDatesSummaryController(
-          aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
-          forType = FOR6030
-        ).submit()(sessionRequest)
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "redirect to the next page for 6045 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true"
-          )
-        val session6045     = aboutYourTradingHistory6045YesSession
-        val sessionRequest  = SessionRequest(session6045, requestWithForm)
-
-        val result =
-          financialYearEndDatesSummaryController(session6045.aboutTheTradingHistory, session6045.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-        )
-      }
-
-      "redirect to CYA for 6045 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true",
-            "from"                           -> "CYA"
-          )
-        val session6045     = aboutYourTradingHistory6045YesSession
-        val sessionRequest  = SessionRequest(session6045, requestWithForm)
-
-        val result =
-          financialYearEndDatesSummaryController(session6045.aboutTheTradingHistory, session6045.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "redirect to the next page for 6048 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true"
-          )
-        val session6048     = aboutYourTradingHistory6048YesSession
-        val sessionRequest  = SessionRequest(session6048, requestWithForm)
-
-        val result =
-          financialYearEndDatesSummaryController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-        )
-      }
-
-      "redirect to CYA for 6048 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true",
-            "from"                           -> "CYA"
-          )
-        val session6048     = aboutYourTradingHistory6048YesSession
-        val sessionRequest  = SessionRequest(session6048, requestWithForm)
-
-        val result =
-          financialYearEndDatesSummaryController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-
-      "redirect to the next page for 6076 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true"
-          )
-        val session6076     = aboutYourTradingHistory6076YesSession
-        val sessionRequest  = SessionRequest(session6076, requestWithForm)
-
-        val result =
-          financialYearEndDatesSummaryController(session6076.aboutTheTradingHistory, session6076.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-        )
-      }
-
-      "redirect to CYA for 6076 " in {
-        val requestWithForm = FakeRequest(POST, "/")
-          .withFormUrlEncodedBody(
-            "isFinancialYearEndDatesCorrect" -> "true",
-            "from"                           -> "CYA"
-          )
-        val session6076     = aboutYourTradingHistory6076YesSession
-        val sessionRequest  = SessionRequest(session6076, requestWithForm)
-
-        val result =
-          financialYearEndDatesSummaryController(session6076.aboutTheTradingHistory, session6076.forType).submit()(
-            sessionRequest
-          )
-
-        status(result)           shouldBe SEE_OTHER
-        redirectLocation(result) shouldBe Some(
-          aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-        )
-      }
-    }
-
   }
 
-}
+  "SUBMIT /" should {
+    "return redirect 400 for empty request" in {
+      val res = financialYearEndDatesSummaryController().submit()(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "return 303 for correct data" in {
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6010YesSession,
+          requestWithForm
+        )
+      val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+      )
+    }
+
+    "return to CYA " in {
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true",
+          "from"                           -> "CYA"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6010YesSession,
+          requestWithForm
+        )
+      val result          = financialYearEndDatesSummaryController().submit()(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "return 303 for 6020 " in {
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6020YesSession,
+          requestWithForm
+        )
+      val result          = financialYearEndDatesSummaryController(forType = FOR6020).submit()(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+      )
+    }
+
+    "return CYA for 6020 " in {
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true",
+          "from"                           -> "CYA"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6020YesSession,
+          requestWithForm
+        )
+      val result          = financialYearEndDatesSummaryController(forType = FOR6020).submit()(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "return 303 for 6030 " in {
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true"
+        )
+      val sessionRequest  =
+        SessionRequest(
+          aboutYourTradingHistory6030YesSession,
+          requestWithForm
+        )
+      val result          = financialYearEndDatesSummaryController(forType = FOR6030).submit()(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+      )
+    }
+
+    "return to CYA for 6030 " in {
+      val requestWithForm = FakeRequest(POST, "/path-to-form-handler")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true",
+          "from"                           -> "CYA"
+        )
+      val sessionRequest  =
+        SessionRequest(aboutYourTradingHistory6030YesSession, requestWithForm)
+      val result          = financialYearEndDatesSummaryController(
+        aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
+        forType = FOR6030
+      ).submit()(sessionRequest)
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "redirect to the next page for 6045 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true"
+        )
+      val session6045     = aboutYourTradingHistory6045YesSession
+      val sessionRequest  = SessionRequest(session6045, requestWithForm)
+
+      val result =
+        financialYearEndDatesSummaryController(session6045.aboutTheTradingHistory, session6045.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+      )
+    }
+
+    "redirect to CYA for 6045 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true",
+          "from"                           -> "CYA"
+        )
+      val session6045     = aboutYourTradingHistory6045YesSession
+      val sessionRequest  = SessionRequest(session6045, requestWithForm)
+
+      val result =
+        financialYearEndDatesSummaryController(session6045.aboutTheTradingHistory, session6045.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "redirect to the next page for 6048 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true"
+        )
+      val session6048     = aboutYourTradingHistory6048YesSession
+      val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+      val result =
+        financialYearEndDatesSummaryController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+      )
+    }
+
+    "redirect to CYA for 6048 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true",
+          "from"                           -> "CYA"
+        )
+      val session6048     = aboutYourTradingHistory6048YesSession
+      val sessionRequest  = SessionRequest(session6048, requestWithForm)
+
+      val result =
+        financialYearEndDatesSummaryController(session6048.aboutTheTradingHistory, session6048.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+
+    "redirect to the next page for 6076 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true"
+        )
+      val session6076     = aboutYourTradingHistory6076YesSession
+      val sessionRequest  = SessionRequest(session6076, requestWithForm)
+
+      val result =
+        financialYearEndDatesSummaryController(session6076.aboutTheTradingHistory, session6076.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+      )
+    }
+
+    "redirect to CYA for 6076 " in {
+      val requestWithForm = FakeRequest(POST, "/")
+        .withFormUrlEncodedBody(
+          "isFinancialYearEndDatesCorrect" -> "true",
+          "from"                           -> "CYA"
+        )
+      val session6076     = aboutYourTradingHistory6076YesSession
+      val sessionRequest  = SessionRequest(session6076, requestWithForm)
+
+      val result =
+        financialYearEndDatesSummaryController(session6076.aboutTheTradingHistory, session6076.forType).submit()(
+          sessionRequest
+        )
+
+      status(result)           shouldBe SEE_OTHER
+      redirectLocation(result) shouldBe Some(
+        aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+      )
+    }
+  }

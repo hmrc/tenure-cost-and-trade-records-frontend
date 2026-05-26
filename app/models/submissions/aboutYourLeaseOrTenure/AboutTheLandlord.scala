@@ -25,10 +25,9 @@ case class AboutTheLandlord(
   landlordAddress: Option[Address]
 )
 
-object AboutTheLandlord {
+object AboutTheLandlord:
 
   implicit val format: Format[AboutTheLandlord] = (
     (JsPath \ "landlordFullName").format[String] and
       (JsPath \ "landlordAddress").formatNullable[Address]
   )(AboutTheLandlord.apply, o => Tuple.fromProductTyped(o))
-}

@@ -33,6 +33,5 @@ case class TurnoverSection6020(
   otherIncome: Option[BigDecimal] = None
 )
 
-object TurnoverSection6020 {
+object TurnoverSection6020:
   implicit val format: OFormat[TurnoverSection6020] = Json.format
-}

@@ -20,13 +20,11 @@ import play.api.http.Status
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class ErrorHandlerControllerSpec extends TestBaseSpec {
+class ErrorHandlerControllerSpec extends TestBaseSpec:
 
-  val errorHandlerController: ErrorHandlerController =
-    ErrorHandlerController(preFilledSession, jsonErrorView = jsonErrorView, cc = stubMessagesControllerComponents())
+  private val errorHandlerController = ErrorHandlerController(preFilledSession, jsonErrorView = jsonErrorView, cc = stubMessagesControllerComponents())
 
   "ErrorHandlerController GET /" should {
-
     "return 200" in {
       val result = errorHandlerController.showJsonError(fakeRequest)
       status(result) shouldBe Status.OK
@@ -38,4 +36,3 @@ class ErrorHandlerControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some(UTF8)
     }
   }
-}

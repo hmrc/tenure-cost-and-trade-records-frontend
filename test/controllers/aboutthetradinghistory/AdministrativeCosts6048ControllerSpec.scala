@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
+class AdministrativeCosts6048ControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -59,7 +59,6 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include cyaPage
-
     }
 
     "render back link to CYA if come from CYA" in {
@@ -123,5 +122,3 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

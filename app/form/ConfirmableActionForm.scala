@@ -14,6 +14,20 @@
  * limitations under the License.
  */
 
-package object useCases {
-  type ReferenceNumber = String
-}
+package form
+
+import form.MappingSupport.createYesNoType
+import models.submissions.common.AnswersYesNo
+import play.api.data.Form
+import play.api.data.Forms.{optional, single}
+
+object ConfirmableActionForm:
+
+  val confirmableActionForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "genericRemoveConfirmation" -> optional(createYesNoType("error.confirmableAction.required"))
+          .verifying("error.confirmableAction.required", _.nonEmpty)
+          .transform[AnswersYesNo](_.get, Some(_))
+      )
+    )

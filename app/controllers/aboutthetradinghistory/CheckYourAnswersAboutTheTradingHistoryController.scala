@@ -45,16 +45,16 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       checkYourAnswersAboutTheTradingHistoryView(
-        request.sessionData.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory) match {
+        request.sessionData.aboutTheTradingHistory.flatMap(_.checkYourAnswersAboutTheTradingHistory) match
           case Some(checkYourAnswersAboutTheTradingHistory) =>
             checkYourAnswersAboutTheTradingHistoryForm.fill(checkYourAnswersAboutTheTradingHistory)
           case _                                            => checkYourAnswersAboutTheTradingHistoryForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -72,33 +72,26 @@ class CheckYourAnswersAboutTheTradingHistoryController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistory(_.copy(checkYourAnswersAboutTheTradingHistory = Some(data)))
           .copy(lastCYAPageUrl = Some(routes.CheckYourAnswersAboutTheTradingHistoryController.show().url))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersAboutTheTradingHistoryId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
   private def getBackLink(answers: Session): String =
-    answers.forType match {
+    answers.forType match
       case FOR6010 | FOR6011 | FOR6016 => routes.TurnoverController.show().url
       case FOR6015 | FOR6030           => routes.UnusualCircumstancesController.show().url
       case FOR6020                     => routes.ElectricVehicleChargingPointsController.show().url
       case FOR6045 | FOR6046           =>
-        if (
-          answers.aboutTheTradingHistoryPartOne
+        if answers.aboutTheTradingHistoryPartOne
             .flatMap(_.caravans)
             .flatMap(_.anyStaticLeisureCaravansOnSite)
             .contains(AnswerYes)
-        )
-          routes.CaravansAnnualPitchFeeController.show().url
-        else
-          routes.StaticCaravansController.show().url
+        then routes.CaravansAnnualPitchFeeController.show().url
+        else routes.StaticCaravansController.show().url
       case FOR6048                     => routes.OperationalCosts6048Controller.show.url
       case FOR6076                     => routes.IncomeExpenditureSummary6076Controller.show().url
-    }
-
-}

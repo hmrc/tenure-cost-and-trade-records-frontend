@@ -22,7 +22,7 @@ import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object RallyAreasTradingDataForm {
+object RallyAreasTradingDataForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[RallyAreasTradingData] =
     mapping(
@@ -30,12 +30,7 @@ object RallyAreasTradingDataForm {
       "areasInHectares" -> rallyAreasMapping(year)
     )(RallyAreasTradingData.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def rallyAreasTradingDataForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[RallyAreasTradingData]] =
-    Form {
+  def rallyAreasTradingDataForm(years: Seq[String])(using messages: Messages): Form[Seq[RallyAreasTradingData]] =
+    Form(
       mappingPerYear(years, (year, idx) => s"rallyAreas[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

@@ -60,23 +60,14 @@ class AboutYourLandlordController @Inject() (
         aboutTheLandlord             <- aboutLeaseOrAgreementPartOne.aboutTheLandlord
       yield theForm.fill(aboutTheLandlord.landlordFullName)
 
-    Ok(
-      theView(
-        filledForm.getOrElse(freshForm),
-        request.sessionData.toSummary,
-        getBackLink(request.sessionData)
-      )
-    )
+    Ok(theView(filledForm.getOrElse(freshForm), request.sessionData.toSummary, getBackLink(request.sessionData)))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(formWithErrors, request.sessionData.toSummary, getBackLink(request.sessionData))
-        ),
-      formData => {
+      formWithErrors => BadRequest(theView(formWithErrors, request.sessionData.toSummary, getBackLink(request.sessionData))),
+      formData =>
         given Session = request.sessionData
         for
           newSession     <- sessionWithLandlordFullName(formData)
@@ -90,7 +81,6 @@ class AboutYourLandlordController @Inject() (
                               )
                             )
         yield redirectResult
-      }
     )
   }
 
@@ -124,29 +114,24 @@ class AboutYourLandlordController @Inject() (
       landlordAddress   = confirmedAddress.asAddress
       newSession       <- sessionWithLandlordAddress(landlordAddress)
       _                <- repository.saveOrUpdate(newSession)
-    yield navigator.from match {
-      case "CYA" =>
-        Redirect(
-          controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
-        )
+    yield navigator.from match
+      case "CYA" => Redirect(controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show())
       case _     => Redirect(controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show())
-    }
   }
 
   private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
-    if (answers.forType == FOR6020)
+    if answers.forType == FOR6020 then
       controllers.aboutYourLeaseOrTenure.routes.TypeOfTenureController.show().url
     else
-      navigator.from match {
+      navigator.from match
         case "TL" => controllers.routes.TaskListController.show.url + "#about-your-landlord"
         case _    => controllers.routes.TaskListController.show.url
-      }
 
   private def sessionWithLandlordAddress(address: Address)(using session: Session) =
     assert(session.aboutLeaseOrAgreementPartOne.isDefined)
     assert(session.aboutLeaseOrAgreementPartOne.get.aboutTheLandlord.isDefined)
     session.copy(
-      aboutLeaseOrAgreementPartOne = session.aboutLeaseOrAgreementPartOne.map { about =>
+      aboutLeaseOrAgreementPartOne = session.aboutLeaseOrAgreementPartOne.map: about =>
         about.copy(
           aboutTheLandlord = about.aboutTheLandlord.map { landlord =>
             landlord.copy(
@@ -154,5 +139,4 @@ class AboutYourLandlordController @Inject() (
             )
           }
         )
-      }
     )

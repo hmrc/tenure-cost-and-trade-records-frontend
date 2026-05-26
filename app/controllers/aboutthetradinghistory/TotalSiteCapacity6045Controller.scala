@@ -44,7 +44,7 @@ class TotalSiteCapacity6045Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TotalSiteCapacity6045")
@@ -64,7 +64,7 @@ class TotalSiteCapacity6045Controller @Inject() (
     continueOrSaveAsDraft[TotalSiteCapacity](
       totalSiteCapacityForm,
       formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateOtherHolidayAccommodation(_.copy(totalSiteCapacity = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
@@ -78,7 +78,6 @@ class TotalSiteCapacity6045Controller @Inject() (
               .apply(updatedData)
           )
         }
-      }
     )
   }
 
@@ -88,11 +87,7 @@ class TotalSiteCapacity6045Controller @Inject() (
   ): Option[AboutTheTradingHistoryPartOne] = request.sessionData.aboutTheTradingHistoryPartOne
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    // TODO update CYA?
-    navigator.from match {
+    navigator.from match
       case "TL"  => controllers.routes.TaskListController.show.url
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show().url
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersOtherHolidayAccommodationController.show().url
       case _     => controllers.aboutthetradinghistory.routes.GrossReceiptsSubLetUnitsController.show().url
-    }
-}

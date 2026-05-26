@@ -27,25 +27,24 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IsRentUnderReviewControllerSpec extends TestBaseSpec {
+class IsRentUnderReviewControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def isRentUnderReviewController(
     forType: ForType = FOR6010,
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): IsRentUnderReviewController =
+    IsRentUnderReviewController(
+      isRentUnderReviewView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): IsRentUnderReviewController = IsRentUnderReviewController(
-    isRentUnderReviewView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "IsRentUnderReviewController GET /" should {
+  "GET /" should {
     "return 200 and HTML with is rent under review is present in session" in {
       val result = isRentUnderReviewController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -79,7 +78,7 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec {
     }
   }
 
-  "IsRentUnderReviewController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = isRentUnderReviewController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -87,12 +86,10 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = isRentUnderReviewController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("isRentUnderReview" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

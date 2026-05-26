@@ -19,7 +19,7 @@ package form.aboutthetradinghistory
 import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
 
-object WhatYouWillNeedForm {
+object WhatYouWillNeedForm:
 
   val whatYouWillNeedForm: Form[String] =
     Form(
@@ -27,4 +27,3 @@ object WhatYouWillNeedForm {
         "whatYouWillNeed" -> default(text, "")
       )
     )
-}

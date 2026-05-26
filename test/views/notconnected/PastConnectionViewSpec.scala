@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "pastConnectionType"
 
@@ -32,13 +32,13 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
 
   override val form: Form[AnswersYesNo] = PastConnectionForm.pastConnectionForm
 
-  private def createView: () => Html = () =>
-    pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  private def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => pastConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  "Past connection view" must {
+  "Past connection view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -94,4 +94,3 @@ class PastConnectionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

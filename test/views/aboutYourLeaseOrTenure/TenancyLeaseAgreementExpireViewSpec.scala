@@ -23,7 +23,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDate] {
+class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDate]:
 
   private def tenancyLeaseAgreementExpireView = inject[views.html.aboutYourLeaseOrTenure.tenancyLeaseAgreementExpire]
 
@@ -37,7 +37,7 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDa
   private def createViewUsingForm = (form: Form[LocalDate]) =>
     tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Tenancy lease agreement expire view" must {
+  "Tenancy lease agreement expire view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -85,4 +85,3 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDa
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

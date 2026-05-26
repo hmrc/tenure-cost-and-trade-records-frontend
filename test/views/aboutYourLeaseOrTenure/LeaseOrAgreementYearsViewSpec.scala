@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreementYearsDetails] {
+class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreementYearsDetails]:
 
   private val messageKeyPrefix = "leaseOrAgreement"
 
@@ -37,7 +37,7 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
   private def createViewUsingForm = (form: Form[LeaseOrAgreementYearsDetails]) =>
     leaseOrAgreementYearsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Lease or agreement years view" must {
+  "Lease or agreement years view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -133,4 +133,3 @@ class LeaseOrAgreementYearsViewSpec extends QuestionViewBehaviours[LeaseOrAgreem
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

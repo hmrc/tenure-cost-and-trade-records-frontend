@@ -42,18 +42,18 @@ class SurrenderLeaseAgreementDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("SurrenderLeaseAgreementDetails")
 
     Ok(
       surrenderedLeaseAgreementDetailsView(
-        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.surrenderedLeaseAgreementDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartFour.flatMap(_.surrenderedLeaseAgreementDetails) match
           case Some(surrenderedLeaseAgreementDetails) =>
             surrenderedLeaseAgreementDetailsForm.fill(surrenderedLeaseAgreementDetails)
           case _                                      => surrenderedLeaseAgreementDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -63,12 +63,10 @@ class SurrenderLeaseAgreementDetailsController @Inject() (
     continueOrSaveAsDraft[SurrenderedLeaseAgreementDetails](
       surrenderedLeaseAgreementDetailsForm,
       formWithErrors => BadRequest(surrenderedLeaseAgreementDetailsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartFour(_.copy(surrenderedLeaseAgreementDetails = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(SurrenderedLeaseAgreementDetailsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
-}

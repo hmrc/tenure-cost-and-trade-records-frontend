@@ -20,7 +20,7 @@ import play.api.http.Status
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class ApplicationSpec extends TestBaseSpec {
+class ApplicationSpec extends TestBaseSpec:
 
   private val controller = inject[controllers.Application]
 
@@ -36,4 +36,3 @@ class ApplicationSpec extends TestBaseSpec {
       charset(result)     shouldBe Some(UTF8)
     }
   }
-}

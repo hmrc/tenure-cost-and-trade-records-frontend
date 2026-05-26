@@ -67,15 +67,8 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CheckYourAnswersAndConfirm](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(
-            formWithErrors,
-            backLinkUrl(request.sessionData),
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(theView(formWithErrors, backLinkUrl(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(checkYourAnswersAboutTheProperty = Some(data)))
           .copy(lastCYAPageUrl =
             Some(controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url)
@@ -85,38 +78,30 @@ class CheckYourAnswersAboutThePropertyController @Inject() (
           .map(_ =>
             Redirect(navigator.nextPage(CheckYourAnswersAboutThePropertyPageId, updatedData).apply(updatedData))
           )
-      }
     )
   }
 
   private def backLinkUrl(answers: Session): String =
-    answers.forType match {
+    answers.forType match
       case FOR6010 | FOR6011 =>
-        answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
+        answers.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match
           case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show().url
           case _               => controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show().url
-        }
       case FOR6015 | FOR6016 =>
-        answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match {
-          case Some(AnswerYes) =>
-            controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show().url
+        answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseGrantedDetail) match
+          case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show().url
           case _               => controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
-        }
       case FOR6030           =>
-        answers.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
+        answers.aboutYouAndTheProperty.flatMap(_.charityQuestion) match
           case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.TradingActivityController.show().url
           case _               => controllers.aboutyouandtheproperty.routes.CharityQuestionController.show().url
-        }
       case FOR6020           => controllers.aboutyouandtheproperty.routes.AboutThePropertyStringController.show().url
-      case FOR6045 | FOR6046 =>
-        controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
+      case FOR6045 | FOR6046 => controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
       case FOR6048           =>
         answers.aboutYouAndThePropertyPartTwo.flatMap(_.partsUnavailable) match
           case Some(AnswerYes) =>
             controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController
               .show(answers.aboutYouAndThePropertyPartTwo.fold(0)(_.occupiersListIndex))
               .url
-          case _               =>
-            controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
+          case _               => controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
       case FOR6076           => controllers.aboutyouandtheproperty.routes.BatteriesCapacityController.show().url
-    }

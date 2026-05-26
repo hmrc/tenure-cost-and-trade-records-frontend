@@ -25,25 +25,23 @@ import play.api.mvc.AnyContentAsEmpty
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm] {
+class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviours[CheckYourAnswersAndConfirm]:
 
-  val messageKeyPrefix = "checkYourAnswersConnectionToProperty"
+  private val messageKeyPrefix = "checkYourAnswersConnectionToProperty"
 
-  override val form: Form[CheckYourAnswersAndConfirm] =
-    CheckYourAnswersAndConfirmForm.theForm
+  override val form: Form[CheckYourAnswersAndConfirm] = CheckYourAnswersAndConfirmForm.theForm
 
-  val backLink: String = controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
+  private val backLink: String = controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
 
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
 
-  def createView: () => Html = () =>
-    checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
+  def createView: () => Html =
+    () => checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   def createViewUsingForm: Form[CheckYourAnswersAndConfirm] => Html =
-    (form: Form[CheckYourAnswersAndConfirm]) =>
-      checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
+    form => checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
-  "Check Your Answers Connection To Property view" must {
+  "Check Your Answers Connection To Property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -61,4 +59,3 @@ class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviour
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

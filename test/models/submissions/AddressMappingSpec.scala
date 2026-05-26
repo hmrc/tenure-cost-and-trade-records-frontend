@@ -20,24 +20,17 @@ import models.submissions.common.Address
 import play.api.libs.json.{JsResult, JsSuccess, Json}
 import utils.TestBaseSpec
 
-class AddressMappingSpec extends TestBaseSpec {
+class AddressMappingSpec extends TestBaseSpec:
 
-  val json2          =
-    """{"buildingNameNumber":"Some House","street1":"Some Street","town":"Some City","county":"Some County","postcode":"AA11 1AA"}"""
-  val data2: Address = Address("Some House", Some("Some Street"), "Some City", Some("Some County"), "AA11 1AA")
+  private val json2 = """{"buildingNameNumber":"Some House","street1":"Some Street","town":"Some City","county":"Some County","postcode":"AA11 1AA"}"""
+  private val data2 = Address("Some House", Some("Some Street"), "Some City", Some("Some County"), "AA11 1AA")
 
-  def toJson(data: Address): String = {
-    val json = Json.toJson(data).toString
-    json
-  }
+  def toJson(data: Address): String = Json.toJson(data).toString
 
   def fromJson(json: String): JsResult[Address] =
     Json.fromJson[Address](Json.parse(json))
 
-  "Address with a fully filled in address" should {
+  "Address with a fully filled in address" should:
     "create a fully filled Address" in {
       fromJson(json2) should be(JsSuccess(data2))
     }
-  }
-
-}

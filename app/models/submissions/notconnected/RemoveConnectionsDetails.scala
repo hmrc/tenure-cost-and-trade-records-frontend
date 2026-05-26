@@ -25,6 +25,5 @@ case class RemoveConnectionsDetails(
   removeConnectionAdditionalInfo: Option[String]
 )
 
-object RemoveConnectionsDetails {
+object RemoveConnectionsDetails:
   implicit val format: OFormat[RemoveConnectionsDetails] = Json.format
-}

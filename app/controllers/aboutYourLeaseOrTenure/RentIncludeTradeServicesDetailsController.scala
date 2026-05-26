@@ -48,25 +48,24 @@ class RentIncludeTradeServicesDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   private def forType(using request: SessionRequest[?]): ForType = request.sessionData.forType
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeTradeServicesDetails")
 
-    if (forType == FOR6045 || forType == FOR6046) {
+    if forType == FOR6045 || forType == FOR6046 then
       Ok(
         rentIncludeTradeServicesDetailsTextAreaView(
           request.sessionData.aboutLeaseOrAgreementPartThree
-            .flatMap(_.rentIncludeTradeServicesDetailsTextArea) match {
+            .flatMap(_.rentIncludeTradeServicesDetailsTextArea) match
             case Some(rentIncludeTradeServicesDetailsTextArea) =>
               rentIncludeTradeServicesDetailsTextAreaForm.fill(rentIncludeTradeServicesDetailsTextArea)
             case _                                             => rentIncludeTradeServicesDetailsTextAreaForm
-          }
         )
       )
-    } else {
+    else
       Ok(
         rentIncludeTradeServicesDetailsView(
           request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesInformation) match {
@@ -77,7 +76,6 @@ class RentIncludeTradeServicesDetailsController @Inject() (
           request.sessionData.toSummary
         )
       )
-    }
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -87,33 +85,24 @@ class RentIncludeTradeServicesDetailsController @Inject() (
       .flatMap(_.rentIncludeFixturesAndFittingsAmount)
       .getOrElse(zeroBigDecimal)
 
-    if (forType == FOR6045 || forType == FOR6046) {
+    if forType == FOR6045 || forType == FOR6046 then
       continueOrSaveAsDraft[String](
         rentIncludeTradeServicesDetailsTextAreaForm,
-        formWithErrors =>
-          BadRequest(
-            rentIncludeTradeServicesDetailsTextAreaView(formWithErrors)
-          ),
-        data => {
-          val updatedData =
-            updateAboutLeaseOrAgreementPartThree(_.copy(rentIncludeTradeServicesDetailsTextArea = Some(data)))
+        formWithErrors => BadRequest(rentIncludeTradeServicesDetailsTextAreaView(formWithErrors)),
+        data =>
+          val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(rentIncludeTradeServicesDetailsTextArea = Some(data)))
           session.saveOrUpdate(updatedData).map { _ =>
             Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId, updatedData).apply(updatedData))
           }
-        }
       )
-    } else {
+    else
       continueOrSaveAsDraft[RentIncludeTradeServicesInformationDetails](
         rentIncludeTradeServicesDetailsForm(annualRent, otherIncludedPartsSum),
-        formWithErrors =>
-          BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors, request.sessionData.toSummary)),
-        data => {
+        formWithErrors => BadRequest(rentIncludeTradeServicesDetailsView(formWithErrors, request.sessionData.toSummary)),
+        data =>
           val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesInformation = Some(data)))
           session.saveOrUpdate(updatedData).map { _ =>
             Redirect(navigator.nextPage(RentIncludeTradeServicesDetailsPageId, updatedData).apply(updatedData))
           }
-        }
       )
-    }
   }
-}

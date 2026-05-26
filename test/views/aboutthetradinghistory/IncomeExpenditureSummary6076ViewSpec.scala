@@ -23,7 +23,7 @@ import models.submissions.aboutthetradinghistory.IncomeExpenditure6076Entry
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String] {
+class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "incomeExpenditureSummary6076"
 
@@ -92,4 +92,3 @@ class IncomeExpenditureSummary6076ViewSpec extends QuestionViewBehaviours[String
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -26,7 +26,7 @@ import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.taskList.taskList
 
-class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
+class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec:
 
   private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   private val mockTaskListView                    = mock[taskList]
@@ -102,8 +102,8 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
-
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = checkYourAnswersTentingPitchesController.submit(
@@ -112,4 +112,3 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

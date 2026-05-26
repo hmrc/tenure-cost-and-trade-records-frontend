@@ -41,7 +41,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryOnQuantityOfBeersDetails")
@@ -49,13 +49,13 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
     Ok(
       rentPayableVaryOnQuantityOfBeersDetailsView(
         request.sessionData.aboutLeaseOrAgreementPartTwo
-          .flatMap(_.rentPayableVaryOnQuantityOfBeersDetails) match {
+          .flatMap(_.rentPayableVaryOnQuantityOfBeersDetails) match
           case Some(rentPayableVaryOnQuantityOfBeersInformationDetails) =>
             rentPayableVaryOnQuantityOfBeersDetailsForm.fill(
               rentPayableVaryOnQuantityOfBeersInformationDetails
             )
           case _                                                        => rentPayableVaryOnQuantityOfBeersDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -64,16 +64,11 @@ class RentPayableVaryOnQuantityOfBeersDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       rentPayableVaryOnQuantityOfBeersDetailsForm,
-      formWithErrors =>
-        BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
-        val updatedData =
-          updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
+      formWithErrors => BadRequest(rentPayableVaryOnQuantityOfBeersDetailsView(formWithErrors, request.sessionData.toSummary)),
+      data =>
+        val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(rentPayableVaryOnQuantityOfBeersDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentVaryQuantityOfBeersDetailsId, updatedData).apply(updatedData)))
-      }
     )
   }
-
-}

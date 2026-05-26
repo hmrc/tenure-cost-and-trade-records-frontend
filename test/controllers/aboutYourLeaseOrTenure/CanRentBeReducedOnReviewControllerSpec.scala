@@ -24,29 +24,31 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
+class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
+
   val mockAudit: Audit = mock[Audit]
 
   def canRentBeReducedOnReviewController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo)
-  ): CanRentBeReducedOnReviewController = CanRentBeReducedOnReviewController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    canRentBeReducedOnReviewView,
-    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-    mockSessionRepo
-  )
+  ): CanRentBeReducedOnReviewController =
+    CanRentBeReducedOnReviewController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      canRentBeReducedOnReviewView,
+      preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
+      mockSessionRepo
+    )
 
-  "CanRentBeReducedOnReviewController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Can Rent Be Reduced On Review in the session" in {
       val result = canRentBeReducedOnReviewController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -91,7 +93,7 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
     }
   }
 
-  "CanRentBeReducedOnReviewController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = canRentBeReducedOnReviewController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -116,12 +118,10 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val canRentBeReducedOnReview: String = "canRentBeReducedOnReview"
-    }
+
     val baseFormData: Map[String, String] = Map("canRentBeReducedOnReview" -> "yes")
-  }
-}

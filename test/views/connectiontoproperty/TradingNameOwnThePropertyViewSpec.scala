@@ -24,7 +24,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "tradingNameOwnTheProperty"
 
@@ -32,13 +32,13 @@ class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYe
 
   val backLink: String = controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show().url
 
-  def createView: () => Html = () =>
-    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"), false)(using fakeRequest, messages)
+  def createView: () => Html =
+    () => tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"), false)(using fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => tradingNameOwnThePropertyView(form, backLink, "", Summary("99996010001"), false)(using fakeRequest, messages)
 
-  "Trading name own the property view" must {
+  "Trading name own the property view" should {
 
     "has a link marked with back.link.label leading to has enforcement action been taken Page" in {
       val doc          = asDocument(createView())
@@ -90,4 +90,3 @@ class TradingNameOwnThePropertyViewSpec extends QuestionViewBehaviours[AnswersYe
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

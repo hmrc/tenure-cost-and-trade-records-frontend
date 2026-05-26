@@ -22,11 +22,10 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec {
+class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec:
 
   private val previousPage = aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show().url
-
-  private val nextPage = aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show().url
+  private val nextPage     = aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show().url
 
   val mockAudit: Audit = mock[Audit]
 
@@ -57,7 +56,6 @@ class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include "/check-your-answers-about-the-trading-history"
-
     }
 
     "render back link to CYA if come from CYA" in {
@@ -107,5 +105,3 @@ class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

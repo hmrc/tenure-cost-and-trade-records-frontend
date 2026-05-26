@@ -47,7 +47,7 @@ class NonFuelTurnoverController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("NonFuelTurnover")
@@ -73,7 +73,7 @@ class NonFuelTurnoverController @Inject() (
       continueOrSaveAsDraft[Seq[TurnoverSection6020]](
         turnoverForm6020(years),
         formWithErrors => BadRequest(turnoverView(formWithErrors, getBackLink(tradingHistory))),
-        success => {
+        success =>
           val turnoverSections6020 = (success zip yearEndDates).map { case (turnoverSection, finYearEnd) =>
             turnoverSection.copy(financialYearEnd = finYearEnd)
           }
@@ -92,7 +92,6 @@ class NonFuelTurnoverController @Inject() (
                 .getOrElse(navigator.nextPage(TurnoverPageId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }
@@ -113,16 +112,10 @@ class NonFuelTurnoverController @Inject() (
     tradingHistory: AboutTheTradingHistory
   )(using request: SessionRequest[AnyContent]
   ): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "TL"  => controllers.routes.TaskListController.show.url + "#non-fuel-turnover"
       case _     =>
-        tradingHistory.doYouAcceptLowMarginFuelCard match {
-          case Some(AnswerYes) =>
-            aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0).url
+        tradingHistory.doYouAcceptLowMarginFuelCard match
+          case Some(AnswerYes) => aboutthetradinghistory.routes.AddAnotherLowMarginFuelCardsDetailsController.show(0).url
           case _               => aboutthetradinghistory.routes.AcceptLowMarginFuelCardController.show().url
-        }
-    }
-
-}

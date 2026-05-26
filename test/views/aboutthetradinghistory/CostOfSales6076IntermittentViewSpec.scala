@@ -23,7 +23,7 @@ import play.api.data.Form
 import utils.TestBaseSpec
 import views.behaviours.ViewBehaviours
 
-class CostOfSales6076IntermittentViewSpec extends TestBaseSpec with ViewBehaviours {
+class CostOfSales6076IntermittentViewSpec extends TestBaseSpec with ViewBehaviours:
 
   private val messageKeyPrefix = "costOfSales6076"
   private val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
@@ -58,5 +58,3 @@ class CostOfSales6076IntermittentViewSpec extends TestBaseSpec with ViewBehaviou
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

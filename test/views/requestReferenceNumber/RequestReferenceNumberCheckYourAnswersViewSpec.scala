@@ -20,7 +20,7 @@ import actions.SessionRequest
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehaviours[String] {
+class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "requestReferenceNumber.checkYourAnswers"
 
@@ -31,7 +31,7 @@ class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehavio
   private def createView = () =>
     requestReferenceNumberCheckYourAnswersView(notConnected6010NoSession)(using sessionRequest, messages)
 
-  "Check Your Answers Additional Information view" must {
+  "Check Your Answers Additional Information view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -52,5 +52,3 @@ class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehavio
       assert(loginButton == messages("button.confirmAndSend.label"))
     }
   }
-
-}

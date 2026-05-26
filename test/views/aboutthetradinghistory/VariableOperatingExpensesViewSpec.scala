@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.VariableOperatingExpensesSectio
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableOperatingExpensesSections] {
+class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableOperatingExpensesSections]:
 
   private val messageKeyPrefix = "variableOperatingExpenses"
   private val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
@@ -35,7 +35,7 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
   private def createViewUsingForm = (form: Form[VariableOperatingExpensesSections]) =>
     variableOperatingExpensesView(form)(using sessionRequest, messages)
 
-  "Variable Operating Expenses view" must {
+  "Variable Operating Expenses view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -65,5 +65,3 @@ class VariableOperatingExpensesViewSpec extends QuestionViewBehaviours[VariableO
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

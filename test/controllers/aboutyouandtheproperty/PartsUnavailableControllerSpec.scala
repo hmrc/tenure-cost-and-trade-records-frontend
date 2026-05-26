@@ -22,25 +22,26 @@ import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
-class PartsUnavailableControllerSpec extends TestBaseSpec {
+class PartsUnavailableControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
-  def controller(isWelsh: Boolean = false): PartsUnavailableController = PartsUnavailableController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    partsUnavailableView,
-    preEnrichedActionRefiner(isWelsh = isWelsh),
-    mockSessionRepo
-  )
+  def controller(isWelsh: Boolean = false): PartsUnavailableController =
+    PartsUnavailableController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      partsUnavailableView,
+      preEnrichedActionRefiner(isWelsh = isWelsh),
+      mockSessionRepo
+    )
 
-  "Controller - commercial letting question" should {
+  "GET /" should {
     "return 200" in {
       val result = controller().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -56,12 +57,14 @@ class PartsUnavailableControllerSpec extends TestBaseSpec {
       val result = controller().show()(fakeRequestFromTL)
       contentAsString(result) should include(s"${controllers.routes.TaskListController.show.url}#family-usage")
     }
+
     "return correct backLink when 'from=CYA' query param is present" in {
       val result = controller().show()(fakeRequestFromCYA)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
+
     "return correct backLink when no query param is present fo english property" in {
       val result = controller().show()(fakeRequest)
       contentAsString(result) should include(
@@ -81,7 +84,6 @@ class PartsUnavailableControllerSpec extends TestBaseSpec {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = controller().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
-
     }
 
     "Redirect to when form data submitted with yes" in {
@@ -92,7 +94,8 @@ class PartsUnavailableControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe SEE_OTHER
     }
-    "Redirect when form data submitted with no" in {
+
+    "redirect when form data submitted with no" in {
       val res = controller().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "partsUnavailable" -> "no"
@@ -111,14 +114,10 @@ class PartsUnavailableControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val partsUnavailableQuestion: String = "partsUnavailable"
-    }
 
     val baseFormData: Map[String, String] = Map("partsUnavailable" -> "yes")
-  }
-
-}

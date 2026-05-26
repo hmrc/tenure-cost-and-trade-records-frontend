@@ -24,7 +24,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentIncludeTradeServices"
 
@@ -39,7 +39,7 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesN
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeTradeServicesView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent include trade services view" must {
+  "Rent include trade services view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -102,4 +102,3 @@ class RentIncludeTradeServiceViewSpec extends QuestionViewBehaviours[AnswersYesN
       assert(hint == messages("hint.rentIncludeTradeServices"))
     }
   }
-}

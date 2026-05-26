@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "formerLeaseSurrendered"
 
@@ -35,7 +35,7 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Answer
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     incentivesPaymentsConditionsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Incentives payment conditions view" must {
+  "Incentives payment conditions view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -83,4 +83,3 @@ class IncentivesPaymentsConditionsViewSpec extends QuestionViewBehaviours[Answer
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -27,84 +27,51 @@ import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+class AboutFranchisesOrLettingsNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
-  override def cyaPage: Option[Call] =
-    Some(aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
+  override def cyaPage: Option[Call] = Some(aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show())
 
   private def franchiseOrLettingConditionsRouting: Session => Call = answers =>
-    answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
+    answers.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
       case Some(AnswerYes) =>
-        answers.forType match {
+        answers.forType match
           case FOR6020 =>
             val idx: Int = answers.aboutFranchisesOrLettings.fold(0)(_.lettings.fold(0)(_.size))
             controllers.aboutfranchisesorlettings.routes.TypeOfLettingController.show(Option(idx))
-          case _       =>
-            controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
-        }
-      case _               =>
-        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-    }
+          case _       => controllers.aboutfranchisesorlettings.routes.TypeOfIncomeController.show()
+      case _               => controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
 
   private def getRentalIncomeIndex(session: Session): Int =
     session.aboutFranchisesOrLettings.map(_.rentalIncomeIndex).getOrElse(0)
 
   private def franchiseTypeDetailsRouting: Session => Call = answers =>
-    answers.forType match {
-      case FOR6015 | FOR6016 =>
-        controllers.aboutfranchisesorlettings.routes.RentReceivedFromController
-          .show(getRentalIncomeIndex(answers))
-      case _                 =>
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController
-          .show(getRentalIncomeIndex(answers))
-    }
+    answers.forType match
+      case FOR6015 | FOR6016 => controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(getRentalIncomeIndex(answers))
+      case _                 => controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(getRentalIncomeIndex(answers))
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     FranchiseOrLettingsTiedToPropertyId        -> franchiseOrLettingConditionsRouting,
     CateringOperationBusinessPageId            ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(getRentalIncomeIndex(answers))
-      ),
+      (answers => controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(getRentalIncomeIndex(answers))),
     FeeReceivedPageId                          ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
-      ),
+      (answers => controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))),
     FranchiseTypeDetailsId                     -> franchiseTypeDetailsRouting,
     ConcessionTypeDetailsId                    ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))
-      ),
+      (answers => controllers.aboutfranchisesorlettings.routes.ConcessionTypeFeesController.show(getRentalIncomeIndex(answers))),
     ConcessionTypeFeesId                       ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
-      ),
+      (answers => controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))),
     LettingTypeDetailsId                       ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(getRentalIncomeIndex(answers))
-      ),
+      (answers => controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(getRentalIncomeIndex(answers))),
     RentalIncomeRentId                         ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))
-      ),
+      (answers => controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))),
     RentalIncomeIncludedId                     ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))
-      ),
+      (answers => controllers.aboutfranchisesorlettings.routes.RentalIncomeListController.show(getRentalIncomeIndex(answers))),
     RentReceivedFromPageId                     ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(getRentalIncomeIndex(answers))
-      ),
+      (answers => controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(getRentalIncomeIndex(answers))),
     CalculatingTheRentForPageId                ->
-      (answers =>
-        controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))
-      ),
+      (answers => controllers.aboutfranchisesorlettings.routes.RentalIncomeIncludedController.show(getRentalIncomeIndex(answers))),
     MaxOfLettingsReachedCurrentId              ->
-      (_ =>
-        controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()
-      ),
+      (_ => controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show()),
     CheckYourAnswersAboutFranchiseOrLettingsId ->
-      (_ =>
-        controllers.routes.TaskListController.show.withFragment("franchiseAndLettings")
-      )
+      (_ => controllers.routes.TaskListController.show.withFragment("franchiseAndLettings"))
   )
-}

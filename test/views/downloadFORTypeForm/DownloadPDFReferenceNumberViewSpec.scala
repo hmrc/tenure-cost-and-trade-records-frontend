@@ -22,7 +22,7 @@ import models.submissions.ReferenceNumber
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[ReferenceNumber] {
+class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[ReferenceNumber]:
 
   private val messageKeyPrefix = "referenceNumber"
 
@@ -34,7 +34,7 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
   private def createViewUsingForm = (form: Form[ReferenceNumber]) =>
     referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using fakeRequest, messages)
 
-  "Download PDF reference number view" must {
+  "Download PDF reference number view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -79,4 +79,3 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

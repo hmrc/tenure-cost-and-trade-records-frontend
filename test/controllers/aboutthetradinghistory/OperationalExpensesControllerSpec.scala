@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class OperationalExpensesControllerSpec extends TestBaseSpec {
+class OperationalExpensesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -69,7 +69,6 @@ class OperationalExpensesControllerSpec extends TestBaseSpec {
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       )
     }
-
   }
 
   private def operationalExpensesForYear(idx: Int): Seq[(String, String)] =
@@ -102,5 +101,3 @@ class OperationalExpensesControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

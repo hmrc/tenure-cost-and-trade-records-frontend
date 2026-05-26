@@ -71,24 +71,20 @@ class CheckYourAnswersAboutFranchiseOrLettingsController @Inject() (
             backLinkUrl
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutFranchisesOrLettings(_.copy(checkYourAnswersAboutFranchiseOrLettings = Some(data)))
           .copy(lastCYAPageUrl =
-            Some(
-              controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-            )
+            Some(controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url)
           )
         repo.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersAboutFranchiseOrLettingsId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): String =
     request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
-      case Some(AnswerNo) =>
-        controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
+      case Some(AnswerNo) => controllers.aboutfranchisesorlettings.routes.FranchiseOrLettingsTiedToPropertyController.show().url
       case _              =>
         request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
           case Some(AnswerYes) =>

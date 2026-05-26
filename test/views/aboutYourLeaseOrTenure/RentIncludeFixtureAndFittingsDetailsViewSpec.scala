@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviours[Option[BigDecimal]] {
+class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviours[Option[BigDecimal]]:
 
   private val messageKeyPrefix = "rentIncludeFixturesAndFittingsDetails"
 
@@ -34,7 +34,7 @@ class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviour
   private def createViewUsingForm = (form: Form[Option[BigDecimal]]) =>
     rentIncludeFixtureAndFittingsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent include fixture and fittings details view" must {
+  "Rent include fixture and fittings details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -63,4 +63,3 @@ class RentIncludeFixtureAndFittingsDetailsViewSpec extends QuestionViewBehaviour
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

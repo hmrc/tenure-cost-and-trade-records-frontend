@@ -23,12 +23,12 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
+class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec:
 
-  val mockAudit: Audit     = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
+
   private val previousPage = aboutthetradinghistory.routes.GrossReceiptsLettingUnitsController.show().url
-
-  private val nextPage = controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show().url
+  private val nextPage     = controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show().url
 
   def grossReceiptsSubLetUnitsController: GrossReceiptsSubLetUnitsController =
     GrossReceiptsSubLetUnitsController(
@@ -57,7 +57,6 @@ class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include(previousPage)
       content should not include "/check-your-answers-about-the-trading-history"
-
     }
 
     "render back link to CYA if come from CYA" in {
@@ -108,5 +107,3 @@ class GrossReceiptsSubLetUnitsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

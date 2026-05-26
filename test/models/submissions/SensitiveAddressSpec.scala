@@ -24,12 +24,12 @@ import play.api.Configuration
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import utils.SensitiveTestHelper
 
-class SensitiveAddressSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper {
+class SensitiveAddressSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
+
   val testConfig: Configuration    = loadTestConfig()
   implicit val crypto: MongoCrypto = TestMongoCrypto(testConfig)
 
   "SensitiveAddress" should {
-
     "encrypt and decrypt address fields correctly" in {
       val originalAddress = Address(
         buildingNameNumber = "123",
@@ -49,6 +49,4 @@ class SensitiveAddressSpec extends AnyWordSpecLike with Matchers with SensitiveT
       // Ensure the sensitive fields are decrypted correctly
       sensitiveAddress.decryptedValue shouldBe originalAddress
     }
-
   }
-}

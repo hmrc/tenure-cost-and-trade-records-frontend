@@ -18,43 +18,45 @@ package controllers.aboutyouandtheproperty
 
 import connectors.Audit
 import form.Errors
+import form.aboutyouandtheproperty.AboutYouForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AboutYouControllerSpec extends TestBaseSpec {
+class AboutYouControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import form.aboutyouandtheproperty.AboutYouForm.theForm
-  import utils.FormBindingTestAssertions.mustContainError
 
   val mockAudit: Audit = mock[Audit]
 
   def aboutYouController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): AboutYouController = AboutYouController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    aboutYouView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): AboutYouController =
+    AboutYouController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      aboutYouView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def aboutYouControllerNone(): AboutYouController = AboutYouController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    aboutYouView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def aboutYouControllerNone(): AboutYouController =
+    AboutYouController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      aboutYouView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "About you controller" should {
+  "GET /" should {
     "GET / return 200 about you in the session" in {
       val result = aboutYouController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -72,12 +74,12 @@ class AboutYouControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = aboutYouController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = aboutYouController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
   }
 
@@ -95,6 +97,7 @@ class AboutYouControllerSpec extends TestBaseSpec {
 
       mustContainError(errorKey.phone, Errors.contactPhoneAboutYouRequired, form)
     }
+
     "error if phone number is too short" in {
       val formData = baseFormData + (errorKey.phone -> "12345")
       val form     = theForm.bind(formData)
@@ -124,15 +127,14 @@ class AboutYouControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val fullName: String = "fullName"
       val phone            = "contactDetails.phone"
       val email            = "contactDetails.email"
       val email1TooLong    = "contactDetails.email.email.tooLong"
-    }
 
     val tooLongEmail = "email_too_long_for_validation_againt_business_rules_specify_but_DB_constraints@something.co.uk"
 
@@ -142,6 +144,3 @@ class AboutYouControllerSpec extends TestBaseSpec {
       "contactDetails.email1" -> "blah.blah@test.com",
       "fullName"              -> "Mr John Smith"
     )
-
-  }
-}

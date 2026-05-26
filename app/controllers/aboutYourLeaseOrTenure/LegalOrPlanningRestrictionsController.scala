@@ -44,17 +44,17 @@ class LegalOrPlanningRestrictionsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("LegalOrPlanningRestrictions")
 
     Ok(
       legalOrPlanningRestrictionsView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictions) match
           case Some(data) => legalPlanningRestrictionsForm.fill(data)
           case _          => legalPlanningRestrictionsForm
-        },
+        ,
         getBackLink,
         request.sessionData.toSummary
       )
@@ -72,34 +72,26 @@ class LegalOrPlanningRestrictionsController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictions = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(LegalOrPlanningRestrictionId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6020           =>
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
           case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
-        }
       case FOR6045 | FOR6046 =>
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.CapitalSumDescriptionController.show().url
           case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
-        }
       case FOR6048           =>
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.PayACapitalSumAmountDetailsController.show().url
           case _               => aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
-        }
       case _                 => aboutYourLeaseOrTenure.routes.PaymentWhenLeaseIsGrantedController.show().url
-    }
-
-}

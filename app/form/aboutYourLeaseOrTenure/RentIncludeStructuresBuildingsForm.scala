@@ -19,12 +19,13 @@ package form.aboutYourLeaseOrTenure
 import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
 object RentIncludeStructuresBuildingsForm:
 
-  private val baseRentIncludeStructuresBuildingsMapping = mapping(
-    "rentIncludeStructuresBuildings" -> createYesNoType("error.rentIncludeStructuresBuildings.missing")
-  )(x => x)(b => Some(b))
-
-  val rentIncludeStructuresBuildingsForm: Form[AnswersYesNo] = Form(baseRentIncludeStructuresBuildingsMapping)
+  val rentIncludeStructuresBuildingsForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "rentIncludeStructuresBuildings" -> createYesNoType("error.rentIncludeStructuresBuildings.missing")
+      )
+    )

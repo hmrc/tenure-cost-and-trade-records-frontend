@@ -31,6 +31,5 @@ case class IncomeExpenditureSummaryData(
   profitMargin: BigDecimal
 )
 
-object IncomeExpenditureSummaryData {
+object IncomeExpenditureSummaryData:
   implicit val format: OFormat[IncomeExpenditureSummaryData] = Json.format
-}

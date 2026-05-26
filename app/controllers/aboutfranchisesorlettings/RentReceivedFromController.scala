@@ -74,16 +74,15 @@ class RentReceivedFromController @Inject() (
             Option(routes.FranchiseTypeDetailsController.show(index).url)
           )
         ),
-      formData => {
+      formData =>
         val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
           if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(index))) {
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
               records.updated(
                 index,
-                records(index) match {
+                records(index) match
                   case concession: Concession6015IncomeRecord => concession.copy(rent = Some(formData))
                   case _                                      => throw IllegalStateException("Unknown income record type")
-                }
               )
             }
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
@@ -92,8 +91,6 @@ class RentReceivedFromController @Inject() (
 
         repository.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(RentReceivedFromPageId, updatedSession).apply(updatedSession))
-
         }
-      }
     )
   }

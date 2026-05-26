@@ -19,8 +19,8 @@ package models.submissions.aboutfranchisesorlettings
 import actions.SessionRequest
 import models.Session
 import models.submissions.common.AnswersYesNo
-import play.api.libs.functional.syntax._
-import play.api.libs.json._
+import play.api.libs.functional.syntax.*
+import play.api.libs.json.*
 
 case class AboutFranchisesOrLettings(
   franchisesOrLettingsTiedToProperty: Option[AnswersYesNo] = None,
@@ -51,16 +51,11 @@ object AboutFranchisesOrLettings:
   implicit val format: Format[AboutFranchisesOrLettings] =
     Format(aboutFranchisesOrLettingsReads, Json.writes[AboutFranchisesOrLettings])
 
-  def updateAboutFranchisesOrLettings(
-    copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
-
+  def updateAboutFranchisesOrLettings(copy: AboutFranchisesOrLettings => AboutFranchisesOrLettings)(using sessionRequest: SessionRequest[?]): Session =
     val currentAboutFranchisesOrLettings = sessionRequest.sessionData.aboutFranchisesOrLettings
 
-    val updateAboutFranchisesOrLettings = currentAboutFranchisesOrLettings match {
+    val updateAboutFranchisesOrLettings = currentAboutFranchisesOrLettings match
       case Some(_) => sessionRequest.sessionData.aboutFranchisesOrLettings.map(copy)
       case _       => Some(copy(AboutFranchisesOrLettings()))
-    }
 
     sessionRequest.sessionData.copy(aboutFranchisesOrLettings = updateAboutFranchisesOrLettings)

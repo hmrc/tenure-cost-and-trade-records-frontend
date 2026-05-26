@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
+class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,7 +39,7 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "RentIncreaseAnnuallyWithRPIController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Rent Increased Annual RPI and Open market with Yes in the sessions" in {
       val result = rentIncreaseAnnuallyWithRPIController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -75,7 +75,7 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
     }
   }
 
-  "RentIncreaseAnnuallyWithRPIController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentIncreaseAnnuallyWithRPIController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -83,11 +83,10 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data rentIncreasedAnnuallyWithRPIs submitted" in {
+    "redirect when form data rentIncreasedAnnuallyWithRPIs submitted" in {
       val res = rentIncreaseAnnuallyWithRPIController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentIncreasedAnnuallyWithRPIs" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
   }
-}

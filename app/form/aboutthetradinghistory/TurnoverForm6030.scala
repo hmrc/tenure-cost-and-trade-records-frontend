@@ -26,16 +26,10 @@ import play.api.i18n.Messages
 import java.time.LocalDate
 import scala.util.Try
 
-object TurnoverForm6030 {
+object TurnoverForm6030:
 
-  def turnoverForm6030(
-    expectedNumberOfFinancialYears: Int,
-    financialYearEndDates: Seq[LocalDate]
-  )(using
-    messages: Messages
-  ): Form[Seq[TurnoverSection6030]] = {
-
-    def columnMapping(year: String)(using messages: Messages): Mapping[TurnoverSection6030] = mapping(
+  private def columnMapping(year: String)(using messages: Messages): Mapping[TurnoverSection6030] =
+    mapping(
       "financial-year-end" -> ignored(LocalDate.EPOCH),
       "weeks"              -> tradingPeriodWeeks(year),
       "grossIncome"        -> turnoverSalesMappingWithYear("turnover.grossIncome", year),
@@ -47,10 +41,16 @@ object TurnoverForm6030 {
         )
     )(TurnoverSection6030.apply)(o => Some(Tuple.fromProductTyped(o)))
 
+  def turnoverForm6030(
+    expectedNumberOfFinancialYears: Int,
+    financialYearEndDates: Seq[LocalDate]
+  )(using
+    messages: Messages
+  ): Form[Seq[TurnoverSection6030]] =
     val yearMappings = financialYearEndDates.map(date => columnMapping(date.getYear.toString))
 
-    Form {
-      expectedNumberOfFinancialYears match {
+    Form(
+      expectedNumberOfFinancialYears match
         case 1 =>
           mapping(
             "0" -> yearMappings.head
@@ -77,18 +77,14 @@ object TurnoverForm6030 {
 
         case _ =>
           throw IllegalArgumentException(s"Unexpected number of financial years: $expectedNumberOfFinancialYears")
-      }
-    }
-  }
+    )
 
   private def nonNegativeNumberConstraint(year: String): Constraint[Option[String]] =
     Constraint("constraints.nonNegative") {
       case Some(text) =>
-        Try(text.toDouble).toOption match {
+        Try(text.toDouble).toOption match
           case Some(num) if num >= 0 => Valid
           case Some(_)               => Invalid(ValidationError("error.totalVisitorNumber.negative", year))
           case None                  => Invalid(ValidationError("error.totalVisitorNumber.nonNumeric", year))
-        }
       case None       => Invalid(ValidationError("error.totalVisitorNumber.required", year))
     }
-}

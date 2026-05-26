@@ -17,8 +17,8 @@
 package util
 
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.Logging
 
 import java.time.{LocalDate, MonthDay, YearMonth}
@@ -26,36 +26,33 @@ import java.time.{LocalDate, MonthDay, YearMonth}
 /**
   * @author Yuriy Tumakha
   */
-class AccountingInformationUtilSpec extends AnyFlatSpec with should.Matchers with Logging:
+class AccountingInformationUtilSpec extends AnyWordSpec with should.Matchers with Logging:
 
   private val today   = LocalDate.now
   private def yearNow = YearMonth.now.getYear
 
   private val financialYearEnd = DayMonthsDuration(5, 4)
 
-  "AccountingInformationUtil.financialYearsRequired" should "return 3 dates" in {
-    val firstOccupy = MonthsYearDuration(1, yearNow - 5)
-    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3)
+  "AccountingInformationUtil.financialYearsRequired" should:
+    "return 3 dates" in:
+      val firstOccupy = MonthsYearDuration(1, yearNow - 5)
+      verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3)
 
-    val firstOccupy2 = MonthsYearDuration(1, yearNow - 4)
-    verifyFinancialYearEndDates(firstOccupy2, financialYearEnd, 3)
-  }
+      val firstOccupy2 = MonthsYearDuration(1, yearNow - 4)
+      verifyFinancialYearEndDates(firstOccupy2, financialYearEnd, 3)
 
-  it should "return more dates" in {
-    val firstOccupy = MonthsYearDuration(1, yearNow - 3)
-    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3)
-  }
+    "return more dates" in:
+      val firstOccupy = MonthsYearDuration(1, yearNow - 3)
+      verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3)
 
-  it should "return 2 dates" in {
-    val firstOccupy = MonthsYearDuration(1, yearNow - 2)
-    // verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 2)
-    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3) // Temporary fix until comprehensive review of AccountingInformationUtil logic
-  }
+    "return 2 dates" in:
+      val firstOccupy = MonthsYearDuration(1, yearNow - 2)
+      // verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 2)
+      verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3) // Temporary fix until comprehensive review of AccountingInformationUtil logic
 
-  it should "return 3 dates with partial year " in {
-    val firstOccupy = MonthsYearDuration(1, yearNow - 3)
-    verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3)
-  }
+    "return 3 dates with partial year " in:
+      val firstOccupy = MonthsYearDuration(1, yearNow - 3)
+      verifyFinancialYearEndDates(firstOccupy, financialYearEnd, 3)
 
   private def getFirstYearEnd(financialYearEnd: MonthDay): LocalDate =
     val firstYearEnd = LocalDate.of(yearNow, financialYearEnd.getMonthValue, financialYearEnd.getDayOfMonth)

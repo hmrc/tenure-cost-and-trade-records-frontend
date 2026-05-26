@@ -22,7 +22,7 @@ import play.api.mvc.{AnyContent, Request, WrappedRequest}
 case class SessionRequest[A](
   sessionData: Session,
   request: Request[A]
-) extends WrappedRequest[A](request) {}
+) extends WrappedRequest[A](request)
 
 object SessionRequest:
 
@@ -33,11 +33,8 @@ object SessionRequest:
 
     def eventualFromFragment: Option[String] =
       hasFrom(ifEmpty = None) { fromValue =>
-        if fromValue.nonEmpty
-        then
-          val splitted = fromValue.split(";")
-          if splitted.size > 1 then Some(splitted(1)) else None
-        else None
+        val split = fromValue.split(";")
+        Option.when(split.size > 1)(split(1))
       }
 
     private def isFrom(pageId: String): Boolean =

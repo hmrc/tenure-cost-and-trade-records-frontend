@@ -19,7 +19,7 @@ package form
 import play.api.data.Forms.text
 import play.api.data.Mapping
 
-object EmailMapping {
+object EmailMapping:
 
   // Valid formats: test@test.com | test.test@hotmail.com | test.account@digital.gov.uk |
 
@@ -27,10 +27,8 @@ object EmailMapping {
 
   def validateEmail: Mapping[String] =
     text
-      .verifying(Errors.contactEmailRequired, eA => eA.nonEmpty)
+      .verifying(Errors.contactEmailRequired, _.nonEmpty)
       .verifying(
         Errors.emailFormat,
         eA => if eA.nonEmpty then eA.matches(invalidEmailRegex) else true
       )
-
-}

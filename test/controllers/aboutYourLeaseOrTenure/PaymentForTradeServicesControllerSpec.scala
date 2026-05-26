@@ -24,22 +24,20 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
+class PaymentForTradeServicesControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def paymentForTradeServicesController(
     forType: ForType = FOR6010,
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
   ): PaymentForTradeServicesController =
     PaymentForTradeServicesController(
       stubMessagesControllerComponents(),
@@ -50,7 +48,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "PaymentForTradeServicesController GET /" should {
+  "GET /" should {
     "return 200 and HTML with trade services in the session" in {
       val result = paymentForTradeServicesController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -102,7 +100,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
     }
   }
 
-  "PaymentForTradeServicesController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = paymentForTradeServicesController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -110,7 +108,7 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = paymentForTradeServicesController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("paymentForTradeServices" -> "yes")
       )
@@ -127,13 +125,10 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val paymentForTradeServices: String = "paymentForTradeServices"
-    }
 
     val baseFormData: Map[String, String] = Map("paymentForTradeServices" -> "yes")
-  }
-}

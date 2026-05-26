@@ -44,18 +44,18 @@ class RentDevelopedLandController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentDevelopedLand")
 
     Ok(
       rentDevelopedLandView(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match {
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.rentDevelopedLand) match
           case Some(rentDevelopedLand) =>
             rentDevelopedLandForm.fill(rentDevelopedLand)
           case _                       => rentDevelopedLandForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -65,13 +65,10 @@ class RentDevelopedLandController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       rentDevelopedLandForm,
       formWithErrors => BadRequest(rentDevelopedLandView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(rentDevelopedLand = Some(data)))
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(RentDevelopedLandId, updatedData).apply(updatedData))
         }
-      }
     )
   }
-
-}

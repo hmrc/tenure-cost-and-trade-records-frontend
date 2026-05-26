@@ -45,7 +45,7 @@ class ChangeOccupationAndAccountingController @Inject() (
   mcc: MessagesControllerComponents
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("ChangeOccupationAndAccounting")
@@ -67,5 +67,3 @@ class ChangeOccupationAndAccountingController @Inject() (
         )
     )
   }
-
-}

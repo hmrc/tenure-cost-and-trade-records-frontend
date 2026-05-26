@@ -23,14 +23,12 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
 
-class TownMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks {
+class TownMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
 
-  trait Setup {
+  trait Setup:
     val form: Form[String] = Form(single("town" -> validateTown))
-  }
 
-  "town validation" should {
-
+  "Town validation" should {
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
         ("county", "validity"),
@@ -43,11 +41,10 @@ class TownMappingSpec extends AnyWordSpecLike with should.Matchers with TableDri
       TableDrivenPropertyChecks.forAll(lengths) { (town, isValid) =>
         val res: Form[String] = form.bind(Map("town" -> town))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.townCity.maxLength"
-        }
       }
     }
 
@@ -61,13 +58,10 @@ class TownMappingSpec extends AnyWordSpecLike with should.Matchers with TableDri
       TableDrivenPropertyChecks.forAll(isInput) { (town, isValid) =>
         val res: Form[String] = form.bind(Map("town" -> town))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.townCity.required"
-        }
       }
     }
   }
-
-}

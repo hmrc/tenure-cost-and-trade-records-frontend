@@ -26,7 +26,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class OtherHolidayAccommodationControllerSpec extends TestBaseSpec {
+class OtherHolidayAccommodationControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,14 +37,15 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec {
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
       prefilledAboutTheTradingHistoryPartOne
     )
-  ): OtherHolidayAccommodationController = OtherHolidayAccommodationController(
-    otherHolidayAccommodationView,
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
+  ): OtherHolidayAccommodationController =
+    OtherHolidayAccommodationController(
+      otherHolidayAccommodationView,
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
+    )
 
   "OtherHolidayAccommodationController GET /" should {
     "return 200 and HTML with is parking rent paid separately is present in session" in {
@@ -66,7 +67,6 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec {
       val result = otherHolidayAccommodationController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
-
   }
 
   "OtherHolidayAccommodationController SUBMIT /" should {
@@ -87,14 +87,10 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val otherHolidayAccommodation: String = "otherHolidayAccommodation"
-    }
 
     val baseFormData: Map[String, String] = Map("otherHolidayAccommodation" -> "yes")
-  }
-
-}

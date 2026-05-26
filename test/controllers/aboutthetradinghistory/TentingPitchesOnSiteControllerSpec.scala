@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
+class TentingPitchesOnSiteControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -32,17 +32,16 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
 
   def tentingPitchesOnSiteController(
-    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
-      prefilledAboutTheTradingHistoryPartOne
+    aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)
+  ): TentingPitchesOnSiteController =
+    TentingPitchesOnSiteController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      tentingPitchesOnSiteView,
+      preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
+      mockSessionRepo
     )
-  ): TentingPitchesOnSiteController = TentingPitchesOnSiteController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    tentingPitchesOnSiteView,
-    preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-    mockSessionRepo
-  )
 
   "TentingPitchesOnSiteController GET /" should {
     "return 200 and HTML when data present in session" in {
@@ -71,7 +70,6 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
         controllers.aboutthetradinghistory.routes.CheckYourAnswersTentingPitchesController.show().url
       )
     }
-
   }
 
   "TentingPitchesOnSiteController SUBMIT /" should {
@@ -92,10 +90,7 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val tentingPitchesOnSiteErrorKey: String = "tentingPitchesOnSite"
 
     val baseFormData: Map[String, String] = Map("tentingPitchesOnSite" -> "yes")
-  }
-
-}

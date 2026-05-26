@@ -24,7 +24,7 @@ import play.api.data.Forms.single
 /**
   * @author Yuriy Tumakha
   */
-object DoesRentIncludeParkingForm {
+object DoesRentIncludeParkingForm:
 
   val doesRentIncludeParkingForm: Form[AnswersYesNo] =
     Form(
@@ -32,5 +32,3 @@ object DoesRentIncludeParkingForm {
         "doesRentIncludeParking" -> createYesNoType("error.doesRentIncludeParking.required")
       )
     )
-
-}

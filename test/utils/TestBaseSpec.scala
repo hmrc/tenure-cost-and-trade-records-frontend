@@ -52,6 +52,9 @@ import java.nio.charset.StandardCharsets
 import java.time.{Clock, Instant, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
 
+/**
+  * Replaced by [[test.TCTRAppSpec]]
+  */
 trait TestBaseSpec
   extends AnyWordSpec
   with Matchers

@@ -20,7 +20,7 @@ import play.api.data.Forms.text
 import play.api.data.{Form, FormError}
 import play.twirl.api.HtmlFormat
 
-trait QuestionViewBehaviours[A] extends ViewBehaviours {
+trait QuestionViewBehaviours[A] extends ViewBehaviours:
 
   val defaultForm: Form[String] = Form(text)
 
@@ -35,7 +35,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
     fields: String*
   ): Unit =
     "behave like a question page" when {
-      "rendered" must {
+      "rendered" should {
         for (field <- fields)
           s"contain an input for $field" in {
             val doc = asDocument(createView(form))
@@ -49,7 +49,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
       }
 
       for (field <- fields)
-        s"rendered with an error with field '$field'" must {
+        s"rendered with an error with field '$field'" should {
           "show an error summary" in {
             val doc = asDocument(createView(form.withError(FormError(field, "error"))))
             assertRenderedByCssSelector(doc, ".govuk-error-summary")
@@ -62,5 +62,3 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
           }
         }
     }
-
-}

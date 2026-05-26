@@ -32,10 +32,9 @@ trait ReadOnlySupport:
     * @return boolean indicating if the section can be locked into read-only mode
     */
   def isReadOnly(using request: SessionRequest[AnyContent]): Boolean =
-    val answerChecked =
+    (
       for
         stillConnectedDetails      <- request.sessionData.stillConnectedDetails
         checkYourAnswersAndConfirm <- stillConnectedDetails.checkYourAnswersConnectionToProperty
       yield checkYourAnswersAndConfirm.answersChecked
-
-    answerChecked.contains(AnswerYes)
+    ).contains(AnswerYes)

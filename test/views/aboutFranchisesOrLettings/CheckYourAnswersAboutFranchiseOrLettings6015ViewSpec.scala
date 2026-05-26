@@ -22,10 +22,9 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CheckYourAnswersAboutFranchiseOrLettings6015ViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CheckYourAnswersAboutFranchiseOrLettings6015ViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  private def cyaFranchiseOrLettingsView =
-    inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
+  private def cyaFranchiseOrLettingsView = inject[views.html.aboutfranchisesorlettings.checkYourAnswersAboutFranchiseOrLettings]
 
   private val messageKeyPrefix = "checkYourAnswersAboutConcessionsOrLettings"
 
@@ -40,7 +39,7 @@ class CheckYourAnswersAboutFranchiseOrLettings6015ViewSpec extends QuestionViewB
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
 
-  "Check Your Answers About Franchise Or Lettings view" must {
+  "Check Your Answers About Franchise Or Lettings view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -58,4 +57,3 @@ class CheckYourAnswersAboutFranchiseOrLettings6015ViewSpec extends QuestionViewB
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

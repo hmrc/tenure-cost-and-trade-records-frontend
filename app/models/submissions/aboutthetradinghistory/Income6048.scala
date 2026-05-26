@@ -25,10 +25,8 @@ case class Income6048(
   letting: Option[BigDecimal] = None,
   serviceProvision: Option[BigDecimal] = None,
   other: Option[BigDecimal] = None
-) {
+):
   def total: BigDecimal = Seq(letting, serviceProvision, other).flatten.sum
-}
 
-object Income6048 {
+object Income6048:
   implicit val format: OFormat[Income6048] = Json.format
-}

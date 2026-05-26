@@ -23,6 +23,5 @@ case class OtherCosts(
   otherCostDetails: Option[String] = None
 )
 
-object OtherCosts {
+object OtherCosts:
   implicit val format: OFormat[OtherCosts] = Json.format
-}

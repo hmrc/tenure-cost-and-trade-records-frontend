@@ -21,7 +21,7 @@ import models.submissions.lettingHistory.AdvertisingDetail
 
 class AdvertisingDetailFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in {
+  it should "bind good data as expected" in:
     val data  = Map(
       "websiteAddress"          -> "123.uk",
       "propertyReferenceNumber" -> "3456aaa"
@@ -29,7 +29,6 @@ class AdvertisingDetailFormSpec extends FormSpec:
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
-  }
 
   it should "unbind good data as expected" in {
     val residentDetail = AdvertisingDetail(

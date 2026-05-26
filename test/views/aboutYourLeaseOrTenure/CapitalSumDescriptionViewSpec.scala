@@ -21,7 +21,7 @@ import form.aboutYourLeaseOrTenure.CapitalSumDescriptionForm.capitalSumDescripti
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[String] {
+class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "capitalSumDescription"
 
@@ -39,7 +39,6 @@ class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[String] {
     behave like normalPage(createView, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to pay capital sum question Page" in {
-
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
@@ -64,4 +63,3 @@ class CapitalSumDescriptionViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

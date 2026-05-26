@@ -21,7 +21,7 @@ import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object ChangeOccupationAndAccountingForm {
+object ChangeOccupationAndAccountingForm:
 
   val changeOccupationAndAccountingForm: Form[AnswersYesNo] =
     Form(
@@ -29,5 +29,3 @@ object ChangeOccupationAndAccountingForm {
         "changeOccupationAndAccountingInfo" -> createYesNoType("error.changeOccupationAndAccountingInfo.required")
       )
     )
-
-}

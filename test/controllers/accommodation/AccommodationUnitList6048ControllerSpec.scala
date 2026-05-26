@@ -24,7 +24,7 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationUnitList6048ControllerSpec extends TestBaseSpec {
+class AccommodationUnitList6048ControllerSpec extends TestBaseSpec:
 
   private val nextPage = controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show.url
 
@@ -47,6 +47,7 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec {
     "return 200" in {
       val result = accommodationUnitList6048Controller.show(fakeRequest)
       status(result) shouldBe OK
+
     }
   }
 
@@ -65,7 +66,6 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec {
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
     }
-
   }
 
   "GET /accommodation-unit-remove" should {
@@ -101,5 +101,3 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec {
       redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)
     }
   }
-
-}

@@ -44,17 +44,17 @@ class RentIncludesVatController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludesVat")
 
     Ok(
       rentIncludeVatView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludesVat) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludesVat) match
           case Some(rentIncludeVat) => rentIncludesVatForm.fill(rentIncludeVat)
           case _                    => rentIncludesVatForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -64,13 +64,10 @@ class RentIncludesVatController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       rentIncludesVatForm,
       formWithErrors => BadRequest(rentIncludeVatView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludesVat = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentIncludesVatPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-}

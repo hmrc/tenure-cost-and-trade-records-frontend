@@ -42,18 +42,18 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CurrentLeaseOrAgreementBegin")
 
     Ok(
       currentLeaseOrAgreementBeginView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentLeaseOrAgreementBegin) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentLeaseOrAgreementBegin) match
           case Some(currentLeaseOrAgreementBegin) =>
             currentLeaseOrAgreementBeginForm.fill(currentLeaseOrAgreementBegin)
           case _                                  => currentLeaseOrAgreementBeginForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -63,14 +63,10 @@ class CurrentLeaseOrAgreementBeginController @Inject() (
     continueOrSaveAsDraft[CurrentLeaseOrAgreementBegin](
       currentLeaseOrAgreementBeginForm,
       formWithErrors => BadRequest(currentLeaseOrAgreementBeginView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentLeaseOrAgreementBegin = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CurrentLeaseBeginPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

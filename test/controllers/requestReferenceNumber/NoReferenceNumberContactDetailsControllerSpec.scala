@@ -22,36 +22,38 @@ import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
+class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
-  import utils.FormBindingTestAssertions.mustContainError
 
   private val postRequest = FakeRequest("POST", "/")
 
   def requestReferenceNumberContactDetailsController(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
-  ): RequestReferenceNumberContactDetailsController = RequestReferenceNumberContactDetailsController(
-    stubMessagesControllerComponents(),
-    requestReferenceNumberNavigator,
-    requestReferenceNumberContactDetailsView,
-    preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
-    mockSessionRepo
-  )
+  ): RequestReferenceNumberContactDetailsController =
+    RequestReferenceNumberContactDetailsController(
+      stubMessagesControllerComponents(),
+      requestReferenceNumberNavigator,
+      requestReferenceNumberContactDetailsView,
+      preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
+      mockSessionRepo
+    )
 
   def requestReferenceNumberContactDetailsControllerBlank(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumBlank)
-  ): RequestReferenceNumberContactDetailsController = RequestReferenceNumberContactDetailsController(
-    stubMessagesControllerComponents(),
-    requestReferenceNumberNavigator,
-    requestReferenceNumberContactDetailsView,
-    preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
-    mockSessionRepo
-  )
+  ): RequestReferenceNumberContactDetailsController =
+    RequestReferenceNumberContactDetailsController(
+      stubMessagesControllerComponents(),
+      requestReferenceNumberNavigator,
+      requestReferenceNumberContactDetailsView,
+      preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
@@ -97,7 +99,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "no Reference Number Contact Details form" should {
+  "No Reference Number Contact Details form" should {
     "error if fullName is missing " in {
       val formData = baseFormData - errorKey.fullName
       val form     = theForm.bind(formData)
@@ -111,6 +113,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
 
       mustContainError(errorKey.phone, Errors.contactPhoneRequired, form)
     }
+
     "error if phone number is too short" in {
       val formData = baseFormData + (errorKey.phone -> "12345")
       val form     = theForm.bind(formData)
@@ -140,19 +143,16 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val fullName = "requestReferenceNumberContactDetailsFullName"
       val phone    = "requestReferenceNumberContactDetails.phone"
       val email    = "requestReferenceNumberContactDetails.email"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "requestReferenceNumberContactDetailsFullName" -> "John Smith",
       "requestReferenceNumberContactDetails.phone"   -> "01234 123123",
       "requestReferenceNumberContactDetails.email1"  -> "blah.blah@test.com"
     )
-  }
-}

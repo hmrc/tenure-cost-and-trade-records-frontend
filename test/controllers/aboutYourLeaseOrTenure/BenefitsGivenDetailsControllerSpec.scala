@@ -23,22 +23,21 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class BenefitsGivenDetailsControllerSpec extends TestBaseSpec {
+class BenefitsGivenDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def benefitsGivenDetailsController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): BenefitsGivenDetailsController =
+    BenefitsGivenDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      benefitsGivenDetailsView,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo
     )
-  ): BenefitsGivenDetailsController = BenefitsGivenDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    benefitsGivenDetailsView,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo
-  )
 
   "BenefitsGivenDetailsController GET /" should {
     "return 200 and HTML with Benefits Given Details in the session" in {
@@ -71,7 +70,7 @@ class BenefitsGivenDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
 
-    "Bad request when string exceeds 2000 char" in {
+    "bad request when string exceeds 2000 char" in {
       val res = benefitsGivenDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "benefitsGivenDetails" ->
@@ -81,4 +80,3 @@ class BenefitsGivenDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

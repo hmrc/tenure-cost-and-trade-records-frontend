@@ -24,10 +24,11 @@ import play.api.data.Forms.mapping
 
 object LeaseOrAgreementYearsForm:
 
-  val leaseOrAgreementYearsForm: Form[LeaseOrAgreementYearsDetails] = Form(
-    mapping(
-      "commenceWithinThreeYears"        -> createYesNoType(Errors.tenancy3Years),
-      "agreedReviewedAlteredThreeYears" -> createYesNoType(Errors.rent3Years),
-      "rentUnderReviewNegotiated"       -> createYesNoType(Errors.underReview)
-    )(LeaseOrAgreementYearsDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val leaseOrAgreementYearsForm: Form[LeaseOrAgreementYearsDetails] =
+    Form(
+      mapping(
+        "commenceWithinThreeYears"        -> createYesNoType(Errors.tenancy3Years),
+        "agreedReviewedAlteredThreeYears" -> createYesNoType(Errors.rent3Years),
+        "rentUnderReviewNegotiated"       -> createYesNoType(Errors.underReview)
+      )(LeaseOrAgreementYearsDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

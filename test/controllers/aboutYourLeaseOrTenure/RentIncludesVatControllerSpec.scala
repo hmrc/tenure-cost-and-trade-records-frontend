@@ -23,22 +23,23 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentIncludesVatControllerSpec extends TestBaseSpec {
+class RentIncludesVatControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def rentIncludesVatController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): RentIncludesVatController = RentIncludesVatController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    rentIncludesVatView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): RentIncludesVatController =
+    RentIncludesVatController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      rentIncludesVatView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "RentIncludesVatController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Rent Includes VAT in the session" in {
       val result = rentIncludesVatController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -61,7 +62,7 @@ class RentIncludesVatControllerSpec extends TestBaseSpec {
     }
   }
 
-  "RentIncludesVatController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentIncludesVatController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -69,11 +70,10 @@ class RentIncludesVatControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = rentIncludesVatController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentIncludesVat" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
   }
-}

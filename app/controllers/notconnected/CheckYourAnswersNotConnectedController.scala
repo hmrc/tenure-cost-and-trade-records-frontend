@@ -49,7 +49,7 @@ class CheckYourAnswersNotConnectedController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   import FeedbackFormMapper.feedbackForm
 
@@ -81,14 +81,14 @@ class CheckYourAnswersNotConnectedController @Inject() (
   }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future(Ok(confirmationView(feedbackForm)))
+    Ok(confirmationView(feedbackForm))
   }
 
   private def submitToBackend(
     session: Session
   )(using hc: HeaderCarrier,
     messages: Messages
-  ): Future[Unit] = {
+  ): Future[Unit] =
     val sessionRemoveConnection = session.removeConnectionDetails.flatMap(_.removeConnectionDetails)
 
     val submission = NotConnectedSubmission(
@@ -105,6 +105,3 @@ class CheckYourAnswersNotConnectedController @Inject() (
     )
 
     submissionConnector.submitNotConnected(session.referenceNumber, submission).map(_ => ())
-  }
-
-}

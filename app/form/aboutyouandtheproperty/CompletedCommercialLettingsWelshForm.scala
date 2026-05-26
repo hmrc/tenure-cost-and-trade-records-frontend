@@ -29,16 +29,12 @@ import util.AccountingInformationUtil
 import java.time.LocalDate
 import scala.util.Try
 
-object CompletedCommercialLettingsWelshForm {
+object CompletedCommercialLettingsWelshForm:
 
-  def completedCommercialLettingsWelshForm(
-    years: Seq[String]
-  )(using request: SessionRequest[AnyContent],
-    messages: Messages
-  ): Form[Seq[CompletedLettings]] =
-    Form {
+  def completedCommercialLettingsWelshForm(years: Seq[String])(using request: SessionRequest[AnyContent], messages: Messages): Form[Seq[CompletedLettings]] =
+    Form(
       mappingPerYear(years, (year, idx) => "" -> completedMapping(year, idx))
-    }
+    )
 
   private def completedMapping(
     year: String,
@@ -65,5 +61,3 @@ object CompletedCommercialLettingsWelshForm {
           _.toString
         )
     )(CompletedLettings.apply)(o => Some(Tuple.fromProductTyped(o)))
-
-}

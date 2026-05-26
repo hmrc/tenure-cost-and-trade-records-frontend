@@ -42,15 +42,16 @@ class BunkerFuelCardDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show(index: Option[Int]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingBunkerFuelCardDetails: Option[BunkerFuelCardDetails] = for {
-      requestedIndex      <- index
-      existingBFCDetails  <-
-        request.sessionData.aboutTheTradingHistory.map(_.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty))
-      requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
-    } yield requestedBFCDetails.bunkerFuelCardDetails
+    val existingBunkerFuelCardDetails: Option[BunkerFuelCardDetails] =
+      for
+        requestedIndex      <- index
+        existingBFCDetails  <-
+          request.sessionData.aboutTheTradingHistory.map(_.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty))
+        requestedBFCDetails <- existingBFCDetails.lift(requestedIndex)
+      yield requestedBFCDetails.bunkerFuelCardDetails
 
     Ok(
       view(
@@ -66,14 +67,13 @@ class BunkerFuelCardDetailsController @Inject() (
     continueOrSaveAsDraft[BunkerFuelCardDetails](
       bunkerFuelCardDetailsForm,
       formWithErrors => BadRequest(view(formWithErrors, index, getBackLinkUrl(index), request.sessionData.toSummary)),
-      data => {
+      data =>
         val ifBunkerFuelCardsDetailsEmpty = AboutTheTradingHistory(bunkerFuelCardsDetails =
           Some(IndexedSeq(BunkerFuelCardsDetails(bunkerFuelCardDetails = data)))
         )
         val updatedAboutTheTradingHistory =
           request.sessionData.aboutTheTradingHistory.fold(ifBunkerFuelCardsDetailsEmpty) { aboutTheTradingHistory =>
-            val existingBunkerFuelCardsDetails                            =
-              aboutTheTradingHistory.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty)
+            val existingBunkerFuelCardsDetails                            = aboutTheTradingHistory.bunkerFuelCardsDetails.getOrElse(IndexedSeq.empty)
             val requestedDetails                                          = index.flatMap(existingBunkerFuelCardsDetails.lift)
             val updatedDetails: (Int, IndexedSeq[BunkerFuelCardsDetails]) = requestedDetails.fold {
               val defaultDetails  = BunkerFuelCardsDetails(data)
@@ -91,19 +91,14 @@ class BunkerFuelCardDetailsController @Inject() (
         session.saveOrUpdate(updatedSessionData).map { _ =>
           Redirect(navigator.nextPage(BunkerFuelCardsDetailsId, updatedSessionData).apply(updatedSessionData))
         }
-      }
     )
   }
 
   private def getBackLinkUrl(maybeIndex: Option[Int]) =
-    maybeIndex match {
+    maybeIndex match
       case Some(idx) =>
-        if (idx > 0) {
+        if idx > 0 then
           controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(idx - 1).url
-        } else {
+        else
           controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
-        }
       case _         => controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
-    }
-
-}

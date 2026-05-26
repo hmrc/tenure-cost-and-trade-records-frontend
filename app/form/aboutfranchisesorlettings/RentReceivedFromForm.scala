@@ -23,15 +23,12 @@ import play.api.data.Forms.*
 import play.api.data.format.Formats.*
 import play.api.i18n.Messages
 
-object RentReceivedFromForm {
+object RentReceivedFromForm:
 
   def rentReceivedFromForm(using messages: Messages): Form[RentReceivedFrom] =
     Form(
       mapping(
         "annualRent"  -> currencyMapping(".annualRent"),
-        "declaration" ->
-          of[Boolean]
-            .verifying(messages("rent.received.from.confirm.error"), value => value)
+        "declaration" -> of[Boolean].verifying(messages("rent.received.from.confirm.error"), value => value)
       )(RentReceivedFrom.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
-}

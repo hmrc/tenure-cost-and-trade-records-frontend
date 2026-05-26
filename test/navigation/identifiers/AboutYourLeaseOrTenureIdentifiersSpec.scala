@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
+class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec:
 
   "About your lease or tenure identifiers" when {
 
@@ -198,38 +198,53 @@ class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for check your answers about your lease or tenure" in
       assert(CheckYourAnswersAboutYourLeaseOrTenureId.toString.equals("checkYourAnswersAboutYourLeaseOrTenurePage"))
+
     "Identifier for service paid separately" in
       assert(ServicePaidSeparatelyId.toString.equals("servicePaidSeparatelyPage"))
+
     "Identifier for service paid separately list" in
       assert(ServicePaidSeparatelyListId.toString.equals("servicePaidSeparatelyListPage"))
+
     "Identifier for service paid separately charge" in
       assert(ServicePaidSeparatelyChargeId.toString.equals("servicePaidSeparatelyChargePage"))
+
     "Identifier for payment for trade services" in
       assert(PaymentForTradeServicesId.toString.equals("paymentForTradeServicesPage"))
+
     "Identifier for trade services description page" in
       assert(TradeServicesDescriptionId.toString.equals("tradeServicesDescriptionPage"))
+
     "Identifier for trade services list" in
       assert(TradeServicesListId.toString.equals("tradeServicesListPage"))
+
     "Identifier for type of tenure" in
       assert(TypeOfTenureId.toString.equals("typeOfTenurePage"))
+
     "Identifier for rent under review" in
       assert(IsRentUnderReviewId.toString.equals("isRentUnderReviewPage"))
+
     "Identifier for is vat payable" in
       assert(IsVATPayableForWholePropertyId.toString.equals("isVATPayableForWholePropertyPage"))
+
     "Identifier for throughput affects rent " in
       assert(ThroughputAffectsRentId.toString.equals("throughputAffectsRentPage"))
+
     "Identifier for throughput affects rent details" in
       assert(ThroughputAffectsRentDetailsId.toString.equals("throughputAffectsRentDetailsPage"))
+
     "Identifier for rent developed land" in
       assert(RentDevelopedLandId.toString.equals("rentDevelopedLandPage"))
+
     "Identifier for rent developed land details" in
       assert(RentDevelopedLandDetailsId.toString.equals("rentDevelopedLandDetailsPage"))
+
     "Identifier for rent include structures buildings" in
       assert(RentIncludeStructuresBuildingsId.toString.equals("rentIncludeStructuresBuildingsPage"))
+
     "Identifier for rent include structures buildings details" in
       assert(RentIncludeStructuresBuildingsDetailsId.toString.equals("rentIncludeStructuresBuildingsDetailsPage"))
 
     "Identifier for surrendered lease agreement details" in
       assert(SurrenderedLeaseAgreementDetailsId.toString.equals("surrenderedLeaseAgreementDetailsPage"))
+
   }
-}

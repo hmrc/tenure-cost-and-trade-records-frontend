@@ -29,10 +29,10 @@ import java.time.LocalDate
 class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
 
   val testConfig: Configuration = loadTestConfig()
-  given MongoCrypto             = createTestMongoCrypto(testConfig)
 
-  "SensitiveStillConnectedDetails" should {
+  given MongoCrypto = createTestMongoCrypto(testConfig)
 
+  "SensitiveStillConnectedDetails" should:
     "encrypt and decrypt sensitive fields correctly" in {
       val clearData     = StillConnectedDetails(
         addressConnectionType = Some(AddressConnectionType.AddressConnectionTypeYesChangeAddress),
@@ -70,7 +70,6 @@ class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers w
         checkYourAnswersConnectionToProperty = Some(CheckYourAnswersAndConfirm(AnswerYes, Some(true)))
       )
       val encryptedData = SensitiveStillConnectedDetails(clearData)
-      val d             = encryptedData.decryptedValue
-      d shouldBe clearData
+
+      encryptedData.decryptedValue shouldBe clearData
     }
-  }

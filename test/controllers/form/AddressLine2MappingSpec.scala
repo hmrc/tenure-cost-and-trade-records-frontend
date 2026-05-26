@@ -23,14 +23,12 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
 
-class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDrivenPropertyChecks {
+class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDrivenPropertyChecks:
 
-  trait Setup {
+  trait Setup:
     val form: Form[String] = Form(single("line2" -> validateAddressLineTwo))
-  }
 
-  "address line 2 mapping" should {
-
+  "Address line 2 mapping" should {
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
         ("address", "validity"),
@@ -42,11 +40,10 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
       TableDrivenPropertyChecks.forAll(lengths) { (line2, isValid) =>
         val res: Form[String] = form.bind(Map("line2" -> line2))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.addressLineTwo.maxLength"
-        }
       }
     }
 
@@ -60,11 +57,10 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
       TableDrivenPropertyChecks.forAll(validFormat) { (line2, isValid) =>
         val res: Form[String] = form.bind(Map("line2" -> line2))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.invalidCharAddress2"
-        }
       }
     }
 
@@ -78,12 +74,10 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
       TableDrivenPropertyChecks.forAll(isInput) { (line2, isValid) =>
         val res: Form[String] = form.bind(Map("line2" -> line2))
 
-        if (isValid) {
-          res.hasErrors shouldBe false
-        } else {
+        if isValid then
+          res.hasErrors         shouldBe false
+        else
           res.errors(0).message shouldBe "error.buildingNameNumber.required"
-        }
       }
     }
   }
-}

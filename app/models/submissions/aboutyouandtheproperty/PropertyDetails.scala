@@ -23,6 +23,5 @@ case class PropertyDetails(
   currentlyUsedOtherField: Option[String]
 )
 
-object PropertyDetails {
+object PropertyDetails:
   implicit val format: OFormat[PropertyDetails] = Json.format
-}

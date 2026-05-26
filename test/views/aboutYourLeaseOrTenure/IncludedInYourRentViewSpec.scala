@@ -23,7 +23,7 @@ import models.submissions.aboutYourLeaseOrTenure.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRentDetails] {
+class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRentDetails]:
 
   private val messageKeyPrefix = "includedInYourRent"
 
@@ -41,7 +41,7 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
   private def createViewUsingForm6045 = (form: Form[IncludedInYourRentDetails]) =>
     includedInYourRentView(form, Summary("99996045001"), forType6045)(using fakeRequest, messages)
 
-  "Included in rent view" must {
+  "Included in rent view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -95,5 +95,3 @@ class IncludedInYourRentViewSpec extends QuestionViewBehaviours[IncludedInYourRe
     }
 
   }
-
-}

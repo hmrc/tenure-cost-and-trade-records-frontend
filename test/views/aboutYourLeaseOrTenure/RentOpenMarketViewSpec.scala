@@ -25,7 +25,7 @@ import play.api.data.Form
 import play.api.mvc.AnyContentAsEmpty
 import views.behaviours.QuestionViewBehaviours
 
-class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentOpenMarketValue"
 
@@ -45,7 +45,7 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent open market view" must {
+  "Rent open market view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -101,4 +101,3 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

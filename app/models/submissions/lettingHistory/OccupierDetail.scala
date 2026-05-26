@@ -24,7 +24,7 @@ case class OccupierDetail(
   rentalPeriod: Option[LocalPeriod]
 ):
 
-  override def equals(that: Any): Boolean = that match {
+  override def equals(that: Any): Boolean = that match
     case OccupierDetail(name, address, None)               =>
       this.name.equalsIgnoreCase(name) && this.address == address && this.rentalPeriod.isEmpty
     case OccupierDetail(name, address, Some(rentalPeriod)) =>
@@ -32,7 +32,6 @@ case class OccupierDetail(
         name
       ) && this.address == address && this.rentalPeriod.isDefined && this.rentalPeriod.get.overlapsWith(rentalPeriod)
     case _                                                 => false
-  }
 
 object OccupierDetail:
 

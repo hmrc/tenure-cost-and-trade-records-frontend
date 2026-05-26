@@ -25,7 +25,8 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLoc
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class AdditionalAmusementsControllerSpec extends TestBaseSpec {
+class AdditionalAmusementsControllerSpec extends TestBaseSpec:
+
   private val mockAudit: Audit = mock[Audit]
   private val years            = Seq("2023", "2022", "2021")
 
@@ -79,7 +80,6 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include("/additional-bars-clubs")
     }
-
   }
 
   "SUBMIT /" should {
@@ -109,7 +109,6 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for invalid receipts" in {
-
       val formData = Map("additionalAmusements[0].receipts" -> "xxx")
 
       val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages).bind(formData)
@@ -121,7 +120,6 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for empty receipts" in {
-
       val formData = Map("additionalAmusements[1].receipts" -> "")
 
       val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages).bind(formData)
@@ -133,7 +131,6 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for negative receipts" in {
-
       val formData = Map("additionalAmusements[2].receipts" -> "-1")
 
       val form = AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages).bind(formData)
@@ -145,4 +142,3 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec {
     }
 
   }
-}

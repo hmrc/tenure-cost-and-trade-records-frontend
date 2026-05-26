@@ -24,7 +24,7 @@ import play.twirl.api.HtmlFormat
 import utils.TestBaseSpec
 import views.html.taskList.taskList
 
-class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec {
+class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec:
 
   private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
 
@@ -149,5 +149,3 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec 
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

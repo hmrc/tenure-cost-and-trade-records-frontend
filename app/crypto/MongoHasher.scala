@@ -25,16 +25,14 @@ import javax.inject.{Inject, Singleton}
   * @author Yuriy Tumakha
   */
 @Singleton
-class MongoHasher @Inject() (configuration: Configuration) extends Hasher with Verifier {
+class MongoHasher @Inject() (configuration: Configuration) extends Hasher with Verifier:
 
   private val hasherCrypto = OnewayCryptoFactory.shaCryptoFromConfig("oneway.hash", configuration.underlying)
 
   def hash(plainText: PlainText): Scrambled = hasherCrypto.hash(plainText)
 
-  def verify(sample: PlainText, ncrypted: Scrambled): Boolean = hasherCrypto.verify(sample, ncrypted)
+  def verify(sample: PlainText, encrypted: Scrambled): Boolean = hasherCrypto.verify(sample, encrypted)
 
   def hash(str: String): String = hash(PlainText(str)).value
 
   def verify(sample: String, hash: String): Boolean = verify(PlainText(sample), Scrambled(hash))
-
-}

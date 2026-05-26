@@ -46,7 +46,7 @@ class FinancialYearEndDatesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("FinancialYearEndDates")
@@ -57,10 +57,9 @@ class FinancialYearEndDatesController @Inject() (
       .fold(Redirect(routes.WhenDidYouFirstOccupyController.show())) { aboutTheTradingHistory =>
         val occupationAndAccounting          = aboutTheTradingHistory.occupationAndAccountingInformation.get
         val financialYearEnd: Seq[LocalDate] =
-          request.sessionData.forType match {
+          request.sessionData.forType match
             case FOR6030 => aboutTheTradingHistory.turnoverSections6030.map(_.financialYearEnd)
             case _       => aboutTheTradingHistory.turnoverSections.map(_.financialYearEnd)
-          }
         Ok(
           financialYearEndDatesView(
             financialYearEndDatesForm().fill(financialYearEnd),
@@ -74,10 +73,9 @@ class FinancialYearEndDatesController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(using request: SessionRequest[AnyContent]
   ): Boolean =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6030 => aboutTheTradingHistory.turnoverSections6030.nonEmpty
       case _       => aboutTheTradingHistory.turnoverSections.nonEmpty
-    }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     request.sessionData.aboutTheTradingHistory
@@ -94,21 +92,20 @@ class FinancialYearEndDatesController @Inject() (
                 financialYearsList(occupationAndAccounting)
               )
             ),
-          data => {
+          data =>
             val occupationAndAccounting = aboutTheTradingHistory.occupationAndAccountingInformation.get
             val financialYearEnd        = occupationAndAccounting.currentFinancialYearEnd.get.toMonthDay
 
             val newOccupationAndAccounting =
-              if (data.forall(d => MonthDay.of(d.getMonthValue, d.getDayOfMonth) == financialYearEnd)) {
+              if data.forall(d => MonthDay.of(d.getMonthValue, d.getDayOfMonth) == financialYearEnd) then
                 occupationAndAccounting
-              } else {
+              else
                 occupationAndAccounting.copy(financialYearEndHasChanged = Some(true))
-              }
 
-            val updatedData: Session = request.sessionData.forType match {
+            val updatedData: Session = request.sessionData.forType match
               case FOR6030 => buildUpdateData6030(aboutTheTradingHistory, data, newOccupationAndAccounting)
               case _       => buildUpdateData(aboutTheTradingHistory, data, newOccupationAndAccounting)
-            }
+
             session
               .saveOrUpdate(updatedData)
               .map(_ =>
@@ -119,7 +116,6 @@ class FinancialYearEndDatesController @Inject() (
                   .getOrElse(navigator.nextPage(FinancialYearEndDatesPageId, updatedData).apply(updatedData))
               )
               .map(Redirect)
-          }
         )
       }
   }
@@ -128,56 +124,48 @@ class FinancialYearEndDatesController @Inject() (
     aboutTheTradingHistory: AboutTheTradingHistory
   )(using request: SessionRequest[AnyContent]
   ) =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6030 => aboutTheTradingHistory.turnoverSections6030.headOption.flatMap(_.grossIncome).isDefined
       case _       => aboutTheTradingHistory.turnoverSections.headOption.flatMap(_.alcoholicDrinks).isDefined
-    }
 
   private def buildUpdateData(
     aboutTheTradingHistory: AboutTheTradingHistory,
     data: Seq[LocalDate],
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ) = {
+  ) =
     val turnoverSections = (aboutTheTradingHistory.turnoverSections zip data).map { case (turnoverSection, finYearEnd) =>
       turnoverSection.copy(financialYearEnd = finYearEnd)
     }
 
-    val costOfSales = if (aboutTheTradingHistory.costOfSales.size == turnoverSections.size) {
+    val costOfSales = if aboutTheTradingHistory.costOfSales.size == turnoverSections.size then
       (aboutTheTradingHistory.costOfSales zip turnoverSections.map(_.financialYearEnd)).map {
         case (costOfSales, finYearEnd) => costOfSales.copy(financialYearEnd = finYearEnd)
       }
-    } else {
+    else
       turnoverSections.map(_.financialYearEnd).map(CostOfSales(_, None, None, None, None))
-    }
 
-    val updatedData = updateAboutTheTradingHistory(
+    updateAboutTheTradingHistory(
       _.copy(
         occupationAndAccountingInformation = Some(newOccupationAndAccounting),
         turnoverSections = turnoverSections,
         costOfSales = costOfSales
       )
     )
-    updatedData
-  }
 
   private def buildUpdateData6030(
     aboutTheTradingHistory: AboutTheTradingHistory,
     data: Seq[LocalDate],
     newOccupationAndAccounting: OccupationalAndAccountingInformation
   )(using request: SessionRequest[AnyContent]
-  ) = {
+  ) =
     val turnoverSections6030 = (aboutTheTradingHistory.turnoverSections6030 zip data).map { case (turnoverSection6030, finYearEnd) =>
       turnoverSection6030.copy(financialYearEnd = finYearEnd)
     }
 
-    val updatedData = updateAboutTheTradingHistory(
+    updateAboutTheTradingHistory(
       _.copy(
         occupationAndAccountingInformation = Some(newOccupationAndAccounting),
         turnoverSections6030 = turnoverSections6030
       )
     )
-    updatedData
-  }
-
-}

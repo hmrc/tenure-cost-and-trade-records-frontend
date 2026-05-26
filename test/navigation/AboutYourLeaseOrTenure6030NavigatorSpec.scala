@@ -33,9 +33,10 @@ import utils.TestBaseSpec
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
-class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
+class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   private val navigator = AboutYourLeaseOrTenureNavigator(audit)
@@ -84,7 +85,6 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
-
       val session = session6030.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -104,7 +104,6 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to Ultimately responsible IR page when Ultimately Responsible OR has been completed" in {
-
       val session = session6030.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -124,7 +123,6 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to rent include trade services page when Ultimately Responsible BI has been completed" in {
-
       val session = session6030.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -144,7 +142,6 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
-
       val session = session6030.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -164,7 +161,6 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {
-
       val session = session6030.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -179,4 +175,3 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec {
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController.show()
     }
   }
-}

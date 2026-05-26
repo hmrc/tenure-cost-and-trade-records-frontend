@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
+class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -35,16 +35,17 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
 
   def currentLeaseOrAgreementBeginController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): CurrentLeaseOrAgreementBeginController = CurrentLeaseOrAgreementBeginController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    currentLeaseOrAgreementBeginView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): CurrentLeaseOrAgreementBeginController =
+    CurrentLeaseOrAgreementBeginController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      currentLeaseOrAgreementBeginView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "CurrentLeaseOrAgreementBeginController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Current Lease Or Agreement Begin in the session" in {
       val result = currentLeaseOrAgreementBeginController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -67,16 +68,15 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
     }
   }
 
-  "CurrentLeaseOrAgreementBeginController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = currentLeaseOrAgreementBeginController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data leaseBegin and grantedFor submitted" in {
+    "redirect when form data leaseBegin and grantedFor submitted" in {
       val res = currentLeaseOrAgreementBeginController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "leaseBegin.month" -> "09",
@@ -118,19 +118,16 @@ class CurrentLeaseOrAgreementBeginControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val occupyMonth = "leaseBegin.month"
       val occupyYear  = "leaseBegin.year"
       val grantedFor  = "grantedFor"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "leaseBegin.month" -> "9",
       "leaseBegin.year"  -> "2017",
       "grantedFor"       -> "1 year"
     )
-  }
-}

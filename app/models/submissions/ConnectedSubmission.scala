@@ -77,5 +77,5 @@ object ConnectedSubmission:
     session.lastCYAPageUrl,
     session.requestReferenceNumberDetails,
     session.accommodationDetails,
-    Instant.now()
+    Instant.now
   )

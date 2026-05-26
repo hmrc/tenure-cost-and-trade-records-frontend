@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class AdditionalInformationIdentifiersSpec extends TestBaseSpec {
+class AdditionalInformationIdentifiersSpec extends TestBaseSpec:
 
   "Additional information identifiers" when {
 
@@ -27,5 +27,5 @@ class AdditionalInformationIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for CYA page" in
       assert(CheckYourAnswersAdditionalInformationId.toString.equals("checkYourAnswersAdditionalInformationPage"))
+
   }
-}

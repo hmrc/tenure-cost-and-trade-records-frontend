@@ -25,7 +25,7 @@ import play.api.test.Helpers.{contentAsString, contentType, status, stubMessages
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
-class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec {
+class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec:
 
   private val mockNavigator = mock[AboutTheTradingHistoryNavigator]
 
@@ -59,16 +59,13 @@ class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec {
       val html   = Jsoup.parse(contentAsString(result))
       Option(html.getElementById("name").`val`()).value shouldBe "Card 1"
     }
-
   }
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = createBunkerFuelCardDetailsController().submit(None)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

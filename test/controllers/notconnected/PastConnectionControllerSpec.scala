@@ -22,26 +22,27 @@ import models.submissions.notconnected.RemoveConnectionDetails
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PastConnectionControllerSpec extends TestBaseSpec {
+class PastConnectionControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   def pastConnectionController(
     removeConnectionDetails: Option[RemoveConnectionDetails] = Some(prefilledNotConnectedYes)
-  ): PastConnectionController = PastConnectionController(
-    stubMessagesControllerComponents(),
-    removeConnectionNavigator,
-    pastConnectionView,
-    preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
-    mockSessionRepo
-  )
+  ): PastConnectionController =
+    PastConnectionController(
+      stubMessagesControllerComponents(),
+      removeConnectionNavigator,
+      pastConnectionView,
+      preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
+      mockSessionRepo
+    )
 
-  "Premises licence conditions controller" should {
+  "GET /" should {
     "return 200 and HTML with Past Connections with yes in the session" in {
       val result = pastConnectionController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -73,18 +74,19 @@ class PastConnectionControllerSpec extends TestBaseSpec {
         controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
       )
     }
+  }
 
-    "SUBMIT /" should {
-      "return 303 with location pointing to next page" in {
-        val request = FakeRequest(POST, "/").withFormUrlEncodedBody("pastConnectionType" -> "yes")
-        val result  = pastConnectionController().submit(request)
-        status(result)                   shouldBe Status.SEE_OTHER
-        header("Location", result).value shouldBe controllers.notconnected.routes.RemoveConnectionController.show().url
-      }
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = pastConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "POST /" should {
+    "return 303 with location pointing to next page" in {
+      val request = FakeRequest(POST, "/").withFormUrlEncodedBody("pastConnectionType" -> "yes")
+      val result  = pastConnectionController().submit(request)
+      status(result)                   shouldBe Status.SEE_OTHER
+      header("Location", result).value shouldBe controllers.notconnected.routes.RemoveConnectionController.show().url
+    }
+
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = pastConnectionController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
   }
 
@@ -113,13 +115,10 @@ class PastConnectionControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val pastConnectionType: String = "pastConnectionType"
-    }
 
     val baseFormData: Map[String, String] = Map("premisesLicenseConditions" -> "yes")
-  }
-}

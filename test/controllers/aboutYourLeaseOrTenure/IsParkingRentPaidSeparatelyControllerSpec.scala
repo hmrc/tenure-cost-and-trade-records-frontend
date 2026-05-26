@@ -28,7 +28,7 @@ import scala.language.reflectiveCalls
 /**
   * @author Yuriy Tumakha
   */
-class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
+class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec:
 
   import TestData.*
   import utils.FormBindingTestAssertions.*
@@ -36,19 +36,18 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
   val mockAudit: Audit = mock[Audit]
 
   def isParkingRentPaidSeparatelyController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): IsParkingRentPaidSeparatelyController =
+    IsParkingRentPaidSeparatelyController(
+      isParkingRentPaidSeparatelyView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): IsParkingRentPaidSeparatelyController = IsParkingRentPaidSeparatelyController(
-    isParkingRentPaidSeparatelyView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "IsParkingRentPaidSeparatelyController GET /" should {
+  "GET /" should {
     "return 200 and HTML with is parking rent paid separately is present in session" in {
       val result = isParkingRentPaidSeparatelyController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -74,10 +73,9 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
       val result = isParkingRentPaidSeparatelyController().show()(FakeRequest(GET, "/path?from=TL"))
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
-
   }
 
-  "IsParkingRentPaidSeparatelyController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = isParkingRentPaidSeparatelyController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -85,7 +83,7 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data isParkingRentPaidSeparately submitted" in {
+    "redirect when form data isParkingRentPaidSeparately submitted" in {
       val res = isParkingRentPaidSeparatelyController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "isParkingRentPaidSeparately" -> "yes"
@@ -104,14 +102,10 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val isParkingRentPaidSeparately: String = "isParkingRentPaidSeparately"
-    }
 
     val baseFormData: Map[String, String] = Map("isParkingRentPaidSeparately" -> "yes")
-  }
-
-}

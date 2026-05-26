@@ -25,7 +25,7 @@ import views.behaviours.QuestionViewBehaviours
 
 import scala.jdk.CollectionConverters.*
 
-class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   override val form: Form[AnswersYesNo] = AreYouThirdPartyForm.theForm
 
@@ -52,10 +52,10 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       messages
     )
 
-  "Are you a third party view" must {
+  "Are you a third party view" should {
 
     "behave like a normal page" when {
-      "rendered" must {
+      "rendered" should {
         "have the correct banner title" in
           checkServiceNameInHeaderBanner(createView())
 
@@ -105,7 +105,6 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(doc.toString.contains(messages("areYouThirdParty6076.l2")))
       assert(doc.toString.contains(messages("areYouThirdParty6076.l3")))
       assert(doc.toString.contains(messages("areYouThirdParty6076.l4")))
-
     }
 
     "contain continue button with the value Continue" in {
@@ -114,4 +113,3 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

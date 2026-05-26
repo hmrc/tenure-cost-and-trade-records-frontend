@@ -44,26 +44,23 @@ import java.time.{ZoneOffset, ZonedDateTime}
 import javax.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
-case class LoginDetails(referenceNumber: String, postcode: String, startTime: ZonedDateTime) {
+case class LoginDetails(referenceNumber: String, postcode: String, startTime: ZonedDateTime):
 
   /**
     * Returns only referenceNumber digits without slash or any other special char to use in endpoint path.
     */
   def referenceNumberCleaned: String = referenceNumber.replaceAll("[^0-9]", "")
-}
 
-object LoginController {
+object LoginController:
 
   val loginForm: Form[LoginDetails] = Form(
     mapping(
       // format of reference number should be 7 or 8 digits then / then 3 digits
       "referenceNumber" -> text.verifying(
         Errors.invalidRefNum,
-        x => {
+        x =>
           val cleanRefNumber = x.replaceAll("\\D+", "")
-          val validLength    = cleanRefNumber.length > 9 && cleanRefNumber.length < 12: Boolean
-          validLength
-        }
+          cleanRefNumber.length > 9 && cleanRefNumber.length < 12
       ),
       "postcode"        -> customPostcodeMapping,
       "start-time"      -> default(
@@ -75,8 +72,6 @@ object LoginController {
   )
 
   val startPage: Call = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show()
-
-}
 
 @Singleton
 class LoginController @Inject() (
@@ -95,7 +90,7 @@ class LoginController @Inject() (
 )(using ec: ExecutionContext
 ) extends FrontendController(mcc)
   with Logging
-  with I18nSupport {
+  with I18nSupport:
 
   import LoginController.loginForm
 
@@ -104,14 +99,14 @@ class LoginController @Inject() (
     val forTypeFromURL         = request.getQueryString("forType")
     val form                   = loginForm.fill(LoginDetails(referenceNumberFromUrl, "", nowInUK))
 
-    forTypeFromURL.flatMap(ForType.find) match {
+    forTypeFromURL.flatMap(ForType.find) match
       case Some(forType) =>
         audit.sendExplicitAudit(
           "ForRequestedFromContinue",
           DownloadPDFAudit(referenceNumberFromUrl, forType.toString, request.uri)
         )
-      case _             => Ok(login(form))
-    }
+      case _             =>
+
     Ok(login(form))
   }
 
@@ -155,21 +150,19 @@ class LoginController @Inject() (
     loginToBackend(using hc, ec)(cleanedRefNumber, cleanPostcode)
       .flatMap { case NoExistingDocument(token, forNum, address, isWelsh) =>
         auditLogin(referenceNumber, false, address, forNum)
-        ForType.find(forNum) match {
+        ForType.find(forNum) match
           case Some(forType) =>
             session
               .start(Session(referenceNumber, forType, address, token, isWelsh))
               .flatMap { _ =>
-                backendConnector.loadSubmissionDraft(cleanedRefNumber, hc).map {
+                backendConnector.loadSubmissionDraft(cleanedRefNumber, hc).map:
                   case Some(_) => Redirect(controllers.routes.SaveAsDraftController.loginToResume)
                   case _       => Redirect(startPage)
-                }
               }
           case None          =>
             session
               .start(Session(referenceNumber, FOR6010, address, token, isWelsh))
               .map(_ => Redirect(routes.LoginController.notValidFORType()))
-        }
       }
       .recover {
         case UpstreamErrorResponse(_, 409, _, _)    =>
@@ -180,14 +173,13 @@ class LoginController @Inject() (
           val failed            = Json.parse(body).as[FailedLoginResponse]
           val remainingAttempts = failed.numberOfRemainingTriesUntilIPLockout
           logger.warn(s"Failed login: RefNum: $referenceNumber Attempts remaining: $remainingAttempts")
-          if (remainingAttempts < 1) {
+          if remainingAttempts < 1 then
             val clientIP = r.headers.get(trueClientIp).getOrElse("")
             auditLockedOut(cleanedRefNumber, postcode, cleanPostcode, clientIP)
 
             Redirect(routes.LoginController.lockedOut)
-          } else {
+          else
             Redirect(routes.LoginController.loginFailed(remainingAttempts))
-          }
       }
       .recoverWith { case e: JsValidationException =>
         logger.warn(s"Failed login: JSON Error: $e")
@@ -203,7 +195,7 @@ class LoginController @Inject() (
     formOfReturn: String
   )(using
     hc: HeaderCarrier
-  ): Unit = {
+  ): Unit =
     val json = Json.obj(
       "returningUser"       -> returnUser,
       Audit.referenceNumber -> refNumber,
@@ -211,7 +203,6 @@ class LoginController @Inject() (
       Audit.address         -> address
     )
     audit.sendExplicitAudit("UserLogin", json)
-  }
 
   private def auditLockedOut(
     refNumber: String,
@@ -220,7 +211,7 @@ class LoginController @Inject() (
     lockedIP: String
   )(using
     hc: HeaderCarrier
-  ): Unit = {
+  ): Unit =
     val detailJson = Json.obj(
       Audit.referenceNumber -> refNumber,
       "postcode"            -> postcode,
@@ -228,7 +219,6 @@ class LoginController @Inject() (
       "lockedIP"            -> lockedIP
     )
     audit.sendExplicitAudit("LockedOut", detailJson)
-  }
 
   def lockedOut: Action[AnyContent] = Action { implicit request =>
     Unauthorized(lockedOutView())
@@ -238,10 +228,7 @@ class LoginController @Inject() (
     Unauthorized(loginFailedView(attemptsRemaining))
   }
 
-}
-
-object FailedLoginResponse {
+object FailedLoginResponse:
   implicit val f: Format[FailedLoginResponse] = Json.format
-}
 
 case class FailedLoginResponse(numberOfRemainingTriesUntilIPLockout: Int)

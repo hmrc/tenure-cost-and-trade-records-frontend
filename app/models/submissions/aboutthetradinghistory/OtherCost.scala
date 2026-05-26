@@ -25,10 +25,8 @@ case class OtherCost(
   financialYearEnd: LocalDate,
   contributionsToHeadOffice: Option[BigDecimal],
   otherCosts: Option[BigDecimal]
-) {
+):
   def total: BigDecimal = contributionsToHeadOffice.getOrElse(zeroBigDecimal) + otherCosts.getOrElse(zeroBigDecimal)
-}
 
-object OtherCost {
+object OtherCost:
   implicit val format: OFormat[OtherCost] = Json.format
-}

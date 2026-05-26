@@ -21,11 +21,11 @@ import play.api.http.Status
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class DownloadPDFControllerSpec extends TestBaseSpec {
+class DownloadPDFControllerSpec extends TestBaseSpec:
 
   val audit: Audit = mock[Audit]
 
-  private def downloadPDFController() =
+  private def downloadPDFController =
     DownloadPDFController(
       stubMessagesControllerComponents(),
       audit,
@@ -36,17 +36,15 @@ class DownloadPDFControllerSpec extends TestBaseSpec {
     "return 200" in {
       mockSessionRepo.saveOrUpdate(prefilledBaseSession)
 
-      val result = downloadPDFController().show("FOR2016")(fakeRequest)
+      val result = downloadPDFController.show("FOR2016")(fakeRequest)
       status(result) shouldBe Status.OK
     }
 
     "return HTML" in {
       mockSessionRepo.saveOrUpdate(prefilledBaseSession)
 
-      val result = downloadPDFController().show("FOR2016")(fakeRequest)
+      val result = downloadPDFController.show("FOR2016")(fakeRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
   }
-
-}

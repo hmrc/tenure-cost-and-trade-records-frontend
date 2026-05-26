@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "rentIncreasedAnnuallyWithRPIs"
 
@@ -37,7 +37,7 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[Answers
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncreaseAnnuallyWithRPIView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent Increase annually with RPI view" must {
+  "Rent Increase annually with RPI view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -85,4 +85,3 @@ class RentIncreaseAnnuallyWithRPIViewSpec extends QuestionViewBehaviours[Answers
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -41,17 +41,17 @@ class TenantsAdditionsDisregardedDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TenantsAdditionsDisregardedDetails")
 
     Ok(
       tenantsAdditionsDisregardedDetailsView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregardedDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregardedDetails) match
           case Some(data) => tenantsAdditionsDisregardedDetailsForm.fill(data)
           case _          => tenantsAdditionsDisregardedDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -60,16 +60,11 @@ class TenantsAdditionsDisregardedDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       tenantsAdditionsDisregardedDetailsForm,
-      formWithErrors =>
-        BadRequest(tenantsAdditionsDisregardedDetailsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      formWithErrors => BadRequest(tenantsAdditionsDisregardedDetailsView(formWithErrors, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregardedDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TenantsAdditionsDisregardedDetailsId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

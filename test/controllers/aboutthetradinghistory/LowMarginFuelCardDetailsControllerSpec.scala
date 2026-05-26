@@ -25,7 +25,7 @@ import play.api.test.Helpers.{contentAsString, contentType, status, stubMessages
 import play.api.test.{FakeRequest, Helpers}
 import utils.TestBaseSpec
 
-class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec {
+class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec:
 
   private val mockNavigator = mock[AboutTheTradingHistoryNavigator]
 
@@ -60,16 +60,13 @@ class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec {
       val html   = Jsoup.parse(contentAsString(result))
       Option(html.getElementById("name").`val`()).value shouldBe "Low Margin Card"
     }
-
   }
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = createLowMarginFuelCardDetailsController().submit(None)(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

@@ -22,11 +22,10 @@ import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 class NoOpInternalAuthTokenInitialiserSpec extends BaseSpec:
 
-  "NoOpInternalAuthTokenInitialiser.initialised method" should {
+  "NoOpInternalAuthTokenInitialiser.initialised method" should:
     "return Done" in {
       val initialiser = NoOpInternalAuthTokenInitialiser()
       val result      = await(initialiser.initialised)
 
       result shouldBe Done
     }
-  }

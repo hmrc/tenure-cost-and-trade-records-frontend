@@ -23,7 +23,7 @@ import models.submissions.aboutYourLeaseOrTenure.CurrentRentBasedOn.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCurrentRentBasedOnDetails] {
+class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCurrentRentBasedOnDetails]:
 
   private val messageKeyPrefix = "currentRentBasedOn"
 
@@ -35,7 +35,7 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
   private def createViewUsingForm = (form: Form[WhatIsYourCurrentRentBasedOnDetails]) =>
     whatIsYourRentBasedOnView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Current rent based on details view" must {
+  "Current rent based on details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -133,4 +133,3 @@ class WhatIsYourRentBasedOnViewSpec extends QuestionViewBehaviours[WhatIsYourCur
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -27,6 +27,5 @@ case class CarParkingSpaces(
   garages: Int = 0
 )
 
-object CarParkingSpaces {
+object CarParkingSpaces:
   implicit val format: OFormat[CarParkingSpaces] = Json.format
-}

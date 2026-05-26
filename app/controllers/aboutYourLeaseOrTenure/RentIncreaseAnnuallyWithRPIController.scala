@@ -46,18 +46,18 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncreaseAnnuallyWithRPI")
 
     Ok(
       rentIncreaseAnnuallyWithRPIView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncreasedAnnuallyWithRPIDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncreasedAnnuallyWithRPIDetails) match
           case Some(rentIncreasedAnnuallyWithRPIDetails) =>
             rentIncreasedAnnuallyWithRPIDetailsForm.fill(rentIncreasedAnnuallyWithRPIDetails)
           case None                                      => rentIncreasedAnnuallyWithRPIDetailsForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -67,27 +67,16 @@ class RentIncreaseAnnuallyWithRPIController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       rentIncreasedAnnuallyWithRPIDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          rentIncreaseAnnuallyWithRPIView(
-            formWithErrors,
-            getBackLink(request.sessionData),
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(rentIncreaseAnnuallyWithRPIView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncreasedAnnuallyWithRPIDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentIncreaseByRPIPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
+    answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match
       case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
       case _               => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
-    }
-}

@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.CustomerCreditAccounts
 import play.api.data.{Form, FormError}
 import views.behaviours.QuestionViewBehaviours
 
-class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[CustomerCreditAccounts]] {
+class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[CustomerCreditAccounts]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
 
@@ -116,4 +116,3 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
       }
     }
   }
-}

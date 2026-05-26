@@ -24,21 +24,21 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "enforcementActionHasBeenTaken"
+  private val messageKeyPrefix = "enforcementActionHasBeenTaken"
 
   override val form: Form[AnswersYesNo] = EnforcementActionForm.enforcementActionForm
 
-  val backLink: String = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
+  private val backLink: String = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
 
-  def createView: () => Html = () =>
-    enforcementActionsTakenView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => enforcementActionsTakenView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    enforcementActionsTakenView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => enforcementActionsTakenView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Enforcement Action view" must {
+  "Enforcement Action view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -93,4 +93,3 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
     }
 
   }
-}

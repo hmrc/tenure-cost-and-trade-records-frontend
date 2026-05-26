@@ -25,24 +25,23 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
+class ThroughputAffectsRentControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def throughputAffectsRentController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): ThroughputAffectsRentController =
+    ThroughputAffectsRentController(
+      throughputAffectsRentView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): ThroughputAffectsRentController = ThroughputAffectsRentController(
-    throughputAffectsRentView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "ThroughputAffectsRentController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Through Put Affect Rent in the session" in {
       val result = throughputAffectsRentController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -65,7 +64,7 @@ class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
     }
   }
 
-  "ThroughputAffectsRentController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = throughputAffectsRentController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -73,12 +72,10 @@ class ThroughputAffectsRentControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = throughputAffectsRentController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("throughputAffectsRent" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

@@ -23,7 +23,7 @@ import stub.StubSessionRepo
 import utils.TestBaseSpec
 import views.html.taskList.taskList
 
-class TaskListSpec extends TestBaseSpec {
+class TaskListSpec extends TestBaseSpec:
 
   private val sessionRepo = StubSessionRepo()
 
@@ -34,6 +34,7 @@ class TaskListSpec extends TestBaseSpec {
   )
 
   "GET /" should {
+
     "return 200 (6010)" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession)
 
@@ -111,8 +112,5 @@ class TaskListSpec extends TestBaseSpec {
       val result = taskListController.show(fakeRequest)
       status(result)      shouldBe Status.OK
       contentType(result) shouldBe Some("text/html")
-
     }
   }
-
-}

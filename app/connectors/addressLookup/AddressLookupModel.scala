@@ -23,7 +23,7 @@ case class AddressLookupConfirmedAddress(
   address: AddressLookupAddress,
   auditRef: String,
   id: Option[String]
-) {
+):
 
   val buildingNameNumber: String = address.lines.flatMap(_.headOption).getOrElse("")
   val street1: Option[String]    = address.lines.flatMap(lines => Option.when(lines.size > 2)(lines(1)))
@@ -38,12 +38,9 @@ case class AddressLookupConfirmedAddress(
     this.county,
     this.postcode
   )
-}
 
 object AddressLookupConfirmedAddress:
   given Format[AddressLookupConfirmedAddress] = Json.format
-
-// ------------
 
 case class AddressLookupAddress(
   lines: Option[Seq[String]],
@@ -53,8 +50,6 @@ case class AddressLookupAddress(
 
 object AddressLookupAddress:
   given Format[AddressLookupAddress] = Json.format
-
-// ------------
 
 case class AddressLookupCountry(
   name: Option[String],

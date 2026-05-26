@@ -25,21 +25,21 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "franchiseLettings"
+  private val messageKeyPrefix = "franchiseLettings"
 
-  val backLink: String = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
+  private val backLink: String = s"${controllers.routes.TaskListController.show.url}#franchise-or-lettings-tied-to-property"
 
   override val form: Form[AnswersYesNo] = FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 
-  def createView: () => Html = () =>
+  private def createView: () => Html = () =>
     franchiseOrLettingsTiedToPropertyView(form, FOR6010, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
+  private def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
     franchiseOrLettingsTiedToPropertyView(form, FOR6010, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Franchise or lettings tied to property view" must {
+  "Franchise or lettings tied to property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -100,4 +100,3 @@ class FranchiseOrLettingsTiedToPropertyViewSpec extends QuestionViewBehaviours[A
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

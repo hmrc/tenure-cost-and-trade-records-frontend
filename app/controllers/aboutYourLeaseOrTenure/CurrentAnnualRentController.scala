@@ -47,16 +47,16 @@ class CurrentAnnualRentController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CurrentAnnualRent")
     Ok(
       currentAnnualRentView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.annualRent) match
           case Some(annualRent) => currentAnnualRentForm().fill(annualRent)
           case _                => currentAnnualRentForm()
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -82,24 +82,18 @@ class CurrentAnnualRentController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(annualRent = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CurrentAnnualRentPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(answers: Session): String =
-    answers.forType match {
+    answers.forType match
       case FOR6011 =>
-        answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match {
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.connectedToLandlord) match
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show().url
-        }
       case _       => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
-    }
-}

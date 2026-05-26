@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.LowMarginFuelCardDetail
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMarginFuelCardDetail] {
+class LowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMarginFuelCardDetail]:
 
   override val form: Form[LowMarginFuelCardDetail] = lowMarginFuelCardDetailsForm
 
@@ -45,7 +45,6 @@ class LowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMargin
     behave like normalPage(createView, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to the benefits given Page" in {
-
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
@@ -65,5 +64,3 @@ class LowMarginFuelCardsDetailsViewSpec extends QuestionViewBehaviours[LowMargin
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

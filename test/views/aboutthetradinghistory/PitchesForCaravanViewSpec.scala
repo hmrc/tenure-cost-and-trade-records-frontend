@@ -22,12 +22,11 @@ import models.submissions.aboutthetradinghistory.TentingPitchesTradingData
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class PitchesForCaravanViewSpec extends QuestionViewBehaviours[Seq[TentingPitchesTradingData]] {
+class PitchesForCaravanViewSpec extends QuestionViewBehaviours[Seq[TentingPitchesTradingData]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
-  val form: Form[Seq[TentingPitchesTradingData]] =
-    tentingPitchesTradingDataForm(Seq("2026", "2025", "2024"))(using messages)
+  val form: Form[Seq[TentingPitchesTradingData]] = tentingPitchesTradingDataForm(Seq("2026", "2025", "2024"))(using messages)
 
   private def createView = () => pitchesForCaravansView(form, "")(using sessionRequest, messages)
 
@@ -54,5 +53,3 @@ class PitchesForCaravanViewSpec extends QuestionViewBehaviours[Seq[TentingPitche
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

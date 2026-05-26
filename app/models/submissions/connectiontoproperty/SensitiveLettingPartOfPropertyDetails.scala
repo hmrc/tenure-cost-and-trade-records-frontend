@@ -21,13 +21,15 @@ import models.submissions.common.AnswersYesNo
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
+import scala.language.implicitConversions
+
 case class SensitiveLettingPartOfPropertyDetails(
   tenantDetails: SensitiveTenantDetails,
   lettingPartOfPropertyRentDetails: Option[LettingPartOfPropertyRentDetails] = None,
   itemsIncludedInRent: List[String] = List.empty,
   addAnotherLettingToProperty: Option[AnswersYesNo] = None,
   maxOfLettings: Option[Boolean] = None
-) extends Sensitive[LettingPartOfPropertyDetails] {
+) extends Sensitive[LettingPartOfPropertyDetails]:
 
   override def decryptedValue: LettingPartOfPropertyDetails = LettingPartOfPropertyDetails(
     tenantDetails.decryptedValue,
@@ -36,9 +38,8 @@ case class SensitiveLettingPartOfPropertyDetails(
     addAnotherLettingToProperty,
     maxOfLettings
   )
-}
 
-object SensitiveLettingPartOfPropertyDetails {
+object SensitiveLettingPartOfPropertyDetails:
 
   implicit def format(using crypto: MongoCrypto): OFormat[SensitiveLettingPartOfPropertyDetails] = Json.format
 
@@ -50,4 +51,3 @@ object SensitiveLettingPartOfPropertyDetails {
       lettingDetails.addAnotherLettingToProperty,
       lettingDetails.maxOfLettings
     )
-}

@@ -28,6 +28,5 @@ case class SavedAsDraftEvent(
   exitPath: String
 )
 
-object SavedAsDraftEvent {
+object SavedAsDraftEvent:
   implicit val format: OFormat[SavedAsDraftEvent] = Json.format
-}

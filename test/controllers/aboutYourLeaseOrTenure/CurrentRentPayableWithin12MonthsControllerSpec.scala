@@ -24,22 +24,23 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
+class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def currentRentPayableWithin12MonthsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): CurrentRentPayableWithin12MonthsController = CurrentRentPayableWithin12MonthsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    currentRentPayableWithin12MonthsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): CurrentRentPayableWithin12MonthsController =
+    CurrentRentPayableWithin12MonthsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      currentRentPayableWithin12MonthsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "CurrentRentPayableWithin12MonthsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Current Rent Payable Within 12 Months in the session" in {
       val result = currentRentPayableWithin12MonthsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -74,7 +75,7 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "CurrentRentPayableWithin12MonthsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = currentRentPayableWithin12MonthsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -82,7 +83,7 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data rentPayable and dateReview submitted" in {
+    "redirect when form data rentPayable and dateReview submitted" in {
       val res = currentRentPayableWithin12MonthsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "rentPayable"      -> "yes",
@@ -94,4 +95,3 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

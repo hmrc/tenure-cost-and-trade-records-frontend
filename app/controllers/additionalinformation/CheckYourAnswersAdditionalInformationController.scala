@@ -42,15 +42,15 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       checkYourAnswersAdditionalInformationView(
-        request.sessionData.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) match {
+        request.sessionData.additionalInformation.flatMap(_.checkYourAnswersAdditionalInformation) match
           case Some(answer) => checkYourAnswersAdditionalInformationForm.fill(answer)
           case _            => checkYourAnswersAdditionalInformationForm
-        },
+        ,
         request.sessionData
       )
     )
@@ -59,13 +59,7 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       checkYourAnswersAdditionalInformationForm,
-      formWithErrors =>
-        BadRequest(
-          checkYourAnswersAdditionalInformationView(
-            formWithErrors,
-            request.sessionData
-          )
-        ),
+      formWithErrors => BadRequest(checkYourAnswersAdditionalInformationView(formWithErrors, request.sessionData)),
       data =>
         val updatedData = updateAdditionalInformation(_.copy(checkYourAnswersAdditionalInformation = Some(data)))
           .copy(lastCYAPageUrl =
@@ -76,5 +70,3 @@ class CheckYourAnswersAdditionalInformationController @Inject() (
         }
     )
   }
-
-}

@@ -21,7 +21,7 @@ import models.submissions.lettingHistory.ResidentDetail
 
 class ResidentDetailFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in {
+  it should "bind good data as expected" in:
     val data  = Map(
       "name"    -> "name",
       "address" -> "address"
@@ -29,7 +29,6 @@ class ResidentDetailFormSpec extends FormSpec:
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
-  }
 
   it should "unbind good data as expected" in {
     val residentDetail = ResidentDetail(

@@ -17,54 +17,57 @@
 package controllers.aboutyouandtheproperty
 
 import connectors.Audit
+import form.aboutyouandtheproperty.TiedForGoodsForm.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class TiedForGoodsControllerSpec extends TestBaseSpec {
+class TiedForGoodsControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import form.aboutyouandtheproperty.TiedForGoodsForm.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
   def tiedForGoodsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): TiedForGoodsController = TiedForGoodsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    tiedForGoodsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): TiedForGoodsController =
+    TiedForGoodsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      tiedForGoodsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def tiedForGoodsControllerNoEnforcement(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): TiedForGoodsController = TiedForGoodsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    tiedForGoodsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): TiedForGoodsController =
+    TiedForGoodsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      tiedForGoodsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def tiedForGoodsControllerNone(): TiedForGoodsController = TiedForGoodsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    tiedForGoodsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def tiedForGoodsControllerNone(): TiedForGoodsController =
+    TiedForGoodsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      tiedForGoodsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "Tied for goods controller" should {
+  "GET /" should {
     "return 200 tied goods in the session" in {
       val result = tiedForGoodsController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -98,19 +101,19 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
       )
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = tiedForGoodsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = tiedForGoodsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
+    }
 
-      "Redirect when form data submitted" in {
-        val res = tiedForGoodsController().submit(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("tiedForGoods" -> "yes")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
+    "redirect when form data submitted" in {
+      val res = tiedForGoodsController().submit(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("tiedForGoods" -> "yes")
+      )
+      status(res) shouldBe SEE_OTHER
     }
   }
 
@@ -123,13 +126,10 @@ class TiedForGoodsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val tiedForGoods: String = "tiedForGoods"
-    }
 
     val baseFormData: Map[String, String] = Map("tiedForGoods" -> "yes")
-  }
-}

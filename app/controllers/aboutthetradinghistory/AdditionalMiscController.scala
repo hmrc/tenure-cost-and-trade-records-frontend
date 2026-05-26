@@ -42,7 +42,7 @@ class AdditionalMiscController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AdditionalMisc")
@@ -52,6 +52,7 @@ class AdditionalMiscController @Inject() (
       val details = request.sessionData.aboutTheTradingHistoryPartOne
         .flatMap(_.additionalMiscDetails)
         .getOrElse(AdditionalMiscDetails())
+
       Ok(
         view(
           additionalMiscForm(years).fill(
@@ -73,7 +74,7 @@ class AdditionalMiscController @Inject() (
       continueOrSaveAsDraft[(Seq[AdditionalMisc], AdditionalMiscDetails)](
         additionalMiscForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success._1 zip turnoverSections6045).map { case (additionalMisc, previousSection) =>
             previousSection.copy(additionalMisc = Some(additionalMisc))
           }
@@ -98,7 +99,6 @@ class AdditionalMiscController @Inject() (
                 .apply(updatedData)
             )
           }
-        }
       )
     }
   }
@@ -113,11 +113,6 @@ class AdditionalMiscController @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show().url
-      case _     =>
-        aboutthetradinghistory.routes.AdditionalAmusementsController.show().url
-    }
-
-}
+    navigator.from match
+      case "CYA" => aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show().url
+      case _     => aboutthetradinghistory.routes.AdditionalAmusementsController.show().url

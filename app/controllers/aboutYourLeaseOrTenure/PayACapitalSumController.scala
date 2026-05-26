@@ -47,17 +47,17 @@ class PayACapitalSumController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PayACapitalSum")
 
     Ok(
       payACapitalSumView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match
           case Some(data) => payACapitalSumForm.fill(data)
           case _          => payACapitalSumForm
-        },
+        ,
         request.sessionData.forType,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
@@ -77,41 +77,33 @@ class PayACapitalSumController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumOrPremium = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PayCapitalSumId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum"
       case _    =>
-        answers.forType match {
+        answers.forType match
           case FOR6020           =>
-            answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven) match {
-              case Some(AnswerYes) =>
-                controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
+            answers.aboutLeaseOrAgreementPartThree.flatMap(_.benefitsGiven) match
+              case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenDetailsController.show().url
               case Some(AnswerNo)  => controllers.aboutYourLeaseOrTenure.routes.BenefitsGivenController.show().url
               case _               =>
                 logger.warn("Back link for pay capital sum page reached with unknown benefits given value")
                 controllers.routes.TaskListController.show.url
-            }
           case FOR6045 | FOR6046 =>
             if answers.aboutLeaseOrAgreementPartFour.flatMap(_.isGivenRentFreePeriod).contains(AnswerYes) then
               controllers.aboutYourLeaseOrTenure.routes.RentFreePeriodDetailsController.show().url
             else controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController.show().url
           case _                 =>
-            answers.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
+            answers.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match
               case Some(AnswerYes) =>
                 controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedDetailsController.show().url
               case _               =>
                 controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-            }
-        }
-    }
-}

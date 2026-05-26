@@ -24,18 +24,19 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class LicensableActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class LicensableActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "licensableActivities"
+  private val messageKeyPrefix = "licensableActivities"
 
   override val form: Form[AnswersYesNo] = LicensableActivitiesForm.licensableActivitiesForm
 
-  def createView: () => Html = () => licensableActivitiesView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => licensableActivitiesView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    licensableActivitiesView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => licensableActivitiesView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Property licence activities view" must {
+  "Property licence activities view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -102,5 +103,3 @@ class LicensableActivitiesViewSpec extends QuestionViewBehaviours[AnswersYesNo] 
       assert(doc.contains(messages("help.licensableActivities.list1.item7")))
     }
   }
-
-}

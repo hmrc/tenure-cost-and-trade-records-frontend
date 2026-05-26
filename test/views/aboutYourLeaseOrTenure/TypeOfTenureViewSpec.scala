@@ -23,7 +23,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class TypeOfTenureViewSpec extends QuestionViewBehaviours[TypeOfTenure] {
+class TypeOfTenureViewSpec extends QuestionViewBehaviours[TypeOfTenure]:
 
   val messageKeyPrefix = "typeOfTenure"
 
@@ -31,10 +31,10 @@ class TypeOfTenureViewSpec extends QuestionViewBehaviours[TypeOfTenure] {
 
   def createView: () => Html = () => typeOfTenureView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[TypeOfTenure] => Html = (form: Form[TypeOfTenure]) =>
-    typeOfTenureView(form, Summary("99996010001"))(using fakeRequest, messages)
+  def createViewUsingForm: Form[TypeOfTenure] => Html =
+    form => typeOfTenureView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Type of Tenure view" must {
+  "Type of Tenure view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -84,5 +84,3 @@ class TypeOfTenureViewSpec extends QuestionViewBehaviours[TypeOfTenure] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

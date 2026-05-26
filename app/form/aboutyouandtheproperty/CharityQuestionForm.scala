@@ -19,13 +19,13 @@ package form.aboutyouandtheproperty
 import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
-import play.api.data.Forms.mapping
+import play.api.data.Forms.single
 
-object CharityQuestionForm {
+object CharityQuestionForm:
 
-  val charityQuestionForm: Form[AnswersYesNo] = Form(
-    mapping(
-      "charityQuestion" -> createYesNoType("error.charityQuestion.missing")
-    )(x => x)(b => Some(b))
-  )
-}
+  val charityQuestionForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "charityQuestion" -> createYesNoType("error.charityQuestion.missing")
+      )
+    )

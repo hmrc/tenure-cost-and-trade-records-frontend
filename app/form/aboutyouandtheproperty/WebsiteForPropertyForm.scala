@@ -18,7 +18,7 @@ package form.aboutyouandtheproperty
 
 import form.Errors
 import form.MappingSupport.createYesNoType
-import form.WebsiteMapping.validateWebaddress
+import form.WebsiteMapping.validateWebAddress
 import models.submissions.aboutyouandtheproperty.WebsiteForPropertyDetails
 import models.submissions.common.AnswersYesNo.AnswerYes
 import play.api.data.Form
@@ -27,13 +27,14 @@ import uk.gov.voa.play.form.ConditionalMappings.mandatoryIfEqual
 
 object WebsiteForPropertyForm:
 
-  val websiteForPropertyForm: Form[WebsiteForPropertyDetails] = Form(
-    mapping(
-      "buildingOperatingHaveAWebsite" -> createYesNoType(Errors.buildingOperatingHaveAWebsite),
-      "websiteAddressForProperty"     -> mandatoryIfEqual(
-        "buildingOperatingHaveAWebsite",
-        AnswerYes.toString,
-        validateWebaddress
-      )
-    )(WebsiteForPropertyDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
+  val websiteForPropertyForm: Form[WebsiteForPropertyDetails] =
+    Form(
+      mapping(
+        "buildingOperatingHaveAWebsite" -> createYesNoType(Errors.buildingOperatingHaveAWebsite),
+        "websiteAddressForProperty"     -> mandatoryIfEqual(
+          "buildingOperatingHaveAWebsite",
+          AnswerYes.toString,
+          validateWebAddress
+        )
+      )(WebsiteForPropertyDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

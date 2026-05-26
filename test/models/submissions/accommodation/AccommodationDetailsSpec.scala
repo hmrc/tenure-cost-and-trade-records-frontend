@@ -26,7 +26,6 @@ import test.TestObjects
   */
 class AccommodationDetailsSpec extends AnyFlatSpec with Matchers with TestObjects:
 
-  "AccommodationDetails" should "be serialized/deserialized from JSON" in {
+  "AccommodationDetails" should "be serialized/deserialized from JSON" in:
     val json = Json.toJson(prefilledAccommodationDetails)
     json.as[AccommodationDetails] shouldBe prefilledAccommodationDetails
-  }

@@ -41,7 +41,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentPayableVaryAccordingToGrossOrNetDetails")
@@ -49,10 +49,10 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
     Ok(
       rentPayableVaryAccordingToGrossOrNetDetailsView(
         request.sessionData.aboutLeaseOrAgreementPartTwo
-          .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match {
+          .flatMap(_.rentPayableVaryAccordingToGrossOrNetDetails) match
           case Some(details) => rentPayableVaryAccordingToGrossOrNetInformationForm.fill(details)
           case _             => rentPayableVaryAccordingToGrossOrNetInformationForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -61,9 +61,8 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       rentPayableVaryAccordingToGrossOrNetInformationForm,
-      formWithErrors =>
-        BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      formWithErrors => BadRequest(rentPayableVaryAccordingToGrossOrNetDetailsView(formWithErrors, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(
           _.copy(rentPayableVaryAccordingToGrossOrNetDetails = Some(data))
         )
@@ -72,9 +71,5 @@ class RentPayableVaryAccordingToGrossOrNetDetailsController @Inject() (
           .map(_ =>
             Redirect(navigator.nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId, updatedData).apply(updatedData))
           )
-
-      }
     )
   }
-
-}

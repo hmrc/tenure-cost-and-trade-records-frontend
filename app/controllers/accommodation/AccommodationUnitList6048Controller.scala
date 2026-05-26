@@ -50,15 +50,10 @@ class AccommodationUnitList6048Controller @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(
-      accommodationUnitListView(
-        accommodationUnitList6048Form,
-        accommodationUnits
-      )
-    )
+    Ok(accommodationUnitListView(accommodationUnitList6048Form, accommodationUnits))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -66,7 +61,7 @@ class AccommodationUnitList6048Controller @Inject() (
       accommodationUnitList6048Form,
       formWithErrors => BadRequest(accommodationUnitListView(formWithErrors, accommodationUnits)),
       data =>
-        (data == AnswerYes, accommodationUnits.size) match {
+        (data == AnswerYes, accommodationUnits.size) match
           case (true, size) if size >= AccommodationUnits.maxListItems =>
             Redirect(controllers.routes.AddedMaximumListItemsController.show(AccommodationUnits))
           case (true, size)                                            =>
@@ -81,7 +76,6 @@ class AccommodationUnitList6048Controller @Inject() (
             )
           case (false, _)                                              =>
             Redirect(navigator.nextPage(AccommodationUnitListPageId, request.sessionData).apply(request.sessionData))
-        }
     )
   }
 
@@ -102,11 +96,7 @@ class AccommodationUnitList6048Controller @Inject() (
     )
   }
 
-  private def performRemove(
-    removeLastAllowed: Boolean = false
-  )(using
-    request: SessionRequest[AnyContent]
-  ): Future[Result] =
+  private def performRemove(removeLastAllowed: Boolean = false)(using request: SessionRequest[AnyContent]): Future[Result] =
     val updatedData = updateAccommodationDetails(accommodationDetails =>
       val accommodationUnits = accommodationDetails.accommodationUnits.patch(navigator.idx, Nil, 1)
 
@@ -119,35 +109,21 @@ class AccommodationUnitList6048Controller @Inject() (
 
     session
       .saveOrUpdate(updatedData)
-      .map { _ =>
+      .map: _ =>
         if updatedData.accommodationDetails.exists(_.accommodationUnits.nonEmpty) then
           if navigator.from == "CYA" then Redirect(navigator.cyaPage.get)
           else Redirect(controllers.accommodation.routes.AccommodationUnitList6048Controller.show)
         else Redirect(s"${controllers.accommodation.routes.AccommodationUnit6048Controller.show.url}?idx=0")
-      }
 
-  private def accommodationDetails(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationDetails] = request.sessionData.accommodationDetails
+  private def accommodationDetails(using request: SessionRequest[AnyContent]): Option[AccommodationDetails] =
+    request.sessionData.accommodationDetails
 
-  private def accommodationUnits(
-    using
-    request: SessionRequest[AnyContent]
-  ): List[AccommodationUnit] =
+  private def accommodationUnits(using request: SessionRequest[AnyContent]): List[AccommodationUnit] =
     accommodationDetails.fold(List.empty)(_.accommodationUnits)
 
-  private def selectedUnit(
-    using
-    request: SessionRequest[AnyContent]
-  ): Option[AccommodationUnit] =
+  private def selectedUnit(using request: SessionRequest[AnyContent]): Option[AccommodationUnit] =
     accommodationDetails
       .flatMap(_.accommodationUnits.lift(navigator.idx))
 
-  private def selectedUnitName(
-    using
-    request: SessionRequest[AnyContent]
-  ): String =
+  private def selectedUnitName(using request: SessionRequest[AnyContent]): String =
     selectedUnit.fold("")(_.unitName)
-
-}

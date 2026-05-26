@@ -49,8 +49,7 @@ class AdvertisingRightLettingControllerSpec extends TestBaseSpec with JsoupHelpe
         aboutFranchisesOrLettings = Some(
           prefilledAboutFranchiseOrLettingsWith6020LettingsAll.copy(
             lettings =
-              if havingNoLettings
-              then None
+              if havingNoLettings then None
               else prefilledAboutFranchiseOrLettingsWith6020LettingsAll.lettings
           )
         )

@@ -48,7 +48,7 @@ class CaravansPerServiceController @Inject() (
   mcc: MessagesControllerComponents
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   implicit val ec: ExecutionContext = mcc.executionContext
 
@@ -75,14 +75,13 @@ class CaravansPerServiceController @Inject() (
     continueOrSaveAsDraft[CaravansPerService](
       caravansPerServiceForm,
       formWithErrors => BadRequest(caravansPerServiceView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCaravans(updateAnswer(data))
 
         session
           .saveOrUpdate(updatedData)
           .map(_ => navigator.nextPage(CaravansPerServiceId, updatedData).apply(updatedData))
           .map(Redirect)
-      }
     )
   }
 
@@ -91,5 +90,3 @@ class CaravansPerServiceController @Inject() (
       .filter(_ => navigator.from == "CYA")
       .getOrElse(routes.CaravansTotalSiteCapacityController.show())
       .url
-
-}

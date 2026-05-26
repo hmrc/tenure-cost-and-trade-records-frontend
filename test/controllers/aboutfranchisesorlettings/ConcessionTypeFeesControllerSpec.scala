@@ -22,7 +22,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class ConcessionTypeFeesControllerSpec extends TestBaseSpec {
+class ConcessionTypeFeesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -60,12 +60,9 @@ class ConcessionTypeFeesControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
-
       val res = controller.submit(0)(
         FakeRequest().withFormUrlEncodedBody()
       )
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

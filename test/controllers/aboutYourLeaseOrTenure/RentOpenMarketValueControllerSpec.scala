@@ -25,23 +25,24 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentOpenMarketValueControllerSpec extends TestBaseSpec {
+class RentOpenMarketValueControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def rentOpenMarketValueController(
     forType: ForType = FOR6010,
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): RentOpenMarketValueController = RentOpenMarketValueController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    rentOpenMarketValueView,
-    preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): RentOpenMarketValueController =
+    RentOpenMarketValueController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      rentOpenMarketValueView,
+      preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "RentOpenMarketValueController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with Yes in the sessions" in {
       val result = rentOpenMarketValueController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -94,7 +95,7 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
     }
   }
 
-  "RentOpenMarketValueController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentOpenMarketValueController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -102,11 +103,10 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data rentOpenMarketValue submitted" in {
+    "redirect when form data rentOpenMarketValue submitted" in {
       val res = rentOpenMarketValueController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentOpenMarketValue" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
   }
-}

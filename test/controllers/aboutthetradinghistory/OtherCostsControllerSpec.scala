@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class OtherCostsControllerSpec extends TestBaseSpec {
+class OtherCostsControllerSpec extends TestBaseSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
@@ -77,5 +77,3 @@ class OtherCostsControllerSpec extends TestBaseSpec {
       )
     }
   }
-
-}

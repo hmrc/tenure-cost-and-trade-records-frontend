@@ -46,17 +46,17 @@ class PayACapitalSumDetailsController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("PayACapitalSumDetails")
 
     Ok(
       payACapitalSumDetailsView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumInformationDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumInformationDetails) match
           case Some(data) => payACapitalSumDetailsForm.fill(data)
           case _          => payACapitalSumDetailsForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -66,28 +66,19 @@ class PayACapitalSumDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[PayACapitalSumInformationDetails](
       payACapitalSumDetailsForm,
-      formWithErrors =>
-        BadRequest(
-          payACapitalSumDetailsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(payACapitalSumDetailsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(payACapitalSumInformationDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(PayCapitalSumDetailsId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(answers: Session)(using request: Request[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url + "#pay-a-capital-sum-details"
       case _    =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match {
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.payACapitalSumOrPremium) match
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show().url
-        }
-    }
-}

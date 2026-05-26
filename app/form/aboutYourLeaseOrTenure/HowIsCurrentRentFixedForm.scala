@@ -23,13 +23,12 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.i18n.Messages
 
-object HowIsCurrentRentFixedForm {
+object HowIsCurrentRentFixedForm:
 
-  def howIsCurrentRentFixedForm(using messages: Messages): Form[HowIsCurrentRentFixed] = Form(
-    mapping(
-      "howIsCurrentRentFixed" -> howIsCurrentRentFixedType,
-      "rentActuallyAgreed"    -> requiredDateMapping("rentActuallyAgreed", allowPastDates = true)
-    )(HowIsCurrentRentFixed.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
-
-}
+  def howIsCurrentRentFixedForm(using messages: Messages): Form[HowIsCurrentRentFixed] =
+    Form(
+      mapping(
+        "howIsCurrentRentFixed" -> howIsCurrentRentFixedType,
+        "rentActuallyAgreed"    -> requiredDateMapping("rentActuallyAgreed", allowPastDates = true)
+      )(HowIsCurrentRentFixed.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

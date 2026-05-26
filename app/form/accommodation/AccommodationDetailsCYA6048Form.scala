@@ -27,8 +27,8 @@ import play.api.data.Forms.single
 object AccommodationDetailsCYA6048Form:
 
   val accommodationDetailsCYA6048Form: Form[AnswersYesNo] =
-    Form {
+    Form(
       single(
         "sectionCompleted" -> createYesNoType("error.checkYourAnswersRadio.required")
       )
-    }
+    )

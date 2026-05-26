@@ -48,7 +48,7 @@ class CarParkingAnnualRentController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CarParkingAnnualRent")
@@ -58,10 +58,10 @@ class CarParkingAnnualRentController @Inject() (
         leaseOrAgreementPartThree
           .flatMap(_.carParking)
           .flatMap(carParking =>
-            for {
+            for
               annualRent    <- carParking.annualRent
               fixedRentFrom <- carParking.fixedRentFrom
-            } yield (annualRent, fixedRentFrom)
+            yield (annualRent, fixedRentFrom)
           )
           .fold(carParkingAnnualRentForm)(carParkingAnnualRentForm.fill),
         getBackLink
@@ -73,7 +73,7 @@ class CarParkingAnnualRentController @Inject() (
     continueOrSaveAsDraft[(BigDecimal, LocalDate)](
       carParkingAnnualRentForm,
       formWithErrors => BadRequest(carParkingAnnualRentView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCarParking(
           _.copy(annualRent = Some(data._1), fixedRentFrom = Some(data._2))
         )
@@ -81,7 +81,6 @@ class CarParkingAnnualRentController @Inject() (
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CarParkingAnnualRentId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
@@ -91,9 +90,6 @@ class CarParkingAnnualRentController @Inject() (
   ): Option[AboutLeaseOrAgreementPartThree] = request.sessionData.aboutLeaseOrAgreementPartThree
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "TL" => controllers.routes.TaskListController.show.url
       case _    => controllers.aboutYourLeaseOrTenure.routes.RentedSeparatelyParkingSpacesController.show().url
-    }
-
-}

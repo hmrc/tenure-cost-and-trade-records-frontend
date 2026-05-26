@@ -40,7 +40,7 @@ class MaxOfLettingsReachedController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(src: Option[String]): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     val (backLink, form) = getDetails(src, request)
@@ -68,18 +68,17 @@ class MaxOfLettingsReachedController @Inject() (
             src.getOrElse("")
           )
         ),
-      data => {
-        val updatedData = src match {
+      data =>
+        val updatedData = src match
           case Some("connection")   => updateStillConnectedDetails(_.copy(maxOfLettings = data))
           case Some("lettings")     => updateAboutFranchisesOrLettings(_.copy(currentMaxOfLetting = data))
           case Some("typeOfIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = data))
           case Some("rentalIncome") => updateAboutFranchisesOrLettings(_.copy(rentalIncomeMax = data))
           case _                    => request.sessionData
-        }
         session
           .saveOrUpdate(updatedData)
           .map { _ =>
-            src match {
+            src match
               case Some("connection") =>
                 connectionNavigator
                   .cyaPageDependsOnSession(updatedData)
@@ -90,10 +89,8 @@ class MaxOfLettingsReachedController @Inject() (
                       .apply(updatedData)
                   )
               case _                  => franchiseNavigator.nextPage(MaxOfLettingsReachedCurrentId, updatedData).apply(updatedData)
-            }
           }
           .map(Redirect)
-      }
     )
   }
 
@@ -101,7 +98,7 @@ class MaxOfLettingsReachedController @Inject() (
     source: Option[String],
     request: SessionRequest[AnyContent]
   ): (String, Option[Boolean]) =
-    source match {
+    source match
       case Some("connection")   =>
         (
           controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(4).url,
@@ -127,5 +124,3 @@ class MaxOfLettingsReachedController @Inject() (
           routes.TaskListController.show.url,
           None
         )
-    }
-}

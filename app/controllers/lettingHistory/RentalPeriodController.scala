@@ -93,27 +93,20 @@ class RentalPeriodController @Inject (
   )(
     generateResult: (PartiallyAppliedView, OccupierDetail, Int) => Future[Result]
   )(using request: SessionRequest[AnyContent]
-  ): Future[Result] = {
-
+  ): Future[Result] =
     val result =
       for
         index          <- maybeIndex
         occupierDetail <- completedLettings(request.sessionData).lift(index)
-      yield {
+      yield
         val thePartiallyAppliedView = theView.apply(_, occupierDetail.name, index, backLinkUrl(index))
         generateResult.apply(thePartiallyAppliedView, occupierDetail, index)
-      }
 
     result.getOrElse(Redirect(routes.OccupierListController.show))
-  }
 
   private def backLinkUrl(index: Int)(using request: SessionRequest[AnyContent]): Option[String] =
     val navigationData = Map("index" -> index)
     navigator.backLinkUrl(ofPage = RentalPeriodPageId, navigationData)
 
   private def badRequestWith(thePartiallyAppliedView: PartiallyAppliedView, theFormWithErrors: Form[LocalPeriod]) =
-    BadRequest(
-      thePartiallyAppliedView.apply(
-        theFormWithErrors
-      )
-    )
+    BadRequest(thePartiallyAppliedView(theFormWithErrors))

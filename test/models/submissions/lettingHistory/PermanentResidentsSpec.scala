@@ -27,19 +27,21 @@ import org.scalatest.wordspec.AnyWordSpec
 class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues:
 
   "the PermanentResidents trait" when {
-    "copying the session withHasPermanentResidents"           should {
+    "copying the session withHasPermanentResidents" should {
       "set a boolean value although lettingHistory was None" in new SessionWithNoLettingHistory {
         val session: SessionWrapper = withHasPermanentResidents(true)
         session.changed mustBe true
         session.data.lettingHistory mustNot be(None)
         hasPermanentResidents(session.data).value mustBe true
       }
+
       "set a boolean value although lettingHistory.hasPermanentResident was None" in new SessionWithSomeLettingHistory {
         val session: SessionWrapper = withHasPermanentResidents(true)
         session.changed mustBe true
         hasPermanentResidents(session.data).value mustBe true
         // permanentResidents(session.data) must be(empty)
       }
+
       "confirm the boolean value which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
@@ -48,6 +50,7 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
         hasPermanentResidents(session.data).value mustBe true
         permanentResidents(session.data) mustNot be(empty)
       }
+
       "negate the boolean value which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
@@ -56,6 +59,7 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
         hasPermanentResidents(session.data).value mustBe false
         permanentResidents(session.data) mustBe empty
       }
+
       "double negate the boolean value which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
@@ -65,6 +69,7 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
         hasPermanentResidents(session2.data).value mustBe true
       }
     }
+
     "copying the session byAddingOrUpdatingPermanentResident" should {
       "set a non-empty permanentResidents list although the lettingHistory was None" in new SessionWithNoLettingHistory {
         val session: SessionWrapper = byAddingOrUpdatingPermanentResident(johnBrown)
@@ -74,6 +79,7 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
         permanentResidents(session.data) must have size 1
         permanentResidents(session.data).head mustBe johnBrown
       }
+
       "set the very first list value when lettingHistory is not None" in new SessionWithSomeLettingHistory {
         val session: SessionWrapper = byAddingOrUpdatingPermanentResident(johnBrown)
         session.changed mustBe true
@@ -81,6 +87,7 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
         permanentResidents(session.data) must have size 1
         permanentResidents(session.data).head mustBe johnBrown
       }
+
       "confirm resident address which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
@@ -90,6 +97,7 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
         permanentResidents(session.data) must have size 1
         permanentResidents(session.data).head mustBe johnBrown
       }
+
       "change resident address which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
@@ -107,6 +115,7 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
         permanentResidents(session.data).head.name mustBe johnBrown.name
         permanentResidents(session.data).head.address mustBe newAddress
       }
+
       "append a second resident to the existing list" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
@@ -118,7 +127,8 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
         permanentResidents(session.data).last mustBe aliceWhite
       }
     }
-    "copying the session byRemovingPermanentResidentAt"       should {
+
+    "copying the session byRemovingPermanentResidentAt" should {
       "set an empty permanentResidents list although the lettingHistory was None" in new SessionWithNoLettingHistory {
         val session: SessionWrapper = byRemovingPermanentResidentAt(2)
         session.changed mustBe true
@@ -126,12 +136,14 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
         hasPermanentResidents(session.data).value mustBe false
         permanentResidents(session.data) mustBe empty
       }
+
       "remove from empty permanentResidents list when lettingHistory is not None" in new SessionWithSomeLettingHistory {
         val session: SessionWrapper = byRemovingPermanentResidentAt(0)
         session.changed mustBe true
         hasPermanentResidents(session.data).value mustBe false
         permanentResidents(session.data) mustBe empty
       }
+
       "remove existent resident from permanentResidents list" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {

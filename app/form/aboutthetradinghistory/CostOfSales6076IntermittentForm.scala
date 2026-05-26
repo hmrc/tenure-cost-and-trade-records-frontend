@@ -24,13 +24,9 @@ import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object CostOfSales6076IntermittentForm {
+object CostOfSales6076IntermittentForm:
 
-  private def sumIntermittentMapping(
-    year: String
-  )(using
-    messages: Messages
-  ): Mapping[CostOfSales6076IntermittentSum] =
+  private def sumIntermittentMapping(year: String)(using messages: Messages): Mapping[CostOfSales6076IntermittentSum] =
     mapping(
       "importedPower" -> turnoverSalesMappingWithYear("costOfSales6076.importedPower", year),
       "TNuoS"         -> turnoverSalesMappingWithYear("costOfSales6076.TNuoS", year),
@@ -38,18 +34,11 @@ object CostOfSales6076IntermittentForm {
       "otherSales"    -> turnoverSalesMappingWithYear("costOfSales6076.otherSales", year)
     )(CostOfSales6076IntermittentSum.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def costOfSales6076IntermittentMapping(
-    years: Seq[String]
-  )(using
-    messages: Messages
-  ): Mapping[Seq[CostOfSales6076IntermittentSum]] =
+  private def costOfSales6076IntermittentMapping(years: Seq[String])(using messages: Messages): Mapping[Seq[CostOfSales6076IntermittentSum]] =
     mappingPerYear(years, (year, idx) => s"[$idx]" -> sumIntermittentMapping(year))
 
-  def costOfSales6076IntermittentForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[(Seq[CostOfSales6076IntermittentSum], String)] =
-    Form {
+  def costOfSales6076IntermittentForm(years: Seq[String])(using messages: Messages): Form[(Seq[CostOfSales6076IntermittentSum], String)] =
+    Form(
       tuple(
         "costOfSales6076"   -> costOfSales6076IntermittentMapping(years),
         "otherSalesDetails" -> mandatoryStringIfNonZeroSum(
@@ -59,6 +48,4 @@ object CostOfSales6076IntermittentForm {
           maxLength(2000, "error.costOfSales6076Intermittent.otherSalesDetails.maxLength")
         )
       )
-    }
-
-}
+    )

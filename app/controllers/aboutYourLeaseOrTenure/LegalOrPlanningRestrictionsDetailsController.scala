@@ -41,17 +41,17 @@ class LegalOrPlanningRestrictionsDetailsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("LegalOrPlanningRestrictionsDetails")
 
     Ok(
       legalOrPlanningRestrictionsDetailsView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictionsDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.legalOrPlanningRestrictionsDetails) match
           case Some(data) => legalOrPlanningRestrictionsDetailsForm.fill(data)
           case _          => legalOrPlanningRestrictionsDetailsForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -60,16 +60,11 @@ class LegalOrPlanningRestrictionsDetailsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       legalOrPlanningRestrictionsDetailsForm,
-      formWithErrors =>
-        BadRequest(legalOrPlanningRestrictionsDetailsView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      formWithErrors => BadRequest(legalOrPlanningRestrictionsDetailsView(formWithErrors, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(legalOrPlanningRestrictionsDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(LegalOrPlanningRestrictionDetailsId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

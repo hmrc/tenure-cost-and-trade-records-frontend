@@ -22,9 +22,7 @@ import java.time.LocalDate
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class AccessibilityUtil @Inject() (dateUtilLocalised: DateUtilLocalised) {
+class AccessibilityUtil @Inject() (dateUtilLocalised: DateUtilLocalised):
 
   def ariaBuilder(messageKey: String, financialYearEnd: LocalDate)(using messages: Messages): String =
     s"${messages(messageKey)} ${messages("turnover.forYearEnding.aria")} ${dateUtilLocalised.formatDayMonthAbbrYear(financialYearEnd)}"
-
-}

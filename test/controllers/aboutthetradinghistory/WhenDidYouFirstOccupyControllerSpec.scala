@@ -31,7 +31,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
+class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -40,17 +40,18 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
   def aboutYourTradingHistoryController(
     forType: ForType = FOR6010,
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
-  ): WhenDidYouFirstOccupyController = WhenDidYouFirstOccupyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    whenDidYouFistOccupyView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutTheTradingHistory = aboutTheTradingHistory
-    ),
-    mockSessionRepo
-  )
+  ): WhenDidYouFirstOccupyController =
+    WhenDidYouFirstOccupyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      whenDidYouFistOccupyView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutTheTradingHistory = aboutTheTradingHistory
+      ),
+      mockSessionRepo
+    )
 
   "About your trading history controller" should {
     "return 200" in {
@@ -62,8 +63,7 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
       val session6048    = aboutYourTradingHistory6048YesSession
       val sessionRequest = SessionRequest(session6048, FakeRequest())
 
-      val result =
-        aboutYourTradingHistoryController(session6048.forType, session6048.aboutTheTradingHistory).show(sessionRequest)
+      val result = aboutYourTradingHistoryController(session6048.forType, session6048.aboutTheTradingHistory).show(sessionRequest)
       status(result) shouldBe Status.OK
     }
 
@@ -76,6 +76,7 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
     "return 200 and HTML for 6045" in {
       val controller = aboutYourTradingHistoryController(forType = FOR6045)
       val result     = controller.show()(fakeRequest)
+
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -87,6 +88,7 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
     "return 200 and HTML for 6076" in {
       val controller = aboutYourTradingHistoryController(forType = FOR6076)
       val result     = controller.show()(fakeRequest)
+
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -98,6 +100,7 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
     "return 200 and HTML for 6048" in {
       val controller = aboutYourTradingHistoryController(forType = FOR6048)
       val result     = controller.show()(fakeRequest)
+
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -109,6 +112,7 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
     "return 200 and HTML when the session is None" in {
       val controller = aboutYourTradingHistoryController(aboutTheTradingHistory = None)
       val result     = controller.show()(fakeRequest)
+
       status(result)        shouldBe Status.OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -180,20 +184,16 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val occupyMonth        = "firstOccupy.month"
       val occupyYear         = "firstOccupy.year"
       val financialYearDay   = "financialYear.day"
       val financialYearMonth = "financialYear.month"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "firstOccupy.month" -> "9",
       "firstOccupy.year"  -> "2017"
     )
-
-  }
-}

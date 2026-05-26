@@ -53,15 +53,11 @@ object AboutLeaseOrAgreementPartTwo:
 
   implicit val format: OFormat[AboutLeaseOrAgreementPartTwo] = Json.format
 
-  def updateAboutLeaseOrAgreementPartTwo(
-    copy: AboutLeaseOrAgreementPartTwo => AboutLeaseOrAgreementPartTwo
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
+  def updateAboutLeaseOrAgreementPartTwo(copy: AboutLeaseOrAgreementPartTwo => AboutLeaseOrAgreementPartTwo)(using sessionRequest: SessionRequest[?]): Session =
     val currentAboutLeaseOrAgreementPartTwo = sessionRequest.sessionData.aboutLeaseOrAgreementPartTwo
 
-    val updatedAboutLeaseOrAgreementPartTwo = currentAboutLeaseOrAgreementPartTwo match {
+    val updatedAboutLeaseOrAgreementPartTwo = currentAboutLeaseOrAgreementPartTwo match
       case Some(_) => sessionRequest.sessionData.aboutLeaseOrAgreementPartTwo.map(copy)
       case _       => Some(copy(AboutLeaseOrAgreementPartTwo()))
-    }
 
     sessionRequest.sessionData.copy(aboutLeaseOrAgreementPartTwo = updatedAboutLeaseOrAgreementPartTwo)

@@ -23,7 +23,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDuration] {
+class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDuration]:
 
   private val messageKeyPrefix = "firstOccupy"
 
@@ -31,15 +31,15 @@ class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDur
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
-  override val form: Form[MonthsYearDuration] =
-    OccupationalInformationForm.occupationalInformationForm(using messages)
+  override val form: Form[MonthsYearDuration] = OccupationalInformationForm.occupationalInformationForm(using messages)
 
-  private def createView: () => Html = () => whenDidYouFistOccupyView(form, backLink)(using sessionRequest, messages)
+  private def createView: () => Html =
+    () => whenDidYouFistOccupyView(form, backLink)(using sessionRequest, messages)
 
   private def createViewUsingForm: Form[MonthsYearDuration] => Html =
-    (form: Form[MonthsYearDuration]) => whenDidYouFistOccupyView(form, backLink)(using sessionRequest, messages)
+    form => whenDidYouFistOccupyView(form, backLink)(using sessionRequest, messages)
 
-  "About the trading history view" must {
+  "About the trading history view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -81,4 +81,3 @@ class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDur
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

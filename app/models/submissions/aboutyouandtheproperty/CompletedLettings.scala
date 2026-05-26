@@ -25,6 +25,5 @@ case class CompletedLettings(
   numberOfNights: Int
 )
 
-object CompletedLettings {
+object CompletedLettings:
   implicit val format: OFormat[CompletedLettings] = Json.format
-}

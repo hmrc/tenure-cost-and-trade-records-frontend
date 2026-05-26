@@ -24,6 +24,5 @@ case class UltimatelyResponsibleBuildingInsurance(
   sharedResponsibilitiesBI: Option[String]
 )
 
-object UltimatelyResponsibleBuildingInsurance {
+object UltimatelyResponsibleBuildingInsurance:
   implicit val format: OFormat[UltimatelyResponsibleBuildingInsurance] = Json.format
-}

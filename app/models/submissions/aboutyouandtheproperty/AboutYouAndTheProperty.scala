@@ -51,16 +51,11 @@ case class AboutYouAndTheProperty(
 object AboutYouAndTheProperty:
   implicit val format: OFormat[AboutYouAndTheProperty] = Json.format
 
-  def updateAboutYouAndTheProperty(
-    copy: AboutYouAndTheProperty => AboutYouAndTheProperty
-  )(using sessionRequest: SessionRequest[?]
-  ): Session =
-
+  def updateAboutYouAndTheProperty(copy: AboutYouAndTheProperty => AboutYouAndTheProperty)(using sessionRequest: SessionRequest[?]): Session =
     val currentAboutTheProperty = sessionRequest.sessionData.aboutYouAndTheProperty
 
-    val updateAboutTheProperty = currentAboutTheProperty match {
+    val updateAboutTheProperty = currentAboutTheProperty match
       case Some(_) => sessionRequest.sessionData.aboutYouAndTheProperty.map(copy)
       case _       => Some(copy(AboutYouAndTheProperty()))
-    }
 
     sessionRequest.sessionData.copy(aboutYouAndTheProperty = updateAboutTheProperty)

@@ -24,18 +24,19 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
-  val messageKeyPrefix = "charityQuestion"
+  private val messageKeyPrefix = "charityQuestion"
 
   override val form: Form[AnswersYesNo] = CharityQuestionForm.charityQuestionForm
 
-  val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
+  private val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
 
-  def createView: () => Html = () => charityQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => charityQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    charityQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
+  private def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => charityQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
 
   "Charity question view" should {
 
@@ -91,4 +92,3 @@ class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

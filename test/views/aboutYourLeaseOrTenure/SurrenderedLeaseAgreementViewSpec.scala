@@ -22,12 +22,11 @@ import models.submissions.aboutYourLeaseOrTenure.SurrenderedLeaseAgreementDetail
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class SurrenderedLeaseAgreementViewSpec extends QuestionViewBehaviours[SurrenderedLeaseAgreementDetails] {
+class SurrenderedLeaseAgreementViewSpec extends QuestionViewBehaviours[SurrenderedLeaseAgreementDetails]:
 
   private val messageKeyPrefix = "surrenderedLeaseAgreement"
 
-  override val form: Form[SurrenderedLeaseAgreementDetails] =
-    SurrenderedLeaseAgreementDetailsForm.surrenderedLeaseAgreementDetailsForm
+  override val form: Form[SurrenderedLeaseAgreementDetails] = SurrenderedLeaseAgreementDetailsForm.surrenderedLeaseAgreementDetailsForm
 
   private def createView = () =>
     surrenderedLeaseAgreementView(form, Summary("99996010001"))(using fakeRequest, messages)
@@ -64,4 +63,3 @@ class SurrenderedLeaseAgreementViewSpec extends QuestionViewBehaviours[Surrender
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

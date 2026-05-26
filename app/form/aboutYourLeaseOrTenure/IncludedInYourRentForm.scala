@@ -30,39 +30,39 @@ object IncludedInYourRentForm:
 
   private val regexForVatValue = """^\d+(\.\d+)?$"""
 
-  val vatValueNumberConstraint: Constraint[Option[String]] = Constraint("constraints.vatValueNumber") {
+  private val vatValueNumberConstraint: Constraint[Option[String]] = Constraint("constraints.vatValueNumber") {
     case Some(value) if value.matches(regexForVatValue) => Valid
     case Some(_)                                        => Invalid(Seq(ValidationError("error.includedInYourRent.vatValue.range")))
     case None                                           => Valid
   }
 
-  def includedInYourRentForm(forType: ForType): Form[IncludedInYourRentDetails] = Form(
-    mapping(
-      "includedInYourRent" -> enumMappingSeq(IncludedInYourRentInformation).verifying(
-        nonEmptySeq("error.includedInYourRent.required"),
-        noneCantBeSelectedWithOtherSeq(
-          IncludedInYourRentInformationNone,
-          "error.includedInYourRent.noneSelectedWithOther"
+  def includedInYourRentForm(forType: ForType): Form[IncludedInYourRentDetails] =
+    Form(
+      mapping(
+        "includedInYourRent" -> enumMappingSeq(IncludedInYourRentInformation).verifying(
+          nonEmptySeq("error.includedInYourRent.required"),
+          noneCantBeSelectedWithOtherSeq(
+            IncludedInYourRentInformationNone,
+            "error.includedInYourRent.noneSelectedWithOther"
+          )
+        ),
+        "vatValue"           -> optional(text)
+          .verifying(vatValueNumberConstraint)
+          .transform[Option[BigDecimal]](
+            {
+              case Some(value) if value.matches(regexForVatValue) => Some(BigDecimal(value))
+              case _                                              => None
+            },
+            _.map(_.toString)
+          )
+      )(IncludedInYourRentDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+        .verifying(
+          "error.includedInYourRent.vatValue.required",
+          fields =>
+            fields match
+              case IncludedInYourRentDetails(includedInYourRent, vatValue) =>
+                !((forType == FOR6045 || forType == FOR6046) && includedInYourRent.contains(
+                  IncludedInYourRentInformationVat
+                ) && vatValue.isEmpty)
         )
-      ),
-      "vatValue"           -> optional(text)
-        .verifying(vatValueNumberConstraint)
-        .transform[Option[BigDecimal]](
-          {
-            case Some(value) if value.matches(regexForVatValue) => Some(BigDecimal(value))
-            case _                                              => None
-          },
-          _.map(_.toString)
-        )
-    )(IncludedInYourRentDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-      .verifying(
-        "error.includedInYourRent.vatValue.required",
-        fields =>
-          fields match {
-            case IncludedInYourRentDetails(includedInYourRent, vatValue) =>
-              !((forType == FOR6045 || forType == FOR6046) && includedInYourRent.contains(
-                IncludedInYourRentInformationVat
-              ) && vatValue.isEmpty)
-          }
-      )
-  )
+    )

@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[String] {
+class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "legalOrPlanningRestrictionsDetails"
 
@@ -33,7 +33,7 @@ class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[
   private def createViewUsingForm = (form: Form[String]) =>
     legalOrPlanningRestrictionsDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Legal or planning restrictions view" must {
+  "Legal or planning restrictions view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -62,4 +62,3 @@ class LegalOrPlanningRestrictionsDetailsViewSpec extends QuestionViewBehaviours[
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

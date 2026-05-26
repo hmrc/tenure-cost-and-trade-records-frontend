@@ -26,14 +26,12 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
+class TradeServicesDescriptionControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def tradeServicesDescriptionController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
   ): TradeServicesDescriptionController =
     TradeServicesDescriptionController(
       stubMessagesControllerComponents(),
@@ -44,7 +42,7 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "Trade services description controller" should {
+  "GET /" should {
     "return 200 and HTML with Trade Services Description in the session" in {
       val result = tradeServicesDescriptionController().show(Some(0))(fakeRequest)
       status(result)      shouldBe Status.OK
@@ -60,64 +58,57 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
 
-    "render a page with an empty form" when {
-      "not given an index" in {
-        val result = tradeServicesDescriptionController().show(None)(fakeRequest)
-        val html   = Jsoup.parse(contentAsString(result))
+    "render a page with an empty form when not given an index" in {
+      val result = tradeServicesDescriptionController().show(None)(fakeRequest)
+      val html   = Jsoup.parse(contentAsString(result))
 
-        Option(html.getElementById("description").`val`()).value shouldBe ""
-      }
-
-      "given an index" which {
-        "doesn't already exist in the session" in {
-          val result = tradeServicesDescriptionController().show(Some(2))(fakeRequest)
-          val html   = Jsoup.parse(contentAsString(result))
-
-          Option(html.getElementById("description").`val`()).value shouldBe ""
-
-        }
-      }
+      Option(html.getElementById("description").`val`()).value shouldBe ""
     }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res = tradeServicesDescriptionController().submit(None)(
-          FakeRequest().withFormUrlEncodedBody(Seq.empty*)
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
+    "given an index which doesn't already exist in the session" in {
+      val result = tradeServicesDescriptionController().show(Some(2))(fakeRequest)
+      val html   = Jsoup.parse(contentAsString(result))
 
-      "Redirect when form data submitted" in {
-        val res = tradeServicesDescriptionController().submit(Some(0))(
-          FakeRequest(POST, "/").withFormUrlEncodedBody("description" -> "Description")
-        )
-        status(res) shouldBe SEE_OTHER
-      }
-
-      "throw a BAD_REQUEST if description is greater than max length is submitted" in {
-        val res = tradeServicesDescriptionController().submit(Some(0))(
-          FakeRequest(POST, "/").withFormUrlEncodedBody(
-            "description" -> "x" * 501
-          )
-        )
-        status(res) shouldBe BAD_REQUEST
-      }
-    }
-
-    "getBackLink" should {
-
-      "return the correct backLink" in {
-        val controller = tradeServicesDescriptionController()
-        val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, fakeRequest), 1)
-        result shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
-      }
-      "return the correct backLink if view was accessed via 'Change' link" in {
-        val controller        = tradeServicesDescriptionController()
-        val requestWithChange = requestWithQueryParam(fakeRequest, "from=Change")
-        val result            = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, requestWithChange), 1)
-        result shouldBe controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(1).url
-      }
-
+      Option(html.getElementById("description").`val`()).value shouldBe ""
     }
   }
-}
+
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = tradeServicesDescriptionController().submit(None)(
+        FakeRequest().withFormUrlEncodedBody(Seq.empty*)
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+
+    "redirect when form data submitted" in {
+      val res = tradeServicesDescriptionController().submit(Some(0))(
+        FakeRequest(POST, "/").withFormUrlEncodedBody("description" -> "Description")
+      )
+      status(res) shouldBe SEE_OTHER
+    }
+
+    "throw a BAD_REQUEST if description is greater than max length is submitted" in {
+      val res = tradeServicesDescriptionController().submit(Some(0))(
+        FakeRequest(POST, "/").withFormUrlEncodedBody(
+          "description" -> "x" * 501
+        )
+      )
+      status(res) shouldBe BAD_REQUEST
+    }
+  }
+
+  "getBackLink" should {
+    "return the correct backLink" in {
+      val controller = tradeServicesDescriptionController()
+      val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, fakeRequest), 1)
+      result shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
+    }
+
+    "return the correct backLink if view was accessed via 'Change' link" in {
+      val controller        = tradeServicesDescriptionController()
+      val requestWithChange = requestWithQueryParam(fakeRequest, "from=Change")
+      val result            = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, requestWithChange), 1)
+      result shouldBe controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(1).url
+    }
+  }

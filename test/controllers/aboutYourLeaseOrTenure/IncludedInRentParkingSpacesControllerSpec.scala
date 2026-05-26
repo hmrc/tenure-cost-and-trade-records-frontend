@@ -25,24 +25,23 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec {
+class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def includedInRentParkingSpacesController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
+  ): IncludedInRentParkingSpacesController =
+    IncludedInRentParkingSpacesController(
+      includedInRentParkingSpacesView,
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
+      mockSessionRepo,
+      stubMessagesControllerComponents()
     )
-  ): IncludedInRentParkingSpacesController = IncludedInRentParkingSpacesController(
-    includedInRentParkingSpacesView,
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-    mockSessionRepo,
-    stubMessagesControllerComponents()
-  )
 
-  "IncludedInRentParkingSpacesController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Included In Rent Parking Spaces in the session" in {
       val result = includedInRentParkingSpacesController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -70,7 +69,7 @@ class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec {
     }
   }
 
-  "IncludedInRentParkingSpacesController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = includedInRentParkingSpacesController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -78,7 +77,7 @@ class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data includedInRentParkingSpaces submitted" in {
+    "redirect when form data includedInRentParkingSpaces submitted" in {
       val res = includedInRentParkingSpacesController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "openSpaces"    -> "30",
@@ -89,5 +88,3 @@ class IncludedInRentParkingSpacesControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-
-}

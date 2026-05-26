@@ -19,8 +19,8 @@ package controllers.aboutYourLeaseOrTenure
 import actions.WithSessionRefiner
 import connectors.Audit
 import controllers.FORDataCaptureController
+import form.ConfirmableActionForm.confirmableActionForm
 import form.aboutYourLeaseOrTenure.ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
-import form.confirmableActionForm.confirmableActionForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree.updateAboutLeaseOrAgreementPartThree
 import models.submissions.common.AnswersYesNo
@@ -45,20 +45,19 @@ class ServicePaidSeparatelyListController @Inject() (
   withSessionRefiner: WithSessionRefiner,
   @Named("session") repository: SessionRepo
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    val existingSection =
-      request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid.lift(index))
+    val existingSection = request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.servicesPaid.lift(index))
 
     audit.sendChangeLink("ServicePaidSeparatelyList")
 
     Ok(
       theListView(
-        existingSection.flatMap(_.addAnotherPaidService) match {
+        existingSection.flatMap(_.addAnotherPaidService) match
           case Some(answer) => addServicePaidSeparatelyForm.fill(answer)
           case _            => addServicePaidSeparatelyForm
-        },
+        ,
         index
       )
     )
@@ -67,29 +66,18 @@ class ServicePaidSeparatelyListController @Inject() (
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       addServicePaidSeparatelyForm,
-      formWithErrors =>
-        BadRequest(
-          theListView(
-            formWithErrors,
-            index
-          )
-        ),
+      formWithErrors => BadRequest(theListView(formWithErrors, index)),
       formData =>
         request.sessionData.aboutLeaseOrAgreementPartThree
           .map(_.servicesPaid)
           .filter(_.nonEmpty)
           .fold {
-            formData match {
-              case AnswerYes =>
-                Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show())
+            formData match
+              case AnswerYes => Redirect(controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show())
               case AnswerNo  =>
-                request.sessionData.forType match {
-                  case FOR6020 =>
-                    Redirect(controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show())
-                  case _       =>
-                    Redirect(controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show())
-                }
-            }
+                request.sessionData.forType match
+                  case FOR6020 => Redirect(controllers.aboutYourLeaseOrTenure.routes.DoesRentIncludeParkingController.show())
+                  case _       => Redirect(controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show())
           } { existingServices =>
             val updatedServices = existingServices.updated(
               index,
@@ -160,4 +148,3 @@ class ServicePaidSeparatelyListController @Inject() (
 
   private def toServicePaidSeparatelyList(index: Int): Call =
     controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(index)
-}

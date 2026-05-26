@@ -42,18 +42,17 @@ class CharityQuestionController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CharityQuestion")
 
     Ok(
       charityQuestionView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.charityQuestion) match {
-          case Some(answer) =>
-            charityQuestionForm.fill(answer)
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.charityQuestion) match
+          case Some(answer) => charityQuestionForm.fill(answer)
           case _            => charityQuestionForm
-        },
+        ,
         request.sessionData.toSummary,
         navigator.from
       )
@@ -64,13 +63,10 @@ class CharityQuestionController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       charityQuestionForm,
       formWithErrors => BadRequest(charityQuestionView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(charityQuestion = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CharityQuestionPageId, updatedData).apply(updatedData)))
-      }
     )
   }
-
-}

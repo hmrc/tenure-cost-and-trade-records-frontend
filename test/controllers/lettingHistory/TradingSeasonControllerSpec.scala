@@ -34,7 +34,7 @@ import scala.language.implicitConversions
 class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with FiscalYearSupport:
 
   "the TradingSeasonLength controller" when {
-    "the user has not entered any period yet"       should {
+    "the user has not entered any period yet" should {
       "be handling GET by replying 200 with the form showing date fields" in new ControllerFixture {
         val result: Future[Result] = controller.show(fakeGetRequest)
         status(result)            shouldBe OK
@@ -47,8 +47,8 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
         page.input("fromDate.month") should beEmpty
         page.input("toDate.day")     should beEmpty
         page.input("toDate.month")   should beEmpty
-
       }
+
       "be handling POST index=0 by replying 303 redirect to 'Occupier List' page" in new ControllerFixture {
         val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
           "fromDate.day"   -> "1",
@@ -72,7 +72,8 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
         )
       }
     }
-    "the user has already entered a period"         should {
+
+    "the user has already entered a period" should {
       "be handling GET by replying 200 with the pre-filled form showing date values" in new ControllerFixture(
         period = Some(
           LocalPeriod(
@@ -93,6 +94,7 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
         page.input("toDate.month")   should haveValue("2")
       }
     }
+
     "regardless users having entered period or not" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
         val result: Future[Result] = controller.submit(

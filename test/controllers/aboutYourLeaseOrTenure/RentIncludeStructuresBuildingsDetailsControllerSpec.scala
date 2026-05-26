@@ -27,26 +27,25 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class RentIncludeStructuresBuildingsDetailsControllerSpec extends TestBaseSpec {
+class RentIncludeStructuresBuildingsDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
   val mockAudit: Audit = mock[Audit]
 
   def rentIncludeStructuresBuildingsDetailsController(
-    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
-      prefilledAboutLeaseOrAgreementPartFour
+    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
+  ): RentIncludeStructuresBuildingsDetailsController =
+    RentIncludeStructuresBuildingsDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      rentIncludeStructuresBuildingsDetailsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),
+      mockSessionRepo
     )
-  ): RentIncludeStructuresBuildingsDetailsController = RentIncludeStructuresBuildingsDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    rentIncludeStructuresBuildingsDetailsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),
-    mockSessionRepo
-  )
 
-  "rentDevelopedLandDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with rentIncludeStructuresBuildingsDetails in the session" in {
       val result = rentIncludeStructuresBuildingsDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -69,7 +68,7 @@ class RentIncludeStructuresBuildingsDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "ConnectedToLandlordDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
 
       val res = rentIncludeStructuresBuildingsDetailsController().submit(
@@ -78,7 +77,7 @@ class RentIncludeStructuresBuildingsDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data rentIncludeStructuresBuildingsDetails submitted" in {
+    "redirect when form data rentIncludeStructuresBuildingsDetails submitted" in {
       val res = rentIncludeStructuresBuildingsDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("rentIncludeStructuresBuildingsDetails" -> "Test content")
       )
@@ -99,15 +98,12 @@ class RentIncludeStructuresBuildingsDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
-
-    class ErrorKey {
-      val rentIncludeStructuresBuildingsDetails: String = "rentIncludeStructuresBuildingsDetails"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "rentIncludeStructuresBuildingsDetails" -> "Test content"
     )
-  }
-}
+
+    class ErrorKey:
+      val rentIncludeStructuresBuildingsDetails: String = "rentIncludeStructuresBuildingsDetails"

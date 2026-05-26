@@ -25,7 +25,7 @@ import util.DateUtilLocalised
 
 import java.time.LocalDate
 
-object DateMappings {
+object DateMappings:
 
   def requiredDateMapping(
     fieldNameKey: String,
@@ -64,5 +64,3 @@ object DateMappings {
         Invalid(ValidationError(errorMessage, rangeStartEnd*))
       else Valid
     }
-
-}

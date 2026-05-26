@@ -42,18 +42,18 @@ class RentIncludeTradeServicesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("RentIncludeTradeServices")
 
     Ok(
       rentIncludeTradeServicesView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.rentIncludeTradeServicesDetails) match
           case Some(rentIncludeTradeServicesDetails) =>
             rentIncludeTradeServicesForm.fill(rentIncludeTradeServicesDetails)
           case _                                     => rentIncludeTradeServicesForm
-        },
+        ,
         request.sessionData.forType,
         request.sessionData.toSummary
       )
@@ -63,18 +63,11 @@ class RentIncludeTradeServicesController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       rentIncludeTradeServicesForm,
-      formWithErrors =>
-        BadRequest(
-          rentIncludeTradeServicesView(formWithErrors, request.sessionData.forType, request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(rentIncludeTradeServicesView(formWithErrors, request.sessionData.forType, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(rentIncludeTradeServicesDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(RentIncludeTradeServicesPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

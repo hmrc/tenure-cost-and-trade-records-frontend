@@ -24,7 +24,7 @@ import play.api.data.{Form, Mapping}
 
 import scala.util.Try
 
-object LowMarginFuelCardDetailsForm {
+object LowMarginFuelCardDetailsForm:
 
   private val positiveBigDecimal: Constraint[BigDecimal] = Constraint("constraint.positive") { value =>
     if value >= 0 then Valid else Invalid("error.handlingFee.mustBeNonNegative")
@@ -35,14 +35,14 @@ object LowMarginFuelCardDetailsForm {
       .verifying(errorMessage, str => Try(BigDecimal(str)).isSuccess)
       .transform[BigDecimal](str => BigDecimal(str), _.toString)
 
-  val lowMarginFuelCardDetailsForm: Form[LowMarginFuelCardDetail] = Form(
-    mapping(
-      "name"        -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.lowMarginFuelCardDetails.name.required"),
-        maxLength(100, "error.lowMarginFuelCardDetails.name.maxLength")
-      ),
-      "handlingFee" -> bigDecimalWithCustomError("error.lowMarginFuelCardDetails.handlingFee.invalidFormat")
-        .verifying(positiveBigDecimal)
-    )(LowMarginFuelCardDetail.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
-}
+  val lowMarginFuelCardDetailsForm: Form[LowMarginFuelCardDetail] =
+    Form(
+      mapping(
+        "name"        -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.lowMarginFuelCardDetails.name.required"),
+          maxLength(100, "error.lowMarginFuelCardDetails.name.maxLength")
+        ),
+        "handlingFee" -> bigDecimalWithCustomError("error.lowMarginFuelCardDetails.handlingFee.invalidFormat")
+          .verifying(positiveBigDecimal)
+      )(LowMarginFuelCardDetail.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

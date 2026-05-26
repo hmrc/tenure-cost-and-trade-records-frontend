@@ -26,17 +26,18 @@ import play.api.i18n.Messages
 /**
   * @author Yuriy Tumakha
   */
-object OtherIncomeForm {
+object OtherIncomeForm:
 
-  private def columnMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = single(
-    "otherIncome" -> turnoverSalesMappingWithYear("turnover.6076.otherIncome", year)
-  )
+  private def columnMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] =
+    single(
+      "otherIncome" -> turnoverSalesMappingWithYear("turnover.6076.otherIncome", year)
+    )
 
   private def otherIncomeSeq(years: Seq[String])(using messages: Messages): Mapping[Seq[Option[BigDecimal]]] =
     mappingPerYear(years, (year, idx) => s"turnover[$idx]" -> columnMapping(year))
 
   def otherIncomeForm(years: Seq[String])(using messages: Messages): Form[(Seq[Option[BigDecimal]], String)] =
-    Form {
+    Form(
       tuple(
         "otherIncomeSeq"     -> otherIncomeSeq(years),
         "otherIncomeDetails" -> mandatoryStringIfNonZeroSum(
@@ -46,6 +47,4 @@ object OtherIncomeForm {
           maxLength(2000, "error.turnover.6076.otherIncomeDetails.maxLength")
         )
       )
-    }
-
-}
+    )

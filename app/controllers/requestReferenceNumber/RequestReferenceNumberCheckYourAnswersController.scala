@@ -49,14 +49,12 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   import controllers.FeedbackFormMapper.feedbackForm
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Ok(
-      checkYourAnswersView(request.sessionData)
-    )
+    Ok(checkYourAnswersView(request.sessionData))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -64,7 +62,7 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
     submitRequestReferenceNumber()(using hc, request)
   }
 
-  def submitRequestReferenceNumber()(using hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] = {
+  def submitRequestReferenceNumber()(using hc: HeaderCarrier, request: SessionRequest[?]): Future[Result] =
     val auditType      = "NoReferenceSubmission"
     val session        = request.sessionData
     val submissionJson = Json.toJson(request.sessionData).as[JsObject]
@@ -87,17 +85,12 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
       audit.sendExplicitAudit(auditType, submissionJson ++ Json.obj("outcome" -> outcome))
       errorHandler.internalServerErrorTemplate(using request).map(InternalServerError(_))
     }
-  }
 
   def confirmation: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    Future(Ok(confirmationView(feedbackForm)))
+    Ok(confirmationView(feedbackForm))
   }
 
-  private def submitRequestRefNumToBackend(
-    session: Session
-  )(using hc: HeaderCarrier,
-    messages: Messages
-  ): Future[Unit] = {
+  private def submitRequestRefNumToBackend(session: Session)(using hc: HeaderCarrier, messages: Messages): Future[Unit] =
     val sessionRequestRefNum        = session.requestReferenceNumberDetails
     val sessionRequestRefNumAddress = sessionRequestRefNum.flatMap(_.propertyDetails)
     val sessionRequestRefNumDetails = sessionRequestRefNum.flatMap(_.contactDetails)
@@ -114,6 +107,3 @@ class RequestReferenceNumberCheckYourAnswersController @Inject() (
     )
 
     submissionConnector.submitRequestReferenceNumber(submission).map(_ => ())
-  }
-
-}

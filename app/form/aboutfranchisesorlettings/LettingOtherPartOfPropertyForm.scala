@@ -21,20 +21,20 @@ import play.api.data.Form
 import play.api.data.Forms.{default, mapping, text}
 import play.api.data.validation.Constraints.{maxLength, nonEmpty}
 
-object LettingOtherPartOfPropertyForm {
+object LettingOtherPartOfPropertyForm:
 
-  val theForm: Form[OperatorDetails] = Form[OperatorDetails](
-    mapping(
-      "lettingOperatorName"   -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.operatorName.required"),
-        maxLength(50, "error.lettingOperatorName.maxLength")
-      ),
-      "lettingTypeOfBusiness" -> default(text, "").verifying(
-        nonEmpty(errorMessage = "error.lettingTypeOfBusiness.required"),
-        maxLength(50, "error.lettingTypeOfBusiness.maxLength")
-      )
-    )((operatorName, typeOfBusiness) => OperatorDetails(operatorName, typeOfBusiness, None)) { obj =>
-      Some(obj.operatorName, obj.typeOfBusiness)
-    }
-  )
-}
+  val theForm: Form[OperatorDetails] =
+    Form(
+      mapping(
+        "lettingOperatorName"   -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.operatorName.required"),
+          maxLength(50, "error.lettingOperatorName.maxLength")
+        ),
+        "lettingTypeOfBusiness" -> default(text, "").verifying(
+          nonEmpty(errorMessage = "error.lettingTypeOfBusiness.required"),
+          maxLength(50, "error.lettingTypeOfBusiness.maxLength")
+        )
+      )((operatorName, typeOfBusiness) => OperatorDetails(operatorName, typeOfBusiness, None)) { obj =>
+        Some(obj.operatorName, obj.typeOfBusiness)
+      }
+    )

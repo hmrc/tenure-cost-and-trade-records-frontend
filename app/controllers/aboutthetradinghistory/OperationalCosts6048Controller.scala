@@ -45,15 +45,14 @@ class OperationalCosts6048Controller @Inject() (
   mcc: MessagesControllerComponents
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OperationalCosts6048")
 
     runWithSessionCheck { turnoverSections6048 =>
       val years   = turnoverSections6048.map(_.financialYearEnd).map(_.getYear.toString)
-      val details =
-        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherOperationalExpensesDetails).getOrElse("")
+      val details = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherOperationalExpensesDetails).getOrElse("")
 
       Ok(
         operationalCosts6048View(
@@ -73,7 +72,7 @@ class OperationalCosts6048Controller @Inject() (
       continueOrSaveAsDraft[(Seq[OperationalCosts6048], String)](
         operationalCosts6048Form(years),
         formWithErrors => BadRequest(operationalCosts6048View(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success._1 zip turnoverSections6048).map { case (operationalCosts, previousSection) =>
             previousSection.copy(
               operationalCosts = Some(operationalCosts)
@@ -92,7 +91,6 @@ class OperationalCosts6048Controller @Inject() (
             .saveOrUpdate(updatedData)
             .map(_ => navigator.nextPage(OperationalCosts6048Id, updatedData).apply(updatedData))
             .map(Redirect)
-        }
       )
     }
   }
@@ -107,10 +105,6 @@ class OperationalCosts6048Controller @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    navigator.from match
+      case "CYA" => controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     => aboutthetradinghistory.routes.AdministrativeCosts6048Controller.show.url
-    }
-
-}

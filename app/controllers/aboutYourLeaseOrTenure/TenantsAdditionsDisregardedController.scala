@@ -44,17 +44,17 @@ class TenantsAdditionsDisregardedController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TenantsAdditionsDisregarded")
 
     Ok(
       tenantsAdditionsDisregardedView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.tenantAdditionsDisregarded) match
           case Some(data) => tenantsAdditionsDisregardedForm.fill(data)
           case _          => tenantsAdditionsDisregardedForm
-        },
+        ,
         getBackLink,
         request.sessionData.toSummary
       )
@@ -64,29 +64,20 @@ class TenantsAdditionsDisregardedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       tenantsAdditionsDisregardedForm,
-      formWithErrors =>
-        BadRequest(tenantsAdditionsDisregardedView(formWithErrors, getBackLink, request.sessionData.toSummary)),
-      data => {
+      formWithErrors => BadRequest(tenantsAdditionsDisregardedView(formWithErrors, getBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(tenantAdditionsDisregarded = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TenantsAdditionsDisregardedId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    request.sessionData.forType match {
+    request.sessionData.forType match
       case FOR6020           => controllers.aboutYourLeaseOrTenure.routes.WorkCarriedOutConditionController.show().url
       case FOR6045 | FOR6046 =>
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match {
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.incentivesPaymentsConditionsDetails) match
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
-        }
-      case _                 =>
-        controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url
-    }
-
-}
+      case _                 => controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController.show().url

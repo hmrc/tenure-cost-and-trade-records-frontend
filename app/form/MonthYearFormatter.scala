@@ -37,7 +37,7 @@ class MonthYearFormatter(
   allowPastDates: Boolean,
   allowFutureDates: Boolean
 )(using messages: Messages
-) extends Formatter[MonthsYearDuration] {
+) extends Formatter[MonthsYearDuration]:
 
   require(
     allowPastDates || allowFutureDates,
@@ -46,8 +46,7 @@ class MonthYearFormatter(
 
   private val monthYearFields = Seq("month", "year")
 
-  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], MonthsYearDuration] = {
-
+  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], MonthsYearDuration] =
     val dateText = messages("error.dateParts.date")
     val mYText   = messages("error.dateParts.monthYear")
 
@@ -87,7 +86,6 @@ class MonthYearFormatter(
             ).flatten
           )
     }
-  }
 
   override def unbind(key: String, value: MonthsYearDuration): Map[String, String] =
     Map(
@@ -96,11 +94,10 @@ class MonthYearFormatter(
     )
 
   private def parseNumber(str: String, allowedRange: Range): Int =
-    Try(str.trim.toInt) match {
+    Try(str.trim.toInt) match
       case Success(num) if allowedRange contains num => num
       case Success(_)                                => 0
       case Failure(_)                                => -1
-    }
 
   private def oneError(key: String, message: String, args: Seq[Any]): Left[Seq[FormError], MonthsYearDuration] =
     Left(Seq(FormError(key, message, args)))
@@ -120,4 +117,3 @@ class MonthYearFormatter(
           else if !allowFutureDates && date.isAfter(startOfMonth) then Left("error.date.mustBeInPast")
           else Right(MonthsYearDuration(date.getMonthValue, date.getYear))
         }
-}

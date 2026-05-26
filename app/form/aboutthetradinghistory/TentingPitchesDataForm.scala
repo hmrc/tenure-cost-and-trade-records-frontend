@@ -22,7 +22,7 @@ import play.api.data.Forms.mapping
 import play.api.data.{Form, Mapping}
 import play.api.i18n.Messages
 
-object TentingPitchesDataForm {
+object TentingPitchesDataForm:
 
   private def columnMapping(year: String)(using messages: Messages): Mapping[TentingPitchesData] =
     mapping(
@@ -30,12 +30,7 @@ object TentingPitchesDataForm {
       "numberOfPitches" -> nonNegativeNumberWithYear("tentingPitches.numberOfPitches", year)
     )(TentingPitchesData.apply)(o => Some(Tuple.fromProductTyped(o)))
 
-  def tentingPitchesDataForm(
-    years: Seq[String]
-  )(using messages: Messages
-  ): Form[Seq[TentingPitchesData]] =
-    Form {
+  def tentingPitchesDataForm(years: Seq[String])(using messages: Messages): Form[Seq[TentingPitchesData]] =
+    Form(
       mappingPerYear(years, (year, idx) => s"tentingPitches[$idx]" -> columnMapping(year))
-    }
-
-}
+    )

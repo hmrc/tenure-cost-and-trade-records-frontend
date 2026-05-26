@@ -43,7 +43,7 @@ class StaffCostsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("StaffCosts")
@@ -64,7 +64,7 @@ class StaffCostsController @Inject() (
       continueOrSaveAsDraft[Seq[StaffCosts]](
         staffCostsForm(years),
         formWithErrors => BadRequest(view(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6076).map { case (updatedCosts, turnoverSection) =>
             turnoverSection.copy(staffCosts = Some(updatedCosts))
           }
@@ -81,7 +81,6 @@ class StaffCostsController @Inject() (
                 .getOrElse(navigator.nextPage(StaffCostsId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }
@@ -99,29 +98,17 @@ class StaffCostsController @Inject() (
       }
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    val intermittentCheck =
-      request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant)
+    val intermittentCheck = request.sessionData.aboutYouAndTheProperty.flatMap(_.renewablesPlant)
 
-    intermittentCheck match {
+    intermittentCheck match
       case Some(Intermittent) =>
-        navigator.from match {
-          case "CYA" =>
-            aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-          case "IES" =>
-            controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
-          case _     =>
-            aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show().url
-        }
+        navigator.from match
+          case "CYA" => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+          case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+          case _     => aboutthetradinghistory.routes.CostOfSales6076IntermittentController.show().url
       case Some(Baseload)     =>
-        navigator.from match {
-          case "CYA" =>
-            aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
-          case "IES" =>
-            controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
-          case _     =>
-            aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
-        }
+        navigator.from match
+          case "CYA" => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+          case "IES" => controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
+          case _     => aboutthetradinghistory.routes.CostOfSales6076Controller.show().url
       case _                  => controllers.routes.TaskListController.show.url
-    }
-
-}

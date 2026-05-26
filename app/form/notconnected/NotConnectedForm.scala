@@ -21,13 +21,13 @@ import models.submissions.notconnected.NotConnectedContactDetails
 import play.api.data.Form
 import play.api.data.Forms.{mapping, nonEmptyText, optional, text}
 
-object NotConnectedForm {
+object NotConnectedForm:
 
-  val notConnectedForm: Form[NotConnectedContactDetails] = Form(
-    mapping(
-      "fullName"              -> nonEmptyText(maxLength = 50),
-      "contactDetails"        -> contactDetailsMapping,
-      "additionalInformation" -> optional(text)
-    )(NotConnectedContactDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
-}
+  val notConnectedForm: Form[NotConnectedContactDetails] =
+    Form(
+      mapping(
+        "fullName"              -> nonEmptyText(maxLength = 50),
+        "contactDetails"        -> contactDetailsMapping,
+        "additionalInformation" -> optional(text)
+      )(NotConnectedContactDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

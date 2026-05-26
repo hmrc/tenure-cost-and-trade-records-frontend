@@ -21,14 +21,13 @@ import models.submissions.common.AnswersYesNo.*
 
 class HasCompletedLettingsFormSpec extends FormSpec:
 
-  it should "bind data as expected" in {
+  it should "bind data as expected" in:
     val data  = Map(
       "answer" -> "yes"
     )
     val bound = theForm.bind(data)
     bound.hasErrors mustBe false
     bound.data mustBe data
-  }
 
   it should "unbind data as expected" in {
     val filled = theForm.fill(AnswerYes)

@@ -48,7 +48,7 @@ abstract class CaravansAgeCategoriesController @Inject() (
   audit: Audit
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   implicit val ec: ExecutionContext = mcc.executionContext
 
@@ -79,14 +79,13 @@ abstract class CaravansAgeCategoriesController @Inject() (
     continueOrSaveAsDraft[CaravansAge](
       form,
       formWithErrors => BadRequest(caravansAgeCategoriesView(formWithErrors, caravanUnitType, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateCaravans(updateAnswer(data))
 
         session
           .saveOrUpdate(updatedData)
           .map(_ => navigator.nextPage(pageId, updatedData).apply(updatedData))
           .map(Redirect)
-      }
     )
   }
 
@@ -94,11 +93,8 @@ abstract class CaravansAgeCategoriesController @Inject() (
     navigator.cyaPage
       .filter(_ => navigator.from == "CYA")
       .getOrElse(
-        caravanUnitType match {
+        caravanUnitType match
           case Single => routes.SingleCaravansSubletController.show()
           case Twin   => routes.TwinUnitCaravansSubletController.show()
-        }
       )
       .url
-
-}

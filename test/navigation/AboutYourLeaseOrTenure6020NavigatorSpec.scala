@@ -34,15 +34,15 @@ import utils.TestBaseSpec
 import java.time.LocalDate
 import scala.concurrent.ExecutionContext
 
-class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
+class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec:
 
   private val audit = mock[Audit]
+
   doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
 
   private val navigator = AboutYourLeaseOrTenureNavigator(audit)
 
-  private val session6020 =
-    Session("99996020004", FOR6020, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
+  private val session6020 = Session("99996020004", FOR6020, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
 
   implicit override val hc: HeaderCarrier = HeaderCarrier()
 
@@ -56,7 +56,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to lease surrendered early page when disregarded addition has been completed no" in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -64,7 +63,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
           )
         )
       )
-
       navigator
         .nextPage(TenantsAdditionsDisregardedId, session)
         .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.LeaseSurrenderedEarlyController.show()
@@ -98,7 +96,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
       )
       val result  = navigator.connectedToLandlordRouting(answers)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show()
-
     }
 
     "return a function that goes to trade services description page when include trade services with yes has been completed" in {
@@ -109,14 +106,12 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
           )
         )
       )
-
       navigator
         .nextPage(RentIncludeTradeServicesPageId, session)
         .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.TradeServicesDescriptionController.show()
     }
 
     "return a function that goes to trade services description page when include trade services with no has been completed" in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           session6020.aboutLeaseOrAgreementPartOne.getOrElse(
@@ -124,7 +119,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
           )
         )
       )
-
       navigator
         .nextPage(RentIncludeTradeServicesPageId, session)
         .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show()
@@ -220,7 +214,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to what is the rent based on when the current rent was agreed has been completed with No " in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           session6020.aboutLeaseOrAgreementPartOne.getOrElse(
@@ -234,7 +227,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to ultimately responsible OR based on when is VAT Payable has been completed with No " in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartThree = Some(
           session6020.aboutLeaseOrAgreementPartThree.getOrElse(
@@ -258,7 +250,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
           )
         )
       )
-
       navigator
         .nextPage(IncludedInYourRentPageId, session)
         .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.IsVATPayableForWholePropertyController.show()
@@ -278,14 +269,12 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
           )
         )
       )
-
       navigator
         .nextPage(IntervalsOfRentReviewId, session)
         .apply(session) shouldBe controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController.show()
     }
 
     "return a function that goes to setting the current rent when the current rent was agreed has been completed with Yes " in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           session6020.aboutLeaseOrAgreementPartOne.getOrElse(
@@ -293,7 +282,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
           )
         )
       )
-
       navigator
         .nextPage(RentOpenMarketPageId, session)
         .apply(session) shouldBe
@@ -302,7 +290,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to MethodToFixCurrentRentController when HowIsCurrentRentFixed has been completed " in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -312,7 +299,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
           )
         )
       )
-
       navigator
         .nextPage(HowIsCurrentRentFixedId, session)
         .apply(session) shouldBe
@@ -320,7 +306,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
           .show()
     }
     "return a function that goes to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -340,7 +325,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to rented equipment details page when rent includes fixtures and fitting answer is Yes" in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartOne = Some(
           session6020.aboutLeaseOrAgreementPartOne.getOrElse(
@@ -358,7 +342,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to work carried out condition page when property updates answer is no" in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartThree = Some(
           session6020.aboutLeaseOrAgreementPartThree.getOrElse(
@@ -396,7 +379,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to rent include trade services page when Ultimately Responsible BI has been completed" in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -434,7 +416,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -454,7 +435,6 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {
-
       val session = session6020.copy(
         aboutLeaseOrAgreementPartTwo = Some(
           session6020.aboutLeaseOrAgreementPartTwo.getOrElse(
@@ -506,14 +486,12 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to trade services description page when addAnotherService is yes" in {
-
       val tradeServicesEntry  = TradeService(
         details = "Some service",
         addAnotherService = Some(AnswerYes)
       )
       val aboutLeasePartThree = AboutLeaseOrAgreementPartThree(tradeServices = IndexedSeq(tradeServicesEntry))
-
-      val session = session6020.copy(aboutLeaseOrAgreementPartThree = Some(aboutLeasePartThree))
+      val session             = session6020.copy(aboutLeaseOrAgreementPartThree = Some(aboutLeasePartThree))
 
       navigator
         .nextPage(TradeServicesListId, session)
@@ -522,14 +500,12 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
     "return a function that goes to payment for trade services page when addAnotherService is no" in {
-
       val tradeServicesEntry  = TradeService(
         details = "test",
         addAnotherService = Some(AnswerNo)
       )
       val aboutLeasePartThree = AboutLeaseOrAgreementPartThree(tradeServices = IndexedSeq(tradeServicesEntry))
-
-      val session = session6020.copy(aboutLeaseOrAgreementPartThree = Some(aboutLeasePartThree))
+      val session             = session6020.copy(aboutLeaseOrAgreementPartThree = Some(aboutLeasePartThree))
 
       navigator
         .nextPage(TradeServicesListId, session)
@@ -552,5 +528,3 @@ class AboutYourLeaseOrTenure6020NavigatorSpec extends TestBaseSpec {
     }
 
   }
-
-}

@@ -45,17 +45,17 @@ class CurrentRentFirstPaidController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CurrentRentFirstPaid")
 
     Ok(
       currentRentFirstPaidView(
-        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid) match {
+        request.sessionData.aboutLeaseOrAgreementPartOne.flatMap(_.currentRentFirstPaid) match
           case Some(currentRentFirstPaid) => currentRentFirstPaidForm.fill(currentRentFirstPaid)
           case _                          => currentRentFirstPaidForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -69,25 +69,19 @@ class CurrentRentFirstPaidController @Inject() (
         BadRequest(
           currentRentFirstPaidView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
         ),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartOne(_.copy(currentRentFirstPaid = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CurrentRentFirstPaidPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(answers: Session): String =
-    answers.forType match {
+    answers.forType match
       case FOR6011 => controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show().url
       case FOR6020 =>
-        answers.aboutLeaseOrAgreementPartThree.flatMap(_.throughputAffectsRent).map(_.doesRentVaryToThroughput) match {
+        answers.aboutLeaseOrAgreementPartThree.flatMap(_.throughputAffectsRent).map(_.doesRentVaryToThroughput) match
           case Some(AnswerYes) => aboutYourLeaseOrTenure.routes.ThroughputAffectsRentDetailsController.show().url
           case _               => aboutYourLeaseOrTenure.routes.ThroughputAffectsRentController.show().url
-        }
       case _       => controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController.show().url
-    }
-
-}

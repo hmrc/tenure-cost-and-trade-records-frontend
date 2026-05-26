@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
+class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -35,16 +35,17 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
 
   def connectedToLandlordDetailsController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): ConnectedToLandlordDetailsController = ConnectedToLandlordDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    connectedToLandlordDetailsView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): ConnectedToLandlordDetailsController =
+    ConnectedToLandlordDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      connectedToLandlordDetailsView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "ConnectedToLandlordDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Connected To Landlord Details in the session" in {
       val result = connectedToLandlordDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -67,9 +68,8 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "ConnectedToLandlordDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = connectedToLandlordDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
@@ -97,15 +97,12 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val connectedToLandlordDetails: String = "connectedToLandlordDetails"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "connectedToLandlordDetails" -> "Test content"
     )
-  }
-}

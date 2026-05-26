@@ -24,6 +24,5 @@ case class AdditionalActivities(
   checkYourAnswersAdditionalActivities: Option[AnswersYesNo] = None
 )
 
-object AdditionalActivities {
+object AdditionalActivities:
   implicit val format: OFormat[AdditionalActivities] = Json.format
-}

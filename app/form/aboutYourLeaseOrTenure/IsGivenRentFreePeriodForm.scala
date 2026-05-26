@@ -24,7 +24,7 @@ import play.api.data.Forms.single
 /**
   * @author Yuriy Tumakha
   */
-object IsGivenRentFreePeriodForm {
+object IsGivenRentFreePeriodForm:
 
   val isGivenRentFreePeriodForm: Form[AnswersYesNo] =
     Form(
@@ -32,5 +32,3 @@ object IsGivenRentFreePeriodForm {
         "rentFreePeriod" -> createYesNoType("error.rentFreePeriod.required")
       )
     )
-
-}

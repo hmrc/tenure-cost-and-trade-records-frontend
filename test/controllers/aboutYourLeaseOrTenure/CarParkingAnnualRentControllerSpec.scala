@@ -26,14 +26,12 @@ import utils.TestBaseSpec
 /**
   * @author Yuriy Tumakha
   */
-class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
+class CarParkingAnnualRentControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def carParkingAnnualRentController(
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    )
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree)
   ): CarParkingAnnualRentController =
     CarParkingAnnualRentController(
       mockAudit,
@@ -44,7 +42,7 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
       stubMessagesControllerComponents()
     )
 
-  "CarParkingAnnualRentController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Car Parking Annual Rent in the session" in {
       val result = carParkingAnnualRentController().show(fakeRequest)
       status(result)        shouldBe OK
@@ -72,7 +70,7 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
     }
   }
 
-  "CarParkingAnnualRentController SUBMIT /" should {
+  "SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {
       val res = carParkingAnnualRentController().submit(
         FakeRequest().withFormUrlEncodedBody()
@@ -80,7 +78,7 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data annualRent and fixedRentFrom submitted" in {
+    "redirect when form data annualRent and fixedRentFrom submitted" in {
       val res = carParkingAnnualRentController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "annualRent"          -> "2200",
@@ -92,4 +90,3 @@ class CarParkingAnnualRentControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

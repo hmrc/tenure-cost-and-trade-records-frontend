@@ -29,23 +29,24 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
+class AddOrRemoveLettingControllerSpec extends TestBaseSpec:
+
   import TestData.*
+
   val mockAudit: Audit = mock[Audit]
 
   def addOrRemoveLettingController(
-    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(
-      prefilledAboutFranchiseOrLettingsWith6020LettingsAll
+    aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettingsWith6020LettingsAll)
+  ): AddOrRemoveLettingController =
+    AddOrRemoveLettingController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutFranchisesOrLettingsNavigator,
+      addOrRemoveLettingView,
+      genericRemoveConfirmationView,
+      preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
+      mockSessionRepo
     )
-  ): AddOrRemoveLettingController = AddOrRemoveLettingController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutFranchisesOrLettingsNavigator,
-    addOrRemoveLettingView,
-    genericRemoveConfirmationView,
-    preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-    mockSessionRepo
-  )
 
   "GET /" should {
     "return 200" in {
@@ -65,8 +66,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
         status(result) shouldBe BAD_REQUEST
       }
       "throw a BAD_REQUEST if an empty form is submitted via CYA" in {
-        val result =
-          addOrRemoveLettingController().submit(1)(FakeRequest().withFormUrlEncodedBody("from" -> "CYA"))
+        val result = addOrRemoveLettingController().submit(1)(FakeRequest().withFormUrlEncodedBody("from" -> "CYA"))
         status(result) shouldBe BAD_REQUEST
       }
     }
@@ -217,15 +217,10 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
-
-      val addAnotherLetting: String =
-        "addAnotherLetting"
-    }
+    class ErrorKey:
+      val addAnotherLetting: String = "addAnotherLetting"
 
     val baseFormData: Map[String, String] = Map("addAnotherLetting" -> "yes")
-  }
-}

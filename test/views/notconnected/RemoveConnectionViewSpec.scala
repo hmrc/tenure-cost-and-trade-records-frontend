@@ -23,7 +23,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsDetails] {
+class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsDetails]:
 
   private val messageKeyPrefix = "removeConnection"
 
@@ -31,13 +31,13 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
 
   override val form: Form[RemoveConnectionsDetails] = RemoveConnectionForm.removeConnectionForm
 
-  private def createView: () => Html = () =>
-    removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  private def createViewUsingForm: Form[RemoveConnectionsDetails] => Html = (form: Form[RemoveConnectionsDetails]) =>
-    removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[RemoveConnectionsDetails] => Html =
+    form => removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
 
-  "Past connection view" must {
+  "Past connection view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -81,4 +81,3 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

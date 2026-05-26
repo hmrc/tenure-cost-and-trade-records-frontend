@@ -22,16 +22,14 @@ import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.data.validation.Constraints.maxLength
 
-object WhatIsYourCurrentRentBasedOnForm {
+object WhatIsYourCurrentRentBasedOnForm:
 
-  val whatIsYourCurrentRentBasedOnForm: Form[WhatIsYourCurrentRentBasedOnDetails] = Form(
-    mapping(
-      "currentRentBasedOn"    -> whatIsYourRentBasedOnType,
-      "whatIsYourRentBasedOn" -> optional(
-        text.verifying(
-          maxLength(2000, "error.currentRentBasedOn.maxLength")
+  val whatIsYourCurrentRentBasedOnForm: Form[WhatIsYourCurrentRentBasedOnDetails] =
+    Form(
+      mapping(
+        "currentRentBasedOn"    -> whatIsYourRentBasedOnType,
+        "whatIsYourRentBasedOn" -> optional(
+          text.verifying(maxLength(2000, "error.currentRentBasedOn.maxLength"))
         )
-      )
-    )(WhatIsYourCurrentRentBasedOnDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
-  )
-}
+      )(WhatIsYourCurrentRentBasedOnDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
+    )

@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.api.data.Forms.{mapping, optional, text}
 import play.api.i18n.Messages
 
-object IntervalsOfRentReviewForm {
+object IntervalsOfRentReviewForm:
 
   def intervalsOfRentReviewForm(using messages: Messages): Form[IntervalsOfRentReview] =
     Form(
@@ -32,5 +32,3 @@ object IntervalsOfRentReviewForm {
         "nextReview"            -> optional(requiredDateMapping("nextReview", allowFutureDates = true))
       )(IntervalsOfRentReview.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
-
-}

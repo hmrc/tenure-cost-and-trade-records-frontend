@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBaseSpec {
+class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -45,7 +45,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
       mockSessionRepo
     )
 
-  "RentPayableVaryAccordingToGrossOrNetDetailsController GET /" should {
+  "GET /" should {
     "return 200 with Rent Payable Vary Gross or Net Details in the session" in {
       val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -68,7 +68,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
     }
   }
 
-  "RentPayableVaryAccordingToGrossOrNetDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentPayableVaryAccordingToGrossOrNetDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -76,7 +76,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = rentPayableVaryAccordingToGrossOrNetDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "rentPayableVaryAccordingToGrossOrNetDetails" -> "text"
@@ -108,15 +108,12 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val rentPayableVaryAccordingToGrossOrNetDetails: String = "rentPayableVaryAccordingToGrossOrNetDetails"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "rentPayableVaryAccordingToGrossOrNetDetails" -> "Test content"
     )
-  }
-}

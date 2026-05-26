@@ -23,7 +23,7 @@ import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix = "tenantsAdditionsDisregarded"
 
@@ -37,7 +37,7 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[Answers
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     tenantsAdditionsDisregardedView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Tenants additions disregarded view" must {
+  "Tenants additions disregarded view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -85,4 +85,3 @@ class TenantsAdditionsDisregardedViewSpec extends QuestionViewBehaviours[Answers
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -85,13 +85,12 @@ abstract class Navigator @Inject() (audit: Audit):
   ): Call =
     nextPage(id, session).apply(session).callWithParam(paramAndValue)
 
-  protected def auditNextUrl(session: Session)(call: Call)(using hc: HeaderCarrier): Call = {
+  protected def auditNextUrl(session: Session)(call: Call)(using hc: HeaderCarrier): Call =
     audit.sendContinueNextPage(session, call.url)
     call
-  }
 
   private def possibleCYARedirect(session: Session)(nextCall: Call)(using request: Request[AnyContent]): Call =
-    if (from == "CYA") {
+    if from == "CYA" then
       overrideRedirectIfFromCYA
         .find(entry => nextCall.url.contains(entry._1))
         .map(_._2(session))
@@ -102,9 +101,8 @@ abstract class Navigator @Inject() (audit: Audit):
         )
         .orElse(cyaPage)
         .getOrElse(nextCall)
-    } else {
+    else
       nextCall
-    }
 
   def idx(using request: Request[AnyContent]): Int =
     request

@@ -46,17 +46,17 @@ class EnforcementActionBeenTakenController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("EnforcementActionBeenTaken")
 
     Ok(
       enforcementActionBeenTakenView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementAction) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.enforcementAction) match
           case Some(enforcementAction) => enforcementActionForm.fill(enforcementAction)
           case _                       => enforcementActionForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -74,20 +74,15 @@ class EnforcementActionBeenTakenController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(enforcementAction = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(EnforcementActionBeenTakenPageId, updatedData).apply(updatedData)))
-      }
     )
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match {
-      case Some(AnswerYes) =>
-        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show().url
+    answers.aboutYouAndTheProperty.flatMap(_.premisesLicenseConditions) match
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show().url
       case _               => controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
-    }
-
-}

@@ -47,15 +47,14 @@ class OperationalExpensesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("OperationalExpenses")
 
     runWithSessionCheck { turnoverSections6076 =>
       val years   = turnoverSections6076.map(_.financialYearEnd).map(_.getYear.toString)
-      val details =
-        request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherOperationalExpensesDetails).getOrElse("")
+      val details = request.sessionData.aboutTheTradingHistoryPartOne.flatMap(_.otherOperationalExpensesDetails).getOrElse("")
 
       Ok(
         operationalExpensesView(
@@ -75,7 +74,7 @@ class OperationalExpensesController @Inject() (
       continueOrSaveAsDraft[(Seq[OperationalExpenses], String)](
         operationalExpensesForm(years),
         formWithErrors => BadRequest(operationalExpensesView(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success._1 zip turnoverSections6076).map { case (operationalExpenses, previousSection) =>
             previousSection.copy(operationalExpenses = Some(operationalExpenses))
           }
@@ -96,7 +95,6 @@ class OperationalExpensesController @Inject() (
                 .getOrElse(navigator.nextPage(OperationalExpensesId, updatedData).apply(updatedData))
             }
             .map(Redirect)
-        }
       )
     }
   }
@@ -111,13 +109,10 @@ class OperationalExpensesController @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" =>
         controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case "IES" =>
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummary6076Controller.show().url
       case _     =>
         aboutthetradinghistory.routes.PremisesCostsController.show().url
-    }
-
-}

@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.GrossReceiptsForBaseLoad
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class GrossReceiptsForBaseLoadViewSpec extends QuestionViewBehaviours[Seq[GrossReceiptsForBaseLoad]] {
+class GrossReceiptsForBaseLoadViewSpec extends QuestionViewBehaviours[Seq[GrossReceiptsForBaseLoad]]:
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
 
@@ -54,5 +54,3 @@ class GrossReceiptsForBaseLoadViewSpec extends QuestionViewBehaviours[Seq[GrossR
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

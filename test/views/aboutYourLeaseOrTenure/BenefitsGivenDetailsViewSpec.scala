@@ -21,7 +21,7 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class BenefitsGivenDetailsViewSpec extends QuestionViewBehaviours[String] {
+class BenefitsGivenDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "benefitsGivenDetails"
 
@@ -37,7 +37,6 @@ class BenefitsGivenDetailsViewSpec extends QuestionViewBehaviours[String] {
     behave like normalPage(createView, messageKeyPrefix)
 
     "has a link marked with back.link.label leading to the benefits given Page" in {
-
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
       backlinkText shouldBe messages("back.link.label")
@@ -68,4 +67,3 @@ class BenefitsGivenDetailsViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

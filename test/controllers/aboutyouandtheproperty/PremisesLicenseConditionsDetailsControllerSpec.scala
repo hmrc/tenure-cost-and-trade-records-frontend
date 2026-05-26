@@ -27,7 +27,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
+class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -35,25 +35,27 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
 
   def premisesLicenseConditionsDetailsController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): PremisesLicenseConditionsDetailsController = PremisesLicenseConditionsDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    premisesLicenceConditionsDetailsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): PremisesLicenseConditionsDetailsController =
+    PremisesLicenseConditionsDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      premisesLicenceConditionsDetailsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def premisesLicenseConditionsDetailsControllerNone(): PremisesLicenseConditionsDetailsController = PremisesLicenseConditionsDetailsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    premisesLicenceConditionsDetailsView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def premisesLicenseConditionsDetailsControllerNone(): PremisesLicenseConditionsDetailsController =
+    PremisesLicenseConditionsDetailsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      premisesLicenceConditionsDetailsView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "Premises License conditions details controller" should {
+  "GET /" should {
     "return 200 license conditions details in the session" in {
       val result = premisesLicenseConditionsDetailsController().show(fakeRequest)
       status(result) shouldBe Status.OK
@@ -71,16 +73,15 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+  }
 
-    "SUBMIT /" should {
-      "throw a BAD_REQUEST if an empty form is submitted" in {
-        val res =
-          premisesLicenseConditionsDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
-        status(res) shouldBe BAD_REQUEST
-      }
+  "SUBMIT /" should {
+    "throw a BAD_REQUEST if an empty form is submitted" in {
+      val res = premisesLicenseConditionsDetailsController().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
+      status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = premisesLicenseConditionsDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "premisesLicenseConditionsDetails" -> "test"
@@ -88,7 +89,6 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
       )
       status(res) shouldBe SEE_OTHER
     }
-
   }
 
   "Premises License conditions details form" should {
@@ -104,15 +104,12 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val premisesLicenseConditionsDetails: String = "premisesLicenseConditionsDetails"
-    }
 
     val baseFormData: Map[String, String] = Map(
       "premisesLicenseConditionsDetails" -> "Test content"
     )
-  }
-}

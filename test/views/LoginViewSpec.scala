@@ -20,11 +20,11 @@ import controllers.{LoginController, LoginDetails}
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
+class LoginViewSpec extends QuestionViewBehaviours[LoginDetails]:
 
   private def login = inject[views.html.login]
 
-  val messageKeyPrefix = "login"
+  private val messageKeyPrefix = "login"
 
   override val form: Form[LoginDetails] = LoginController.loginForm
 
@@ -32,7 +32,7 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
 
   private def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(using fakeRequest, messages)
 
-  "Login view" must {
+  "Login view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -44,4 +44,3 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

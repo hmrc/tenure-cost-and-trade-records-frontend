@@ -43,7 +43,7 @@ class ConcessionTypeFeesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(idx: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     runWithSessionCheck(idx) { concession =>
@@ -80,7 +80,7 @@ class ConcessionTypeFeesController @Inject() (
             )
           ),
         data =>
-          if (data.feeReceivedPerYear.size == yearEndDates.size) {
+          if data.feeReceivedPerYear.size == yearEndDates.size then
             val feeReceivedSeq = (data.feeReceivedPerYear zip yearEndDates).map { case (feePerYear, finYearEnd) =>
               feePerYear.copy(financialYearEnd = finYearEnd)
             }
@@ -92,14 +92,12 @@ class ConcessionTypeFeesController @Inject() (
               .map(_.updated(idx, concession.copy(feeReceived = Some(updatedFeeReceived))))
               .get
 
-            val updatedData =
-              updateAboutFranchisesOrLettings(_.copy(rentalIncome = Some(updatedSections)))
+            val updatedData = updateAboutFranchisesOrLettings(_.copy(rentalIncome = Some(updatedSections)))
             session.saveOrUpdate(updatedData).map { _ =>
               Redirect(navigator.nextPage(ConcessionTypeFeesId, updatedData).apply(updatedData))
             }
-          } else {
+          else
             Redirect(controllers.aboutfranchisesorlettings.routes.FeeReceivedController.show(idx))
-          }
       )
     }
   }
@@ -110,15 +108,14 @@ class ConcessionTypeFeesController @Inject() (
     action: ConcessionIncomeRecord => Future[Result]
   )(using request: SessionRequest[AnyContent]
   ): Future[Result] =
-    if (request.sessionData.aboutTheTradingHistoryPartOne.map(_.turnoverSections6045).exists(_.nonEmpty)) {
+    if request.sessionData.aboutTheTradingHistoryPartOne.map(_.turnoverSections6045).exists(_.nonEmpty) then
       request.sessionData.aboutFranchisesOrLettings
         .flatMap(_.rentalIncome.flatMap(_.lift(idx)))
         .collect { case record: ConcessionIncomeRecord => record }
         .filter(_ => request.sessionData.aboutTheTradingHistoryPartOne.exists(_.turnoverSections6045.nonEmpty))
         .fold[Future[Result]](Redirect(backLink(idx)))(action)
-    } else {
+    else
       Redirect(controllers.aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show())
-    }
 
   private def initialFeeReceived(using request: SessionRequest[AnyContent]): FeeReceived =
     FeeReceived(
@@ -136,5 +133,3 @@ class ConcessionTypeFeesController @Inject() (
 
   private def backLink(idx: Int): Call =
     controllers.aboutfranchisesorlettings.routes.ConcessionTypeDetailsController.show(idx)
-
-}

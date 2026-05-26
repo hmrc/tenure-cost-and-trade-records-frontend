@@ -22,7 +22,7 @@ import models.submissions.aboutYourLeaseOrTenure.CurrentLeaseOrAgreementBegin
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[CurrentLeaseOrAgreementBegin] {
+class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[CurrentLeaseOrAgreementBegin]:
 
   private val messageKeyPrefix = "currentLeaseOrAgreementBegin"
 
@@ -35,7 +35,7 @@ class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[Curren
   private def createViewUsingForm = (form: Form[CurrentLeaseOrAgreementBegin]) =>
     currentLeaseOrAgreementBeginView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Current rent first paid view" must {
+  "Current rent first paid view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -81,4 +81,3 @@ class CurrentLeaseOrAgreementBeginViewSpec extends QuestionViewBehaviours[Curren
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

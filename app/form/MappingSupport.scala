@@ -47,15 +47,13 @@ object MappingSupport:
 
   extension [A](seq: Seq[A])
 
-    def toTuple2: Option[(A, A)] = seq match {
+    def toTuple2: Option[(A, A)] = seq match
       case Seq(a, b) => Some((a, b))
       case _         => None
-    }
 
-    def toTuple3: Option[(A, A, A)] = seq match {
+    def toTuple3: Option[(A, A, A)] = seq match
       case Seq(a, b, c) => Some((a, b, c))
       case _            => None
-    }
 
   val typeOfLettingMapping: Mapping[TypeOfLetting] = enumMappingRequired(TypeOfLetting, Errors.typeOfLetting)
   val typeOfIncomeMapping: Mapping[TypeOfIncome]   = enumMappingRequired(TypeOfIncome, Errors.typeOfIncome)
@@ -238,10 +236,7 @@ object MappingSupport:
   def weeksMapping(blankErrorMessage: String, invalidErrorMessage: String, minWeeks: Int = 1): Mapping[Int] =
     default(text, "")
       .verifying(blankErrorMessage, _.trim.nonEmpty)
-      .transform[Int](
-        str => Try(str.toInt).getOrElse(-1),
-        _.toString
-      )
+      .transform[Int](str => Try(str.toInt).getOrElse(-1), _.toString)
       .verifying(invalidErrorMessage, (minWeeks to 52).contains(_))
 
   def nonNegativeNumberWithYear(
@@ -262,10 +257,7 @@ object MappingSupport:
   def rallyAreasMapping(year: String)(using messages: Messages): Mapping[Option[BigDecimal]] = optional(
     text
       .verifying(messages("error.rallyAreas.areaInHectares.range", year), s => Try(BigDecimal(s)).isSuccess)
-      .transform[BigDecimal](
-        s => BigDecimal(s),
-        _.toString
-      )
+      .transform[BigDecimal](s => BigDecimal(s), _.toString)
       .verifying(messages("error.rallyAreas.areaInHectares.range", year), _ >= 0)
   ).verifying(messages("error.rallyAreas.areaInHectares.required", year), _.isDefined)
 
@@ -275,10 +267,7 @@ object MappingSupport:
     optional(
       text
         .verifying(messages(s"error.$field.range", year), s => Try(BigDecimal(s)).isSuccess)
-        .transform[BigDecimal](
-          s => BigDecimal(s),
-          _.toString
-        )
+        .transform[BigDecimal](s => BigDecimal(s), _.toString)
         .verifying(messages(s"error.$field.negative", year), _ >= 0)
         .verifying(messages(s"error.$field.range", year), _ <= salesMax)
     ).verifying(messages(s"error.$field.required", year), _.isDefined)
@@ -287,10 +276,7 @@ object MappingSupport:
     optional(
       text
         .verifying(s"error.$field.nonNumeric", s => Try(BigDecimal(s)).isSuccess)
-        .transform[BigDecimal](
-          s => BigDecimal(s),
-          _.toString
-        )
+        .transform[BigDecimal](s => BigDecimal(s), _.toString)
         .verifying(s"error.$field.negative", _ >= 0)
     )
 
@@ -315,13 +301,11 @@ object MappingSupport:
   def mappingPerYear[T](
     financialYears: Seq[String],
     mappingPerYearAndIdx: (String, Int) => (String, Mapping[T])
-  ): Mapping[Seq[T]] = {
+  ): Mapping[Seq[T]] =
     val yearsMapping: Seq[(String, Mapping[T])] = financialYears.take(3).zipWithIndex.map(mappingPerYearAndIdx.tupled)
 
-    yearsMapping match {
+    yearsMapping match
       case Seq(a)       => mapping(a)(Seq(_))(_.headOption)
       case Seq(a, b)    => mapping(a, b)(Seq(_, _))(_.toTuple2)
       case Seq(a, b, c) => mapping(a, b, c)(Seq(_, _, _))(_.toTuple3)
       case _            => throw IllegalArgumentException("Financial years sequence is empty")
-    }
-  }

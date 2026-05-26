@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class RemoveConnectionIdentifiersSpec extends TestBaseSpec {
+class RemoveConnectionIdentifiersSpec extends TestBaseSpec:
 
   "Remove connection identifiers" when {
 
@@ -27,5 +27,5 @@ class RemoveConnectionIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for Remove connection page" in
       assert(RemoveConnectionId.toString.equals("removeConnectionPageId"))
+
   }
-}

@@ -36,7 +36,7 @@ class LocalDateFormatter(
   allowFutureDates: Boolean,
   years: Option[Seq[Int]] = None
 )(using messages: Messages
-) extends Formatter[LocalDate] {
+) extends Formatter[LocalDate]:
 
   require(
     allowPastDates || allowFutureDates,
@@ -46,17 +46,17 @@ class LocalDateFormatter(
   private val allDateFields   = Seq("day", "month", "year")
   private val nineteenHundred = LocalDate.of(1900, 1, 1)
 
-  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], LocalDate] = {
+  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], LocalDate] =
 
     val indexFromKey = key.split("\\[|\\]")
     val fieldIndex   = indexFromKey.lift(1).flatMap(s => Try(s.toInt).toOption).getOrElse(0)
 
     val yearForField = years.flatMap(_.lift(fieldIndex))
 
-    val fieldName            = yearForField match {
+    val fieldName = yearForField match
       case Some(year) => messages(s"fieldName.$fieldNameKey", year.toString)
       case None       => messages(s"fieldName.$fieldNameKey")
-    }
+
     val fieldNameCapitalized = fieldName.capitalize
     val dayKey               = s"$key.day"
 
@@ -82,7 +82,7 @@ class LocalDateFormatter(
           (year, s"$key.year", "error.date.year.invalid")
         ).filter(_._1 == 0)
 
-        invalidFields match {
+        invalidFields match
           case Seq((_, field, error))                      =>
             oneError(field, error, Seq(fieldNameCapitalized, field))
           case multipleErrors if multipleErrors.length > 1 =>
@@ -93,7 +93,6 @@ class LocalDateFormatter(
             validateDate(day, month, year).left.map { errorKey =>
               Seq(FormError(key, errorKey, Seq(fieldNameCapitalized, allDateFields)))
             }
-        }
 
       case (d, m, y) =>
         val prefix           = messages("error.dateParts.prefix")
@@ -107,7 +106,6 @@ class LocalDateFormatter(
         val focusKey         = s"$key.${missedFields.head}"
         oneError(focusKey, "error.date.mustInclude", Seq(fieldNameCapitalized, arg1, missedFields))
     }
-  }
 
   override def unbind(key: String, value: LocalDate): Map[String, String] =
     Map(
@@ -133,5 +131,3 @@ class LocalDateFormatter(
         else if !allowFutureDates && date.isAfter(todayUKDate) then Left("error.date.mustBeInPast")
         else Right(date)
       }
-
-}

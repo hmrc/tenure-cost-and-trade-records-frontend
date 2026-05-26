@@ -23,20 +23,21 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class PercentageFromFuelCardsControllerSpec extends TestBaseSpec {
+class PercentageFromFuelCardsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def percentageFromFuelCards(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory6020)
-  ): PercentageFromFuelCardsController = PercentageFromFuelCardsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourTradingHistoryNavigator,
-    percentageFromFuelCardsView,
-    preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-    mockSessionRepo
-  )
+  ): PercentageFromFuelCardsController =
+    PercentageFromFuelCardsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourTradingHistoryNavigator,
+      percentageFromFuelCardsView,
+      preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
+      mockSessionRepo
+    )
 
   "Percentage from fuel cards controller" should {
     "return 200" in {
@@ -69,4 +70,3 @@ class PercentageFromFuelCardsControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

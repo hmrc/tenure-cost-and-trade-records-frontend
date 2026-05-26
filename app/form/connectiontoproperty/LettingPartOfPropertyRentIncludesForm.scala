@@ -20,18 +20,17 @@ import form.MappingSupport.{nonEmptyList, noneCantBeSelectedWithOther}
 import play.api.data.Form
 import play.api.data.Forms.{list, single, text}
 
-object LettingPartOfPropertyRentIncludesForm {
+object LettingPartOfPropertyRentIncludesForm:
 
-  val lettingPartOfPropertyRentIncludesForm: Form[List[String]] = Form(
-    single(
-      "itemsInRent" -> list(text).verifying(
-        nonEmptyList("error.lettingPartOfPropertyCheckboxesDetails.required"),
-        noneCantBeSelectedWithOther(
-          "noneOfThese",
-          "error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther"
+  val lettingPartOfPropertyRentIncludesForm: Form[List[String]] =
+    Form(
+      single(
+        "itemsInRent" -> list(text).verifying(
+          nonEmptyList("error.lettingPartOfPropertyCheckboxesDetails.required"),
+          noneCantBeSelectedWithOther(
+            "noneOfThese",
+            "error.lettingPartOfPropertyCheckboxesDetails.noneSelectedWithOther"
+          )
         )
       )
     )
-  )
-
-}

@@ -46,17 +46,17 @@ class TiedForGoodsController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TiedForGoods")
 
     Ok(
       tiedForGoodsView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.tiedForGoods) match
           case Some(tiedForGoods) => tiedForGoodsForm.fill(tiedForGoods)
           case _                  => tiedForGoodsForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -66,29 +66,16 @@ class TiedForGoodsController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       tiedForGoodsForm,
-      formWithErrors =>
-        BadRequest(
-          tiedForGoodsView(
-            formWithErrors,
-            getBackLink(request.sessionData),
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(tiedForGoodsView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(tiedForGoods = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TiedForGoodsPageId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(answers: Session): String =
-    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction) match {
-      case Some(AnswerYes) =>
-        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
+    answers.aboutYouAndTheProperty.flatMap(_.enforcementAction) match
+      case Some(AnswerYes) => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show().url
       case _               => controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show().url
-    }
-
-}

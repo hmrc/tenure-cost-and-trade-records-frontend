@@ -47,17 +47,17 @@ class HowIsCurrentRentFixedController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("HowIsCurrentRentFixed")
 
     Ok(
       howIsCurrentRentFixedView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.howIsCurrentRentFixed) match
           case Some(data) => howIsCurrentRentFixedForm.fill(data)
           case _          => howIsCurrentRentFixedForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -67,42 +67,27 @@ class HowIsCurrentRentFixedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[HowIsCurrentRentFixed](
       howIsCurrentRentFixedForm,
-      formWithErrors =>
-        BadRequest(
-          howIsCurrentRentFixedView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)
-        ),
-      data => {
+      formWithErrors => BadRequest(howIsCurrentRentFixedView(formWithErrors, getBackLink(request.sessionData), request.sessionData.toSummary)),
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(howIsCurrentRentFixed = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(HowIsCurrentRentFixedId, updatedData).apply(updatedData)))
-
-      }
     )
   }
 
   private def getBackLink(answers: Session): String =
-    answers.forType match {
+    answers.forType match
       case FOR6010 | FOR6015 | FOR6016 =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match {
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show().url
-          case _               =>
-            controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
-        }
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryOnQuantityOfBeers) match
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersDetailsController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryOnQuantityOfBeersController.show().url
       case FOR6020 | FOR6045 | FOR6046 =>
-        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match {
+        answers.aboutLeaseOrAgreementPartOne.flatMap(_.rentOpenMarketValue) match
           case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController.show().url
           case _               => controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController.show().url
-        }
-      case FOR6048                     =>
-        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url
+      case FOR6048                     => controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleBuildingInsuranceController.show().url
       case _                           =>
-        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNet) match {
-          case Some(AnswerYes) =>
-            controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
-          case _               =>
-            controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url
-        }
-    }
-}
+        answers.aboutLeaseOrAgreementPartTwo.flatMap(_.rentPayableVaryAccordingToGrossOrNet) match
+          case Some(AnswerYes) => controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetDetailsController.show().url
+          case _               => controllers.aboutYourLeaseOrTenure.routes.RentPayableVaryAccordingToGrossOrNetController.show().url

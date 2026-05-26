@@ -22,7 +22,7 @@ import models.submissions.common.Address
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class EditAddressViewSpec extends QuestionViewBehaviours[Address] {
+class EditAddressViewSpec extends QuestionViewBehaviours[Address]:
 
   private val messageKeyPrefix = "editAddress"
 
@@ -35,7 +35,7 @@ class EditAddressViewSpec extends QuestionViewBehaviours[Address] {
   private def createViewUsingForm = (form: Form[Address]) =>
     editAddressView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
 
-  "Edit Address view" must {
+  "Edit Address view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -74,4 +74,3 @@ class EditAddressViewSpec extends QuestionViewBehaviours[Address] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

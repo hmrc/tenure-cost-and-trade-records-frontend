@@ -27,7 +27,7 @@ case class GrossReceiptsExcludingVAT(
   capacityMarket: Option[BigDecimal] = None,
   balancingServices: Option[BigDecimal] = None,
   embeddedBenefits: Option[BigDecimal] = None
-) {
+):
 
   def total: BigDecimal = Seq(
     electricitySales,
@@ -39,8 +39,6 @@ case class GrossReceiptsExcludingVAT(
     balancingServices,
     embeddedBenefits
   ).flatten.sum
-}
 
-object GrossReceiptsExcludingVAT {
+object GrossReceiptsExcludingVAT:
   implicit val format: OFormat[GrossReceiptsExcludingVAT] = Json.format
-}

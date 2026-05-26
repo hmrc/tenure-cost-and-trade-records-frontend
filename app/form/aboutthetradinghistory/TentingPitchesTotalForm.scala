@@ -19,16 +19,16 @@ package form.aboutthetradinghistory
 import play.api.data.Form
 import play.api.data.Forms.*
 
-object TentingPitchesTotalForm {
+object TentingPitchesTotalForm:
 
-  val tentingPitchesTotalForm: Form[Int] = Form(
-    single(
-      "tentingPitchesTotal" ->
-        text
-          .verifying("error.tentingPitchesTotal.missing", _.nonEmpty)
-          .verifying("error.tentingPitchesTotal.range", s => s.isEmpty || s.matches("""\d+"""))
-          .transform[Int](_.toInt, _.toString)
-          .verifying("error.tentingPitchesTotal.range", n => n >= 0)
+  val tentingPitchesTotalForm: Form[Int] =
+    Form(
+      single(
+        "tentingPitchesTotal" ->
+          text
+            .verifying("error.tentingPitchesTotal.missing", _.nonEmpty)
+            .verifying("error.tentingPitchesTotal.range", s => s.isEmpty || s.matches("""\d+"""))
+            .transform[Int](_.toInt, _.toString)
+            .verifying("error.tentingPitchesTotal.range", n => n >= 0)
+      )
     )
-  )
-}

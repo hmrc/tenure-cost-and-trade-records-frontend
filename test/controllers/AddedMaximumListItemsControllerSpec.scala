@@ -26,20 +26,15 @@ import utils.TestBaseSpec
   */
 class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
 
-  private val nextPageAccommodationUnits =
-    controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show.url
+  private val nextPageAccommodationUnits = controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show.url
 
-  private val nextPageTradeServices =
-    controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
+  private val nextPageTradeServices = controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
 
-  private val nextPageServicesPaidSeparately =
-    controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
+  private val nextPageServicesPaidSeparately = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
 
-  private val nextPageBunkerFuelCards =
-    controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
+  private val nextPageBunkerFuelCards = controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
 
-  private val nextPageLowMarginFuelCards =
-    controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show().url
+  private val nextPageLowMarginFuelCards = controllers.aboutthetradinghistory.routes.NonFuelTurnoverController.show().url
 
   def addedMaximumListItemsController: AddedMaximumListItemsController =
     AddedMaximumListItemsController(
@@ -54,12 +49,11 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
       "exceededMaxListItems" -> "true"
     )
 
-  "AccommodationUnits - GET /" should {
+  "AccommodationUnits - GET /" should:
     "return 200" in {
       val result = addedMaximumListItemsController.show(AccommodationUnits)(fakeRequest)
       status(result) shouldBe OK
     }
-  }
 
   "AccommodationUnits - SUBMIT /" should {
     "return BAD_REQUEST if an empty form is submitted" in {

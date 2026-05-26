@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import utils.TestBaseSpec
 
-class RallyAreasControllerSpec extends TestBaseSpec {
+class RallyAreasControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -57,7 +57,6 @@ class RallyAreasControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include("/check-your-answers-tenting-pitches")
     }
-
   }
 
   "SUBMIT /" should {
@@ -66,5 +65,3 @@ class RallyAreasControllerSpec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
   }
-
-}

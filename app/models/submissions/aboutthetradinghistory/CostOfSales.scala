@@ -26,10 +26,8 @@ case class CostOfSales(
   food: Option[BigDecimal],
   drinks: Option[BigDecimal],
   other: Option[BigDecimal]
-) {
+):
   def total: BigDecimal = Seq(accommodation, food, drinks, other).flatten.sum
-}
 
-object CostOfSales {
+object CostOfSales:
   implicit val format: OFormat[CostOfSales] = Json.format
-}

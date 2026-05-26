@@ -45,7 +45,7 @@ class AccountingCosts6048Controller @Inject() (
   mcc: MessagesControllerComponents
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AccountingCosts6048")
@@ -71,7 +71,7 @@ class AccountingCosts6048Controller @Inject() (
       continueOrSaveAsDraft[Seq[AccountingCosts6048]](
         accountingCosts6048Form(years),
         formWithErrors => BadRequest(accountingCosts6048View(formWithErrors, getBackLink)),
-        success => {
+        success =>
           val updatedSections = (success zip turnoverSections6048).map { case (accountingCosts, previousSection) =>
             previousSection.copy(
               accountingCosts = Some(accountingCosts)
@@ -88,7 +88,6 @@ class AccountingCosts6048Controller @Inject() (
             .saveOrUpdate(updatedData)
             .map(_ => navigator.nextPage(AccountingCosts6048Id, updatedData).apply(updatedData))
             .map(Redirect)
-        }
       )
     }
   }
@@ -103,10 +102,6 @@ class AccountingCosts6048Controller @Inject() (
       .fold[Future[Result]](Redirect(routes.WhenDidYouFirstOccupyController.show()))(action)
 
   private def getBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
-      case "CYA" =>
-        controllers.aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
+    navigator.from match
+      case "CYA" => aboutthetradinghistory.routes.CheckYourAnswersAboutTheTradingHistoryController.show().url
       case _     => aboutthetradinghistory.routes.FixedCosts6048Controller.show.url
-    }
-
-}

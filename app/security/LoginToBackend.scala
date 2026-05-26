@@ -21,7 +21,7 @@ import models.submissions.common.Address
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object LoginToBackend {
+object LoginToBackend:
   type RefNumber         = String
   type Postcode          = String
   type SessionID         = String
@@ -29,16 +29,10 @@ object LoginToBackend {
   type LoginToBackend    = (RefNumber, Postcode) => Future[LoginResult]
   type VerifyCredentials = (RefNumber, Postcode) => Future[FORLoginResponse]
 
-  def apply(
-    v: VerifyCredentials
-  )(
-    rn: RefNumber,
-    pc: Postcode
-  )(using ec: ExecutionContext
-  ): Future[LoginResult] =
-    for {
+  def apply(v: VerifyCredentials)(rn: RefNumber, pc: Postcode)(using ec: ExecutionContext): Future[LoginResult] =
+    for
       lr <- v(rn, pc)
-    } yield ned(
+    yield ned(
       lr.forAuthToken,
       lr.forType,
       lr.address,
@@ -46,7 +40,6 @@ object LoginToBackend {
     )
 
   private def ned = NoExistingDocument.apply
-}
 
 sealed trait LoginResult
 

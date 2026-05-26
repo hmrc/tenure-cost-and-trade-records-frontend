@@ -33,34 +33,29 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @ImplementedBy(classOf[TctrAuditConnector])
-trait Audit extends AuditConnector {
+trait Audit extends AuditConnector:
 
   implicit def ec: ExecutionContext
 
   private val AUDIT_SOURCE = "tenure-cost-and-trade-records-frontend"
 
-  def apply(event: String, detail: Map[String, String])(using hc: HeaderCarrier): Future[AuditResult] = {
+  def apply(event: String, detail: Map[String, String])(using hc: HeaderCarrier): Future[AuditResult] =
     val tags = hc.toAuditTags()
     val de   = DataEvent(auditSource = AUDIT_SOURCE, auditType = event, tags = tags, detail = detail)
     sendEvent(de)
-  }
 
-  def sendContinueNextPage(session: Session, url: String)(using hc: HeaderCarrier): Unit = {
+  def sendContinueNextPage(session: Session, url: String)(using hc: HeaderCarrier): Unit =
     val continueNextPageJson = Json.toJson(session).as[JsObject] + ("nextPageURL" -> Json.toJson(url))
     sendExplicitAudit("ContinueNextPage", continueNextPageJson)
-  }
 
   def sendSavedAsDraft(savedAsDraftEvent: SavedAsDraftEvent)(using hc: HeaderCarrier): Unit =
     sendExplicitAudit("SavedAsDraft", savedAsDraftEvent)
 
   def sendChangeLink(pageID: String)(using request: SessionRequest[AnyContent], hc: HeaderCarrier): Unit =
-    if (request.uri.contains("CYA&change=true")) {
+    if request.uri.contains("CYA&change=true") then
       sendExplicitAudit("CyaChangeLink", ChangeLinkAudit(request.sessionData.forType.toString, request.uri, pageID))
-    }
 
-}
-
-object Audit {
+object Audit:
   val referenceNumber = "referenceNumber"
   val address         = "address"
   val formOfReturn    = "forType"
@@ -69,12 +64,10 @@ object Audit {
   def languageJson(using messages: Messages): JsObject =
     Json.obj(Audit.language -> messages.lang.language)
 
-}
-
 @Singleton
 class TctrAuditConnector @Inject() (
   val auditingConfig: AuditingConfig,
   val auditChannel: AuditChannel,
   val datastreamMetrics: DatastreamMetrics
 )(using val ec: ExecutionContext
-) extends Audit {}
+) extends Audit

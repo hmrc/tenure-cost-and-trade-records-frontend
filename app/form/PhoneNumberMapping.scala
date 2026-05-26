@@ -19,23 +19,19 @@ package form
 import play.api.data.Forms.text
 import play.api.data.Mapping
 
-object PhoneNumberMapping {
+object PhoneNumberMapping:
 
   // Valid formats: 1234567890 | +44 1234567890 | +44 0123 456 789 | +441234567890 | 0123 456 7890 | 0123-456-7890 | +44 123-456-7890
 
   val phoneNumberRegex = """^^[0-9\s\+()-]+$"""
 
-  def validatePhoneNumber: Mapping[String] = {
+  private def validPNLength(pN: String) = pN.length >= 10 && pN.length <= 20
 
-    def validPNLength(pN: String) = pN.length >= 10 && pN.length <= 20
-
+  def validatePhoneNumber: Mapping[String] =
     text
-      .verifying(Errors.contactPhoneRequired, pN => pN.nonEmpty)
+      .verifying(Errors.contactPhoneRequired, _.nonEmpty)
       .verifying(Errors.contactPhoneLength, pN => if pN.nonEmpty then validPNLength(pN) else true)
       .verifying(
         Errors.invalidPhone,
         pN => if pN.nonEmpty && validPNLength(pN) then pN.matches(phoneNumberRegex) else true
       )
-  }
-
-}

@@ -48,10 +48,10 @@ class GeneratorCapacityController @Inject() (
     audit.sendChangeLink("GeneratorCapacity")
     Ok(
       theView(
-        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.generatorCapacity) match {
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.generatorCapacity) match
           case Some(data) => theForm.fill(data)
           case _          => theForm
-        },
+        ,
         request.sessionData.toSummary,
         isReadOnly
       )
@@ -61,19 +61,11 @@ class GeneratorCapacityController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[String](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(
-            formWithErrors,
-            request.sessionData.toSummary,
-            isReadOnly
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(theView(formWithErrors, request.sessionData.toSummary, isReadOnly)),
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(generatorCapacity = Some(data)))
         repo
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(GeneratorCapacityId, updatedData).apply(updatedData)))
-      }
     )
   }

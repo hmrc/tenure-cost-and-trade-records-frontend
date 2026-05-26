@@ -23,22 +23,23 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class DoesTheRentPayableControllerSpec extends TestBaseSpec {
+class DoesTheRentPayableControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   def doesTheRentPayableController(
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne)
-  ): DoesTheRentPayableController = DoesTheRentPayableController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    doesTheRentPayableView,
-    preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-    mockSessionRepo
-  )
+  ): DoesTheRentPayableController =
+    DoesTheRentPayableController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      doesTheRentPayableView,
+      preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
+      mockSessionRepo
+    )
 
-  "DoesTheRentPayableController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Does The Rent Payable in the session" in {
       val result = doesTheRentPayableController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -59,19 +60,17 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
         controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
       )
     }
-
   }
 
-  "DoesTheRentPayableController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = doesTheRentPayableController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data rentPayable and detailsToQuestions submitted" in {
+    "redirect when form data rentPayable and detailsToQuestions submitted" in {
       val res = doesTheRentPayableController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "rentPayable[]"      -> "otherProperty",
@@ -81,4 +80,3 @@ class DoesTheRentPayableControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

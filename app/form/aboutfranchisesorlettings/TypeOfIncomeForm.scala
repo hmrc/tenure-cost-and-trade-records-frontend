@@ -20,10 +20,9 @@ import form.MappingSupport.typeOfIncomeMapping
 import models.submissions.aboutfranchisesorlettings.TypeOfIncome
 import play.api.data.Form
 
-object TypeOfIncomeForm {
+object TypeOfIncomeForm:
 
-  val typeOfIncomeForm: Form[TypeOfIncome] = Form(
-    "typeOfIncome" -> typeOfIncomeMapping
-  )
-
-}
+  val typeOfIncomeForm: Form[TypeOfIncome] =
+    Form(
+      "typeOfIncome" -> typeOfIncomeMapping
+    )

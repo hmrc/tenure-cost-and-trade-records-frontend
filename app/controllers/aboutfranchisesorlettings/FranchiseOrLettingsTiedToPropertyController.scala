@@ -44,18 +44,18 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("FranchiseOrLettingsTiedToProperty")
 
     Ok(
       franchiseOrLettingsTiedToPropertyView(
-        request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match {
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.franchisesOrLettingsTiedToProperty) match
           case Some(franchisesOrLettingsTiedToProperty) =>
             franchiseOrLettingsTiedToPropertyForm.fill(franchisesOrLettingsTiedToProperty)
           case _                                        => franchiseOrLettingsTiedToPropertyForm
-        },
+        ,
         request.sessionData.forType,
         calculateBacklink,
         request.sessionData.toSummary
@@ -75,7 +75,7 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedData = updateAboutFranchisesOrLettings(_.copy(franchisesOrLettingsTiedToProperty = Some(data)))
         session
           .saveOrUpdate(updatedData)
@@ -98,15 +98,11 @@ class FranchiseOrLettingsTiedToPropertyController @Inject() (
               )
           }
           .map(Redirect)
-      }
     )
   }
 
   private def calculateBacklink(using request: SessionRequest[AnyContent]): String =
-    if (navigator.from == "CYA") {
+    if navigator.from == "CYA" then
       controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
-    } else {
+    else
       controllers.routes.TaskListController.show.url + "#franchise-or-lettings-tied-to-property"
-    }
-
-}

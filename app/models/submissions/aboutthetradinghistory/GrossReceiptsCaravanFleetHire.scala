@@ -28,6 +28,5 @@ case class GrossReceiptsCaravanFleetHire(
   grossReceipts: Option[BigDecimal] = None
 )
 
-object GrossReceiptsCaravanFleetHire {
+object GrossReceiptsCaravanFleetHire:
   implicit val format: OFormat[GrossReceiptsCaravanFleetHire] = Json.format
-}

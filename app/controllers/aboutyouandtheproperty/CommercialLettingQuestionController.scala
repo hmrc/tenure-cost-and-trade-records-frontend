@@ -47,17 +47,17 @@ class CommercialLettingQuestionController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CommercialLettingQuestion")
 
     Ok(
       view(
-        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate) match {
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetDate) match
           case Some(data) => commercialLettingQuestionForm.fill(data)
           case _          => commercialLettingQuestionForm
-        },
+        ,
         calculateBackLink
       )
     )
@@ -67,7 +67,7 @@ class CommercialLettingQuestionController @Inject() (
     continueOrSaveAsDraft[MonthsYearDuration](
       commercialLettingQuestionForm,
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink)),
-      data => {
+      data =>
         val updatedSessionWithTradingHistory = updateAboutTheTradingHistory { theTradingHistory =>
           theTradingHistory.copy(
             occupationAndAccountingInformation = Option(
@@ -93,30 +93,23 @@ class CommercialLettingQuestionController @Inject() (
         session
           .saveOrUpdate(updatedSession)
           .map(_ => Redirect(navigator.nextPage(CommercialLettingQuestionId, updatedSession).apply(updatedSession)))
-      }
     )
   }
 
-  private def calculateFinancialEndYearDates(commercialLetDate: MonthsYearDuration): Option[Seq[LocalDate]] = {
+  private def calculateFinancialEndYearDates(commercialLetDate: MonthsYearDuration): Option[Seq[LocalDate]] =
     val commercialLet = commercialLetDate.toYearMonth.atEndOfMonth()
 
-    val endDates = commercialLet match {
+    val endDates = commercialLet match
       case d if !d.isBefore(LocalDate.of(2023, 4, 1)) => Seq(LocalDate.of(2024, 3, 31))
       case d if !d.isBefore(LocalDate.of(2022, 4, 1)) => Seq(LocalDate.of(2024, 3, 31), LocalDate.of(2023, 3, 31))
       case _                                          => Seq(LocalDate.of(2024, 3, 31), LocalDate.of(2023, 3, 31), LocalDate.of(2022, 3, 31))
-    }
 
-    endDates match {
+    endDates match
       case Nil   => None
       case dates => Option(dates)
-    }
-  }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case "TL"  => s"${controllers.routes.TaskListController.show.url}#about-the-property"
       case _     => controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-    }
-
-}

@@ -44,16 +44,16 @@ class TypeOfTenureController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("TypeOfTenure")
     Ok(
       typeOfTenureView(
-        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.typeOfTenure) match {
+        request.sessionData.aboutLeaseOrAgreementPartThree.flatMap(_.typeOfTenure) match
           case Some(typeOfTenure) => typeOfTenureForm.fill(typeOfTenure)
           case _                  => typeOfTenureForm
-        },
+        ,
         request.sessionData.toSummary,
         navigator.from
       )
@@ -64,14 +64,10 @@ class TypeOfTenureController @Inject() (
     continueOrSaveAsDraft[TypeOfTenure](
       typeOfTenureForm,
       formWithErrors => BadRequest(typeOfTenureView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(typeOfTenure = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(TypeOfTenureId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

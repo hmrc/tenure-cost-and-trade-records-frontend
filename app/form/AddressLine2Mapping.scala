@@ -19,21 +19,17 @@ package form
 import play.api.data.Forms.text
 import play.api.data.Mapping
 
-object AddressLine2Mapping {
+object AddressLine2Mapping:
 
-  def validateAddressLineTwo: Mapping[String] = {
+  private val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
 
-    val invalidCharRegex = """^[0-9A-Za-z\s\-\,]+$"""
+  private def validAddressLineTwo(aLT: String) = aLT.length <= 50
 
-    def validddressLineTwo(aLT: String) = aLT.length <= 50
-
+  def validateAddressLineTwo: Mapping[String] =
     text
-      .verifying(Errors.addressBuildingNameNumberRequired, aLT => aLT.nonEmpty)
-      .verifying(Errors.addressLine2Length, aLT => if aLT.nonEmpty then validddressLineTwo(aLT) else true)
+      .verifying(Errors.addressBuildingNameNumberRequired, _.nonEmpty)
+      .verifying(Errors.addressLine2Length, aLT => if aLT.nonEmpty then validAddressLineTwo(aLT) else true)
       .verifying(
         Errors.invalidCharAddress2,
-        aLT => if aLT.nonEmpty && validddressLineTwo(aLT) then aLT.matches(invalidCharRegex) else true
+        aLT => if aLT.nonEmpty && validAddressLineTwo(aLT) then aLT.matches(invalidCharRegex) else true
       )
-  }
-
-}

@@ -81,25 +81,20 @@ class AreYouThirdPartyController @Inject() (
             isReadOnly
           )
         ),
-      data => {
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(areYouThirdParty = Some(data)))
         repo.saveOrUpdate(updatedData).map { _ =>
           val redirectToCYA = navigator.cyaPage.filter(_ => navigator.from(using request) == "CYA")
-          val nextPage      =
-            redirectToCYA.getOrElse(navigator.nextPage(AreYouThirdPartyPageId, updatedData).apply(updatedData))
+          val nextPage      = redirectToCYA.getOrElse(navigator.nextPage(AreYouThirdPartyPageId, updatedData).apply(updatedData))
           Redirect(nextPage)
         }
-      }
     )
   }
 
   private def getBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
-      case "CYA" =>
-        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
+    navigator.from match
+      case "CYA" => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       case _     =>
-        request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match {
+        request.sessionData.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match
           case Some(AnswerYes) => controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
           case _               => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
-        }
-    }

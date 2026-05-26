@@ -19,9 +19,9 @@ package navigation
 import navigation.identifiers.*
 import utils.TestBaseSpec
 
-class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
+class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec:
 
-  val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
+  private val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
 
   "About you and the property navigator for 6015" should {
 
@@ -67,4 +67,3 @@ class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
     }
   }
-}

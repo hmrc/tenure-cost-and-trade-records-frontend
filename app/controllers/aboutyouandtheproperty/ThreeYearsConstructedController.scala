@@ -51,10 +51,10 @@ class ThreeYearsConstructedController @Inject() (
     audit.sendChangeLink("ThreeYearsConstructed")
     Ok(
       theView(
-        request.sessionData.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match {
+        request.sessionData.aboutYouAndTheProperty.flatMap(_.threeYearsConstructed) match
           case Some(tiedForGoods) => theForm.fill(tiedForGoods)
           case _                  => theForm
-        },
+        ,
         navigator.from,
         request.sessionData.toSummary,
         isReadOnly
@@ -65,20 +65,11 @@ class ThreeYearsConstructedController @Inject() (
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[AnswersYesNo](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(
-            formWithErrors,
-            navigator.from,
-            request.sessionData.toSummary,
-            isReadOnly
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(theView(formWithErrors, navigator.from, request.sessionData.toSummary, isReadOnly)),
+      data =>
         val updatedData = updateAboutYouAndTheProperty(_.copy(threeYearsConstructed = Some(data)))
         repo
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(ThreeYearsConstructedPageId, updatedData).apply(updatedData)))
-      }
     )
   }

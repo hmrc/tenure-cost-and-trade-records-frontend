@@ -16,16 +16,16 @@
 
 package form.lettingHistory
 
-import form.MappingSupport.createYesNoType as answerYesNo
+import form.MappingSupport.createYesNoType
 import models.submissions.common.AnswersYesNo
 import play.api.data.Form
 import play.api.data.Forms.single
 
-object AdvertisingListForm {
+object AdvertisingListForm:
 
-  val theForm: Form[AnswersYesNo] = Form[AnswersYesNo](
-    single(
-      "answer" -> answerYesNo(errorMessage = "lettingHistory.advertisingList.hasMoreWebsites.required")
+  val theForm: Form[AnswersYesNo] =
+    Form(
+      single(
+        "answer" -> createYesNoType(errorMessage = "lettingHistory.advertisingList.hasMoreWebsites.required")
+      )
     )
-  )
-}

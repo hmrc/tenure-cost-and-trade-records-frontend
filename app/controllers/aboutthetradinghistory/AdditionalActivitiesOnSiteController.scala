@@ -45,7 +45,7 @@ class AdditionalActivitiesOnSiteController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AdditionalActivitiesOnSite")
@@ -54,10 +54,10 @@ class AdditionalActivitiesOnSiteController @Inject() (
       view(
         request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.additionalActivities)
-          .flatMap(_.additionalActivitiesOnSite) match {
+          .flatMap(_.additionalActivitiesOnSite) match
           case Some(answers) => additionalActivitiesOnSiteForm.fill(answers)
           case None          => additionalActivitiesOnSiteForm
-        },
+        ,
         calculateBackLink
       )
     )
@@ -73,7 +73,7 @@ class AdditionalActivitiesOnSiteController @Inject() (
             calculateBackLink
           )
         ),
-      data => {
+      data =>
         val previousAnswer = request.sessionData.aboutTheTradingHistoryPartOne
           .flatMap(_.additionalActivities)
           .flatMap(_.additionalActivitiesOnSite)
@@ -84,7 +84,7 @@ class AdditionalActivitiesOnSiteController @Inject() (
         session
           .saveOrUpdate(updatedSession)
           .map { _ =>
-            val nextPage = (previousAnswer, data, navigator.from) match {
+            val nextPage = (previousAnswer, data, navigator.from) match
               case (Some(AnswerYes), AnswerYes, "CYA") =>
                 controllers.aboutthetradinghistory.routes.CheckYourAnswersAdditionalActivitiesController.show()
               case (Some(AnswerNo), AnswerYes, _)      =>
@@ -97,18 +97,13 @@ class AdditionalActivitiesOnSiteController @Inject() (
                     navigator.cyaPageForAdditionalActivities
                   )
                   .apply(updatedSession)
-            }
             Redirect(nextPage)
           }
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageForAdditionalActivities.url
       case "TL"  => controllers.routes.TaskListController.show.url + "#additional-activities-on-site"
       case _     => controllers.routes.TaskListController.show.url
-
-    }
-}

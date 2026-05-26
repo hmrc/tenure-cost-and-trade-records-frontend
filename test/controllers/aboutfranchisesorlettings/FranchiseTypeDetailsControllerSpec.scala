@@ -40,6 +40,7 @@ class FranchiseTypeDetailsControllerSpec extends TestBaseSpec with FranchiseType
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
+
         val page: Document = contentAsJsoup(result)
         page.heading shouldBe "cateringOperationOrLettingAccommodationOperator.heading"
       }
@@ -72,6 +73,7 @@ class FranchiseTypeDetailsControllerSpec extends TestBaseSpec with FranchiseType
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
         )
         status(result) shouldBe BAD_REQUEST
+
         val page: Document = contentAsJsoup(result)
         page.error("operatorName")   shouldBe "error.operatorName.required"
         page.error("typeOfBusiness") shouldBe "error.typeOfBusiness.required"
@@ -112,7 +114,7 @@ trait FranchiseTypeDetailsControllerBehaviours:
   this: FranchiseTypeDetailsControllerSpec =>
 
   def savingIncomeRecordAndRedirectingToAddressLookupService(index: Int): Unit =
-    s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture {
+    s"save record at index=$index and reply 303 and redirect to address lookup page" in new ControllerFixture:
       val operatorName           = "Godzilla"
       val typeOfBusiness         = "Atomic Bomb Factory"
       val result: Future[Result] = controller.submit(index)(
@@ -123,6 +125,7 @@ trait FranchiseTypeDetailsControllerBehaviours:
       )
       status(result) shouldBe SEE_OTHER
       redirectLocation(result).value shouldBe "/on-ramp"
+
       val session: ArgumentCaptor[Session] = captor[Session]
       verify(repository, once).saveOrUpdate(session.capture())(using any)
       inside(session.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.apply(index)) {
@@ -133,7 +136,6 @@ trait FranchiseTypeDetailsControllerBehaviours:
           record.businessDetails.value.operatorName   shouldBe operatorName
           record.businessDetails.value.typeOfBusiness shouldBe typeOfBusiness
       }
-    }
 
   def retrievingConfirmedAddressFromAddressLookupService(index: Int): Unit =
     s"save record at index=$index and reply 303 redirect to the next page" in new ControllerFixture {

@@ -52,27 +52,14 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
         checkYourAnswersAndConfirm <- stillConnectedDetails.checkYourAnswersConnectionToProperty
       yield theForm.fill(checkYourAnswersAndConfirm)
 
-    Ok(
-      theView(
-        filledForm.getOrElse(freshForm),
-        getBackLink,
-        request.sessionData.toSummary
-      )
-    )
+    Ok(theView(filledForm.getOrElse(freshForm), getBackLink, request.sessionData.toSummary))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     continueOrSaveAsDraft[CheckYourAnswersAndConfirm](
       theForm,
-      formWithErrors =>
-        BadRequest(
-          theView(
-            formWithErrors,
-            getBackLink,
-            request.sessionData.toSummary
-          )
-        ),
-      data => {
+      formWithErrors => BadRequest(theView(formWithErrors, getBackLink, request.sessionData.toSummary)),
+      data =>
         val updatedData = updateStillConnectedDetails(_.copy(checkYourAnswersConnectionToProperty = Some(data)))
           .copy(lastCYAPageUrl =
             Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url)
@@ -80,7 +67,6 @@ class CheckYourAnswersConnectionToPropertyController @Inject() (
         repo.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersConnectionToPropertyId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 

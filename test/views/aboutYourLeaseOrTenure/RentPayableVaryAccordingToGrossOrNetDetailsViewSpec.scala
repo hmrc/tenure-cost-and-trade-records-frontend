@@ -21,12 +21,11 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec extends QuestionViewBehaviours[String] {
+class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "rentPayableVaryAccordingToGrossOrNetDetails"
 
-  override val form: Form[String] =
-    RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
+  override val form: Form[String] = RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
 
   private def createView = () =>
     rentPayableVaryAccordingToGrossOrNetDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
@@ -34,7 +33,7 @@ class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec extends QuestionViewBe
   private def createViewUsingForm = (form: Form[String]) =>
     rentPayableVaryAccordingToGrossOrNetDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent payable vary on gross or net turnover details view" must {
+  "Rent payable vary on gross or net turnover details view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -66,4 +65,3 @@ class RentPayableVaryAccordingToGrossOrNetDetailsViewSpec extends QuestionViewBe
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

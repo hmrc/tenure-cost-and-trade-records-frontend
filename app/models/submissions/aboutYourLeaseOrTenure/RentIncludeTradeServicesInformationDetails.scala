@@ -23,6 +23,5 @@ case class RentIncludeTradeServicesInformationDetails(
   describeTheServices: String
 )
 
-object RentIncludeTradeServicesInformationDetails {
+object RentIncludeTradeServicesInformationDetails:
   implicit val format: OFormat[RentIncludeTradeServicesInformationDetails] = Json.format
-}

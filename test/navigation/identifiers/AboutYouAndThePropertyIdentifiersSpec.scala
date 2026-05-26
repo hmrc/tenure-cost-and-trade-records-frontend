@@ -18,7 +18,7 @@ package navigation.identifiers
 
 import utils.TestBaseSpec
 
-class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
+class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec:
 
   "About the property identifiers" when {
 
@@ -84,6 +84,7 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for plants and technologies page" in
       assert(BatteriesCapacityId.toString.equals("batteriesCapacityPage"))
+
     "Identifier for commercial letting question  page" in
       assert(CommercialLettingQuestionId.toString.equals("commercialLettingQuestionPage"))
 
@@ -92,6 +93,7 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for commercial letting availability welsh  page" in
       assert(CommercialLettingAvailabilityWelshId.toString.equals("commercialLettingAvailabilityWelshPage"))
+
     "Identifier for  Occupiers Details  page" in
       assert(OccupiersDetailsId.toString.equals("occupiersDetailsPage"))
 
@@ -121,5 +123,5 @@ class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec {
 
     "Identifier for check your answers page" in
       assert(CheckYourAnswersAboutThePropertyPageId.toString.equals("checkYourAnswersAboutThePropertyPage"))
+
   }
-}

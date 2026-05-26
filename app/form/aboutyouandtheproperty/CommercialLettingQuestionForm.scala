@@ -22,12 +22,11 @@ import play.api.data.Form
 import play.api.data.Forms.single
 import play.api.i18n.Messages
 
-object CommercialLettingQuestionForm {
+object CommercialLettingQuestionForm:
 
-  def commercialLettingQuestionForm(using messages: Messages): Form[MonthsYearDuration] = Form(
-    single(
-      "commercialLettingQuestion" -> monthYearMapping("commercialLettingQuestion", allowPastDates = true)
+  def commercialLettingQuestionForm(using messages: Messages): Form[MonthsYearDuration] =
+    Form(
+      single(
+        "commercialLettingQuestion" -> monthYearMapping("commercialLettingQuestion", allowPastDates = true)
+      )
     )
-  )
-
-}

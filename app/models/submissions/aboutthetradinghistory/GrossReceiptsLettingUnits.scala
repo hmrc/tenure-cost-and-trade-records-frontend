@@ -24,6 +24,5 @@ case class GrossReceiptsLettingUnits(
   numberOfUnits: Option[Int] = None
 )
 
-object GrossReceiptsLettingUnits {
+object GrossReceiptsLettingUnits:
   implicit val format: OFormat[GrossReceiptsLettingUnits] = Json.format
-}

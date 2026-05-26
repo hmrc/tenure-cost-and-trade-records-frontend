@@ -17,13 +17,20 @@
 package controllers.lettingHistory
 
 import actions.SessionRequest
+import models.submissions.Form6010.DayMonthsDuration
 import models.submissions.lettingHistory.LocalPeriod
 import play.api.mvc.AnyContent
 
-import java.time.LocalDate
+import java.time.{LocalDate, Year}
 import java.time.Month.{APRIL, MARCH}
 
 trait RentalPeriodSupport extends FiscalYearSupport:
+
+  def toLocalDate(dm: DayMonthsDuration): LocalDate =
+    LocalDate.of(Year.now.getValue, dm.months, dm.days)
+
+  def fromLocalDate(date: LocalDate): DayMonthsDuration =
+    DayMonthsDuration(date.getDayOfMonth, date.getMonthValue)
 
   def previousRentalPeriod(using request: SessionRequest[AnyContent]): LocalPeriod =
     LocalPeriod(

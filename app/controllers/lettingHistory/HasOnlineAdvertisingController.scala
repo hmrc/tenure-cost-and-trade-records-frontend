@@ -42,7 +42,7 @@ class HasOnlineAdvertisingController @Inject() (
   @Named("session") repository: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen sessionRefiner).apply { implicit request =>
     val filledForm =
@@ -69,5 +69,3 @@ class HasOnlineAdvertisingController @Inject() (
 
   private def backLinkUrl(using request: SessionRequest[AnyContent]): Option[String] =
     navigator.backLinkUrl(ofPage = HasOnlineAdvertisingPageId)
-
-}

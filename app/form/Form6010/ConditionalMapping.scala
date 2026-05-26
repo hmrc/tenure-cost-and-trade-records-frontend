@@ -20,7 +20,7 @@ import play.api.data.validation.Constraint
 import play.api.data.{FormError, Mapping}
 import uk.gov.voa.play.form.Condition
 
-object ConditionalMapping {
+object ConditionalMapping:
 
   def nonEmptyTextOr(
     fieldName: String,
@@ -28,7 +28,6 @@ object ConditionalMapping {
     errorRequiredKey: String = "error.required"
   ): Mapping[String] =
     NonEmptyTextOrMapping(fieldName, mapping, errorRequiredKey = errorRequiredKey)
-}
 
 case class IfElseMapping[T](
   condition: Condition,
@@ -36,7 +35,7 @@ case class IfElseMapping[T](
   falseMapping: Mapping[T],
   keys: Set[String] = Set(),
   constraints: Seq[Constraint[T]] = Nil
-) extends Mapping[T] {
+) extends Mapping[T]:
 
   override val format: Option[(String, Seq[Any])] = trueMapping.format
 
@@ -58,7 +57,6 @@ case class IfElseMapping[T](
   val mappings: Seq[Mapping[?]] = trueMapping.mappings :+ this
 
   override val key: String = trueMapping.key
-}
 
 case class NonEmptyTextOrMapping(
   fieldName: String,
@@ -66,7 +64,7 @@ case class NonEmptyTextOrMapping(
   keys: Set[String] = Set(),
   constraints: Seq[Constraint[String]] = Nil,
   errorRequiredKey: String = "error.required"
-) extends Mapping[String] {
+) extends Mapping[String]:
 
   override val format: Option[(String, Seq[Any])] = wrapped.format
 
@@ -89,5 +87,3 @@ case class NonEmptyTextOrMapping(
     copy(wrapped = wrapped.withPrefix(prefix))
 
   val mappings: Seq[Mapping[?]] = wrapped.mappings :+ this
-
-}

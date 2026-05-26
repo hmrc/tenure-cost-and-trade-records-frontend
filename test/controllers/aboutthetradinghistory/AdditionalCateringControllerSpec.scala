@@ -24,7 +24,7 @@ import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLoc
 import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
-class AdditionalCateringControllerSpec extends TestBaseSpec {
+class AdditionalCateringControllerSpec extends TestBaseSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
@@ -81,7 +81,6 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
       val content = contentAsString(result)
       content should include("/additional-shops")
     }
-
   }
 
   "SUBMIT /" should {
@@ -111,7 +110,6 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for invalid gross receipts" in {
-
       val formData = Map("additionalCatering[0].grossReceipts" -> "xxx")
 
       val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
@@ -123,7 +121,6 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for empty gross receipts" in {
-
       val formData = Map("additionalCatering[1].grossReceipts" -> "")
 
       val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
@@ -135,7 +132,6 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for negative gross receipts" in {
-
       val formData = Map("additionalCatering[2].grossReceipts" -> "-1")
 
       val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
@@ -147,7 +143,6 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for invalid cost of purchase" in {
-
       val formData = Map("additionalCatering[0].costOfPurchase" -> "xxx")
 
       val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
@@ -159,7 +154,6 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for empty cost of purchase" in {
-
       val formData = Map("additionalCatering[1].costOfPurchase" -> "")
 
       val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
@@ -171,7 +165,6 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for negative cost of purchase" in {
-
       val formData = Map("additionalCatering[2].costOfPurchase" -> "-1")
 
       val form = AdditionalCateringForm.additionalCateringForm(years)(using messages).bind(formData)
@@ -182,4 +175,3 @@ class AdditionalCateringControllerSpec extends TestBaseSpec {
       )
     }
   }
-}

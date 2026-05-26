@@ -49,7 +49,7 @@ class AcceptLowMarginFuelCardController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("AcceptLowMarginFuelCard")
@@ -68,7 +68,7 @@ class AcceptLowMarginFuelCardController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       acceptLowMarginFuelCardForm,
       formWithErrors => BadRequest(acceptLowMarginFuelCardView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutTheTradingHistory(_.copy(doYouAcceptLowMarginFuelCard = Some(data)))
 
         session
@@ -85,7 +85,6 @@ class AcceptLowMarginFuelCardController @Inject() (
               .getOrElse(navigator.nextPage(AcceptLowMarginFuelCardsId, updatedData).apply(updatedData))
           }
           .map(Redirect)
-      }
     )
   }
 
@@ -96,5 +95,3 @@ class AcceptLowMarginFuelCardController @Inject() (
 
   private def getBackLink: String =
     controllers.aboutthetradinghistory.routes.CustomerCreditAccountsController.show().url
-
-}

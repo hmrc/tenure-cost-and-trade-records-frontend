@@ -62,9 +62,7 @@ class RequestReferenceNumberPropertyDetailsController @Inject() (
         address <- details.propertyDetails
       yield freshForm.fill(address.businessTradingName)
 
-    Ok(
-      theView(filledForm.getOrElse(freshForm))
-    )
+    Ok(theView(filledForm.getOrElse(freshForm)))
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>

@@ -22,7 +22,7 @@ import models.submissions.aboutfranchisesorlettings.TelecomMastLetting
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetting] {
+class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetting]:
 
   private def TelecomMastLettingView = inject[views.html.aboutfranchisesorlettings.telecomMastLetting]
 
@@ -37,7 +37,7 @@ class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetti
   private def createViewUsingForm = (form: Form[TelecomMastLetting]) =>
     TelecomMastLettingView(form, Some(0), backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Telecom Mast letting view" must {
+  "Telecom Mast letting view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -66,4 +66,3 @@ class TelecomMastLettingViewSpec extends QuestionViewBehaviours[TelecomMastLetti
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

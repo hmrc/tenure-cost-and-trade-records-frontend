@@ -43,19 +43,18 @@ class CostOfSalesController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("CostOfSales")
 
     runWithSessionCheck { aboutTheTradingHistory =>
-      val costOfSales = if (aboutTheTradingHistory.costOfSales.size == aboutTheTradingHistory.turnoverSections.size) {
+      val costOfSales = if aboutTheTradingHistory.costOfSales.size == aboutTheTradingHistory.turnoverSections.size then
         (aboutTheTradingHistory.costOfSales zip financialYearEndDates(aboutTheTradingHistory)).map {
           case (costOfSales, finYearEnd) => costOfSales.copy(financialYearEnd = finYearEnd)
         }
-      } else {
+      else
         financialYearEndDates(aboutTheTradingHistory).map(CostOfSales(_, None, None, None, None))
-      }
 
       val updatedData = updateAboutTheTradingHistory(_.copy(costOfSales = costOfSales))
       session
@@ -71,7 +70,7 @@ class CostOfSalesController @Inject() (
       continueOrSaveAsDraft[Seq[CostOfSales]](
         costOfSalesForm(years(aboutTheTradingHistory)),
         formWithErrors => BadRequest(costOfSalesView(formWithErrors, navigator.from)),
-        data => {
+        data =>
           val costOfSales = (data zip financialYearEndDates(aboutTheTradingHistory)).map { case (costOfSales, finYearEnd) =>
             costOfSales.copy(financialYearEnd = finYearEnd)
           }
@@ -85,7 +84,6 @@ class CostOfSalesController @Inject() (
                 .getOrElse(navigator.nextPage(CostOfSalesId, updatedData).apply(updatedData))
             )
             .map(Redirect)
-        }
       )
     }
   }
@@ -104,5 +102,3 @@ class CostOfSalesController @Inject() (
 
   private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
     financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)
-
-}

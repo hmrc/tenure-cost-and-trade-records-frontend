@@ -48,7 +48,7 @@ class IsVATPayableForWholePropertyController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("IsVATPayableForWholeProperty")
@@ -67,13 +67,12 @@ class IsVATPayableForWholePropertyController @Inject() (
     continueOrSaveAsDraft[AnswersYesNo](
       isVATPayableForWholePropertyForm,
       formWithErrors => BadRequest(isVATPayableForWholePropertyView(formWithErrors, getBackLink)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartThree(_.copy(isVATPayableForWholeProperty = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(IsVATPayableForWholePropertyId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
@@ -84,5 +83,3 @@ class IsVATPayableForWholePropertyController @Inject() (
 
   private def getBackLink: String =
     controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
-
-}

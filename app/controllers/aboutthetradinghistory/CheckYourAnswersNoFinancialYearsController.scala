@@ -55,7 +55,7 @@ class CheckYourAnswersNoFinancialYearsController @Inject (
 
         // Eventually empty all turnover sections across the entire trading history declaration
         val eventuallyEmptiedSession =
-          if (currentSession.financialYearEndDates.isEmpty) {
+          if currentSession.financialYearEndDates.isEmpty then
             // It happens when the users have first occupied the property within their last financial year
             currentSession.copy(
               aboutTheTradingHistory = Some(
@@ -72,17 +72,18 @@ class CheckYourAnswersNoFinancialYearsController @Inject (
                 )
               )
             )
-          } else {
+          else
             currentSession
-          }
 
         val newSession =
           eventuallyEmptiedSession
             .copy(
               aboutTheTradingHistory =
-                Some(eventuallyEmptiedSession.aboutTheTradingHistory.fold(AboutTheTradingHistory()) {
-                  _.copy(checkYourAnswersAboutTheTradingHistory = Some(formData))
-                })
+                Some(
+                  eventuallyEmptiedSession.aboutTheTradingHistory.fold(AboutTheTradingHistory()) {
+                    _.copy(checkYourAnswersAboutTheTradingHistory = Some(formData))
+                  }
+                )
             )
             .copy(lastCYAPageUrl =
               Some(

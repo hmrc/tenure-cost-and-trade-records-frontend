@@ -21,6 +21,8 @@ import models.submissions.common.{AnswersYesNo, CheckYourAnswersAndConfirm, Sens
 import play.api.libs.json.{Json, OFormat}
 import uk.gov.hmrc.crypto.Sensitive
 
+import scala.language.implicitConversions
+
 case class SensitiveAboutYouAndTheProperty(
   customerDetails: Option[SensitiveCustomerDetails] = None,
   altDetailsQuestion: Option[AnswersYesNo] = None,
@@ -44,7 +46,7 @@ case class SensitiveAboutYouAndTheProperty(
   renewablesPlant: Option[RenewablesPlantType] = None,
   threeYearsConstructed: Option[AnswersYesNo] = None,
   costsBreakDown: Option[String] = None
-) extends Sensitive[AboutYouAndTheProperty] {
+) extends Sensitive[AboutYouAndTheProperty]:
 
   override def decryptedValue: AboutYouAndTheProperty = AboutYouAndTheProperty(
     customerDetails.map(_.decryptedValue),
@@ -70,9 +72,8 @@ case class SensitiveAboutYouAndTheProperty(
     threeYearsConstructed,
     costsBreakDown
   )
-}
 
-object SensitiveAboutYouAndTheProperty {
+object SensitiveAboutYouAndTheProperty:
 
   implicit def format(using crypto: MongoCrypto): OFormat[SensitiveAboutYouAndTheProperty] = Json.format
 
@@ -101,4 +102,3 @@ object SensitiveAboutYouAndTheProperty {
       aboutYouAndTheProperty.threeYearsConstructed,
       aboutYouAndTheProperty.costsBreakdown
     )
-}

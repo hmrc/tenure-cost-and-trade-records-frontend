@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class AboutThePropertyControllerSpec extends TestBaseSpec {
+class AboutThePropertyControllerSpec extends TestBaseSpec:
 
   import TestData.*
 
@@ -36,36 +36,39 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
 
   def aboutThePropertyController(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyYes)
-  ): AboutThePropertyController = AboutThePropertyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    aboutThePropertyView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): AboutThePropertyController =
+    AboutThePropertyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      aboutThePropertyView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
   def aboutThePropertyControllerNo(
     aboutYouAndTheProperty: Option[AboutYouAndTheProperty] = Some(prefilledAboutYouAndThePropertyNo)
-  ): AboutThePropertyController = AboutThePropertyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    aboutThePropertyView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-    mockSessionRepo
-  )
+  ): AboutThePropertyController =
+    AboutThePropertyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      aboutThePropertyView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
+      mockSessionRepo
+    )
 
-  def aboutThePropertyControllerNone(): AboutThePropertyController = AboutThePropertyController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYouAndThePropertyNavigator,
-    aboutThePropertyView,
-    preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-    mockSessionRepo
-  )
+  def aboutThePropertyControllerNone(): AboutThePropertyController =
+    AboutThePropertyController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYouAndThePropertyNavigator,
+      aboutThePropertyView,
+      preEnrichedActionRefiner(aboutYouAndTheProperty = None),
+      mockSessionRepo
+    )
 
-  "About the property controller" should {
+  "GET /" should {
     "GET / return 200 about the property with yes in the session" in {
       val result = aboutThePropertyController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -131,14 +134,11 @@ class AboutThePropertyControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val propertyCurrentlyUsed: String = "propertyCurrentlyUsed"
-    }
 
     val baseFormData: Map[String, String] =
       Map("propertyCurrentlyUsed" -> CurrentPropertyHotel.toString)
-  }
-}

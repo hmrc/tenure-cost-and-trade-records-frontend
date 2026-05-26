@@ -20,7 +20,7 @@ import play.api.data.Form
 import play.api.data.Forms.{default, single, text}
 import play.api.data.validation.Constraints.nonEmpty
 
-object IncomeExpenditureSummary6076Form {
+object IncomeExpenditureSummary6076Form:
 
   val incomeExpenditureSummary6076Form: Form[String] =
     Form(
@@ -31,4 +31,3 @@ object IncomeExpenditureSummary6076Form {
           )
       )
     )
-}

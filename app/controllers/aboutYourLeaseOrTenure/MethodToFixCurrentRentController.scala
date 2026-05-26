@@ -42,17 +42,17 @@ class MethodToFixCurrentRentController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("MethodToFixCurrentRent")
 
     Ok(
       methodToFixCurrentRentView(
-        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.methodToFixCurrentRentDetails) match {
+        request.sessionData.aboutLeaseOrAgreementPartTwo.flatMap(_.methodToFixCurrentRentDetails) match
           case Some(data) => methodToFixCurrentRentForm.fill(data)
           case _          => methodToFixCurrentRentForm
-        },
+        ,
         request.sessionData.toSummary
       )
     )
@@ -62,14 +62,10 @@ class MethodToFixCurrentRentController @Inject() (
     continueOrSaveAsDraft[MethodToFixCurrentRent](
       methodToFixCurrentRentForm,
       formWithErrors => BadRequest(methodToFixCurrentRentView(formWithErrors, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutLeaseOrAgreementPartTwo(_.copy(methodToFixCurrentRentDetails = Some(data)))
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(MethodToFixCurrentRentsId, updatedData).apply(updatedData)))
-
-      }
     )
   }
-
-}

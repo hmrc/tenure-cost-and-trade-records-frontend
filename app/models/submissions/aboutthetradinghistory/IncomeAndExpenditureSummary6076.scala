@@ -31,6 +31,5 @@ case class IncomeAndExpenditureSummary6076(
   netProfitOrLoss: BigDecimal
 )
 
-object IncomeAndExpenditureSummary6076 {
+object IncomeAndExpenditureSummary6076:
   implicit val format: OFormat[IncomeAndExpenditureSummary6076] = Json.format
-}

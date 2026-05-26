@@ -43,7 +43,7 @@ class TotalPayrollCostsController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("TotalPayrollCosts")
@@ -58,7 +58,6 @@ class TotalPayrollCostsController @Inject() (
           )
         )
       }
-
   }
 
   def submit: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
@@ -74,7 +73,7 @@ class TotalPayrollCostsController @Inject() (
                 navigator.from
               )
             ),
-          success => {
+          success =>
             val totalPaytollCosts = (success zip financialYearEndDates(aboutTheTradingHistory)).map { case (totalPaytollCost, finYearEnd) =>
               totalPaytollCost.copy(financialYearEnd = finYearEnd)
             }
@@ -83,7 +82,6 @@ class TotalPayrollCostsController @Inject() (
             session
               .saveOrUpdate(updatedData)
               .map(_ => Redirect(navigator.nextPage(TotalPayrollCostId, updatedData).apply(updatedData)))
-          }
         )
       }
   }
@@ -93,5 +91,3 @@ class TotalPayrollCostsController @Inject() (
 
   private def years(aboutTheTradingHistory: AboutTheTradingHistory): Seq[String] =
     financialYearEndDates(aboutTheTradingHistory).map(_.getYear.toString)
-
-}

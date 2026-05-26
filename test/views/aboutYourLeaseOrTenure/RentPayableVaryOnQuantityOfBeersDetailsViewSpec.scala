@@ -21,12 +21,11 @@ import models.pages.Summary
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class RentPayableVaryOnQuantityOfBeersDetailsViewSpec extends QuestionViewBehaviours[String] {
+class RentPayableVaryOnQuantityOfBeersDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix = "rentPayableVaryOnQuantityOfBeersDetails"
 
-  override val form: Form[String] =
-    RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
+  override val form: Form[String] = RentPayableVaryOnQuantityOfBeersDetailsForm.rentPayableVaryOnQuantityOfBeersDetailsForm
 
   private def createView = () =>
     rentPayableVaryOnQuantityOfBeersDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
@@ -34,7 +33,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsViewSpec extends QuestionViewBehavi
   private def createViewUsingForm = (form: Form[String]) =>
     rentPayableVaryOnQuantityOfBeersDetailsView(form, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Rent payable vary on quantity of beer detail view" must {
+  "Rent payable vary on quantity of beer detail view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -66,4 +65,3 @@ class RentPayableVaryOnQuantityOfBeersDetailsViewSpec extends QuestionViewBehavi
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

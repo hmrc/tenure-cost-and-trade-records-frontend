@@ -22,7 +22,7 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class RentedEquipmentDetailsViewSpec extends QuestionViewBehaviours[String] {
+class RentedEquipmentDetailsViewSpec extends QuestionViewBehaviours[String]:
 
   val messageKeyPrefix = "rentedEquipmentDetails"
 
@@ -34,10 +34,9 @@ class RentedEquipmentDetailsViewSpec extends QuestionViewBehaviours[String] {
     rentedEquipmentDetailsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
   def createViewUsingForm: Form[String] => Html =
-    (form: Form[String]) =>
-      rentedEquipmentDetailsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    form => rentedEquipmentDetailsView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "rentedEquipmentDetails view" must {
+  "rentedEquipmentDetails view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -72,4 +71,3 @@ class RentedEquipmentDetailsViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

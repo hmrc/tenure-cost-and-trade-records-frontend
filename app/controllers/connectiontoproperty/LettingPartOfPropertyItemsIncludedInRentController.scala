@@ -41,7 +41,7 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
   @Named("session") val session: SessionRepo
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     audit.sendChangeLink("LettingPartOfPropertyItemsIncludedInRent")
@@ -67,10 +67,10 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
   }
 
   def submit(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
-    (for {
+    (for
       existingSections <- request.sessionData.stillConnectedDetails.map(_.lettingPartOfPropertyDetails)
       currentSection   <- existingSections.lift(index)
-    } yield continueOrSaveAsDraft[List[String]](
+    yield continueOrSaveAsDraft[List[String]](
       lettingPartOfPropertyRentIncludesForm,
       formWithErrors =>
         BadRequest(
@@ -82,7 +82,7 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
+      data =>
         val updatedSections = existingSections.updated(
           index,
           currentSection.copy(itemsIncludedInRent = data)
@@ -96,16 +96,12 @@ class LettingPartOfPropertyItemsIncludedInRentController @Inject() (
             )
           Redirect(nextPage)
         }
-      }
     )).getOrElse(startRedirect)
   }
 
   private def calculateBackLink(index: Int)(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => navigator.cyaPageDependsOnSession(request.sessionData).map(_.url).getOrElse("")
       case _     => controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(index).url
-    }
 
   private def startRedirect: Result = Redirect(routes.LettingPartOfPropertyDetailsController.show(None))
-
-}

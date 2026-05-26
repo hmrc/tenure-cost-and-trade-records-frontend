@@ -22,7 +22,7 @@ import models.submissions.aboutthetradinghistory.CostOfSales
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
+class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]]:
   // NOTE: this is a holding view test until the cost of sales page is implemented
   private def costOfSalesView = inject[views.html.aboutthetradinghistory.costOfSales]
 
@@ -37,7 +37,7 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
   private def createViewUsingForm = (form: Form[Seq[CostOfSales]]) =>
     costOfSalesView(form)(using sessionRequest, messages)
 
-  "costOfSales view" must {
+  "costOfSales view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -75,5 +75,3 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]] {
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

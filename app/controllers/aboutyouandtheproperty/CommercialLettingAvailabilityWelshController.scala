@@ -43,7 +43,7 @@ class CommercialLettingAvailabilityWelshController @Inject() (
   @Named("session") val session: SessionRepo
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
-  with I18nSupport {
+  with I18nSupport:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CommercialLettingAvailabilityWelsh")
@@ -53,11 +53,11 @@ class CommercialLettingAvailabilityWelshController @Inject() (
       .fold(Redirect(routes.CommercialLettingQuestionController.show())) { data =>
         Ok(
           view(
-            request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetAvailabilityWelsh) match {
+            request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.commercialLetAvailabilityWelsh) match
               case Some(lettingAvailability) =>
                 commercialLettingAvailabilityWelshForm(years(data)).fill(lettingAvailability)
               case _                         => commercialLettingAvailabilityWelshForm(years(data))
-            },
+            ,
             calculateBackLink
           )
         )
@@ -70,26 +70,18 @@ class CommercialLettingAvailabilityWelshController @Inject() (
       .fold(Future(Redirect(routes.CommercialLettingQuestionController.show()))) { data =>
         continueOrSaveAsDraft[Seq[LettingAvailability]](
           commercialLettingAvailabilityWelshForm(years(data)),
-          formWithErrors =>
-            BadRequest(
-              view(
-                formWithErrors,
-                calculateBackLink
-              )
-            ),
-          success => {
+          formWithErrors => BadRequest(view(formWithErrors, calculateBackLink)),
+          success =>
             val updatedLettingData = (success zip financialYearEndDates(data)).map { case (lettingAvailability, finYearEnd) =>
               lettingAvailability.copy(financialYearEnd = finYearEnd)
             }
 
-            val updatedData =
-              updateAboutYouAndThePropertyPartTwo(_.copy(commercialLetAvailabilityWelsh = Some(updatedLettingData)))
+            val updatedData = updateAboutYouAndThePropertyPartTwo(_.copy(commercialLetAvailabilityWelsh = Some(updatedLettingData)))
             session
               .saveOrUpdate(updatedData)
               .map(_ =>
                 Redirect(navigator.nextPage(CommercialLettingAvailabilityWelshId, updatedData).apply(updatedData))
               )
-          }
         )
       }
   }
@@ -101,9 +93,6 @@ class CommercialLettingAvailabilityWelshController @Inject() (
     data.financialEndYearDates.getOrElse(Seq.empty)
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]): String =
-    navigator.from match {
+    navigator.from match
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show().url
-    }
-
-}

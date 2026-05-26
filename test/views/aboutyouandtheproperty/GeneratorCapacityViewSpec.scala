@@ -22,17 +22,17 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class GeneratorCapacityViewSpec extends QuestionViewBehaviours[String] {
+class GeneratorCapacityViewSpec extends QuestionViewBehaviours[String]:
 
-  val messageKeyPrefix = "generatorCapacity"
+  private val messageKeyPrefix = "generatorCapacity"
 
   override val form: Form[String] = GeneratorCapacityForm.theForm
 
-  def createView: () => Html = () =>
-    generatorCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
+  private def createView: () => Html =
+    () => generatorCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[String] => Html = (form: Form[String]) =>
-    generatorCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
+  private def createViewUsingForm: Form[String] => Html =
+    form => generatorCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
 
   "generator capacity view" should {
 
@@ -51,6 +51,7 @@ class GeneratorCapacityViewSpec extends QuestionViewBehaviours[String] {
       val html = doc.getElementsByClass("govuk-caption-m").html()
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutTheProperty")}"""
     }
+
     "contain an input for generator capacity " in {
       val doc = asDocument(createViewUsingForm(form))
       assertRenderedById(doc, "generatorCapacity")
@@ -68,4 +69,3 @@ class GeneratorCapacityViewSpec extends QuestionViewBehaviours[String] {
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

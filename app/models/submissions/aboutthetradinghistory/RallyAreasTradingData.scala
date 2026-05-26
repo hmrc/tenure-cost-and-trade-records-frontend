@@ -23,7 +23,5 @@ case class RallyAreasTradingData(
   areaInHectares: Option[BigDecimal] = None
 )
 
-object RallyAreasTradingData {
+object RallyAreasTradingData:
   implicit val format: OFormat[RallyAreasTradingData] = Json.format
-
-}

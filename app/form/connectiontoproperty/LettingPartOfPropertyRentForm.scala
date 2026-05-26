@@ -23,7 +23,7 @@ import play.api.data.Form
 import play.api.data.Forms.mapping
 import play.api.i18n.Messages
 
-object LettingPartOfPropertyRentForm {
+object LettingPartOfPropertyRentForm:
 
   def lettingPartOfPropertyRentForm(using messages: Messages): Form[LettingPartOfPropertyRentDetails] =
     Form(
@@ -32,5 +32,3 @@ object LettingPartOfPropertyRentForm {
         "dateInput"  -> requiredDateMapping("lettingPartOfPropertyFixedRentDate", allowPastDates = true)
       )(LettingPartOfPropertyRentDetails.apply)(o => Some(Tuple.fromProductTyped(o)))
     )
-
-}

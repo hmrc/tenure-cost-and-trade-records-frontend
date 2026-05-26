@@ -23,14 +23,11 @@ import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class RemoveConnectionNavigator @Inject() (audit: Audit) extends Navigator(audit) {
+class RemoveConnectionNavigator @Inject() (audit: Audit) extends Navigator(audit):
 
-  override def cyaPage: Option[Call] = Some(
-    controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show()
-  )
+  override def cyaPage: Option[Call] = Some(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
     PastConnectionId   -> (_ => controllers.notconnected.routes.RemoveConnectionController.show()),
     RemoveConnectionId -> (_ => controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
   )
-}

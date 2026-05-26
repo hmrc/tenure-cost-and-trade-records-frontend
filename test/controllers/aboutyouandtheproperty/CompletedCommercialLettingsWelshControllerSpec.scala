@@ -28,7 +28,7 @@ import utils.TestBaseSpec
 
 import java.time.LocalDate
 
-class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
+class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec:
 
   import utils.FormBindingTestAssertions.*
 
@@ -47,9 +47,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
       validFormDataPerYear(2)
 
   private def controller(
-    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Option(
-      prefilledAboutYouAndThePropertyPartTwo6048
-    )
+    aboutYouAndThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(prefilledAboutYouAndThePropertyPartTwo6048)
   ) = CompletedCommercialLettingsWelshController(
     stubMessagesControllerComponents(),
     mockAudit,
@@ -62,7 +60,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
   private val sessionRequest: SessionRequest[AnyContent] =
     SessionRequest[AnyContent](stillConnectedDetails6048YesSession, fakeRequest)
 
-  "Completed commercial lettings welsh controller GET" should {
+  "GET /" should {
     "return 200" in {
       val result = controller().show(fakeRequest)
       status(result) shouldBe OK
@@ -80,6 +78,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
+
     "return correct backLink when no query param is present" in {
       val result = controller().show()(fakeRequest)
       contentAsString(result) should include(
@@ -88,7 +87,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
     }
   }
 
-  "Completed commercial lettings welsh controller SUBMIT /" should {
+  "SUBMIT /" should {
     "return 400 for form with errors" in {
       val res = controller().submit(FakeRequest().withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
@@ -102,13 +101,12 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for invalid character" in {
-
       val formData = Map("completedLettings-0" -> "xxx")
 
-      val form =
-        CompletedCommercialLettingsWelshForm
-          .completedCommercialLettingsWelshForm(years)(using sessionRequest, messages)
-          .bind(formData)
+      val form = CompletedCommercialLettingsWelshForm
+        .completedCommercialLettingsWelshForm(years)(using sessionRequest, messages)
+        .bind(formData)
+
       mustContainError(
         "completedLettings-0",
         messages("error.completedCommercialLettings.welsh.range", 2024.toString, 365),
@@ -117,13 +115,12 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for empty input" in {
-
       val formData = Map("completedLettings-1" -> "")
 
-      val form =
-        CompletedCommercialLettingsWelshForm
-          .completedCommercialLettingsWelshForm(years)(using sessionRequest, messages)
-          .bind(formData)
+      val form = CompletedCommercialLettingsWelshForm
+        .completedCommercialLettingsWelshForm(years)(using sessionRequest, messages)
+        .bind(formData)
+
       mustContainError(
         "completedLettings-1",
         messages("error.completedCommercialLettings.welsh.required", 2023.toString),
@@ -132,13 +129,12 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
     }
 
     "return 400 and error message for invalid number" in {
-
       val formData = Map("completedLettings-2" -> "366")
 
-      val form =
-        CompletedCommercialLettingsWelshForm
-          .completedCommercialLettingsWelshForm(years)(using sessionRequest, messages)
-          .bind(formData)
+      val form = CompletedCommercialLettingsWelshForm
+        .completedCommercialLettingsWelshForm(years)(using sessionRequest, messages)
+        .bind(formData)
+
       mustContainError(
         "completedLettings-2",
         messages("error.completedCommercialLettings.welsh.range", 2022.toString, 365),
@@ -146,18 +142,13 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec {
       )
     }
 
-    "CompletedLettings" should {
-      "serialize and deserialize correctly" in {
-        val completedLettings = CompletedLettings(
-          financialYearEnd = LocalDate.of(2024, 3, 31),
-          numberOfNights = 120
-        )
+    "serialize and deserialize correctly" in {
+      val completedLettings = CompletedLettings(
+        financialYearEnd = LocalDate.of(2024, 3, 31),
+        numberOfNights = 120
+      )
 
-        val json = Json.toJson(completedLettings)
-        json.as[CompletedLettings] shouldBe completedLettings
-      }
+      val json = Json.toJson(completedLettings)
+      json.as[CompletedLettings] shouldBe completedLettings
     }
-
   }
-
-}

@@ -23,35 +23,33 @@ import util.NumberUtil.*
 
 import scala.util.{Failure, Success, Try}
 
-object OptionalCurrencyMapping {
+object OptionalCurrencyMapping:
 
   def partOfAnnualRent(
     errorTitle: String,
     annualRent: Option[BigDecimal],
     otherIncludedPartsSum: BigDecimal
   ): Mapping[Option[BigDecimal]] =
-    optional(
-      text
-    ).verifying(
-      Constraint[Option[String]]("partOfAnnualRent") {
-        _.fold[ValidationResult](Valid)(value =>
-          Try(BigDecimal(value)) match {
-            case Success(amount) => validate(amount, otherIncludedPartsSum, annualRent, errorTitle)
-            case Failure(_)      => Invalid(ValidationError("error.optCurrency.invalid", errorTitle))
-          }
-        )
-      }
-    ).transform[Option[BigDecimal]](
-      _.flatMap(value => Try(BigDecimal(value)).toOption),
-      _.map(_.toString)
-    )
+    optional(text)
+      .verifying(
+        Constraint[Option[String]]("partOfAnnualRent") {
+          _.fold[ValidationResult](Valid)(value =>
+            Try(BigDecimal(value)) match
+              case Success(amount) => validate(amount, otherIncludedPartsSum, annualRent, errorTitle)
+              case Failure(_)      => Invalid(ValidationError("error.optCurrency.invalid", errorTitle))
+          )
+        }
+      ).transform[Option[BigDecimal]](
+        _.flatMap(value => Try(BigDecimal(value)).toOption),
+        _.map(_.toString)
+      )
 
   private def validate(
     partOfRent: BigDecimal,
     otherIncludedPartsSum: BigDecimal,
     annualRent: Option[BigDecimal],
     errorTitle: String
-  ): ValidationResult = {
+  ): ValidationResult =
     val includedPartsSum = partOfRent + otherIncludedPartsSum
     val rent             = annualRent.getOrElse(BigDecimal(Long.MaxValue))
 
@@ -61,6 +59,3 @@ object OptionalCurrencyMapping {
     else if includedPartsSum > rent then
       Invalid(ValidationError("error.includedPartsSum.graterThanAnnualRent", includedPartsSum.asMoney, rent.asMoney))
     else Valid
-  }
-
-}

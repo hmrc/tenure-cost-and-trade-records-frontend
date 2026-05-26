@@ -18,43 +18,39 @@ package navigation
 
 import connectors.Audit
 import controllers.connectiontoproperty.routes
-import identifiers._
-import play.api.mvc.Call
 import models.ForType.*
 import models.Session
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.LettingPartOfPropertyDetails
+import navigation.identifiers.*
 import play.api.Logging
+import play.api.mvc.Call
 
 import javax.inject.Inject
 
-class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging {
+class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 
-  override def cyaPage: Option[Call] =
-    Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show())
+  override def cyaPage: Option[Call] = Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show())
 
-  def cyaPageVacant: Option[Call] =
-    Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show())
+  def cyaPageVacant: Option[Call] = Some(controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show())
 
-  def cyaPageNotConnected: Option[Call] =
-    Some(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
+  private def cyaPageNotConnected: Option[Call] = Some(controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show())
 
   def cyaPageDependsOnSession(session: Session): Option[Call] =
-    if (isNotConnectedPropertySubmission(session)) {
+    if isNotConnectedPropertySubmission(session) then
       cyaPageNotConnected
-    } else if (isVacantPropertySubmission(session)) {
+    else if isVacantPropertySubmission(session) then
       cyaPageVacant
-    } else {
+    else
       cyaPage
-    }
 
-  def isVacantPropertySubmission(session: Session): Boolean =
+  private def isVacantPropertySubmission(session: Session): Boolean =
     session.stillConnectedDetails
       .flatMap(_.isPropertyVacant)
       .contains(AnswerYes)
 
-  def isNotConnectedPropertySubmission(session: Session): Boolean =
+  private def isNotConnectedPropertySubmission(session: Session): Boolean =
     session.stillConnectedDetails
       .flatMap(_.addressConnectionType)
       .contains(AddressConnectionTypeNo)
@@ -65,55 +61,43 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
   ).map(_.url)
 
   private def areYouStillConnectedRouting: Session => Call = answers =>
-    answers.stillConnectedDetails.flatMap(_.addressConnectionType) match {
+    answers.stillConnectedDetails.flatMap(_.addressConnectionType) match
       case Some(AddressConnectionTypeYes)              =>
-        answers.forType match {
-          case FOR6076 =>
-            controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
-          case _       =>
-            controllers.connectiontoproperty.routes.VacantPropertiesController.show()
-        }
-      case Some(AddressConnectionTypeYesChangeAddress) =>
-        controllers.connectiontoproperty.routes.EditAddressController.show()
+        answers.forType match
+          case FOR6076 => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+          case _       => controllers.connectiontoproperty.routes.VacantPropertiesController.show()
+      case Some(AddressConnectionTypeYesChangeAddress) => controllers.connectiontoproperty.routes.EditAddressController.show()
       case _                                           => controllers.notconnected.routes.PastConnectionController.show()
-    }
 
-  private def editAddressRouting: Session => Call = answers =>
-    answers.forType match {
-      case FOR6076 =>
-        controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
-      case _       =>
-        controllers.connectiontoproperty.routes.VacantPropertiesController.show()
-    }
+  private def editAddressRouting: Session => Call =
+    _.forType match
+      case FOR6076 => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
+      case _       => controllers.connectiontoproperty.routes.VacantPropertiesController.show()
 
-  private def isPropertyVacant: Session => Call = answers =>
-    answers.stillConnectedDetails.flatMap(_.isPropertyVacant) match {
+  private def isPropertyVacant: Session => Call =
+    _.stillConnectedDetails.flatMap(_.isPropertyVacant) match
       case Some(AnswerYes) => controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show()
       case _               => controllers.connectiontoproperty.routes.TradingNameOperatingFromPropertyController.show()
-    }
 
   private def isAnyRentReceived: Session => Call = answers =>
-    answers.stillConnectedDetails.flatMap(_.isAnyRentReceived) match {
+    answers.stillConnectedDetails.flatMap(_.isAnyRentReceived) match
       case Some(AnswerYes) =>
         if answers.stillConnectedDetails.get.lettingPartOfPropertyDetails.isEmpty then
           controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show()
         else
           val maybeLastDetail = answers.stillConnectedDetails.flatMap(_.lettingPartOfPropertyDetails.lastOption)
           val idx             = getLettingPartOfPropertyDetailsIndex(answers)
-          maybeLastDetail match {
+          maybeLastDetail match
             case Some(lastDetail) if isIncomplete(lastDetail) =>
               getIncompleteSectionCall(lastDetail, idx)
             case _                                            =>
               controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(idx)
-          }
       case _               => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
-    }
 
-  private def tradingNameOwnTheProperty: Session => Call = answers =>
-    answers.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match {
+  private def tradingNameOwnTheProperty: Session => Call =
+    _.stillConnectedDetails.flatMap(_.tradingNameOwnTheProperty) match
       case Some(AnswerYes) => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()
       case _               => controllers.connectiontoproperty.routes.TradingNamePayingRentController.show()
-    }
 
   private def getLettingPartOfPropertyDetailsIndex(session: Session): Int =
     session.stillConnectedDetails.map(_.lettingPartOfPropertyDetailsIndex).getOrElse(0)
@@ -130,24 +114,20 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController
       .show(getLettingPartOfPropertyDetailsIndex(answers))
 
-  private def addAnotherLettingsConditionsRouting: Session => Call = answers => {
+  private def addAnotherLettingsConditionsRouting: Session => Call = answers =>
     val existingSectionOpt = answers.stillConnectedDetails.flatMap(
       _.lettingPartOfPropertyDetails.lift(getLettingPartOfPropertyDetailsIndex(answers))
     )
-    existingSectionOpt match {
+    existingSectionOpt match
       case Some(existingSection) if isIncomplete(existingSection) =>
         getIncompleteSectionCall(existingSection, getLettingPartOfPropertyDetailsIndex(answers))
       case Some(existingSection)                                  =>
-        existingSection.addAnotherLettingToProperty match {
+        existingSection.addAnotherLettingToProperty match
           case Some(AnswerYes) =>
-            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController
-              .show(Some(getLettingPartOfPropertyDetailsIndex(answers) + 1))
+            controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(getLettingPartOfPropertyDetailsIndex(answers) + 1))
           case _               =>
             controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
-        }
       case _                                                      => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()
-    }
-  }
 
   private def isIncomplete(detail: LettingPartOfPropertyDetails): Boolean =
     detail.tenantDetails == null ||
@@ -155,10 +135,9 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
       detail.itemsIncludedInRent.isEmpty
 
   def getIncompleteSectionCall(detail: LettingPartOfPropertyDetails, idx: Int): Call =
-    if (detail.tenantDetails == null) routes.LettingPartOfPropertyDetailsController.show(Some(idx))
-    else if (detail.lettingPartOfPropertyRentDetails.isEmpty)
-      routes.LettingPartOfPropertyDetailsRentController.show(idx)
-    else if (detail.itemsIncludedInRent.isEmpty) routes.LettingPartOfPropertyItemsIncludedInRentController.show(idx)
+    if detail.tenantDetails == null then routes.LettingPartOfPropertyDetailsController.show(Some(idx))
+    else if detail.lettingPartOfPropertyRentDetails.isEmpty then routes.LettingPartOfPropertyDetailsRentController.show(idx)
+    else if detail.itemsIncludedInRent.isEmpty then routes.LettingPartOfPropertyItemsIncludedInRentController.show(idx)
     else routes.LettingPartOfPropertyDetailsController.show(Some(idx))
 
   override val routeMap: Map[Identifier, Session => Call] = Map(
@@ -167,24 +146,16 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     ConnectionToPropertyPageId                     -> (_ => controllers.routes.TaskListController.show),
     VacantPropertiesPageId                         -> isPropertyVacant,
     PropertyBecomeVacantPageId                     ->
-      (_ =>
-        controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()
-      ),
+      (_ => controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show()),
     LettingIncomePageId                            -> isAnyRentReceived,
     TradingNameOperatingFromPropertyPageId         ->
-      (_ =>
-        controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()
-      ),
+      (_ => controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show()),
     TradingNameOwnThePropertyPageId                -> tradingNameOwnTheProperty,
     TradingNamePayingRentPageId                    -> (_ => controllers.connectiontoproperty.routes.AreYouThirdPartyController.show()),
     AreYouThirdPartyPageId                         ->
-      (_ =>
-        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()
-      ),
+      (_ => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show()),
     ProvideYourContactDetailsPageId                ->
-      (_ =>
-        controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show()
-      ),
+      (_ => controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show()),
     LettingPartOfPropertyDetailsPageId             -> lettingPartOfPropertyRentDetailsConditionsRouting,
     LettingPartOfPropertyRentDetailsPageId         -> lettingsPartOfPropertyRentDetailsConditionsRouting,
     LettingPartOfPropertyItemsIncludedInRentPageId -> lettingPartOfPropertyItemsIncludedInRentConditionsRouting,
@@ -192,4 +163,3 @@ class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(a
     MaxOfLettingsReachedId                         -> (_ => controllers.connectiontoproperty.routes.ProvideContactDetailsController.show()),
     CheckYourAnswersConnectionToPropertyId         -> (_ => controllers.routes.TaskListController.show)
   )
-}

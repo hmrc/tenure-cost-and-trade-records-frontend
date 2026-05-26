@@ -24,14 +24,14 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
+class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -48,7 +48,7 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "LegalOrPlanningRestrictionsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with legal or planning restrictions in the session" in {
       val result = legalOrPlanningRestrictionsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -94,7 +94,7 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
     }
   }
 
-  "LegalOrPlanningRestrictionsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = legalOrPlanningRestrictionsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -102,7 +102,7 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = legalOrPlanningRestrictionsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("legalOrPlanningRestrictions" -> "yes")
       )
@@ -119,13 +119,10 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val legalOrPlanningRestrictions: String = "legalOrPlanningRestrictions"
-    }
 
     val baseFormData: Map[String, String] = Map("legalOrPlanningRestrictions" -> "yes")
-  }
-}

@@ -26,29 +26,31 @@ import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
+class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec:
 
   import TestData.*
 
   def checkYourAdditionalInformationController(
     additionalInformation: Option[AdditionalInformation] = Some(prefilledAdditionalInformation)
-  ): CheckYourAnswersAdditionalInformationController = CheckYourAnswersAdditionalInformationController(
-    stubMessagesControllerComponents(),
-    additionalInformationNavigator,
-    checkYourAnswersAdditionalInformationView,
-    preEnrichedActionRefiner(additionalInformation = additionalInformation),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAdditionalInformationController =
+    CheckYourAnswersAdditionalInformationController(
+      stubMessagesControllerComponents(),
+      additionalInformationNavigator,
+      checkYourAnswersAdditionalInformationView,
+      preEnrichedActionRefiner(additionalInformation = additionalInformation),
+      mockSessionRepo
+    )
 
   def checkYourAdditionalInformationControllerEmpty(
     additionalInformation: Option[AdditionalInformation] = None
-  ): CheckYourAnswersAdditionalInformationController = CheckYourAnswersAdditionalInformationController(
-    stubMessagesControllerComponents(),
-    additionalInformationNavigator,
-    checkYourAnswersAdditionalInformationView,
-    preEnrichedActionRefiner(additionalInformation = additionalInformation),
-    mockSessionRepo
-  )
+  ): CheckYourAnswersAdditionalInformationController =
+    CheckYourAnswersAdditionalInformationController(
+      stubMessagesControllerComponents(),
+      additionalInformationNavigator,
+      checkYourAnswersAdditionalInformationView,
+      preEnrichedActionRefiner(additionalInformation = additionalInformation),
+      mockSessionRepo
+    )
 
   "GET /" should {
     "return 200" in {
@@ -80,14 +82,14 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
       status(result) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = checkYourAdditionalInformationController().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody("checkYourAnswersAdditionalInformation" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
     }
 
-    "Redirect when form data submitted even when starting with no information at all" in {
+    "redirect when form data submitted even when starting with no information at all" in {
       val res = checkYourAdditionalInformationControllerEmpty().submit()(
         FakeRequest(POST, "").withFormUrlEncodedBody("checkYourAnswersAdditionalInformation" -> "yes")
       )
@@ -104,16 +106,10 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
-
-      val checkYourAnswersAdditionalInformation: String =
-        "checkYourAnswersAdditionalInformation"
-    }
+    class ErrorKey:
+      val checkYourAnswersAdditionalInformation: String = "checkYourAnswersAdditionalInformation"
 
     val baseFormData: Map[String, String] = Map("checkYourAnswersAdditionalInformation" -> "yes")
-  }
-
-}

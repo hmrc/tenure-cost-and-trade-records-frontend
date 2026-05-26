@@ -44,6 +44,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec:
         status(result)            shouldBe OK
         contentType(result).value shouldBe HTML
         charset(result).value     shouldBe UTF8
+
         val html: Document = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()                                       shouldBe "feeReceived.heading"
         html.getElementById("feeReceivedPerYear.year[0].tradingPeriod").value            shouldBe "52"
@@ -55,6 +56,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec:
       "reply 400 and error messages if the form is submitted with invalid data" in new ControllerFixture {
         val result: Future[Result] = controller.submit(0)(fakePostRequest)
         val content: String        = contentAsString(result)
+
         status(result) shouldBe BAD_REQUEST
         content          should include("error.weeksMapping.blank")
         content          should include("error.feeReceived.concessionOrFranchiseFee.required")
@@ -70,6 +72,7 @@ class FeeReceivedControllerSpec extends TestBaseSpec:
         status(result) shouldBe SEE_OTHER
         redirectLocation(result).value shouldBe routes.RentalIncomeListController.show(1).url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
+
         val feeReceivedPerYear: FeeReceivedPerYear =
           data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
             .asInstanceOf[ConcessionIncomeRecord]

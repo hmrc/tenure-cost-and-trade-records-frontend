@@ -23,7 +23,7 @@ import models.submissions.connectiontoproperty.ConnectionToProperty.*
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionToProperty] {
+class ConnectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionToProperty]:
 
   private val messageKeyPrefix = "connectionToTheProperty"
 
@@ -37,7 +37,7 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
   private def createViewUsingForm = (form: Form[ConnectionToProperty]) =>
     connectionToThePropertyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
 
-  "Connection to property view" must {
+  "Connection to property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -105,4 +105,3 @@ class connectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -24,23 +24,23 @@ import play.api.data.Form
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
-class ThreeYearsConstructedViewSpec extends QuestionViewBehaviours[AnswersYesNo] {
+class ThreeYearsConstructedViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   val messageKeyPrefix = "threeYearsConstructed"
 
   override val form: Form[AnswersYesNo] = ThreeYearsConstructedForm.theForm
 
-  def createView: () => Html = () =>
-    threeYearsConstructedView(form, "", Summary("99996010001"), false)(using fakeRequest, messages)
+  def createView: () => Html =
+    () => threeYearsConstructedView(form, "", Summary("99996010001"), false)(using fakeRequest, messages)
 
-  def createViewFromTL: () => Html = () =>
-    threeYearsConstructedView(form, "TL", Summary("99996010001"), false)(using fakeRequest, messages)
+  def createViewFromTL: () => Html =
+    () => threeYearsConstructedView(form, "TL", Summary("99996010001"), false)(using fakeRequest, messages)
 
-  def createViewFromCYA: () => Html = () =>
-    threeYearsConstructedView(form, "CYA", Summary("99996010001"), false)(using fakeRequest, messages)
+  def createViewFromCYA: () => Html =
+    () => threeYearsConstructedView(form, "CYA", Summary("99996010001"), false)(using fakeRequest, messages)
 
-  def createViewUsingForm: Form[AnswersYesNo] => Html = (form: Form[AnswersYesNo]) =>
-    threeYearsConstructedView(form, "", Summary("99996010001"), false)(using fakeRequest, messages)
+  def createViewUsingForm: Form[AnswersYesNo] => Html =
+    form => threeYearsConstructedView(form, "", Summary("99996010001"), false)(using fakeRequest, messages)
 
   "Three years constructed view" should {
 
@@ -53,11 +53,13 @@ class ThreeYearsConstructedViewSpec extends QuestionViewBehaviours[AnswersYesNo]
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.RenewablesPlantController.show().url
     }
+
     "has a link marked with back.link.label leading to Task List page if page assessed from Task List" in {
       val doc         = asDocument(createViewFromTL())
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
       backlinkUrl shouldBe controllers.routes.TaskListController.show.url + "#site-construction-details"
     }
+
     "has a link marked with back.link.label leading to CYA page if page accessed from Check your answer" in {
       val doc         = asDocument(createViewFromCYA())
       val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
@@ -109,4 +111,3 @@ class ThreeYearsConstructedViewSpec extends QuestionViewBehaviours[AnswersYesNo]
       assert(loginButton == messages("button.save.label"))
     }
   }
-}

@@ -42,17 +42,17 @@ class CompletedCommercialLettingsController @Inject() (
 )(using val ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     audit.sendChangeLink("CompletedCommercialLettings")
 
     Ok(
       view(
-        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.completedCommercialLettings) match {
+        request.sessionData.aboutYouAndThePropertyPartTwo.flatMap(_.completedCommercialLettings) match
           case Some(data) => completedCommercialLettingsForm.fill(data)
           case _          => completedCommercialLettingsForm
-        },
+        ,
         calculateBackLink,
         request.sessionData.toSummary
       )
@@ -63,7 +63,7 @@ class CompletedCommercialLettingsController @Inject() (
     continueOrSaveAsDraft[Int](
       completedCommercialLettingsForm,
       formWithErrors => BadRequest(view(formWithErrors, calculateBackLink, request.sessionData.toSummary)),
-      data => {
+      data =>
         val updatedData = updateAboutYouAndThePropertyPartTwo(
           _.copy(
             completedCommercialLettings = Option(data)
@@ -72,14 +72,10 @@ class CompletedCommercialLettingsController @Inject() (
         session
           .saveOrUpdate(updatedData)
           .map(_ => Redirect(navigator.nextPage(CompletedCommercialLettingsId, updatedData).apply(updatedData)))
-      }
     )
   }
 
   private def calculateBackLink(using request: SessionRequest[AnyContent]) =
-    navigator.from match {
+    navigator.from match
       case "CYA" => controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       case _     => controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show().url
-
-    }
-}

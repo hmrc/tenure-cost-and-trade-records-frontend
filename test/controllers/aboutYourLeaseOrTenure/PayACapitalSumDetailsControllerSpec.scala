@@ -24,7 +24,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
+class PayACapitalSumDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -40,7 +40,7 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
       mockSessionRepo
     )
 
-  "PayACapitalSumDetailsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with capital sum or premium with yes in the session" in {
       val result = payACapitalSumDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -92,7 +92,7 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
     }
   }
 
-  "PayACapitalSumDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a See_Other if an empty form is submitted" in {
       val res = payACapitalSumDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -100,4 +100,3 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec {
       status(res) shouldBe SEE_OTHER
     }
   }
-}

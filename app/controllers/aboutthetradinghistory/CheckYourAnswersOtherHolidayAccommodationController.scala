@@ -44,17 +44,17 @@ class CheckYourAnswersOtherHolidayAccommodationController @Inject() (
 )(using ec: ExecutionContext
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
-  with Logging {
+  with Logging:
 
   def show: Action[AnyContent] = (Action andThen withSessionRefiner).async { implicit request =>
     Ok(
       checkYourAnswersOtherHolidayAccommodationView(
         request.sessionData.aboutTheTradingHistoryPartOne
-          .flatMap(_.otherHolidayAccommodation.flatMap(_.checkYourAnswersOtherHolidayAccommodation)) match {
+          .flatMap(_.otherHolidayAccommodation.flatMap(_.checkYourAnswersOtherHolidayAccommodation)) match
           case Some(checkYourAnswersAboutTheTradingHistory) =>
             checkYourAnswersOtherHolidayAccommodationForm.fill(checkYourAnswersAboutTheTradingHistory)
           case _                                            => checkYourAnswersOtherHolidayAccommodationForm
-        },
+        ,
         getBackLink(request.sessionData),
         request.sessionData.toSummary
       )
@@ -72,14 +72,12 @@ class CheckYourAnswersOtherHolidayAccommodationController @Inject() (
             request.sessionData.toSummary
           )
         ),
-      data => {
-        val updatedData =
-          updateOtherHolidayAccommodation(_.copy(checkYourAnswersOtherHolidayAccommodation = Some(data)))
+      data =>
+        val updatedData = updateOtherHolidayAccommodation(_.copy(checkYourAnswersOtherHolidayAccommodation = Some(data)))
 
         session.saveOrUpdate(updatedData).map { _ =>
           Redirect(navigator.nextPage(CheckYourAnswersOtherHolidayAccommodationId, updatedData).apply(updatedData))
         }
-      }
     )
   }
 
@@ -89,5 +87,3 @@ class CheckYourAnswersOtherHolidayAccommodationController @Inject() (
     ) match
       case Some(AnswerYes) => controllers.aboutthetradinghistory.routes.TotalSiteCapacity6045Controller.show().url
       case _               => controllers.aboutthetradinghistory.routes.OtherHolidayAccommodationController.show().url
-
-}

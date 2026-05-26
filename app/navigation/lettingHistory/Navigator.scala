@@ -35,12 +35,7 @@ abstract class Navigator(audit: Audit):
   val checkYourAnswerCall: Call
   val taskListCall: Call
 
-  def backLinkUrl(
-    ofPage: PageIdentifier,
-    navigation: NavigationData = Map.empty
-  )(using
-    request: SessionRequest[AnyContent]
-  ): Option[String] =
+  def backLinkUrl(ofPage: PageIdentifier, navigation: NavigationData = Map.empty)(using request: SessionRequest[AnyContent]): Option[String] =
     (
       if request.isFromCheckYourAnswer
       then Some(checkYourAnswerCall)
@@ -58,8 +53,7 @@ abstract class Navigator(audit: Audit):
     currentPage: PageIdentifier,
     session: SessionWrapper,
     navigation: NavigationData = Map.empty
-  )(using
-    hc: HeaderCarrier,
+  )(using hc: HeaderCarrier,
     request: SessionRequest[AnyContent]
   ): Result =
     val nextCall =

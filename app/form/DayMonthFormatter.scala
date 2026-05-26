@@ -35,13 +35,12 @@ class DayMonthFormatter(
   fieldNameKey: String,
   allow29February: Boolean
 )(using messages: Messages
-) extends Formatter[DayMonthsDuration] {
+) extends Formatter[DayMonthsDuration]:
 
   private val dayMonthFields = Seq("day", "month")
   private val validationYear = if allow29February then 2020 else 2021
 
-  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], DayMonthsDuration] = {
-
+  override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], DayMonthsDuration] =
     val dateText = messages("error.dateParts.date")
     val dMText   = messages("error.dateParts.dayMonth")
 
@@ -83,7 +82,6 @@ class DayMonthFormatter(
             ).flatten
           )
     }
-  }
 
   override def unbind(key: String, value: DayMonthsDuration): Map[String, String] =
     Map(
@@ -92,11 +90,10 @@ class DayMonthFormatter(
     )
 
   private def parseNumber(str: String, allowedRange: Range): Int =
-    Try(str.trim.toInt) match {
+    Try(str.trim.toInt) match
       case Success(num) if allowedRange contains num => num
       case Success(_)                                => 0
       case Failure(_)                                => -1
-    }
 
   private def oneError(key: String, message: String, args: Seq[Any]): Left[Seq[FormError], DayMonthsDuration] =
     Left(Seq(FormError(key, message, args)))
@@ -105,5 +102,3 @@ class DayMonthFormatter(
     Try(LocalDate.of(validationYear, month, day)).toEither.left
       .map(_ => "error.date.invalid")
       .map(_ => DayMonthsDuration(day, month))
-
-}

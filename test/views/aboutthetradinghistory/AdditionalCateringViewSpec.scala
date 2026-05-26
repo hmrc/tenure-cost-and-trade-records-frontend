@@ -22,14 +22,13 @@ import models.submissions.aboutthetradinghistory.AdditionalCatering
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCatering]] {
+class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCatering]]:
 
   private val years = Seq("2023", "2022", "2021")
 
   private val messageKeyPrefix = "catering.additionalActivitiesOnSite"
 
-  override val form: Form[Seq[AdditionalCatering]] =
-    AdditionalCateringForm.additionalCateringForm(years)(using messages)
+  override val form: Form[Seq[AdditionalCatering]] = AdditionalCateringForm.additionalCateringForm(years)(using messages)
 
   private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
 
@@ -40,7 +39,7 @@ class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCa
   private def createViewUsingForm = (form: Form[Seq[AdditionalCatering]]) =>
     additionalCateringView(form, backLink)(using sessionRequest, messages)
 
-  "Additional bars and clubs 6045 view" must {
+  "Additional bars and clubs 6045 view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -84,4 +83,3 @@ class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCa
       assert(loginButton == messages("button.continue.label"))
     }
   }
-}

@@ -24,14 +24,14 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour,
 import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
+import utils.FormBindingTestAssertions.*
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls
 
-class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
+class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -40,21 +40,22 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
     aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour)
-  ): UltimatelyResponsibleOutsideRepairsController = UltimatelyResponsibleOutsideRepairsController(
-    stubMessagesControllerComponents(),
-    mockAudit,
-    aboutYourLeaseOrTenureNavigator,
-    ultimatelyResponsibleOutsideRepairsView,
-    preEnrichedActionRefiner(
-      forType = forType,
-      aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
-      aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
-      aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour
-    ),
-    mockSessionRepo
-  )
+  ): UltimatelyResponsibleOutsideRepairsController =
+    UltimatelyResponsibleOutsideRepairsController(
+      stubMessagesControllerComponents(),
+      mockAudit,
+      aboutYourLeaseOrTenureNavigator,
+      ultimatelyResponsibleOutsideRepairsView,
+      preEnrichedActionRefiner(
+        forType = forType,
+        aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
+        aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
+        aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour
+      ),
+      mockSessionRepo
+    )
 
-  "UltimatelyResponsibleOutsideRepairsController GET /" should {
+  "GET /" should {
     "return 200 and HTML with Ultimately Responsible Outside Repairs in the session" in {
       val result = ultimatelyResponsibleOutsideRepairsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -112,14 +113,13 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = ultimatelyResponsibleOutsideRepairsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = ultimatelyResponsibleOutsideRepairsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody("outsideRepairs" -> "landlord")
       )
@@ -136,13 +136,10 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec {
     }
   }
 
-  object TestData {
+  object TestData:
     val errorKey: ErrorKey = new ErrorKey
 
-    class ErrorKey {
+    class ErrorKey:
       val ultimatelyResponsibleOR: String = "outsideRepairs"
-    }
 
     val baseFormData: Map[String, String] = Map("outsideRepairs" -> "tenant")
-  }
-}

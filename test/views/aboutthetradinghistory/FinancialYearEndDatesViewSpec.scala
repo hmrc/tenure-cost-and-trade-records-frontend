@@ -25,22 +25,22 @@ import views.behaviours.QuestionViewBehaviours
 
 import java.time.LocalDate
 
-class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate]] {
+class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate]]:
 
-  val messageKeyPrefix = "financialYearEndDates"
+  private val messageKeyPrefix = "financialYearEndDates"
 
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
 
   private val finYears = Seq(today, today.minusYears(1), today.minusYears(2)).map(_.getYear)
 
   override val form: Form[Seq[LocalDate]] = financialYearEndDatesForm()(using messages)
 
-  def createView: () => Html = () => financialYearEndDatesView(form, finYears)(using sessionRequest, messages)
+  private def createView: () => Html = () => financialYearEndDatesView(form, finYears)(using sessionRequest, messages)
 
-  def createViewUsingForm: Form[Seq[LocalDate]] => Html =
+  private def createViewUsingForm: Form[Seq[LocalDate]] => Html =
     financialYearEndDatesView(_, finYears)(using sessionRequest, messages)
 
-  "financialYearEndDates view" must {
+  "financialYearEndDates view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -63,6 +63,7 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
       assertContainsLabel(doc, "financialYearEnd[0].date.day", "Day")
       assertContainsText(doc, "financialYearEnd[0].date.day")
     }
+
     "contain date field for the value financialYearEnd[0].date.month" in {
       val doc = asDocument(createViewUsingForm(form))
       assertContainsLabel(doc, "financialYearEnd[0].date.month", "Month")
@@ -81,5 +82,3 @@ class FinancialYearEndDatesViewSpec extends QuestionViewBehaviours[Seq[LocalDate
       assert(loginButton == messages("button.continue.label"))
     }
   }
-
-}

@@ -44,7 +44,7 @@ class RentalIncomeIncludedController @Inject() (
 ) extends FORDataCaptureController(mcc)
   with I18nSupport
   with FranchiseAndLettingSupport
-  with Logging {
+  with Logging:
 
   def show(index: Int): Action[AnyContent] = (Action andThen withSessionRefiner) { implicit request =>
     val existingDetails = getIncomeRecord(index).collect {
@@ -53,6 +53,7 @@ class RentalIncomeIncludedController @Inject() (
       case franchise: FranchiseIncomeRecord           => franchise.itemsIncluded
       case _                                          => None
     }.flatten
+
     audit.sendChangeLink("LettingTypeIncluded")
 
     Ok(
@@ -79,18 +80,17 @@ class RentalIncomeIncludedController @Inject() (
             calculateBackLink(idx)
           )
         ),
-      data => {
+      data =>
         val updatedSession = AboutFranchisesOrLettings.updateAboutFranchisesOrLettings { aboutFranchisesOrLettings =>
           if (aboutFranchisesOrLettings.rentalIncome.exists(_.isDefinedAt(idx))) {
             val updatedRentalIncome = aboutFranchisesOrLettings.rentalIncome.map { records =>
               records.updated(
                 idx,
-                records(idx) match {
+                records(idx) match
                   case franchise: FranchiseIncomeRecord       => franchise.copy(itemsIncluded = Some(data))
                   case concession: Concession6015IncomeRecord => concession.copy(itemsIncluded = Some(data))
                   case letting: LettingIncomeRecord           => letting.copy(itemsIncluded = Some(data))
                   case _                                      => throw IllegalStateException("Unknown income record type")
-                }
               )
             }
             aboutFranchisesOrLettings.copy(rentalIncome = updatedRentalIncome)
@@ -99,22 +99,17 @@ class RentalIncomeIncludedController @Inject() (
 
         session.saveOrUpdate(updatedSession).map { _ =>
           Redirect(navigator.nextPage(RentalIncomeIncludedId, updatedSession).apply(updatedSession))
-
         }
-      }
     )
   }
 
   private def calculateBackLink(idx: Int)(using request: SessionRequest[AnyContent]) =
-    request.getQueryString("from") match {
+    request.getQueryString("from") match
       case Some("CYA") =>
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       case _           =>
-        request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).flatMap(_.lift(idx)) match {
+        request.sessionData.aboutFranchisesOrLettings.flatMap(_.rentalIncome).flatMap(_.lift(idx)) match
           case Some(_: Concession6015IncomeRecord) =>
             controllers.aboutfranchisesorlettings.routes.CalculatingTheRentForController.show(idx).url
           case _                                   =>
             controllers.aboutfranchisesorlettings.routes.RentalIncomeRentController.show(idx).url
-        }
-    }
-}

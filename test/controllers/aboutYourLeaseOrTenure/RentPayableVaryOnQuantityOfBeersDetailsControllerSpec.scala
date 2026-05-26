@@ -23,7 +23,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import utils.TestBaseSpec
 
-class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec {
+class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,7 +39,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
       mockSessionRepo
     )
 
-  "RentPayableVaryOnQuantityOfBeersDetailsController GET /" should {
+  "GET /" should {
     "return 200" in {
       val result = rentPayableVaryOnQuantityOfBeersDetailsController().show(fakeRequest)
       status(result)        shouldBe Status.OK
@@ -62,7 +62,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
     }
   }
 
-  "RentPayableVaryOnQuantityOfBeersDetailsController SUBMIT /" should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = rentPayableVaryOnQuantityOfBeersDetailsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -70,7 +70,7 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
       status(res) shouldBe BAD_REQUEST
     }
 
-    "Redirect when form data submitted" in {
+    "redirect when form data submitted" in {
       val res = rentPayableVaryOnQuantityOfBeersDetailsController().submit(
         FakeRequest(POST, "/").withFormUrlEncodedBody(
           "rentPayableVaryOnQuantityOfBeersDetails" -> "text"
@@ -88,4 +88,3 @@ class RentPayableVaryOnQuantityOfBeersDetailsControllerSpec extends TestBaseSpec
       status(res) shouldBe BAD_REQUEST
     }
   }
-}

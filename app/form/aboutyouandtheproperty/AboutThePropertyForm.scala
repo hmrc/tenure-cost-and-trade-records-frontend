@@ -20,7 +20,7 @@ import form.MappingSupport.currentPropertyUsedMapping
 import models.submissions.aboutyouandtheproperty.*
 import models.submissions.aboutyouandtheproperty.CurrentPropertyUsed.*
 import play.api.data.Form
-import play.api.data.Forms.{default, mapping, optional, text}
+import play.api.data.Forms.{mapping, optional, text}
 import play.api.data.validation.Constraints.maxLength
 
 object AboutThePropertyForm:
@@ -37,16 +37,15 @@ object AboutThePropertyForm:
   val lodgeAndRestaurant: String = CurrentPropertyLodgeAndRestaurant.toString
   val conferenceCentre: String   = CurrentPropertyConferenceCentre.toString
 
-  val aboutThePropertyForm: Form[PropertyDetails] = Form(
-    mapping(
-      "propertyCurrentlyUsed"      -> currentPropertyUsedMapping,
-      "propertyCurrentlyUsedOther" -> optional(
-        default(text, "").verifying(
-          maxLength(200, "error.propertyCurrentlyUsed.maxLength")
+  val aboutThePropertyForm: Form[PropertyDetails] =
+    Form(
+      mapping(
+        "propertyCurrentlyUsed"      -> currentPropertyUsedMapping,
+        "propertyCurrentlyUsedOther" -> optional(
+          text.verifying(maxLength(200, "error.propertyCurrentlyUsed.maxLength"))
         )
+      )(PropertyDetails.apply)(o => Some(Tuple.fromProductTyped(o))).verifying(
+        "error.propertyCurrentlyUsed.required",
+        pd => !(pd.propertyCurrentlyUsed == CurrentPropertyOther && pd.currentlyUsedOtherField.isEmpty)
       )
-    )(PropertyDetails.apply)(o => Some(Tuple.fromProductTyped(o))).verifying(
-      "error.propertyCurrentlyUsed.required",
-      pd => !(pd.propertyCurrentlyUsed == CurrentPropertyOther && pd.currentlyUsedOtherField.isEmpty)
     )
-  )

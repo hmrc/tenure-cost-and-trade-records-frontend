@@ -19,7 +19,7 @@ package views.downloadFORTypeForm
 import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
-class DownloadPDFViewSpec extends QuestionViewBehaviours[String] {
+class DownloadPDFViewSpec extends QuestionViewBehaviours[String]:
 
   private val messageKeyPrefix    = "downloadPdf"
   private val testReferenceNumber = "12345678"
@@ -38,7 +38,7 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[String] {
   private def createView6076      = () => downloadPDFView("FOR6076", testReferenceNumber)(using fakeRequest, messages)
   private def createViewNoForType = () => downloadPDFView("", testReferenceNumber)(using fakeRequest, messages)
 
-  "download pdf view" must {
+  "download pdf view" should {
 
     behave like normalPage(createView6010, messageKeyPrefix)
 
@@ -116,4 +116,3 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[String] {
       assert(doc.toString.contains(messages("downloadPdf.retry")))
     }
   }
-}
