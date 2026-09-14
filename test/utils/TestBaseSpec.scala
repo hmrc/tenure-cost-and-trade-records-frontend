@@ -43,10 +43,10 @@ import play.api.mvc.request.RequestTarget
 import play.api.mvc.{AnyContentAsEmpty, Request, Result}
 import play.api.test.{DefaultAwaitTimeout, FakeRequest, FutureAwaits, Injecting}
 import repositories.SessionRepository
-import repository.RepositoryUtils
 import test.{InjectedViews, TestObjects}
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import uk.gov.hmrc.vo.unit.test.mock.MockitoExtendedSugar
 
 import java.nio.charset.StandardCharsets
 import java.time.{Clock, Instant, ZoneId}
@@ -66,7 +66,6 @@ trait TestBaseSpec
   with Inside
   with GuiceOneAppPerSuite
   with Injecting
-  with GlobalExecutionContext
   with RepositoryUtils
   with TestObjects
   with InjectedViews

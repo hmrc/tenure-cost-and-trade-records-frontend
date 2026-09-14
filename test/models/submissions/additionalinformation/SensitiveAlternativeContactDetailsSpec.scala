@@ -16,18 +16,11 @@
 
 package models.submissions.additionalinformation
 
-import crypto.MongoCrypto
 import models.submissions.common.{Address, SensitiveAddress}
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpecLike
-import play.api.Configuration
-import utils.SensitiveTestHelper
+import test.SensitiveTestHelper
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class SensitiveAlternativeContactDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
-
-  val testConfig: Configuration = loadTestConfig()
-
-  implicit val crypto: MongoCrypto = createTestMongoCrypto(testConfig)
+class SensitiveAlternativeContactDetailsSpec extends BaseSpec with SensitiveTestHelper:
 
   "SensitiveAlternativeContactDetails" should {
     "encrypt and decrypt sensitive fields correctly" in {

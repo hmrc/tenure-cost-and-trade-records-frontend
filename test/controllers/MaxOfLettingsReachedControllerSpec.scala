@@ -27,7 +27,8 @@ import play.api.mvc.{AnyContent, Call, Request}
 import play.api.test.Helpers.{contentAsString, contentType, header, status, stubMessagesControllerComponents}
 import play.api.test.{DefaultAwaitTimeout, FakeRequest, Helpers}
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.{MockitoExtendedSugar, TestBaseSpec}
+import uk.gov.hmrc.vo.unit.test.mock.MockitoExtendedSugar
+import utils.TestBaseSpec
 
 trait MaxOfLettingsReachedControllerBehaviours:
   this: AnyWordSpecLike & Matchers & MockitoExtendedSugar & DefaultAwaitTimeout & OptionValues =>

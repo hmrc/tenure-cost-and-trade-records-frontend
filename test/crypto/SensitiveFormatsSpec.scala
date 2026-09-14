@@ -17,25 +17,21 @@
 package crypto
 
 import crypto.SensitiveFormats.*
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpecLike
-import play.api.Configuration
+import org.bson.types.ObjectId
 import play.api.libs.json.{Json, OFormat}
+import test.SensitiveTestHelper
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
-import utils.SensitiveTestHelper
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 import scala.language.implicitConversions
 
-class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
+class SensitiveFormatsSpec extends BaseSpec with SensitiveTestHelper:
 
-  import SensitiveFormatsSpec.*
-
-  val testConfig: Configuration = loadTestConfig()
-
-  implicit val crypto: MongoCrypto = TestMongoCrypto(testConfig)
+  import SensitiveTestEntity.*
 
   "SensitiveFormats" should {
-
     "serialize and deserialize SensitiveString correctly" in {
       val originalString  = "mySensitiveData"
       val sensitiveString = SensitiveString(originalString)
@@ -58,17 +54,18 @@ class SensitiveFormatsSpec extends AnyWordSpecLike with Matchers with SensitiveT
       deserialized.get                 shouldBe testEntity
       deserialized.get.encryptedString shouldBe sensitiveString
     }
-
   }
-
-object SensitiveFormatsSpec:
 
   case class SensitiveTestEntity(
     normalString: String,
-    encryptedString: SensitiveString
+    encryptedString: SensitiveString,
+    _id: ObjectId = ObjectId.get(),
+    createdAt: Instant = Instant.now.truncatedTo(ChronoUnit.MILLIS)
   )
 
   object SensitiveTestEntity:
-    import crypto.SensitiveFormats.*
+
+    import uk.gov.hmrc.mongo.play.json.formats.MongoFormats.Implicits.*
+    import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats.Implicits.*
 
     implicit def format(using crypto: MongoCrypto): OFormat[SensitiveTestEntity] = Json.format

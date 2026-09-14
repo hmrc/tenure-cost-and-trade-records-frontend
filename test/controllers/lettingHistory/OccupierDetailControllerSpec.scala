@@ -16,7 +16,6 @@
 
 package controllers.lettingHistory
 
-import connectors.MockAddressLookup
 import models.Session
 import models.submissions.lettingHistory.LettingHistory.*
 import models.submissions.lettingHistory.{LettingHistory, LocalPeriod, OccupierAddress, OccupierDetail}
@@ -28,6 +27,7 @@ import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
+import test.MockAddressLookup
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.lettingHistory.occupierDetail as OccupierDetailView
 

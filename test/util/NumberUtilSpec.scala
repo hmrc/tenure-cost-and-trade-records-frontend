@@ -16,13 +16,12 @@
 
 package util
 
-import org.scalatest.matchers.should
-import org.scalatest.wordspec.AnyWordSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class NumberUtilSpec extends AnyWordSpec with should.Matchers:
+class NumberUtilSpec extends BaseSpec:
 
   import NumberUtil.*
 

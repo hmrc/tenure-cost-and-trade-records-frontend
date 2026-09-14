@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package repository
+package test
 
-import models.Session
-import repositories.SessionRepo
-import utils.MockitoExtendedSugar
+import crypto.MongoCrypto
+import play.api.Configuration
 
-import scala.concurrent.Future
+trait SensitiveTestHelper:
 
-trait RepositoryUtils:
-  this: MockitoExtendedSugar =>
+  private val testCryptoConfig = Configuration("crypto.key" -> "P5xsJ9Nt+quxGZzB4DeLfw==")
 
-  val mockSessionRepo: SessionRepo = mock[SessionRepo]
-
-  when(mockSessionRepo.start(any[Session])(using any)).thenReturn(Future.successful(()))
-  when(mockSessionRepo.saveOrUpdate(any[Session])(using any)).thenReturn(Future.successful(()))
-  when(mockSessionRepo.remove()(using any)).thenReturn(Future.successful(()))
+  implicit val crypto: MongoCrypto = MongoCrypto(testCryptoConfig)

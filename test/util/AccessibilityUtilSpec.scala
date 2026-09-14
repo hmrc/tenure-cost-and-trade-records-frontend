@@ -17,18 +17,18 @@
 package util
 
 import play.api.i18n.Messages
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import java.time.LocalDate
 
-class AccessibilityUtilSpec extends TestBaseSpec:
+class AccessibilityUtilSpec extends BaseSpec:
 
   private val mockDateUtilLocalised = mock[DateUtilLocalised]
   private val accessibilityUtil     = AccessibilityUtil(mockDateUtilLocalised)
 
   implicit private val messages: Messages = mock[Messages]
 
-  "ariaBuilder" should {
+  "AccessibilityUtil.ariaBuilder" should {
     "return formatted aria label message" in {
       val messageKey       = "test.key"
       val financialYearEnd = LocalDate.of(2024, 3, 31)

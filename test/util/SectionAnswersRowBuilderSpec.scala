@@ -17,16 +17,17 @@
 package util
 
 import controllers.aboutyouandtheproperty
+import test.{TCTRAppSpec, TestObjects}
 import uk.gov.hmrc.govukfrontend.views.Aliases.{Key, Text}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, SummaryListRow, Value}
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseAppSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class SectionAnswersRowBuilderSpec extends TestBaseSpec:
+class SectionAnswersRowBuilderSpec extends TCTRAppSpec:
 
-  private def sectionAnswers = SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)(using messages)
+  private def sectionAnswers = SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)
 
   private val expectedRow = Seq(
     SummaryListRow(
@@ -49,7 +50,7 @@ class SectionAnswersRowBuilderSpec extends TestBaseSpec:
     )
   )
 
-  "SectionAnswer" should {
+  "SectionAnswersRowBuilder" should {
     "build SummaryListRow" in {
       sectionAnswers.row(
         "label.fullName",

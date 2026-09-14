@@ -16,8 +16,17 @@
 
 package utils
 
-import scala.concurrent.ExecutionContext
-import scala.concurrent.ExecutionContext.global
+import models.Session
+import repositories.SessionRepo
+import uk.gov.hmrc.vo.unit.test.mock.MockitoExtendedSugar
 
-trait GlobalExecutionContext:
-  implicit val executionContext: ExecutionContext = global
+import scala.concurrent.Future
+
+trait RepositoryUtils:
+  this: MockitoExtendedSugar =>
+
+  val mockSessionRepo: SessionRepo = mock[SessionRepo]
+
+  when(mockSessionRepo.start(any[Session])(using any)).thenReturn(Future.successful(()))
+  when(mockSessionRepo.saveOrUpdate(any[Session])(using any)).thenReturn(Future.successful(()))
+  when(mockSessionRepo.remove()(using any)).thenReturn(Future.successful(()))

@@ -17,10 +17,8 @@
 package utils
 
 import actions.RefNumAction
-import crypto.MongoCrypto
 import play.api.mvc.*
 import play.api.test.FakeRequest
-import play.api.{Configuration, Environment, Mode}
 
 import scala.language.implicitConversions
 
@@ -33,17 +31,3 @@ object Helpers:
     val cc = play.api.test.Helpers.stubControllerComponents()
 
     RefNumAction(play.api.mvc.BodyParsers.Default(cc.parsers), cc.messagesApi)(using cc.executionContext)
-
-trait SensitiveTestHelper:
-
-  class TestMongoCrypto(configuration: Configuration) extends MongoCrypto(configuration)
-
-  def loadTestConfig(): Configuration =
-    val testEnv: Environment             = Environment.simple(mode = Mode.Test)
-    val devSettings: Map[String, AnyRef] = Map(
-      "crypto.key" -> "P5xsJ9Nt+quxGZzB4DeLfw=="
-    )
-    Configuration.load(testEnv, devSettings)
-
-  def createTestMongoCrypto(configuration: Configuration): MongoCrypto =
-    TestMongoCrypto(configuration)

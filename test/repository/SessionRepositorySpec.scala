@@ -17,20 +17,25 @@
 package repository
 
 import models.Session
-import org.scalatest.BeforeAndAfterEach
-import repositories.{SessionData, SessionRepository as SessionRepo}
-import utils.TestBaseSpec
+import org.scalatest.Inside
+import repositories.{SensitiveSessionData, SessionData, SessionRepository}
+import test.TestObjects
+import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
+import uk.gov.hmrc.vo.unit.test.db.MongoDBAppSpec
 
-class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach:
+class SessionRepositorySpec extends MongoDBAppSpec[SensitiveSessionData, SessionRepository] with TestObjects with Inside:
 
-  private val repository: SessionRepo = inject[SessionRepo]
+  given headerCarrier: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("test-session-id")))
 
-  "session repository" should {
+  override protected def beforeEach(): Unit =
+    super.beforeEach()
+    mongoRepository.removeAll().futureValue
 
+  "SessionRepository" should {
     "start by saving or updating data" in {
-      repository.start(baseFilled6010Session).futureValue
+      mongoRepository.start(baseFilled6010Session).futureValue
 
-      val returnedSessionData: SessionData = repository.findSession.futureValue // shouldBe session
+      val returnedSessionData: SessionData = mongoRepository.findSession.futureValue // shouldBe session
 
       inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
         data.referenceNumber shouldBe baseFilled6010Session.referenceNumber
@@ -38,9 +43,9 @@ class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach:
     }
 
     "get data from current session" in {
-      repository.start(baseFilled6010Session).futureValue
+      mongoRepository.start(baseFilled6010Session).futureValue
 
-      val returnedSessionData: Option[Session] = repository.get.futureValue
+      val returnedSessionData: Option[Session] = mongoRepository.get.futureValue
 
       inside(returnedSessionData) { case Some(session) =>
         session.referenceNumber shouldBe referenceNumber
@@ -48,15 +53,11 @@ class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach:
     }
 
     "remove data from current session" in {
-      repository.start(baseFilled6010Session).futureValue
-      repository.remove().futureValue
+      mongoRepository.start(baseFilled6010Session).futureValue
+      mongoRepository.remove().futureValue
 
-      val returnedSessionData = repository.get.futureValue
+      val returnedSessionData = mongoRepository.get.futureValue
 
       returnedSessionData shouldBe None
     }
   }
-
-  override protected def beforeEach(): Unit =
-    super.beforeEach()
-    repository.removeAll().futureValue

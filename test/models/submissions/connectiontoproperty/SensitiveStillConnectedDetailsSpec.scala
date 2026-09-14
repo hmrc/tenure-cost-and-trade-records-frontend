@@ -16,21 +16,14 @@
 
 package models.submissions.connectiontoproperty
 
-import crypto.MongoCrypto
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.common.{Address, CheckYourAnswersAndConfirm, ContactDetails}
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpecLike
-import play.api.Configuration
-import utils.SensitiveTestHelper
+import test.SensitiveTestHelper
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import java.time.LocalDate
 
-class SensitiveStillConnectedDetailsSpec extends AnyWordSpecLike with Matchers with SensitiveTestHelper:
-
-  val testConfig: Configuration = loadTestConfig()
-
-  given MongoCrypto = createTestMongoCrypto(testConfig)
+class SensitiveStillConnectedDetailsSpec extends BaseSpec with SensitiveTestHelper:
 
   "SensitiveStillConnectedDetails" should:
     "encrypt and decrypt sensitive fields correctly" in {
