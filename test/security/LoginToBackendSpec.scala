@@ -20,40 +20,37 @@ import models.FORLoginResponse
 import models.ForType.*
 import models.submissions.common.Address
 import security.LoginToBackend.{Postcode, RefNumber}
-import utils.UnitTest
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class LoginToBackendSpec extends UnitTest:
+class LoginToBackendSpec extends BaseSpec:
 
-  import TestData.*
+  private val refNum        = "1111111899"
+  private val postcode      = "CV24 5RR"
+  private val testAddress   = Address("123", None, "test", None, postcode)
+  private val auth          = "YouAreLoggedInNow"
+  private val loginResponse = FORLoginResponse(auth, FOR6010.toString, testAddress, isWelsh = false)
 
-  type ReferenceNumber = String
+  private def respondWith[A, B, C](a: A, b: B)(c: C): (A, B) => Future[C] =
+    (aa, bb) => if aa == a && bb == b then Future.successful(c) else throw ArgumentsDidNotMatch(Seq(a, b), Seq(aa, bb))
 
   private val l: (RefNumber, Postcode) => Future[LoginResult] = LoginToBackend(
     respondWith(refNum, postcode)(loginResponse)
   )
 
-  private val r = await(l(refNum, postcode))
-
   "Login to HOD with valid credentials when there is no previously stored document" should {
-    "indicate there is no saved document" in
-      assert(
-        r === NoExistingDocument(
-          loginResponse.forAuthToken,
-          loginResponse.forType,
-          loginResponse.address,
-          loginResponse.isWelsh
-        )
+    "indicate there is no saved document" in {
+      val r = l(refNum, postcode).futureValue
+
+      r shouldBe NoExistingDocument(
+        loginResponse.forAuthToken,
+        loginResponse.forType,
+        loginResponse.address,
+        loginResponse.isWelsh
       )
+    }
   }
 
-  object TestData:
-    val refNum                          = "1111111899"
-    val password                        = "aljsljdf"
-    val postcode                        = "CV24 5RR"
-    val testAddress: Address            = Address("123", None, "test", None, postcode)
-    val forType: String                 = FOR6010.toString
-    val auth                            = "YouAreLoggedInNow"
-    val loginResponse: FORLoginResponse = FORLoginResponse(auth, forType, testAddress, isWelsh = false)
+  case class ArgumentsDidNotMatch(es: Seq[Any], as: Seq[Any]) extends Exception(s"Expected: $es but got: $as")

@@ -30,8 +30,6 @@ class CharityQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   override val form: Form[AnswersYesNo] = CharityQuestionForm.charityQuestionForm
 
-  private val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
-
   private def createView: () => Html =
     () => charityQuestionView(form, Summary("99996010001"))(using fakeRequest, messages)
 

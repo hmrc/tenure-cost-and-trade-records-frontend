@@ -28,8 +28,6 @@ class CostsBreakdownViewSpec extends QuestionViewBehaviours[String]:
 
   override val form: Form[String] = CostsBreakdownForm.costsBreakdownForm
 
-  private val backLink: String = controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
-
   private def createView: () => Html =
     () => costsBreakdownView(form, Summary("99996076001"))(using fakeRequest, messages)
 

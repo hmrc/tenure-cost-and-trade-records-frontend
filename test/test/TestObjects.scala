@@ -849,14 +849,14 @@ trait TestObjects:
       aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6048)
     )
 
-  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSession: Session =
-    aboutYourTradingHistory6045YesSession.copy(aboutTheTradingHistoryPartOne =
-      prefilledAboutTheTradingHistoryPartOneCYA6045
-    )
-
   val prefilledAboutTheTradingHistoryPartOneCYA6045: AboutTheTradingHistoryPartOne =
     prefilledTurnoverSections6045.copy(otherHolidayAccommodation =
       Some(OtherHolidayAccommodation(Some(AnswerNo), None))
+    )
+
+  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSession: Session =
+    aboutYourTradingHistory6045YesSession.copy(aboutTheTradingHistoryPartOne =
+      prefilledAboutTheTradingHistoryPartOneCYA6045
     )
 
   val prefilledAboutTheTradingHistoryPartOneCYA6048: AboutTheTradingHistoryPartOne =
@@ -994,16 +994,6 @@ trait TestObjects:
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
-    )
-
-  val aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession: Session =
-    aboutYourTradingHistory6020YesSession.copy(
-      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails
-    )
-
-  val aboutYourTradingHistoryWithLowMarginFuelCardsDetailsSession: Session =
-    aboutYourTradingHistory6020YesSession.copy(
-      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails
     )
 
   val rentDetails: Option[RentDetails] = Some(RentDetails(100, prefilledDateInput))
@@ -1265,7 +1255,8 @@ trait TestObjects:
         )
       )
     )
-  val connectedSubmission: ConnectedSubmission           = ConnectedSubmission(stillConnectedDetailsYesToAllSession)
+
+  val connectedSubmission: ConnectedSubmission = ConnectedSubmission(stillConnectedDetailsYesToAllSession)
 
   val notConnectedSubmission: NotConnectedSubmission = NotConnectedSubmission(
     "id",
@@ -1306,6 +1297,16 @@ trait TestObjects:
       )
     )
   )
+
+  val aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession: Session =
+    aboutYourTradingHistory6020YesSession.copy(
+      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails
+    )
+
+  val aboutYourTradingHistoryWithLowMarginFuelCardsDetailsSession: Session =
+    aboutYourTradingHistory6020YesSession.copy(
+      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails
+    )
 
   val prefilledAboutTheTradingHistoryPartOne: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne()
 

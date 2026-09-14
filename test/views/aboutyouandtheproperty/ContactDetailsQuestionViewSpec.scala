@@ -30,8 +30,6 @@ class ContactDetailsQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo
 
   override val form: Form[AnswersYesNo] = ContactDetailsQuestionForm.theForm
 
-  private val backLink: String = controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show().url
-
   private def createView: () => Html =
     () => contactDetailsQuestionView(form, Summary("99996010001"), false)(using fakeRequest, messages)
 
