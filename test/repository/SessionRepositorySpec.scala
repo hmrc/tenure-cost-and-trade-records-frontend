@@ -17,13 +17,11 @@
 package repository
 
 import models.Session
-import org.scalatest.Inside
-import repositories.{SensitiveSessionData, SessionData, SessionRepository}
-import test.TestObjects
+import repositories.{SensitiveSessionData, SessionRepository}
+import test.TCTRMongoSpec
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
-import uk.gov.hmrc.vo.unit.test.db.MongoDBAppSpec
 
-class SessionRepositorySpec extends MongoDBAppSpec[SensitiveSessionData, SessionRepository] with TestObjects with Inside:
+class SessionRepositorySpec extends TCTRMongoSpec[SensitiveSessionData, SessionRepository]:
 
   given headerCarrier: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("test-session-id")))
 
@@ -35,29 +33,25 @@ class SessionRepositorySpec extends MongoDBAppSpec[SensitiveSessionData, Session
     "start by saving or updating data" in {
       mongoRepository.start(baseFilled6010Session).futureValue
 
-      val returnedSessionData: SessionData = mongoRepository.findSession.futureValue // shouldBe session
+      val returnedSessionData = mongoRepository.findSession.futureValue
 
-      inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
-        data.referenceNumber shouldBe baseFilled6010Session.referenceNumber
-      }
+      returnedSessionData.data.referenceNumber shouldBe baseFilled6010Session.referenceNumber
     }
 
     "get data from current session" in {
       mongoRepository.start(baseFilled6010Session).futureValue
 
-      val returnedSessionData: Option[Session] = mongoRepository.get.futureValue
+      val returnedSessionDataOpt = mongoRepository.get.futureValue
 
-      inside(returnedSessionData) { case Some(session) =>
-        session.referenceNumber shouldBe referenceNumber
-      }
+      returnedSessionDataOpt.get.referenceNumber shouldBe referenceNumber
     }
 
     "remove data from current session" in {
       mongoRepository.start(baseFilled6010Session).futureValue
       mongoRepository.remove().futureValue
 
-      val returnedSessionData = mongoRepository.get.futureValue
+      val returnedSessionDataOpt = mongoRepository.get.futureValue
 
-      returnedSessionData shouldBe None
+      returnedSessionDataOpt shouldBe None
     }
   }

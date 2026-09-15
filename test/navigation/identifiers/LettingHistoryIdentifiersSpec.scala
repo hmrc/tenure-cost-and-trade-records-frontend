@@ -16,73 +16,92 @@
 
 package navigation.identifiers
 
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class LettingHistoryIdentifiersSpec extends TestBaseSpec:
+class LettingHistoryIdentifiersSpec extends BaseSpec:
 
-  "Letting history identifiers" when {
+  "Letting history page identifiers" should {
+    "be correct for the permanent residents page" in {
+      HasPermanentResidentsPageId.toString shouldBe "hasPermanentResidentsPage"
+    }
 
-    "Identifier for permanent residents page" in
-      assert(HasPermanentResidentsPageId.toString.equals("hasPermanentResidentsPage"))
+    "be correct for the resident details page" in {
+      ResidentDetailPageId.toString shouldBe "residentDetailPage"
+    }
 
-    "Identifier for resident details page" in
-      assert(ResidentDetailPageId.toString.equals("residentDetailPage"))
+    "be correct for the resident remove page" in {
+      ResidentRemovePageId.toString shouldBe "residentRemovePage"
+    }
 
-    "Identifier for resident remove page" in
-      assert(ResidentRemovePageId.toString.equals("residentRemovePage"))
+    "be correct for the resident list page" in {
+      ResidentListPageId.toString shouldBe "residentListPage"
+    }
 
-    "Identifier for resident list page" in
-      assert(ResidentListPageId.toString.equals("residentListPage"))
+    "be correct for the max number reached page" in {
+      MaxNumberReachedPageId.toString shouldBe "maxNumberReachedPage"
+    }
 
-    "Identifier for max number reached page" in
-      assert(MaxNumberReachedPageId.toString.equals("maxNumberReachedPage"))
+    "be correct for the has completed lettings page" in {
+      HasCompletedLettingsPageId.toString shouldBe "hasCompletedLettings"
+    }
 
-    "Identifier for has completed lettings page" in
-      assert(HasCompletedLettingsPageId.toString.equals("hasCompletedLettings"))
+    "be correct for the occupier detail page" in {
+      OccupierDetailPageId.toString shouldBe "occupierDetailPage"
+    }
 
-    "Identifier for occupier detail page" in
-      assert(OccupierDetailPageId.toString.equals("occupierDetailPage"))
+    "be correct for the rental period page" in {
+      RentalPeriodPageId.toString shouldBe "rentalPeriodPage"
+    }
 
-    "Identifier for rental period page" in
-      assert(RentalPeriodPageId.toString.equals("rentalPeriodPage"))
+    "be correct for the occupier remove page" in {
+      OccupierRemovePageId.toString shouldBe "occupierRemovePage"
+    }
 
-    "Identifier for occupier remove page" in
-      assert(OccupierRemovePageId.toString.equals("occupierRemovePage"))
+    "be correct for the occupier list page" in {
+      OccupierListPageId.toString shouldBe "occupierListPage"
+    }
 
-    "Identifier for occupier list page" in
-      assert(OccupierListPageId.toString.equals("occupierListPage"))
+    "be correct for the how many nights page" in {
+      HowManyNightsPageId.toString shouldBe "howManyNightsPage"
+    }
 
-    "Identifier for how many nights page" in
-      assert(HowManyNightsPageId.toString.equals("howManyNightsPage"))
+    "be correct for the has stopped letting page" in {
+      HasStoppedLettingPageId.toString shouldBe "hasStoppedLettingPage"
+    }
 
-    "Identifier for has stopped letting page" in
-      assert(HasStoppedLettingPageId.toString.equals("hasStoppedLettingPage"))
+    "be correct for the when was last let page" in {
+      WhenWasLastLetPageId.toString shouldBe "whenWasLastLetPage"
+    }
 
-    "Identifier for when was last let page" in
-      assert(WhenWasLastLetPageId.toString.equals("whenWasLastLetPage"))
+    "be correct for the is yearly available page" in {
+      IsYearlyAvailablePageId.toString shouldBe "isYearlyAvailablePage"
+    }
 
-    "Identifier for is yearly available page" in
-      assert(IsYearlyAvailablePageId.toString.equals("isYearlyAvailablePage"))
+    "be correct for the trading season length page" in {
+      TradingSeasonLengthPageId.toString shouldBe "tradingSeasonLengthPage"
+    }
 
-    "Identifier for trading season length page" in
-      assert(TradingSeasonLengthPageId.toString.equals("tradingSeasonLengthPage"))
+    "be correct for the has online advertising page" in {
+      HasOnlineAdvertisingPageId.toString shouldBe "hasOnlineAdvertisingPage"
+    }
 
-    "Identifier for has online advertising page" in
-      assert(HasOnlineAdvertisingPageId.toString.equals("hasOnlineAdvertisingPage"))
+    "be correct for the advertising details page" in {
+      AdvertisingDetailPageId.toString shouldBe "onlineAdvertisingDetailPage"
+    }
 
-    "Identifier for advertising detail page" in
-      assert(AdvertisingDetailPageId.toString.equals("onlineAdvertisingDetailPage"))
+    "be correct for the advertising list page" in {
+      AdvertisingListPageId.toString shouldBe "advertisingListPage"
+    }
 
-    "Identifier for advertising list page" in
-      assert(AdvertisingListPageId.toString.equals("advertisingListPage"))
+    "be correct for the advertising remove page" in {
+      AdvertisingRemovePageId.toString shouldBe "advertisingRemovePage"
+    }
 
-    "Identifier for advertising remove page" in
-      assert(AdvertisingRemovePageId.toString.equals("advertisingRemovePage"))
+    "be correct for the CYA page" in {
+      CheckYourAnswersPageId.toString shouldBe "checkYourAnswers"
+    }
 
-    "Identifier for check your answers page" in
-      assert(CheckYourAnswersPageId.toString.equals("checkYourAnswers"))
-
-    "Letting history identifiers correctly convert strings" in {
+    "Letting history identifiers correctly convert from strings" in {
       "hasPermanentResidentsPage".asPageIdentifier shouldBe Some(HasPermanentResidentsPageId)
       "residentDetailPage".asPageIdentifier        shouldBe Some(ResidentDetailPageId)
       "residentRemovePage".asPageIdentifier        shouldBe Some(ResidentRemovePageId)
@@ -104,5 +123,4 @@ class LettingHistoryIdentifiersSpec extends TestBaseSpec:
       "advertisingRemovePage".asPageIdentifier     shouldBe Some(AdvertisingRemovePageId)
       "checkYourAnswers".asPageIdentifier          shouldBe Some(CheckYourAnswersPageId)
     }
-
   }

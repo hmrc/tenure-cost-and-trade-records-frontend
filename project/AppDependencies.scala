@@ -6,7 +6,7 @@ object AppDependencies {
   private val playFrontendVersion           = "13.13.0"
   private val voServiceVersion              = "0.12.0"
   private val playConditionalMappingVersion = "3.5.0"
-  private val mongoVersion                  = "2.13.0"
+  private val mongoVersion                  = "2.14.0"
   private val cryptoJsonVersion             = "8.4.0"
 
   // Test dependencies

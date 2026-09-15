@@ -17,10 +17,9 @@
 package util
 
 import controllers.aboutyouandtheproperty
-import test.{TCTRAppSpec, TestObjects}
+import test.TCTRAppSpec
 import uk.gov.hmrc.govukfrontend.views.Aliases.{Key, Text}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, SummaryListRow, Value}
-import uk.gov.hmrc.vo.unit.test.BaseAppSpec
 
 /**
   * @author Yuriy Tumakha

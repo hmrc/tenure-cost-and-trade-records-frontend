@@ -16,235 +16,308 @@
 
 package navigation.identifiers
 
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AboutTheTradingHistoryIdentifiersSpec extends TestBaseSpec:
+class AboutTheTradingHistoryIdentifiersSpec extends BaseSpec:
 
-  "About your trading history identifiers" when {
+  "Trading history page identifiers" should {
+    "be correct for the about your trading history page" in {
+      AboutYourTradingHistoryPageId.toString shouldBe "aboutYourTradingHistoryPage"
+    }
 
-    "Identifier for about your trading history page" in
-      assert(AboutYourTradingHistoryPageId.toString.equals("aboutYourTradingHistoryPage"))
+    "be correct for the what will you need page" in {
+      WhatYouWillNeedPageId.toString shouldBe "whatYouWillNeedPage"
+    }
 
-    "Identifier for what will you need page" in
-      assert(WhatYouWillNeedPageId.toString.equals("whatYouWillNeedPage"))
+    "be correct for the financial year end page" in {
+      FinancialYearEndPageId.toString shouldBe "financialYearEndPage"
+    }
 
-    "Identifier for financial year end page" in
-      assert(FinancialYearEndPageId.toString.equals("financialYearEndPage"))
+    "be correct for the financial year end dates page" in {
+      FinancialYearEndDatesPageId.toString shouldBe "financialYearEndDatesPage"
+    }
 
-    "Identifier for financial year end dates page" in
-      assert(FinancialYearEndDatesPageId.toString.equals("financialYearEndDatesPage"))
+    "be correct for the accounting info CYA page" in {
+      CheckYourAnswersAccountingInfoPageId.toString shouldBe "checkYourAnswersAccountingInfoPage"
+    }
 
-    "Identifier for financial year page page" in
-      assert(CheckYourAnswersAccountingInfoPageId.toString.equals("checkYourAnswersAccountingInfoPage"))
+    "be correct for the turnover page" in {
+      TurnoverPageId.toString shouldBe "turnoverPage"
+    }
 
-    "Identifier for turnover page" in
-      assert(TurnoverPageId.toString.equals("turnoverPage"))
+    "be correct for the cost of sales page" in {
+      CostOfSalesId.toString shouldBe "costOfSales"
+    }
 
-    "Identifier for cost of sales page" in
-      assert(CostOfSalesId.toString.equals("costOfSales"))
+    "be correct for the total payroll cost page" in {
+      TotalPayrollCostId.toString shouldBe "totalPayrollCost"
+    }
 
-    "Identifier for total payroll page" in
-      assert(TotalPayrollCostId.toString.equals("totalPayrollCost"))
+    "be correct for the variable operating expenses page" in {
+      VariableOperatingExpensesId.toString shouldBe "variableOperatingExpenses"
+    }
 
-    "Identifier for about variable operating expenses page" in
-      assert(VariableOperatingExpensesId.toString.equals("variableOperatingExpenses"))
+    "be correct for the fixed operating expenses page" in {
+      FixedOperatingExpensesId.toString shouldBe "fixedOperatingExpenses"
+    }
 
-    "Identifier for fixed operating expenses page" in
-      assert(FixedOperatingExpensesId.toString.equals("fixedOperatingExpenses"))
+    "be correct for the other costs page" in {
+      OtherCostsId.toString shouldBe "otherCosts"
+    }
 
-    "Identifier for other costs page" in
-      assert(OtherCostsId.toString.equals("otherCosts"))
+    "be correct for the income expenditure summary page" in {
+      IncomeExpenditureSummaryId.toString shouldBe "incomeExpenditureSummary"
+    }
 
-    "Identifier for income expenditure summary page" in
-      assert(IncomeExpenditureSummaryId.toString.equals("incomeExpenditureSummary"))
+    "be correct for the income expenditure summary page for 6076" in {
+      IncomeExpenditureSummary6076Id.toString shouldBe "incomeExpenditureSummary6076"
+    }
 
-    "Identifier for income expenditure summary page fot 6076" in
-      assert(IncomeExpenditureSummary6076Id.toString.equals("incomeExpenditureSummary6076"))
+    "be correct for the unusual circumstances page" in {
+      UnusualCircumstancesId.toString shouldBe "unusualCircumstances"
+    }
 
-    "Identifier for unusual circumstances page" in
-      assert(UnusualCircumstancesId.toString.equals("unusualCircumstances"))
+    "be correct for the Electric Vehicle Charging Points page" in {
+      ElectricVehicleChargingPointsId.toString shouldBe "electricVehicleChargingPoints"
+    }
 
-    "Identifier for electric Vehicle Charging Points page" in
-      assert(ElectricVehicleChargingPointsId.toString.equals("electricVehicleChargingPoints"))
+    "be correct for the Electricity Generated page" in {
+      ElectricityGeneratedId.toString shouldBe "electricityGeneratedPage"
+    }
 
-    "Identifier for Electricity Generated  page" in
-      assert(ElectricityGeneratedId.toString.equals("electricityGeneratedPage"))
+    "be correct for the CostOfSales6076 page" in {
+      CostOfSales6076Id.toString shouldBe "costOfSales6076Page"
+    }
 
-    "Identifier for CostOfSales6076 page" in
-      assert(CostOfSales6076Id.toString.equals("costOfSales6076Page"))
+    "be correct for the CostOfSalesIntermittent6076 page" in {
+      CostOfSales6076IntermittentId.toString shouldBe "costOfSales6076IntermittentPage"
+    }
 
-    "Identifier for CostOfSalesIntermittent6076 page" in
-      assert(CostOfSales6076IntermittentId.toString.equals("costOfSales6076IntermittentPage"))
+    "be correct for the StaffCosts page" in {
+      StaffCostsId.toString shouldBe "staffCostsPage"
+    }
 
-    "Identifier for StaffCosts page" in
-      assert(StaffCostsId.toString.equals("staffCostsPage"))
+    "be correct for the GrossReceiptsForBaseLoad page" in {
+      GrossReceiptsForBaseLoadId.toString shouldBe "grossReceiptsForBaseLoadPage"
+    }
 
-    "Identifier for GrossReceiptsForBaseLoad page" in
-      assert(GrossReceiptsForBaseLoadId.toString.equals("grossReceiptsForBaseLoadPage"))
+    "be correct for the PremisesCosts page" in {
+      PremisesCostsId.toString shouldBe "premisesCostsPage"
+    }
 
-    "Identifier for PremisesCosts page" in
-      assert(PremisesCostsId.toString.equals("premisesCostsPage"))
+    "be correct for the Tenting Pitches On Site page" in {
+      TentingPitchesOnSiteId.toString shouldBe "tentingPitchesOnSitePage"
+    }
 
-    "Identifier for tenting Pitches On Site page" in
-      assert(TentingPitchesOnSiteId.toString.equals("tentingPitchesOnSitePage"))
+    "be correct for the pitches for caravans page" in {
+      PitchesForCaravansId.toString shouldBe "pitchesForCaravansPage"
+    }
 
-    "Identifier for pitches for caravans page" in
-      assert(PitchesForCaravansId.toString.equals("pitchesForCaravansPage"))
+    "be correct for the pitches for glamping page" in {
+      PitchesForGlampingId.toString shouldBe "pitchesForGlampingPage"
+    }
 
-    "Identifier for pitches for glamping  page" in
-      assert(PitchesForGlampingId.toString.equals("pitchesForGlampingPage"))
+    "be correct for the rally areas page" in {
+      RallyAreasId.toString shouldBe "rallyAreasPage"
+    }
 
-    "Identifier for rally areas  page" in
-      assert(RallyAreasId.toString.equals("rallyAreasPage"))
+    "be correct for the tenting pitches total page" in {
+      TentingPitchesTotalId.toString shouldBe "tentingPitchesTotalPage"
+    }
 
-    "Identifier for tenting Pitches  total" in
-      assert(TentingPitchesTotalId.toString.equals("tentingPitchesTotalPage"))
+    "be correct for the tenting pitches certificated page" in {
+      TentingPitchesCertificatedId.toString shouldBe "tentingPitchesCertificatedPage"
+    }
 
-    "Identifier for tenting Pitches  certificated" in
-      assert(TentingPitchesCertificatedId.toString.equals("tentingPitchesCertificatedPage"))
+    "be correct for the additional activities on site page" in {
+      AdditionalActivitiesOnSiteId.toString shouldBe "additionalActivitiesOnSitePage"
+    }
 
-    "Identifier for additional activities on site" in
-      assert(AdditionalActivitiesOnSiteId.toString.equals("additionalActivitiesOnSitePage"))
+    "be correct for the additional activities shops page" in {
+      AdditionalShopsId.toString shouldBe "additionalShopsPage"
+    }
 
-    "Identifier for additional activities shops" in
-      assert(AdditionalShopsId.toString.equals("additionalShopsPage"))
+    "be correct for the additional activities catering page" in {
+      AdditionalCateringId.toString shouldBe "additionalCateringPage"
+    }
 
-    "Identifier for additional activities catering" in
-      assert(AdditionalCateringId.toString.equals("additionalCateringPage"))
+    "be correct for the additional activities bars page" in {
+      AdditionalBarsClubsId.toString shouldBe "additionalBarsClubsPage"
+    }
 
-    "Identifier for additional activities bars" in
-      assert(AdditionalBarsClubsId.toString.equals("additionalBarsClubsPage"))
+    "be correct for the additional amusements page" in {
+      AdditionalAmusementsId.toString shouldBe "additionalAmusementsPage"
+    }
 
-    "Identifier for additional amusements" in
-      assert(AdditionalAmusementsId.toString.equals("additionalAmusementsPage"))
+    "be correct for the additional misc page" in {
+      AdditionalMiscId.toString shouldBe "additionalMiscPage"
+    }
 
-    "Identifier for additional misc" in
-      assert(AdditionalMiscId.toString.equals("additionalMiscPage"))
+    "be correct for the gross receipts holiday units page" in {
+      GrossReceiptsHolidayUnitsId.toString shouldBe "grossReceiptsHolidayUnitsPage"
+    }
 
-    "Identifier for gross receipts holiday unit page" in
-      assert(GrossReceiptsHolidayUnitsId.toString.equals("grossReceiptsHolidayUnitsPage"))
+    "be correct for the gross receipts sub let units page" in {
+      GrossReceiptsSubLetUnitsId.toString shouldBe "grossReceiptsSubLetUnitsPage"
+    }
 
-    "Identifier for gross receipts sub let units page " in
-      assert(GrossReceiptsSubLetUnitsId.toString.equals("grossReceiptsSubLetUnitsPage"))
+    "be correct for the single caravans age categories page" in {
+      SingleCaravansAgeCategoriesId.toString shouldBe "singleCaravansAgeCategoriesPage"
+    }
 
-    "Identifier for single caravan age categories page  " in
-      assert(SingleCaravansAgeCategoriesId.toString.equals("singleCaravansAgeCategoriesPage"))
+    "be correct for the single caravans owned by operator page" in {
+      SingleCaravansOwnedByOperatorId.toString shouldBe "singleCaravansOwnedByOperatorPage"
+    }
 
-    "Identifier for single caravan owned by operator page  " in
-      assert(SingleCaravansOwnedByOperatorId.toString.equals("singleCaravansOwnedByOperatorPage"))
+    "be correct for the single caravans sublet page" in {
+      SingleCaravansSubletId.toString shouldBe "singleCaravansSubletPage"
+    }
 
-    "Identifier for single caravan sublet page  " in
-      assert(SingleCaravansSubletId.toString.equals("singleCaravansSubletPage"))
+    "be correct for the total site capacity page" in {
+      TotalSiteCapacityId.toString shouldBe "TotalSiteCapacityPage"
+    }
 
-    "Identifier for total site capacity page  " in
-      assert(TotalSiteCapacityId.toString.equals("TotalSiteCapacityPage"))
+    "be correct for the twin caravans owned by operator page" in {
+      TwinCaravansOwnedByOperatorId.toString shouldBe "twinCaravansOwnedByOperatorPage"
+    }
 
-    "Identifier for twin caravan owned by operator page  " in
-      assert(TwinCaravansOwnedByOperatorId.toString.equals("twinCaravansOwnedByOperatorPage"))
+    "be correct for the twin caravans sublet page" in {
+      TwinCaravansSubletId.toString shouldBe "twinCaravansSubletPage"
+    }
 
-    "Identifier for twin caravan sublet page  " in
-      assert(TwinCaravansSubletId.toString.equals("twinCaravansSubletPage"))
+    "be correct for the tenting pitches CYA page" in {
+      CheckYourAnswersTentingPitchesId.toString shouldBe "checkYourAnswersTentingPitchesPage"
+    }
 
-    "Identifier for Check Your Answers Tenting Pitches page" in
-      assert(CheckYourAnswersTentingPitchesId.toString.equals("checkYourAnswersTentingPitchesPage"))
+    "be correct for the additional activities CYA page" in {
+      CheckYourAnswersAdditionalActivitiesId.toString shouldBe "checkYourAnswersAdditionalActivitiesPage"
+    }
 
-    "Identifier for Check Your Answers Additional Activities page" in
-      assert(CheckYourAnswersAdditionalActivitiesId.toString.equals("checkYourAnswersAdditionalActivitiesPage"))
+    "be correct for the trading history CYA page" in {
+      CheckYourAnswersAboutTheTradingHistoryId.toString shouldBe "checkYourAnswersAboutTheTradingHistory"
+    }
 
-    "Identifier for check your answers about the trading history page" in
-      assert(CheckYourAnswersAboutTheTradingHistoryId.toString.equals("checkYourAnswersAboutTheTradingHistory"))
+    "be correct for the change occupation and accounting page" in {
+      ChangeOccupationAndAccountingId.toString shouldBe "changeOccupationAndAccountingPage"
+    }
 
-    "Identifier for change occupation and accounting page" in
-      assert(ChangeOccupationAndAccountingId.toString.equals("changeOccupationAndAccountingPage"))
+    "be correct for the VAT registered page" in {
+      AreYouVATRegisteredId.toString shouldBe "areYouVATRegisteredPage"
+    }
 
-    "Identifier for vat registered page" in
-      assert(AreYouVATRegisteredId.toString.equals("areYouVATRegisteredPage"))
+    "be correct for the total fuel sold page" in {
+      TotalFuelSoldId.toString shouldBe "totalFuelSold"
+    }
 
-    "Identifier for total fuel sold page" in
-      assert(TotalFuelSoldId.toString.equals("totalFuelSold"))
+    "be correct for the bunkered fuel question page" in {
+      BunkeredFuelQuestionId.toString shouldBe "bunkeredFuelQuestionPage"
+    }
 
-    "Identifier for bunkered fuel question" in
-      assert(BunkeredFuelQuestionId.toString.equals("bunkeredFuelQuestionPage"))
+    "be correct for the bunkered fuel sold page" in {
+      BunkeredFuelSoldId.toString shouldBe "bunkeredFuelSoldPage"
+    }
 
-    "Identifier for bunkered fuel sold page" in
-      assert(BunkeredFuelSoldId.toString.equals("bunkeredFuelSoldPage"))
+    "be correct for the customer credit accounts page" in {
+      CustomerCreditAccountsId.toString shouldBe "customerCreditAccountsPage"
+    }
 
-    "Identifier for customer credit accounts page" in
-      assert(CustomerCreditAccountsId.toString.equals("customerCreditAccountsPage"))
+    "be correct for the percentage from fuel cards page" in {
+      PercentageFromFuelCardsId.toString shouldBe "percentageFromFuelCardsPage"
+    }
 
-    "Identifier for percentage from fuel cards page" in
-      assert(PercentageFromFuelCardsId.toString.equals("percentageFromFuelCardsPage"))
+    "be correct for the add bunker fuel card page" in {
+      AddAnotherBunkerFuelCardsDetailsId.toString shouldBe "addAnotherBunkerFuelCardsDetailsPage"
+    }
 
-    "Identifier for add bunker fuel cards page" in
-      assert(AddAnotherBunkerFuelCardsDetailsId.toString.equals("addAnotherBunkerFuelCardsDetailsPage"))
+    "be correct for the accept low margin fuel card page" in {
+      AcceptLowMarginFuelCardsId.toString shouldBe "acceptLowMarginFuelCardsPage"
+    }
 
-    "Identifier for accept low margin fuel cards page" in
-      assert(AcceptLowMarginFuelCardsId.toString.equals("acceptLowMarginFuelCardsPage"))
+    "be correct for the AccommodationUnit page" in {
+      AccommodationUnitPageId.toString shouldBe "accommodationUnitPage"
+    }
 
-    "Identifier for AccommodationUnit page" in
-      assert(AccommodationUnitPageId.toString.equals("accommodationUnitPage"))
+    "be correct for the AvailableRooms page" in {
+      AvailableRoomsPageId.toString shouldBe "availableRoomsPage"
+    }
 
-    "Identifier for AvailableRooms page" in
-      assert(AvailableRoomsPageId.toString.equals("availableRoomsPage"))
+    "be correct for the add low margin fuel card page" in {
+      AddAnotherLowMarginFuelCardsDetailsId.toString shouldBe "addAnotherLowMarginFuelCardsDetailsPage"
+    }
 
-    "Identifier for add lm fuel cards page" in
-      assert(AddAnotherLowMarginFuelCardsDetailsId.toString.equals("addAnotherLowMarginFuelCardsDetailsPage"))
+    "be correct for the low margin fuel cards page" in {
+      LowMarginFuelCardsDetailsId.toString shouldBe "lowMarginFuelCardsDetailsPage"
+    }
 
-    "Identifier for lm fuel cards page" in
-      assert(LowMarginFuelCardsDetailsId.toString.equals("lowMarginFuelCardsDetailsPage"))
+    "be correct for the bunker fuel card details page" in {
+      BunkerFuelCardsDetailsId.toString shouldBe "bunkerFuelCardsDetailsPage"
+    }
 
-    "Identifier for bunker fuel card details page" in
-      assert(BunkerFuelCardsDetailsId.toString.equals("bunkerFuelCardsDetailsPage"))
+    "be correct for the other holiday accommodation CYA page" in {
+      CheckYourAnswersOtherHolidayAccommodationId.toString shouldBe "checkYourAnswersOtherHolidayAccommodation"
+    }
 
-    "Identifier for other CYA holiday accommodation details page" in
-      assert(CheckYourAnswersOtherHolidayAccommodationId.toString.equals("checkYourAnswersOtherHolidayAccommodation"))
+    "be correct for the Gross Receipts Caravan Fleet Hire page" in {
+      GrossReceiptsCaravanFleetHireId.toString shouldBe "grossReceiptsCaravanFleetHirePage"
+    }
 
-    "Identifier for Gross Receipts Caravan Fleet Hire page" in
-      assert(GrossReceiptsCaravanFleetHireId.toString.equals("grossReceiptsCaravanFleetHirePage"))
+    "be correct for the Gross Receipts Excluding VAT page" in {
+      GrossReceiptsExcludingVatId.toString shouldBe "grossReceiptsExcludingVatPage"
+    }
 
-    "Identifier for Gross Receipts Excluding Vat  page" in
-      assert(GrossReceiptsExcludingVatId.toString.equals("grossReceiptsExcludingVatPage"))
+    "be correct for the Head Office Expenses page" in {
+      HeadOfficeExpensesId.toString shouldBe "headOfficeExpensesPage"
+    }
 
-    "Identifier for Head Office Expenses  page" in
-      assert(HeadOfficeExpensesId.toString.equals("headOfficeExpensesPage"))
+    "be correct for the Operational Expenses page" in {
+      OperationalExpensesId.toString shouldBe "operationalExpensesPage"
+    }
 
-    "Identifier for   Operational Expenses  page" in
-      assert(OperationalExpensesId.toString.equals("operationalExpensesPage"))
+    "be correct for the Other Holiday Accommodation page" in {
+      OtherHolidayAccommodationId.toString shouldBe "otherHolidayAccommodationPage"
+    }
 
-    "Identifier for Other Holiday Accommodation  page" in
-      assert(OtherHolidayAccommodationId.toString.equals("otherHolidayAccommodationPage"))
+    "be correct for the Other Income page" in {
+      OtherIncomeId.toString shouldBe "otherIncomePage"
+    }
 
-    "Identifier for  Other Income  page" in
-      assert(OtherIncomeId.toString.equals("otherIncomePage"))
+    "be correct for the Static Caravans page" in {
+      StaticCaravansId.toString shouldBe "staticCaravansPage"
+    }
 
-    "Identifier for  Static Caravans  page" in
-      assert(StaticCaravansId.toString.equals("staticCaravansPage"))
+    "be correct for the Twin Caravans Age Categories page" in {
+      TwinCaravansAgeCategoriesId.toString shouldBe "twinCaravansAgeCategoriesPage"
+    }
 
-    "Identifier for Twin Caravans  page" in
-      assert(TwinCaravansAgeCategoriesId.toString.equals("twinCaravansAgeCategoriesPage"))
+    "be correct for the Caravans Total Site Capacity page" in {
+      CaravansTotalSiteCapacityId.toString shouldBe "caravansTotalSiteCapacityPage"
+    }
 
-    "Identifier for caravansTotalSiteCapacityPage" in
-      assert(CaravansTotalSiteCapacityId.toString.equals("caravansTotalSiteCapacityPage"))
+    "be correct for the Caravans Per Service page" in {
+      CaravansPerServiceId.toString shouldBe "caravansPerServicePage"
+    }
 
-    "Identifier for caravansPerServicePage" in
-      assert(CaravansPerServiceId.toString.equals("caravansPerServicePage"))
+    "be correct for the Caravans Annual Pitch Fee page" in {
+      CaravansAnnualPitchFeeId.toString shouldBe "caravansAnnualPitchFeePage"
+    }
 
-    "Identifier for caravansAnnualPitchFeePage" in
-      assert(CaravansAnnualPitchFeeId.toString.equals("caravansAnnualPitchFeePage"))
+    "be correct for the Income6048 page" in {
+      Income6048Id.toString shouldBe "income6048Page"
+    }
 
-    "Identifier for income6048Page" in
-      assert(Income6048Id.toString.equals("income6048Page"))
+    "be correct for the fixed costs page" in {
+      FixedCosts6048Id.toString shouldBe "fixedCostsPage"
+    }
 
-    "Identifier for fixedCostsPage" in
-      assert(FixedCosts6048Id.toString.equals("fixedCostsPage"))
+    "be correct for the accounting costs page" in {
+      AccountingCosts6048Id.toString shouldBe "accountingCostsPage"
+    }
 
-    "Identifier for accountingCostsPage" in
-      assert(AccountingCosts6048Id.toString.equals("accountingCostsPage"))
+    "be correct for the administrative costs page" in {
+      AdministrativeCosts6048Id.toString shouldBe "administrativeCostsPage"
+    }
 
-    "Identifier for administrativeCostsPage" in
-      assert(AdministrativeCosts6048Id.toString.equals("administrativeCostsPage"))
-
-    "Identifier for operationalCostsPage" in
-      assert(OperationalCosts6048Id.toString.equals("operationalCostsPage"))
-
+    "be correct for the operational costs page" in {
+      OperationalCosts6048Id.toString shouldBe "operationalCostsPage"
+    }
   }

@@ -16,58 +16,68 @@
 
 package navigation.identifiers
 
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AboutFranchisesOrLettingsIdentifiersSpec extends TestBaseSpec:
+class AboutFranchisesOrLettingsIdentifiersSpec extends BaseSpec:
 
-  "About franchise or lettings identifiers" when {
+  "Franchise or lettings page identifiers" should {
+    "be correct for the franchise or lettings page" in {
+      FranchiseOrLettingsTiedToPropertyId.toString shouldBe "franchiseOrLettingsTiedToPropertyPage"
+    }
 
-    "Identifier for franchise or lettings page" in
-      assert(FranchiseOrLettingsTiedToPropertyId.toString.equals("franchiseOrLettingsTiedToPropertyPage"))
+    "be correct for the rent received from page" in {
+      RentReceivedFromPageId.toString shouldBe "rentReceivedFromPage"
+    }
 
-    "Identifier for rent received from page" in
-      assert(RentReceivedFromPageId.toString.equals("rentReceivedFromPage"))
+    "be correct for the catering operations business page" in {
+      CateringOperationBusinessPageId.toString shouldBe "cateringOperationBusinessPage"
+    }
 
-    "Identifier for catering operations business page" in
-      assert(CateringOperationBusinessPageId.toString.equals("cateringOperationBusinessPage"))
+    "be correct for the fee received page" in {
+      FeeReceivedPageId.toString shouldBe "feeReceivedPage"
+    }
 
-    "Identifier for fee received page" in
-      assert(FeeReceivedPageId.toString.equals("feeReceivedPage"))
+    "be correct for the concession type details page" in {
+      ConcessionTypeDetailsId.toString shouldBe "concessionTypeDetailsPage"
+    }
 
-    "Identifier for concession type  details received page" in
-      assert(ConcessionTypeDetailsId.toString.equals("concessionTypeDetailsPage"))
+    "be correct for the concession type fees page" in {
+      ConcessionTypeFeesId.toString shouldBe "concessionTypeFeesPage"
+    }
 
-    "Identifier for concession type  fee received page" in
-      assert(ConcessionTypeFeesId.toString.equals("concessionTypeFeesPage"))
+    "be correct for the franchise type details page" in {
+      FranchiseTypeDetailsId.toString shouldBe "franchiseTypeDetailsPage"
+    }
 
-    "Identifier for franchise type  details page" in
-      assert(FranchiseTypeDetailsId.toString.equals("franchiseTypeDetailsPage"))
+    "be correct for the letting type details page" in {
+      LettingTypeDetailsId.toString shouldBe "lettingTypeDetailsPage"
+    }
 
-    "Identifier for letting type  details page" in
-      assert(LettingTypeDetailsId.toString.equals("lettingTypeDetailsPage"))
+    "be correct for the rental income page" in {
+      RentalIncomeRentId.toString shouldBe "rentalIncomePage"
+    }
 
-    "Identifier for letting type  rent page" in
-      assert(RentalIncomeRentId.toString.equals("rentalIncomePage"))
+    "be correct for the rental income included page" in {
+      RentalIncomeIncludedId.toString shouldBe "rentalIncomeIncludedPage"
+    }
 
-    "Identifier for letting type included page" in
-      assert(RentalIncomeIncludedId.toString.equals("rentalIncomeIncludedPage"))
+    "be correct for the calculating the rent for page" in {
+      CalculatingTheRentForPageId.toString shouldBe "calculatingTheRentForPage"
+    }
 
-    "Identifier for calculating the rent for included page" in
-      assert(CalculatingTheRentForPageId.toString.equals("calculatingTheRentForPage"))
+    "be correct for the add another concession page" in {
+      AddAnotherConcessionPageId.toString shouldBe "addAnotherConcessionRoutingPage"
+    }
 
-    "Identifier for add another concession page" in
-      assert(AddAnotherConcessionPageId.toString.equals("addAnotherConcessionRoutingPage"))
+    "be correct for the max number of lettings reached catering page" in {
+      MaxOfLettingsReachedCateringId.toString shouldBe "MaxOfLettingsReachedCateringPage"
+    }
 
-    "Identifier for max number of lettings reached page" in
-      assert(MaxOfLettingsReachedCateringId.toString.equals("MaxOfLettingsReachedCateringPage"))
+    "be correct for the max number of lettings reached current page" in {
+      MaxOfLettingsReachedCurrentId.toString shouldBe "MaxOfLettingsReachedCurrentPage"
+    }
 
-    "Identifier for max number of lettings page" in
-      assert(MaxOfLettingsReachedCurrentId.toString.equals("MaxOfLettingsReachedCurrentPage"))
-
-    "Identifier for franchise type details page" in
-      assert(FranchiseTypeDetailsId.toString.equals("franchiseTypeDetailsPage"))
-
-    "Identifier for cya franchise or lettings page" in
-      assert(CheckYourAnswersAboutFranchiseOrLettingsId.toString.equals("checkYourAnswersAboutFranchiseOrLettingsPage"))
-
+    "be correct for the franchise or lettings CYA page" in {
+      CheckYourAnswersAboutFranchiseOrLettingsId.toString shouldBe "checkYourAnswersAboutFranchiseOrLettingsPage"
+    }
   }
