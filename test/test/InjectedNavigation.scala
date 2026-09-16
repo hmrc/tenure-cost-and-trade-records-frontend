@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package utils
+package test
 
 import navigation.*
+import navigation.identifiers.Identifier
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.{FakeRequest, Injecting}
 
-trait FakeNavigation:
+trait InjectedNavigation:
 
   this: Injecting =>
+
+  case object UnknownIdentifier extends Identifier
+
+  given toOpt[A]: Conversion[A, Option[A]] = Some(_)
 
   implicit def implicitRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 

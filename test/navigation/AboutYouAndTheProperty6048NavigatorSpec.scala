@@ -16,133 +16,118 @@
 
 package navigation
 
-import connectors.Audit
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo, CompletedLettings, LettingAvailability}
 import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
 import java.time.LocalDate
-import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
 
-class AboutYouAndTheProperty6048NavigatorSpec extends TestBaseSpec:
-
-  private val audit: Audit = mock[Audit]
-
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  private val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
+class AboutYouAndTheProperty6048NavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
   "About you and the property navigator for 6048" when {
-
-    "handling no answers" should {
-
-      "navigate to CommercialLettingQuestionController after completing Contact Details Question with no" in {
+    "handling NO answers" should {
+      "redirect to CommercialLettingQuestionController after completing Contact Details Question with no" in {
         val answers = baseFilled6048Session.copy(
-          aboutYouAndTheProperty = Some(AboutYouAndTheProperty(altDetailsQuestion = Some(AnswerNo)))
+          aboutYouAndTheProperty = AboutYouAndTheProperty(altDetailsQuestion = AnswerNo)
         )
-        navigator
+        aboutYouAndThePropertyNavigator
           .nextPage(ContactDetailsQuestionId, answers)
           .apply(answers) shouldBe
           controllers.aboutyouandtheproperty.routes.CommercialLettingQuestionController.show()
       }
 
-      "navigate to CheckYourAnswersAboutThePropertyController after completing PartsUnavailable with no" in {
+      "redirect to CheckYourAnswersAboutThePropertyController after completing PartsUnavailable with no" in {
         val answers = baseFilled6048Session.copy(
-          aboutYouAndThePropertyPartTwo = Some(AboutYouAndThePropertyPartTwo(partsUnavailable = Some(AnswerNo)))
+          aboutYouAndThePropertyPartTwo = AboutYouAndThePropertyPartTwo(partsUnavailable = AnswerNo)
         )
-        navigator
+        aboutYouAndThePropertyNavigator
           .nextPage(PartsUnavailableId, answers)
           .apply(answers) shouldBe
           controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
       }
     }
 
-    "handling yes answers" should {
-      "navigate to CommercialLettingAvailabilityController after completing CommercialLettingQuestion for English property" in {
-        navigator
+    "handling YES answers" should {
+      "redirect to CommercialLettingAvailabilityController after completing CommercialLettingQuestion for English property" in {
+        aboutYouAndThePropertyNavigator
           .nextPage(CommercialLettingQuestionId, baseFilled6048Session)
           .apply(baseFilled6048Session) shouldBe
           controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show()
       }
 
-      "navigate to CommercialLettingAvailabilityWelshController after completing CommercialLettingQuestion for Welsh property" in {
-        navigator
+      "redirect to CommercialLettingAvailabilityWelshController after completing CommercialLettingQuestion for Welsh property" in {
+        aboutYouAndThePropertyNavigator
           .nextPage(CommercialLettingQuestionId, baseFilled6048WelshSession)
           .apply(baseFilled6048WelshSession) shouldBe
           controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityWelshController.show()
       }
 
-      "navigate to CompletedCommercialLettingsController after completing CommercialLettingAvailability for English property" in {
-        navigator
+      "redirect to CompletedCommercialLettingsController after completing CommercialLettingAvailability for English property" in {
+        aboutYouAndThePropertyNavigator
           .nextPage(CommercialLettingAvailabilityId, baseFilled6048Session)
           .apply(baseFilled6048Session) shouldBe
           controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show()
       }
 
-      "navigate to CompletedCommercialLettingsWelshController after completing CommercialLettingAvailabilityWelsh for Welsh property" in {
-        navigator
+      "redirect to CompletedCommercialLettingsWelshController after completing CommercialLettingAvailabilityWelsh for Welsh property" in {
+        aboutYouAndThePropertyNavigator
           .nextPage(CommercialLettingAvailabilityWelshId, baseFilled6048WelshSession)
           .apply(baseFilled6048WelshSession) shouldBe
           controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show()
       }
 
-      "navigate to PartsUnavailableController after completing CompletedCommercialLettings for English property" in {
+      "redirect to PartsUnavailableController after completing CompletedCommercialLettings for English property" in {
         val answers = baseFilled6048Session.copy(
-          aboutYouAndThePropertyPartTwo = Some(
+          aboutYouAndThePropertyPartTwo =
             AboutYouAndThePropertyPartTwo(
-              commercialLetAvailability = Some(200),
-              completedCommercialLettings = Some(200)
+              commercialLetAvailability = 200,
+              completedCommercialLettings = 200
             )
-          )
         )
-        navigator
+        aboutYouAndThePropertyNavigator
           .nextPage(CompletedCommercialLettingsId, answers)
           .apply(answers) shouldBe
           controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
       }
 
-      "navigate to PartsUnavailableController after completing CompletedCommercialLettingsWelsh for Welsh property" in {
+      "redirect to PartsUnavailableController after completing CompletedCommercialLettingsWelsh for Welsh property" in {
         val answers = baseFilled6048Session.copy(
-          aboutYouAndThePropertyPartTwo = Some(
+          aboutYouAndThePropertyPartTwo =
             AboutYouAndThePropertyPartTwo(
-              commercialLetAvailabilityWelsh = Some(
+              commercialLetAvailabilityWelsh =
                 Seq(
                   LettingAvailability(LocalDate.of(2024, 3, 31), 100),
                   LettingAvailability(LocalDate.of(2023, 3, 31), 200),
                   LettingAvailability(LocalDate.of(2022, 3, 31), 150)
-                )
-              ),
-              completedCommercialLettingsWelsh = Some(
+                ),
+              completedCommercialLettingsWelsh =
                 Seq(
                   CompletedLettings(LocalDate.of(2024, 3, 31), 100),
                   CompletedLettings(LocalDate.of(2023, 3, 31), 200),
                   CompletedLettings(LocalDate.of(2022, 3, 31), 150)
                 )
-              )
             )
-          )
         )
-        navigator
+        aboutYouAndThePropertyNavigator
           .nextPage(CompletedCommercialLettingsWelshId, answers)
           .apply(answers) shouldBe
           controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show()
       }
 
-      "navigate to OccupiersDetailsController after completing PartsUnavailable with yes" in {
+      "redirect to OccupiersDetailsController after completing PartsUnavailable with yes" in {
         val answers = baseFilled6048Session.copy(
-          aboutYouAndThePropertyPartTwo = Some(AboutYouAndThePropertyPartTwo(partsUnavailable = Some(AnswerYes)))
+          aboutYouAndThePropertyPartTwo = AboutYouAndThePropertyPartTwo(partsUnavailable = AnswerYes)
         )
-        navigator
+        aboutYouAndThePropertyNavigator
           .nextPage(PartsUnavailableId, answers)
           .apply(answers) shouldBe
           controllers.aboutyouandtheproperty.routes.OccupiersDetailsController.show()
       }
 
-      "navigate to OccupiersDetailsListController after completing OccupiersDetails" in {
-        navigator
+      "redirect to OccupiersDetailsListController after completing OccupiersDetails" in {
+        aboutYouAndThePropertyNavigator
           .nextPage(OccupiersDetailsId, baseFilled6048Session)
           .apply(baseFilled6048Session) shouldBe
           controllers.aboutyouandtheproperty.routes.OccupiersDetailsListController.show(0)

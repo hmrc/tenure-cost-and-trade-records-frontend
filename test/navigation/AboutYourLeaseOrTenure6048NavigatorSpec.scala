@@ -16,25 +16,16 @@
 
 package navigation
 
-import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
 import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
-import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
 
-class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec:
-
-  private val audit = mock[Audit]
-
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  private val navigator = AboutYourLeaseOrTenureNavigator(audit)
+class AboutYourLeaseOrTenure6048NavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
   private val session6048 = Session(
     "99996048004",
@@ -42,45 +33,41 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec:
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6045TextArea),
-    aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree6045TextArea)
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreement6045TextArea,
+    aboutLeaseOrAgreementPartThree = prefilledAboutLeaseOrAgreementPartThree6045TextArea
   )
 
-  implicit override val hc: HeaderCarrier = HeaderCarrier()
-
-  "About your lease or tenure navigator" when {
-
-    "return a function that goes to how rent is currently fixed  page when UR building insurance is completed" in {
+  "Lease or agreement navigator for 6048" should {
+    "redirect to how rent is currently fixed  page when UR building insurance is completed" in {
       val answers = session6048.copy(
-        aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
+        aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwo
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(HowIsCurrentRentFixedId, answers)
         .apply(answers) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
           .show()
     }
 
-    "return a function that goes to how rent is currently fixed  page when UR building insurance is completed123" in {
+    "redirect to how rent is currently fixed  page when UR building insurance is completed123" in {
       val answers = session6048.copy(
-        aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
+        aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwo
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(UltimatelyResponsibleBusinessInsurancePageId, answers)
         .apply(answers) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
           .show()
     }
 
-    "return a function that goes to work carried out condition page when property updates answer is no123" in {
+    "redirect to work carried out condition page when property updates answer is no123" in {
       val session = session6048.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           session6048.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(payACapitalSumOrPremium = Some(AnswerYes))
+            AboutLeaseOrAgreementPartTwo(payACapitalSumOrPremium = AnswerYes)
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(PayCapitalSumId, session)
         .apply(
           session
@@ -89,12 +76,11 @@ class AboutYourLeaseOrTenure6048NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to does rent include fixture and fittings  when is parking rent paid separately has been completed123" in {
-      navigator
+    "redirect to does rent include fixture and fittings  when is parking rent paid separately has been completed123" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(PayCapitalSumDetailsId, session6048)
         .apply(session6048) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController
           .show()
     }
-
   }

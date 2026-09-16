@@ -16,7 +16,6 @@
 
 package navigation
 
-import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
@@ -26,20 +25,12 @@ import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
 import navigation.identifiers.*
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
 import java.time.LocalDate
-import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
 
-class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
-
-  private val audit = mock[Audit]
-
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  private val navigator = AboutYourLeaseOrTenureNavigator(audit)
+class AboutYourLeaseOrTenure6010NavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
   private val session6010 = Session(
     "99996010004",
@@ -47,114 +38,109 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6010Route),
-    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo)
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreement6010Route,
+    aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwo
   )
 
   private val session6010No: Session = session6010.copy(
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
-    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreementPartOneNo,
+    aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwoNo
   )
 
   private val session6010NoLeaseback: Session = session6010.copy(
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
-    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreementPartOneNo,
+    aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwoNo
   )
 
   private val session6010PayNavigation: Session = session6010.copy(
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
-    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPayPartTwo)
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreementPartOneNo,
+    aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPayPartTwo
   )
 
-  implicit override val hc: HeaderCarrier = HeaderCarrier()
-
-  "About your lease or tenure navigator" when {
-
-    "go to sign in from an identifier that doesn't exist in the route map" in {
-      case object UnknownIdentifier extends Identifier
-      navigator
+  "Lease or agreement navigator for 6010" should {
+    "redirect to default page for identifier that doesn't exist in the route map" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(UnknownIdentifier, session6010)
         .apply(session6010) shouldBe controllers.routes.LoginController.show
     }
 
-    "return a function that goes to lease or agreement years page when about your landlord has been completed" in {
-      navigator
+    "redirect to lease or agreement years page when about your landlord has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(AboutTheLandlordPageId, session6010)
         .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordController.show()
     }
 
-    "return a function that goes to current annual rent page when lease or agreement details with yes has been completed" in {
-      navigator
+    "redirect to current annual rent page when lease or agreement details with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(LeaseOrAgreementDetailsPageId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
           .show()
     }
 
-    "return a function that goes to current annual rent page when property use leaseback agreement with yes has been completed" in {
-      navigator
+    "redirect to current annual rent page when property use leaseback agreement with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(LeaseOrAgreementDetailsPageId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
           .show()
     }
 
-    "return a function that goes to payable within 12 months page when lease or agreement details with no has been completed" in {
-      navigator
+    "redirect to payable within 12 months page when lease or agreement details with no has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(LeaseOrAgreementDetailsPageId, session6010No)
         .apply(
           session6010No
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentPayableWithin12MonthsController.show()
     }
 
-    "return a function that goes to task list page when current rent payable within 12 months has been completed" in {
-      navigator
+    "redirect to task list page when current rent payable within 12 months has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CurrentRentPayableWithin12monthsPageId, session6010)
         .apply(
           session6010
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
 
-    "return a function that goes to current rent first paid page when current annual rent has been completed" in {
-      navigator
+    "redirect to current rent first paid page when current annual rent has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CurrentAnnualRentPageId, session6010)
         .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
 
-    "return a function that goes to current lease or agreement begin page when current rent first paid has been completed" in {
-      navigator
+    "redirect to current lease or agreement begin page when current rent first paid has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CurrentRentFirstPaidPageId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.CurrentLeaseOrAgreementBeginController
           .show()
     }
 
-    "return a function that goes to included in your rent page when current lease or agreement begin has been completed" in {
-      navigator
+    "redirect to included in your rent page when current lease or agreement begin has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CurrentLeaseBeginPageId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController
           .show()
     }
 
-    "return a function that goes to does rent payable page when included in your rent has been completed" in {
-      navigator
+    "redirect to does rent payable page when included in your rent has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(IncludedInYourRentPageId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.DoesTheRentPayableController
           .show()
     }
 
-    "return a function that goes to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
+    "redirect to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
 
       val session = session6010.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleOutsideRepairs =
-            Some(UltimatelyResponsibleOutsideRepairs(OutsideRepairsLandlord, Some("test")))
+            UltimatelyResponsibleOutsideRepairs(OutsideRepairsLandlord, "test")
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session)
         .apply(
           session
@@ -163,16 +149,15 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to Ultimately responsible IR page when Ultimately Responsible OR has been completed" in {
+    "redirect to Ultimately responsible IR page when Ultimately Responsible OR has been completed" in {
       val session = session6010.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           AboutLeaseOrAgreementPartTwo(
             ultimatelyResponsibleInsideRepairs =
-              Some(UltimatelyResponsibleInsideRepairs(InsideRepairsLandlord, Some("test")))
+              UltimatelyResponsibleInsideRepairs(InsideRepairsLandlord, "test")
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(UltimatelyResponsibleInsideRepairsPageId, session)
         .apply(
           session
@@ -181,16 +166,15 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to rent include trade services page when Ultimately Responsible BI has been completed" in {
+    "redirect to rent include trade services page when Ultimately Responsible BI has been completed" in {
       val session = session6010.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           AboutLeaseOrAgreementPartTwo(
             ultimatelyResponsibleBuildingInsurance =
-              Some(UltimatelyResponsibleBuildingInsurance(BuildingInsuranceLandlord, Some("test")))
+              UltimatelyResponsibleBuildingInsurance(BuildingInsuranceLandlord, "test")
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(UltimatelyResponsibleBusinessInsurancePageId, session)
         .apply(
           session
@@ -199,8 +183,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to 'does the rent payable vary(...)', when 'what is the rent based on(...)' has been completed" in {
-      navigator
+    "redirect to 'does the rent payable vary(...)', when 'what is the rent based on(...)' has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(WhatRentBasedOnPageId, session6010)
         .apply(
           session6010
@@ -209,15 +193,14 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
+    "redirect to method to fix current rent page when how is current rent fixed has been completed" in {
       val session = session6010.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           AboutLeaseOrAgreementPartTwo(howIsCurrentRentFixed =
-            Some(HowIsCurrentRentFixed(CurrentRentFixedNewLeaseAgreement, LocalDate.of(2000, 2, 1)))
+            HowIsCurrentRentFixed(CurrentRentFixedNewLeaseAgreement, LocalDate.of(2000, 2, 1))
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(HowIsCurrentRentFixedId, session)
         .apply(
           session
@@ -226,13 +209,12 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {
+    "redirect to intervals of rent page when method to fix current rent has been completed" in {
       val session = session6010.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
-          AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails = Some(MethodToFixCurrentRentAgreement))
-        )
+        aboutLeaseOrAgreementPartTwo =
+          AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails = MethodToFixCurrentRentAgreement)
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(MethodToFixCurrentRentsId, session)
         .apply(
           session
@@ -241,32 +223,32 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to rent include trade services details page when rent include trade services with yes has been completed" in {
-      navigator
+    "redirect to rent include trade services details page when rent include trade services with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentIncludeTradeServicesPageId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController
           .show()
     }
 
-    "return a function that goes to fixture and fittings page when include trade services with no has been completed" in {
-      navigator
+    "redirect to fixture and fittings page when include trade services with no has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentIncludeTradeServicesPageId, session6010)
         .apply(session6010No) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController
           .show()
     }
 
-    "return a function that goes to fixture and fittings page when include trade services details has been completed" in {
-      navigator
+    "redirect to fixture and fittings page when include trade services details has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentIncludeTradeServicesDetailsPageId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController
           .show()
     }
 
-    "return a function that goes to fixture and fittings details page when fixture and fittings with yes has been completed" in {
-      navigator
+    "redirect to fixture and fittings details page when fixture and fittings with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentFixtureAndFittingsPageId, session6010)
         .apply(
           session6010
@@ -275,40 +257,40 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to open market page when fixture and fittings with no has been completed" in {
-      navigator
+    "redirect to open market page when fixture and fittings with no has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentFixtureAndFittingsPageId, session6010No)
         .apply(session6010No) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController
           .show()
     }
 
-    "return a function that goes to open market page when fixture and fittings details has been completed" in {
-      navigator
+    "redirect to open market page when fixture and fittings details has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentFixtureAndFittingsDetailsPageId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentOpenMarketValueController
           .show()
     }
 
-    "return a function that goes to increase by RPI page when open market rent with yes has been completed" in {
-      navigator
+    "redirect to increase by RPI page when open market rent with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentOpenMarketPageId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController
           .show()
     }
 
-    "return a function that goes to what rent based on page when open market rent with no has been completed" in {
-      navigator
+    "redirect to what rent based on page when open market rent with no has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentOpenMarketPageId, session6010No)
         .apply(session6010No) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.WhatIsYourRentBasedOnController
           .show()
     }
 
-    "return a function that goes to rent by gross or net turnover when increase by RPI has been completed" in {
-      navigator
+    "redirect to rent by gross or net turnover when increase by RPI has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentIncreaseByRPIPageId, session6010)
         .apply(
           session6010
@@ -317,8 +299,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to gross or net turnover details page when rent by gross or net turnover with yes has been completed" in {
-      navigator
+    "redirect to gross or net turnover details page when rent by gross or net turnover with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentPayableVaryAccordingToGrossOrNetId, session6010)
         .apply(
           session6010
@@ -327,8 +309,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to rent vary on quantity of beer page when rent by gross or net turnover with no has been completed" in {
-      navigator
+    "redirect to rent vary on quantity of beer page when rent by gross or net turnover with no has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentPayableVaryAccordingToGrossOrNetId, session6010No)
         .apply(
           session6010No
@@ -337,8 +319,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to how is current rent fixed on page when rent by gross or net turnover details has been completed" in {
-      navigator
+    "redirect to how is current rent fixed on page when rent by gross or net turnover details has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentPayableVaryAccordingToGrossOrNetDetailsId, session6010)
         .apply(
           session6010
@@ -347,8 +329,8 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to rent vary quantity of beer details when rent vary quantity of beer with yes has been completed" in {
-      navigator
+    "redirect to rent vary quantity of beer details when rent vary quantity of beer with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentVaryQuantityOfBeersId, session6010)
         .apply(
           session6010
@@ -357,64 +339,64 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to how is rent fixed page page when rent vary quantity of beer with no has been completed" in {
-      navigator
+    "redirect to how is rent fixed page page when rent vary quantity of beer with no has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentVaryQuantityOfBeersId, session6010No)
         .apply(session6010No) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
           .show()
     }
 
-    "return a function that goes to how is rent fixed page when rent vary quantity of beer has been completed" in {
-      navigator
+    "redirect to how is rent fixed page when rent vary quantity of beer has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentVaryQuantityOfBeersDetailsId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.HowIsCurrentRentFixedController
           .show()
     }
 
-    "return a function that goes to method fix rent when how is rent fixed has been completed" in {
-      navigator
+    "redirect to method fix rent when how is rent fixed has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(HowIsCurrentRentFixedId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.MethodToFixCurrentRentController
           .show()
     }
 
-    "return a function that goes to intervals rent review when method fix rent has been completed" in {
-      navigator
+    "redirect to intervals rent review when method fix rent has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(MethodToFixCurrentRentsId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.IsRentReviewPlannedController
           .show()
     }
 
-    "return a function that goes to can rent be reduced when intervals rent review has been completed" in {
-      navigator
+    "redirect to can rent be reduced when intervals rent review has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(IntervalsOfRentReviewId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.CanRentBeReducedOnReviewController
           .show()
     }
 
-    "return a function that goes to incentives payment when can rent be reduced has been completed" in {
-      navigator
+    "redirect to incentives payment when can rent be reduced has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CanRentBeReducedOnReviewId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.IncentivesPaymentsConditionsController
           .show()
     }
 
-    "return a function that goes to tenants additional disregarded when incentives payment has been completed" in {
-      navigator
+    "redirect to tenants additional disregarded when incentives payment has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(IncentivesPaymentsConditionsId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController
           .show()
     }
 
-    "return a function that goes to tenants additional disregarded details page when tenants additional disregarded with yes has been completed" in {
-      navigator
+    "redirect to tenants additional disregarded details page when tenants additional disregarded with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(TenantsAdditionsDisregardedId, session6010)
         .apply(
           session6010
@@ -423,22 +405,22 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to pay a capital sum page when tenants additional disregarded with no has been completed" in {
-      navigator
+    "redirect to pay a capital sum page when tenants additional disregarded with no has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(TenantsAdditionsDisregardedId, session6010)
         .apply(session6010No) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController
           .show()
     }
 
-    "return a function that goes to pay a capital sum page when tenants additional disregarded details has been completed" in {
-      navigator
+    "redirect to pay a capital sum page when tenants additional disregarded details has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(TenantsAdditionsDisregardedDetailsId, session6010)
         .apply(session6010) shouldBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show()
     }
 
-    "return a function that goes to pay when lease granted page when pay a capital sum has been completed" in {
-      navigator
+    "redirect to pay when lease granted page when pay a capital sum has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(PayCapitalSumId, session6010PayNavigation)
         .apply(
           session6010PayNavigation
@@ -447,90 +429,89 @@ class AboutYourLeaseOrTenure6010NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to legal or planning restrictions page when pay when lease granted has been completed" in {
-      navigator
+    "redirect to legal or planning restrictions page when pay when lease granted has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(PayWhenLeaseGrantedId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController
           .show()
     }
 
-    "return a function that goes to legal or planning restrictions details page when legal or planning restrictions with yes has been completed" in {
-      navigator
+    "redirect to legal or planning restrictions details page when legal or planning restrictions with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(LegalOrPlanningRestrictionId, session6010)
         .apply(
           session6010
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsDetailsController.show()
     }
 
-    "return a function that goes to CurrentAnnualRent when PropertyUseLeasebackAgreement has been completed" in {
-      navigator
+    "redirect to CurrentAnnualRent when PropertyUseLeasebackAgreement has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(PropertyUseLeasebackAgreementId, session6010NoLeaseback)
         .apply(
           session6010NoLeaseback
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     }
 
-    "return a function that goes to CYA page when legal or planning restrictions with no has been completed" in {
-      navigator
+    "redirect to CYA page when legal or planning restrictions with no has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(LegalOrPlanningRestrictionId, session6010No)
         .apply(
           session6010No
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
 
-    "return a function that goes to CYA page when legal or planning restrictions details has been completed" in {
-      navigator
+    "redirect to CYA page when legal or planning restrictions details has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(LegalOrPlanningRestrictionDetailsId, session6010)
         .apply(
           session6010
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show()
     }
 
-    "return a function that goes to task list page when CYA has been completed" in {
-      navigator
+    "redirect to task list page when CYA has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CheckYourAnswersAboutYourLeaseOrTenureId, session6010)
         .apply(session6010) shouldBe controllers.routes.TaskListController.show.withFragment("leaseOrAgreement")
     }
 
-    "return a function that goes to does rent include fixture and fittings  when payment for trade service has been completed" in {
-      navigator
+    "redirect to does rent include fixture and fittings  when payment for trade service has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(PaymentForTradeServicesId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController
           .show()
     }
 
-    "return a function that goes to is parking rent paid separately  when does rent include parking has been completed" in {
-      navigator
+    "redirect to is parking rent paid separately  when does rent include parking has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(DoesRentIncludeParkingId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.IsParkingRentPaidSeparatelyController
           .show()
     }
 
-    "return a function that goes to does rent include fixture and fittings  when is parking rent paid separately has been completed" in {
-      navigator
+    "redirect to does rent include fixture and fittings  when is parking rent paid separately has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(IsParkingRentPaidSeparatelyId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController
           .show()
     }
 
-    "return a function that goes to PayACapitalSum  when IsGivenRentFree has been completed" in {
-      navigator
+    "redirect to PayACapitalSum  when IsGivenRentFree has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(IsGivenRentFreePeriodId, session6010No)
         .apply(session6010No) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController
           .show()
     }
 
-    "return a function that goes to TenantsAdditionsDisregarded page when IncentivesPaymentsCondition has been completed " in {
-      navigator
+    "redirect to TenantsAdditionsDisregarded page when IncentivesPaymentsCondition has been completed " in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(IncentivesPaymentsConditionsId, session6010)
         .apply(session6010) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController
           .show()
     }
-
   }

@@ -43,7 +43,7 @@ import play.api.mvc.request.RequestTarget
 import play.api.mvc.{AnyContentAsEmpty, Request, Result}
 import play.api.test.{DefaultAwaitTimeout, FakeRequest, FutureAwaits, Injecting}
 import repositories.SessionRepository
-import test.{InjectedViews, TestObjects}
+import test.{InjectedNavigation, InjectedViews, TestObjects}
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.vo.unit.test.mock.MockitoExtendedSugar
@@ -51,6 +51,7 @@ import uk.gov.hmrc.vo.unit.test.mock.MockitoExtendedSugar
 import java.nio.charset.StandardCharsets
 import java.time.{Clock, Instant, ZoneId}
 import scala.concurrent.{ExecutionContext, Future}
+import scala.language.implicitConversions
 
 /**
   * Replaced by [[test.TCTRAppSpec]]
@@ -69,7 +70,7 @@ trait TestBaseSpec
   with RepositoryUtils
   with TestObjects
   with InjectedViews
-  with FakeNavigation
+  with InjectedNavigation
   with OptionValues:
 
   override def fakeApplication(): Application =

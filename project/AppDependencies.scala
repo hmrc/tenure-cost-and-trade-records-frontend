@@ -3,7 +3,7 @@ import sbt.*
 object AppDependencies {
 
   private val bootstrapVersion              = "10.8.0"
-  private val playFrontendVersion           = "13.13.0"
+  private val playFrontendVersion           = "13.14.0"
   private val voServiceVersion              = "0.12.0"
   private val playConditionalMappingVersion = "3.5.0"
   private val mongoVersion                  = "2.14.0"

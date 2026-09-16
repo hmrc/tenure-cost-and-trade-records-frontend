@@ -30,6 +30,8 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.vo.unit.test.mock.MockitoExtendedSugar
 import utils.TestBaseSpec
 
+import scala.language.implicitConversions
+
 trait MaxOfLettingsReachedControllerBehaviours:
   this: AnyWordSpecLike & Matchers & MockitoExtendedSugar & DefaultAwaitTimeout & OptionValues =>
 
