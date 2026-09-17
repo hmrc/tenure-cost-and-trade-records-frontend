@@ -31,6 +31,9 @@ import views.html.feedback.{feedback, feedbackThx}
 import views.html.notconnected.*
 import views.html.requestReferenceNumber.{requestReferenceNumberCheckYourAnswers, requestReferenceNumberConfirmation, requestReferenceNumberContactDetails, requestReferenceNumberPropertyDetails}
 
+/**
+  * @author Yuriy Tumakha
+  */
 trait InjectedViews:
 
   this: Injecting =>

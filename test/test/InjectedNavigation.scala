@@ -21,6 +21,9 @@ import navigation.identifiers.Identifier
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.{FakeRequest, Injecting}
 
+/**
+  * @author Yuriy Tumakha
+  */
 trait InjectedNavigation:
 
   this: Injecting =>

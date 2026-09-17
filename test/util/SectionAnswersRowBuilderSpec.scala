@@ -17,30 +17,30 @@
 package util
 
 import controllers.aboutyouandtheproperty
-import test.TCTRAppSpec
+import test.{MessagesApiSpec, TestObjects}
 import uk.gov.hmrc.govukfrontend.views.Aliases.{Key, Text}
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.{ActionItem, Actions, SummaryListRow, Value}
 
 /**
   * @author Yuriy Tumakha
   */
-class SectionAnswersRowBuilderSpec extends TCTRAppSpec:
+class SectionAnswersRowBuilderSpec extends MessagesApiSpec with TestObjects:
 
-  private def sectionAnswers = SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)
+  private val sectionAnswers = SectionAnswersRowBuilder(aboutYouAndTheProperty6010YesSession.aboutYouAndTheProperty)
 
   private val expectedRow = Seq(
     SummaryListRow(
-      key = Key(Text("Full name")),
+      key = Key(Text("label.fullName")),
       value = Value(Text("Tobermory")),
       actions = Some(
         Actions(items =
           Seq(
             ActionItem(
-              href = "/send-trade-and-cost-information/about-you?from=CYA&change=true#fullName",
-              content = Text("Change"),
-              visuallyHiddenText = Some("Full name"),
+              href = controllers.aboutyouandtheproperty.routes.AboutYouController.show().url + "?from=CYA&change=true#fullName",
+              content = Text("label.change"),
+              visuallyHiddenText = Some("label.fullName"),
               attributes = Map(
-                "aria-label" -> "Change Full name"
+                "aria-label" -> "label.change label.fullName"
               )
             )
           )

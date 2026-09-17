@@ -16,8 +16,7 @@
 
 package util
 
-import play.api.i18n.{Lang, Messages, MessagesApi}
-import test.TCTRAppSpec
+import test.MessagesApiSpec
 
 import java.time.LocalDate
 import java.util.Locale
@@ -25,7 +24,7 @@ import java.util.Locale
 /**
   * @author Yuriy Tumakha
   */
-class DateUtilLocalisedSpec extends TCTRAppSpec:
+class DateUtilLocalisedSpec extends MessagesApiSpec:
 
   private val en: Locale        = Locale.UK
   private val cy: Locale        = Locale.of("cy")
@@ -36,13 +35,6 @@ class DateUtilLocalisedSpec extends TCTRAppSpec:
   private val dateCY            = "17 Ebrill 2025"
   private val dateMonthAbbrEN   = "17 Apr 2025"
   private val dateMonthAbbrCY   = "17 Ebr 2025"
-
-  private val dateUtilLocalised = inject[DateUtilLocalised]
-  private val messagesApi       = inject[MessagesApi]
-
-  private def messagesForLocale(locale: Locale): Messages = messagesApi.preferred(Seq(Lang(locale)))
-
-  implicit val messagesEN: Messages = messagesForLocale(en)
 
   "DateUtilLocalised" should {
     "format LocalDate" in {

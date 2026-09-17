@@ -16,14 +16,26 @@
 
 package test
 
-import crypto.MongoCrypto
 import play.api.Configuration
+import play.api.i18n.*
+import uk.gov.hmrc.play.language.LanguageUtils
+import uk.gov.hmrc.vo.unit.test.BaseSpec
+import util.DateUtilLocalised
+
+import java.util.Locale
+import scala.language.implicitConversions
 
 /**
   * @author Yuriy Tumakha
   */
-trait MongoCryptoSupport:
+class MessagesApiSpec extends BaseSpec:
 
-  private val testCryptoConfig = Configuration("crypto.key" -> "P5xsJ9Nt+quxGZzB4DeLfw==")
+  private val languages: Langs = DefaultLangs(Seq(Lang(Locale.UK), Lang(Locale.of("cy"))))
 
-  given MongoCrypto = MongoCrypto(testCryptoConfig)
+  given messagesApi: MessagesApi = DefaultMessagesApi(langs = languages)
+
+  def messagesForLocale(locale: Locale): Messages = messagesApi.preferred(Seq(Lang(locale)))
+
+  given Messages = messagesForLocale(Locale.UK)
+
+  given dateUtilLocalised: DateUtilLocalised = DateUtilLocalised(LanguageUtils(languages, Configuration.empty))
