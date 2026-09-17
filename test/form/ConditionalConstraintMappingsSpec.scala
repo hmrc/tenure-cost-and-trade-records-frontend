@@ -17,18 +17,22 @@
 package form
 
 import form.ConditionalConstraintMappings.mandatoryStringIfExists
-import org.scalatest.matchers.should
-import org.scalatest.wordspec.AnyWordSpec
 import play.api.data.Forms.{list, mapping, text}
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, FormError}
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import scala.collection.immutable.ArraySeq
 
 /**
   * @author Yuriy Tumakha
   */
-class ConditionalConstraintMappingsSpec extends AnyWordSpec with should.Matchers:
+class ConditionalConstraintMappingsSpec extends BaseSpec:
+
+  case class Model(
+    items: List[String] = List.empty,
+    description: String
+  )
 
   private val form: Form[Model] =
     Form(
@@ -85,8 +89,3 @@ class ConditionalConstraintMappingsSpec extends AnyWordSpec with should.Matchers
       res.value  shouldBe None
     }
   }
-
-  case class Model(
-    items: List[String] = List.empty,
-    description: String
-  )

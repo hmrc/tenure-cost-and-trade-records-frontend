@@ -20,44 +20,60 @@ import models.ForType.FOR6048
 import models.Session
 import models.submissions.common.Address as CommonAddress
 import models.submissions.lettingHistory.LettingHistory.*
-import org.scalatest.OptionValues
-import org.scalatest.matchers.must.Matchers
-import org.scalatest.wordspec.AnyWordSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues:
+class PermanentResidentsSpec extends BaseSpec:
+
+  private val session: Session = Session(
+    referenceNumber = "99996048004",
+    forType = FOR6048,
+    address = CommonAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX"),
+    token = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
+    isWelsh = false,
+    lettingHistory = None
+  )
+
+  private val johnBrown: ResidentDetail = ResidentDetail(
+    name = "John Brown",
+    address = "10, Somewhere Street"
+  )
+
+  private val aliceWhite: ResidentDetail = ResidentDetail(
+    name = "Alice White",
+    address = "99, Anywhere Square"
+  )
 
   "the PermanentResidents trait" when {
     "copying the session withHasPermanentResidents" should {
       "set a boolean value although lettingHistory was None" in new SessionWithNoLettingHistory {
         val session: SessionWrapper = withHasPermanentResidents(true)
-        session.changed mustBe true
-        session.data.lettingHistory mustNot be(None)
-        hasPermanentResidents(session.data).value mustBe true
+        session.changed                         shouldBe true
+        session.data.lettingHistory            shouldNot be(None)
+        hasPermanentResidents(session.data).get shouldBe true
       }
 
       "set a boolean value although lettingHistory.hasPermanentResident was None" in new SessionWithSomeLettingHistory {
         val session: SessionWrapper = withHasPermanentResidents(true)
-        session.changed mustBe true
-        hasPermanentResidents(session.data).value mustBe true
-        // permanentResidents(session.data) must be(empty)
+        session.changed                         shouldBe true
+        hasPermanentResidents(session.data).get shouldBe true
       }
 
       "confirm the boolean value which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
         val session: SessionWrapper = withHasPermanentResidents(true)
-        session.changed mustBe false
-        hasPermanentResidents(session.data).value mustBe true
-        permanentResidents(session.data) mustNot be(empty)
+        session.changed                         shouldBe false
+        hasPermanentResidents(session.data).get shouldBe true
+        permanentResidents(session.data)       shouldNot be(empty)
       }
 
       "negate the boolean value which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
         val session: SessionWrapper = withHasPermanentResidents(false)
-        session.changed mustBe true
-        hasPermanentResidents(session.data).value mustBe false
-        permanentResidents(session.data) mustBe empty
+        session.changed                         shouldBe true
+        hasPermanentResidents(session.data).get shouldBe false
+        permanentResidents(session.data)        shouldBe empty
       }
 
       "double negate the boolean value which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
@@ -65,37 +81,37 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
       ) {
         val session1: SessionWrapper = withHasPermanentResidents(false)
         val session2: SessionWrapper = withHasPermanentResidents(true)(using session1.data)
-        session2.changed mustBe true
-        hasPermanentResidents(session2.data).value mustBe true
+        session2.changed                         shouldBe true
+        hasPermanentResidents(session2.data).get shouldBe true
       }
     }
 
     "copying the session byAddingOrUpdatingPermanentResident" should {
       "set a non-empty permanentResidents list although the lettingHistory was None" in new SessionWithNoLettingHistory {
         val session: SessionWrapper = byAddingOrUpdatingPermanentResident(johnBrown)
-        session.changed mustBe true
-        session.data.lettingHistory mustNot be(None)
-        hasPermanentResidents(session.data).value mustBe true
-        permanentResidents(session.data) must have size 1
-        permanentResidents(session.data).head mustBe johnBrown
+        session.changed                         shouldBe true
+        session.data.lettingHistory            shouldNot be(None)
+        hasPermanentResidents(session.data).get shouldBe true
+        permanentResidents(session.data)          should have size 1
+        permanentResidents(session.data).head   shouldBe johnBrown
       }
 
       "set the very first list value when lettingHistory is not None" in new SessionWithSomeLettingHistory {
         val session: SessionWrapper = byAddingOrUpdatingPermanentResident(johnBrown)
-        session.changed mustBe true
-        hasPermanentResidents(session.data).value mustBe true
-        permanentResidents(session.data) must have size 1
-        permanentResidents(session.data).head mustBe johnBrown
+        session.changed                         shouldBe true
+        hasPermanentResidents(session.data).get shouldBe true
+        permanentResidents(session.data)          should have size 1
+        permanentResidents(session.data).head   shouldBe johnBrown
       }
 
       "confirm resident address which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
         val session: SessionWrapper = byAddingOrUpdatingPermanentResident(johnBrown, maybeIndex = Some(0))
-        session.changed mustBe false
-        hasPermanentResidents(session.data).value mustBe true
-        permanentResidents(session.data) must have size 1
-        permanentResidents(session.data).head mustBe johnBrown
+        session.changed                         shouldBe false
+        hasPermanentResidents(session.data).get shouldBe true
+        permanentResidents(session.data)          should have size 1
+        permanentResidents(session.data).head   shouldBe johnBrown
       }
 
       "change resident address which was already set" in new SessionWithSomeLettingHistory(permanentResidents =
@@ -109,73 +125,54 @@ class PermanentResidentsSpec extends AnyWordSpec with Matchers with OptionValues
           ),
           maybeIndex = Some(0)
         )
-        session.changed mustBe true
-        hasPermanentResidents(session.data).value mustBe true
-        permanentResidents(session.data) must have size 1
-        permanentResidents(session.data).head.name mustBe johnBrown.name
-        permanentResidents(session.data).head.address mustBe newAddress
+        session.changed                               shouldBe true
+        hasPermanentResidents(session.data).get       shouldBe true
+        permanentResidents(session.data)                should have size 1
+        permanentResidents(session.data).head.name    shouldBe johnBrown.name
+        permanentResidents(session.data).head.address shouldBe newAddress
       }
 
       "append a second resident to the existing list" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
         val session: SessionWrapper = byAddingOrUpdatingPermanentResident(aliceWhite)
-        session.changed mustBe true
-        hasPermanentResidents(session.data).value mustBe true
-        permanentResidents(session.data) must have size 2
-        permanentResidents(session.data).head mustBe johnBrown
-        permanentResidents(session.data).last mustBe aliceWhite
+        session.changed                         shouldBe true
+        hasPermanentResidents(session.data).get shouldBe true
+        permanentResidents(session.data)          should have size 2
+        permanentResidents(session.data).head   shouldBe johnBrown
+        permanentResidents(session.data).last   shouldBe aliceWhite
       }
     }
 
     "copying the session byRemovingPermanentResidentAt" should {
       "set an empty permanentResidents list although the lettingHistory was None" in new SessionWithNoLettingHistory {
         val session: SessionWrapper = byRemovingPermanentResidentAt(2)
-        session.changed mustBe true
-        session.data.lettingHistory mustNot be(None)
-        hasPermanentResidents(session.data).value mustBe false
-        permanentResidents(session.data) mustBe empty
+        session.changed                         shouldBe true
+        session.data.lettingHistory            shouldNot be(None)
+        hasPermanentResidents(session.data).get shouldBe false
+        permanentResidents(session.data)        shouldBe empty
       }
 
       "remove from empty permanentResidents list when lettingHistory is not None" in new SessionWithSomeLettingHistory {
         val session: SessionWrapper = byRemovingPermanentResidentAt(0)
-        session.changed mustBe true
-        hasPermanentResidents(session.data).value mustBe false
-        permanentResidents(session.data) mustBe empty
+        session.changed                         shouldBe true
+        hasPermanentResidents(session.data).get shouldBe false
+        permanentResidents(session.data)        shouldBe empty
       }
 
       "remove existent resident from permanentResidents list" in new SessionWithSomeLettingHistory(permanentResidents =
         List(johnBrown)
       ) {
         val session: SessionWrapper = byRemovingPermanentResidentAt(0)
-        session.changed mustBe true
-        hasPermanentResidents(session.data).value mustBe false
-        permanentResidents(session.data) mustBe empty
+        session.changed                         shouldBe true
+        hasPermanentResidents(session.data).get shouldBe false
+        permanentResidents(session.data)        shouldBe empty
       }
     }
   }
 
-  val session: Session = Session(
-    referenceNumber = "99996010004",
-    forType = FOR6048,
-    address = CommonAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX"),
-    token = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
-    isWelsh = false,
-    lettingHistory = None
-  )
-
-  val johnBrown: ResidentDetail = ResidentDetail(
-    name = "John Brown",
-    address = "10, Somewhere Street"
-  )
-
-  val aliceWhite: ResidentDetail = ResidentDetail(
-    name = "Alice White",
-    address = "99, Anywhere Square"
-  )
-
   trait SessionWithNoLettingHistory:
-    given Session = session // having lettingHistory = None
+    given Session = session
 
   trait SessionWithSomeLettingHistory(permanentResidents: List[ResidentDetail] = Nil):
 

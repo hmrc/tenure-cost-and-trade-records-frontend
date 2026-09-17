@@ -16,18 +16,18 @@
 
 package models.submissions.aboutthetradinghistory
 
-import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.Json
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class GrossReceiptsSubLetUnitsSpec extends PlaySpec:
+class GrossReceiptsSubLetUnitsSpec extends BaseSpec:
 
-  "GrossReceiptsSubLetUnits" should {
+  "GrossReceiptsSubLetUnits" should:
     "serialize and deserialize correctly" in {
       val grossReceiptsSubLetUnits = GrossReceiptsSubLetUnits(
         Some(100.00),
         Some(1)
       )
       val json                     = Json.toJson(grossReceiptsSubLetUnits)
-      json.as[GrossReceiptsSubLetUnits] mustBe grossReceiptsSubLetUnits
+
+      json.as[GrossReceiptsSubLetUnits] shouldBe grossReceiptsSubLetUnits
     }
-  }

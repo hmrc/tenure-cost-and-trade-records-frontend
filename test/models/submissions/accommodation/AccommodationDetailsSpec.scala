@@ -16,16 +16,17 @@
 
 package models.submissions.accommodation
 
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 import test.TestObjects
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationDetailsSpec extends AnyFlatSpec with Matchers with TestObjects:
+class AccommodationDetailsSpec extends BaseSpec with TestObjects:
 
-  "AccommodationDetails" should "be serialized/deserialized from JSON" in:
-    val json = Json.toJson(prefilledAccommodationDetails)
-    json.as[AccommodationDetails] shouldBe prefilledAccommodationDetails
+  "AccommodationDetails" should:
+    "be serialized/deserialized from JSON" in {
+      val json = Json.toJson(prefilledAccommodationDetails)
+      json.as[AccommodationDetails] shouldBe prefilledAccommodationDetails
+    }

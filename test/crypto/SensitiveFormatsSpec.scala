@@ -19,7 +19,7 @@ package crypto
 import crypto.SensitiveFormats.*
 import org.bson.types.ObjectId
 import play.api.libs.json.{Json, OFormat}
-import test.SensitiveTestHelper
+import test.MongoCryptoSupport
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import uk.gov.hmrc.vo.unit.test.BaseSpec
 
@@ -27,7 +27,7 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 import scala.language.implicitConversions
 
-class SensitiveFormatsSpec extends BaseSpec with SensitiveTestHelper:
+class SensitiveFormatsSpec extends BaseSpec with MongoCryptoSupport:
 
   import SensitiveTestEntity.*
 

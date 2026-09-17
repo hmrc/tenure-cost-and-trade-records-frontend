@@ -16,14 +16,12 @@
 
 package models.submissions.requestReferenceNumber
 
-import models.submissions.MongoCryptoSupport
 import models.submissions.common.{Address, ContactDetails}
-import org.scalatest.OptionValues
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.{JsSuccess, Json}
+import test.MongoCryptoSupport
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class SensitiveRequestReferenceNumberDetailsSpec extends AnyWordSpec with Matchers with OptionValues with MongoCryptoSupport:
+class SensitiveRequestReferenceNumberDetailsSpec extends BaseSpec with MongoCryptoSupport:
 
   private val clearDetails: RequestReferenceNumberDetails = RequestReferenceNumberDetails(
     propertyDetails = Some(

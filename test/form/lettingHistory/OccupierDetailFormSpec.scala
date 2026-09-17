@@ -18,46 +18,51 @@ package form.lettingHistory
 
 import form.lettingHistory.OccupierDetailForm.theForm
 import models.submissions.lettingHistory.{OccupierAddress, OccupierDetail}
+import test.FormSpec
+
+import scala.language.implicitConversions
 
 class OccupierDetailFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in:
-    val data  = Map(
-      "name" -> "name"
-    )
-    val bound = theForm.bind(data)
-    bound.hasErrors mustBe false
-    bound.data mustBe data
-
-  it should "unbind good data as expected" in {
-    val occupierDetail = OccupierDetail(
-      name = "name",
-      address = Some(
-        OccupierAddress(
-          buildingNameNumber = "89, Fantasy Street",
-          street1 = None,
-          town = "Birds Island",
-          county = Some("Neverland"),
-          postcode = "BN124AX"
-        )
-      ),
-      rentalPeriod = None
-    )
-    val filled         = theForm.fill(occupierDetail)
-    filled.hasErrors mustBe false
-    filled.data mustBe Map(
-      "name" -> "name"
-    )
-  }
-
-  it should "detect errors" in {
-    // When the form gets submitted even though "untouched"
-    val bound = theForm.bind(
-      Map(
-        "name" -> ""
+  "OccupierDetailForm" should {
+    "bind good data as expected" in {
+      val data  = Map(
+        "name" -> "name"
       )
-    )
-    bound.hasErrors mustBe true
-    bound.errors must have size 1
-    bound.error("name").value.message mustBe "lettingHistory.occupierDetail.name.required"
+      val bound = theForm.bind(data)
+
+      bound.hasErrors shouldBe false
+      bound.data      shouldBe data
+    }
+
+    "unbind good data as expected" in {
+      val occupierDetail = OccupierDetail(
+        name = "name",
+        address =
+          OccupierAddress(
+            buildingNameNumber = "89, Fantasy Street",
+            street1 = None,
+            town = "Birds Island",
+            county = "Neverland",
+            postcode = "BN124AX"
+          ),
+        rentalPeriod = None
+      )
+      val filled         = theForm.fill(occupierDetail)
+
+      filled.hasErrors shouldBe false
+      filled.data      shouldBe Map("name" -> "name")
+    }
+
+    "detect errors" in {
+      val bound = theForm.bind(
+        Map(
+          "name" -> ""
+        )
+      )
+
+      bound.hasErrors                 shouldBe true
+      bound.errors                      should have size 1
+      bound.error("name").get.message shouldBe "lettingHistory.occupierDetail.name.required"
+    }
   }

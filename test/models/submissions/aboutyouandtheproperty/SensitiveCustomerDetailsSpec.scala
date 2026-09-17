@@ -17,11 +17,11 @@
 package models.submissions.aboutyouandtheproperty
 
 import models.submissions.common.{ContactDetails, SensitiveContactDetails}
-import test.SensitiveTestHelper
+import test.MongoCryptoSupport
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class SensitiveCustomerDetailsSpec extends BaseSpec with SensitiveTestHelper:
+class SensitiveCustomerDetailsSpec extends BaseSpec with MongoCryptoSupport:
 
   "SensitiveCustomerDetails" should {
     "encrypt and decrypt customer details correctly" in {

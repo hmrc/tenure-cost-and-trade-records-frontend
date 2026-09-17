@@ -17,10 +17,10 @@
 package models.submissions.aboutyouandtheproperty
 
 import models.submissions.common.*
-import test.SensitiveTestHelper
+import test.MongoCryptoSupport
 import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class SensitiveAboutYouAndThePropertySpec extends BaseSpec with SensitiveTestHelper:
+class SensitiveAboutYouAndThePropertySpec extends BaseSpec with MongoCryptoSupport:
 
   "SensitiveAboutYouAndTheProperty" should {
     "encrypt and decrypt sensitive fields correctly" in {

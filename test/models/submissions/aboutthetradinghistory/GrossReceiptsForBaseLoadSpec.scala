@@ -16,10 +16,10 @@
 
 package models.submissions.aboutthetradinghistory
 
-import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.Json
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class GrossReceiptsForBaseLoadSpec extends PlaySpec:
+class GrossReceiptsForBaseLoadSpec extends BaseSpec:
 
   "GrossReceiptsForBaseLoad" should {
     "serialize and deserialize correctly" in {
@@ -30,10 +30,9 @@ class GrossReceiptsForBaseLoadSpec extends PlaySpec:
         Some(4),
         Some(5)
       )
+      val json                         = Json.toJson(grossReceiptsForBaseLoadSpec: GrossReceiptsForBaseLoad)
 
-      val json = Json.toJson(grossReceiptsForBaseLoadSpec: GrossReceiptsForBaseLoad)
-
-      json.as[GrossReceiptsForBaseLoad] mustBe grossReceiptsForBaseLoadSpec
+      json.as[GrossReceiptsForBaseLoad] shouldBe grossReceiptsForBaseLoadSpec
     }
 
     "have correct total value" in {
@@ -44,6 +43,7 @@ class GrossReceiptsForBaseLoadSpec extends PlaySpec:
         Some(4),
         Some(5)
       )
-      grossReceiptsForBaseLoadSpec.total mustBe 15
+
+      grossReceiptsForBaseLoadSpec.total shouldBe 15
     }
   }

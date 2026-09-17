@@ -17,16 +17,17 @@
 package models.submissions.connectiontoproperty
 
 import models.submissions.ConnectedSubmission
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 import test.TestObjects
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class ConnectedSubmissionSpec extends AnyFlatSpec with Matchers with TestObjects:
+class ConnectedSubmissionSpec extends BaseSpec with TestObjects:
 
-  "ConnectedSubmission" should "be serialized/deserialized from JSON" in:
-    val json = Json.toJson(connectedSubmission)
-    json.as[ConnectedSubmission] shouldBe connectedSubmission
+  "ConnectedSubmission" should:
+    "be serialized/deserialized from JSON" in {
+      val json = Json.toJson(connectedSubmission)
+      json.as[ConnectedSubmission] shouldBe connectedSubmission
+    }

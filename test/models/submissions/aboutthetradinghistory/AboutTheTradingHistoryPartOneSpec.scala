@@ -16,24 +16,25 @@
 
 package models.submissions.aboutthetradinghistory
 
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 import test.TestObjects
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AboutTheTradingHistoryPartOneSpec extends AnyWordSpec with Matchers with TestObjects:
+class AboutTheTradingHistoryPartOneSpec extends BaseSpec with TestObjects:
 
   "AboutTheTradingHistoryPartOne" should {
     "be serialized/deserialized from JSON for 6076" in {
       val json = Json.toJson(prefilledTurnoverSections6076)
+
       json.as[AboutTheTradingHistoryPartOne] shouldBe prefilledTurnoverSections6076
     }
 
     "be serialized/deserialized from JSON for 6048" in {
       val json = Json.toJson(prefilledTurnoverSections6048)
+
       json.as[AboutTheTradingHistoryPartOne] shouldBe prefilledTurnoverSections6048
     }
 
@@ -53,6 +54,7 @@ class AboutTheTradingHistoryPartOneSpec extends AnyWordSpec with Matchers with T
       )
 
       val caravans = prefilledTurnoverSections6045.caravans
+
       caravans.flatMap(_.singleCaravansAge).fold(0)(_.fleetHire.total)       shouldBe 100
       caravans.flatMap(_.singleCaravansAge).fold(0)(_.privateSublet.total)   shouldBe 26
       caravans.flatMap(_.twinUnitCaravansAge).fold(0)(_.fleetHire.total)     shouldBe 1000
@@ -62,6 +64,7 @@ class AboutTheTradingHistoryPartOneSpec extends AnyWordSpec with Matchers with T
 
     "handle model turnoverSections6048" in {
       val turnoverSections6048 = prefilledTurnoverSections6048.turnoverSections6048
+
       turnoverSections6048.map(_.flatMap(_.income.map(_.total)).sum)              shouldBe Some(666)
       turnoverSections6048.map(_.flatMap(_.fixedCosts.map(_.total)).sum)          shouldBe Some(777)
       turnoverSections6048.map(_.flatMap(_.accountingCosts.map(_.total)).sum)     shouldBe Some(888)

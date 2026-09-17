@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package models.submissions
+package test
 
-import com.typesafe.config.ConfigFactory
 import crypto.MongoCrypto
-import org.scalatest.Suite
 import play.api.Configuration
 
 trait MongoCryptoSupport:
-  this: Suite =>
 
-  given MongoCrypto = MongoCrypto(Configuration(ConfigFactory.load()))
+  private val testCryptoConfig = Configuration("crypto.key" -> "P5xsJ9Nt+quxGZzB4DeLfw==")
+
+  given MongoCrypto = MongoCrypto(testCryptoConfig)

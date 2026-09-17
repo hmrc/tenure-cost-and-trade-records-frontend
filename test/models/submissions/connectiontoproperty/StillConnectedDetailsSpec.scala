@@ -16,16 +16,17 @@
 
 package models.submissions.connectiontoproperty
 
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 import test.TestObjects
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class StillConnectedDetailsSpec extends AnyFlatSpec with Matchers with TestObjects:
+class StillConnectedDetailsSpec extends BaseSpec with TestObjects:
 
-  "StillConnectedDetails" should "be serialized/deserialized from JSON" in:
-    val json = Json.toJson(prefilledStillConnectedDetailsYesToAll)
-    json.as[StillConnectedDetails] shouldBe prefilledStillConnectedDetailsYesToAll
+  "StillConnectedDetails" should:
+    "be serialized/deserialized from JSON" in {
+      val json = Json.toJson(prefilledStillConnectedDetailsYesToAll)
+      json.as[StillConnectedDetails] shouldBe prefilledStillConnectedDetailsYesToAll
+    }

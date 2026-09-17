@@ -17,12 +17,12 @@
 package models.submissions.additionalinformation
 
 import models.submissions.common.{Address, SensitiveAddress}
-import test.SensitiveTestHelper
+import test.MongoCryptoSupport
 import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class SensitiveAlternativeContactDetailsSpec extends BaseSpec with SensitiveTestHelper:
+class SensitiveAlternativeContactDetailsSpec extends BaseSpec with MongoCryptoSupport:
 
-  "SensitiveAlternativeContactDetails" should {
+  "SensitiveAlternativeContactDetails" should:
     "encrypt and decrypt sensitive fields correctly" in {
       val clearData     =
         Address(
@@ -35,4 +35,3 @@ class SensitiveAlternativeContactDetailsSpec extends BaseSpec with SensitiveTest
       val encryptedData = SensitiveAddress(clearData)
       encryptedData.decryptedValue shouldBe clearData
     }
-  }

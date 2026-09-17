@@ -17,18 +17,18 @@
 package form.aboutyouandtheproperty
 
 import models.submissions.aboutyouandtheproperty.PropertyCurrentlyUsed
-import org.scalatestplus.play.*
 import play.api.data.FormError
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class PropertyCurrentlyUsedFormSpec extends PlaySpec:
+class PropertyCurrentlyUsedFormSpec extends BaseSpec:
 
-  "PropertyCurrentlyUsedForm" must {
+  "PropertyCurrentlyUsedForm" should {
     "fail to bind when propertyCurrentlyUsed is empty" in {
       val data = Map("propertyCurrentlyUsed" -> "")
       val form = PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm.bind(data)
 
-      form.hasErrors mustBe true
-      form.errors must contain(FormError("propertyCurrentlyUsed", "error.propertyCurrentlyUsed.required"))
+      form.hasErrors shouldBe true
+      form.errors      should contain(FormError("propertyCurrentlyUsed", "error.propertyCurrentlyUsed.required"))
     }
 
     "fail to bind when propertyCurrentlyUsed contains 'other' and anotherUseDetails is empty" in {
@@ -38,8 +38,8 @@ class PropertyCurrentlyUsedFormSpec extends PlaySpec:
       )
       val form = PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm.bind(data)
 
-      form.hasErrors mustBe true
-      form.errors must contain(FormError("", "error.anotherUseDetails.required"))
+      form.hasErrors shouldBe true
+      form.errors      should contain(FormError("", "error.anotherUseDetails.required"))
     }
 
     "fail to bind when propertyCurrentlyUsed contains 'other' and anotherUseDetails exceeds max length" in {
@@ -50,8 +50,8 @@ class PropertyCurrentlyUsedFormSpec extends PlaySpec:
       )
       val form     = PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm.bind(data)
 
-      form.hasErrors mustBe true
-      form.errors must contain(FormError("anotherUseDetails", "error.anotherUseDetails.maxLength"))
+      form.hasErrors shouldBe true
+      form.errors      should contain(FormError("anotherUseDetails", "error.anotherUseDetails.maxLength"))
     }
 
     "bind successfully when propertyCurrentlyUsed contains 'other' and anotherUseDetails is within valid length" in {
@@ -61,8 +61,8 @@ class PropertyCurrentlyUsedFormSpec extends PlaySpec:
       )
       val form = PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm.bind(data)
 
-      form.hasErrors mustBe false
-      form.get mustEqual PropertyCurrentlyUsed(List("other"), Some("Some other use"))
+      form.hasErrors shouldBe false
+      form.get    shouldEqual PropertyCurrentlyUsed(List("other"), Some("Some other use"))
     }
 
     "bind successfully when propertyCurrentlyUsed does not contain 'other'" in {
@@ -72,7 +72,7 @@ class PropertyCurrentlyUsedFormSpec extends PlaySpec:
       )
       val form = PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm.bind(data)
 
-      form.hasErrors mustBe false
-      form.get mustEqual PropertyCurrentlyUsed(List("residential"), None)
+      form.hasErrors shouldBe false
+      form.get    shouldEqual PropertyCurrentlyUsed(List("residential"), None)
     }
   }

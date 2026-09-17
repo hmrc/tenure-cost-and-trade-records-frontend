@@ -18,12 +18,12 @@ package models.submissions.connectiontoproperty
 
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.common.{Address, CheckYourAnswersAndConfirm, ContactDetails}
-import test.SensitiveTestHelper
+import test.MongoCryptoSupport
 import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import java.time.LocalDate
 
-class SensitiveStillConnectedDetailsSpec extends BaseSpec with SensitiveTestHelper:
+class SensitiveStillConnectedDetailsSpec extends BaseSpec with MongoCryptoSupport:
 
   "SensitiveStillConnectedDetails" should:
     "encrypt and decrypt sensitive fields correctly" in {

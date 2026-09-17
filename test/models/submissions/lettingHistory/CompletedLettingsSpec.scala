@@ -20,178 +20,13 @@ import models.ForType.FOR6048
 import models.Session
 import models.submissions.common.Address as CommonAddress
 import models.submissions.lettingHistory.LettingHistory.*
-import org.scalatest.OptionValues
-import org.scalatest.matchers.must.Matchers
-import org.scalatest.wordspec.AnyWordSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import java.time.LocalDate
 
-class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
+class CompletedLettingsSpec extends BaseSpec:
 
-  "the CompletedLettings trait" when {
-    "copying the session withHasCompletedLettings" should {
-      "set a boolean value although lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session: SessionWrapper = withHasCompletedLettings(true)
-        session.changed mustBe true
-        session.data.lettingHistory mustNot be(None)
-        hasCompletedLettings(session.data).value mustBe true
-      }
-
-      "set a boolean value although lettingHistory.hasCompletedLettings was None" in new SessionWithSomeLettingHistory {
-        val session: SessionWrapper = withHasCompletedLettings(true)
-        session.changed mustBe true
-        hasCompletedLettings(session.data).value mustBe true
-        // completedLettings(session.data) must be(empty)
-      }
-
-      "confirm the boolean value which was already set" in new SessionWithSomeLettingHistory(completedLettings =
-        List(johnBrown)
-      ) {
-        val session: SessionWrapper = withHasCompletedLettings(true)
-        session.changed mustBe false
-        hasCompletedLettings(session.data).value mustBe true
-        completedLettings(session.data) mustNot be(empty)
-      }
-
-      "negate the boolean value which was already set" in new SessionWithSomeLettingHistory(completedLettings =
-        List(johnBrown)
-      ) {
-        val session: SessionWrapper = withHasCompletedLettings(false)
-        session.changed mustBe true
-        hasCompletedLettings(session.data).value mustBe false
-        completedLettings(session.data) mustBe empty
-      }
-
-      "double negate the boolean value which was already set" in new SessionWithSomeLettingHistory(completedLettings =
-        List(johnBrown)
-      ) {
-        val session1: SessionWrapper = withHasCompletedLettings(false)
-        val session2: SessionWrapper = withHasCompletedLettings(true)(using session1.data)
-        session2.changed mustBe true
-        hasCompletedLettings(session2.data).value mustBe true
-      }
-    }
-
-    "copying the session byAddingOrUpdatingTemporaryOccupier" should {
-      "set a non-empty completedLettings list although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        private val session = byAddingOrUpdatingOccupier(johnBrown)._2
-        session.changed mustBe true
-        session.data.lettingHistory mustNot be(None)
-        hasCompletedLettings(session.data).value mustBe true
-        completedLettings(session.data) must have size 1
-        completedLettings(session.data).head mustBe johnBrown
-      }
-
-      "set the very first list value when lettingHistory is not None" in new SessionWithSomeLettingHistory {
-        private val session = byAddingOrUpdatingOccupier(johnBrown)._2
-        session.changed mustBe true
-        hasCompletedLettings(session.data).value mustBe true
-        completedLettings(session.data) must have size 1
-        completedLettings(session.data).head mustBe johnBrown
-      }
-
-      "confirm resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
-        List(johnBrown)
-      ) {
-        private val session = byAddingOrUpdatingOccupier(johnBrown, maybeIndex = Some(0))._2
-        session.changed mustBe false
-        hasCompletedLettings(session.data).value mustBe true
-        completedLettings(session.data) must have size 1
-        completedLettings(session.data).head mustBe johnBrown
-      }
-
-      "change resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
-        List(johnBrown)
-      ) {
-        val updatedJohnBrown: OccupierDetail = OccupierDetail(johnBrown.name, aliceWhite.address, rentalPeriod = None)
-        private val session                  = byAddingOrUpdatingOccupier(updatedJohnBrown, maybeIndex = Some(0))._2
-        session.changed mustBe true
-        hasCompletedLettings(session.data).value mustBe true
-        completedLettings(session.data) must have size 1
-        completedLettings(session.data).head.name mustBe johnBrown.name
-        completedLettings(session.data).head.address mustBe aliceWhite.address
-      }
-
-      "append a second resident to the existing list" in new SessionWithSomeLettingHistory(completedLettings =
-        List(johnBrown)
-      ) {
-        private val session = byAddingOrUpdatingOccupier(aliceWhite)._2
-        session.changed mustBe true
-        hasCompletedLettings(session.data).value mustBe true
-        completedLettings(session.data) must have size 2
-        completedLettings(session.data).head mustBe johnBrown
-        completedLettings(session.data).last mustBe aliceWhite
-      }
-    }
-
-    "copying the session byUpdatingOccupierRentalPeriod" should {
-      "create some empty lettingHistory if it was None" in new SessionWithNoLettingHistory {
-        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
-        session.changed mustBe true
-        hasCompletedLettings(session.data) mustBe None
-        completedLettings(session.data) mustBe empty
-      }
-
-      "keep the empty completedLettings" in new SessionWithSomeLettingHistory(
-        completedLettings = List.empty
-      ) {
-        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
-        session.changed mustBe false
-        hasCompletedLettings(session.data) mustBe None
-        completedLettings(session.data) mustBe empty
-      }
-
-      "patch the existing occupier if the given rental period is different" in new SessionWithSomeLettingHistory(
-        completedLettings = List(johnBrown)
-      ) {
-        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
-        session.changed mustBe true
-        completedLettings(session.data).head.name mustBe johnBrown.name
-        completedLettings(session.data).head.address mustBe johnBrown.address
-        completedLettings(session.data).head.rentalPeriod.value mustBe year2024
-      }
-
-      "keep the existing occupier if the given rental period is the same" in new SessionWithSomeLettingHistory(
-        completedLettings = List(
-          johnBrown.copy(rentalPeriod = Some(year2024))
-        )
-      ) {
-        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
-        session.changed mustBe false
-        completedLettings(session.data).head.name mustBe johnBrown.name
-        completedLettings(session.data).head.address mustBe johnBrown.address
-        completedLettings(session.data).head.rentalPeriod.value mustBe year2024
-      }
-    }
-
-    "copying the session byRemovingCompletedLettingAt" should {
-      "set an empty completedLettings list although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session: SessionWrapper = byRemovingCompletedLettingAt(2)
-        session.changed mustBe true
-        session.data.lettingHistory mustNot be(None)
-        hasCompletedLettings(session.data).value mustBe false
-        completedLettings(session.data) mustBe empty
-      }
-
-      "remove from empty completedLettings list when lettingHistory is not None" in new SessionWithSomeLettingHistory {
-        val session: SessionWrapper = byRemovingCompletedLettingAt(0)
-        session.changed mustBe true
-        hasCompletedLettings(session.data).value mustBe false
-        completedLettings(session.data) mustBe empty
-      }
-
-      "remove existent resident from completedLettings list" in new SessionWithSomeLettingHistory(completedLettings =
-        List(johnBrown)
-      ) {
-        val session: SessionWrapper = byRemovingCompletedLettingAt(0)
-        session.changed mustBe true
-        hasCompletedLettings(session.data).value mustBe false
-        completedLettings(session.data) mustBe empty
-      }
-    }
-  }
-
-  val session: Session = Session(
+  private val session: Session = Session(
     referenceNumber = "99996010004",
     forType = FOR6048,
     address = CommonAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX"),
@@ -200,12 +35,12 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     lettingHistory = None
   )
 
-  val year2024: LocalPeriod = LocalPeriod(
+  private val year2024: LocalPeriod = LocalPeriod(
     fromDate = LocalDate.of(2024, 1, 1),
     toDate = LocalDate.of(2024, 12, 31)
   )
 
-  val johnBrown: OccupierDetail = OccupierDetail(
+  private val johnBrown: OccupierDetail = OccupierDetail(
     name = "John Brown",
     address = Some(
       OccupierAddress(
@@ -219,14 +54,176 @@ class CompletedLettingsSpec extends AnyWordSpec with Matchers with OptionValues:
     rentalPeriod = None
   )
 
-  val aliceWhite: OccupierDetail = OccupierDetail(
+  private val aliceWhite: OccupierDetail = OccupierDetail(
     name = "Alice White",
     address = None,
     rentalPeriod = None
   )
 
+  "the CompletedLettings trait" when {
+    "copying the session withHasCompletedLettings" should {
+      "set a boolean value although lettingHistory was None" in new SessionWithNoLettingHistory {
+        val session: SessionWrapper = withHasCompletedLettings(true)
+        session.changed                        shouldBe true
+        session.data.lettingHistory           shouldNot be(None)
+        hasCompletedLettings(session.data).get shouldBe true
+      }
+
+      "set a boolean value although lettingHistory.hasCompletedLettings was None" in new SessionWithSomeLettingHistory {
+        val session: SessionWrapper = withHasCompletedLettings(true)
+        session.changed                        shouldBe true
+        hasCompletedLettings(session.data).get shouldBe true
+      }
+
+      "confirm the boolean value which was already set" in new SessionWithSomeLettingHistory(completedLettings =
+        List(johnBrown)
+      ) {
+        val session: SessionWrapper = withHasCompletedLettings(true)
+        session.changed                        shouldBe false
+        hasCompletedLettings(session.data).get shouldBe true
+        completedLettings(session.data)       shouldNot be(empty)
+      }
+
+      "negate the boolean value which was already set" in new SessionWithSomeLettingHistory(completedLettings =
+        List(johnBrown)
+      ) {
+        val session: SessionWrapper = withHasCompletedLettings(false)
+        session.changed                        shouldBe true
+        hasCompletedLettings(session.data).get shouldBe false
+        completedLettings(session.data)        shouldBe empty
+      }
+
+      "double negate the boolean value which was already set" in new SessionWithSomeLettingHistory(completedLettings =
+        List(johnBrown)
+      ) {
+        val session1: SessionWrapper = withHasCompletedLettings(false)
+        val session2: SessionWrapper = withHasCompletedLettings(true)(using session1.data)
+        session2.changed                        shouldBe true
+        hasCompletedLettings(session2.data).get shouldBe true
+      }
+    }
+
+    "copying the session byAddingOrUpdatingTemporaryOccupier" should {
+      "set a non-empty completedLettings list although the lettingHistory was None" in new SessionWithNoLettingHistory {
+        private val session = byAddingOrUpdatingOccupier(johnBrown)._2
+        session.changed                        shouldBe true
+        session.data.lettingHistory           shouldNot be(None)
+        hasCompletedLettings(session.data).get shouldBe true
+        completedLettings(session.data)          should have size 1
+        completedLettings(session.data).head   shouldBe johnBrown
+      }
+
+      "set the very first list value when lettingHistory is not None" in new SessionWithSomeLettingHistory {
+        private val session = byAddingOrUpdatingOccupier(johnBrown)._2
+        session.changed                        shouldBe true
+        hasCompletedLettings(session.data).get shouldBe true
+        completedLettings(session.data)          should have size 1
+        completedLettings(session.data).head   shouldBe johnBrown
+      }
+
+      "confirm resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
+        List(johnBrown)
+      ) {
+        private val session = byAddingOrUpdatingOccupier(johnBrown, maybeIndex = Some(0))._2
+        session.changed                        shouldBe false
+        hasCompletedLettings(session.data).get shouldBe true
+        completedLettings(session.data)          should have size 1
+        completedLettings(session.data).head   shouldBe johnBrown
+      }
+
+      "change resident address which was already set" in new SessionWithSomeLettingHistory(completedLettings =
+        List(johnBrown)
+      ) {
+        val updatedJohnBrown: OccupierDetail = OccupierDetail(johnBrown.name, aliceWhite.address, rentalPeriod = None)
+        private val session                  = byAddingOrUpdatingOccupier(updatedJohnBrown, maybeIndex = Some(0))._2
+        session.changed                              shouldBe true
+        hasCompletedLettings(session.data).get       shouldBe true
+        completedLettings(session.data)                should have size 1
+        completedLettings(session.data).head.name    shouldBe johnBrown.name
+        completedLettings(session.data).head.address shouldBe aliceWhite.address
+      }
+
+      "append a second resident to the existing list" in new SessionWithSomeLettingHistory(completedLettings =
+        List(johnBrown)
+      ) {
+        private val session = byAddingOrUpdatingOccupier(aliceWhite)._2
+        session.changed                        shouldBe true
+        hasCompletedLettings(session.data).get shouldBe true
+        completedLettings(session.data)          should have size 2
+        completedLettings(session.data).head   shouldBe johnBrown
+        completedLettings(session.data).last   shouldBe aliceWhite
+      }
+    }
+
+    "copying the session byUpdatingOccupierRentalPeriod" should {
+      "create some empty lettingHistory if it was None" in new SessionWithNoLettingHistory {
+        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
+        session.changed                    shouldBe true
+        hasCompletedLettings(session.data) shouldBe None
+        completedLettings(session.data)    shouldBe empty
+      }
+
+      "keep the empty completedLettings" in new SessionWithSomeLettingHistory(
+        completedLettings = List.empty
+      ) {
+        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
+        session.changed                    shouldBe false
+        hasCompletedLettings(session.data) shouldBe None
+        completedLettings(session.data)    shouldBe empty
+      }
+
+      "patch the existing occupier if the given rental period is different" in new SessionWithSomeLettingHistory(
+        completedLettings = List(johnBrown)
+      ) {
+        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
+        session.changed                                       shouldBe true
+        completedLettings(session.data).head.name             shouldBe johnBrown.name
+        completedLettings(session.data).head.address          shouldBe johnBrown.address
+        completedLettings(session.data).head.rentalPeriod.get shouldBe year2024
+      }
+
+      "keep the existing occupier if the given rental period is the same" in new SessionWithSomeLettingHistory(
+        completedLettings = List(
+          johnBrown.copy(rentalPeriod = Some(year2024))
+        )
+      ) {
+        val session: SessionWrapper = byUpdatingOccupierRentalPeriod(0, year2024)
+        session.changed                                       shouldBe false
+        completedLettings(session.data).head.name             shouldBe johnBrown.name
+        completedLettings(session.data).head.address          shouldBe johnBrown.address
+        completedLettings(session.data).head.rentalPeriod.get shouldBe year2024
+      }
+    }
+
+    "copying the session byRemovingCompletedLettingAt" should {
+      "set an empty completedLettings list although the lettingHistory was None" in new SessionWithNoLettingHistory {
+        val session: SessionWrapper = byRemovingCompletedLettingAt(2)
+        session.changed                        shouldBe true
+        session.data.lettingHistory           shouldNot be(None)
+        hasCompletedLettings(session.data).get shouldBe false
+        completedLettings(session.data)        shouldBe empty
+      }
+
+      "remove from empty completedLettings list when lettingHistory is not None" in new SessionWithSomeLettingHistory {
+        val session: SessionWrapper = byRemovingCompletedLettingAt(0)
+        session.changed                        shouldBe true
+        hasCompletedLettings(session.data).get shouldBe false
+        completedLettings(session.data)        shouldBe empty
+      }
+
+      "remove existent resident from completedLettings list" in new SessionWithSomeLettingHistory(completedLettings =
+        List(johnBrown)
+      ) {
+        val session: SessionWrapper = byRemovingCompletedLettingAt(0)
+        session.changed                        shouldBe true
+        hasCompletedLettings(session.data).get shouldBe false
+        completedLettings(session.data)        shouldBe empty
+      }
+    }
+  }
+
   trait SessionWithNoLettingHistory:
-    given Session = session // having lettingHistory = None
+    given Session = session
 
   trait SessionWithSomeLettingHistory(completedLettings: List[OccupierDetail] = Nil):
 

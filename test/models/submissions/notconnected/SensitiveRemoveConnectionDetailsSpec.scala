@@ -16,16 +16,14 @@
 
 package models.submissions.notconnected
 
-import models.submissions.MongoCryptoSupport
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.common.{AnswersYesNo, ContactDetails}
 import models.submissions.notconnected.RemoveConnectionsDetails.*
-import org.scalatest.OptionValues
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.{JsSuccess, Json}
+import test.MongoCryptoSupport
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class SensitiveRemoveConnectionDetailsSpec extends AnyWordSpec with Matchers with OptionValues with MongoCryptoSupport:
+class SensitiveRemoveConnectionDetailsSpec extends BaseSpec with MongoCryptoSupport:
 
   private val clearEnvelope: RemoveConnectionDetails = RemoveConnectionDetails(
     removeConnectionDetails = Some(
@@ -58,7 +56,7 @@ class SensitiveRemoveConnectionDetailsSpec extends AnyWordSpec with Matchers wit
       removeConnectionsDetails.removeConnectionAdditionalInfo shouldBe clearEnvelope.removeConnectionDetails.get.removeConnectionAdditionalInfo
 
       val pastConnectionType = (jsValue \ "pastConnectionType").as[AnswersYesNo]
-      pastConnectionType shouldBe clearEnvelope.pastConnectionType.value
+      pastConnectionType shouldBe clearEnvelope.pastConnectionType.get
     }
 
     "deserialize from encrypted JSON" in {

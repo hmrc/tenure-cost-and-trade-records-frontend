@@ -17,10 +17,10 @@
 package models.submissions.aboutYourLeaseOrTenure
 
 import models.submissions.common.{Address, AnswersYesNo}
-import test.SensitiveTestHelper
+import test.MongoCryptoSupport
 import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class SensitiveAboutLeaseOrAgreementPartOneSpec extends BaseSpec with SensitiveTestHelper:
+class SensitiveAboutLeaseOrAgreementPartOneSpec extends BaseSpec with MongoCryptoSupport:
 
   "SensitiveAboutLeaseOrAgreementPartOne" should {
     "encrypt and decrypt sensitive fields correctly" in {

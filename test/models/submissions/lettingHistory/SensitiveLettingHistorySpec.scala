@@ -16,15 +16,13 @@
 
 package models.submissions.lettingHistory
 
-import models.submissions.MongoCryptoSupport
-import org.scalatest.OptionValues
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.{JsSuccess, Json}
+import test.MongoCryptoSupport
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import java.time.LocalDate
 
-class SensitiveLettingHistorySpec extends AnyWordSpec with Matchers with OptionValues with MongoCryptoSupport:
+class SensitiveLettingHistorySpec extends BaseSpec with MongoCryptoSupport:
 
   private val clearLettingHistory: LettingHistory = LettingHistory(
     hasPermanentResidents = Some(true),
@@ -74,15 +72,15 @@ class SensitiveLettingHistorySpec extends AnyWordSpec with Matchers with OptionV
 
       (jsValue \ "hasCompletedLettings").as[Boolean] shouldBe true
       val encryptedOccupierDetails = (jsValue \ "completedLettings").head.as[SensitiveOccupierDetail]
-      encryptedOccupierDetails.name                       should not be clearLettingHistory.completedLettings.head.name
-      encryptedOccupierDetails.address.value.line1        should not be clearLettingHistory.completedLettings.head.address.value.buildingNameNumber
-      encryptedOccupierDetails.address.value.line2.value  should not be clearLettingHistory.completedLettings.head.address.value.street1.value
-      encryptedOccupierDetails.address.value.town         should not be clearLettingHistory.completedLettings.head.address.value.town
-      encryptedOccupierDetails.address.value.county.value should not be clearLettingHistory.completedLettings.head.address.value.county.value
-      encryptedOccupierDetails.address.value.postcode     should not be clearLettingHistory.completedLettings.head.address.value.postcode
-      encryptedOccupierDetails.rental.isDefined         shouldBe true
-      encryptedOccupierDetails.rental.value.fromDate    shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.value.fromDate
-      encryptedOccupierDetails.rental.value.toDate      shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.value.toDate
+      encryptedOccupierDetails.name                   should not be clearLettingHistory.completedLettings.head.name
+      encryptedOccupierDetails.address.get.line1      should not be clearLettingHistory.completedLettings.head.address.get.buildingNameNumber
+      encryptedOccupierDetails.address.get.line2.get  should not be clearLettingHistory.completedLettings.head.address.get.street1.get
+      encryptedOccupierDetails.address.get.town       should not be clearLettingHistory.completedLettings.head.address.get.town
+      encryptedOccupierDetails.address.get.county.get should not be clearLettingHistory.completedLettings.head.address.get.county.get
+      encryptedOccupierDetails.address.get.postcode   should not be clearLettingHistory.completedLettings.head.address.get.postcode
+      encryptedOccupierDetails.rental.isDefined     shouldBe true
+      encryptedOccupierDetails.rental.get.fromDate  shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.get.fromDate
+      encryptedOccupierDetails.rental.get.toDate    shouldBe clearLettingHistory.completedLettings.head.rentalPeriod.get.toDate
     }
 
     "deserialize from encrypted JSON" in {

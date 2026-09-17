@@ -18,9 +18,9 @@ package form.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.LowMarginFuelCardDetail
 import play.api.data.FormError
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class LowMarginFuelCardDetailsFormSpec extends TestBaseSpec:
+class LowMarginFuelCardDetailsFormSpec extends BaseSpec:
 
   "LowMarginFuelCardDetailsForm" should {
     "bind valid data correctly" in {

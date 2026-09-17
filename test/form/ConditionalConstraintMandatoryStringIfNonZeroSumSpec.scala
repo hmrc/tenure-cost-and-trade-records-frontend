@@ -17,11 +17,10 @@
 package form
 
 import form.ConditionalConstraintMappings.mandatoryStringIfNonZeroSum
-import org.scalatest.matchers.should
-import org.scalatest.wordspec.AnyWordSpec
 import play.api.data.Forms.{list, mapping, single, text}
 import play.api.data.validation.Constraints.maxLength
 import play.api.data.{Form, FormError, Mapping}
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 import util.NumberUtil.zeroBigDecimal
 
 import scala.collection.immutable.ArraySeq
@@ -30,7 +29,12 @@ import scala.util.Try
 /**
   * @author Yuriy Tumakha
   */
-class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyWordSpec with should.Matchers:
+class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends BaseSpec:
+
+  case class NonZeroSumModel(
+    items: List[BigDecimal] = List.empty,
+    description: String
+  )
 
   private def columnMapping: Mapping[BigDecimal] =
     single(
@@ -117,8 +121,3 @@ class ConditionalConstraintMandatoryStringIfNonZeroSumSpec extends AnyWordSpec w
       res.value  shouldBe None
     }
   }
-
-  case class NonZeroSumModel(
-    items: List[BigDecimal] = List.empty,
-    description: String
-  )

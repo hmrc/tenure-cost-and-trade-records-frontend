@@ -18,11 +18,11 @@ package form
 
 import play.api.data.Form
 import play.api.data.Forms.*
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import scala.language.implicitConversions
 
-class OptionalCurrencyMappingSpec extends TestBaseSpec:
+class OptionalCurrencyMappingSpec extends BaseSpec:
 
   private val testMapping = OptionalCurrencyMapping.partOfAnnualRent("test", Some(BigDecimal(100)), 20)
 
@@ -30,18 +30,21 @@ class OptionalCurrencyMappingSpec extends TestBaseSpec:
     "evaluate empty input as valid" in {
       val form   = Form(single("amount" -> testMapping))
       val result = form.bind(Map("amount" -> ""))
+
       result.errors shouldBe empty
     }
 
     "evaluate numerical value as valid" in {
       val form   = Form(single("amount" -> testMapping))
       val result = form.bind(Map("amount" -> "50"))
+
       result.errors shouldBe empty
     }
 
     "evaluate an not numerical value as invalid" in {
       val form   = Form(single("amount" -> testMapping))
       val result = form.bind(Map("amount" -> "invalid"))
+
       result.errors                should not be empty
       result.errors.head.message shouldBe "error.optCurrency.invalid"
     }
@@ -49,6 +52,7 @@ class OptionalCurrencyMappingSpec extends TestBaseSpec:
     "evaluate a negative value as invalid" in {
       val form   = Form(single("amount" -> testMapping))
       val result = form.bind(Map("amount" -> "-50"))
+
       result.errors                should not be empty
       result.errors.head.message shouldBe "error.optCurrency.negative"
     }
@@ -56,6 +60,7 @@ class OptionalCurrencyMappingSpec extends TestBaseSpec:
     "invalidate an number greater than annualRent" in {
       val form   = Form(single("amount" -> testMapping))
       val result = form.bind(Map("amount" -> "150"))
+
       result.errors                should not be empty
       result.errors.head.message shouldBe "error.optCurrency.graterThanAnnualRent"
     }
@@ -63,6 +68,7 @@ class OptionalCurrencyMappingSpec extends TestBaseSpec:
     "invalidate case combined sum included to cover equipment and trade services greater than annualRent" in {
       val form   = Form(single("amount" -> testMapping))
       val result = form.bind(Map("amount" -> "81"))
+
       result.errors                should not be empty
       result.errors.head.message shouldBe "error.includedPartsSum.graterThanAnnualRent"
     }

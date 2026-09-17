@@ -16,18 +16,18 @@
 
 package form
 
-import utils.TestBaseSpec
+import test.FormSpec
 
 import java.time.LocalDate
 
-class LocalDateFormatterSpec extends TestBaseSpec:
+class LocalDateFormatterSpec extends FormSpec:
 
   def createLocalDateFormatter(
     fieldNameKey: String,
     allowPastDates: Boolean,
     allowFutureDates: Boolean
   ): LocalDateFormatter =
-    LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates)(using messages)
+    LocalDateFormatter(fieldNameKey, allowPastDates, allowFutureDates)
 
   "LocalDateFormatter" should {
     "validate a correct date without errors" in {

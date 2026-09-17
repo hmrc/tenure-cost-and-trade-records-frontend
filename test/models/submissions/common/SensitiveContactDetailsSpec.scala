@@ -16,13 +16,13 @@
 
 package models.submissions.common
 
-import test.SensitiveTestHelper
+import test.MongoCryptoSupport
 import uk.gov.hmrc.crypto.Sensitive.SensitiveString
 import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class SensitiveContactDetailsSpec extends BaseSpec with SensitiveTestHelper:
+class SensitiveContactDetailsSpec extends BaseSpec with MongoCryptoSupport:
 
-  "SensitiveContactDetails" should {
+  "SensitiveContactDetails" should:
     "encrypt and decrypt contact details correctly" in {
       val originalContactDetails = ContactDetails(
         phone = "123456789",
@@ -36,4 +36,3 @@ class SensitiveContactDetailsSpec extends BaseSpec with SensitiveTestHelper:
 
       sensitiveContactDetails.decryptedValue shouldBe originalContactDetails
     }
-  }
