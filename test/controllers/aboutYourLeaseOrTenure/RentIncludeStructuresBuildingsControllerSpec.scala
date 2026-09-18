@@ -22,9 +22,10 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour,
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.{TestBaseSpec, toOpt}
 
+import utils.TestBaseSpec
+
+import scala.language.implicitConversions
 import scala.language.reflectiveCalls
 
 class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:

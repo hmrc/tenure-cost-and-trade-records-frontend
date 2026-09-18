@@ -21,10 +21,10 @@ import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.JsoupHelpers.contentAsJsoup
+import test.JsoupHelpers
 import utils.TestBaseSpec
 
-class ConcessionTypeDetailsControllerSpec extends TestBaseSpec:
+class ConcessionTypeDetailsControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   val mockAudit: Audit = mock[Audit]
 

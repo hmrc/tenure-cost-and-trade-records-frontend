@@ -16,7 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
-import connectors.{Audit, MockAddressLookup}
+import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutfranchisesorlettings.ATMLetting
@@ -28,8 +28,9 @@ import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
+import test.{JsoupHelpers, MockAddressLookup}
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.{JsoupHelpers, TestBaseSpec}
+import utils.TestBaseSpec
 
 import scala.concurrent.Future
 

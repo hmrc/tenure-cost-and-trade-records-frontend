@@ -23,7 +23,7 @@ import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
+
 import utils.TestBaseSpec
 
 class IntervalsOfRentReviewControllerSpec extends TestBaseSpec:

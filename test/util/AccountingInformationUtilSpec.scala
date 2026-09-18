@@ -17,16 +17,14 @@
 package util
 
 import models.submissions.Form6010.{DayMonthsDuration, MonthsYearDuration}
-import org.scalatest.matchers.should
-import org.scalatest.wordspec.AnyWordSpec
-import play.api.Logging
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import java.time.{LocalDate, MonthDay, YearMonth}
 
 /**
   * @author Yuriy Tumakha
   */
-class AccountingInformationUtilSpec extends AnyWordSpec with should.Matchers with Logging:
+class AccountingInformationUtilSpec extends BaseSpec:
 
   private val today   = LocalDate.now
   private def yearNow = YearMonth.now.getYear

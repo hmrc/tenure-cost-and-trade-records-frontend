@@ -18,9 +18,9 @@ package form.accommodation
 
 import models.submissions.accommodation.AvailableRooms
 import play.api.data.FormError
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AvailableRooms6048FormSpec extends TestBaseSpec:
+class AvailableRooms6048FormSpec extends BaseSpec:
 
   "AvailableRooms6048Form" should {
     "fail to bind when single and double bedrooms are zero" in {

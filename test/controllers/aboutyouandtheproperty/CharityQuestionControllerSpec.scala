@@ -22,7 +22,7 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status.*
 import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
-import utils.FormBindingTestAssertions.*
+
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls

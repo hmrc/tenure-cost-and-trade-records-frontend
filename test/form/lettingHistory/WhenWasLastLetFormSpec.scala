@@ -16,49 +16,50 @@
 
 package form.lettingHistory
 
-import actions.SessionRequest
-import controllers.lettingHistory.FiscalYearSupport
 import form.lettingHistory.WhenWasLastLetForm.theForm
 import play.api.data.Form
-import play.api.mvc.AnyContent
+import test.FormSpec
 
 import java.time.LocalDate
 
 class WhenWasLastLetFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in new SessionFixture:
-    val data: Map[String, String] = Map(
-      "date.day"   -> "1",
-      "date.month" -> "4",
-      "date.year"  -> "2024"
-    )
-    val bound: Form[LocalDate]    = theForm.bind(data)
-    bound.hasErrors mustBe false
-    bound.data mustBe data
-
-  it should "unbind good data as expected" in new SessionFixture {
-    val date: LocalDate         = LocalDate.of(2024, 8, 13)
-    val filled: Form[LocalDate] = theForm.fill(date)
-    filled.hasErrors mustBe false
-    filled.data mustBe Map(
-      "date.day"   -> "13",
-      "date.month" -> "8",
-      "date.year"  -> "2024"
-    )
-  }
-
-  it should "detect errors related to fields being required" in new SessionFixture {
-    val bound: Form[LocalDate] = theForm.bind(
-      Map(
-        "date.day"   -> "",
-        "date.month" -> "",
-        "date.year"  -> ""
+  "WhenWasLastLetForm" should {
+    "bind good data as expected" in new SessionFixture {
+      val data: Map[String, String] = Map(
+        "date.day"   -> "1",
+        "date.month" -> "4",
+        "date.year"  -> "2024"
       )
-    )
-    bound.hasErrors mustBe true
-    bound.errors must have size 1
-    bound.error("date.day").value.message mustBe "error.date.required"
-  }
+      val bound: Form[LocalDate]    = theForm.bind(data)
 
-  trait SessionFixture extends FiscalYearSupport:
-    given SessionRequest[AnyContent] = sessionRequest(isWelsh = false)
+      bound.hasErrors shouldBe false
+      bound.data      shouldBe data
+    }
+
+    "unbind good data as expected" in new SessionFixture {
+      val date: LocalDate         = LocalDate.of(2024, 8, 13)
+      val filled: Form[LocalDate] = theForm.fill(date)
+
+      filled.hasErrors shouldBe false
+      filled.data      shouldBe Map(
+        "date.day"   -> "13",
+        "date.month" -> "8",
+        "date.year"  -> "2024"
+      )
+    }
+
+    "detect errors related to fields being required" in new SessionFixture {
+      val bound: Form[LocalDate] = theForm.bind(
+        Map(
+          "date.day"   -> "",
+          "date.month" -> "",
+          "date.year"  -> ""
+        )
+      )
+
+      bound.hasErrors                     shouldBe true
+      bound.errors                          should have size 1
+      bound.error("date.day").get.message shouldBe "error.date.required"
+    }
+  }

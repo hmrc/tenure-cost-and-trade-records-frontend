@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSold]]:
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, getRequest)
 
   private val backLink = controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url
 
@@ -42,30 +42,27 @@ class BunkeredFuelSoldViewSpec extends QuestionViewBehaviours[Seq[BunkeredFuelSo
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to your bunkered fuel question Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.BunkeredFuelQuestionController.show().url
-    }
+    behave like pageWithBackLink(createView, "Bunkered fuel question", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").first.html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
-      assert(sectionText == messages("bunkeredFuelSold.heading"))
+
+      sectionText shouldBe messages("bunkeredFuelSold.heading")
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "BunkeredFuelSoldForm" should {

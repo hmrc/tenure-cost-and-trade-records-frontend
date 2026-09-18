@@ -23,7 +23,7 @@ import views.behaviours.ViewBehaviours
 class ConfirmationViewSpec extends ViewBehaviours:
 
   private val messageKeyPrefix = "confirmation"
-  private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest   = SessionRequest(baseFilled6010Session, getRequest)
 
   private val form       = FeedbackFormMapper.feedbackForm
   private def createView = () => confirmation(form)(using sessionRequest, messages)
@@ -33,10 +33,11 @@ class ConfirmationViewSpec extends ViewBehaviours:
     behave like normalPage(createView, messageKeyPrefix)
 
     "contain confirmation text" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("confirmation.emailConfirm")))
-      assert(doc.toString.contains(messages("confirmation.whatNext")))
-      assert(doc.toString.contains(messages("confirmation.list.1")))
-      assert(doc.toString.contains(messages("confirmation.list.2")))
+      val page = asDocument(createView()).toString
+
+      assert(page.contains(messages("confirmation.emailConfirm")))
+      assert(page.contains(messages("confirmation.whatNext")))
+      assert(page.contains(messages("confirmation.list.1")))
+      assert(page.contains(messages("confirmation.list.2")))
     }
   }

@@ -16,112 +16,143 @@
 
 package navigation.identifiers
 
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AboutYouAndThePropertyIdentifiersSpec extends TestBaseSpec:
+class AboutYouAndThePropertyIdentifiersSpec extends BaseSpec:
 
-  "About the property identifiers" when {
+  "About you and the property page identifiers" should {
+    "be correct for the about you page" in {
+      AboutYouPageId.toString shouldBe "aboutYouPage"
+    }
 
-    "Identifier for about you page" in
-      assert(AboutYouPageId.toString.equals("aboutYouPage"))
+    "be correct for the charity question page" in {
+      CharityQuestionPageId.toString shouldBe "charityQuestionPage"
+    }
 
-    "Identifier for charity question page" in
-      assert(CharityQuestionPageId.toString.equals("charityQuestionPage"))
+    "be correct for the contact details question page" in {
+      ContactDetailsQuestionId.toString shouldBe "contactDetailsQuestionPage"
+    }
 
-    "Identifier for contact details question page" in
-      assert(ContactDetailsQuestionId.toString.equals("contactDetailsQuestionPage"))
+    "be correct for the trading activity page" in {
+      TradingActivityPageId.toString shouldBe "tradingActivityPage"
+    }
 
-    "Identifier for trading activity page" in
-      assert(TradingActivityPageId.toString.equals("tradingActivityPage"))
-
-    "Identifier for about the property page" in
-      assert(AboutThePropertyPageId.toString.equals("aboutThePropertyPage"))
+    "be correct for the about the property page" in {
+      AboutThePropertyPageId.toString shouldBe "aboutThePropertyPage"
+    }
 
     // 6030 page only
-    "Identifier for about the property string page" in
-      assert(AboutThePropertyStringPageId.toString.equals("aboutThePropertyStringPage"))
+    "be correct for the about the property 6030 page" in {
+      AboutThePropertyStringPageId.toString shouldBe "aboutThePropertyStringPage"
+    }
 
-    "Identifier for website for property page" in
-      assert(WebsiteForPropertyPageId.toString.equals("websiteForPropertyPage"))
-
-    // 6015 page only
-    "Identifier for premises licence granted page" in
-      assert(PremisesLicenseGrantedId.toString.equals("premisesLicenseGrantedPage"))
+    "be correct for the website for the property page" in {
+      WebsiteForPropertyPageId.toString shouldBe "websiteForPropertyPage"
+    }
 
     // 6015 page only
-    "Identifier for premises licence granted details page" in
-      assert(PremisesLicenseGrantedDetailsId.toString.equals("premisesLicenseGrantedDetailsPage"))
+    "be correct for the premises licence granted page" in {
+      PremisesLicenseGrantedId.toString shouldBe "premisesLicenseGrantedPage"
+    }
 
-    "Identifier for licence activity page" in
-      assert(LicensableActivityPageId.toString.equals("licensableActivityPage"))
+    // 6015 page only
+    "be correct for the premises licence granted details page" in {
+      PremisesLicenseGrantedDetailsId.toString shouldBe "premisesLicenseGrantedDetailsPage"
+    }
 
-    "Identifier for licence activity details page" in
-      assert(LicensableActivityDetailsPageId.toString.equals("licensableActivityDetailsPage"))
+    "be correct for the licensable activity page" in {
+      LicensableActivityPageId.toString shouldBe "licensableActivityPage"
+    }
 
-    "Identifier for premise licence conditions page" in
-      assert(PremisesLicenceConditionsPageId.toString.equals("premisesLicenceConditionsPage"))
+    "be correct for the licensable activity details page" in {
+      LicensableActivityDetailsPageId.toString shouldBe "licensableActivityDetailsPage"
+    }
 
-    "Identifier for premise licence conditions details page" in
-      assert(PremisesLicenceConditionsDetailsPageId.toString.equals("premisesLicenceConditionsDetailsPage"))
+    "be correct for the premises licence conditions page" in {
+      PremisesLicenceConditionsPageId.toString shouldBe "premisesLicenceConditionsPage"
+    }
 
-    "Identifier for enforcement action taken page" in
-      assert(EnforcementActionBeenTakenPageId.toString.equals("enforcementActionBeenTakenPage"))
+    "be correct for the premises licence conditions details page" in {
+      PremisesLicenceConditionsDetailsPageId.toString shouldBe "premisesLicenceConditionsDetailsPage"
+    }
 
-    "Identifier for enforcement action taken details page" in
-      assert(EnforcementActionBeenTakenDetailsPageId.toString.equals("enforcementActionBeenTakenDetailsPage"))
+    "be correct for the enforcement action taken page" in {
+      EnforcementActionBeenTakenPageId.toString shouldBe "enforcementActionBeenTakenPage"
+    }
 
-    "Identifier for tied for goods page" in
-      assert(TiedForGoodsPageId.toString.equals("tiedForGoodsPage"))
+    "be correct for the enforcement action taken details page" in {
+      EnforcementActionBeenTakenDetailsPageId.toString shouldBe "enforcementActionBeenTakenDetailsPage"
+    }
 
-    "Identifier for tied for goods details page" in
-      assert(TiedForGoodsDetailsPageId.toString.equals("tiedForGoodsDetailsPage"))
+    "be correct for the tied for goods page" in {
+      TiedForGoodsPageId.toString shouldBe "tiedForGoodsPage"
+    }
 
-    "Identifier for renewables plant page" in
-      assert(RenewablesPlantPageId.toString.equals("renewablesPlantPage"))
+    "be correct for the tied for goods details page" in {
+      TiedForGoodsDetailsPageId.toString shouldBe "tiedForGoodsDetailsPage"
+    }
 
-    "Identifier for three years constructed page" in
-      assert(ThreeYearsConstructedPageId.toString.equals("threeYearsConstructedPage"))
+    "be correct for the renewables plant page" in {
+      RenewablesPlantPageId.toString shouldBe "renewablesPlantPage"
+    }
 
-    "Identifier for plants and technologies page" in
-      assert(BatteriesCapacityId.toString.equals("batteriesCapacityPage"))
+    "be correct for the three years constructed page" in {
+      ThreeYearsConstructedPageId.toString shouldBe "threeYearsConstructedPage"
+    }
 
-    "Identifier for commercial letting question  page" in
-      assert(CommercialLettingQuestionId.toString.equals("commercialLettingQuestionPage"))
+    "be correct for the batteries capacity page" in {
+      BatteriesCapacityId.toString shouldBe "batteriesCapacityPage"
+    }
 
-    "Identifier for commercial letting availability  page" in
-      assert(CommercialLettingAvailabilityId.toString.equals("commercialLettingAvailabilityPage"))
+    "be correct for the commercial letting question page" in {
+      CommercialLettingQuestionId.toString shouldBe "commercialLettingQuestionPage"
+    }
 
-    "Identifier for commercial letting availability welsh  page" in
-      assert(CommercialLettingAvailabilityWelshId.toString.equals("commercialLettingAvailabilityWelshPage"))
+    "be correct for the commercial letting availability page" in {
+      CommercialLettingAvailabilityId.toString shouldBe "commercialLettingAvailabilityPage"
+    }
 
-    "Identifier for  Occupiers Details  page" in
-      assert(OccupiersDetailsId.toString.equals("occupiersDetailsPage"))
+    "be correct for the commercial letting availability Welsh page" in {
+      CommercialLettingAvailabilityWelshId.toString shouldBe "commercialLettingAvailabilityWelshPage"
+    }
 
-    "Identifier for  Occupiers Details List  page" in
-      assert(OccupiersDetailsListId.toString.equals("occupiersDetailsListPage"))
+    "be correct for the Occupiers Details page" in {
+      OccupiersDetailsId.toString shouldBe "occupiersDetailsPage"
+    }
 
-    "Identifier for completed lettings page" in
-      assert(CompletedCommercialLettingsId.toString.equals("completedCommercialLettingsPage"))
+    "be correct for the Occupiers Details List page" in {
+      OccupiersDetailsListId.toString shouldBe "occupiersDetailsListPage"
+    }
 
-    "Identifier for  completed lettings welsh  page" in
-      assert(CompletedCommercialLettingsWelshId.toString.equals("completedCommercialLettingsWelshPage"))
+    "be correct for the completed lettings page" in {
+      CompletedCommercialLettingsId.toString shouldBe "completedCommercialLettingsPage"
+    }
 
-    "Identifier for  parts unavailable  page" in
-      assert(PartsUnavailableId.toString.equals("partsUnavailablePage"))
+    "be correct for the completed lettings Welsh page" in {
+      CompletedCommercialLettingsWelshId.toString shouldBe "completedCommercialLettingsWelshPage"
+    }
 
-    "Identifier generator capacity page" in
-      assert(GeneratorCapacityId.toString.equals("generatorCapacityPage"))
+    "be correct for the parts unavailable page" in {
+      PartsUnavailableId.toString shouldBe "partsUnavailablePage"
+    }
 
-    "Identifier for batteries capacity page" in
-      assert(PlantAndTechnologyId.toString.equals("plantAndTechnologyPage"))
+    "be correct for the generator capacity page" in {
+      GeneratorCapacityId.toString shouldBe "generatorCapacityPage"
+    }
 
-    "Identifier for costs breakdown page" in
-      assert(CostsBreakdownId.toString.equals("costsBreakdownPage"))
+    "be correct for the plant and technology page" in {
+      PlantAndTechnologyId.toString shouldBe "plantAndTechnologyPage"
+    }
 
-    "Identifier for property currently used page" in
-      assert(PropertyCurrentlyUsedPageId.toString.equals("propertyCurrentlyUsedPage"))
+    "be correct for the costs breakdown page" in {
+      CostsBreakdownId.toString shouldBe "costsBreakdownPage"
+    }
 
-    "Identifier for check your answers page" in
-      assert(CheckYourAnswersAboutThePropertyPageId.toString.equals("checkYourAnswersAboutThePropertyPage"))
+    "be correct for the property currently used page" in {
+      PropertyCurrentlyUsedPageId.toString shouldBe "propertyCurrentlyUsedPage"
+    }
 
+    "be correct for the about you and the property CYA page" in {
+      CheckYourAnswersAboutThePropertyPageId.toString shouldBe "checkYourAnswersAboutThePropertyPage"
+    }
   }

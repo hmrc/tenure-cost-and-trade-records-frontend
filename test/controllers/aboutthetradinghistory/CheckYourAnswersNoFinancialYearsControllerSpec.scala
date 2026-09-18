@@ -24,7 +24,8 @@ import org.mockito.ArgumentCaptor
 import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.JsoupHelpers
+import utils.TestBaseSpec
 import views.html.aboutthetradinghistory.checkYourAnswerNoFinancialYears as CheckYourAnswerNoFinancialYearsView
 
 import scala.concurrent.Future

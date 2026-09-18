@@ -30,10 +30,10 @@ class EditAddressViewSpec extends QuestionViewBehaviours[Address]:
 
   override val form: Form[Address] = EditAddressForm.editAddressForm
 
-  private def createView = () => editAddressView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+  private def createView = () => editAddressView(form, Summary("99996010001"), backLink)(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[Address]) =>
-    editAddressView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+    editAddressView(form, Summary("99996010001"), backLink)(using getRequest, messages)
 
   "Edit Address view" should {
 
@@ -48,29 +48,26 @@ class EditAddressViewSpec extends QuestionViewBehaviours[Address]:
       "editAddress.postcode"
     )
 
-    "has a link marked with back.link.label leading to the Are still connected Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
-    }
+    behave like pageWithBackLink(createView, "Are you still connected", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.connectionToTheProperty")}"""
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

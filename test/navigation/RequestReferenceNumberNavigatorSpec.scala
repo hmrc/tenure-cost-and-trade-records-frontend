@@ -16,35 +16,20 @@
 
 package navigation
 
-import connectors.Audit
 import navigation.identifiers.*
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
-import scala.concurrent.ExecutionContext
+class RequestReferenceNumberNavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
-class RequestReferenceNumberNavigatorSpec extends TestBaseSpec:
-
-  private val audit = mock[Audit]
-
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  private val navigator: RequestReferenceNumberNavigator = RequestReferenceNumberNavigator(audit)
-
-  implicit override val hc: HeaderCarrier = HeaderCarrier()
-
-  "RequestReferenceNumber navigator" when {
-
-    "go to sign in from an identifier that doesn't exist in the route map" in {
-      case object UnknownIdentifier extends Identifier
-      navigator
+  "RequestReferenceNumber navigator" should {
+    "redirect to default page for identifier that doesn't exist in the route map" in {
+      requestReferenceNumberNavigator
         .nextPage(UnknownIdentifier, stillConnectedDetailsYesSession)
         .apply(stillConnectedDetailsYesSession) shouldBe controllers.routes.LoginController.show
     }
 
-    "return a function that goes to RequestReferenceNumberContactDetailsController from NoReferenceNumberPageId" in {
-      navigator
+    "redirect to RequestReferenceNumberContactDetailsController from NoReferenceNumberPageId" in {
+      requestReferenceNumberNavigator
         .nextPage(NoReferenceNumberPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
@@ -53,8 +38,8 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to RequestReferenceNumberCheckYourAnswersController from NoReferenceNumberContactDetailsPageId" in {
-      navigator
+    "redirect to RequestReferenceNumberCheckYourAnswersController from NoReferenceNumberContactDetailsPageId" in {
+      requestReferenceNumberNavigator
         .nextPage(NoReferenceNumberContactDetailsPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
@@ -63,8 +48,8 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to request reference number confirmation from CheckYourAnswersRequestReferenceNumberPageId" in {
-      navigator
+    "redirect to request reference number confirmation from CheckYourAnswersRequestReferenceNumberPageId" in {
+      requestReferenceNumberNavigator
         .nextPage(CheckYourAnswersRequestReferenceNumberPageId, stillConnectedDetailsYesSession)
         .apply(
           stillConnectedDetailsYesSession
@@ -73,13 +58,8 @@ class RequestReferenceNumberNavigatorSpec extends TestBaseSpec:
           .confirmation()
     }
 
-    "return the CYA url" in {
-      val result = navigator.cyaPage
-      result.map(
-        _.url shouldBe
-          controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
-            .show()
-            .url
-      )
+    "redirect to the CYA" in {
+      val call = requestReferenceNumberNavigator.cyaPage.get
+      call shouldBe controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show()
     }
   }

@@ -32,26 +32,21 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviour
   private val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
 
   private def createView = () =>
-    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    rentPayableVaryAccordingToGrossOrNetView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   "Rent payable vary on gross or net turnover view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncreaseAnnuallyWithRPIController.show().url
-    }
+    behave like pageWithBackLink(createView, "Rent Increase Annually With RPI", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
@@ -82,6 +77,7 @@ class RentPayableVaryAccordingToGrossOrNetViewSpec extends QuestionViewBehaviour
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

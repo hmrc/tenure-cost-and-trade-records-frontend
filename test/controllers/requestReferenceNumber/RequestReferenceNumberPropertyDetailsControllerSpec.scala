@@ -16,7 +16,6 @@
 
 package controllers.requestReferenceNumber
 
-import connectors.MockAddressLookup
 import connectors.addressLookup.*
 import models.Session
 import models.submissions.common.Address
@@ -28,7 +27,8 @@ import org.scalatest.RecoverMethods.recoverToExceptionIf
 import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.{JsoupHelpers, MockAddressLookup}
+import utils.TestBaseSpec
 import views.html.requestReferenceNumber.requestReferenceNumberPropertyDetails as RequestReferenceNumberPropertyDetailsView
 
 import scala.concurrent.Future

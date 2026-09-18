@@ -16,16 +16,16 @@
 
 package navigation.identifiers
 
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class RemoveConnectionIdentifiersSpec extends TestBaseSpec:
+class RemoveConnectionIdentifiersSpec extends BaseSpec:
 
-  "Remove connection identifiers" when {
+  "Remove connection page identifiers" should {
+    "be correct for the past connection page" in {
+      PastConnectionId.toString shouldBe "PastConnectionId"
+    }
 
-    "Identifier for past connection page" in
-      assert(PastConnectionId.toString.equals("PastConnectionId"))
-
-    "Identifier for Remove connection page" in
-      assert(RemoveConnectionId.toString.equals("removeConnectionPageId"))
-
+    "be correct for the Remove connection page" in {
+      RemoveConnectionId.toString shouldBe "removeConnectionPageId"
+    }
   }

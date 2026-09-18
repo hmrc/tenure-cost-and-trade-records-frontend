@@ -16,8 +16,7 @@
 
 package util
 
-import play.api.i18n.{Lang, Messages, MessagesApi}
-import utils.TestBaseSpec
+import test.MessagesApiSpec
 
 import java.time.LocalDate
 import java.util.Locale
@@ -25,24 +24,17 @@ import java.util.Locale
 /**
   * @author Yuriy Tumakha
   */
-class DateUtilLocalisedSpec extends TestBaseSpec:
+class DateUtilLocalisedSpec extends MessagesApiSpec:
 
-  val en: Locale                  = Locale.UK
-  val cy: Locale                  = Locale.of("cy")
-  val uk: Locale                  = Locale.of("uk")
-  val unavailableLocale: Locale   = Locale.of("xy")
-  private val testDate: LocalDate = LocalDate.of(2025, 4, 17)
-  private val dateEN              = "17 April 2025"
-  private val dateCY              = "17 Ebrill 2025"
-  private val dateMonthAbbrEN     = "17 Apr 2025"
-  private val dateMonthAbbrCY     = "17 Ebr 2025"
-
-  private val dateUtilLocalised = inject[DateUtilLocalised]
-  private val messagesApi       = inject[MessagesApi]
-
-  def messagesForLocale(locale: Locale): Messages = messagesApi.preferred(Seq(Lang(locale)))
-
-  implicit val messagesEN: Messages = messagesForLocale(en)
+  private val en: Locale        = Locale.UK
+  private val cy: Locale        = Locale.of("cy")
+  private val uk: Locale        = Locale.of("uk")
+  private val unavailableLocale = Locale.of("xy")
+  private val testDate          = LocalDate.of(2025, 4, 17)
+  private val dateEN            = "17 April 2025"
+  private val dateCY            = "17 Ebrill 2025"
+  private val dateMonthAbbrEN   = "17 Apr 2025"
+  private val dateMonthAbbrCY   = "17 Ebr 2025"
 
   "DateUtilLocalised" should {
     "format LocalDate" in {

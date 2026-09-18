@@ -32,25 +32,20 @@ class ConnectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
   private val backLink = controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
 
   private def createView = () =>
-    connectionToThePropertyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    connectionToThePropertyView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[ConnectionToProperty]) =>
-    connectionToThePropertyView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    connectionToThePropertyView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   "Connection to property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to payment when lease granted Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
-    }
+    behave like pageWithBackLink(createView, "Are you still connected", backLink)
 
     "contain radio buttons for the value occupier/trustee" in {
       val doc = asDocument(createViewUsingForm(form))
+
       assertContainsRadioButton(
         doc,
         "connectionToTheProperty",
@@ -64,6 +59,7 @@ class ConnectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
 
     "contain radio buttons for the value owner/trustee" in {
       val doc = asDocument(createViewUsingForm(form))
+
       assertContainsRadioButton(
         doc,
         "connectionToTheProperty-2",
@@ -77,6 +73,7 @@ class ConnectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
 
     "contain radio buttons for the value occupier agent" in {
       val doc = asDocument(createViewUsingForm(form))
+
       assertContainsRadioButton(
         doc,
         "connectionToTheProperty-3",
@@ -89,6 +86,7 @@ class ConnectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
 
     "contain radio buttons for the value owner agent" in {
       val doc = asDocument(createViewUsingForm(form))
+
       assertContainsRadioButton(
         doc,
         "connectionToTheProperty-4",
@@ -102,6 +100,7 @@ class ConnectionToThePropertyViewSpec extends QuestionViewBehaviours[ConnectionT
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

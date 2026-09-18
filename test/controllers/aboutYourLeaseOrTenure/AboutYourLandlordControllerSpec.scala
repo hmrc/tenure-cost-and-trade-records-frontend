@@ -17,7 +17,7 @@
 package controllers.aboutYourLeaseOrTenure
 
 import connectors.addressLookup.*
-import connectors.{Audit, MockAddressLookup}
+import connectors.Audit
 import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.theForm
 import models.ForType
 import models.ForType.*
@@ -25,8 +25,8 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import test.MockAddressLookup
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.concurrent.Future.successful

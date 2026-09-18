@@ -32,33 +32,33 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDa
   override val form: Form[LocalDate] = TenancyLeaseAgreementExpireForm.tenancyLeaseAgreementExpireForm(using messages)
 
   private def createView = () =>
-    tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
+    tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[LocalDate]) =>
-    tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using fakeRequest, messages)
+    tenancyLeaseAgreementExpireView(form, Summary("99996010001"))(using getRequest, messages)
 
   "Tenancy lease agreement expire view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the current rent paid Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
-    }
+    behave like pageWithBackLink(
+      createView,
+      "Current Rent First Paid",
+      controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show().url
+    )
 
     "Section heading is visible" in {
-      val doc  = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
     "contain date format hint for tenancyLeaseAgreementExpire-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("tenancyLeaseAgreementExpire-hint").text()
-      assert(firstOccupyHint == messages("hint.date.example"))
+
+      firstOccupyHint shouldBe messages("hint.date.example")
     }
 
     "contain date field for the value tenancyLeaseAgreementExpire.day" in {
@@ -82,6 +82,7 @@ class TenancyLeaseAgreementExpireViewSpec extends QuestionViewBehaviours[LocalDa
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

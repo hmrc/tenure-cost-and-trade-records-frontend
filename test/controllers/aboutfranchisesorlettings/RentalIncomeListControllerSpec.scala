@@ -23,7 +23,7 @@ import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, 
 import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
-import utils.FormBindingTestAssertions.mustContainError
+
 import utils.TestBaseSpec
 
 class RentalIncomeListControllerSpec extends TestBaseSpec:

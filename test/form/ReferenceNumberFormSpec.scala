@@ -18,11 +18,9 @@ package form
 
 import form.ReferenceNumberForm.theForm
 import models.submissions.ReferenceNumber
-import org.scalatest.OptionValues
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.matchers.must.Matchers
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class ReferenceNumberFormSpec extends AnyWordSpec with Matchers with OptionValues:
+class ReferenceNumberFormSpec extends BaseSpec:
 
   "ReferenceNumberForm" should {
     "bind good data as expected" in {
@@ -30,25 +28,24 @@ class ReferenceNumberFormSpec extends AnyWordSpec with Matchers with OptionValue
         "referenceNumber" -> "0123456789"
       )
       val bound = theForm.bind(data)
-      bound.hasErrors mustBe false
-      bound.data mustBe data
+
+      bound.hasErrors shouldBe false
+      bound.data      shouldBe data
     }
 
     "unbind good data as expected" in {
-      val referenceNumber = ReferenceNumber(
-        value = "0123456789"
-      )
+      val referenceNumber = ReferenceNumber("0123456789")
       val filled          = theForm.fill(referenceNumber)
-      filled.hasErrors mustBe false
-      filled.data mustBe Map(
-        "referenceNumber" -> "0123456789"
-      )
+
+      filled.hasErrors shouldBe false
+      filled.data      shouldBe Map("referenceNumber" -> "0123456789")
     }
 
     "detect errors" in {
       val bound = theForm.bind(Map.empty)
-      bound.hasErrors mustBe true
-      bound.errors must have size 1
-      bound.error("referenceNumber").value.message mustBe "error.referenceNumber.required"
+
+      bound.hasErrors                            shouldBe true
+      bound.errors                                 should have size 1
+      bound.error("referenceNumber").get.message shouldBe "error.referenceNumber.required"
     }
   }

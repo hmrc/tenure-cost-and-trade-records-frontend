@@ -32,7 +32,7 @@ class CheckYourAnswersTentingPitchesViewSpec extends QuestionViewBehaviours[Answ
 
   private val backLink: String = controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show().url
 
-  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6045YesSession, getRequest)
 
   private def createView: () => Html = () => checkYourAnswersTentingPitches(form, backLink)(using sessionRequest, messages)
 
@@ -43,23 +43,19 @@ class CheckYourAnswersTentingPitchesViewSpec extends QuestionViewBehaviours[Answ
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the Tenting Pitches Certificated Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.TentingPitchesCertificatedController.show().url
-    }
+    behave like pageWithBackLink(createView, "Tenting pitches certificated", backLink)
 
     "Section heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
-      assert(sectionText == messages("cYa.touringAndTentingPitches.heading"))
+
+      sectionText shouldBe messages("cYa.touringAndTentingPitches.heading")
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

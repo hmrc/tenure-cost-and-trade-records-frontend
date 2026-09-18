@@ -19,7 +19,8 @@ package controllers.guidance
 import org.jsoup.nodes.Document
 import play.api.mvc.Result
 import play.api.test.Helpers.*
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.JsoupHelpers
+import utils.TestBaseSpec
 import views.html.guidance.guidancePage as GuidancePageView
 
 import scala.concurrent.Future

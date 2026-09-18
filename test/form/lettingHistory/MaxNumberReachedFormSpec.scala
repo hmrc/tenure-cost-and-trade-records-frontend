@@ -17,50 +17,49 @@
 package form.lettingHistory
 
 import form.lettingHistory.MaxNumberReachedForm.theForm
+import test.FormSpec
 
 class MaxNumberReachedFormSpec extends FormSpec:
 
-  it should "bind data as expected" in:
-    val data  = Map(
-      "understood" -> "true"
-    )
-    val bound = theForm.bind(data)
-    bound.hasErrors mustBe false
-    bound.data mustBe data
-
-  it should "unbind data as expected" in {
-    val filled = theForm.fill(true)
-    filled.hasErrors mustBe false
-    filled.data mustBe Map(
-      "understood" -> "true"
-    )
-  }
-
-  it should "detect users did not understand" in {
-    val bound = theForm.bind(
-      Map(
-        "understood" -> "false"
+  "MaxNumberReachedForm" should {
+    "bind data as expected" in {
+      val data  = Map(
+        "understood" -> "true"
       )
-    )
-    bound.hasErrors mustBe true
-    bound.errors must have size 1
-    bound
-      .error("understood")
-      .value
-      .message mustBe "lettingHistory.maxNumberReached.understanding.required"
-  }
+      val bound = theForm.bind(data)
 
-  it should "detect missing understanding" in {
-    // When the form gets submitted before being filled
-    val bound = theForm.bind(
-      Map(
-        "understood" -> "" // missing data
+      bound.hasErrors shouldBe false
+      bound.data      shouldBe data
+    }
+
+    "unbind data as expected" in {
+      val filled = theForm.fill(true)
+
+      filled.hasErrors shouldBe false
+      filled.data      shouldBe Map("understood" -> "true")
+    }
+
+    "detect users did not understand" in {
+      val bound = theForm.bind(
+        Map(
+          "understood" -> "false"
+        )
       )
-    )
-    bound.hasErrors mustBe true
-    bound.errors must have size 1
-    bound
-      .error("understood")
-      .value
-      .message mustBe "error.boolean"
+
+      bound.hasErrors                       shouldBe true
+      bound.errors                            should have size 1
+      bound.error("understood").get.message shouldBe "lettingHistory.maxNumberReached.understanding.required"
+    }
+
+    "detect missing understanding" in {
+      val bound = theForm.bind(
+        Map(
+          "understood" -> ""
+        )
+      )
+
+      bound.hasErrors                       shouldBe true
+      bound.errors                            should have size 1
+      bound.error("understood").get.message shouldBe "error.boolean"
+    }
   }

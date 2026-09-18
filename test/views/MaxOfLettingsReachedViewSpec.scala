@@ -29,11 +29,11 @@ class MaxOfLettingsReachedViewSpec extends ViewBehaviours:
   private val messageKeyPrefix6010 = "maxOf5Lettings.businessOrFranchise"
   private val messageKeyPrefix6030 = "maxOf5Lettings.concessionOrFranchise"
 
-  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6010Session, getRequest)
 
-  private val sessionRequest6015 = SessionRequest(baseFilled6015Session, fakeRequest)
+  private val sessionRequest6015 = SessionRequest(baseFilled6015Session, getRequest)
 
-  private val sessionRequest6030 = SessionRequest(baseFilled6030Session, fakeRequest)
+  private val sessionRequest6030 = SessionRequest(baseFilled6030Session, getRequest)
 
   private val form: Form[Boolean] = MaxOfLettingsForm.maxOfLettingsForm(using messages)
 
@@ -63,22 +63,25 @@ class MaxOfLettingsReachedViewSpec extends ViewBehaviours:
     behave like normalPage(createView, messageKeyPrefix)
 
     "contain text" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("maxOf5Lettings.heading")))
-      assert(doc.toString.contains(messages("maxOf5Lettings.confirm")))
-      assert(doc.toString.contains(messages("maxOf5Lettings.link")))
+      val page = asDocument(createView()).toString
+
+      assert(page.contains(messages("maxOf5Lettings.heading")))
+      assert(page.contains(messages("maxOf5Lettings.confirm")))
+      assert(page.contains(messages("maxOf5Lettings.link")))
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }
 

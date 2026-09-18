@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[String]:
 
-  private val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6048Session, getRequest)
 
   private val backLink = controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
 
@@ -38,17 +38,12 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[St
 
   "Trading name operating from property view" should {
 
-    "has a link marked with back.link.label leading to has enforcement action been taken Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
-    }
+    behave like pageWithBackLink(createView, "Vacant properties", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.connectionToTheProperty")}"""
     }
 
@@ -60,12 +55,14 @@ class TradingNameOperatingFromPropertyViewSpec extends QuestionViewBehaviours[St
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

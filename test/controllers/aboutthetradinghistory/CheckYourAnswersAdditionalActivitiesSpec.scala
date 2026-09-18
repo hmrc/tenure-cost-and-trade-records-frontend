@@ -26,7 +26,6 @@ import utils.TestBaseSpec
 class CheckYourAnswersAdditionalActivitiesSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   def controller(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(prefilledAboutTheTradingHistoryPartOne)

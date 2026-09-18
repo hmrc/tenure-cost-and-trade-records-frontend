@@ -34,37 +34,42 @@ class AppConfigSpec extends TCTRAppSpec:
     "return the correct boolean value for useDummyIp = true" in {
       val configuration = Configuration("useDummyTrueIP" -> true).withFallback(defaultConfig)
       val appConfig     = AppConfig(configuration)
+
       appConfig.useDummyIp shouldBe true
     }
 
     "return the correct boolean value for useDummyIp = false" in {
       val configuration = Configuration("useDummyTrueIP" -> false).withFallback(defaultConfig)
       val appConfig     = AppConfig(configuration)
+
       appConfig.useDummyIp shouldBe false
     }
 
     "return the correct boolean value for startPageRedirect" in {
       val configuration = Configuration("startPageRedirect" -> false).withFallback(defaultConfig)
       val appConfig     = AppConfig(configuration)
+
       appConfig.startPageRedirect shouldBe false
     }
 
     "return the correct string value for govukStartPage" in {
       val configuration = Configuration("govukStartPage" -> "https://example.com").withFallback(defaultConfig)
       val appConfig     = AppConfig(configuration)
+
       appConfig.govukStartPage shouldBe "https://example.com"
     }
 
     "return the correct value for internalAuthToken" in {
       val configuration = Configuration("internalAuthToken" -> "token").withFallback(defaultConfig)
       val appConfig     = AppConfig(configuration)
+
       appConfig.internalAuthToken shouldBe "token"
     }
 
     "return the correct value for tctrFrontendUrl" in {
       val configuration = Configuration("urls.tctrFrontend" -> "https://frontend.com").withFallback(defaultConfig)
       val appConfig     = AppConfig(configuration)
+
       appConfig.tctrFrontendUrl shouldBe "https://frontend.com"
     }
-
   }

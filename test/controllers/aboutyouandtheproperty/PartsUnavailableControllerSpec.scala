@@ -22,7 +22,7 @@ import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.FormBindingTestAssertions.*
+
 import utils.TestBaseSpec
 
 class PartsUnavailableControllerSpec extends TestBaseSpec:

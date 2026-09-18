@@ -16,7 +16,7 @@
 
 package controllers.aboutyouandtheproperty
 
-import connectors.{Audit, MockAddressLookup}
+import connectors.Audit
 import models.Session
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.common.Address
@@ -28,7 +28,8 @@ import play.api.mvc.Result
 import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
 import repositories.SessionRepo
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.{JsoupHelpers, MockAddressLookup}
+import utils.TestBaseSpec
 
 import scala.concurrent.Future
 

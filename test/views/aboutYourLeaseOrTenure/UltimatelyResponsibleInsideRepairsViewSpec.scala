@@ -31,10 +31,10 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
   override val form: Form[UltimatelyResponsibleInsideRepairs] = UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 
   private def createView = () =>
-    ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
+    ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[UltimatelyResponsibleInsideRepairs]) =>
-    ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using fakeRequest, messages)
+    ultimatelyResponsibleInsideRepairsView(form, Summary("99996010001"))(using getRequest, messages)
 
   "Ultimately responsible view" should {
 
@@ -42,20 +42,16 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
 
     behave like pageWithTextFields(createViewUsingForm, "sharedResponsibilitiesIR")
 
-    "has a link marked with back.link.label leading to the does the rent payable Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe
-        controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
-          .show()
-          .url
-    }
+    behave like pageWithBackLink(
+      createView,
+      "Ultimately Responsible Outside Repairs",
+      controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController.show().url
+    )
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
@@ -134,6 +130,7 @@ class UltimatelyResponsibleInsideRepairsViewSpec extends QuestionViewBehaviours[
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

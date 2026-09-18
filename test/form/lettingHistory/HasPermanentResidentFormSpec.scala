@@ -18,36 +18,37 @@ package form.lettingHistory
 
 import form.lettingHistory.HasPermanentResidentsForm.theForm
 import models.submissions.common.AnswersYesNo.*
+import test.FormSpec
 
 class HasPermanentResidentFormSpec extends FormSpec:
 
-  it should "bind data as expected" in:
-    val data  = Map(
-      "answer" -> "yes"
-    )
-    val bound = theForm.bind(data)
-    bound.hasErrors mustBe false
-    bound.data mustBe data
-
-  it should "unbind data as expected" in {
-    val filled = theForm.fill(AnswerYes)
-    filled.hasErrors mustBe false
-    filled.data mustBe Map(
-      "answer" -> "yes"
-    )
-  }
-
-  it should "detect errors" in {
-    // When the form gets submitted before being filled
-    val bound = theForm.bind(
-      Map(
-        "answer" -> ""
+  "HasPermanentResidentsForm" should {
+    "bind data as expected" in {
+      val data  = Map(
+        "answer" -> "yes"
       )
-    )
-    bound.hasErrors mustBe true
-    bound.errors must have size 1
-    bound
-      .error("answer")
-      .value
-      .message mustBe "lettingHistory.hasPermanentResidents.required"
+      val bound = theForm.bind(data)
+
+      bound.hasErrors shouldBe false
+      bound.data      shouldBe data
+    }
+
+    "unbind data as expected" in {
+      val filled = theForm.fill(AnswerYes)
+
+      filled.hasErrors shouldBe false
+      filled.data      shouldBe Map("answer" -> "yes")
+    }
+
+    "detect errors" in {
+      val bound = theForm.bind(
+        Map(
+          "answer" -> ""
+        )
+      )
+
+      bound.hasErrors                   shouldBe true
+      bound.errors                        should have size 1
+      bound.error("answer").get.message shouldBe "lettingHistory.hasPermanentResidents.required"
+    }
   }

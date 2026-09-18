@@ -16,235 +16,304 @@
 
 package navigation.identifiers
 
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AboutYourLeaseOrTenureIdentifiersSpec extends TestBaseSpec:
+class AboutYourLeaseOrTenureIdentifiersSpec extends BaseSpec:
 
-  "About your lease or tenure identifiers" when {
+  "Lease or tenure page identifiers" should {
+    "be correct for the about landlord page" in {
+      AboutTheLandlordPageId.toString shouldBe "aboutTheLandlordPage"
+    }
 
-    "Identifier for about your landlord page" in
-      assert(AboutTheLandlordPageId.toString.equals("aboutTheLandlordPage"))
+    "be correct for the connected to landlord page" in {
+      ConnectedToLandlordPageId.toString shouldBe "connectedToLandlordPage"
+    }
 
-    "Identifier for connected to landlord page" in
-      assert(ConnectedToLandlordPageId.toString.equals("connectedToLandlordPage"))
+    "be correct for the connected to landlord details page" in {
+      ConnectedToLandlordDetailsPageId.toString shouldBe "connectedToLandlordDetailsPage"
+    }
 
-    "Identifier for connected to landlord details page" in
-      assert(ConnectedToLandlordDetailsPageId.toString.equals("connectedToLandlordDetailsPage"))
+    "be correct for the current annual rent page" in {
+      CurrentAnnualRentPageId.toString shouldBe "currentAnnualRentPage"
+    }
 
-    "Identifier for current annual rent page" in
-      assert(CurrentAnnualRentPageId.toString.equals("currentAnnualRentPage"))
+    "be correct for the lease or agreement details page" in {
+      LeaseOrAgreementDetailsPageId.toString shouldBe "leaseOrAgreementDetailsPage"
+    }
 
-    "Identifier for lease agreement details page" in
-      assert(LeaseOrAgreementDetailsPageId.toString.equals("leaseOrAgreementDetailsPage"))
+    "be correct for the current rent payable within 12 months page" in {
+      CurrentRentPayableWithin12monthsPageId.toString shouldBe "currentRentPayableWithin12monthsPage"
+    }
 
-    "Identifier for current rent payable with 12 months page" in
-      assert(CurrentRentPayableWithin12monthsPageId.toString.equals("currentRentPayableWithin12monthsPage"))
+    "be correct for the provide details of your lease page" in {
+      ProvideDetailsOfYourLeasePageId.toString shouldBe "provideDetailsOfYourLeasePage"
+    }
 
-    "Identifier for provide details of your lease page" in
-      assert(ProvideDetailsOfYourLeasePageId.toString.equals("provideDetailsOfYourLeasePage"))
+    "be correct for the property use leaseback agreement page" in {
+      PropertyUseLeasebackAgreementId.toString shouldBe "propertyUseLeasebackAgreementPage"
+    }
 
-    "Identifier for property use leaseback agreement page" in
-      assert(PropertyUseLeasebackAgreementId.toString.equals("propertyUseLeasebackAgreementPage"))
+    "be correct for the current rent first paid page" in {
+      CurrentRentFirstPaidPageId.toString shouldBe "currentRentFirstPaidPage"
+    }
 
-    "Identifier for current rent first paid page" in
-      assert(CurrentRentFirstPaidPageId.toString.equals("currentRentFirstPaidPage"))
+    "be correct for the current lease begin page" in {
+      CurrentLeaseBeginPageId.toString shouldBe "currentLeaseBeginPage"
+    }
 
-    "Identifier for current rent begin page" in
-      assert(CurrentLeaseBeginPageId.toString.equals("currentLeaseBeginPage"))
+    "be correct for the included in your rent page" in {
+      IncludedInYourRentPageId.toString shouldBe "includedInYourRentPage"
+    }
 
-    "Identifier for included in your rent page" in
-      assert(IncludedInYourRentPageId.toString.equals("includedInYourRentPage"))
+    "be correct for the does rent payable page" in {
+      DoesRentPayablePageId.toString shouldBe "doesRentPayablePage"
+    }
 
-    "Identifier for does rent payable include page" in
-      assert(DoesRentPayablePageId.toString.equals("doesRentPayablePage"))
+    "be correct for the ultimately responsible business insurance page" in {
+      UltimatelyResponsibleBusinessInsurancePageId.toString shouldBe "ultimatelyResponsibleBusinessInsurancePage"
+    }
 
-    "Identifier for ultimately responsible business insurance page" in
-      assert(UltimatelyResponsibleBusinessInsurancePageId.toString.equals("ultimatelyResponsibleBusinessInsurancePage"))
+    "be correct for the ultimately responsible inside repairs page" in {
+      UltimatelyResponsibleInsideRepairsPageId.toString shouldBe "ultimatelyResponsibleInsideRepairsPage"
+    }
 
-    "Identifier for ultimately responsible inside repairs page" in
-      assert(UltimatelyResponsibleInsideRepairsPageId.toString.equals("ultimatelyResponsibleInsideRepairsPage"))
+    "be correct for the ultimately responsible outside repairs page" in {
+      UltimatelyResponsibleOutsideRepairsPageId.toString shouldBe "ultimatelyResponsibleOutsideRepairsPage"
+    }
 
-    "Identifier for ultimately responsible outside repairs page" in
-      assert(UltimatelyResponsibleOutsideRepairsPageId.toString.equals("ultimatelyResponsibleOutsideRepairsPage"))
+    "be correct for the rent includes trade services page" in {
+      RentIncludeTradeServicesPageId.toString shouldBe "rentIncludeTradeServicesPage"
+    }
 
-    "Identifier for rent include trade services page" in
-      assert(RentIncludeTradeServicesPageId.toString.equals("rentIncludeTradeServicesPage"))
+    "be correct for the rent includes trade services details page" in {
+      RentIncludeTradeServicesDetailsPageId.toString shouldBe "rentIncludeTradeServicesDetailsPage"
+    }
 
-    "Identifier for rent include trade services details page" in
-      assert(RentIncludesVatPageId.toString.equals("rentIncludesVatPage"))
+    "be correct for the rent includes VAT page" in {
+      RentIncludesVatPageId.toString shouldBe "rentIncludesVatPage"
+    }
 
-    "Identifier for rent include vat page" in
-      assert(RentIncludeTradeServicesDetailsPageId.toString.equals("rentIncludeTradeServicesDetailsPage"))
+    "be correct for the rent fixture and fittings page" in {
+      RentFixtureAndFittingsPageId.toString shouldBe "rentFixtureAndFittingsPage"
+    }
 
-    "Identifier for rent fixture and fittings page" in
-      assert(RentFixtureAndFittingsPageId.toString.equals("rentFixtureAndFittingsPage"))
+    "be correct for the rent fixture and fittings details page" in {
+      RentFixtureAndFittingsDetailsPageId.toString shouldBe "rentFixtureAndFittingsDetailsPage"
+    }
 
-    "Identifier for rent fixture and fittings details page" in
-      assert(RentFixtureAndFittingsDetailsPageId.toString.equals("rentFixtureAndFittingsDetailsPage"))
+    "be correct for the rent open market page" in {
+      RentOpenMarketPageId.toString shouldBe "rentOpenMarketPage"
+    }
 
-    "Identifier for rent open market page" in
-      assert(RentOpenMarketPageId.toString.equals("rentOpenMarketPage"))
+    "be correct for the what rent based on page" in {
+      WhatRentBasedOnPageId.toString shouldBe "whatRentBasedOnPage"
+    }
 
-    "Identifier for what rent based on page" in
-      assert(WhatRentBasedOnPageId.toString.equals("whatRentBasedOnPage"))
+    "be correct for the rent increase by RPI page" in {
+      RentIncreaseByRPIPageId.toString shouldBe "rentIncreaseByRPIPage"
+    }
 
-    "Identifier for rent increase by RPI page" in
-      assert(RentIncreaseByRPIPageId.toString.equals("rentIncreaseByRPIPage"))
+    "be correct for the rent payable vary by gross or net turnover page" in {
+      RentPayableVaryAccordingToGrossOrNetId.toString shouldBe "rentPayableByGrossOrNetPage"
+    }
 
-    "Identifier for rent payable vary by gross or net turnover page" in
-      assert(RentPayableVaryAccordingToGrossOrNetId.toString.equals("rentPayableByGrossOrNetPage"))
+    "be correct for the rent payable vary by gross or net turnover details page" in {
+      RentPayableVaryAccordingToGrossOrNetDetailsId.toString shouldBe "rentPayableByGrossOrNetDetailsPage"
+    }
 
-    "Identifier for rent payable vary by gross or net turnover details page" in
-      assert(RentPayableVaryAccordingToGrossOrNetDetailsId.toString.equals("rentPayableByGrossOrNetDetailsPage"))
+    "be correct for the rent payable vary by quantity of beers page" in {
+      RentVaryQuantityOfBeersId.toString shouldBe "rentVaryQuantityOfBeersPage"
+    }
 
-    "Identifier for rent payable vary by beer page" in
-      assert(RentVaryQuantityOfBeersId.toString.equals("rentVaryQuantityOfBeersPage"))
+    "be correct for the rent payable vary by quantity of beers details page" in {
+      RentVaryQuantityOfBeersDetailsId.toString shouldBe "rentVaryQuantityOfBeersDetailsPage"
+    }
 
-    "Identifier for rent payable vary by beer details page" in
-      assert(RentVaryQuantityOfBeersDetailsId.toString.equals("rentVaryQuantityOfBeersDetailsPage"))
+    "be correct for the how is current rent fixed page" in {
+      HowIsCurrentRentFixedId.toString shouldBe "howIsCurrentRentFixedPage"
+    }
 
-    "Identifier for how current rent fixed page" in
-      assert(HowIsCurrentRentFixedId.toString.equals("howIsCurrentRentFixedPage"))
+    "be correct for the method fix current rent page" in {
+      MethodToFixCurrentRentsId.toString shouldBe "methodFixCurrentRentPage"
+    }
 
-    "Identifier for method fix current rent page" in
-      assert(MethodToFixCurrentRentsId.toString.equals("methodFixCurrentRentPage"))
+    "be correct for the interval of rent reviews page" in {
+      IntervalsOfRentReviewId.toString shouldBe "intervalRentReviewPage"
+    }
 
-    "Identifier for intervals of rent reviews page" in
-      assert(IntervalsOfRentReviewId.toString.equals("intervalRentReviewPage"))
+    "be correct for the can rent be reduced on review page" in {
+      CanRentBeReducedOnReviewId.toString shouldBe "canRentBeReducedPage"
+    }
 
-    "Identifier for can rent be reduced on review page" in
-      assert(CanRentBeReducedOnReviewId.toString.equals("canRentBeReducedPage"))
+    "be correct for the property updates page" in {
+      PropertyUpdatesId.toString shouldBe "propertyUpdatesPage"
+    }
 
-    "Identifier for property updates page" in
-      assert(PropertyUpdatesId.toString.equals("propertyUpdatesPage"))
+    "be correct for the incentives payments and conditions page" in {
+      IncentivesPaymentsConditionsId.toString shouldBe "incentivesPaymentsConditionsPage"
+    }
 
-    "Identifier for conditions payments and conditions page" in
-      assert(IncentivesPaymentsConditionsId.toString.equals("incentivesPaymentsConditionsPage"))
+    "be correct for the tenants additions disregarded page" in {
+      TenantsAdditionsDisregardedId.toString shouldBe "tenantsAdditionsDisregardedPage"
+    }
 
-    "Identifier for tenants additions disregarded page" in
-      assert(TenantsAdditionsDisregardedId.toString.equals("tenantsAdditionsDisregardedPage"))
+    "be correct for the lease surrendered early page" in {
+      LeaseSurrenderedEarlyId.toString shouldBe "leaseSurrenderedEarlyPage"
+    }
 
-    "Identifier for lease surrendered early page" in
-      assert(LeaseSurrenderedEarlyId.toString.equals("leaseSurrenderedEarlyPage"))
+    "be correct for the benefits given page" in {
+      BenefitsGivenId.toString shouldBe "benefitsGivenPage"
+    }
 
-    "Identifier for benefits given page" in
-      assert(BenefitsGivenId.toString.equals("benefitsGivenPage"))
+    "be correct for the benefits given details page" in {
+      BenefitsGivenDetailsId.toString shouldBe "benefitsGivenDetailsPage"
+    }
 
-    "Identifier for benefits given details page" in
-      assert(BenefitsGivenDetailsId.toString.equals("benefitsGivenDetailsPage"))
+    "be correct for the capital sum description page" in {
+      CapitalSumDescriptionId.toString shouldBe "capitalSumDescriptionPage"
+    }
 
-    "Identifier for capital sum description page" in
-      assert(CapitalSumDescriptionId.toString.equals("capitalSumDescriptionPage"))
+    "be correct for the work carried out details page" in {
+      WorkCarriedOutDetailsId.toString shouldBe "workCarriedOutDetailsPage"
+    }
 
-    "Identifier for work carried out details page" in
-      assert(WorkCarriedOutDetailsId.toString.equals("workCarriedOutDetailsPage"))
+    "be correct for the work carried out condition page" in {
+      WorkCarriedOutConditionId.toString shouldBe "workCarriedOutConditionPage"
+    }
 
-    "Identifier for work carried out condition page" in
-      assert(WorkCarriedOutConditionId.toString.equals("workCarriedOutConditionPage"))
+    "be correct for the rent free period page" in {
+      IsGivenRentFreePeriodId.toString shouldBe "isGivenRentFreePeriodPage"
+    }
 
-    "Identifier for rent free period page" in
-      assert(IsGivenRentFreePeriodId.toString.equals("isGivenRentFreePeriodPage"))
+    "be correct for the rent free period details page" in {
+      RentFreePeriodDetailsId.toString shouldBe "rentFreePeriodDetailsPage"
+    }
 
-    "Identifier for rent free period details page" in
-      assert(RentFreePeriodDetailsId.toString.equals("rentFreePeriodDetailsPage"))
+    "be correct for the car parking annual rent page" in {
+      CarParkingAnnualRentId.toString shouldBe "carParkingAnnualRentPage"
+    }
 
-    "Identifier for car parking annual rent page" in
-      assert(CarParkingAnnualRentId.toString.equals("carParkingAnnualRentPage"))
+    "be correct for the does the rent include parking page" in {
+      DoesRentIncludeParkingId.toString shouldBe "doesRentIncludeParkingPage"
+    }
 
-    "Identifier for does the rent include parking page" in
-      assert(DoesRentIncludeParkingId.toString.equals("doesRentIncludeParkingPage"))
+    "be correct for the included in rent parking spaces page" in {
+      IncludedInRentParkingSpacesId.toString shouldBe "includedInRentParkingSpacesPage"
+    }
 
-    "Identifier for included in rent parking spaces page" in
-      assert(IncludedInRentParkingSpacesId.toString.equals("includedInRentParkingSpacesPage"))
+    "be correct for the is parking rent paid separately page" in {
+      IsParkingRentPaidSeparatelyId.toString shouldBe "IsParkingRentPaidSeparatelyPage"
+    }
 
-    "Identifier for is parking rent pay separately page" in
-      assert(IsParkingRentPaidSeparatelyId.toString.equals("IsParkingRentPaidSeparatelyPage"))
+    "be correct for the rented equipment details page" in {
+      RentedEquipmentDetailsId.toString shouldBe "rentedEquipmentDetailsPage"
+    }
 
-    "Identifier for rent equipment details page" in
-      assert(RentedEquipmentDetailsId.toString.equals("rentedEquipmentDetailsPage"))
+    "be correct for the included in rent for 6020 page" in {
+      IncludedInRent6020Id.toString shouldBe "includedInRent6020Page"
+    }
 
-    "Identifier for included in rent for 6020 page" in
-      assert(IncludedInRent6020Id.toString.equals("includedInRent6020Page"))
+    "be correct for the service paid separately charge page" in {
+      ServicePaidSeparatelyChargeId.toString shouldBe "servicePaidSeparatelyChargePage"
+    }
 
-    "Identifier for service paid separately charge page" in
-      assert(ServicePaidSeparatelyChargeId.toString.equals("servicePaidSeparatelyChargePage"))
+    "be correct for the rented separately parking spaces page" in {
+      RentedSeparatelyParkingSpacesId.toString shouldBe "rentedSeparatelyParkingSpacesPage"
+    }
 
-    "Identifier for rented separately parking spaces page" in
-      assert(RentedSeparatelyParkingSpacesId.toString.equals("rentedSeparatelyParkingSpacesPage"))
+    "be correct for the tenants additions disregarded details page" in {
+      TenantsAdditionsDisregardedDetailsId.toString shouldBe "tenantsAdditionsDisregardedDetailsPage"
+    }
 
-    "Identifier for tenants additions disregarded details page" in
-      assert(TenantsAdditionsDisregardedDetailsId.toString.equals("tenantsAdditionsDisregardedDetailsPage"))
+    "be correct for the pay capital sum page" in {
+      PayCapitalSumId.toString shouldBe "payCapitalSumPage"
+    }
 
-    "Identifier for pay capital sum page" in
-      assert(PayCapitalSumId.toString.equals("payCapitalSumPage"))
+    "be correct for the pay capital sum details page" in {
+      PayCapitalSumDetailsId.toString shouldBe "payCapitalSumDetailsPage"
+    }
 
-    "Identifier for pay capital sum details page" in
-      assert(PayCapitalSumDetailsId.toString.equals("payCapitalSumDetailsPage"))
+    "be correct for the pay capital sum amount details page" in {
+      PayCapitalSumAmountDetailsId.toString shouldBe "payCapitalSumAmountDetailsPage"
+    }
 
-    "Identifier for pay capital sum amount details page" in
-      assert(PayCapitalSumAmountDetailsId.toString.equals("payCapitalSumAmountDetailsPage"))
+    "be correct for the pay when lease granted page" in {
+      PayWhenLeaseGrantedId.toString shouldBe "payWhenLeaseGrantedPage"
+    }
 
-    "Identifier for pay when lease granted page" in
-      assert(PayWhenLeaseGrantedId.toString.equals("payWhenLeaseGrantedPage"))
+    "be correct for the legal or planning restrictions page" in {
+      LegalOrPlanningRestrictionId.toString shouldBe "legalOrPlanningRestrictionPage"
+    }
 
-    "Identifier for legal or planning restrictions page" in
-      assert(LegalOrPlanningRestrictionId.toString.equals("legalOrPlanningRestrictionPage"))
+    "be correct for the legal or planning restrictions details page" in {
+      LegalOrPlanningRestrictionDetailsId.toString shouldBe "legalOrPlanningRestrictionDetailsPage"
+    }
 
-    "Identifier for legal or planning restrictions details page" in
-      assert(LegalOrPlanningRestrictionDetailsId.toString.equals("legalOrPlanningRestrictionDetailsPage"))
+    "be correct for the tenancy lease agreement expire page (6011 only)" in {
+      TenancyLeaseAgreementExpirePageId.toString shouldBe "tenancyLeaseAgreementExpirePage"
+    }
 
-    "Identifier for tenancy lease agreement expire page (6011 only)" in
-      assert(TenancyLeaseAgreementExpirePageId.toString.equals("tenancyLeaseAgreementExpirePage"))
+    "be correct for the lease or tenure CYA page" in {
+      CheckYourAnswersAboutYourLeaseOrTenureId.toString shouldBe "checkYourAnswersAboutYourLeaseOrTenurePage"
+    }
 
-    "Identifier for check your answers about your lease or tenure" in
-      assert(CheckYourAnswersAboutYourLeaseOrTenureId.toString.equals("checkYourAnswersAboutYourLeaseOrTenurePage"))
+    "be correct for the service paid separately page" in {
+      ServicePaidSeparatelyId.toString shouldBe "servicePaidSeparatelyPage"
+    }
 
-    "Identifier for service paid separately" in
-      assert(ServicePaidSeparatelyId.toString.equals("servicePaidSeparatelyPage"))
+    "be correct for the service paid separately list page" in {
+      ServicePaidSeparatelyListId.toString shouldBe "servicePaidSeparatelyListPage"
+    }
 
-    "Identifier for service paid separately list" in
-      assert(ServicePaidSeparatelyListId.toString.equals("servicePaidSeparatelyListPage"))
+    "be correct for the payment for trade services page" in {
+      PaymentForTradeServicesId.toString shouldBe "paymentForTradeServicesPage"
+    }
 
-    "Identifier for service paid separately charge" in
-      assert(ServicePaidSeparatelyChargeId.toString.equals("servicePaidSeparatelyChargePage"))
+    "be correct for the trade services description page" in {
+      TradeServicesDescriptionId.toString shouldBe "tradeServicesDescriptionPage"
+    }
 
-    "Identifier for payment for trade services" in
-      assert(PaymentForTradeServicesId.toString.equals("paymentForTradeServicesPage"))
+    "be correct for the trade services list page" in {
+      TradeServicesListId.toString shouldBe "tradeServicesListPage"
+    }
 
-    "Identifier for trade services description page" in
-      assert(TradeServicesDescriptionId.toString.equals("tradeServicesDescriptionPage"))
+    "be correct for the type of tenure page" in {
+      TypeOfTenureId.toString shouldBe "typeOfTenurePage"
+    }
 
-    "Identifier for trade services list" in
-      assert(TradeServicesListId.toString.equals("tradeServicesListPage"))
+    "be correct for the rent under review page" in {
+      IsRentUnderReviewId.toString shouldBe "isRentUnderReviewPage"
+    }
 
-    "Identifier for type of tenure" in
-      assert(TypeOfTenureId.toString.equals("typeOfTenurePage"))
+    "be correct for the is VAT payable for whole property page" in {
+      IsVATPayableForWholePropertyId.toString shouldBe "isVATPayableForWholePropertyPage"
+    }
 
-    "Identifier for rent under review" in
-      assert(IsRentUnderReviewId.toString.equals("isRentUnderReviewPage"))
+    "be correct for the throughput affects rent page" in {
+      ThroughputAffectsRentId.toString shouldBe "throughputAffectsRentPage"
+    }
 
-    "Identifier for is vat payable" in
-      assert(IsVATPayableForWholePropertyId.toString.equals("isVATPayableForWholePropertyPage"))
+    "be correct for the throughput affects rent details page" in {
+      ThroughputAffectsRentDetailsId.toString shouldBe "throughputAffectsRentDetailsPage"
+    }
 
-    "Identifier for throughput affects rent " in
-      assert(ThroughputAffectsRentId.toString.equals("throughputAffectsRentPage"))
+    "be correct for the rent developed land page" in {
+      RentDevelopedLandId.toString shouldBe "rentDevelopedLandPage"
+    }
 
-    "Identifier for throughput affects rent details" in
-      assert(ThroughputAffectsRentDetailsId.toString.equals("throughputAffectsRentDetailsPage"))
+    "be correct for the rent developed land details page" in {
+      RentDevelopedLandDetailsId.toString shouldBe "rentDevelopedLandDetailsPage"
+    }
 
-    "Identifier for rent developed land" in
-      assert(RentDevelopedLandId.toString.equals("rentDevelopedLandPage"))
+    "be correct for the rent includes structures buildings page" in {
+      RentIncludeStructuresBuildingsId.toString shouldBe "rentIncludeStructuresBuildingsPage"
+    }
 
-    "Identifier for rent developed land details" in
-      assert(RentDevelopedLandDetailsId.toString.equals("rentDevelopedLandDetailsPage"))
+    "be correct for the rent includes structures buildings details page" in {
+      RentIncludeStructuresBuildingsDetailsId.toString shouldBe "rentIncludeStructuresBuildingsDetailsPage"
+    }
 
-    "Identifier for rent include structures buildings" in
-      assert(RentIncludeStructuresBuildingsId.toString.equals("rentIncludeStructuresBuildingsPage"))
-
-    "Identifier for rent include structures buildings details" in
-      assert(RentIncludeStructuresBuildingsDetailsId.toString.equals("rentIncludeStructuresBuildingsDetailsPage"))
-
-    "Identifier for surrendered lease agreement details" in
-      assert(SurrenderedLeaseAgreementDetailsId.toString.equals("surrenderedLeaseAgreementDetailsPage"))
-
+    "be correct for the surrendered lease agreement details page" in {
+      SurrenderedLeaseAgreementDetailsId.toString shouldBe "surrenderedLeaseAgreementDetailsPage"
+    }
   }

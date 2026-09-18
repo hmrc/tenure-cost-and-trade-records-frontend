@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package utils
+package test
 
 import org.apache.pekko.stream.Materializer
 import org.apache.pekko.stream.testkit.NoMaterializer
@@ -102,5 +102,3 @@ trait JsoupHelpers:
 
   def haveValue(value: String): InputElementMatcher = InputElementMatcher(expectedValue = Some(value))
   def beEmpty: InputElementMatcher                  = InputElementMatcher(expectedValue = None)
-
-object JsoupHelpers extends JsoupHelpers

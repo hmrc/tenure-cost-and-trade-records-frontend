@@ -16,7 +16,6 @@
 
 package navigation
 
-import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
@@ -25,45 +24,30 @@ import models.submissions.common.ContactDetails
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import models.submissions.notconnected.{RemoveConnectionDetails, RemoveConnectionsDetails}
-import navigation.identifiers.{Identifier, PastConnectionId, RemoveConnectionId}
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import navigation.identifiers.{PastConnectionId, RemoveConnectionId}
+import test.{InjectedNavigation, TCTRAppSpec}
 
-import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
 
-class RemoveConnectionNavigatorSpec extends TestBaseSpec:
+class RemoveConnectionNavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
-  val audit: Audit = mock[Audit]
+  private val aboutTheProperty: Option[AboutYouAndTheProperty]               = AboutYouAndTheProperty()
+  private val aboutThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = AboutYouAndThePropertyPartTwo()
 
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  val navigator: RemoveConnectionNavigator = RemoveConnectionNavigator(audit)
-
-  val aboutTheProperty: Option[AboutYouAndTheProperty]               = Some(AboutYouAndTheProperty(None))
-  val aboutThePropertyPartTwo: Option[AboutYouAndThePropertyPartTwo] = Some(AboutYouAndThePropertyPartTwo(None))
-
-  val removeConnection: Option[RemoveConnectionDetails] = Some(
+  private val removeConnection: Option[RemoveConnectionDetails] =
     RemoveConnectionDetails(
-      Some(
-        RemoveConnectionsDetails(
-          "John Smith",
-          ContactDetails("12345678909", "test@email.com"),
-          Some("Additional Information is here")
-        )
+      RemoveConnectionsDetails(
+        "John Smith",
+        ContactDetails("12345678909", "test@email.com"),
+        "Additional Information is here"
       )
     )
-  )
 
-  val additionalInformation: Option[AdditionalInformation] = Some(
-    AdditionalInformation(Some("test"))
-  )
+  private val additionalInformation: Option[AdditionalInformation] = AdditionalInformation("test")
 
-  val stillConnectedDetailsYes: Option[StillConnectedDetails] = Some(
-    StillConnectedDetails(Some(AddressConnectionTypeYes))
-  )
+  private val stillConnectedDetailsYes: Option[StillConnectedDetails] = StillConnectedDetails(AddressConnectionTypeYes)
 
-  val sessionAdditionalInformation: Session =
+  private val sessionAdditionalInformation: Session =
     Session(
       "99996010004",
       FOR6010,
@@ -77,17 +61,15 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec:
       additionalInformation
     )
 
-  "Remove connection navigator" when {
-
-    "go to sign in from an identifier that doesn't exist in the route map" in {
-      case object UnknownIdentifier extends Identifier
-      navigator
+  "Remove connection navigator" should {
+    "redirect to default page for identifier that doesn't exist in the route map" in {
+      removeConnectionNavigator
         .nextPage(UnknownIdentifier, sessionAdditionalInformation)
         .apply(sessionAdditionalInformation) shouldBe controllers.routes.LoginController.show
     }
 
-    "return a function that goes to remove connection page when past connection has been completed" in {
-      navigator
+    "redirect to remove connection page when past connection has been completed" in {
+      removeConnectionNavigator
         .nextPage(PastConnectionId, sessionAdditionalInformation)
         .apply(
           sessionAdditionalInformation
@@ -96,8 +78,8 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to CYA page when remove connection has been completed" in {
-      navigator
+    "redirect to CYA page when remove connection has been completed" in {
+      removeConnectionNavigator
         .nextPage(RemoveConnectionId, sessionAdditionalInformation)
         .apply(
           sessionAdditionalInformation
@@ -106,8 +88,8 @@ class RemoveConnectionNavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return the CYA url" in {
-      val result = navigator.cyaPage
-      result.map(_.url shouldBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url)
+    "redirect to the CYA" in {
+      val call = removeConnectionNavigator.cyaPage.get
+      call shouldBe controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show()
     }
   }

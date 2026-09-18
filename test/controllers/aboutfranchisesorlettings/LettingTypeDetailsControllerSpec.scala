@@ -16,7 +16,7 @@
 
 package controllers.aboutfranchisesorlettings
 
-import connectors.{Audit, MockAddressLookup}
+import connectors.Audit
 import models.Session
 import models.submissions.aboutfranchisesorlettings.{AboutFranchisesOrLettings, LettingIncomeRecord}
 import models.submissions.common.Address
@@ -27,7 +27,8 @@ import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.{JsoupHelpers, MockAddressLookup}
+import utils.TestBaseSpec
 
 import scala.concurrent.Future
 

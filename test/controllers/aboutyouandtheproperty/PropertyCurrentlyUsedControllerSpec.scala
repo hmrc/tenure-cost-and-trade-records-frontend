@@ -23,7 +23,7 @@ import play.api.http.Status
 import play.api.http.Status.BAD_REQUEST
 import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
-import utils.FormBindingTestAssertions.*
+
 import utils.TestBaseSpec
 
 class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec:

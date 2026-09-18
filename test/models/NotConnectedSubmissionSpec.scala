@@ -17,15 +17,14 @@
 package models
 
 import models.submissions.NotConnectedSubmission
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 import test.TestObjects
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class NotConnectedSubmissionSpec extends AnyWordSpec with Matchers with TestObjects:
+class NotConnectedSubmissionSpec extends BaseSpec with TestObjects:
 
   "NotConnectedSubmission" should {
     "be serialized/deserialized from JSON" in {

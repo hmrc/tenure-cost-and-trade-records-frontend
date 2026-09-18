@@ -17,51 +17,48 @@
 package navigation
 
 import navigation.identifiers.*
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
-class AboutYouAndTheProperty6015_6016NavigatorSpec extends TestBaseSpec:
+class AboutYouAndTheProperty6015_6016NavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
-  private val navigator: AboutYouAndThePropertyNavigator = aboutYouAndThePropertyNavigator
-
-  "About you and the property navigator for 6015" should {
-
-    "navigate to PremisesLicenseGrantedDetailsController after completing PremisesLicenseGranted with yes" in {
-      navigator
+  "About you and the property navigator for 6015/6016" should {
+    "redirect to PremisesLicenseGrantedDetailsController after completing PremisesLicenseGranted with yes" in {
+      aboutYouAndThePropertyNavigator
         .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6015YesSession)
         .apply(aboutYouAndTheProperty6015YesSession) shouldBe
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()
     }
 
-    "navigate to CheckYourAnswersAboutThePropertyController after completing PremisesLicenseGrantedDetails with yes" in {
-      navigator
+    "redirect to CheckYourAnswersAboutThePropertyController after completing PremisesLicenseGrantedDetails with yes" in {
+      aboutYouAndThePropertyNavigator
         .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6015YesSession)
         .apply(aboutYouAndTheProperty6015YesSession) shouldBe
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
 
-    "navigate to PremisesLicenseGrantedController after completing WebsiteForProperty with no" in {
-      navigator
+    "redirect to PremisesLicenseGrantedController after completing WebsiteForProperty with no" in {
+      aboutYouAndThePropertyNavigator
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6016NoSession)
         .apply(aboutYouAndTheProperty6016NoSession) shouldBe
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
     }
 
-    "navigate to CheckYourAnswersAboutThePropertyController after completing PremisesLicenseGranted with no" in {
-      navigator
+    "redirect to CheckYourAnswersAboutThePropertyController after completing PremisesLicenseGranted with no" in {
+      aboutYouAndThePropertyNavigator
         .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6016NoSession)
         .apply(aboutYouAndTheProperty6016NoSession) shouldBe
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
 
-    "navigate to PremisesLicenseGrantedController after completing WebsiteForProperty" in {
-      navigator
+    "redirect to PremisesLicenseGrantedController after completing WebsiteForProperty" in {
+      aboutYouAndThePropertyNavigator
         .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6016YesSession)
         .apply(aboutYouAndTheProperty6016YesSession) shouldBe
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show()
     }
 
-    "navigate to PremisesLicenseGrantedDetailsController after completing PremisesLicenseGranted" in {
-      navigator
+    "redirect to PremisesLicenseGrantedDetailsController after completing PremisesLicenseGranted" in {
+      aboutYouAndThePropertyNavigator
         .nextPage(PremisesLicenseGrantedId, aboutYouAndTheProperty6016YesSession)
         .apply(aboutYouAndTheProperty6016YesSession) shouldBe
         controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedDetailsController.show()

@@ -29,8 +29,8 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   override val form: Form[AnswersYesNo] = AreYouThirdPartyForm.theForm
 
-  private val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)
-  private val sessionRequest     = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest6076 = SessionRequest(baseFilled6076Session, getRequest)
+  private val sessionRequest     = SessionRequest(baseFilled6010Session, getRequest)
 
   private val backLink = controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
 
@@ -62,6 +62,7 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
         "Section heading is visible" in {
           val doc  = asDocument(createViewUsingForm(form))
           val html = doc.getElementsByClass("govuk-caption-m").html()
+
           html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.connectionToTheProperty")}"""
         }
 
@@ -100,16 +101,18 @@ class AreYouThirdPartyViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
     }
 
     "contain list" in {
-      val doc = asDocument(createViewUsingForm6076(form))
-      assert(doc.toString.contains(messages("areYouThirdParty6076.l1")))
-      assert(doc.toString.contains(messages("areYouThirdParty6076.l2")))
-      assert(doc.toString.contains(messages("areYouThirdParty6076.l3")))
-      assert(doc.toString.contains(messages("areYouThirdParty6076.l4")))
+      val page = asDocument(createViewUsingForm6076(form)).toString
+
+      assert(page.contains(messages("areYouThirdParty6076.l1")))
+      assert(page.contains(messages("areYouThirdParty6076.l2")))
+      assert(page.contains(messages("areYouThirdParty6076.l3")))
+      assert(page.contains(messages("areYouThirdParty6076.l4")))
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

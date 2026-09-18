@@ -30,7 +30,7 @@ class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCa
 
   override val form: Form[Seq[AdditionalCatering]] = AdditionalCateringForm.additionalCateringForm(years)(using messages)
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, getRequest)
 
   private val backLink = controllers.aboutthetradinghistory.routes.AdditionalShopsController.show().url
 
@@ -43,17 +43,12 @@ class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCa
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the additional shops Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.AdditionalShopsController.show().url
-    }
+    behave like pageWithBackLink(createView, "Additional shops", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
@@ -80,6 +75,7 @@ class AdditionalCateringViewSpec extends QuestionViewBehaviours[Seq[AdditionalCa
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

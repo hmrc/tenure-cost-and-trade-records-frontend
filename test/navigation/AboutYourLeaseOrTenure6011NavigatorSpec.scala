@@ -16,93 +16,79 @@
 
 package navigation
 
-import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
 import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
 import java.time.LocalDate
-import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
 
-class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec:
+class AboutYourLeaseOrTenure6011NavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
-  private val audit = mock[Audit]
+  private val session6011 = Session("99996011004", FOR6011, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
 
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  private val navigator = AboutYourLeaseOrTenureNavigator(audit)
-
-  private val session6011 = Session("99996010004", FOR6011, prefilledAddress, "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=", isWelsh = false)
-
-  implicit override val hc: HeaderCarrier = HeaderCarrier()
-
-  "About your lease or tenure navigator" when {
-
-    "go to sign in from an identifier that doesn't exist in the route map" in {
-      case object UnknownIdentifier extends Identifier
-      navigator
+  "Lease or agreement navigator for 6011" should {
+    "redirect to default page for identifier that doesn't exist in the route map" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(UnknownIdentifier, session6011)
         .apply(session6011) shouldBe controllers.routes.LoginController.show
     }
 
-    "return a function that goes to current annual rent page when about your landlord has been completed" in {
-      navigator
+    "redirect to current annual rent page when about your landlord has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(ConnectedToLandlordDetailsPageId, session6011)
         .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     }
 
-    "return a function that goes to connected to landlord details page when connected to landlord and answer is 'yes'" in {
+    "redirect to connected to landlord details page when connected to landlord and answer is 'yes'" in {
       val answers = session6011.copy(
-        aboutLeaseOrAgreementPartOne = Some(AboutLeaseOrAgreementPartOne(connectedToLandlord = Some(AnswerYes)))
+        aboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(connectedToLandlord = AnswerYes)
       )
-      val result  = navigator.connectedToLandlordRouting(answers)
+      val result  = aboutYourLeaseOrTenureNavigator.connectedToLandlordRouting(answers)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.ConnectedToLandlordDetailsController.show()
 
     }
 
-    "return a function that goes to current annual page when connected to landlord has been completed and the answer is 'no'" in {
+    "redirect to current annual page when connected to landlord has been completed and the answer is 'no'" in {
       val answers = session6011.copy(
-        aboutLeaseOrAgreementPartOne = Some(AboutLeaseOrAgreementPartOne(connectedToLandlord = Some(AnswerNo)))
+        aboutLeaseOrAgreementPartOne = AboutLeaseOrAgreementPartOne(connectedToLandlord = AnswerNo)
       )
-      val result  = navigator.connectedToLandlordRouting(answers)
+      val result  = aboutYourLeaseOrTenureNavigator.connectedToLandlordRouting(answers)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentAnnualRentController.show()
     }
 
-    "return a function that goes to  rent includes VAT page when current annual rent has been completed" in {
-      navigator
+    "redirect to  rent includes VAT page when current annual rent has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CurrentAnnualRentPageId, session6011)
         .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludesVatController.show()
     }
 
-    "return a function that goes to current rent first paid page when  rent includes VAT has been completed" in {
-      navigator
+    "redirect to current rent first paid page when  rent includes VAT has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentIncludesVatPageId, session6011)
         .apply(session6011) shouldBe controllers.aboutYourLeaseOrTenure.routes.CurrentRentFirstPaidController.show()
     }
 
-    "return a function that goes to tenancy lease agreement expire page when current rent first paid has been completed" in {
-      navigator
+    "redirect to tenancy lease agreement expire page when current rent first paid has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CurrentRentFirstPaidPageId, session6011)
         .apply(session6011) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.TenancyLeaseAgreementExpireController
           .show()
     }
 
-    "return a function that goes to tenancy lease expire page when current rent first paid has been completed" in {
+    "redirect to tenancy lease expire page when current rent first paid has been completed" in {
 
       val session = session6011.copy(
-        aboutLeaseOrAgreementPartOne = Some(
+        aboutLeaseOrAgreementPartOne =
           session6011.aboutLeaseOrAgreementPartOne.getOrElse(
-            AboutLeaseOrAgreementPartOne(currentRentFirstPaid = Some(LocalDate.of(2000, 2, 1)))
+            AboutLeaseOrAgreementPartOne(currentRentFirstPaid = LocalDate.of(2000, 2, 1))
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CurrentRentFirstPaidPageId, session)
         .apply(
           session
@@ -111,15 +97,14 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to Tenancy lease agreement page when What is your current rent has been completed" in {
+    "redirect to Tenancy lease agreement page when What is your current rent has been completed" in {
       val session = session6011.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           session6011.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(tenancyLeaseAgreementExpire = Some(LocalDate.of(2000, 2, 1)))
+            AboutLeaseOrAgreementPartTwo(tenancyLeaseAgreementExpire = LocalDate.of(2000, 2, 1))
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(CurrentRentFirstPaidPageId, session)
         .apply(
           session
@@ -128,8 +113,8 @@ class AboutYourLeaseOrTenure6011NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to further information page when tenancy lease agreement expire has been completed" in {
-      navigator
+    "redirect to further information page when tenancy lease agreement expire has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(TenancyLeaseAgreementExpirePageId, session6011)
         .apply(
           session6011

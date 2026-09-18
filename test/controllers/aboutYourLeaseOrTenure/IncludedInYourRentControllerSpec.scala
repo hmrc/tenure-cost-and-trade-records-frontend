@@ -28,8 +28,6 @@ import utils.TestBaseSpec
 
 class IncludedInYourRentControllerSpec extends TestBaseSpec:
 
-  import utils.FormBindingTestAssertions.*
-
   val mockAudit: Audit = mock[Audit]
 
   def includedInYourRentController(

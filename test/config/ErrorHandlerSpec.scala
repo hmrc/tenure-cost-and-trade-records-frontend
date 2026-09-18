@@ -25,5 +25,6 @@ class ErrorHandlerSpec extends TCTRAppSpec:
   "standardErrorTemplate" should:
     "render HTML" in {
       val html = errorHandler.standardErrorTemplate("title", "heading", "message")(using getRequest).futureValue
+
       html.contentType shouldBe "text/html"
     }

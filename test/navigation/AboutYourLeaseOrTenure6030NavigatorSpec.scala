@@ -16,7 +16,6 @@
 
 package navigation
 
-import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.aboutYourLeaseOrTenure.*
@@ -26,20 +25,12 @@ import models.submissions.common.ResponsibilityParty.BuildingInsurance.*
 import models.submissions.common.ResponsibilityParty.InsideRepairs.*
 import models.submissions.common.ResponsibilityParty.OutsideRepairs.*
 import navigation.identifiers.*
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
 import java.time.LocalDate
-import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
 
-class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec:
-
-  private val audit = mock[Audit]
-
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  private val navigator = AboutYourLeaseOrTenureNavigator(audit)
+class AboutYourLeaseOrTenure6030NavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
   private val session6030 = Session(
     "99996030004",
@@ -47,8 +38,8 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec:
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030Route),
-    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo6030)
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreement6030Route,
+    aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwo6030
   )
 
   private val session6030Full = Session(
@@ -57,17 +48,14 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec:
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6030Route),
-    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo),
-    aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreement6030Route,
+    aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwoNo,
+    aboutLeaseOrAgreementPartThree = prefilledAboutLeaseOrAgreementPartThree
   )
 
-  implicit override val hc: HeaderCarrier = HeaderCarrier()
-
-  "About your lease or tenure navigator" when {
-
-    "return a function that goes to 'does the rent payable (...)', when 'what is the rent based on (...)' has been completed" in {
-      navigator
+  "Lease or agreement navigator for 6030" should {
+    "redirect to 'does the rent payable (...)', when 'what is the rent based on (...)' has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(WhatRentBasedOnPageId, session6030)
         .apply(
           session6030
@@ -76,25 +64,24 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to services paid separately when payment for trade services has been completed" in {
-      navigator
+    "redirect to services paid separately when payment for trade services has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(PaymentForTradeServicesId, session6030Full)
         .apply(
           session6030Full
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyController.show()
     }
 
-    "return a function that goes to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
+    "redirect to Ultimately responsible BI page when Ultimately Responsible OR has been completed" in {
       val session = session6030.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
             AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleOutsideRepairs =
-              Some(UltimatelyResponsibleOutsideRepairs(OutsideRepairsLandlord, Some("test")))
+              UltimatelyResponsibleOutsideRepairs(OutsideRepairsLandlord, "test")
             )
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(UltimatelyResponsibleOutsideRepairsPageId, session)
         .apply(
           session
@@ -103,17 +90,16 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to Ultimately responsible IR page when Ultimately Responsible OR has been completed" in {
+    "redirect to Ultimately responsible IR page when Ultimately Responsible OR has been completed" in {
       val session = session6030.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
             AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleInsideRepairs =
-              Some(UltimatelyResponsibleInsideRepairs(InsideRepairsLandlord, Some("test")))
+              UltimatelyResponsibleInsideRepairs(InsideRepairsLandlord, "test")
             )
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(UltimatelyResponsibleInsideRepairsPageId, session)
         .apply(
           session
@@ -122,17 +108,16 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to rent include trade services page when Ultimately Responsible BI has been completed" in {
+    "redirect to rent include trade services page when Ultimately Responsible BI has been completed" in {
       val session = session6030.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
             AboutLeaseOrAgreementPartTwo(ultimatelyResponsibleBuildingInsurance =
-              Some(UltimatelyResponsibleBuildingInsurance(BuildingInsuranceLandlord, Some("test")))
+              UltimatelyResponsibleBuildingInsurance(BuildingInsuranceLandlord, "test")
             )
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(UltimatelyResponsibleBusinessInsurancePageId, session)
         .apply(
           session
@@ -141,17 +126,16 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to method to fix current rent page when how is current rent fixed has been completed" in {
+    "redirect to method to fix current rent page when how is current rent fixed has been completed" in {
       val session = session6030.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
             AboutLeaseOrAgreementPartTwo(howIsCurrentRentFixed =
-              Some(HowIsCurrentRentFixed(CurrentRentFixedNewLeaseAgreement, LocalDate.of(2000, 2, 1)))
+              HowIsCurrentRentFixed(CurrentRentFixedNewLeaseAgreement, LocalDate.of(2000, 2, 1))
             )
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(HowIsCurrentRentFixedId, session)
         .apply(
           session
@@ -160,15 +144,14 @@ class AboutYourLeaseOrTenure6030NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to intervals of rent page when method to fix current rent has been completed" in {
+    "redirect to intervals of rent page when method to fix current rent has been completed" in {
       val session = session6030.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           session6030.aboutLeaseOrAgreementPartTwo.getOrElse(
-            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails = Some(MethodToFixCurrentRentAgreement))
+            AboutLeaseOrAgreementPartTwo(methodToFixCurrentRentDetails = MethodToFixCurrentRentAgreement)
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(MethodToFixCurrentRentsId, session)
         .apply(
           session

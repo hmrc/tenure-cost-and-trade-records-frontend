@@ -24,13 +24,13 @@ import org.mockito.ArgumentCaptor
 import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
+import test.JsoupHelpers
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.JsoupHelpers.*
 import utils.TestBaseSpec
 
 import scala.concurrent.Future
 
-class FeeReceivedControllerSpec extends TestBaseSpec:
+class FeeReceivedControllerSpec extends TestBaseSpec with JsoupHelpers:
 
   "the FeeReceived controller" when {
     "handling GET / requests"  should {

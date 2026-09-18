@@ -28,7 +28,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.FormBindingTestAssertions.mustContainError
+
 import utils.TestBaseSpec
 
 import java.time.LocalDate

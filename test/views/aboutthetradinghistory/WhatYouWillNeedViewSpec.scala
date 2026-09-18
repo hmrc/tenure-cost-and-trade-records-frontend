@@ -24,15 +24,15 @@ import views.behaviours.QuestionViewBehaviours
 
 class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String]:
 
-  private val sessionRequest     = SessionRequest(baseFilled6076Session, fakeRequest)
-  private val sessionRequest6010 = SessionRequest(baseFilled6010Session, fakeRequest)
-  private val sessionRequest6015 = SessionRequest(baseFilled6015Session, fakeRequest)
-  private val sessionRequest6016 = SessionRequest(baseFilled6016Session, fakeRequest)
-  private val sessionRequest6020 = SessionRequest(baseFilled6020Session, fakeRequest)
-  private val sessionRequest6030 = SessionRequest(baseFilled6030Session, fakeRequest)
-  private val sessionRequest6045 = SessionRequest(baseFilled6045Session, fakeRequest)
-  private val sessionRequest6048 = SessionRequest(baseFilled6048Session, fakeRequest)
-  private val sessionRequest6076 = SessionRequest(baseFilled6076Session, fakeRequest)
+  private val sessionRequest     = SessionRequest(baseFilled6076Session, getRequest)
+  private val sessionRequest6010 = SessionRequest(baseFilled6010Session, getRequest)
+  private val sessionRequest6015 = SessionRequest(baseFilled6015Session, getRequest)
+  private val sessionRequest6016 = SessionRequest(baseFilled6016Session, getRequest)
+  private val sessionRequest6020 = SessionRequest(baseFilled6020Session, getRequest)
+  private val sessionRequest6030 = SessionRequest(baseFilled6030Session, getRequest)
+  private val sessionRequest6045 = SessionRequest(baseFilled6045Session, getRequest)
+  private val sessionRequest6048 = SessionRequest(baseFilled6048Session, getRequest)
+  private val sessionRequest6076 = SessionRequest(baseFilled6076Session, getRequest)
 
   private val messageKeyPrefix = "whatYouWillNeed"
 
@@ -71,13 +71,7 @@ class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String]:
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show.url
-    }
+    behave like pageWithBackLink(createView, "Task list", controllers.routes.TaskListController.show.url)
 
     "contain whatYouWillNeed.header1" in {
       val doc = asDocument(createView())
@@ -226,13 +220,14 @@ class WhatYouWillNeedViewSpec extends QuestionViewBehaviours[String]:
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
-    }
 
+      loginButton shouldBe messages("button.continue.label")
+    }
   }

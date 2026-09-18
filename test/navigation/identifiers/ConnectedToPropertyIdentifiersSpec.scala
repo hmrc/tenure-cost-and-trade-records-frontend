@@ -16,78 +16,96 @@
 
 package navigation.identifiers
 
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class ConnectedToPropertyIdentifiersSpec extends TestBaseSpec:
+class ConnectedToPropertyIdentifiersSpec extends BaseSpec:
 
-  "Connection to property identifiers" when {
+  "Connection to the property page identifiers" should {
+    "be correct for the sign in page" in {
+      SignInPageId.toString shouldBe "signInPage"
+    }
 
-    "Identifier for sign in page" in
-      assert(SignInPageId.toString.equals("signInPage"))
+    "be correct for the are you still connected page" in {
+      AreYouStillConnectedPageId.toString shouldBe "areYouStillConnectedPage"
+    }
 
-    "Identifier for are you still connected page" in
-      assert(AreYouStillConnectedPageId.toString.equals("areYouStillConnectedPage"))
+    "be correct for the edit address page" in {
+      EditAddressPageId.toString shouldBe "editAddressPage"
+    }
 
-    "Identifier for edit address page" in
-      assert(EditAddressPageId.toString.equals("editAddressPage"))
+    "be correct for the connection to the property page" in {
+      ConnectionToPropertyPageId.toString shouldBe "ConnectionToPropertyPage"
+    }
 
-    "Identifier for connection to the property page" in
-      assert(ConnectionToPropertyPageId.toString.equals("ConnectionToPropertyPage"))
+    "be correct for the vacant properties page" in {
+      VacantPropertiesPageId.toString shouldBe "VacantPropertiesPage"
+    }
 
-    "Identifier for vacant properties page" in
-      assert(VacantPropertiesPageId.toString.equals("VacantPropertiesPage"))
+    "be correct for the become vacant page" in {
+      PropertyBecomeVacantPageId.toString shouldBe "PropertyBecomeVacantPage"
+    }
 
-    "Identifier for property become vacant page" in
-      assert(PropertyBecomeVacantPageId.toString.equals("PropertyBecomeVacantPage"))
+    "be correct for the letting income page" in {
+      LettingIncomePageId.toString shouldBe "LettingIncomePage"
+    }
 
-    "Identifier for letting income page" in
-      assert(LettingIncomePageId.toString.equals("LettingIncomePage"))
+    "be correct for the no reference number page" in {
+      NoReferenceNumberPageId.toString shouldBe "NoReferenceNumberPage"
+    }
 
-    "Identifier for no reference number page" in
-      assert(NoReferenceNumberPageId.toString.equals("NoReferenceNumberPage"))
+    "be correct for the no reference number contact details page" in {
+      NoReferenceNumberContactDetailsPageId.toString shouldBe "NoReferenceNumberContactDetailsPage"
+    }
 
-    "Identifier for no reference number contact details page" in
-      assert(NoReferenceNumberContactDetailsPageId.toString.equals("NoReferenceNumberContactDetailsPage"))
+    "be correct for the request reference number CYA page" in {
+      CheckYourAnswersRequestReferenceNumberPageId.toString shouldBe "CheckYourAnswersRequestReferenceNumberPage"
+    }
 
-    "Identifier for check your answers request reference number page" in
-      assert(CheckYourAnswersRequestReferenceNumberPageId.toString.equals("CheckYourAnswersRequestReferenceNumberPage"))
+    "be correct for the connection to property page" in {
+      ConnectionToPropertyPageId.toString shouldBe "ConnectionToPropertyPage"
+    }
 
-    "Identifier for connection to property page" in
-      assert(ConnectionToPropertyPageId.toString.equals("ConnectionToPropertyPage"))
+    "be correct for the trading name operating from property page" in {
+      TradingNameOperatingFromPropertyPageId.toString shouldBe "TradingNameOperatingFromProperty"
+    }
 
-    "Identifier for trading name operating from property page" in
-      assert(TradingNameOperatingFromPropertyPageId.toString.equals("TradingNameOperatingFromProperty"))
+    "be correct for the trading name own the property page" in {
+      TradingNameOwnThePropertyPageId.toString shouldBe "TradingNameOwnTheProperty"
+    }
 
-    "Identifier for trading name own the property page" in
-      assert(TradingNameOwnThePropertyPageId.toString.equals("TradingNameOwnTheProperty"))
+    "be correct for the trading name paying rent page" in {
+      TradingNamePayingRentPageId.toString shouldBe "TradingNamePayingRentPage"
+    }
 
-    "Identifier for trading name paying page" in
-      assert(TradingNamePayingRentPageId.toString.equals("TradingNamePayingRentPage"))
+    "be correct for the provide your contact details page" in {
+      ProvideYourContactDetailsPageId.toString shouldBe "ProvideYourContactDetailsPage"
+    }
 
-    "Identifier for provide your contact details page" in
-      assert(ProvideYourContactDetailsPageId.toString.equals("ProvideYourContactDetailsPage"))
+    "be correct for the are you third party page" in {
+      AreYouThirdPartyPageId.toString shouldBe "AreYouThirdParty"
+    }
 
-    "Identifier for are you third party page" in
-      assert(AreYouThirdPartyPageId.toString.equals("AreYouThirdParty"))
+    "be correct for the letting part of the property details page" in {
+      LettingPartOfPropertyDetailsPageId.toString shouldBe "LettingPartOfPropertyDetailsPage"
+    }
 
-    "Identifier for letting part of the property details page" in
-      assert(LettingPartOfPropertyDetailsPageId.toString.equals("LettingPartOfPropertyDetailsPage"))
+    "be correct for the letting part of the property rent details page" in {
+      LettingPartOfPropertyRentDetailsPageId.toString shouldBe "LettingPartOfPropertyRentDetailsPage"
+    }
 
-    "Identifier for letting part of the property rent details page" in
-      assert(LettingPartOfPropertyRentDetailsPageId.toString.equals("LettingPartOfPropertyRentDetailsPage"))
+    "be correct for the letting part of the property items included in rent page" in {
+      LettingPartOfPropertyItemsIncludedInRentPageId.toString shouldBe "LettingPartOfPropertyItemsIncludedInRentPage"
+    }
 
-    "Identifier for letting part of the property items included in rent page" in
-      assert(
-        LettingPartOfPropertyItemsIncludedInRentPageId.toString.equals("LettingPartOfPropertyItemsIncludedInRentPage")
-      )
+    "be correct for the add another letting part of the property page" in {
+      AddAnotherLettingPartOfPropertyPageId.toString shouldBe "AddAnotherLettingPartOfPropertyPage"
+    }
 
-    "Identifier for add another letting part of the property page" in
-      assert(AddAnotherLettingPartOfPropertyPageId.toString.equals("AddAnotherLettingPartOfPropertyPage"))
+    "be correct for the connection to the property CYA page" in {
+      CheckYourAnswersConnectionToPropertyId.toString shouldBe "CheckYourAnswersConnectionToPropertyPage"
+    }
 
-    "Identifier for cya connection to property page" in
-      assert(CheckYourAnswersConnectionToPropertyId.toString.equals("CheckYourAnswersConnectionToPropertyPage"))
-
-    "Identifier for max letting  page" in
-      assert(MaxOfLettingsReachedId.toString.equals("MaxOfLettingsReachedPage"))
-
+    "be correct for the max lettings reached page" in {
+      MaxOfLettingsReachedId.toString shouldBe "MaxOfLettingsReachedPage"
+    }
   }

@@ -32,29 +32,24 @@ class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[String]:
   override val form: Form[String] = AboutThePropertyStringForm.aboutThePropertyStringForm
 
   private def createView: () => Html =
-    () => aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
+    () => aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using getRequest, messages)
 
   private def createViewUsingForm: Form[String] => Html =
-    form => aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using fakeRequest, messages)
+    form => aboutThePropertyStringView(form, FOR6010, Summary("99996010001"), backLink)(using getRequest, messages)
 
   private def createViewUsingForm6020: Form[String] => Html =
-    form => aboutThePropertyStringView(form, FOR6020, Summary("99996020001"), backLink)(using fakeRequest, messages)
+    form => aboutThePropertyStringView(form, FOR6020, Summary("99996020001"), backLink)(using getRequest, messages)
 
   "About the property view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url
-    }
+    behave like pageWithBackLink(createView, "Contact details question", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutTheProperty")}"""
     }
 
@@ -71,6 +66,7 @@ class AboutThePropertyStringViewSpec extends QuestionViewBehaviours[String]:
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

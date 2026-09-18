@@ -26,7 +26,7 @@ class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehavio
 
   override val form: Form[String] = defaultForm
 
-  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6010Session, getRequest)
 
   private def createView = () =>
     requestReferenceNumberCheckYourAnswersView(notConnected6010NoSession)(using sessionRequest, messages)
@@ -35,20 +35,16 @@ class RequestReferenceNumberCheckYourAnswersViewSpec extends QuestionViewBehavio
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the request reference number contact details page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe
-        controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController
-          .show()
-          .url
-    }
+    behave like pageWithBackLink(
+      createView,
+      "Request reference number contact details",
+      controllers.requestReferenceNumber.routes.RequestReferenceNumberContactDetailsController.show().url
+    )
 
     "contain submit and send button with the value Accept and send" in {
       val doc         = asDocument(createView())
       val loginButton = doc.getElementById("confirmAndSend-button").text()
-      assert(loginButton == messages("button.confirmAndSend.label"))
+
+      loginButton shouldBe messages("button.confirmAndSend.label")
     }
   }

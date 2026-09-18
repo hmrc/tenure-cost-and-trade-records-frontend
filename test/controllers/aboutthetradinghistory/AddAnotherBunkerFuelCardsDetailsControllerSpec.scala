@@ -24,7 +24,7 @@ import play.api.http.Status
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.Helpers.{POST, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
-import utils.FormBindingTestAssertions.mustContainError
+
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls

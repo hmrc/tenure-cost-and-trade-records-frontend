@@ -33,7 +33,7 @@ class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviour
 
   private val backLink: String = controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
 
-  private val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, getRequest)
 
   def createView: () => Html =
     () => checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
@@ -45,17 +45,12 @@ class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviour
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the website for property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
-    }
+    behave like pageWithBackLink(createView, "Are you third party", backLink)
 
     "contain save and continue button with the value Save and Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

@@ -33,26 +33,21 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
   private val backLink: String = controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
 
   private def createView: () => Html =
-    () => enforcementActionsTakenView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    () => enforcementActionsTakenView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   private def createViewUsingForm: Form[AnswersYesNo] => Html =
-    form => enforcementActionsTakenView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    form => enforcementActionsTakenView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   "Enforcement Action view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to premises license conditions Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show().url
-    }
+    behave like pageWithBackLink(createView, "Premises License Conditions", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutTheProperty")}"""
     }
 
@@ -83,13 +78,14 @@ class EnforcementActionBeenTakenViewSpec extends QuestionViewBehaviours[AnswersY
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
-    }
 
+      loginButton shouldBe messages("button.save.label")
+    }
   }

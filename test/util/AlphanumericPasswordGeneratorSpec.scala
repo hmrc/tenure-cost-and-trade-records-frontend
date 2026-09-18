@@ -16,14 +16,13 @@
 
 package util
 
-import org.scalatest.matchers.should
-import org.scalatest.wordspec.AnyWordSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 import util.AlphanumericPasswordGenerator.passwordLength
 
 /**
   * @author Yuriy Tumakha
   */
-class AlphanumericPasswordGeneratorSpec extends AnyWordSpec with should.Matchers:
+class AlphanumericPasswordGeneratorSpec extends BaseSpec:
 
   "AlphanumericPasswordGenerator" should {
     s"generate passwords with length $passwordLength" in {

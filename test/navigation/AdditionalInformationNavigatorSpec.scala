@@ -16,33 +16,20 @@
 
 package navigation
 
-import connectors.Audit
 import navigation.identifiers.*
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
-import scala.concurrent.ExecutionContext
+class AdditionalInformationNavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
-class AdditionalInformationNavigatorSpec extends TestBaseSpec:
-
-  private val audit = mock[Audit]
-
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  private val navigator: AdditionalInformationNavigator = AdditionalInformationNavigator(audit)
-
-  "Additional information navigator" when {
-
-    "go to sign in from an identifier that doesn't exist in the route map" in {
-      case object UnknownIdentifier extends Identifier
-      navigator
+  "Additional information navigator" should {
+    "redirect to default page for identifier that doesn't exist in the route map" in {
+      additionalInformationNavigator
         .nextPage(UnknownIdentifier, additionalInformationSession)
         .apply(additionalInformationSession) shouldBe controllers.routes.LoginController.show
     }
 
-    "return a function that goes to  CYA page when further information has been completed" in {
-      navigator
+    "redirect to  CYA page when further information has been completed" in {
+      additionalInformationNavigator
         .nextPage(FurtherInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
@@ -51,22 +38,16 @@ class AdditionalInformationNavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to task list page when CYA has been completed" in {
-      navigator
+    "redirect to task list page when CYA has been completed" in {
+      additionalInformationNavigator
         .nextPage(CheckYourAnswersAdditionalInformationId, additionalInformationSession)
         .apply(
           additionalInformationSession
-        ) shouldBe
-        controllers.routes.TaskListController.show
+        ) shouldBe controllers.routes.TaskListController.show
     }
 
-    "return the CYA url" in {
-      val result = navigator.cyaPage
-      result.map(
-        _.url shouldBe
-          controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController
-            .show()
-            .url
-      )
+    "redirect to the CYA" in {
+      val call = additionalInformationNavigator.cyaPage.get
+      call shouldBe controllers.additionalinformation.routes.CheckYourAnswersAdditionalInformationController.show()
     }
   }

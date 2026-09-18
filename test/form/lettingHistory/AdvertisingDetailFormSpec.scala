@@ -18,40 +18,46 @@ package form.lettingHistory
 
 import form.lettingHistory.AdvertisingDetailForm.theForm
 import models.submissions.lettingHistory.AdvertisingDetail
+import test.FormSpec
 
 class AdvertisingDetailFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in:
-    val data  = Map(
-      "websiteAddress"          -> "123.uk",
-      "propertyReferenceNumber" -> "3456aaa"
-    )
-    val bound = theForm.bind(data)
-    bound.hasErrors mustBe false
-    bound.data mustBe data
-
-  it should "unbind good data as expected" in {
-    val residentDetail = AdvertisingDetail(
-      websiteAddress = "123.uk",
-      propertyReferenceNumber = "3456aaa"
-    )
-    val filled         = theForm.fill(residentDetail)
-    filled.hasErrors mustBe false
-    filled.data mustBe Map(
-      "websiteAddress"          -> "123.uk",
-      "propertyReferenceNumber" -> "3456aaa"
-    )
-  }
-
-  it should "detect errors" in {
-    // When the form gets submitted before being filled
-    val bound = theForm.bind(
-      Map(
-        "websiteAddress"          -> "",
-        "propertyReferenceNumber" -> ""
+  "AdvertisingDetailForm" should {
+    "bind good data as expected" in {
+      val data  = Map(
+        "websiteAddress"          -> "123.uk",
+        "propertyReferenceNumber" -> "3456aaa"
       )
-    )
-    bound.hasErrors mustBe true
-    bound.errors must have size 1
-    bound.error("websiteAddress").value.message mustBe "error.websiteAddressForProperty.required"
+      val bound = theForm.bind(data)
+
+      bound.hasErrors shouldBe false
+      bound.data      shouldBe data
+    }
+
+    "unbind good data as expected" in {
+      val residentDetail = AdvertisingDetail(
+        websiteAddress = "123.uk",
+        propertyReferenceNumber = "3456aaa"
+      )
+      val filled         = theForm.fill(residentDetail)
+
+      filled.hasErrors shouldBe false
+      filled.data      shouldBe Map(
+        "websiteAddress"          -> "123.uk",
+        "propertyReferenceNumber" -> "3456aaa"
+      )
+    }
+
+    "detect errors" in {
+      val bound = theForm.bind(
+        Map(
+          "websiteAddress"          -> "",
+          "propertyReferenceNumber" -> ""
+        )
+      )
+
+      bound.hasErrors                           shouldBe true
+      bound.errors                                should have size 1
+      bound.error("websiteAddress").get.message shouldBe "error.websiteAddressForProperty.required"
+    }
   }

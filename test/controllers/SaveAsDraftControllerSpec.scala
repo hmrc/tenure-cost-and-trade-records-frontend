@@ -21,17 +21,16 @@ import config.ErrorHandler
 import connectors.Audit
 import crypto.MongoHasher
 import models.ForType.*
-import play.api.http.Status.*
-import play.api.test.Helpers.{POST, contentAsString, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import stub.{StubBackendConnector, StubSessionRepo}
+import test.ControllerSpec
 import util.DateUtilLocalised
-import utils.TestBaseSpec
 import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, submissionDraftSaved}
 
 /**
   * @author Yuriy Tumakha
   */
-class SaveAsDraftControllerSpec extends TestBaseSpec:
+class SaveAsDraftControllerSpec extends ControllerSpec:
 
   private val sessionRepo      = StubSessionRepo()
   private val backendConnector = StubBackendConnector()
@@ -59,14 +58,14 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
     "return 307 if session is empty" in {
       sessionRepo.remove()
 
-      val result = saveAsDraftController.customPassword(exitPath)(fakeRequest)
+      val result = saveAsDraftController.customPassword(exitPath)(getRequest)
       status(result) shouldBe TEMPORARY_REDIRECT
     }
 
     "return customUserPasswordForm if session.saveAsDraftPassword is empty" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession.copy(saveAsDraftPassword = None))
 
-      val result = saveAsDraftController.customPassword(exitPath)(fakeRequest)
+      val result = saveAsDraftController.customPassword(exitPath)(getRequest)
       status(result) shouldBe OK
       checkCustomUserPasswordForm(contentAsString(result))
     }
@@ -74,7 +73,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
     "save SubmissionDraft and return page displaying saveAsDraftPassword if session.saveAsDraftPassword is defined" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession.copy(saveAsDraftPassword = Some(mongoHasher.hash(password))))
 
-      val result = saveAsDraftController.customPassword(exitPath)(fakeRequest)
+      val result = saveAsDraftController.customPassword(exitPath)(getRequest)
       status(result) shouldBe OK
       checkFinalPageDraftSaved(contentAsString(result))
     }
@@ -82,7 +81,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
 
   "SaveAsDraftController.saveAsDraft" should {
     "return customUserPasswordForm with errors on submit empty from" in {
-      val result = saveAsDraftController.saveAsDraft(exitPath)(fakeRequest)
+      val result = saveAsDraftController.saveAsDraft(exitPath)(getRequest)
 
       status(result) shouldBe OK
       checkCustomUserPasswordForm(
@@ -93,8 +92,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
 
     "return customUserPasswordForm with saveAsDraft.error.passwordsDontMatch" in {
       val result = saveAsDraftController.saveAsDraft(exitPath)(
-        fakeRequest
-          .withMethod(POST)
+        postRequest
           .withFormUrlEncodedBody("password" -> "pass1357", "confirmPassword" -> "pass2468")
       )
 
@@ -107,8 +105,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
 
     "save SubmissionDraft and return page displaying saveAsDraftPassword on submit valid form" in {
       val result = saveAsDraftController.saveAsDraft(exitPath)(
-        fakeRequest
-          .withMethod(POST)
+        postRequest
           .withFormUrlEncodedBody("password" -> password, "confirmPassword" -> password)
       )
 
@@ -125,7 +122,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
 
   "SaveAsDraftController.loginToResume" should {
     "return saveAsDraftLoginForm" in {
-      val result = saveAsDraftController.loginToResume(fakeRequest)
+      val result = saveAsDraftController.loginToResume(getRequest)
       status(result) shouldBe OK
       checkSaveAsDraftLoginForm(contentAsString(result))
     }
@@ -133,7 +130,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
 
   "SaveAsDraftController.resume" should {
     "return saveAsDraftLoginForm with error on submit empty from" in {
-      val result = saveAsDraftController.resume(fakeRequest)
+      val result = saveAsDraftController.resume(getRequest)
 
       status(result) shouldBe BAD_REQUEST
       checkSaveAsDraftLoginForm(
@@ -149,8 +146,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
       backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe None // SubmissionDraft deleted
 
       val result = saveAsDraftController.resume(
-        fakeRequest
-          .withMethod(POST)
+        postRequest
           .withFormUrlEncodedBody("password" -> "Pa$$word1234567890")
       )
       status(result) shouldBe NOT_FOUND
@@ -165,8 +161,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
       ) // SubmissionDraft exists
 
       val result = saveAsDraftController.resume(
-        fakeRequest
-          .withMethod(POST)
+        postRequest
           .withFormUrlEncodedBody("password" -> "Pa$$word1234567890")
       )
 
@@ -185,21 +180,20 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
       backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(draft) // SubmissionDraft exists
       sessionRepo.saveOrUpdate(session.copy(token = "NEW_TOKEN"))
 
-      val sessionBefore = sessionRepo.get.futureValue.value
+      val sessionBefore = sessionRepo.get.futureValue.get
       mongoHasher.verify(password, sessionBefore.saveAsDraftPassword.getOrElse("")) shouldBe true
 
       sessionBefore.token shouldBe "NEW_TOKEN"
 
       val result = saveAsDraftController.resume(
-        fakeRequest
-          .withMethod(POST)
+        postRequest
           .withFormUrlEncodedBody("password" -> password)
       )
 
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(draft.exitPath)
 
-      val sessionAfter = sessionRepo.get.futureValue.value
+      val sessionAfter = sessionRepo.get.futureValue.get
       sessionAfter.saveAsDraftPassword shouldBe None
       sessionAfter.token               shouldBe "NEW_TOKEN"
       sessionAfter.forType             shouldBe FOR6010
@@ -213,7 +207,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
 
       backendConnector.loadSubmissionDraft(refNum, hc).futureValue shouldBe Some(submissionDraft) // SubmissionDraft exists
 
-      val result = saveAsDraftController.startAgain(fakeRequest)
+      val result = saveAsDraftController.startAgain(getRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(LoginController.startPage.url)
 
@@ -226,7 +220,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
       val refNum = submissionDraft.session.referenceNumber
       sessionRepo.saveOrUpdate(submissionDraft.session.copy(saveAsDraftPassword = None))
 
-      val result = saveAsDraftController.timeout(exitPath)(fakeRequest)
+      val result = saveAsDraftController.timeout(exitPath)(getRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(routes.SaveAsDraftController.sessionTimeout.url)
 
@@ -239,7 +233,7 @@ class SaveAsDraftControllerSpec extends TestBaseSpec:
     "show session timeout page with generated password and draft expiration date" in {
       val generatedPassword = "2345xyz"
 
-      val result = saveAsDraftController.sessionTimeout(fakeRequest.withSession("generatedPassword" -> generatedPassword))
+      val result = saveAsDraftController.sessionTimeout(getRequest.withSession("generatedPassword" -> generatedPassword))
       status(result) shouldBe OK
 
       val content = contentAsString(result)

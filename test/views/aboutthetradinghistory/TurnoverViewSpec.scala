@@ -33,9 +33,9 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]]:
     Seq(LocalDate.of(2021, 12, 31), LocalDate.of(2022, 12, 31), LocalDate.of(2023, 12, 31))
   )(using messages)
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, getRequest)
 
-  private val sessionRequest6015 = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val sessionRequest6015 = SessionRequest(aboutYourTradingHistory6015YesSession, getRequest)
 
   private def createView = () => turnoverView(form)(using sessionRequest, messages)
 
@@ -48,17 +48,16 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]]:
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
-    }
+    behave like pageWithBackLink(
+      createView,
+      "Accounting Info CYA",
+      controllers.aboutthetradinghistory.routes.CheckYourAnswersAccountingInfoController.show.url
+    )
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").first.html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
@@ -128,6 +127,7 @@ class TurnoverViewSpec extends QuestionViewBehaviours[Seq[TurnoverSection]]:
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

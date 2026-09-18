@@ -17,10 +17,10 @@
 package form.aboutYourLeaseOrTenure
 
 import play.api.data.FormError
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 import util.NumberUtil.*
-import utils.TestBaseSpec
 
-class CurrentAnnualRentFormSpec extends TestBaseSpec:
+class CurrentAnnualRentFormSpec extends BaseSpec:
 
   "CurrentAnnualRentForm" should {
     "bind valid data correctly" in {

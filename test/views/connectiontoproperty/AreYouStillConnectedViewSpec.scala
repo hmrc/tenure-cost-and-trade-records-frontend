@@ -27,10 +27,10 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
 
   override val form: Form[AddressConnectionType] = AreYouStillConnectedForm.theForm
 
-  private def createView = () => areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
+  private def createView = () => areYouStillConnectedView(form, Summary("99996010001"), "", false)(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[AddressConnectionType]) =>
-    areYouStillConnectedView(form, Summary("99996010001"), "", false)(using fakeRequest, messages)
+    areYouStillConnectedView(form, Summary("99996010001"), "", false)(using getRequest, messages)
 
   "Are you still connected view" should {
 
@@ -42,6 +42,7 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
         "Section heading is visible" in {
           val doc  = asDocument(createViewUsingForm(form))
           val html = doc.getElementsByClass("govuk-caption-m").html()
+
           html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.connectionToTheProperty")}"""
         }
 
@@ -94,6 +95,7 @@ class AreYouStillConnectedViewSpec extends QuestionViewBehaviours[AddressConnect
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

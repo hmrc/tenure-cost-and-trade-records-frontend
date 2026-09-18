@@ -17,13 +17,13 @@
 package models.submissions
 
 import models.submissions.common.Address
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AddressesSpec extends TestBaseSpec:
+class AddressSpec extends BaseSpec:
 
   private val address: Address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
 
-  "Address" should {
+  "Address model" should {
     "return the address as a single line" in {
       val result = address.singleLine
       result shouldBe "001, GORING ROAD, GORING-BY-SEA, WORTHING, WEST SUSSEX, BN12 4AX"

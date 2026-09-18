@@ -46,7 +46,7 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec:
       rentalIncomeIncludedView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
       mockSessionRepo
-    )(using executionContext)
+    )
 
   "GET /" should {
     "return 200" in {
