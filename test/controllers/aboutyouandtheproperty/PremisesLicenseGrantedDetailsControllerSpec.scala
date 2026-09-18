@@ -22,7 +22,6 @@ import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainRequiredErrorFor
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls

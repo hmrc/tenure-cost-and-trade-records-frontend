@@ -30,8 +30,6 @@ trait InjectedNavigation:
 
   case object UnknownIdentifier extends Identifier
 
-  given toOpt[A]: Conversion[A, Option[A]] = Some(_)
-
   implicit def implicitRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
   val requestReferenceNumberNavigator: RequestReferenceNumberNavigator  = inject[RequestReferenceNumberNavigator]

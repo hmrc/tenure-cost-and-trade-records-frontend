@@ -27,7 +27,7 @@ import views.behaviours.QuestionViewBehaviours
 class AddAnotherBunkerFuelCardDetailsViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   private val messageKeyPrefix                           = "addAnotherBunkerFuelCardDetails"
-  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(baseFilled6010Session, getRequest)
   override val form: Form[AnswersYesNo]                  = theForm
 
   private def createView: () => Html = () =>

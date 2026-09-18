@@ -21,8 +21,9 @@ import org.jsoup.nodes.Document
 import org.mockito.ArgumentCaptor
 import play.api.mvc.Result
 import play.api.test.Helpers.*
+import test.JsoupHelpers
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.{JsoupHelpers, TestBaseSpec}
+import utils.TestBaseSpec
 import views.html.referenceNumber as ReferenceNumberView
 
 import scala.concurrent.Future

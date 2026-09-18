@@ -29,7 +29,7 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String]:
 
   override val form: Form[String] = AboutTheLandlordForm.theForm
 
-  private val sessionRequest = SessionRequest(stillConnectedDetailsYesToAllSession, fakeRequest)
+  private val sessionRequest = SessionRequest(stillConnectedDetailsYesToAllSession, getRequest)
 
   private def createView = () =>
     aboutYourLandlordView(form, Summary("99996010001"), backLink)(using sessionRequest, messages)
@@ -46,23 +46,19 @@ class AboutYourLandlordViewSpec extends QuestionViewBehaviours[String]:
       "landlordFullName"
     )
 
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show.url
-    }
+    behave like pageWithBackLink(createView, "Task list", controllers.routes.TaskListController.show.url)
 
     "Section heading is visible" in {
-      val doc  = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

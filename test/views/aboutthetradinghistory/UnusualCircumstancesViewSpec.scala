@@ -25,11 +25,11 @@ import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircumstances]:
-  // NOTE: this is a holding view test until the other costs page is implemented
+
   private val messageKeyPrefix     = "unusualCircumstances"
   private val messageKeyPrefix6030 = "unusualCircumstancesReceipts"
   private val backLink             = controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
-  private val sessionRequest       = SessionRequest(baseFilled6030Session, fakeRequest)
+  private val sessionRequest       = SessionRequest(baseFilled6030Session, getRequest)
 
   override val form: Form[UnusualCircumstances] = UnusualCircumstancesForm.unusualCircumstancesForm
 
@@ -49,24 +49,20 @@ class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircums
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
-    }
+    behave like pageWithBackLink(createView, "Income Expenditure Summary", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain an input for unusualCircumstances" in {
@@ -79,24 +75,20 @@ class UnusualCircumstancesViewSpec extends QuestionViewBehaviours[UnusualCircums
 
     behave like normalPage(createView6030, messageKeyPrefix6030)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView6030())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url
-    }
+    behave like pageWithBackLink(createView, "Income Expenditure Summary", backLink)
 
     "Section heading is visible" in {
-      val doc  = asDocument(createViewUsingForm6030(form)) // govuk-caption-m
+      val doc  = asDocument(createViewUsingForm6030(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm6030(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain an input for unusualCircumstances" in {

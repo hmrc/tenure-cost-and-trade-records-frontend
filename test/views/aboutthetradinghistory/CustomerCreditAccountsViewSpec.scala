@@ -24,16 +24,14 @@ import views.behaviours.QuestionViewBehaviours
 
 class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[CustomerCreditAccounts]]:
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6020YesSession, getRequest)
 
   private val messageKeyPrefix = "customerCreditAcc"
 
   override val form: Form[Seq[CustomerCreditAccounts]] =
     CustomerCreditAccountsForm.customerCreditAccountsForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
 
-  private val backLink = controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController
-    .show(0)
-    .url
+  private val backLink = controllers.aboutthetradinghistory.routes.AddAnotherBunkerFuelCardsDetailsController.show(0).url
 
   private def createView = () => customerCreditAccountsView(form, backLink)(using sessionRequest, messages)
 
@@ -44,30 +42,27 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to add another bunker fuel page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe backLink
-    }
+    behave like pageWithBackLink(createView, "Add another bunker fuel card details", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
-      assert(sectionText == messages("customerCreditAcc.heading"))
+
+      sectionText shouldBe messages("customerCreditAcc.heading")
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "CustomerCreditAccountsForm" should {
@@ -100,6 +95,7 @@ class CustomerCreditAccountsViewSpec extends QuestionViewBehaviours[Seq[Customer
           messages("error.customerCreditAcc.range", 2022.toString)
         )
       }
+
       "reject  values bigger than 100" in {
         val form     = CustomerCreditAccountsForm.customerCreditAccountsForm(Seq("2022"))(using messages)
         val formData = Map(

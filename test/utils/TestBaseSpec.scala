@@ -42,8 +42,8 @@ import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.request.RequestTarget
 import play.api.mvc.{AnyContentAsEmpty, Request, Result}
 import play.api.test.{DefaultAwaitTimeout, FakeRequest, FutureAwaits, Injecting}
-import repositories.SessionRepository
-import test.{InjectedNavigation, InjectedViews, TestObjects}
+import repositories.{SessionRepo, SessionRepository}
+import test.{FormBindingAssertions, InjectedNavigation, InjectedViews, TestObjects}
 import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.vo.unit.test.mock.MockitoExtendedSugar
@@ -59,7 +59,6 @@ import scala.language.implicitConversions
 trait TestBaseSpec
   extends AnyWordSpec
   with Matchers
-  with AnswerYesNoMatchers
   with FutureAwaits
   with DefaultAwaitTimeout
   with MockitoExtendedSugar
@@ -67,11 +66,11 @@ trait TestBaseSpec
   with Inside
   with GuiceOneAppPerSuite
   with Injecting
-  with RepositoryUtils
   with TestObjects
   with InjectedViews
   with InjectedNavigation
-  with OptionValues:
+  with OptionValues
+  with FormBindingAssertions:
 
   override def fakeApplication(): Application =
     GuiceApplicationBuilder()
@@ -85,6 +84,12 @@ trait TestBaseSpec
 
   implicit override val patienceConfig: PatienceConfig =
     PatienceConfig(timeout = Span(10, Seconds), interval = Span(20, Millis))
+
+  val mockSessionRepo: SessionRepo = mock[SessionRepo]
+
+  when(mockSessionRepo.start(any[Session])(using any)).thenReturn(Future.successful(()))
+  when(mockSessionRepo.saveOrUpdate(any[Session])(using any)).thenReturn(Future.successful(()))
+  when(mockSessionRepo.remove()(using any)).thenReturn(Future.successful(()))
 
   def frontendAppConfig: AppConfig = inject[AppConfig]
 

@@ -25,7 +25,7 @@ import views.behaviours.ViewBehaviours
 class ConfirmationVacantPropertyViewSpec extends ViewBehaviours:
 
   private val messageKeyPrefix = "label.connectionToProperty.confirm"
-  private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest   = SessionRequest(baseFilled6010Session, getRequest)
 
   private val form: Form[Feedback] = FeedbackFormMapper.feedbackForm
   private def createView           = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
@@ -35,13 +35,14 @@ class ConfirmationVacantPropertyViewSpec extends ViewBehaviours:
     behave like normalPage(createView, messageKeyPrefix)
 
     "contain confirmation text" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("label.connectionToProperty.requestRefNum")))
-      assert(doc.toString.contains(messages("label.connectionToProperty.whatNext")))
-      assert(doc.toString.contains(messages("label.connectionToProperty.reissued")))
-      assert(doc.toString.contains(messages("label.connectionToProperty.contact")))
-      assert(doc.toString.contains(messages("list.connectionToProperty.p1")))
-      assert(doc.toString.contains(messages("list.connectionToProperty.p2")))
-      assert(doc.toString.contains(messages("list.connectionToProperty.p3")))
+      val page = asDocument(createView()).toString
+
+      assert(page.contains(messages("label.connectionToProperty.requestRefNum")))
+      assert(page.contains(messages("label.connectionToProperty.whatNext")))
+      assert(page.contains(messages("label.connectionToProperty.reissued")))
+      assert(page.contains(messages("label.connectionToProperty.contact")))
+      assert(page.contains(messages("list.connectionToProperty.p1")))
+      assert(page.contains(messages("list.connectionToProperty.p2")))
+      assert(page.contains(messages("list.connectionToProperty.p3")))
     }
   }

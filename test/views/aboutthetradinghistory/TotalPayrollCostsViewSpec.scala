@@ -24,7 +24,7 @@ import views.behaviours.QuestionViewBehaviours
 
 class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[Seq[TotalPayrollCost]]:
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, getRequest)
 
   private val messageKeyPrefix = "totalPayrollCosts"
 
@@ -40,29 +40,26 @@ class TotalPayrollCostsViewSpec extends QuestionViewBehaviours[Seq[TotalPayrollC
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url
-    }
+    behave like pageWithBackLink(createView, "Cost Of Sales", controllers.aboutthetradinghistory.routes.CostOfSalesController.show().url)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
-      assert(sectionText == messages("totalPayrollCosts.heading"))
+
+      sectionText shouldBe messages("totalPayrollCosts.heading")
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

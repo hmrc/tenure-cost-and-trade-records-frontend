@@ -33,26 +33,21 @@ class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate]:
   override val form: Form[LocalDate] = VacantPropertyStartDateForm.vacantPropertyStartDateForm(using messages)
 
   private def createView: () => Html =
-    () => vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+    () => vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using getRequest, messages)
 
   private def createViewUsingForm: Form[LocalDate] => Html =
-    form => vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using fakeRequest, messages)
+    form => vacantPropertiesStartDateView(form, Summary("99996010001"), backLink)(using getRequest, messages)
 
   "Vacant property start date view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the vacant properties page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
-    }
+    behave like pageWithBackLink(createView, "Vacant properties", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.connectionToTheProperty")}"""
     }
 
@@ -77,12 +72,14 @@ class VacantPropertyStartDateViewSpec extends QuestionViewBehaviours[LocalDate]:
     "contain continue button with the value continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

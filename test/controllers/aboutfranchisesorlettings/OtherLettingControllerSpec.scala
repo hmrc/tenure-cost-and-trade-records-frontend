@@ -28,9 +28,9 @@ import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import test.MockAddressLookup
+import test.{JsoupHelpers, MockAddressLookup}
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.{JsoupHelpers, TestBaseSpec}
+import utils.TestBaseSpec
 
 import scala.concurrent.Future
 

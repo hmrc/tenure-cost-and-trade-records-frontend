@@ -23,14 +23,11 @@ import play.api.data.Form
 import views.behaviours.QuestionViewBehaviours
 
 class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]]:
-  // NOTE: this is a holding view test until the cost of sales page is implemented
-  private def costOfSalesView = inject[views.html.aboutthetradinghistory.costOfSales]
 
   private val messageKeyPrefix = "costOfSales"
-  private val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val sessionRequest   = SessionRequest(aboutYourTradingHistory6015YesSession, getRequest)
 
-  override val form: Form[Seq[CostOfSales]] =
-    CostOfSalesForm.costOfSalesForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
+  override val form: Form[Seq[CostOfSales]] = CostOfSalesForm.costOfSalesForm(Seq(2025, 2024, 2023).map(_.toString))(using messages)
 
   private def createView = () => costOfSalesView(form)(using sessionRequest, messages)
 
@@ -41,37 +38,35 @@ class CostOfSalesViewSpec extends QuestionViewBehaviours[Seq[CostOfSales]]:
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.TurnoverController.show().url
-    }
+    behave like pageWithBackLink(createView, "Turnover", controllers.aboutthetradinghistory.routes.TurnoverController.show().url)
 
     "Section heading is visible" in {
-      val form1 = CostOfSalesForm.costOfSalesForm(Seq("2025"))(using messages)
+      val form1 = CostOfSalesForm.costOfSalesForm(Seq("2025"))
       val doc   = asDocument(createViewUsingForm(form1))
       val html  = doc.getElementsByClass("govuk-caption-m").first.html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
-      assert(sectionText == messages("costOfSales.heading"))
+
+      sectionText shouldBe messages("costOfSales.heading")
     }
 
     "contain get help section" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("costOfSales.details.p1")))
-      assert(doc.toString.contains(messages("costOfSales.details.p2")))
+      val page = asDocument(createView()).toString
+
+      assert(page.contains(messages("costOfSales.details.p1")))
+      assert(page.contains(messages("costOfSales.details.p2")))
     }
 
     "contain continue button with the value Continue" in {
-      val form2       = CostOfSalesForm.costOfSalesForm(Seq("2025", "2024"))(using messages)
+      val form2       = CostOfSalesForm.costOfSalesForm(Seq("2025", "2024"))
       val doc         = asDocument(createViewUsingForm(form2))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

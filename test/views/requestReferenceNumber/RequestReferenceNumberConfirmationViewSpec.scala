@@ -20,14 +20,14 @@ import actions.SessionRequest
 import controllers.FeedbackFormMapper
 import form.Feedback
 import play.api.data.Form
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.AnyContent
 import play.twirl.api.Html
 import views.behaviours.ViewBehaviours
 
 class RequestReferenceNumberConfirmationViewSpec extends ViewBehaviours:
 
-  val messageKeyPrefix                                       = "label.connectionToProperty.confirm"
-  val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, fakeRequest)
+  val messageKeyPrefix                           = "label.connectionToProperty.confirm"
+  val sessionRequest: SessionRequest[AnyContent] = SessionRequest(baseFilled6010Session, getRequest)
 
   val form: Form[Feedback]   = FeedbackFormMapper.feedbackForm
   def createView: () => Html = () => requestReferenceNumberConfirmationView(form)(using sessionRequest, messages)
@@ -37,14 +37,14 @@ class RequestReferenceNumberConfirmationViewSpec extends ViewBehaviours:
     behave like normalPage(createView, messageKeyPrefix)
 
     "contain confirmation text" in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("label.connectionToProperty.requestRefNum")))
-      assert(doc.toString.contains(messages("label.vacantProperty.whatNext")))
-      assert(doc.toString.contains(messages("label.connectionToProperty.reissued")))
-      assert(doc.toString.contains(messages("label.connectionToProperty.contact")))
-      assert(doc.toString.contains(messages("list.connectionToProperty.p1")))
-      assert(doc.toString.contains(messages("list.connectionToProperty.p2")))
-      assert(doc.toString.contains(messages("list.connectionToProperty.p3")))
+      val page = asDocument(createView()).toString
 
+      assert(page.contains(messages("label.connectionToProperty.requestRefNum")))
+      assert(page.contains(messages("label.vacantProperty.whatNext")))
+      assert(page.contains(messages("label.connectionToProperty.reissued")))
+      assert(page.contains(messages("label.connectionToProperty.contact")))
+      assert(page.contains(messages("list.connectionToProperty.p1")))
+      assert(page.contains(messages("list.connectionToProperty.p2")))
+      assert(page.contains(messages("list.connectionToProperty.p3")))
     }
   }

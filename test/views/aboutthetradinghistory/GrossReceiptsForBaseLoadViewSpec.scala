@@ -24,33 +24,31 @@ import views.behaviours.QuestionViewBehaviours
 
 class GrossReceiptsForBaseLoadViewSpec extends QuestionViewBehaviours[Seq[GrossReceiptsForBaseLoad]]:
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6076YesSession, getRequest)
 
   val form: Form[Seq[GrossReceiptsForBaseLoad]] =
     GrossReceiptsForBaseLoadForm.grossReceiptsForBaseLoadForm(Seq("2026", "2025", "2024"))(using messages)
 
-  private def createView = () => grossReceiptsForBaseLoadView(form, "")(using sessionRequest, messages)
+  private def createView = () => grossReceiptsForBaseLoadView(form, "backLink")(using sessionRequest, messages)
 
   private def createViewUsingForm = (form: Form[Seq[GrossReceiptsForBaseLoad]]) =>
     grossReceiptsForBaseLoadView(form, "")(using sessionRequest, messages)
 
   "GrossReceiptsForBaseLoad 6076 view" should {
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-    }
+    behave like pageWithBackLink(createView, "backLink", "backLink")
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").first.html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

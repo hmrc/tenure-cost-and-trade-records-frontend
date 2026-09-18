@@ -27,8 +27,8 @@ import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import test.MockAddressLookup
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.{JsoupHelpers, MockAddressLookup}
+import utils.TestBaseSpec
 
 import scala.concurrent.Future
 

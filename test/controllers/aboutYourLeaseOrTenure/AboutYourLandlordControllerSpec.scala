@@ -27,7 +27,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import test.MockAddressLookup
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.FormBindingTestAssertions.mustContainError
 import utils.TestBaseSpec
 
 import scala.concurrent.Future.successful

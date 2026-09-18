@@ -29,33 +29,29 @@ class CostsBreakdownViewSpec extends QuestionViewBehaviours[String]:
   override val form: Form[String] = CostsBreakdownForm.costsBreakdownForm
 
   private def createView: () => Html =
-    () => costsBreakdownView(form, Summary("99996076001"))(using fakeRequest, messages)
+    () => costsBreakdownView(form, Summary("99996076001"))(using getRequest, messages)
 
   private def createViewUsingForm: Form[String] => Html =
-    form => costsBreakdownView(form, Summary("99996076001"))(using fakeRequest, messages)
+    form => costsBreakdownView(form, Summary("99996076001"))(using getRequest, messages)
 
   "costs breakdown view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to 3 years constructed page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url
-    }
+    behave like pageWithBackLink(createView, "Three Years Constructed", controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutTheProperty")}"""
     }
 
     "Page heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
-      assert(sectionText == messages("costsBreakdown.heading"))
+
+      sectionText shouldBe messages("costsBreakdown.heading")
     }
 
     "contain an input for plant and technology " in {
@@ -66,12 +62,14 @@ class CostsBreakdownViewSpec extends QuestionViewBehaviours[String]:
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

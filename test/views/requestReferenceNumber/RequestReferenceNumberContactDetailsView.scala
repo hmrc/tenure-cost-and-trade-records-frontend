@@ -27,10 +27,10 @@ class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[Re
 
   override val form: Form[RequestReferenceNumberContactDetails] = RequestReferenceNumberContactDetailsForm.theForm
 
-  private def createView = () => requestReferenceNumberContactDetailsView(form)(using fakeRequest, messages)
+  private def createView = () => requestReferenceNumberContactDetailsView(form)(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[RequestReferenceNumberContactDetails]) =>
-    requestReferenceNumberContactDetailsView(form)(using fakeRequest, messages)
+    requestReferenceNumberContactDetailsView(form)(using getRequest, messages)
 
   "No reference number view" should {
 
@@ -43,16 +43,11 @@ class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[Re
       "requestReferenceNumberContactDetails.email"
     )
 
-    "has a link marked with back.link.label leading to the Login Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe
-        controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController
-          .show()
-          .url
-    }
+    behave like pageWithBackLink(
+      createView,
+      "Request reference number property details",
+      controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController.show().url
+    )
 
     "contain an input for requestReferenceNumberContactDetailsFullName" in {
       val doc = asDocument(createViewUsingForm(form))
@@ -72,6 +67,7 @@ class RequestReferenceNumberContactDetailsView extends QuestionViewBehaviours[Re
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

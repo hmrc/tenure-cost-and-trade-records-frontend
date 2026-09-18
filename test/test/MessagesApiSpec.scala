@@ -28,7 +28,7 @@ import scala.language.implicitConversions
 /**
   * @author Yuriy Tumakha
   */
-class MessagesApiSpec extends BaseSpec:
+abstract class MessagesApiSpec extends BaseSpec:
 
   private val languages: Langs = DefaultLangs(Seq(Lang(Locale.UK), Lang(Locale.of("cy"))))
 

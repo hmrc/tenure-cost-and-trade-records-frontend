@@ -27,7 +27,7 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[AnswersYes
 
   private val messageKeyPrefix = "canRentBeReducedOnReview"
   private val backLink         = controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
-  private val sessionRequest   = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest   = SessionRequest(baseFilled6010Session, getRequest)
 
   override val form: Form[AnswersYesNo] = CanRentBeReducedOnReviewForm.canRentBeReducedOnReviewForm
 
@@ -40,17 +40,16 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[AnswersYes
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to interval of review Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
-    }
+    behave like pageWithBackLink(
+      createView,
+      "Intervals Of Rent Review",
+      controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController.show().url
+    )
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
@@ -81,6 +80,7 @@ class CanRentBeReducedOnReviewViewSpec extends QuestionViewBehaviours[AnswersYes
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

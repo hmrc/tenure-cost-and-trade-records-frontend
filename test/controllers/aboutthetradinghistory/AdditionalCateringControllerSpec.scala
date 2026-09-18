@@ -21,7 +21,7 @@ import form.aboutthetradinghistory.AdditionalCateringForm
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
-import utils.FormBindingTestAssertions.mustContainError
+
 import utils.TestBaseSpec
 
 class AdditionalCateringControllerSpec extends TestBaseSpec:

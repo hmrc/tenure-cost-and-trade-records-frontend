@@ -35,13 +35,13 @@ class CheckYourAnswersAboutTheTradingHistorySpec extends QuestionViewBehaviours[
 
   private val backLink6020: String = controllers.aboutthetradinghistory.routes.ElectricVehicleChargingPointsController.show().url
 
-  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6015YesSession, getRequest)
 
-  private val sessionRequestFor6016: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6016YesSession, fakeRequest)
+  private val sessionRequestFor6016: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6016YesSession, getRequest)
 
-  private val sessionRequestFor6020: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6020YesSession, fakeRequest)
+  private val sessionRequestFor6020: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6020YesSession, getRequest)
 
-  private val sessionRequestFor6030: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6030YesSession, fakeRequest)
+  private val sessionRequestFor6030: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6030YesSession, getRequest)
 
   private def createView: () => Html = () =>
     checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996015001"))(using sessionRequest, messages)
@@ -66,13 +66,13 @@ class CheckYourAnswersAboutTheTradingHistorySpec extends QuestionViewBehaviours[
 
   private def createView6045: () => Html = () =>
     checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996045001"))(
-      using SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest),
+      using SessionRequest(aboutYourTradingHistory6045YesSession, getRequest),
       messages
     )
 
   private def createView6076: () => Html = () =>
     checkYourAnswersAboutTheTradingHistoryView(form, backLink, Summary("99996076001"))(
-      using SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest),
+      using SessionRequest(aboutYourTradingHistory6076YesSession, getRequest),
       messages
     )
 
@@ -83,18 +83,13 @@ class CheckYourAnswersAboutTheTradingHistorySpec extends QuestionViewBehaviours[
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the website for property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.TurnoverController.show().url
-    }
+    behave like pageWithBackLink(createView, "Turnover", backLink)
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }
 

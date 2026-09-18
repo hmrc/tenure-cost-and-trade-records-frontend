@@ -26,8 +26,6 @@ import utils.TestBaseSpec
 
 class TentingPitchesTotalControllerSpec extends TestBaseSpec:
 
-  import utils.FormBindingTestAssertions.*
-
   val mockAudit: Audit = mock[Audit]
 
   def tentingPitchesTotalController(

@@ -33,26 +33,21 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
   val backLink: String = controllers.connectiontoproperty.routes.EditAddressController.show().url
 
   def createView: () => Html =
-    () => vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
+    () => vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using getRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html =
-    form => vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using fakeRequest, messages)
+    form => vacantPropertiesView(form, backLink, Summary("99996010001"), false)(using getRequest, messages)
 
   "Vacant properties view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.connectiontoproperty.routes.EditAddressController.show().url
-    }
+    behave like pageWithBackLink(createView, "Edit address", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.connectionToTheProperty")}"""
     }
 
@@ -73,6 +68,7 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
     "contains a list" in {
       val doc = asDocument(createViewUsingForm(form))
+
       assertContainsText(doc, messages("vacantProperties.item1"))
       assertContainsText(doc, messages("vacantProperties.item2"))
       assertContainsText(doc, messages("vacantProperties.item3"))
@@ -80,6 +76,7 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
+
       assertContainsRadioButton(
         doc,
         "vacantProperties",
@@ -92,6 +89,7 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
     "contain radio buttons for the value no" in {
       val doc = asDocument(createViewUsingForm(form))
+
       assertContainsRadioButton(
         doc,
         "vacantProperties-2",
@@ -105,12 +103,14 @@ class VacantPropertiesViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

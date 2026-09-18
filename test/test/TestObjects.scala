@@ -16,7 +16,6 @@
 
 package test
 
-import controllers.toOpt
 import models.ForType.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
@@ -50,10 +49,13 @@ import java.time.temporal.ChronoUnit.MILLIS
 import java.time.{Instant, LocalDate}
 import scala.language.implicitConversions
 
-given intToBigDecimal: Conversion[Int, BigDecimal]            = BigDecimal(_)
-given intToBigDecimalOpt: Conversion[Int, Option[BigDecimal]] = intToBigDecimal(_)
-
 trait TestObjects:
+
+  given toOpt[A]: Conversion[A, Option[A]] = Some(_)
+
+  given intToBigDecimal: Conversion[Int, BigDecimal] = BigDecimal(_)
+
+  given intToBigDecimalOpt: Conversion[Int, Option[BigDecimal]] = intToBigDecimal(_)
 
   val referenceNumber: String   = "99996010004"
   val prefilledAddress: Address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")

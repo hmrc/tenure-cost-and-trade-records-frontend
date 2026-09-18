@@ -23,7 +23,7 @@ import play.api.http.Status.*
 import play.api.test.Helpers.{POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
 import uk.gov.hmrc.http.HttpVerbs.GET
-import utils.FormBindingTestAssertions.*
+
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls

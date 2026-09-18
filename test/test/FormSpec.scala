@@ -30,9 +30,7 @@ import scala.language.implicitConversions
 /**
   * @author Yuriy Tumakha
   */
-class FormSpec extends TCTRAppSpec:
-
-  given toOpt[A]: Conversion[A, Option[A]] = Some(_)
+abstract class FormSpec extends TCTRAppSpec:
 
   given DateUtilLocalised = inject[DateUtilLocalised]
 

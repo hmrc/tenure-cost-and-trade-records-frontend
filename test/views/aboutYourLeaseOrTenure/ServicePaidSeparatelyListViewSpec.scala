@@ -26,7 +26,7 @@ class ServicePaidSeparatelyListViewSpec extends QuestionViewBehaviours[AnswersYe
 
   override val form: Form[AnswersYesNo] = ServicePaidSeparatelyListForm.addServicePaidSeparatelyForm
 
-  private val sessionRequest = SessionRequest(stillConnectedDetails6030YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(stillConnectedDetails6030YesSession, getRequest)
 
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     servicePaidSeparatelyListView(form, 0)(using sessionRequest, messages)
@@ -36,6 +36,7 @@ class ServicePaidSeparatelyListViewSpec extends QuestionViewBehaviours[AnswersYe
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
@@ -66,6 +67,7 @@ class ServicePaidSeparatelyListViewSpec extends QuestionViewBehaviours[AnswersYe
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

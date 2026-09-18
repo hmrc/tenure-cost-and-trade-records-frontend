@@ -31,7 +31,6 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec:
   val mockAudit: Audit = mock[Audit]
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   def otherHolidayAccommodationController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(

@@ -30,8 +30,6 @@ import java.time.LocalDate
 
 class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec:
 
-  import utils.FormBindingTestAssertions.*
-
   private val mockAudit: Audit = mock[Audit]
 
   private val years = Seq("2024", "2023", "2022")

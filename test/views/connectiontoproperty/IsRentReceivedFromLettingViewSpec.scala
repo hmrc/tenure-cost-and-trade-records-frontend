@@ -33,29 +33,25 @@ class IsRentReceivedFromLettingViewSpec extends QuestionViewBehaviours[AnswersYe
   val backLink: String = controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
 
   def createView: () => Html =
-    () => isRentReceivedFromLettingView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    () => isRentReceivedFromLettingView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   def createViewUsingForm: Form[AnswersYesNo] => Html =
-    form => isRentReceivedFromLettingView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    form => isRentReceivedFromLettingView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   "Is rent received from letting view" should {
 
-    "has a link marked with back.link.label leading to premises license conditions Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
-    }
+    behave like pageWithBackLink(createView, "vacant start date", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.connectionToTheProperty")}"""
     }
 
     "contain radio buttons for the value yes" in {
       val doc = asDocument(createViewUsingForm(form))
+
       assertContainsRadioButton(
         doc,
         "isRentReceivedFromLetting",
@@ -68,6 +64,7 @@ class IsRentReceivedFromLettingViewSpec extends QuestionViewBehaviours[AnswersYe
 
     "contain radio buttons for the value no" in {
       val doc = asDocument(createViewUsingForm(form))
+
       assertContainsRadioButton(
         doc,
         "isRentReceivedFromLetting-2",
@@ -81,12 +78,14 @@ class IsRentReceivedFromLettingViewSpec extends QuestionViewBehaviours[AnswersYe
     "contain continue button with the value continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

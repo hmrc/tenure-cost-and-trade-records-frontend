@@ -24,7 +24,7 @@ import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour,
 import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
+
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls

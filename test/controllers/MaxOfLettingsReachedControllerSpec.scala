@@ -19,60 +19,16 @@ package controllers
 import models.Session
 import navigation.AboutFranchisesOrLettingsNavigator
 import navigation.identifiers.Identifier
-import org.scalatest.OptionValues
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.mvc.{AnyContent, Call, Request}
 import play.api.test.Helpers.{contentAsString, contentType, header, status, stubMessagesControllerComponents}
-import play.api.test.{DefaultAwaitTimeout, FakeRequest, Helpers}
+import play.api.test.{FakeRequest, Helpers}
+import test.{ControllerSpec, InjectedNavigation}
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.vo.unit.test.mock.MockitoExtendedSugar
-import utils.TestBaseSpec
 
 import scala.language.implicitConversions
 
-trait MaxOfLettingsReachedControllerBehaviours:
-  this: AnyWordSpecLike & Matchers & MockitoExtendedSugar & DefaultAwaitTimeout & OptionValues =>
-
-  def updatingStillConnectedDetails(
-    src: String,
-    controller: MaxOfLettingsReachedController,
-    navigator: AboutFranchisesOrLettingsNavigator
-  ): Unit =
-    s"reply 303 and location header when sourcing from '$src'" in {
-      val request = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
-      val result  = controller.submit(Some("connection"))(request)
-      status(result)                   shouldBe SEE_OTHER
-      header("Location", result).value shouldBe
-        controllers.connectiontoproperty.routes.ProvideContactDetailsController
-          .show()
-          .url
-      reset(navigator)
-    }
-
-  def updatingFranchiseOrLettings(
-    src: String,
-    controller: MaxOfLettingsReachedController,
-    navigator: AboutFranchisesOrLettingsNavigator
-  ): Unit =
-    s"reply 303 and location header when sourcing from '$src'" in {
-      val anyIdentifier             = any[Identifier]
-      val anySession                = any[Session]
-      val anyHeaderCarrier          = any[HeaderCarrier]
-      val anyRequest                = any[Request[AnyContent]]
-      val stubSessionToCallFunction = (_: Session) => Call("GET", "url")
-      when(navigator.nextPage(anyIdentifier, anySession)(using anyHeaderCarrier, anyRequest))
-        .thenReturn(stubSessionToCallFunction)
-      val request                   = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
-      val result                    = controller.submit(Some(src))(request)
-      status(result)                   shouldBe SEE_OTHER
-      header("Location", result).value shouldBe "url"
-      // TODO verify(navigator, times(1)).nextPage(MaxOfLettingsReachedCateringId, anySession)(hc, request)
-      reset(navigator)
-    }
-
-class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettingsReachedControllerBehaviours:
+class MaxOfLettingsReachedControllerSpec extends ControllerSpec with InjectedNavigation:
 
   private val mockAboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
 
@@ -82,47 +38,47 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
     maxOfLettingsReachedView,
     connectedToPropertyNavigator,
     mockAboutFranchisesOrLettingsNavigator,
-    mockSessionRepo
+    mockSessionRepository
   )
 
   "GET /" should {
     "return 200 when no scr parameter provided" in {
-      val result = maxOfLettingsReachedController.show(None)(fakeRequest)
+      val result = maxOfLettingsReachedController.show(None)(getRequest)
       status(result) shouldBe OK
     }
 
     "return 200 when  scr parameter equals connection" in {
-      val result = maxOfLettingsReachedController.show("connection")(fakeRequest)
+      val result = maxOfLettingsReachedController.show("connection")(getRequest)
       status(result) shouldBe OK
     }
 
     "return 200 when  scr parameter equals franchiseCatering" in {
-      val result = maxOfLettingsReachedController.show("franchiseCatering")(fakeRequest)
+      val result = maxOfLettingsReachedController.show("franchiseCatering")(getRequest)
       status(result) shouldBe OK
     }
 
     "return 200 when  scr parameter equals lettings" in {
-      val result = maxOfLettingsReachedController.show("lettings")(fakeRequest)
+      val result = maxOfLettingsReachedController.show("lettings")(getRequest)
       status(result) shouldBe OK
     }
 
     "return 200 when  scr parameter equals typeOfIncome" in {
-      val result = maxOfLettingsReachedController.show("typeOfIncome")(fakeRequest)
+      val result = maxOfLettingsReachedController.show("typeOfIncome")(getRequest)
       status(result) shouldBe OK
     }
 
     "return 200 when  scr parameter equals rentalIncome" in {
-      val result = maxOfLettingsReachedController.show("rentalIncome")(fakeRequest)
+      val result = maxOfLettingsReachedController.show("rentalIncome")(getRequest)
       status(result) shouldBe OK
     }
 
     "return 200 when  scr parameter equals franchiseLetting" in {
-      val result = maxOfLettingsReachedController.show("franchiseLetting")(fakeRequest)
+      val result = maxOfLettingsReachedController.show("franchiseLetting")(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = maxOfLettingsReachedController.show(None)(fakeRequest)
+      val result = maxOfLettingsReachedController.show(None)(getRequest)
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some(UTF8)
     }
@@ -137,7 +93,7 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
       )
 
       for (src, expectedBackLink) <- testCases do
-        val result = maxOfLettingsReachedController.show(Option(src))(fakeRequest)
+        val result = maxOfLettingsReachedController.show(Option(src))(getRequest)
         status(result) shouldBe OK
 
         val htmlContent = contentAsString(result)
@@ -190,3 +146,42 @@ class MaxOfLettingsReachedControllerSpec extends TestBaseSpec with MaxOfLettings
       status(res) shouldBe BAD_REQUEST
     }
   }
+
+  private def updatingStillConnectedDetails(
+    src: String,
+    controller: MaxOfLettingsReachedController,
+    navigator: AboutFranchisesOrLettingsNavigator
+  ): Unit =
+    s"reply 303 and location header when sourcing from '$src'" in {
+      val request = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
+      val result  = controller.submit(Some("connection"))(request)
+      status(result)                 shouldBe SEE_OTHER
+      header("Location", result).get shouldBe
+        controllers.connectiontoproperty.routes.ProvideContactDetailsController
+          .show()
+          .url
+
+      reset(navigator)
+    }
+
+  private def updatingFranchiseOrLettings(
+    src: String,
+    controller: MaxOfLettingsReachedController,
+    navigator: AboutFranchisesOrLettingsNavigator
+  ): Unit =
+    s"reply 303 and location header when sourcing from '$src'" in {
+      val anyIdentifier             = any[Identifier]
+      val anySession                = any[Session]
+      val anyHeaderCarrier          = any[HeaderCarrier]
+      val anyRequest                = any[Request[AnyContent]]
+      val stubSessionToCallFunction = (_: Session) => Call("GET", "url")
+      when(navigator.nextPage(anyIdentifier, anySession)(using anyHeaderCarrier, anyRequest))
+        .thenReturn(stubSessionToCallFunction)
+      val request                   = FakeRequest("POST", "/").withFormUrlEncodedBody("maxOfLettings" -> "true")
+      val result                    = controller.submit(Some(src))(request)
+      status(result)                 shouldBe SEE_OTHER
+      header("Location", result).get shouldBe "url"
+      // TODO verify(navigator, times(1)).nextPage(MaxOfLettingsReachedCateringId, anySession)(hc, request)
+
+      reset(navigator)
+    }

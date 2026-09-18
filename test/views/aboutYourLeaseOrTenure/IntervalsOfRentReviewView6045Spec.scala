@@ -28,7 +28,7 @@ class IntervalsOfRentReviewView6045Spec extends QuestionViewBehaviours[Intervals
 
   override val form: Form[IntervalsOfRentReview] = IntervalsOfRentReviewForm.intervalsOfRentReviewForm(using messages)
 
-  private val sessionRequest = SessionRequest(stillConnectedDetails6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(stillConnectedDetails6045YesSession, getRequest)
 
   private def createView = () => intervalsOfRentReviewView(form)(using sessionRequest, messages)
 
@@ -39,17 +39,12 @@ class IntervalsOfRentReviewView6045Spec extends QuestionViewBehaviours[Intervals
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to method to fix rent Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url
-    }
+    behave like pageWithBackLink(createView, "Is Rent Under Review", controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController.show().url)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
@@ -66,7 +61,8 @@ class IntervalsOfRentReviewView6045Spec extends QuestionViewBehaviours[Intervals
     "contain date format hint for leaseBegin-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("nextReview-hint").text()
-      assert(firstOccupyHint == messages("label.nextReview.help"))
+
+      firstOccupyHint shouldBe messages("label.nextReview.help")
     }
 
     "contain date field for the value leaseBegin.day" in {
@@ -90,6 +86,7 @@ class IntervalsOfRentReviewView6045Spec extends QuestionViewBehaviours[Intervals
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

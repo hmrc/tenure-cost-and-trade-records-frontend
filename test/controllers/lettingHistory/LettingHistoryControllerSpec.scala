@@ -23,8 +23,9 @@ import play.api.mvc.AnyContent
 import play.api.mvc.request.RequestTarget
 import play.api.test.FakeRequest
 import repositories.SessionRepo
+import test.JsoupHelpers
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.{JsoupHelpers, TestBaseSpec}
+import utils.TestBaseSpec
 
 import java.time.LocalDate
 import scala.concurrent.Future

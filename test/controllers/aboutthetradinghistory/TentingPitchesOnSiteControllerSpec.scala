@@ -27,7 +27,6 @@ import utils.TestBaseSpec
 class TentingPitchesOnSiteControllerSpec extends TestBaseSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 

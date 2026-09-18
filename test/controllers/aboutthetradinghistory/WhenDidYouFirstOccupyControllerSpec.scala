@@ -26,7 +26,7 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
+
 import utils.TestBaseSpec
 
 import scala.language.reflectiveCalls

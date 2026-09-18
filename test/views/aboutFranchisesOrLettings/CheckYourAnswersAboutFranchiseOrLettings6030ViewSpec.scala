@@ -32,7 +32,7 @@ class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec extends QuestionViewB
 
   private val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
-  private val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6030YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6030YesSession, getRequest)
 
   private def createView = () => cyaFranchiseOrLettingsView(form, backLink)(using sessionRequest, messages)
 
@@ -43,9 +43,12 @@ class CheckYourAnswersAboutFranchiseOrLettings6030ViewSpec extends QuestionViewB
 
     behave like normalPage(createView, messageKeyPrefix)
 
+    behave like pageWithBackLink(createView, "Premises license", backLink)
+
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }
