@@ -16,15 +16,14 @@
 
 package controllers.accommodation
 
-import play.api.mvc.request.RequestTarget
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationUnitList6048ControllerSpec extends TestBaseSpec:
+class AccommodationUnitList6048ControllerSpec extends ControllerSpec:
 
   private val nextPage = controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show.url
 
@@ -34,7 +33,7 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec:
       removeLastUnitView,
       accommodationNavigator,
       preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
@@ -45,7 +44,7 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec:
 
   "GET /" should {
     "return 200" in {
-      val result = accommodationUnitList6048Controller.show(fakeRequest)
+      val result = accommodationUnitList6048Controller.show(getRequest)
       status(result) shouldBe OK
 
     }
@@ -61,7 +60,7 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec:
 
     "save the form data and redirect to the next page" in {
       val res = accommodationUnitList6048Controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
@@ -71,9 +70,7 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec:
   "GET /accommodation-unit-remove" should {
     "redirect to units list ignoring wrong idx" in {
       val res = accommodationUnitList6048Controller.remove(
-        fakeRequest.withTarget(
-          RequestTarget("", "", Map("idx" -> Seq("6")))
-        )
+        getRequest.withQueryParams("idx" -> "6")
       )
       status(res) shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)
@@ -83,9 +80,7 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec:
   "POST /accommodation-unit-remove" should {
     "redirect to units list on answer No" in {
       val res = accommodationUnitList6048Controller.removeLast(
-        fakeRequest.withTarget(
-          RequestTarget("", "", Map("removeLastUnit" -> Seq("no"), "idx" -> Seq("8")))
-        )
+        getRequest.withQueryParams("idx" -> "8", "removeLastUnit" -> "no")
       )
       status(res) shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)
@@ -93,9 +88,7 @@ class AccommodationUnitList6048ControllerSpec extends TestBaseSpec:
 
     "redirect to units list on answer Yes ignoring wrong idx" in {
       val res = accommodationUnitList6048Controller.removeLast(
-        fakeRequest.withTarget(
-          RequestTarget("", "", Map("removeLastUnit" -> Seq("yes"), "idx" -> Seq("8")))
-        )
+        getRequest.withQueryParams("idx" -> "8", "removeLastUnit" -> "yes")
       )
       status(res) shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(controllers.accommodation.routes.AccommodationUnitList6048Controller.show.url)

@@ -17,12 +17,11 @@
 package controllers.aboutthetradinghistory
 
 import connectors.Audit
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class GrossReceiptsExcludingVATControllerSpec extends TestBaseSpec:
+class GrossReceiptsExcludingVATControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,17 +35,17 @@ class GrossReceiptsExcludingVATControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = grossReceiptsExcludingVATController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = grossReceiptsExcludingVATController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = grossReceiptsExcludingVATController.show(fakeRequest)
+      val result = grossReceiptsExcludingVATController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -57,7 +56,7 @@ class GrossReceiptsExcludingVATControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = grossReceiptsExcludingVATController.show(fakeRequestFromCYA)
+      val result  = grossReceiptsExcludingVATController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"

@@ -21,15 +21,14 @@ import form.aboutYourLeaseOrTenure.PropertyUpdatesForm.propertyUpdatesForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class PropertyUpdatesControllerSpec extends TestBaseSpec:
+class PropertyUpdatesControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -50,13 +49,13 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
         aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with property updates in the session" in {
-      val result = propertyUpdateController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = propertyUpdateController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -66,8 +65,8 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML property updates with none in the session" in {
       val controller = propertyUpdateController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -76,8 +75,8 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec:
     }
 
     "return 200 and HTML with property updates in the session for 6045 tenant additional disregarded yes" in {
-      val result = propertyUpdateController(forType = FOR6045).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = propertyUpdateController(forType = FOR6045).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -89,8 +88,8 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec:
       val result = propertyUpdateController(
         forType = FOR6045,
         aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo)
-      ).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      ).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -100,8 +99,8 @@ class PropertyUpdatesControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML property updates with none in the session for 6045" in {
       val controller = propertyUpdateController(forType = FOR6045, aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

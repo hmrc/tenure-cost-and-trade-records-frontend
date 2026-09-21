@@ -18,14 +18,12 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import form.aboutthetradinghistory.AdditionalAmusementsForm
-import play.api.http.Status
-import play.api.http.Status.*
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
 
-class AdditionalAmusementsControllerSpec extends TestBaseSpec:
+import test.ControllerSpec
+
+class AdditionalAmusementsControllerSpec extends ControllerSpec:
 
   private val mockAudit: Audit = mock[Audit]
   private val years            = Seq("2023", "2022", "2021")
@@ -54,29 +52,29 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = controller.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = controller.show(fakeRequestFromCYA)
+      val result  = controller.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-additional-activities")
     }
 
     "render a correct back link to additional bars and clubs page if no query parameters in the url " in {
-      val result  = controller.show(fakeRequest)
+      val result  = controller.show(getRequest)
       val content = contentAsString(result)
       content should include("/additional-bars-clubs")
     }
@@ -90,7 +88,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec:
 
     "save the form data and redirect to the next page" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
@@ -100,7 +98,7 @@ class AdditionalAmusementsControllerSpec extends TestBaseSpec:
 
     "return 400 and error message for invalid weeks" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(invalidFormData*)
+        postRequest.withFormUrlEncodedBody(invalidFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(

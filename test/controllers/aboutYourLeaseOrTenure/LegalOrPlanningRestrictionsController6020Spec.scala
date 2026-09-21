@@ -21,15 +21,14 @@ import form.aboutYourLeaseOrTenure.LegalOrPlanningRestrictionsForm.legalPlanning
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec:
+class LegalOrPlanningRestrictionsController6020Spec extends ControllerSpec:
 
   import TestData.*
 
@@ -45,13 +44,13 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       legalOrPlanningRestrictionsView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with legal or planning restrictions in the session" in {
-      val result = legalOrPlanningRestrictionsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = legalOrPlanningRestrictionsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -61,8 +60,8 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec:
 
     "return 200 and HTML with capital sum with yes in the session" in {
       val controller = legalOrPlanningRestrictionsController(FOR6020)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -73,8 +72,8 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec:
     "return 200 and HTML with capital sum with no in the session" in {
       val controller =
         legalOrPlanningRestrictionsController(FOR6020, Some(prefilledAboutLeaseOrAgreementPartTwoNo))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -84,8 +83,8 @@ class LegalOrPlanningRestrictionsController6020Spec extends TestBaseSpec:
 
     "return 200 and HTML legal or planning restrictions is none in the session for 6020" in {
       val controller = legalOrPlanningRestrictionsController(FOR6020, None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

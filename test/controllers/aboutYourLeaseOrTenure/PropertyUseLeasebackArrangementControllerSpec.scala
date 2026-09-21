@@ -21,15 +21,14 @@ import form.aboutYourLeaseOrTenure.PropertyUseLeasebackArrangementForm.propertyU
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
+class PropertyUseLeasebackArrangementControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -45,13 +44,13 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       propertyUseLeasebackAgreementView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with property use lease back yes in the session" in {
-      val result = propertyUseLeasebackAgreementController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = propertyUseLeasebackAgreementController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -61,8 +60,8 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML property use lease back with none in the session" in {
       val controller = propertyUseLeasebackAgreementController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -72,8 +71,8 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with connection to landlord yes in the session for 6020" in {
       val controller = propertyUseLeasebackAgreementController(forType = FOR6020)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -86,8 +85,8 @@ class PropertyUseLeasebackArrangementControllerSpec extends TestBaseSpec:
         forType = FOR6020,
         aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(

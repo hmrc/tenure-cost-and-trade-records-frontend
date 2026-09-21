@@ -20,9 +20,9 @@ import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import play.api.http.Status.*
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
-import test.TCTRAppSpec
+import test.ControllerSpec
 
-class FeedbackControllerSpec extends TCTRAppSpec:
+class FeedbackControllerSpec extends ControllerSpec:
 
   private val auditServiceMock: Audit = mock[Audit]
 

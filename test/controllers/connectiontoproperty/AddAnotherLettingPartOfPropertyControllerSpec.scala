@@ -20,15 +20,14 @@ import actions.SessionRequest
 import connectors.Audit
 import form.connectiontoproperty.AddAnotherLettingPartOfPropertyForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
+class AddAnotherLettingPartOfPropertyControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -44,13 +43,13 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
       addAnotherLettingPartOfPropertyView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Add another letting part of property in session" in {
-      val result = addAnotherLettingPartOfPropertyController().show(0)(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = addAnotherLettingPartOfPropertyController().show(0)(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
@@ -58,7 +57,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val result = addAnotherLettingPartOfPropertyController().submit(0)(fakeRequest)
+      val result = addAnotherLettingPartOfPropertyController().submit(0)(getRequest)
       status(result) shouldBe BAD_REQUEST
     }
 
@@ -72,7 +71,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
 
   "REMOVE /" should {
     "redirect if an empty form is submitted" in {
-      val result = addAnotherLettingPartOfPropertyController().remove(1)(fakeRequest)
+      val result = addAnotherLettingPartOfPropertyController().remove(1)(getRequest)
       status(result) shouldBe SEE_OTHER
     }
   }
@@ -81,7 +80,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
     "render the removal confirmation page on remove" in {
       val controller     = addAnotherLettingPartOfPropertyController()
       val idxToRemove    = 0
-      val sessionRequest = SessionRequest(stillConnectedDetailsYesToAllSession, fakeRequest)
+      val sessionRequest = SessionRequest(stillConnectedDetailsYesToAllSession, getRequest)
       val result         = controller.remove(idxToRemove)(sessionRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
@@ -90,7 +89,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
     "handle form submission with 'Yes' and perform removal" in {
       val controller      = addAnotherLettingPartOfPropertyController()
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
       val sessionRequest  = SessionRequest(stillConnectedDetailsYesToAllSession, requestWithForm)
       val result          = controller.performRemove(idxToRemove)(sessionRequest)
       status(result) shouldBe BAD_REQUEST
@@ -99,7 +98,7 @@ class AddAnotherLettingPartOfPropertyControllerSpec extends TestBaseSpec:
     "handle form submission with 'No' and cancel removal" in {
       val controller      = addAnotherLettingPartOfPropertyController()
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
       status(result) shouldBe BAD_REQUEST
     }

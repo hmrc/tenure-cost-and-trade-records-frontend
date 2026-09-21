@@ -19,14 +19,12 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.PropertyCurrentlyUsedForm.propertyCurrentlyUsedForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
-import play.api.test.Helpers.{GET, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
 
-class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec:
+import test.ControllerSpec
+
+class PropertyCurrentlyUsedControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -45,13 +43,13 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec:
         aboutYouAndTheProperty = aboutYouAndTheProperty,
         aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Property Currently Used with yes in the session" in {
-      val result = propertyCurrentlyUsedController().show(fakeRequest)
-      status(result)          shouldBe Status.OK
+      val result = propertyCurrentlyUsedController().show(getRequest)
+      status(result)          shouldBe OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
       contentAsString(result)   should include(
@@ -61,8 +59,8 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Property Currently Used with no in the session" in {
       val controller = propertyCurrentlyUsedController(aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo))
-      val result     = controller.show(fakeRequest)
-      status(result)          shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)          shouldBe OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
       contentAsString(result)   should include(
@@ -75,8 +73,8 @@ class PropertyCurrentlyUsedControllerSpec extends TestBaseSpec:
         aboutYouAndTheProperty = None,
         aboutYouAndThePropertyPartTwo = None
       )
-      val result     = controller.show(fakeRequest)
-      status(result)          shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)          shouldBe OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
       contentAsString(result)   should include(

@@ -32,10 +32,10 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehavio
 
   private val backLink = controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
 
-  private val sessionRequest         = SessionRequest(baseFilled6010Session, fakeRequest)
-  private val sessionRequest6011     = SessionRequest(baseFilled6011Session, fakeRequest)
-  private val sessionRequest6030     = SessionRequest(prefilledFull6030Session, fakeRequest)
-  private val sessionRequest6020full = SessionRequest(prefilledFull6020Session, fakeRequest)
+  private val sessionRequest         = SessionRequest(baseFilled6010Session, getRequest)
+  private val sessionRequest6011     = SessionRequest(baseFilled6011Session, getRequest)
+  private val sessionRequest6030     = SessionRequest(prefilledFull6030Session, getRequest)
+  private val sessionRequest6020full = SessionRequest(prefilledFull6020Session, getRequest)
 
   private def createView = () =>
     checkYourAnswersAboutLeaseAndTenureView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
@@ -59,41 +59,18 @@ class CheckYourAnswersAboutYourLeaseOrTenureViewSpec extends QuestionViewBehavio
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the website for property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
-    }
+    behave like pageWithBackLink(createView, "Legal Or Planning Restrictions", backLink)
 
-    "has a link marked with back.link.label leading to the website for property Page for 6011" in {
-      val doc          = asDocument(createView6011())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
-    }
+    behave like pageWithBackLink(createView6011, "Legal Or Planning Restrictions 6011", backLink)
 
-    "has a link marked with back.link.label leading to the website for property Page for 6020" in {
-      val doc          = asDocument(createView6020())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
-    }
+    behave like pageWithBackLink(createView6020, "Legal Or Planning Restrictions 6020", backLink)
 
-    "has a link marked with back.link.label leading to the website for property Page for 6030" in {
-      val doc          = asDocument(createView6030())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.LegalOrPlanningRestrictionsController.show().url
-    }
+    behave like pageWithBackLink(createView6030, "Legal Or Planning Restrictions 6030", backLink)
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

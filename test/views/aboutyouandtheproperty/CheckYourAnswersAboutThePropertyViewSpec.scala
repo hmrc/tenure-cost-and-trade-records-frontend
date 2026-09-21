@@ -31,38 +31,38 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
 
   private val backLink = controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
 
-  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6010Session, getRequest)
 
   private def createView = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996010001"))(using sessionRequest, messages)
 
   private def createView6020 = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996020001"))(
-      using SessionRequest(baseFilled6020Session, fakeRequest),
+      using SessionRequest(baseFilled6020Session, getRequest),
       messages
     )
 
   private def createView6030 = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996030001"))(
-      using SessionRequest(baseFilled6030Session, fakeRequest),
+      using SessionRequest(baseFilled6030Session, getRequest),
       messages
     )
 
   private def createView6048 = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048002"))(
-      using SessionRequest(baseFilled6048Session, fakeRequest),
+      using SessionRequest(baseFilled6048Session, getRequest),
       messages
     )
 
   private def createView6048Welsh = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996048001"))(
-      using SessionRequest(baseFilled6048Session, fakeRequest),
+      using SessionRequest(baseFilled6048Session, getRequest),
       messages
     )
 
   private def createView6076 = () =>
     checkYourAnswersAboutThePropertyView(form, backLink, Summary("99996076001"))(
-      using SessionRequest(baseFilled6076Session, fakeRequest),
+      using SessionRequest(baseFilled6076Session, getRequest),
       messages
     )
 
@@ -73,18 +73,13 @@ class CheckYourAnswersAboutThePropertyViewSpec extends QuestionViewBehaviours[Ch
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the website for property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.PremisesLicenseGrantedController.show().url
-    }
+    behave like pageWithBackLink(createView, "Premises license", backLink)
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }
 

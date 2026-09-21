@@ -29,33 +29,29 @@ class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String]:
   override val form: Form[String] = BatteriesCapacityForm.batteriesCapacityForm
 
   private def createView: () => Html =
-    () => batteriesCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
+    () => batteriesCapacityView(form, Summary("99996076001"), false)(using getRequest, messages)
 
   private def createViewUsingForm: Form[String] => Html =
-    form => batteriesCapacityView(form, Summary("99996076001"), false)(using fakeRequest, messages)
+    form => batteriesCapacityView(form, Summary("99996076001"), false)(using getRequest, messages)
 
   "Batteries capacity view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to website Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show().url
-    }
+    behave like pageWithBackLink(createView, "Generator capacity", controllers.aboutyouandtheproperty.routes.GeneratorCapacityController.show().url)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutTheProperty")}"""
     }
 
     "Page heading is visible" in {
-      val doc         = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
-      assert(sectionText == messages("batteriesCapacity.heading"))
+
+      sectionText shouldBe messages("batteriesCapacity.heading")
     }
 
     "contain an input for generator capacity " in {
@@ -66,12 +62,14 @@ class BatteriesCapacityViewSpec extends QuestionViewBehaviours[String]:
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

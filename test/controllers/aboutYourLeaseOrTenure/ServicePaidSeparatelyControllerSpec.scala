@@ -23,9 +23,9 @@ import navigation.AboutYourLeaseOrTenureNavigator
 import org.jsoup.Jsoup
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class ServicePaidSeparatelyControllerSpec extends TestBaseSpec:
+class ServicePaidSeparatelyControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -38,29 +38,29 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec:
       inject[AboutYourLeaseOrTenureNavigator],
       servicePaidSeparatelyView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Services Paid Separately in the session" in {
-      val result = servicePaidSeparatelyController().show(Some(0))(fakeRequest)
+      val result = servicePaidSeparatelyController().show(Some(0))(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
 
     "render a page with an empty form when not given an index" in {
-      val result = servicePaidSeparatelyController().show(None)(fakeRequest)
+      val result = servicePaidSeparatelyController().show(None)(getRequest)
       val html   = Jsoup.parse(contentAsString(result))
 
-      Option(html.getElementById("description").`val`()).value shouldBe ""
+      Option(html.getElementById("description").`val`()).get shouldBe ""
     }
 
     "given an index which doesn't already exist in the session" in {
-      val result = servicePaidSeparatelyController().show(Some(2))(fakeRequest)
+      val result = servicePaidSeparatelyController().show(Some(2))(getRequest)
       val html   = Jsoup.parse(contentAsString(result))
 
-      Option(html.getElementById("description").`val`()).value shouldBe ""
+      Option(html.getElementById("description").`val`()).get shouldBe ""
     }
   }
 
@@ -92,13 +92,13 @@ class ServicePaidSeparatelyControllerSpec extends TestBaseSpec:
   "getBackLink" should {
     "return the correct backLink" in {
       val controller = servicePaidSeparatelyController()
-      val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, fakeRequest), 1)
+      val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, getRequest), 1)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.PaymentForTradeServicesController.show().url
     }
 
     "return the correct backLink if view was accessed via 'Change' link" in {
       val controller        = servicePaidSeparatelyController()
-      val requestWithChange = requestWithQueryParam(fakeRequest, "from=Change")
+      val requestWithChange = getRequest.withQueryParams("from" -> "Change")
       val result            = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, requestWithChange), 1)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.ServicePaidSeparatelyListController.show(1).url
     }

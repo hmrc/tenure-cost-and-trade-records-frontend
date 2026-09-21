@@ -20,41 +20,37 @@ import actions.SessionRequest
 import form.aboutthetradinghistory.CostOfSales6076Form
 import models.submissions.aboutthetradinghistory.CostOfSales6076Sum
 import play.api.data.Form
-import utils.TestBaseSpec
 import views.behaviours.ViewBehaviours
 
-class CostOfSales6076IntermittentViewSpec extends TestBaseSpec with ViewBehaviours:
+class CostOfSales6076IntermittentViewSpec extends ViewBehaviours:
 
   private val messageKeyPrefix = "costOfSales6076"
-  private val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, fakeRequest)
+  private val sessionRequest   = SessionRequest(aboutYourTradingHistory6076YesSession, getRequest)
 
-  val form: Form[(Seq[CostOfSales6076Sum], String)] =
-    CostOfSales6076Form.costOfSales6076Form(Seq("2026", "2025", "2024"))(using messages)
+  val form: Form[(Seq[CostOfSales6076Sum], String)] = CostOfSales6076Form.costOfSales6076Form(Seq("2026", "2025", "2024"))(using messages)
 
-  private def createView = () => costOfSales6076View(form, "")(using sessionRequest, messages)
+  private def createView = () => costOfSales6076View(form, "backLink")(using sessionRequest, messages)
 
   private def createViewUsingForm = (form: Form[(Seq[CostOfSales6076Sum], String)]) =>
-    costOfSales6076View(form, "")(using sessionRequest, messages)
+    costOfSales6076View(form, "backLink")(using sessionRequest, messages)
 
   "Cost of sales 6076 view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-    }
+    behave like pageWithBackLink(createView, "backLink", "backLink")
 
     "Section heading is visible" in {
-      val doc  = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").first.html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

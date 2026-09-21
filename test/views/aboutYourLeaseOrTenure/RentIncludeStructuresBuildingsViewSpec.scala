@@ -26,28 +26,32 @@ class RentIncludeStructuresBuildingsViewSpec extends QuestionViewBehaviours[Answ
 
   private val messageKeyPrefix = "rentIncludeStructuresBuildings"
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045YesSession, getRequest)
 
   override val form: Form[AnswersYesNo] = RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
 
-  private def createView = () => rentIncludeStructuresBuildingsView(form, "")(using sessionRequest, messages)
+  private def createView = () => rentIncludeStructuresBuildingsView(form, "backLink")(using sessionRequest, messages)
 
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
     rentIncludeStructuresBuildingsView(form, "")(using sessionRequest, messages)
 
-  "rent Include Structures BuildingsView view" should {
+  "Rent Include Structures Buildings view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
+
+    behave like pageWithBackLink(createView, "backLink", "backLink")
 
     "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
       val doc          = asDocument(createView())
       val backlinkText = doc.select("a[class=govuk-back-link]").text()
+
       backlinkText shouldBe messages("back.link.label")
     }
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
@@ -78,6 +82,7 @@ class RentIncludeStructuresBuildingsViewSpec extends QuestionViewBehaviours[Answ
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

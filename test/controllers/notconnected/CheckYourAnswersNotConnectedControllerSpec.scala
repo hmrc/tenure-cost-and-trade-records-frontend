@@ -20,14 +20,13 @@ import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.NotConnectedSubmission
 import models.submissions.notconnected.RemoveConnectionDetails
-import play.api.http.Status
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.concurrent.Future
 
-class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec:
+class CheckYourAnswersNotConnectedControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit                             = mock[Audit]
   val mockSubmissionConnector: SubmissionConnector = mock[SubmissionConnector]
@@ -44,13 +43,13 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec:
       errorHandler,
       mockAudit,
       preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with CYA with yes in the session" in {
-      val result = checkYourAdditionalInformationController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = checkYourAdditionalInformationController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -61,25 +60,25 @@ class CheckYourAnswersNotConnectedControllerSpec extends TestBaseSpec:
 
   "POST /" should {
     "handle submit form with all sections" in {
-      mockSessionRepo.saveOrUpdate(prefilledBaseSession)
+      mockSessionRepository.saveOrUpdate(prefilledBaseSession)
       when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(using any[HeaderCarrier]))
         .thenReturn(Future.successful(HttpResponse(CREATED)))
-      val result = checkYourAdditionalInformationController().submit(fakeRequest)
+      val result = checkYourAdditionalInformationController().submit(getRequest)
       status(result) shouldBe FOUND
     }
 
     "handle failed submit form with all sections" in {
-      mockSessionRepo.saveOrUpdate(prefilledBaseSession)
+      mockSessionRepository.saveOrUpdate(prefilledBaseSession)
       when(mockSubmissionConnector.submitNotConnected(anyString, any[NotConnectedSubmission])(using any[HeaderCarrier]))
         .thenReturn(Future.failed(Exception("Failed submission")))
-      val result = checkYourAdditionalInformationController().submit(fakeRequest)
+      val result = checkYourAdditionalInformationController().submit(getRequest)
       status(result) shouldBe INTERNAL_SERVER_ERROR
     }
 
     "show submission confirmation" in {
-      mockSessionRepo.saveOrUpdate(baseFilled6011Session)
+      mockSessionRepository.saveOrUpdate(baseFilled6011Session)
 
-      val result = checkYourAdditionalInformationController().confirmation(fakeRequest)
+      val result = checkYourAdditionalInformationController().confirmation(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
 

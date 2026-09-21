@@ -20,14 +20,14 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import util.AccountingInformationUtil.previousFinancialYear6048
 import util.DateUtilLocalised
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.concurrent.ExecutionContext
 
 /**
   * @author Yuriy Tumakha
   */
-class HighSeasonTariff6048ControllerSpec extends TestBaseSpec:
+class HighSeasonTariff6048ControllerSpec extends ControllerSpec:
 
   private val nextPage = controllers.accommodation.routes.IncludedTariffItems6048Controller.show.url + "?idx=0"
 
@@ -39,7 +39,7 @@ class HighSeasonTariff6048ControllerSpec extends TestBaseSpec:
         referenceNumber = "99996048008", // England
         accommodationDetails = Some(prefilledAccommodationDetails)
       ),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )(using inject[ExecutionContext], inject[DateUtilLocalised])
 
@@ -55,7 +55,7 @@ class HighSeasonTariff6048ControllerSpec extends TestBaseSpec:
 
   "GET /" should {
     "return 200" in {
-      val result = highSeasonTariff6048Controller.show(fakeRequest)
+      val result = highSeasonTariff6048Controller.show(getRequest)
       status(result) shouldBe OK
     }
   }
@@ -70,7 +70,7 @@ class HighSeasonTariff6048ControllerSpec extends TestBaseSpec:
 
     "save the form data and redirect to the next page" in {
       val res = highSeasonTariff6048Controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)

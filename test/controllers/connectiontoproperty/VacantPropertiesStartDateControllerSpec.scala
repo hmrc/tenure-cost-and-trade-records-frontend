@@ -19,12 +19,11 @@ package controllers.connectiontoproperty
 import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import org.jsoup.Jsoup
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
+class VacantPropertiesStartDateControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,13 +36,13 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       vacantPropertiesStartDateView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with vacant property start date present in session" in {
-      val result = vacantPropertiesStartDateController().show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = vacantPropertiesStartDateController().show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -53,8 +52,8 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with vacant property start date is not present in session" in {
       val controller = vacantPropertiesStartDateController(Some(prefilledStillConnectedDetailsYes))
-      val result     = controller.show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -63,11 +62,11 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
     }
 
     "display the page with the fields prefilled in when exists within the session" in {
-      val result = vacantPropertiesStartDateController().show()(fakeRequest)
+      val result = vacantPropertiesStartDateController().show()(getRequest)
       val html   = Jsoup.parse(contentAsString(result))
-      Option(html.getElementById("startDateOfVacantProperty.day").`val`()).value   shouldBe "1"
-      Option(html.getElementById("startDateOfVacantProperty.month").`val`()).value shouldBe "6"
-      Option(html.getElementById("startDateOfVacantProperty.year").`val`()).value  shouldBe "2022"
+      Option(html.getElementById("startDateOfVacantProperty.day").`val`()).get   shouldBe "1"
+      Option(html.getElementById("startDateOfVacantProperty.month").`val`()).get shouldBe "6"
+      Option(html.getElementById("startDateOfVacantProperty.year").`val`()).get  shouldBe "2022"
     }
   }
 
@@ -104,14 +103,14 @@ class VacantPropertiesStartDateControllerSpec extends TestBaseSpec:
 
   "calculateBackLink" should {
     "return back link to CYA page if query param present" in {
-      val result = vacantPropertiesStartDateController().show(fakeRequestFromCYA)
+      val result = vacantPropertiesStartDateController().show(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       )
     }
 
     "return back link to is the property vacant page if 'from' query param is not present" in {
-      val result = vacantPropertiesStartDateController().show(fakeRequest)
+      val result = vacantPropertiesStartDateController().show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.VacantPropertiesController.show().url
       )

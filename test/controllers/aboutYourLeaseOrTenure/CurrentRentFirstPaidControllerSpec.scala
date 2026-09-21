@@ -21,12 +21,11 @@ import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
 import org.jsoup.Jsoup
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class CurrentRentFirstPaidControllerSpec extends TestBaseSpec:
+class CurrentRentFirstPaidControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -45,13 +44,13 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
         aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Current Rent First Paid in the session" in {
-      val result = currentRentFirstPaidController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = currentRentFirstPaidController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -63,8 +62,8 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec:
       val controller = currentRentFirstPaidController(aboutLeaseOrAgreementPartOne =
         Some(prefilledAboutLeaseOrAgreementPartOneNoStartDate)
       )
-      val result     = controller.show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -74,8 +73,8 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when None in session for 6011" in {
       val controller = currentRentFirstPaidController(forType = FOR6011, aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -85,8 +84,8 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with throughput affect rent, does rent vary in the session for 6020" in {
       val controller = currentRentFirstPaidController(forType = FOR6020)
-      val result     = controller.show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -96,8 +95,8 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no throughput affect rent, does rent vary in the session for 6020" in {
       val controller = currentRentFirstPaidController(forType = FOR6020, aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -107,11 +106,11 @@ class CurrentRentFirstPaidControllerSpec extends TestBaseSpec:
 
     "display the page with the fields prefilled in" when {
       "exists within the session" in {
-        val result = currentRentFirstPaidController().show()(fakeRequest)
+        val result = currentRentFirstPaidController().show()(getRequest)
         val html   = Jsoup.parse(contentAsString(result))
-        Option(html.getElementById("currentRentFirstPaid.day").`val`()).value   shouldBe "1"
-        Option(html.getElementById("currentRentFirstPaid.month").`val`()).value shouldBe "6"
-        Option(html.getElementById("currentRentFirstPaid.year").`val`()).value  shouldBe "2022"
+        Option(html.getElementById("currentRentFirstPaid.day").`val`()).get   shouldBe "1"
+        Option(html.getElementById("currentRentFirstPaid.month").`val`()).get shouldBe "6"
+        Option(html.getElementById("currentRentFirstPaid.year").`val`()).get  shouldBe "2022"
       }
     }
   }

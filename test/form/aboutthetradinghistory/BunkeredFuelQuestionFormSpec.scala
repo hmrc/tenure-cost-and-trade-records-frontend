@@ -18,16 +18,15 @@ package form.aboutthetradinghistory
 
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.FormError
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class BunkeredFuelQuestionFormSpec extends TestBaseSpec:
+class BunkeredFuelQuestionFormSpec extends BaseSpec:
 
   "BunkeredFuelQuestionForm" should {
     "bind valid data correctly" in {
       val data = Map(
         "bunkeredFuelQuestion" -> "yes"
       )
-
       val form = BunkeredFuelQuestionForm.bunkeredFuelQuestionForm.bind(data)
 
       form.errors shouldBe empty

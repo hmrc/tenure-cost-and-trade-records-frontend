@@ -20,19 +20,18 @@ import actions.SessionRequest
 import models.ForType.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import navigation.AboutTheTradingHistoryNavigator
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
-import utils.TestBaseSpec
+import test.ControllerSpec
 import views.html.taskList.taskList
 
-class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSpec:
+class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends ControllerSpec:
 
   private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   private val mockTaskListView                    = mock[taskList]
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6045CYAOtherHolidayAccommodationSessionYes, getRequest)
   when(mockTaskListView()(using any, any)).thenReturn(HtmlFormat.empty)
 
   private def checkYourAnswersOtherHolidayAccommodationController(
@@ -46,17 +45,17 @@ class CheckYourAnswersOtherHolidayAccommodationControllerSpec extends TestBaseSp
       forType = FOR6045,
       aboutTheTradingHistoryPartOne = Some(aboutTheTradingHistoryPartOne)
     ),
-    mockSessionRepo
+    mockSessionRepository
   )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersOtherHolidayAccommodationController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersOtherHolidayAccommodationController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersOtherHolidayAccommodationController().show(fakeRequest)
+      val result = checkYourAnswersOtherHolidayAccommodationController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

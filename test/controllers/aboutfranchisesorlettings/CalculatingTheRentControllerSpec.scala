@@ -18,18 +18,12 @@ package controllers.aboutfranchisesorlettings
 
 import connectors.Audit
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import navigation.AboutFranchisesOrLettingsNavigator
 import org.jsoup.Jsoup
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class CalculatingTheRentControllerSpec extends TestBaseSpec:
-
-  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator =
-    mock[AboutFranchisesOrLettingsNavigator]
+class CalculatingTheRentControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,20 +33,20 @@ class CalculatingTheRentControllerSpec extends TestBaseSpec:
     CalculatingTheRentForController(
       stubMessagesControllerComponents(),
       mockAudit,
-      mockAboutFranchisesOrLettingsNavigator,
+      aboutFranchisesOrLettingsNavigator,
       calculatingTheRentView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller().show(0)(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller().show(0)(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(0)(fakeRequest)
+      val result = controller().show(0)(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -60,10 +54,10 @@ class CalculatingTheRentControllerSpec extends TestBaseSpec:
     "display the page with the fields prefilled in" when {
       "given an index" which {
         "exists within the session" in {
-          val result = controller().show(0)(fakeRequest)
+          val result = controller().show(0)(getRequest)
           val html   = Jsoup.parse(contentAsString(result))
-          Option(html.getElementById("dateInput.month").`val`()).value shouldBe "1"
-          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2021"
+          Option(html.getElementById("dateInput.month").`val`()).get shouldBe "1"
+          Option(html.getElementById("dateInput.year").`val`()).get  shouldBe "2021"
         }
       }
     }

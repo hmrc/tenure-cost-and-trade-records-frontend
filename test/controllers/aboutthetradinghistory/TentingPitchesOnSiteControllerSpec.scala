@@ -22,12 +22,11 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class TentingPitchesOnSiteControllerSpec extends TestBaseSpec:
+class TentingPitchesOnSiteControllerSpec extends ControllerSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -40,12 +39,12 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       tentingPitchesOnSiteView,
       preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "TentingPitchesOnSiteController GET /" should {
     "return 200 and HTML when data present in session" in {
-      val result = tentingPitchesOnSiteController().show(fakeRequest)
+      val result = tentingPitchesOnSiteController().show(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -53,7 +52,7 @@ class TentingPitchesOnSiteControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when data is none in session" in {
       val controller = tentingPitchesOnSiteController(aboutTheTradingHistoryPartOne = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")

@@ -19,7 +19,7 @@ package views.aboutthetradinghistory
 import actions.SessionRequest
 import form.aboutthetradinghistory.AdditionalAmusementsForm
 import play.api.data.Form
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.AnyContent
 import views.behaviours.QuestionViewBehaviours
 
 class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[BigDecimal]]]:
@@ -31,7 +31,7 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[Big
   override val form: Form[Seq[Option[BigDecimal]]] =
     AdditionalAmusementsForm.additionalAmusementsForm(years)(using messages)
 
-  private val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6045YesSession, fakeRequest)
+  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6045YesSession, getRequest)
 
   private val backLink = controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show().url
 
@@ -44,17 +44,12 @@ class AdditionalAmusementsViewSpec extends QuestionViewBehaviours[Seq[Option[Big
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the additional bars and clubs Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.AdditionalBarsClubsController.show().url
-    }
+    behave like pageWithBackLink(createView, "Additional bars and clubs", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 

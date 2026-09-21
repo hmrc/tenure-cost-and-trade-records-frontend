@@ -16,7 +16,6 @@
 
 package controllers.requestReferenceNumber
 
-import connectors.MockAddressLookup
 import connectors.addressLookup.*
 import models.Session
 import models.submissions.common.Address
@@ -28,30 +27,31 @@ import org.scalatest.RecoverMethods.recoverToExceptionIf
 import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.{JsoupHelpers, MockAddressLookup}
+import test.ControllerSpec
 import views.html.requestReferenceNumber.requestReferenceNumberPropertyDetails as RequestReferenceNumberPropertyDetailsView
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec with JsoupHelpers:
+class RequestReferenceNumberPropertyDetailsControllerSpec extends ControllerSpec with JsoupHelpers:
 
   "the RequestReferenceNumber controller" when:
     "starting with a session" should {
       "reply 303 redirect to the show page" in new ControllerFixture {
-        val result: Future[Result] = controller.startWithSession(fakeRequest)
+        val result: Future[Result] = controller.startWithSession(getRequest)
         status(result) shouldBe SEE_OTHER
         redirectLocation(
           result
-        ).value        shouldBe routes.RequestReferenceNumberPropertyDetailsController.show().url
+        ).get          shouldBe routes.RequestReferenceNumberPropertyDetailsController.show().url
       }
 
       "handling GET /" should {
         "reply 200 with an empty form" in new ControllerFixture {
-          val result: Future[Result] = controller.show(fakeRequest)
-          status(result)            shouldBe OK
-          contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF8
+          val result: Future[Result] = controller.show(getRequest)
+          status(result)          shouldBe OK
+          contentType(result).get shouldBe HTML
+          charset(result).get     shouldBe UTF8
           val page: Document = contentAsJsoup(result)
           page.heading                    shouldBe "requestReferenceNumber.heading"
           page.backLink                   shouldBe controllers.routes.LoginController.show.url
@@ -71,10 +71,10 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
             )
           )
         ) {
-          val result: Future[Result] = controller.show(fakeRequest)
-          status(result)            shouldBe OK
-          contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF8
+          val result: Future[Result] = controller.show(getRequest)
+          status(result)          shouldBe OK
+          contentType(result).get shouldBe HTML
+          charset(result).get     shouldBe UTF8
           val page: Document = contentAsJsoup(result)
           page.heading                    shouldBe "requestReferenceNumber.heading"
           page.backLink                   shouldBe controllers.routes.LoginController.show.url
@@ -85,7 +85,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
       "handling POST /" should {
         "reply 404 if the submitted data is invalid" in new ControllerFixture {
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "businessTradingName" -> "" // missing
             )
           )
@@ -99,7 +99,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
             .thenReturn(successful(None))
           recoverToExceptionIf[Exception] {
             controller.submit(
-              fakePostRequest.withFormUrlEncodedBody(
+              postRequest.withFormUrlEncodedBody(
                 "businessTradingName" -> "Wombles Inc"
               )
             )
@@ -110,15 +110,15 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
 
         "reply 303 redirect to the address lookup page" in new ControllerFixture {
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "businessTradingName" -> "Wombles Inc"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe "/on-ramp"
+          redirectLocation(result).get shouldBe "/on-ramp"
           val session: ArgumentCaptor[Session] = captor[Session]
           verify(repository, once).saveOrUpdate(session.capture())(using any)
-          session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Wombles Inc"
+          session.getValue.requestReferenceNumberDetails.get.propertyDetails.get.businessTradingName shouldBe "Wombles Inc"
         }
 
         "reply 303 redirect to the address lookup page if updating the trading name" in new ControllerFixture(
@@ -135,15 +135,15 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
           )
         ) {
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "businessTradingName" -> "Round Wombles Limited"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe "/on-ramp"
+          redirectLocation(result).get shouldBe "/on-ramp"
           val session: ArgumentCaptor[Session] = captor[Session]
           verify(repository, once).saveOrUpdate(session.capture())(using any)
-          session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.businessTradingName shouldBe "Round Wombles Limited"
+          session.getValue.requestReferenceNumberDetails.get.propertyDetails.get.businessTradingName shouldBe "Round Wombles Limited"
         }
       }
 
@@ -161,9 +161,9 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
             )
           )
         ) {
-          val result: Future[Result] = controller.addressLookupCallback("confirmedAddress")(fakeRequest)
-          status(result)                 shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe routes.RequestReferenceNumberContactDetailsController.show().url
+          val result: Future[Result] = controller.addressLookupCallback("confirmedAddress")(getRequest)
+          status(result)               shouldBe SEE_OTHER
+          redirectLocation(result).get shouldBe routes.RequestReferenceNumberContactDetailsController.show().url
 
           val id: ArgumentCaptor[String] = captor[String]
           verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
@@ -171,7 +171,7 @@ class RequestReferenceNumberPropertyDetailsControllerSpec extends TestBaseSpec w
 
           val session: ArgumentCaptor[Session] = captor[Session]
           verify(repository, once).saveOrUpdate(session)(using any)
-          session.getValue.requestReferenceNumberDetails.value.propertyDetails.value.address.value shouldBe Address(
+          session.getValue.requestReferenceNumberDetails.get.propertyDetails.get.address.get shouldBe Address(
             buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
             street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
             town = addressLookupConfirmedAddress.address.lines.get.last,

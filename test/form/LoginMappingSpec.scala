@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
 import controllers.LoginController.loginForm
 import form.Errors
-import org.scalatest.matchers.should
-import org.scalatest.wordspec.AnyWordSpec
-import utils.FormBindingTestAssertions.*
+import test.FormSpec
 
 import java.time.{ZoneOffset, ZonedDateTime}
 
-class LoginMappingSpec extends AnyWordSpec with should.Matchers:
+class LoginMappingSpec extends FormSpec:
 
   "LoginMapping" should {
     "bind to ISO date time strings for the start-time" in {

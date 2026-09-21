@@ -30,22 +30,22 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
   override val form: Form[DoesTheRentPayable] = DoesTheRentPayableForm.doesTheRentPayableForm
 
   private def createView = () =>
-    doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[DoesTheRentPayable]) =>
-    doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(using fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6010, Summary("99996010001"))(using getRequest, messages)
 
   private def createView6045 = () =>
-    doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(using fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(using getRequest, messages)
 
   private def createViewUsingForm6045 = (form: Form[DoesTheRentPayable]) =>
-    doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(using fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6045, Summary("99996045001"))(using getRequest, messages)
 
   private def createView6048 = () =>
-    doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using getRequest, messages)
 
   private def createViewUsingForm6048 = (form: Form[DoesTheRentPayable]) =>
-    doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using fakeRequest, messages)
+    doesTheRentPayableView(form, FOR6048, Summary("99996048001"))(using getRequest, messages)
 
   "Rent payable view" should {
 
@@ -53,45 +53,34 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
 
     behave like pageWithTextFields(createViewUsingForm, "detailsToQuestions")
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
-    }
+    behave like pageWithBackLink(createView, "Included In Your Rent", controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
-    "has a link marked with back.link.label leading to the task list Page 6048" in {
-      val doc          = asDocument(createView6048())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
-    }
+    behave like pageWithBackLink(
+      createView6045,
+      "Included In Your Rent 6045",
+      controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
+    )
 
     "Section heading is visible 6045" in {
       val doc  = asDocument(createViewUsingForm6045(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
-    "has a link marked with back.link.label leading to the task list Page 6045" in {
-      val doc          = asDocument(createView6045())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url
-    }
+    behave like pageWithBackLink(createView6048, "Included In Your Rent 6048", controllers.aboutYourLeaseOrTenure.routes.IncludedInYourRentController.show().url)
 
     "Section heading is visible 6048" in {
       val doc  = asDocument(createViewUsingForm6048(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
@@ -140,6 +129,7 @@ class DoesTheRentPayableViewSpec extends QuestionViewBehaviours[DoesTheRentPayab
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

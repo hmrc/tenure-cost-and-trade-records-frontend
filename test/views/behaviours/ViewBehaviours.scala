@@ -222,6 +222,18 @@ trait ViewBehaviours extends ViewSpecBase:
       }
     }
 
+  def pageWithBackLink(view: () => HtmlFormat.Appendable, title: String, url: String): Unit =
+    s"have a link marked with back.link.label leading to the $title page" in {
+      val doc          = asDocument(view())
+      val backlinkText = doc.select("a[class=govuk-back-link]").text()
+
+      backlinkText shouldBe messages("back.link.label")
+
+      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
+
+      backlinkUrl shouldBe url
+    }
+
   protected def checkServiceNameInHeaderBanner(html: Html): Assertion =
     val doc    = asDocument(html)
     val header = doc.getElementsByAttributeValue("class", "govuk-service-navigation__service-name").first()

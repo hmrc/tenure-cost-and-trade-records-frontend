@@ -26,29 +26,27 @@ class DownloadPDFViewSpec extends QuestionViewBehaviours[String]:
 
   override val form: Form[String] = defaultForm
 
-  private def createView6010      = () => downloadPDFView("FOR6010", testReferenceNumber)(using fakeRequest, messages)
-  private def createView6011      = () => downloadPDFView("FOR6011", testReferenceNumber)(using fakeRequest, messages)
-  private def createView6015      = () => downloadPDFView("FOR6015", testReferenceNumber)(using fakeRequest, messages)
-  private def createView6016      = () => downloadPDFView("FOR6016", testReferenceNumber)(using fakeRequest, messages)
-  private def createView6020      = () => downloadPDFView("FOR6020", testReferenceNumber)(using fakeRequest, messages)
-  private def createView6030      = () => downloadPDFView("FOR6030", testReferenceNumber)(using fakeRequest, messages)
-  private def createView6045      = () => downloadPDFView("FOR6045", testReferenceNumber)(using fakeRequest, messages)
-  private def createView6046      = () => downloadPDFView("FOR6046", testReferenceNumber)(using fakeRequest, messages)
-  private def createView6048      = () => downloadPDFView("FOR6048", testReferenceNumber)(using fakeRequest, messages)
-  private def createView6076      = () => downloadPDFView("FOR6076", testReferenceNumber)(using fakeRequest, messages)
-  private def createViewNoForType = () => downloadPDFView("", testReferenceNumber)(using fakeRequest, messages)
+  private def createView6010      = () => downloadPDFView("FOR6010", testReferenceNumber)(using getRequest, messages)
+  private def createView6011      = () => downloadPDFView("FOR6011", testReferenceNumber)(using getRequest, messages)
+  private def createView6015      = () => downloadPDFView("FOR6015", testReferenceNumber)(using getRequest, messages)
+  private def createView6016      = () => downloadPDFView("FOR6016", testReferenceNumber)(using getRequest, messages)
+  private def createView6020      = () => downloadPDFView("FOR6020", testReferenceNumber)(using getRequest, messages)
+  private def createView6030      = () => downloadPDFView("FOR6030", testReferenceNumber)(using getRequest, messages)
+  private def createView6045      = () => downloadPDFView("FOR6045", testReferenceNumber)(using getRequest, messages)
+  private def createView6046      = () => downloadPDFView("FOR6046", testReferenceNumber)(using getRequest, messages)
+  private def createView6048      = () => downloadPDFView("FOR6048", testReferenceNumber)(using getRequest, messages)
+  private def createView6076      = () => downloadPDFView("FOR6076", testReferenceNumber)(using getRequest, messages)
+  private def createViewNoForType = () => downloadPDFView("", testReferenceNumber)(using getRequest, messages)
 
   "download pdf view" should {
 
     behave like normalPage(createView6010, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the Download Reference Page" in {
-      val doc          = asDocument(createView6010())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
-    }
+    behave like pageWithBackLink(
+      createView6010,
+      "Download Reference",
+      controllers.downloadFORTypeForm.routes.DownloadPDFReferenceNumberController.show().url
+    )
 
     "contain link to form download 6010" in {
       val doc = asDocument(createView6010())

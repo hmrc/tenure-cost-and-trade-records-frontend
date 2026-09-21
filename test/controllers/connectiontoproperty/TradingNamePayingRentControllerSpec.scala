@@ -19,15 +19,14 @@ package controllers.connectiontoproperty
 import connectors.Audit
 import form.connectiontoproperty.TradingNamePayingRentForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class TradingNamePayingRentControllerSpec extends TestBaseSpec:
+class TradingNamePayingRentControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,13 +41,13 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       tradingNamePayRentView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with trading name paying rent present in session" in {
-      val result = tradingNamePayingRentController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = tradingNamePayingRentController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -59,8 +58,8 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec:
     "return 200 and HTML with trading name paying rent is not present in session" in {
       val controller =
         tradingNamePayingRentController(stillConnectedDetails = Some(prefilledStillConnectedDetailsNoneOwnProperty))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -107,14 +106,14 @@ class TradingNamePayingRentControllerSpec extends TestBaseSpec:
 
   "getBackLink" should {
     "return back link to CYA page if query param present" in {
-      val result = tradingNamePayingRentController().show(fakeRequestFromCYA)
+      val result = tradingNamePayingRentController().show(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       )
     }
 
     "return back link to does (...) own the property page if 'from' query param is not present" in {
-      val result = tradingNamePayingRentController().show(fakeRequest)
+      val result = tradingNamePayingRentController().show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
       )

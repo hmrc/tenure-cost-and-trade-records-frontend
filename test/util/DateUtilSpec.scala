@@ -16,7 +16,7 @@
 
 package util
 
-import org.scalatestplus.play.PlaySpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 import util.DateUtil.*
 
 import java.time.format.DateTimeFormatter
@@ -26,7 +26,7 @@ import java.util.Locale
 /**
   * @author Yuriy Tumakha
   */
-class DateUtilSpec extends PlaySpec:
+class DateUtilSpec extends BaseSpec:
 
   private val ukTimezone                   = ZoneId.of("Europe/London")
   private val nowInUK                      = ZonedDateTime.now(ukTimezone)
@@ -35,30 +35,30 @@ class DateUtilSpec extends PlaySpec:
   private val monthYearExampleFormatter    = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
   private val dayMonthExampleFormatter     = DateTimeFormatter.ofPattern("d M", Locale.UK)
 
-  "localDateHelpers" should {
+  "LocalDate extension" should {
     "convert LocalDate to Epoch Milliseconds using ukTimezone" in {
       val result: Long = testLocalDate.toEpochMilli
 
       val expected: Long = testLocalDate.atStartOfDay(ukTimezone).toInstant.toEpochMilli
 
-      result mustBe expected
+      result shouldBe expected
     }
 
     "format LocalDate using short date format 'dd/MM/yyyy'" in {
-      testLocalDate.shortDate mustBe "12/02/2024"
+      testLocalDate.shortDate shouldBe "12/02/2024"
     }
   }
 
   "DateUtil" should {
     "return example DayMonthYear" in {
-      DateUtil.exampleDayMonthYear(0) mustBe nowInUK.format(dayMonthYearExampleFormatter)
+      DateUtil.exampleDayMonthYear(0) shouldBe nowInUK.format(dayMonthYearExampleFormatter)
     }
 
     "return example MonthYear" in {
-      DateUtil.exampleMonthYear(0) mustBe nowInUK.format(monthYearExampleFormatter)
+      DateUtil.exampleMonthYear(0) shouldBe nowInUK.format(monthYearExampleFormatter)
     }
 
     "return example DayMonth" in {
-      DateUtil.exampleDayMonth(0) mustBe nowInUK.format(dayMonthExampleFormatter)
+      DateUtil.exampleDayMonth(0) shouldBe nowInUK.format(dayMonthExampleFormatter)
     }
   }

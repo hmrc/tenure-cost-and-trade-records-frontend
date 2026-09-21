@@ -19,15 +19,14 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleInsideRepairsForm.ultimatelyResponsibleInsideRepairsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec:
+class UltimatelyResponsibleInsideRepairsControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,13 +41,13 @@ class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       ultimatelyResponsibleInsideRepairsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Ultimately Responsible Inside Repairs in the session" in {
-      val result = ultimatelyResponsibleInsideRepairsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = ultimatelyResponsibleInsideRepairsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class UltimatelyResponsibleInsideRepairsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Ultimately Responsible Inside Repairs in the session" in {
       val controller = ultimatelyResponsibleInsideRepairsController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(

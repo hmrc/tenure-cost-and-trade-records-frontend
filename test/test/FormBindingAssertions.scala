@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package utils
+package test
 
 import form.Errors
 import org.scalatest.matchers.should
 import play.api.data.Form
 
-object FormBindingTestAssertions extends should.Matchers:
+trait FormBindingAssertions extends should.Matchers:
 
   def doesNotContainErrors[T](f: Form[T]): Unit =
     if f.hasErrors then

@@ -19,15 +19,14 @@ package controllers.aboutfranchisesorlettings
 import connectors.Audit
 import form.aboutfranchisesorlettings.FranchiseOrLettingsTiedToPropertyForm.franchiseOrLettingsTiedToPropertyForm
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec:
+class FranchiseOrLettingsTiedToPropertyControllerSpec extends ControllerSpec:
 
   import TestData.*
   val mockAudit: Audit = mock[Audit]
@@ -41,28 +40,30 @@ class FranchiseOrLettingsTiedToPropertyControllerSpec extends TestBaseSpec:
       aboutFranchisesOrLettingsNavigator,
       franchiseOrLettingsTiedToPropertyView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = franchiseOrLettingsTiedToPropertyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = franchiseOrLettingsTiedToPropertyController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = franchiseOrLettingsTiedToPropertyController().show(fakeRequest)
+      val result = franchiseOrLettingsTiedToPropertyController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
     "return correct backLink when 'from=CYA' query param is present" in {
-      val result = franchiseOrLettingsTiedToPropertyController().show()(fakeRequestFromCYA)
+      val result = franchiseOrLettingsTiedToPropertyController().show()(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.aboutfranchisesorlettings.routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       )
     }
+
     "return task list back link if no query params in the url" in {
-      val result = franchiseOrLettingsTiedToPropertyController().show()(fakeRequest)
+      val result = franchiseOrLettingsTiedToPropertyController().show()(getRequest)
       contentAsString(result) should include(
         controllers.routes.TaskListController.show.url + "#franchise-or-lettings-tied-to-property"
       )

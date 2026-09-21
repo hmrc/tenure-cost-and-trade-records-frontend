@@ -36,10 +36,10 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
   "the AdvertisingDetail controller" when {
     "the user session is fresh" should {
       "be handling GET /detail by replying 200 with the form showing name and address fields" in new ControllerFixture {
-        val result: Future[Result] = controller.show(None)(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(None)(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading                        shouldBe "lettingHistory.advertisingDetail.heading"
         page.backLink                       shouldBe routes.HasOnlineAdvertisingController.show.url
@@ -48,16 +48,16 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
       }
 
       "be handling good POST /detail by replying 303 redirect to the 'Advertising Online List' page" in new ControllerFixture {
-        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = postRequest.withFormUrlEncodedBody(
           "websiteAddress"          -> "123.uk",
           "propertyReferenceNumber" -> "123abc"
         )
         val result: Future[Result]                           = controller.submit(None)(request)
-        status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
+        status(result)               shouldBe SEE_OTHER
+        redirectLocation(result).get shouldBe routes.AdvertisingListController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        onlineAdvertising(data)          should have size 1
-        onlineAdvertising(data).head   shouldBe AdvertisingDetail(
+        onlineAdvertising(data)        should have size 1
+        onlineAdvertising(data).head shouldBe AdvertisingDetail(
           websiteAddress = "123.uk",
           propertyReferenceNumber = "123abc"
         )
@@ -68,10 +68,10 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /detail?index=0 by replying 200 with the form pre-filled values" in new ControllerFixture(
           oneAdvertising
         ) {
-          val result: Future[Result] = controller.show(maybeIndex = Some(0))(fakeGetRequest)
-          status(result)            shouldBe OK
-          contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF8
+          val result: Future[Result] = controller.show(maybeIndex = Some(0))(getRequest)
+          status(result)          shouldBe OK
+          contentType(result).get shouldBe HTML
+          charset(result).get     shouldBe UTF8
           val page: Document = contentAsJsoup(result)
           page.input("websiteAddress") should haveValue("123.com")
 
@@ -81,13 +81,13 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           oneAdvertising
         ) {
           // Post an unknown resident detail and expect it to become the third resident
-          val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
+          val request: FakeRequest[AnyContentAsFormUrlEncoded] = postRequest.withFormUrlEncodedBody(
             "websiteAddress"          -> "test.pl",
             "propertyReferenceNumber" -> "1234ref"
           )
           val result: Future[Result]                           = controller.submit(None)(request)
           status(result)                                     shouldBe SEE_OTHER
-          redirectLocation(result).value                     shouldBe routes.AdvertisingListController.show.url
+          redirectLocation(result).get                       shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           onlineAdvertising(data)                              should have size 2 // instead of 1
           onlineAdvertising(data).head                       shouldBe oneAdvertising.head
@@ -99,7 +99,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
           oneAdvertising
         ) {
           // Post a duplicate and expect a 400 bad request
-          val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
+          val request: FakeRequest[AnyContentAsFormUrlEncoded] = postRequest.withFormUrlEncodedBody(
             "websiteAddress"          -> "123.com",
             "propertyReferenceNumber" -> "aaa123"
           )
@@ -112,13 +112,13 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling POST /detail?overwrite by replying 303 redirect to 'Advertising Online List' page" in new ControllerFixture(
           twoAdvertising
         ) {
-          val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
+          val request: FakeRequest[AnyContentAsFormUrlEncoded] = postRequest.withFormUrlEncodedBody(
             "websiteAddress"          -> twoAdvertising.last.websiteAddress,
             "propertyReferenceNumber" -> "otherReference123"
           )
           val result: Future[Result]                           = controller.submit(None)(request)
           status(result)                                     shouldBe SEE_OTHER
-          redirectLocation(result).value                     shouldBe routes.AdvertisingListController.show.url
+          redirectLocation(result).get                       shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
           onlineAdvertising(data)                              should have size 3
           onlineAdvertising(data).head                       shouldBe oneAdvertising.head
@@ -131,9 +131,9 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET /detail by replying 303 redirect to the 'Advertising Online List' page" in new ControllerFixture(
           fiveAdvertising
         ) {
-          val result: Future[Result] = controller.show(maybeIndex = None)(fakeGetRequest)
-          status(result)                 shouldBe SEE_OTHER
-          redirectLocation(result).value shouldBe routes.AdvertisingListController.show.url
+          val result: Future[Result] = controller.show(maybeIndex = None)(getRequest)
+          status(result)               shouldBe SEE_OTHER
+          redirectLocation(result).get shouldBe routes.AdvertisingListController.show.url
         }
       }
     }
@@ -141,7 +141,7 @@ class AdvertisingDetailControllerSpec extends LettingHistoryControllerSpec:
     "regardless of what the user might have submitted" should {
       "be handling invalid POST /detail by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(None)(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "websiteAddress"          -> "",
             "propertyReferenceNumber" -> ""
           )

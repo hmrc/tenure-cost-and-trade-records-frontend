@@ -24,12 +24,12 @@ import navigation.AboutYourLeaseOrTenureNavigator
 import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
+class ServicePaidSeparatelyListControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -45,12 +45,12 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
       servicePaidSeparatelyListView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Services Paid Separately List in the session 0" in {
-      val result = servicePaidSeparatelyListController().show(0)(fakeRequest)
+      val result = servicePaidSeparatelyListController().show(0)(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -58,7 +58,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Services Paid Separately List with none in the session 0" in {
       val controller = servicePaidSeparatelyListController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(0)(fakeRequest)
+      val result     = controller.show(0)(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -67,7 +67,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val result = servicePaidSeparatelyListController().submit(1)(fakeRequest)
+      val result = servicePaidSeparatelyListController().submit(1)(getRequest)
       status(result) shouldBe BAD_REQUEST
     }
 
@@ -81,7 +81,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
 
   "REMOVE /" should {
     "redirect if an empty form is submitted" in {
-      val result = servicePaidSeparatelyListController().remove(1)(fakeRequest)
+      val result = servicePaidSeparatelyListController().remove(1)(getRequest)
       status(result) shouldBe SEE_OTHER
     }
   }
@@ -90,7 +90,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
     "render the removal confirmation page on remove" in {
       val controller     = servicePaidSeparatelyListController()
       val idxToRemove    = 0
-      val sessionRequest = SessionRequest(stillConnectedDetails6030NoSession, fakeRequest)
+      val sessionRequest = SessionRequest(stillConnectedDetails6030NoSession, getRequest)
       val result         = controller.remove(idxToRemove)(sessionRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
@@ -99,7 +99,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
     "handle form submission with 'Yes' and perform removal" in {
       val controller      = servicePaidSeparatelyListController()
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
       val sessionRequest  = SessionRequest(stillConnectedDetails6030NoSession, requestWithForm)
       val result          = controller.performRemove(idxToRemove)(sessionRequest)
       status(result) shouldBe BAD_REQUEST
@@ -108,7 +108,7 @@ class ServicePaidSeparatelyListControllerSpec extends TestBaseSpec:
     "handle form submission with 'No' and cancel removal" in {
       val controller      = servicePaidSeparatelyListController()
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
       status(result) shouldBe BAD_REQUEST
     }

@@ -17,17 +17,16 @@
 package models.submissions
 
 import models.submissions.common.{Address, ContactDetails}
-import org.scalatest.matchers.should
-import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.Json
 import test.TestObjects
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 import java.time.Instant
 
 /**
   * @author Yuriy Tumakha
   */
-class RequestReferenceNumberSubmissionSpec extends AnyWordSpec with should.Matchers with TestObjects:
+class RequestReferenceNumberSubmissionSpec extends BaseSpec with TestObjects:
 
   "RequestReferenceNumberSubmission model" should {
     "be serialized/deserialized from json" in {

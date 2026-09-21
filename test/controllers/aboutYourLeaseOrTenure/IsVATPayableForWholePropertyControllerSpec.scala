@@ -20,12 +20,12 @@ import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec:
+class IsVATPayableForWholePropertyControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,13 +37,13 @@ class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200 and HTML with is VAT payable for whole property is present in session" in {
-      val result = isVATPayableForWholePropertyController().show(fakeRequest)
+      val result = isVATPayableForWholePropertyController().show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -54,7 +54,7 @@ class IsVATPayableForWholePropertyControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML is VAT payable for whole property is none in session" in {
       val controller = isVATPayableForWholePropertyController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")

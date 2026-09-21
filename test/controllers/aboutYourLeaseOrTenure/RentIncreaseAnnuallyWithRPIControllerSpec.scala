@@ -18,12 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec:
+class RentIncreaseAnnuallyWithRPIControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,13 +35,13 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       rentIncreaseAnnuallyWithRPIView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Rent Increased Annual RPI and Open market with Yes in the sessions" in {
-      val result = rentIncreaseAnnuallyWithRPIController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentIncreaseAnnuallyWithRPIController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -54,8 +53,8 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec:
       val controller = rentIncreaseAnnuallyWithRPIController(
         aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -65,8 +64,8 @@ class RentIncreaseAnnuallyWithRPIControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML Rent Increased Annual RPI and Open market with None in the sessions" in {
       val controller = rentIncreaseAnnuallyWithRPIController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

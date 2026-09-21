@@ -33,10 +33,10 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
   "the HasStoppedLetting controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture {
-        val result: Future[Result] = controller.show(fakeGetRequest.withSession("from" -> "permanentResidentsPage"))
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest.withSession("from" -> "permanentResidentsPage"))
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.hasStoppedLetting.heading"
         page.backLink          shouldBe routes.HowManyNightsController.show.url
@@ -46,7 +46,7 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
 
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing answer!
           )
         )
@@ -57,14 +57,14 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
 
       "be handling POST answer='yes' by replying 303 redirect to the 'Last Rent' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                shouldBe routes.WhenWasLastLetController.show.url
+        redirectLocation(result).get              shouldBe routes.WhenWasLastLetController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        intendedLettings(data).value.hasStopped.value shouldBe true
+        intendedLettings(data).get.hasStopped.get shouldBe true
       }
     }
 
@@ -72,10 +72,10 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
       "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
         hasStopped = Some(true)
       ) {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.radios("answer") shouldNot be(empty)
         page.radios("answer")    should haveChecked(value = "yes")
@@ -87,14 +87,14 @@ class HasStoppedLettingControllerSpec extends LettingHistoryControllerSpec:
       ) {
         // Answering 'no' will clear out all residents details
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "no"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                shouldBe routes.IsYearlyAvailableController.show.url
+        redirectLocation(result).get              shouldBe routes.IsYearlyAvailableController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        intendedLettings(data).value.hasStopped.value shouldBe false
+        intendedLettings(data).get.hasStopped.get shouldBe false
       }
     }
   }

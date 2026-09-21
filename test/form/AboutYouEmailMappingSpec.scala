@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
-import form.EmailMapping.validateEmail
-import org.scalatest.matchers.should
-import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
-import org.scalatest.wordspec.AnyWordSpecLike
+import form.AboutYouEmailMapping.validateAboutYouEmail
+import org.scalatest.prop.TableFor2
 import play.api.data.Form
 import play.api.data.Forms.single
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class EmailMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
+class AboutYouEmailMappingSpec extends BaseSpec:
 
   trait Setup:
-    val form: Form[String] = Form(single("emailFormat" -> validateEmail))
+    val form: Form[String] = Form(single("emailFormat" -> validateAboutYouEmail))
 
   "Email address validation" should {
     "catch mandatory condition" in new Setup {
@@ -39,13 +38,13 @@ class EmailMappingSpec extends AnyWordSpecLike with should.Matchers with TableDr
         ("", false)
       )
 
-      TableDrivenPropertyChecks.forAll(isInput) { (emailFormat, isValid) =>
+      forAll(isInput) { (emailFormat, isValid) =>
         val res: Form[String] = form.bind(Map("emailFormat" -> emailFormat))
 
         if isValid then
           res.hasErrors         shouldBe false
         else
-          res.errors(0).message shouldBe "error.contact.email.required"
+          res.errors(0).message shouldBe "error.contact.emailAboutYou.required"
       }
     }
   }

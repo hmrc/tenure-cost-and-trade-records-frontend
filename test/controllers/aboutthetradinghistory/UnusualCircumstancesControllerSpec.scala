@@ -18,12 +18,11 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import models.ForType.*
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class UnusualCircumstancesControllerSpec extends TestBaseSpec:
+class UnusualCircumstancesControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -34,7 +33,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       unusualCircumstancesView,
       preEnrichedActionRefiner(forType = FOR6015),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def unusualCircumstancesController6030: UnusualCircumstancesController =
@@ -44,7 +43,7 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       unusualCircumstancesView,
       preEnrichedActionRefiner(forType = FOR6030),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def unusualCircumstancesControllerNone: UnusualCircumstancesController =
@@ -54,13 +53,13 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       unusualCircumstancesView,
       preEnrichedActionRefiner(aboutTheTradingHistory = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "UnusualCircumstancesController GET /" should {
     "return 200 and HTML for 6015 with unusual circumstances in the session" in {
-      val result = unusualCircumstancesController6015.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = unusualCircumstancesController6015.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -69,8 +68,8 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec:
     }
 
     "return 200 and HTML for 6030 with unusual circumstances in the session" in {
-      val result = unusualCircumstancesController6030.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = unusualCircumstancesController6030.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -79,8 +78,8 @@ class UnusualCircumstancesControllerSpec extends TestBaseSpec:
     }
 
     "return 200 and HTML when no unusual circumstances in the session" in {
-      val result = unusualCircumstancesControllerNone.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = unusualCircumstancesControllerNone.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

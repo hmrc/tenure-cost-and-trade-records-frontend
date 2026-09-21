@@ -18,33 +18,32 @@ package controllers.downloadFORTypeForm
 
 import connectors.BackendConnector
 import org.mockito.ArgumentCaptor
-import play.api.http.Status
 import play.api.mvc.Result
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.concurrent.Future
 import scala.concurrent.Future.{failed, successful}
 import scala.language.reflectiveCalls
 
-class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
+class DownloadPDFReferenceNumberControllerSpec extends ControllerSpec:
 
   "the DownloadPDFReferenceNumber controller" when {
     "handling GET /" should {
       "reply 200 with the HTML form" in new ControllerAndConnectorFixture {
-        val result: Future[Result] = controller.show(fakeRequest)
+        val result: Future[Result] = controller.show(getRequest)
         val content: String        = contentAsString(result)
-        status(result)            shouldBe Status.OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
-        content                     should include("referenceNumber.heading")
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
+        content                   should include("referenceNumber.heading")
       }
     }
 
     "handling POST /" should {
       "reply 400 with error message when downloadPdfReferenceNumber is missing" in new ControllerAndConnectorFixture {
-        val result: Future[Result] = controller.submit(fakePostRequest)
+        val result: Future[Result] = controller.submit(postRequest)
         status(result)        shouldBe BAD_REQUEST
         contentAsString(result) should include("error.referenceNumber.required")
       }
@@ -53,28 +52,28 @@ class DownloadPDFReferenceNumberControllerSpec extends TestBaseSpec:
         when(connector.retrieveFORType(any[String], any[HeaderCarrier]))
           .thenReturn(failed(Exception("cannot determine forType")))
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "referenceNumber" -> "unknown"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.DownloadPDFController.show("invalidType").url
+        redirectLocation(result).get  shouldBe routes.DownloadPDFController.show("invalidType").url
         verify(connector, once).retrieveFORType(givenReferenceNumber.capture(), any[HeaderCarrier])
-        givenReferenceNumber.getValue  shouldBe "unknown"
+        givenReferenceNumber.getValue shouldBe "unknown"
       }
 
       "reply 303 redirect to the 'Download PDF' page when downloadPdfReferenceNumber is good" in new ControllerAndConnectorFixture {
         when(connector.retrieveFORType(any[String], any[HeaderCarrier])).thenReturn(successful("FOR6010"))
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "referenceNumber" -> "99996010004" // this resembles a good one!
           )
         )
         status(result) shouldBe SEE_OTHER
-        session(result).get("referenceNumber").value shouldBe "99996010004"
-        redirectLocation(result).value               shouldBe routes.DownloadPDFController.show("FOR6010").url
+        session(result).get("referenceNumber").get shouldBe "99996010004"
+        redirectLocation(result).get               shouldBe routes.DownloadPDFController.show("FOR6010").url
         verify(connector, once).retrieveFORType(givenReferenceNumber.capture(), any[HeaderCarrier])
-        givenReferenceNumber.getValue                shouldBe "99996010004"
+        givenReferenceNumber.getValue              shouldBe "99996010004"
       }
     }
   }

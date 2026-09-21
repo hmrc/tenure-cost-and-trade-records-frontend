@@ -21,15 +21,14 @@ import form.Errors
 import form.connectiontoproperty.ProvideContactDetailsForm.provideContactDetailsForm
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.connectiontoproperty.{LettingPartOfPropertyDetails, StillConnectedDetails}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class ProvideContactDetailsControllerSpec extends TestBaseSpec:
+class ProvideContactDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -44,13 +43,13 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       provideContactDetailsView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Contact Details in session" in {
-      val result = provideContactDetailsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = provideContactDetailsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -62,8 +61,8 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec:
       val controller = provideContactDetailsController(
         stillConnectedDetails = Some(prefilledStillConnectedDetailsYesRentReceivedNoLettings)
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -75,8 +74,8 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec:
       val controller = provideContactDetailsController(
         stillConnectedDetails = Some(prefilledStillConnectedDetailsNoToAll)
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -86,7 +85,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec:
 
     "return exception with none for rent received" in {
       val controller = provideContactDetailsController(stillConnectedDetails = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       result.failed.recover { case e: Exception =>
         e.getMessage shouldBe " Navigation for provide your contact details page reached with error Unknown connection to property back link"
       }
@@ -126,7 +125,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec:
 
   "getBackLink" should {
     "return back link to CYA vacant when from is 'CYA'" in {
-      val result = provideContactDetailsController().show(fakeRequestFromCYA)
+      val result = provideContactDetailsController().show(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       )
@@ -138,7 +137,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec:
         lettingPartOfPropertyDetails = IndexedSeq.empty[LettingPartOfPropertyDetails]
       )
 
-      val result = provideContactDetailsController(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+      val result = provideContactDetailsController(stillConnectedDetails = Some(prefilledDetails)).show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(0).url
       )
@@ -150,7 +149,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec:
         lettingPartOfPropertyDetailsIndex = 1
       )
 
-      val result = provideContactDetailsController(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+      val result = provideContactDetailsController(stillConnectedDetails = Some(prefilledDetails)).show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.AddAnotherLettingPartOfPropertyController.show(1).url
       )
@@ -161,7 +160,7 @@ class ProvideContactDetailsControllerSpec extends TestBaseSpec:
         isAnyRentReceived = Some(AnswerNo)
       )
 
-      val result = provideContactDetailsController(stillConnectedDetails = Some(prefilledDetails)).show(fakeRequest)
+      val result = provideContactDetailsController(stillConnectedDetails = Some(prefilledDetails)).show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.IsRentReceivedFromLettingController.show().url
       )

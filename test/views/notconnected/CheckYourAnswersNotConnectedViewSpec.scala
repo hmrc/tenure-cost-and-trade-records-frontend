@@ -28,7 +28,7 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
 
   override val form: Form[NotConnectedContactDetails] = NotConnectedForm.notConnectedForm
 
-  private def createView: () => Html = () => checkYourAnswersNotConnectedView(notConnected6010NoSession)(using fakeRequest, messages)
+  private def createView: () => Html = () => checkYourAnswersNotConnectedView(notConnected6010NoSession)(using getRequest, messages)
 
   "Check Your Answers Additional Information view" should {
 
@@ -36,19 +36,14 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
 
     "has a reference number and address banner" in {
       val doc = asDocument(createView())
+
       assertContainsText(doc, "Reference:")
       assertContainsText(doc, "99996010/004")
       assertContainsText(doc, "Property:")
       assertContainsText(doc, "001, GORING ROAD, GORING-BY-SEA, WORTHING, WEST SUSSEX, BN12 4AX")
     }
 
-    "has a link marked with back.link.label leading to the further information Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.notconnected.routes.RemoveConnectionController.show().url
-    }
+    behave like pageWithBackLink(createView, "Remove connection", controllers.notconnected.routes.RemoveConnectionController.show().url)
 
     "contain are you still connected field" in {
       val doc = asDocument(createView())
@@ -87,6 +82,7 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
 
     "contain legal declaration" in {
       val doc = asDocument(createView())
+
       assertContainsText(doc, messages("declaration.heading"))
       assertContainsText(doc, messages("declaration.information"))
       assertContainsText(doc, messages("hint.declaration"))
@@ -95,6 +91,7 @@ class CheckYourAnswersNotConnectedViewSpec extends QuestionViewBehaviours[NotCon
     "contain submit button with the value Accept and Send" in {
       val doc         = asDocument(createView())
       val loginButton = doc.getElementById("send-button").text()
-      assert(loginButton == messages("button.send.label"))
+
+      loginButton shouldBe messages("button.send.label")
     }
   }

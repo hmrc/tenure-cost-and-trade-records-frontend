@@ -21,13 +21,14 @@ import views.behaviours.ViewBehaviours
 
 class ErrorSpec extends ViewBehaviours:
 
-  private val sessionRequest = SessionRequest(baseFilled6010Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6010Session, getRequest)
   private def createView     = () => errorView(409)(using sessionRequest, messages)
 
   "errorView" should {
     "contain text " in {
-      val doc = asDocument(createView())
-      assert(doc.toString.contains(messages("error.409.heading")))
-      assert(doc.toString.contains(messages("error.409.body")))
+      val page = asDocument(createView()).toString
+
+      assert(page.contains(messages("error.409.heading")))
+      assert(page.contains(messages("error.409.body")))
     }
   }

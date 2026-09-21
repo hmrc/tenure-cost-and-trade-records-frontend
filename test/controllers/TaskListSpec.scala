@@ -17,100 +17,98 @@
 package controllers
 
 import actions.WithSessionRefiner
-import play.api.http.Status
 import play.api.test.Helpers.*
 import stub.StubSessionRepo
-import utils.TestBaseSpec
+import test.ControllerSpec
 import views.html.taskList.taskList
 
-class TaskListSpec extends TestBaseSpec:
+class TaskListSpec extends ControllerSpec:
 
   private val sessionRepo = StubSessionRepo()
 
-  private def taskListController = TaskListController(
+  private val taskListController = TaskListController(
     stubMessagesControllerComponents(),
     inject[taskList],
     WithSessionRefiner(sessionRepo)
   )
 
   "GET /" should {
-
-    "return 200 (6010)" in {
+    "return HTML (6010)" in {
       sessionRepo.saveOrUpdate(prefilledBaseSession)
 
-      val result = taskListController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML (6011)" in {
       sessionRepo.saveOrUpdate(baseFilled6011Session)
 
-      val result = taskListController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML (6015)" in {
       sessionRepo.saveOrUpdate(baseFilled6015Session)
 
-      val result = taskListController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML (6016)" in {
       sessionRepo.saveOrUpdate(baseFilled6016Session)
 
-      val result = taskListController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML (6020)" in {
       sessionRepo.saveOrUpdate(baseFilled6020Session)
 
-      val result = taskListController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML (6030)" in {
       sessionRepo.saveOrUpdate(baseFilled6030Session)
 
-      val result = taskListController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML (6045)" in {
       sessionRepo.saveOrUpdate(baseFilled6045Session)
 
-      val result = taskListController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML (6046)" in {
       sessionRepo.saveOrUpdate(baseFilled6046Session)
 
-      val result = taskListController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML (6048)" in {
       sessionRepo.saveOrUpdate(baseFilled6048Session)
 
-      val result = taskListController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML (6076)" in {
       sessionRepo.saveOrUpdate(aboutYourTradingHistory6076YesSession)
 
-      val result = taskListController.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = taskListController.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
   }

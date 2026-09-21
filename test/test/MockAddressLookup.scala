@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package connectors
+package test
 
 import connectors.addressLookup.*
-import utils.MockitoExtendedSugar
+import uk.gov.hmrc.vo.unit.test.mock.MockitoExtendedSugar
 
 import scala.concurrent.Future.successful
 
+/**
+  * @author Yuriy Tumakha
+  */
 trait MockAddressLookup extends MockitoExtendedSugar:
 
   val addressLookupConnector: AddressLookupConnector = mock[AddressLookupConnector]

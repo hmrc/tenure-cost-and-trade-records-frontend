@@ -20,16 +20,15 @@ import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.RequestReferenceNumberSubmission
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
-import play.api.http.Status
 import play.api.mvc.Result
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.concurrent.Future
 import scala.language.reflectiveCalls
 
-class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
+class RequestReferenceNumberCheckYourAnswersControllerSpec extends ControllerSpec:
 
   trait ControllerWithInjectedSubmissionConnectorFixture(
     val requestReferenceNumberDetails: RequestReferenceNumberDetails
@@ -43,7 +42,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
       inject[ErrorHandler],
       inject[Audit],
       preEnrichedActionRefiner(requestReferenceNumberDetails = Some(requestReferenceNumberDetails)),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   trait ControllerWithMockedSubmissionConnectorFixture(
@@ -59,17 +58,17 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
       inject[ErrorHandler],
       inject[Audit],
       preEnrichedActionRefiner(requestReferenceNumberDetails = Some(requestReferenceNumberDetails)),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in new ControllerWithInjectedSubmissionConnectorFixture(prefilledRequestRefNumCYA) {
-      val result: Future[Result] = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result: Future[Result] = controller.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in new ControllerWithInjectedSubmissionConnectorFixture(prefilledRequestRefNumCYA) {
-      val result: Future[Result] = controller.show(fakeRequest)
+      val result: Future[Result] = controller.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -77,15 +76,15 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
     "return 200 with empty session" in new ControllerWithInjectedSubmissionConnectorFixture(
       prefilledRequestRefNumBlank
     ) {
-      val result: Future[Result] = controller.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result: Future[Result] = controller.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "confirmation return 200" in new ControllerWithInjectedSubmissionConnectorFixture(prefilledRequestRefNumCYA) {
-      val result: Future[Result] = controller.confirmation(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result: Future[Result] = controller.confirmation(getRequest)
+      status(result) shouldBe OK
     }
   }
 
@@ -98,14 +97,14 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
           mockSubmissionConnector.submitRequestReferenceNumber(any[RequestReferenceNumberSubmission])(using any[HeaderCarrier])
         ).thenReturn(Future.successful(HttpResponse(CREATED)))
 
-        val result: Future[Result] = controller.submit()(fakeRequest)
+        val result: Future[Result] = controller.submit()(getRequest)
 
-        status(result) shouldBe Status.SEE_OTHER
+        status(result) shouldBe SEE_OTHER
 
         header(
           "Location",
           result
-        ).value shouldBe
+        ).get shouldBe
           controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController
             .confirmation()
             .url
@@ -124,7 +123,7 @@ class RequestReferenceNumberCheckYourAnswersControllerSpec extends TestBaseSpec:
           .thenReturn(Future.failed(RuntimeException("Test Exception")))
 
         // Call the submit action
-        val result: Future[Result] = controller.submit()(fakeRequest)
+        val result: Future[Result] = controller.submit()(getRequest)
 
         // Awaiting the result to ensure the exception handling is tested
         status(result) shouldBe INTERNAL_SERVER_ERROR

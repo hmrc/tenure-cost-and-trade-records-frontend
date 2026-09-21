@@ -19,15 +19,14 @@ package controllers.connectiontoproperty
 import connectors.Audit
 import form.connectiontoproperty.EditAddressForm.editAddressForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class EditAddressControllerSpec extends TestBaseSpec:
+class EditAddressControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -41,13 +40,13 @@ class EditAddressControllerSpec extends TestBaseSpec:
     connectedToPropertyNavigator,
     editAddressView,
     preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-    mockSessionRepo
+    mockSessionRepository
   )
 
   "GET /" should {
     "return 200 and HTML with Edit address in session" in {
-      val result = editAddressController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = editAddressController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -56,8 +55,8 @@ class EditAddressControllerSpec extends TestBaseSpec:
     }
 
     "return 200 edit address in session" in {
-      val result = editAddressController(Some(prefilledStillConnectedDetailsEdit)).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = editAddressController(Some(prefilledStillConnectedDetailsEdit)).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -69,7 +68,7 @@ class EditAddressControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = editAddressController().submit(
-        fakeRequest.withFormUrlEncodedBody(Seq.empty*)
+        getRequest.withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -106,7 +105,7 @@ class EditAddressControllerSpec extends TestBaseSpec:
     "return back link to CYA page when 'from=CYA' query param is present for vacant properties" in {
       val result = editAddressController(
         stillConnectedDetails = Some(prefilledStillConnectedVacantYes)
-      ).show(fakeRequestFromCYA)
+      ).show(getRequestFromCYA)
 
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
@@ -116,7 +115,7 @@ class EditAddressControllerSpec extends TestBaseSpec:
     "return back link to CYA page when 'from=CYA' query param is present for not vacant properties" in {
       val result = editAddressController(
         stillConnectedDetails = Some(prefilledStillConnectedVacantNo)
-      ).show(fakeRequestFromCYA)
+      ).show(getRequestFromCYA)
 
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
@@ -124,7 +123,7 @@ class EditAddressControllerSpec extends TestBaseSpec:
     }
 
     "return back link to Are You Still Connected page when no 'from' query param is present" in {
-      val result = editAddressController().show(fakeRequest)
+      val result = editAddressController().show(getRequest)
 
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url

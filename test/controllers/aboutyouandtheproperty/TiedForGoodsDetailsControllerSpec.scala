@@ -20,15 +20,14 @@ import connectors.Audit
 import form.Errors
 import form.aboutyouandtheproperty.TiedForGoodsDetailsForm.tiedForGoodsDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class TiedForGoodsDetailsControllerSpec extends TestBaseSpec:
+class TiedForGoodsDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -43,7 +42,7 @@ class TiedForGoodsDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       tiedForGoodsDetailsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def tiedForGoodsDetailsControllerNone(): TiedForGoodsDetailsController =
@@ -53,24 +52,24 @@ class TiedForGoodsDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       tiedForGoodsDetailsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 tied goods details in the session" in {
-      val result = tiedForGoodsDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = tiedForGoodsDetailsController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = tiedForGoodsDetailsController().show(fakeRequest)
+      val result = tiedForGoodsDetailsController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 no tied goods details in the session" in {
-      val result = tiedForGoodsDetailsControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = tiedForGoodsDetailsControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -17,46 +17,41 @@
 package repository
 
 import models.Session
-import org.scalatest.BeforeAndAfterEach
-import repositories.{SessionData, SessionRepository as SessionRepo}
-import utils.TestBaseSpec
+import repositories.{SensitiveSessionData, SessionRepository}
+import test.TCTRMongoSpec
+import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
 
-class SessionRepositorySpec extends TestBaseSpec with BeforeAndAfterEach:
+class SessionRepositorySpec extends TCTRMongoSpec[SensitiveSessionData, SessionRepository]:
 
-  private val repository: SessionRepo = inject[SessionRepo]
-
-  "session repository" should {
-
-    "start by saving or updating data" in {
-      repository.start(baseFilled6010Session).futureValue
-
-      val returnedSessionData: SessionData = repository.findSession.futureValue // shouldBe session
-
-      inside(returnedSessionData) { case SessionData(_, data, createdAt) =>
-        data.referenceNumber shouldBe baseFilled6010Session.referenceNumber
-      }
-    }
-
-    "get data from current session" in {
-      repository.start(baseFilled6010Session).futureValue
-
-      val returnedSessionData: Option[Session] = repository.get.futureValue
-
-      inside(returnedSessionData) { case Some(session) =>
-        session.referenceNumber shouldBe referenceNumber
-      }
-    }
-
-    "remove data from current session" in {
-      repository.start(baseFilled6010Session).futureValue
-      repository.remove().futureValue
-
-      val returnedSessionData = repository.get.futureValue
-
-      returnedSessionData shouldBe None
-    }
-  }
+  given headerCarrier: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("test-session-id")))
 
   override protected def beforeEach(): Unit =
     super.beforeEach()
-    repository.removeAll().futureValue
+    mongoRepository.removeAll().futureValue
+
+  "SessionRepository" should {
+    "start by saving or updating data" in {
+      mongoRepository.start(baseFilled6010Session).futureValue
+
+      val returnedSessionData = mongoRepository.findSession.futureValue
+
+      returnedSessionData.data.referenceNumber shouldBe baseFilled6010Session.referenceNumber
+    }
+
+    "get data from current session" in {
+      mongoRepository.start(baseFilled6010Session).futureValue
+
+      val returnedSessionDataOpt = mongoRepository.get.futureValue
+
+      returnedSessionDataOpt.get.referenceNumber shouldBe referenceNumber
+    }
+
+    "remove data from current session" in {
+      mongoRepository.start(baseFilled6010Session).futureValue
+      mongoRepository.remove().futureValue
+
+      val returnedSessionDataOpt = mongoRepository.get.futureValue
+
+      returnedSessionDataOpt shouldBe None
+    }
+  }

@@ -19,15 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.EnforcementActionForm.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec:
+class EnforcementActionBeenTakenControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,7 +41,7 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       enforcementActionsTakenView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def enforcementActionBeenTakenControllerNo(
@@ -54,7 +53,7 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       enforcementActionsTakenView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def enforcementActionBeenTakenControllerNone(): EnforcementActionBeenTakenController =
@@ -64,17 +63,17 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       enforcementActionsTakenView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 enforcement action taken with yes in the session" in {
-      val result = enforcementActionBeenTakenController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = enforcementActionBeenTakenController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = enforcementActionBeenTakenController().show(fakeRequest)
+      val result = enforcementActionBeenTakenController().show(getRequest)
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -83,8 +82,8 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec:
     }
 
     "GET / return 200 enforcement action taken with no in the session" in {
-      val result = enforcementActionBeenTakenControllerNo().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = enforcementActionBeenTakenControllerNo().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -93,8 +92,8 @@ class EnforcementActionBeenTakenControllerSpec extends TestBaseSpec:
     }
 
     "GET / return 200 no enforcement action taken in the session" in {
-      val result = enforcementActionBeenTakenControllerNone().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = enforcementActionBeenTakenControllerNone().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

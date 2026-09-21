@@ -21,12 +21,11 @@ import controllers.aboutthetradinghistory
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec:
+class FinancialYearEndDatesSummaryControllerSpec extends ControllerSpec:
 
   def financialYearEndDatesSummaryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory),
@@ -42,13 +41,13 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec:
         aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
         forType = forType
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
       val result = financialYearEndDatesSummaryController().show()(FakeRequest())
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return 200 for 6048" in {
@@ -57,7 +56,7 @@ class FinancialYearEndDatesSummaryControllerSpec extends TestBaseSpec:
 
       val result = financialYearEndDatesSummaryController(session6048.aboutTheTradingHistory, session6048.forType)
         .show()(sessionRequest)
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return HTML" in {

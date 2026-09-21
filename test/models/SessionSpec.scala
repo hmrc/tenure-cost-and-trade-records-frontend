@@ -16,15 +16,14 @@
 
 package models
 
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.matchers.should.Matchers
 import play.api.libs.json.Json
 import test.TestObjects
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class SessionSpec extends AnyWordSpec with Matchers with TestObjects:
+class SessionSpec extends BaseSpec with TestObjects:
 
   "Session" should {
     "be serialized/deserialized from JSON - 6010" in {

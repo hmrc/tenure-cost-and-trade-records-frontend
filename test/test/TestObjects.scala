@@ -16,7 +16,6 @@
 
 package test
 
-import controllers.toOpt
 import models.ForType.*
 import models.submissions.Form6010.*
 import models.submissions.aboutYourLeaseOrTenure.*
@@ -50,10 +49,13 @@ import java.time.temporal.ChronoUnit.MILLIS
 import java.time.{Instant, LocalDate}
 import scala.language.implicitConversions
 
-given intToBigDecimal: Conversion[Int, BigDecimal]            = BigDecimal(_)
-given intToBigDecimalOpt: Conversion[Int, Option[BigDecimal]] = intToBigDecimal(_)
-
 trait TestObjects:
+
+  given toOpt[A]: Conversion[A, Option[A]] = Some(_)
+
+  given intToBigDecimal: Conversion[Int, BigDecimal] = BigDecimal(_)
+
+  given intToBigDecimalOpt: Conversion[Int, Option[BigDecimal]] = intToBigDecimal(_)
 
   val referenceNumber: String   = "99996010004"
   val prefilledAddress: Address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX")
@@ -849,14 +851,14 @@ trait TestObjects:
       aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6048)
     )
 
-  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSession: Session =
-    aboutYourTradingHistory6045YesSession.copy(aboutTheTradingHistoryPartOne =
-      prefilledAboutTheTradingHistoryPartOneCYA6045
-    )
-
   val prefilledAboutTheTradingHistoryPartOneCYA6045: AboutTheTradingHistoryPartOne =
     prefilledTurnoverSections6045.copy(otherHolidayAccommodation =
       Some(OtherHolidayAccommodation(Some(AnswerNo), None))
+    )
+
+  val aboutYourTradingHistory6045CYAOtherHolidayAccommodationSession: Session =
+    aboutYourTradingHistory6045YesSession.copy(aboutTheTradingHistoryPartOne =
+      prefilledAboutTheTradingHistoryPartOneCYA6045
     )
 
   val prefilledAboutTheTradingHistoryPartOneCYA6048: AboutTheTradingHistoryPartOne =
@@ -994,16 +996,6 @@ trait TestObjects:
           )
       ),
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYesToAll)
-    )
-
-  val aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession: Session =
-    aboutYourTradingHistory6020YesSession.copy(
-      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails
-    )
-
-  val aboutYourTradingHistoryWithLowMarginFuelCardsDetailsSession: Session =
-    aboutYourTradingHistory6020YesSession.copy(
-      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails
     )
 
   val rentDetails: Option[RentDetails] = Some(RentDetails(100, prefilledDateInput))
@@ -1265,7 +1257,8 @@ trait TestObjects:
         )
       )
     )
-  val connectedSubmission: ConnectedSubmission           = ConnectedSubmission(stillConnectedDetailsYesToAllSession)
+
+  val connectedSubmission: ConnectedSubmission = ConnectedSubmission(stillConnectedDetailsYesToAllSession)
 
   val notConnectedSubmission: NotConnectedSubmission = NotConnectedSubmission(
     "id",
@@ -1306,6 +1299,16 @@ trait TestObjects:
       )
     )
   )
+
+  val aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession: Session =
+    aboutYourTradingHistory6020YesSession.copy(
+      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails
+    )
+
+  val aboutYourTradingHistoryWithLowMarginFuelCardsDetailsSession: Session =
+    aboutYourTradingHistory6020YesSession.copy(
+      aboutTheTradingHistory = prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails
+    )
 
   val prefilledAboutTheTradingHistoryPartOne: AboutTheTradingHistoryPartOne = AboutTheTradingHistoryPartOne()
 

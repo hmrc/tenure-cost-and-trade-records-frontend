@@ -23,12 +23,12 @@ import play.api.http.Status.*
 import play.api.test.Helpers.{POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
 import uk.gov.hmrc.http.HttpVerbs.GET
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class ThreeYearsConstructedControllerSpec extends TestBaseSpec:
+class ThreeYearsConstructedControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -43,7 +43,7 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       threeYearsConstructedView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def threeYearsConstructedControllerNone(
@@ -55,23 +55,23 @@ class ThreeYearsConstructedControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       threeYearsConstructedView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 three years constructed in the session" in {
-      val result = threeYearsConstructedController().show(fakeRequest)
+      val result = threeYearsConstructedController().show(getRequest)
       status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = threeYearsConstructedController().show(fakeRequest)
+      val result = threeYearsConstructedController().show(getRequest)
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }
 
     "GET / return 200 when  no three years constructed data in the session" in {
-      val result = threeYearsConstructedControllerNone().show(fakeRequest)
+      val result = threeYearsConstructedControllerNone().show(getRequest)
       status(result)          shouldBe OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")

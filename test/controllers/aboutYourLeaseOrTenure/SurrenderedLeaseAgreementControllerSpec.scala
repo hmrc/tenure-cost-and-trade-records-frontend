@@ -18,12 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class SurrenderedLeaseAgreementControllerSpec extends TestBaseSpec:
+class SurrenderedLeaseAgreementControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,13 +35,13 @@ class SurrenderedLeaseAgreementControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       surrenderedLeaseAgreementView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Incentives Payments Conditions in the session" in {
-      val result = surrenderedLeaseAgreementController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = surrenderedLeaseAgreementController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -52,8 +51,8 @@ class SurrenderedLeaseAgreementControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with no Incentives Payments Conditions in the session" in {
       val controller = surrenderedLeaseAgreementController(aboutLeaseOrAgreementPartFour = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

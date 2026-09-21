@@ -36,10 +36,10 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
   "the LastRental controller" when {
     "the user has not entered any date yet" should {
       "be handling GET / by replying 200 with the form showing the date field" in new ControllerFixture {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.whenWasLastLet.heading"
         page.backLink          shouldBe routes.HasStoppedLettingController.show.url
@@ -49,16 +49,16 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
       }
 
       "be handling POST / by replying 303 redirect to the 'Yearly Available' page" in new ControllerFixture {
-        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = postRequest.withFormUrlEncodedBody(
           "date.day"   -> "1",
           "date.month" -> "4",
           "date.year"  -> "2024"
         )
         val result: Future[Result]                           = controller.submit(request)
-        status(result)                                    shouldBe SEE_OTHER
-        redirectLocation(result).value                    shouldBe routes.IsYearlyAvailableController.show.url
+        status(result)                                shouldBe SEE_OTHER
+        redirectLocation(result).get                  shouldBe routes.IsYearlyAvailableController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        intendedLettings(data).value.whenWasLastLet.value shouldBe LocalDate.of(2024, 4, 1)
+        intendedLettings(data).get.whenWasLastLet.get shouldBe LocalDate.of(2024, 4, 1)
       }
     }
 
@@ -66,10 +66,10 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
       "be handling GET / by replying 200 with the pre-filled form showing the date value" in new ControllerFixture(
         whenWasLastLet = Some(LocalDate.of(2024, 12, 25))
       ) {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.whenWasLastLet.heading"
         page.backLink          shouldBe routes.HasStoppedLettingController.show.url
@@ -82,7 +82,7 @@ class WhenWasLastLetControllerSpec extends LettingHistoryControllerSpec:
     "regardless the user had entered a date or not" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "date.day"   -> "",
             "date.month" -> "",
             "date.year"  -> ""

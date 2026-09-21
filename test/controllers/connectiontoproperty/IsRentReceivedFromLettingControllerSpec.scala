@@ -19,15 +19,14 @@ package controllers.connectiontoproperty
 import connectors.Audit
 import form.connectiontoproperty.isRentReceivedFromLettingForm.isRentReceivedFromLettingForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
+class IsRentReceivedFromLettingControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,13 +41,13 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       isRentReceivedFromLettingView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Is rent received from letting in session" in {
-      val result = isRentReceivedFromLettingController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = isRentReceivedFromLettingController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -59,8 +58,8 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
     "return 200 when no rent received in session" in {
       val result = isRentReceivedFromLettingController(
         Some(prefilledStillConnectedDetailsNoneOwnProperty)
-      ).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      ).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -103,14 +102,14 @@ class IsRentReceivedFromLettingControllerSpec extends TestBaseSpec:
 
   "getBackLink" should {
     "return back link to CYA page if query param present" in {
-      val result = isRentReceivedFromLettingController().show(fakeRequestFromCYA)
+      val result = isRentReceivedFromLettingController().show(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       )
     }
 
     "return back link to is the property vacant start date page if 'from' query param is not present" in {
-      val result = isRentReceivedFromLettingController().show(fakeRequest)
+      val result = isRentReceivedFromLettingController().show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.VacantPropertiesStartDateController.show().url
       )

@@ -20,12 +20,12 @@ import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class ThroughputAffectsRentDetailsControllerSpec extends TestBaseSpec:
+class ThroughputAffectsRentDetailsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,13 +37,13 @@ class ThroughputAffectsRentDetailsControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200 and HTML with Through Put Affect Rent Details in the session" in {
-      val result = throughputAffectsRentDetailsController().show(fakeRequest)
+      val result = throughputAffectsRentDetailsController().show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -54,7 +54,7 @@ class ThroughputAffectsRentDetailsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML Through Put Affect Rent Details with none in the session" in {
       val controller = throughputAffectsRentDetailsController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")

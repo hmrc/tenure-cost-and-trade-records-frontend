@@ -19,17 +19,15 @@ package controllers.lettingHistory
 import models.Session
 import models.submissions.lettingHistory.*
 import org.mockito.ArgumentCaptor
-import play.api.mvc.AnyContent
-import play.api.mvc.request.RequestTarget
-import play.api.test.FakeRequest
 import repositories.SessionRepo
+import test.JsoupHelpers
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.ControllerSpec
 
 import java.time.LocalDate
 import scala.concurrent.Future
 
-class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
+class LettingHistoryControllerSpec extends ControllerSpec with JsoupHelpers:
 
   val residentDetails: ResidentDetail = ResidentDetail(name = "Mr. One", address = "Address One")
 
@@ -116,11 +114,3 @@ class LettingHistoryControllerSpec extends TestBaseSpec with JsoupHelpers:
 
     given argumentCaptorToSession: Conversion[ArgumentCaptor[Session], Session] with
       def apply(c: ArgumentCaptor[Session]): Session = c.getValue
-
-  extension (r: FakeRequest[AnyContent])
-
-    def withQueryParams(params: (String, String)*): FakeRequest[AnyContent] =
-      r.withTarget(RequestTarget(r.uri, r.path, queryString = Map(params.map((k, v) => k -> Seq(v))*)))
-
-    def withFragment(fragment: String): FakeRequest[AnyContent] =
-      r.withTarget(RequestTarget(r.uri, r.path + "#" + fragment, r.queryString))

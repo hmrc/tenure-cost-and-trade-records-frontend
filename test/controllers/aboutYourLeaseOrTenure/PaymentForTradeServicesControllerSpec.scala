@@ -21,15 +21,14 @@ import form.aboutYourLeaseOrTenure.PaymentForTradeServicesForm.paymentForTradeSe
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class PaymentForTradeServicesControllerSpec extends TestBaseSpec:
+class PaymentForTradeServicesControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -45,13 +44,13 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       paymentForTradeServicesView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with trade services in the session" in {
-      val result = paymentForTradeServicesController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = paymentForTradeServicesController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -61,8 +60,8 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML trade services with none in the session" in {
       val controller = paymentForTradeServicesController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -72,8 +71,8 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with trade services in the session for 6030" in {
       val controller = paymentForTradeServicesController(forType = FOR6030)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -83,8 +82,8 @@ class PaymentForTradeServicesControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML trade services with none in the session for 6030" in {
       val controller = paymentForTradeServicesController(FOR6030, None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

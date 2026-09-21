@@ -19,12 +19,12 @@ package controllers
 import models.pages.ListPageConfig.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
+class AddedMaximumListItemsControllerSpec extends ControllerSpec:
 
   private val nextPageAccommodationUnits = controllers.accommodation.routes.AccommodationDetailsCYA6048Controller.show.url
 
@@ -40,7 +40,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
     AddedMaximumListItemsController(
       addedMaximumListItemsView,
       preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
@@ -51,7 +51,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
 
   "AccommodationUnits - GET /" should:
     "return 200" in {
-      val result = addedMaximumListItemsController.show(AccommodationUnits)(fakeRequest)
+      val result = addedMaximumListItemsController.show(AccommodationUnits)(getRequest)
       status(result) shouldBe OK
     }
 
@@ -65,7 +65,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
 
     "save the form data and redirect to the next page" in {
       val res = addedMaximumListItemsController.submit(AccommodationUnits)(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageAccommodationUnits)
@@ -74,7 +74,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
 
   "TradeServices - GET /" should {
     "return 200" in {
-      val result = addedMaximumListItemsController.show(TradeServices)(fakeRequest)
+      val result = addedMaximumListItemsController.show(TradeServices)(getRequest)
       status(result) shouldBe OK
     }
   }
@@ -82,7 +82,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
   "TradeServices - SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = addedMaximumListItemsController.submit(TradeServices)(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageTradeServices)
@@ -91,7 +91,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
 
   "ServicesPaidSeparately - GET /" should {
     "return 200" in {
-      val result = addedMaximumListItemsController.show(ServicesPaidSeparately)(fakeRequest)
+      val result = addedMaximumListItemsController.show(ServicesPaidSeparately)(getRequest)
       status(result) shouldBe OK
     }
   }
@@ -99,7 +99,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
   "ServicesPaidSeparately - SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = addedMaximumListItemsController.submit(ServicesPaidSeparately)(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageServicesPaidSeparately)
@@ -108,7 +108,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
 
   "BunkerFuelCards - GET /" should {
     "return 200" in {
-      val result = addedMaximumListItemsController.show(BunkerFuelCards)(fakeRequest)
+      val result = addedMaximumListItemsController.show(BunkerFuelCards)(getRequest)
       status(result) shouldBe OK
     }
   }
@@ -116,7 +116,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
   "BunkerFuelCards - SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = addedMaximumListItemsController.submit(BunkerFuelCards)(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageBunkerFuelCards)
@@ -125,7 +125,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
 
   "LowMarginFuelCards - GET /" should {
     "return 200" in {
-      val result = addedMaximumListItemsController.show(LowMarginFuelCards)(fakeRequest)
+      val result = addedMaximumListItemsController.show(LowMarginFuelCards)(getRequest)
       status(result) shouldBe OK
     }
   }
@@ -133,7 +133,7 @@ class AddedMaximumListItemsControllerSpec extends TestBaseSpec:
   "LowMarginFuelCards - SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = addedMaximumListItemsController.submit(LowMarginFuelCards)(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageLowMarginFuelCards)

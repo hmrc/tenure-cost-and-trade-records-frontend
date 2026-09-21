@@ -16,24 +16,15 @@
 
 package navigation
 
-import connectors.Audit
 import models.ForType.*
 import models.Session
 import models.submissions.common.AnswersYesNo.*
 import navigation.identifiers.*
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
-import scala.concurrent.ExecutionContext
+import scala.language.implicitConversions
 
-class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec:
-
-  private val audit = mock[Audit]
-
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  val navigator: AboutYourLeaseOrTenureNavigator = AboutYourLeaseOrTenureNavigator(audit)
+class AboutYourLeaseOrTenure6045NavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
   val session6045: Session = Session(
     "99996045004",
@@ -41,49 +32,46 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec:
     prefilledAddress,
     "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
     isWelsh = false,
-    aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreement6045TextArea),
-    aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwo6045),
-    aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree6045TextArea)
+    aboutLeaseOrAgreementPartOne = prefilledAboutLeaseOrAgreement6045TextArea,
+    aboutLeaseOrAgreementPartTwo = prefilledAboutLeaseOrAgreementPartTwo6045,
+    aboutLeaseOrAgreementPartThree = prefilledAboutLeaseOrAgreementPartThree6045TextArea
   )
 
-  implicit override val hc: HeaderCarrier = HeaderCarrier()
-
-  "About your lease or tenure navigator" when {
-
-    "return a function that goes to Intervals Of Rent Review for 6045 when is Rent Under Review has been completed" in {
-      navigator
+  "Lease or agreement navigator for 6045" should {
+    "redirect to Intervals Of Rent Review when is Rent Under Review has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(IsRentUnderReviewId, session6045)
         .apply(session6045) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.IntervalsOfRentReviewController
           .show()
     }
 
-    "return a function that goes to IsRentUnderReviewController for 6045 when is methodToFixCurrentRent has been completed" in {
-      navigator
+    "redirect to IsRentUnderReviewController when is methodToFixCurrentRent has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(MethodToFixCurrentRentsId, session6045)
         .apply(session6045) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.IsRentUnderReviewController
           .show()
     }
 
-    "return a function that goes to lease or agreement years page when about your landlord has been completed" in {
-      navigator
+    "redirect to lease or agreement years page when about your landlord has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(ConnectedToLandlordDetailsPageId, session6045)
         .apply(session6045) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.PropertyUseLeasebackArrangementController
           .show()
     }
 
-    "return a function that goes to rent include trade services details page when rent include trade services has been completed" in {
-      navigator
+    "redirect to rent include trade services details page when rent include trade services has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentIncludeTradeServicesPageId, session6045)
         .apply(session6045) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesDetailsController
           .show()
     }
 
-    "return a function that goes to setting the current rent when What is your current rent has been completed" in {
-      navigator
+    "redirect to setting the current rent when What is your current rent has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(WhatRentBasedOnPageId, session6045)
         .apply(
           session6045
@@ -92,98 +80,98 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to describe the developments included in the rent page when rentDevelopedLand is completed with Yes" in {
+    "redirect to describe the developments included in the rent page when rentDevelopedLand is completed with Yes" in {
       val answers = session6045.copy(
-        aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
+        aboutLeaseOrAgreementPartThree = prefilledAboutLeaseOrAgreementPartThree
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentDevelopedLandId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandDetailsController.show()
     }
 
-    "return a function that goes to does the rent payable include any structures when rentDevelopedLand is completed with No" in {
+    "redirect to does the rent payable include any structures when rentDevelopedLand is completed with No" in {
       val answers = session6045.copy(
         aboutLeaseOrAgreementPartThree =
-          Some(prefilledAboutLeaseOrAgreementPartThree.copy(rentDevelopedLand = Some(AnswerNo)))
+          prefilledAboutLeaseOrAgreementPartThree.copy(rentDevelopedLand = AnswerNo)
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentDevelopedLandId, answers)
         .apply(answers) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController
           .show()
     }
 
-    "return a function that goes to does the rent payable include any structures when rentDevelopedLandDetails is completed" in {
+    "redirect to does the rent payable include any structures when rentDevelopedLandDetails is completed" in {
       val answers = session6045.copy(
-        aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)
+        aboutLeaseOrAgreementPartThree = prefilledAboutLeaseOrAgreementPartThree
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentDevelopedLandDetailsId, answers)
         .apply(answers) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsController
           .show()
     }
 
-    "return a function that goes to structures details page when does the rent payable include any structures is completed with  Yes" in {
+    "redirect to structures details page when does the rent payable include any structures is completed with  Yes" in {
       val answers = session6045.copy(
-        aboutLeaseOrAgreementPartFour = Some(prefilledAboutLeaseOrAgreementPartFour)
+        aboutLeaseOrAgreementPartFour = prefilledAboutLeaseOrAgreementPartFour
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentIncludeStructuresBuildingsId, answers)
         .apply(
           answers
         ) shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeStructuresBuildingsDetailsController.show()
     }
 
-    "return a function that goes to Ultimately Responsible Outside Repairs page when does the rent payable include any structures is completed with  No" in {
+    "redirect to Ultimately Responsible Outside Repairs page when does the rent payable include any structures is completed with  No" in {
       val answers = session6045.copy(
         aboutLeaseOrAgreementPartFour =
-          Some(prefilledAboutLeaseOrAgreementPartFour.copy(rentIncludeStructuresBuildings = Some(AnswerNo)))
+          prefilledAboutLeaseOrAgreementPartFour.copy(rentIncludeStructuresBuildings = AnswerNo)
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentIncludeStructuresBuildingsId, answers)
         .apply(answers) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
           .show()
     }
 
-    "return a function that goes to Ultimately Responsible Outside Repairs page when rent payable include any structures details is completed" in {
+    "redirect to Ultimately Responsible Outside Repairs page when rent payable include any structures details is completed" in {
       val answers = session6045.copy(
-        aboutLeaseOrAgreementPartFour = Some(prefilledAboutLeaseOrAgreementPartFour)
+        aboutLeaseOrAgreementPartFour = prefilledAboutLeaseOrAgreementPartFour
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(RentIncludeStructuresBuildingsDetailsId, answers)
         .apply(answers) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.UltimatelyResponsibleOutsideRepairsController
           .show()
     }
 
-    "return a function that goes to lease surrendered early page when disregarded addition details has been completed " in {
-      navigator
+    "redirect to lease surrendered early page when disregarded addition details has been completed " in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(TenantsAdditionsDisregardedDetailsId, session6045)
         .apply(session6045) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController
           .show()
     }
 
-    "return a function that goes to RentDevelopedLand page when DoesRentPayablePage has been completed " in {
-      navigator
+    "redirect to RentDevelopedLand page when DoesRentPayablePage has been completed " in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(DoesRentPayablePageId, session6045)
         .apply(session6045) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.RentDevelopedLandController
           .show()
     }
 
-    "return a function that goes to IsGivenRentFreePeriodController page when WorkCarriedOutCondition has been completed" in {
-      navigator
+    "redirect to IsGivenRentFreePeriodController page when WorkCarriedOutCondition has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(WorkCarriedOutConditionId, session6045)
         .apply(session6045) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.IsGivenRentFreePeriodController
           .show()
     }
 
-    "return a function that goes to tenants additional disregarded details page when tenants additional disregarded with yes has been completed" in {
-      navigator
+    "redirect to tenants additional disregarded details page when tenants additional disregarded with yes has been completed" in {
+      aboutYourLeaseOrTenureNavigator
         .nextPage(TenantsAdditionsDisregardedId, session6045)
         .apply(
           session6045
@@ -192,60 +180,55 @@ class AboutYourLeaseOrTenure6045NavigatorSpec extends TestBaseSpec:
           .show()
     }
 
-    "return a function that goes to PropertyUpdatesController  when tenantAdditionalDisregarded is 'no'" in {
+    "redirect to PropertyUpdatesController  when tenantAdditionalDisregarded is 'no'" in {
       val answers = session6045.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           prefilledAboutLeaseOrAgreementPartTwo6045.copy(
-            tenantAdditionsDisregarded = Some(AnswerNo)
+            tenantAdditionsDisregarded = AnswerNo
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(TenantsAdditionsDisregardedDetailsId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
     }
 
-    "return a function that goes to TenantsAdditionsDisregardedController when formerLeaseSurrendered is 'no'" in {
+    "redirect to TenantsAdditionsDisregardedController when formerLeaseSurrendered is 'no'" in {
       val answers = session6045.copy(
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           prefilledAboutLeaseOrAgreementPartTwo6045.copy(
-            incentivesPaymentsConditionsDetails = Some(AnswerNo)
+            incentivesPaymentsConditionsDetails = AnswerNo
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(IncentivesPaymentsConditionsId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.TenantsAdditionsDisregardedController.show()
     }
 
-    "return a function that goes to SurrenderLeaseAgreementDetailsController when formerLeaseSurrendered is 'yes'" in {
+    "redirect to SurrenderLeaseAgreementDetailsController when formerLeaseSurrendered is 'yes'" in {
       val answers = session6045.copy(
         forType = FOR6045,
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           prefilledAboutLeaseOrAgreementPartTwo6045.copy(
-            incentivesPaymentsConditionsDetails = Some(AnswerYes)
+            incentivesPaymentsConditionsDetails = AnswerYes
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(IncentivesPaymentsConditionsId, answers)
         .apply(answers) shouldBe
         controllers.aboutYourLeaseOrTenure.routes.SurrenderLeaseAgreementDetailsController
           .show()
     }
 
-    "return a function that goes to PropertyUpdatesController when tenantAdditionalDisregarded is not 'yes' and forType is FOR6045" in {
+    "redirect to PropertyUpdatesController when tenantAdditionalDisregarded is not 'yes' and forType is FOR6045" in {
       val answers = session6045.copy(
         forType = FOR6045,
-        aboutLeaseOrAgreementPartTwo = Some(
+        aboutLeaseOrAgreementPartTwo =
           prefilledAboutLeaseOrAgreementPartTwo6045.copy(
-            tenantAdditionsDisregarded = Some(AnswerNo)
+            tenantAdditionsDisregarded = AnswerNo
           )
-        )
       )
-      navigator
+      aboutYourLeaseOrTenureNavigator
         .nextPage(TenantsAdditionsDisregardedId, answers)
         .apply(answers) shouldBe controllers.aboutYourLeaseOrTenure.routes.PropertyUpdatesController.show()
     }
-
   }

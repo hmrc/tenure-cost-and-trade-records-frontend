@@ -21,15 +21,14 @@ import form.connectiontoproperty.TradingNameOperatingFromPropertyForm.tradingNam
 import models.ForType
 import models.ForType.*
 import models.submissions.connectiontoproperty.*
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.{TestBaseSpec, toOpt}
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
+class TradingNameOperatingFromPropertyControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -45,13 +44,13 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       tradingNameOperatingFromProperty,
       preEnrichedActionRefiner(forType = forType, stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 when trading name present in session" in {
-      val result = tradingNameOperatingFromPropertyController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = tradingNameOperatingFromPropertyController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -60,8 +59,8 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
     }
 
     "return 200 when trading name present in session for 6048" in {
-      val result = tradingNameOperatingFromPropertyController(forType = FOR6048).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = tradingNameOperatingFromPropertyController(forType = FOR6048).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -73,8 +72,8 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
       val result = tradingNameOperatingFromPropertyController(
         forType = FOR6048,
         stillConnectedDetails = None
-      ).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      ).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -87,8 +86,8 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
         forType = FOR6076,
         stillConnectedDetails = toOpt(prefilledStillConnectedDetailsYesToAll)
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -101,8 +100,8 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
         forType = FOR6076,
         stillConnectedDetails = Some(prefilledStillConnectedDetailsEdit)
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -115,8 +114,8 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
         forType = FOR6076,
         stillConnectedDetails = None
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -127,12 +126,12 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
 
   "calculateBackLink" should {
     "return correct back link if query param from=TL is present" in {
-      val result = tradingNameOperatingFromPropertyController().show(fakeRequestFromTL)
+      val result = tradingNameOperatingFromPropertyController().show(getRequestFromTL)
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
     "return correct back link if query param from=CYA is present" in {
-      val result = tradingNameOperatingFromPropertyController().show(fakeRequestFromCYA)
+      val result = tradingNameOperatingFromPropertyController().show(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       )
@@ -140,7 +139,7 @@ class TradingNameOperatingFromPropertyControllerSpec extends TestBaseSpec:
 
     "return back link to TaskListController for 6076 and addressConnectionType is unknown" in {
       val result =
-        tradingNameOperatingFromPropertyController(forType = FOR6076, stillConnectedDetails = None).show(fakeRequest)
+        tradingNameOperatingFromPropertyController(forType = FOR6076, stillConnectedDetails = None).show(getRequest)
       contentAsString(result) should include(
         controllers.routes.TaskListController.show.url
       )

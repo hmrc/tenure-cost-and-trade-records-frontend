@@ -20,12 +20,11 @@ import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class RentOpenMarketValueControllerSpec extends TestBaseSpec:
+class RentOpenMarketValueControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,13 +38,13 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       rentOpenMarketValueView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with Yes in the sessions" in {
-      val result = rentOpenMarketValueController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentOpenMarketValueController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -55,8 +54,8 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with None in the sessions" in {
       val controller = rentOpenMarketValueController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -66,8 +65,8 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with Yes in the sessions with 6020" in {
       val controller = rentOpenMarketValueController(forType = FOR6020)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -77,8 +76,8 @@ class RentOpenMarketValueControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Open market and Rent Include Fixture and Fittings Details with No in the sessions with 6020" in {
       val controller = rentOpenMarketValueController(FOR6020, Some(prefilledAboutLeaseOrAgreementPartOneNo))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

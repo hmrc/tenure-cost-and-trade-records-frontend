@@ -20,12 +20,12 @@ import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartFour
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class RentFreePeriodDetailsControllerSpec extends TestBaseSpec:
+class RentFreePeriodDetailsControllerSpec extends ControllerSpec:
   val mockAudit: Audit = mock[Audit]
 
   def rentFreePeriodDetailsController(
@@ -36,13 +36,13 @@ class RentFreePeriodDetailsControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200 and HTML with rentFreePeriodDetails in the session" in {
-      val result = rentFreePeriodDetailsController().show(fakeRequest)
+      val result = rentFreePeriodDetailsController().show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -53,7 +53,7 @@ class RentFreePeriodDetailsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no rentFreePeriodDetails in the session" in {
       val controller = rentFreePeriodDetailsController(aboutLeaseOrAgreementPartFour = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")

@@ -18,12 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class RentIncludesVatControllerSpec extends TestBaseSpec:
+class RentIncludesVatControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,13 +35,13 @@ class RentIncludesVatControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       rentIncludesVatView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Rent Includes VAT in the session" in {
-      val result = rentIncludesVatController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentIncludesVatController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -52,8 +51,8 @@ class RentIncludesVatControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML Rent Includes VAT with none in the session" in {
       val controller = rentIncludesVatController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(

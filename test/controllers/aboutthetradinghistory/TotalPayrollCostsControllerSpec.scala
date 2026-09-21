@@ -17,12 +17,11 @@
 package controllers.aboutthetradinghistory
 
 import connectors.Audit
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class TotalPayrollCostsControllerSpec extends TestBaseSpec:
+class TotalPayrollCostsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -33,17 +32,17 @@ class TotalPayrollCostsControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       totalPayrollCostsView,
       preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = aboutYourTradingHistoryController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = aboutYourTradingHistoryController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = aboutYourTradingHistoryController.show(fakeRequest)
+      val result = aboutYourTradingHistoryController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

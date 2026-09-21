@@ -18,33 +18,33 @@ package form.aboutthetradinghistory
 
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.*
 import models.submissions.common.AnswersYesNo.*
-import org.scalatestplus.play.PlaySpec
 import play.api.data.FormError
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AddAnotherBunkerFuelCardsDetailsFormSpec extends PlaySpec:
+class AddAnotherBunkerFuelCardsDetailsFormSpec extends BaseSpec:
 
   "AddAnotherBunkerFuelCardsDetailsForm" should {
     "bind a 'yes' value correctly" in {
       val data = Map("addAnotherBunkerFuelCardsDetails" -> "yes")
       val form = theForm.bind(data)
 
-      form.errors mustBe empty
-      form.value mustBe Some(AnswerYes)
+      form.errors shouldBe empty
+      form.value  shouldBe Some(AnswerYes)
     }
 
     "bind a 'no' value correctly" in {
       val data = Map("addAnotherBunkerFuelCardsDetails" -> "no")
       val form = theForm.bind(data)
 
-      form.errors mustBe empty
-      form.value mustBe Some(AnswerNo)
+      form.errors shouldBe empty
+      form.value  shouldBe Some(AnswerNo)
     }
 
     "not bind an empty map" in {
       val form = theForm.bind(Map.empty[String, String])
 
-      form.errors mustNot be(empty)
-      form.errors must contain(
+      form.errors shouldNot be(empty)
+      form.errors    should contain(
         FormError("addAnotherBunkerFuelCardsDetails", "error.addAnotherBunkerFuelCardsDetails.required")
       )
     }

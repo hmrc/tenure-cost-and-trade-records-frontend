@@ -21,15 +21,14 @@ import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetForm.rent
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec:
+class RentPayableVaryAccordingToGrossOrNetControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -50,13 +49,13 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
         aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Rent Payable Vary Gross or Net and 6010 in the sessions" in {
-      val result = rentPayableVaryAccordingToGrossOrNetController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentPayableVaryAccordingToGrossOrNetController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -66,8 +65,8 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Rent Payable Vary Gross or Net with none and 6010 in the sessions" in {
       val controller = rentPayableVaryAccordingToGrossOrNetController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -77,8 +76,8 @@ class RentPayableVaryAccordingToGrossOrNetControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Rent Payable Vary Gross or Net and 6030 in the sessions" in {
       val controller = rentPayableVaryAccordingToGrossOrNetController(forType = FOR6011)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

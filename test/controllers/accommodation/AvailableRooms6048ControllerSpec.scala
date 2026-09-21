@@ -18,12 +18,12 @@ package controllers.accommodation
 
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AvailableRooms6048ControllerSpec extends TestBaseSpec:
+class AvailableRooms6048ControllerSpec extends ControllerSpec:
 
   private val nextPage = controllers.accommodation.routes.AccommodationLettingHistory6048Controller.show.url + "?idx=0"
 
@@ -32,7 +32,7 @@ class AvailableRooms6048ControllerSpec extends TestBaseSpec:
       availableRoomsView,
       accommodationNavigator,
       preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
@@ -47,7 +47,7 @@ class AvailableRooms6048ControllerSpec extends TestBaseSpec:
 
   "GET /" should {
     "return 200" in {
-      val result = availableRooms6048Controller.show(fakeRequest)
+      val result = availableRooms6048Controller.show(getRequest)
       status(result) shouldBe OK
     }
   }
@@ -62,7 +62,7 @@ class AvailableRooms6048ControllerSpec extends TestBaseSpec:
 
     "save the form data and redirect to the next page" in {
       val res = availableRooms6048Controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)

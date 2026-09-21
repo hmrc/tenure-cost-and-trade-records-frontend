@@ -22,16 +22,15 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class OtherHolidayAccommodationControllerSpec extends TestBaseSpec:
+class OtherHolidayAccommodationControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   def otherHolidayAccommodationController(
     aboutTheTradingHistoryPartOne: Option[AboutTheTradingHistoryPartOne] = Some(
@@ -43,13 +42,13 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "OtherHolidayAccommodationController GET /" should {
     "return 200 and HTML with is parking rent paid separately is present in session" in {
-      val result = otherHolidayAccommodationController().show(fakeRequest)
+      val result = otherHolidayAccommodationController().show(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -57,7 +56,7 @@ class OtherHolidayAccommodationControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML is parking rent paid separately is none in session" in {
       val controller = otherHolidayAccommodationController(aboutTheTradingHistoryPartOne = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")

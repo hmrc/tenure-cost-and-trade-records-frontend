@@ -16,173 +16,155 @@
 
 package navigation
 
-import connectors.Audit
 import navigation.identifiers.*
-import play.api.libs.json.JsObject
-import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.{InjectedNavigation, TCTRAppSpec}
 
-import scala.concurrent.ExecutionContext
+class AboutYouAndTheProperty6010_6011NavigatorSpec extends TCTRAppSpec with InjectedNavigation:
 
-class AboutYouAndTheProperty6010_6011NavigatorSpec extends TestBaseSpec:
-
-  // This suite tests all generic paths based on form type 6010
-
-  private val audit: Audit = mock[Audit]
-
-  doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(using any[HeaderCarrier], any[ExecutionContext])
-
-  private val navigator: AboutYouAndThePropertyNavigator = AboutYouAndThePropertyNavigator(audit)
-
-  "About you and the property navigator" when {
-
-    "go to sign in from an identifier that doesn't exist in the route map" in {
-      case object UnknownIdentifier extends Identifier
-      navigator
+  "About you and the property navigator for 6010/6011" should {
+    "redirect to default page for identifier that doesn't exist in the route map" in {
+      aboutYouAndThePropertyNavigator
         .nextPage(UnknownIdentifier, aboutYouAndTheProperty6010YesSession)
         .apply(aboutYouAndTheProperty6010YesSession) shouldBe controllers.routes.LoginController.show
     }
 
-    "navigate correctly based on the page and session" should {
+    "redirect to ContactDetailsQuestionController after completing AboutYouPage" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(AboutYouPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()
+    }
 
-      "navigate to ContactDetailsQuestionController after completing AboutYouPage" in {
-        navigator
-          .nextPage(AboutYouPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show()
-      }
+    "redirect to AlternativeContactDetailsController after completing ContactDetailsQuestion" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+    }
 
-      "navigate to AlternativeContactDetailsController after completing ContactDetailsQuestion" in {
-        navigator
-          .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-      }
+    "redirect to WebsiteForPropertyController after completing AboutTheProperty" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
+    }
 
-      "navigate to WebsiteForPropertyController after completing AboutTheProperty" in {
-        navigator
-          .nextPage(AboutThePropertyPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.WebsiteForPropertyController.show()
-      }
+    "redirect to LicensableActivitiesController after completing WebsiteForProperty" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
+    }
 
-      "navigate to LicensableActivitiesController after completing WebsiteForProperty" in {
-        navigator
-          .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
-      }
+    "redirect to LicensableActivitiesDetailsController after completing LicensableActivity" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(LicensableActivityPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show()
+    }
 
-      "navigate to LicensableActivitiesDetailsController after completing LicensableActivity" in {
-        navigator
-          .nextPage(LicensableActivityPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.LicensableActivitiesDetailsController.show()
-      }
+    "redirect to PremisesLicenseConditionsController after completing LicensableActivityDetails" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(LicensableActivityDetailsPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
+    }
 
-      "navigate to PremisesLicenseConditionsController after completing LicensableActivityDetails" in {
-        navigator
-          .nextPage(LicensableActivityDetailsPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
-      }
+    "redirect to TaskListController after completing CheckYourAnswersAboutTheProperty" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(CheckYourAnswersAboutThePropertyPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.routes.TaskListController.show
+    }
 
-      "navigate to TaskListController after completing CheckYourAnswersAboutTheProperty" in {
-        navigator
-          .nextPage(CheckYourAnswersAboutThePropertyPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.routes.TaskListController.show
-      }
+    "redirect to AboutThePropertyController after completing ContactDetailsQuestion with no" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6010NoSession)
+        .apply(aboutYouAndTheProperty6010NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
+    }
 
-      "navigate to AboutThePropertyController after completing ContactDetailsQuestion with no" in {
-        navigator
-          .nextPage(ContactDetailsQuestionId, aboutYouAndTheProperty6010NoSession)
-          .apply(aboutYouAndTheProperty6010NoSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.AboutThePropertyController.show()
-      }
+    "redirect to LicensableActivitiesController after completing WebsiteForProperty with no" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6010NoSession)
+        .apply(aboutYouAndTheProperty6010NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
+    }
 
-      "navigate to LicensableActivitiesController after completing WebsiteForProperty with no" in {
-        navigator
-          .nextPage(WebsiteForPropertyPageId, aboutYouAndTheProperty6010NoSession)
-          .apply(aboutYouAndTheProperty6010NoSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
-      }
+    "redirect to PremisesLicenseConditionsController after completing LicensableActivity with no" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(LicensableActivityPageId, aboutYouAndTheProperty6010NoSession)
+        .apply(aboutYouAndTheProperty6010NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
+    }
 
-      "navigate to PremisesLicenseConditionsController after completing LicensableActivity with no" in {
-        navigator
-          .nextPage(LicensableActivityPageId, aboutYouAndTheProperty6010NoSession)
-          .apply(aboutYouAndTheProperty6010NoSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsController.show()
-      }
+    "redirect to EnforcementActionBeenTakenController after completing PremisesLicenceConditions with no" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(PremisesLicenceConditionsPageId, aboutYouAndTheProperty6010NoSession)
+        .apply(aboutYouAndTheProperty6010NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
+    }
 
-      "navigate to EnforcementActionBeenTakenController after completing PremisesLicenceConditions with no" in {
-        navigator
-          .nextPage(PremisesLicenceConditionsPageId, aboutYouAndTheProperty6010NoSession)
-          .apply(aboutYouAndTheProperty6010NoSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
-      }
+    "redirect to TiedForGoodsController after completing EnforcementActionBeenTaken with no" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(EnforcementActionBeenTakenPageId, aboutYouAndTheProperty6010NoSession)
+        .apply(aboutYouAndTheProperty6010NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
+    }
 
-      "navigate to TiedForGoodsController after completing EnforcementActionBeenTaken with no" in {
-        navigator
-          .nextPage(EnforcementActionBeenTakenPageId, aboutYouAndTheProperty6010NoSession)
-          .apply(aboutYouAndTheProperty6010NoSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
-      }
+    "redirect to CheckYourAnswersAboutThePropertyController after completing TiedForGoods with no" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(TiedForGoodsPageId, aboutYouAndTheProperty6010NoSession)
+        .apply(aboutYouAndTheProperty6010NoSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
+    }
 
-      "navigate to CheckYourAnswersAboutThePropertyController after completing TiedForGoods with no" in {
-        navigator
-          .nextPage(TiedForGoodsPageId, aboutYouAndTheProperty6010NoSession)
-          .apply(aboutYouAndTheProperty6010NoSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-      }
+    "redirect to PremisesLicenseConditionsDetailsController after completing PremisesLicenceConditions with yes" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(PremisesLicenceConditionsPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show()
+    }
 
-      "navigate to PremisesLicenseConditionsDetailsController after completing PremisesLicenceConditions with yes" in {
-        navigator
-          .nextPage(PremisesLicenceConditionsPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.PremisesLicenseConditionsDetailsController.show()
-      }
+    "redirect to EnforcementActionBeenTakenController after completing PremisesLicenceConditionsDetails" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(PremisesLicenceConditionsDetailsPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
+    }
 
-      "navigate to EnforcementActionBeenTakenController after completing PremisesLicenceConditionsDetails" in {
-        navigator
-          .nextPage(PremisesLicenceConditionsDetailsPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenController.show()
-      }
+    "redirect to EnforcementActionBeenTakenDetailsController after completing EnforcementActionBeenTaken with yes" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(EnforcementActionBeenTakenPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
+    }
 
-      "navigate to EnforcementActionBeenTakenDetailsController after completing EnforcementActionBeenTaken with yes" in {
-        navigator
-          .nextPage(EnforcementActionBeenTakenPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.EnforcementActionBeenTakenDetailsController.show()
-      }
+    "redirect to TiedForGoodsController after completing EnforcementActionBeenTakenDetails" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(EnforcementActionBeenTakenDetailsPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
+    }
 
-      "navigate to TiedForGoodsController after completing EnforcementActionBeenTakenDetails" in {
-        navigator
-          .nextPage(EnforcementActionBeenTakenDetailsPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.TiedForGoodsController.show()
-      }
+    "redirect to LicensableActivitiesController after completing PremisesLicenseGrantedDetails" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
+    }
 
-      "navigate to LicensableActivitiesController after completing PremisesLicenseGrantedDetails" in {
-        navigator
-          .nextPage(PremisesLicenseGrantedDetailsId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.LicensableActivitiesController.show()
-      }
+    "redirect to TiedForGoodsDetailsController after completing TiedForGoods with yes" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(TiedForGoodsPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
+    }
 
-      "navigate to TiedForGoodsDetailsController after completing TiedForGoods with yes" in {
-        navigator
-          .nextPage(TiedForGoodsPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.TiedForGoodsDetailsController.show()
-      }
-
-      "navigate to CheckYourAnswersAboutThePropertyController after completing TiedForGoodsDetails" in {
-        navigator
-          .nextPage(TiedForGoodsDetailsPageId, aboutYouAndTheProperty6010YesSession)
-          .apply(aboutYouAndTheProperty6010YesSession) shouldBe
-          controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
-      }
+    "redirect to CheckYourAnswersAboutThePropertyController after completing TiedForGoodsDetails" in {
+      aboutYouAndThePropertyNavigator
+        .nextPage(TiedForGoodsDetailsPageId, aboutYouAndTheProperty6010YesSession)
+        .apply(aboutYouAndTheProperty6010YesSession) shouldBe
+        controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show()
     }
   }

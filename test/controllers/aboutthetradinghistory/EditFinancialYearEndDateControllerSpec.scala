@@ -22,12 +22,11 @@ import controllers.aboutthetradinghistory
 import models.ForType.*
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
 import models.{ForType, Session}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class EditFinancialYearEndDateControllerSpec extends TestBaseSpec:
+class EditFinancialYearEndDateControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -46,7 +45,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec:
         aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
         forType = forType
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def editFinancialYearEndDateController(session: Session): EditFinancialYearEndDateController =
@@ -59,7 +58,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec:
   "GET /" should {
     "return 200" in {
       val result = editFinancialYearEndDateController().show(0)(FakeRequest())
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
@@ -73,7 +72,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020),
         forType = FOR6020
       ).show(0)(FakeRequest())
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return 200 for 6030" in {
@@ -81,7 +80,7 @@ class EditFinancialYearEndDateControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6030),
         forType = FOR6030
       ).show(0)(FakeRequest())
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
   }
 

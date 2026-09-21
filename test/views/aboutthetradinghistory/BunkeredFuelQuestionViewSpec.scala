@@ -31,26 +31,21 @@ class BunkeredFuelQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
   private val backLink = controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
 
   private def createView = () =>
-    bunkeredFuelQuestionView(form, backLink, Summary("99996020001"))(using fakeRequest, messages)
+    bunkeredFuelQuestionView(form, backLink, Summary("99996020001"))(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    bunkeredFuelQuestionView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    bunkeredFuelQuestionView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   "Bunkered fuel question view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked as backLink leading total fuel sold Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.TotalFuelSoldController.show().url
-    }
+    behave like pageWithBackLink(createView, "Total fuel sold", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
@@ -81,6 +76,7 @@ class BunkeredFuelQuestionViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

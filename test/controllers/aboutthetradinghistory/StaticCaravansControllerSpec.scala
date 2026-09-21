@@ -20,12 +20,11 @@ import connectors.Audit
 import controllers.aboutthetradinghistory
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class StaticCaravansControllerSpec extends TestBaseSpec:
+class StaticCaravansControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -42,18 +41,18 @@ class StaticCaravansControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200" in {
-      val result = staticCaravansController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = staticCaravansController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = staticCaravansController.show(fakeRequest)
+      val result = staticCaravansController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -63,7 +62,7 @@ class StaticCaravansControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = staticCaravansController.show(fakeRequestFromCYA)
+      val result  = staticCaravansController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include previousPage
@@ -76,17 +75,17 @@ class StaticCaravansControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "save the form data and redirect to the next page on answer Yes" in {
       val res = staticCaravansController.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData(AnswerYes)*)
+        postRequest.withFormUrlEncodedBody(validFormData(AnswerYes)*)
       )
-      status(res)           shouldBe Status.SEE_OTHER
+      status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageOnYes)
     }
 
     "save the form data and redirect to the next page on answer No" in {
       val res = staticCaravansController.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData(AnswerNo)*)
+        postRequest.withFormUrlEncodedBody(validFormData(AnswerNo)*)
       )
-      status(res)           shouldBe Status.SEE_OTHER
+      status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPageOnNo)
     }
 

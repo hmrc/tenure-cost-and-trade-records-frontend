@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package utils
+package test
 
 import actions.{SessionRequest, WithSessionRefiner}
-import config.AppConfig
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
-import models.submissions.aboutyouandtheproperty.*
+import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import models.submissions.accommodation.AccommodationDetails
 import models.submissions.additionalinformation.AdditionalInformation
 import models.submissions.connectiontoproperty.StillConnectedDetails
@@ -30,104 +29,29 @@ import models.submissions.lettingHistory.LettingHistory
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import models.{ForType, Session}
-import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.time.{Millis, Seconds, Span}
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.{Inside, OptionValues}
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.Application
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.mvc.request.RequestTarget
-import play.api.mvc.{AnyContentAsEmpty, Request, Result}
-import play.api.test.{DefaultAwaitTimeout, FakeRequest, FutureAwaits, Injecting}
+import play.api.mvc.{AnyContent, Request, Result}
+import play.api.test.FakeRequest
 import repositories.SessionRepository
-import repository.RepositoryUtils
-import test.{InjectedViews, TestObjects}
-import uk.gov.hmrc.http.{HeaderCarrier, SessionId}
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
-import java.nio.charset.StandardCharsets
-import java.time.{Clock, Instant, ZoneId}
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
+import scala.language.implicitConversions
 
 /**
-  * Replaced by [[test.TCTRAppSpec]]
+  * @author Yuriy Tumakha
   */
-trait TestBaseSpec
-  extends AnyWordSpec
-  with Matchers
-  with AnswerYesNoMatchers
-  with FutureAwaits
-  with DefaultAwaitTimeout
-  with MockitoExtendedSugar
-  with ScalaFutures
-  with Inside
-  with GuiceOneAppPerSuite
-  with Injecting
-  with GlobalExecutionContext
-  with RepositoryUtils
-  with TestObjects
-  with InjectedViews
-  with FakeNavigation
-  with OptionValues:
-
-  override def fakeApplication(): Application =
-    GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"                         -> false,
-        "metrics.enabled"                     -> false,
-        "create-internal-auth-token-on-start" -> false,
-        "urls.tctrFrontend"                   -> "someUrl"
-      )
-      .build()
-
-  implicit override val patienceConfig: PatienceConfig =
-    PatienceConfig(timeout = Span(10, Seconds), interval = Span(20, Millis))
-
-  def frontendAppConfig: AppConfig = inject[AppConfig]
-
-  def messagesApi: MessagesApi = inject[MessagesApi]
-
-  val UTF8: String = StandardCharsets.UTF_8.name.toLowerCase
-
-  val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
-
-  val fakeGetRequest: FakeRequest[AnyContentAsEmpty.type] = fakeRequest
-
-  val fakePostRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("POST", "/")
-
-  val fakeRequestFromCYA: FakeRequest[AnyContentAsEmpty.type] = fakeRequest.withTarget(
-    RequestTarget("", "", Map("from" -> Seq("CYA")))
-  )
-
-  val fakeRequestFromTL: FakeRequest[AnyContentAsEmpty.type] = fakeRequest.withTarget(
-    RequestTarget("", "", Map("from" -> Seq("TL")))
-  )
-
-  val fakeRequestFromIES: FakeRequest[AnyContentAsEmpty.type] = fakeRequest.withTarget(
-    RequestTarget("", "", Map("from" -> Seq("IES")))
-  )
-
-  extension (request: FakeRequest[AnyContentAsEmpty.type])
-
-    def withQueryString(elems: (String, Seq[String])*): FakeRequest[AnyContentAsEmpty.type] =
-      request.withTarget(RequestTarget("", "", Map(elems*)))
-
-  def messages: Messages = messagesApi.preferred(fakeRequest)
-
-  def servicesConfig: ServicesConfig = inject[ServicesConfig]
-
-  def requestWithQueryParam[A](fakeRequest: FakeRequest[A], queryParam: String): FakeRequest[A] =
-    FakeRequest(fakeRequest.method, s"${fakeRequest.uri}?$queryParam", fakeRequest.headers, fakeRequest.body)
-
-  implicit def ec: ExecutionContext = inject[ExecutionContext]
-
-  implicit val hc: HeaderCarrier = HeaderCarrier(sessionId = Some(SessionId("my-session")))
-  implicit val clock: Clock      = Clock.fixed(Instant.now(), ZoneId.systemDefault())
+abstract class ControllerSpec extends TCTRAppSpec with InjectedNavigation:
 
   val mockSessionRepository: SessionRepository = mock[SessionRepository]
+
+  when(mockSessionRepository.start(any[Session])(using any)).thenReturn(Future.successful(()))
+  when(mockSessionRepository.saveOrUpdate(any[Session])(using any)).thenReturn(Future.successful(()))
+  when(mockSessionRepository.remove()(using any)).thenReturn(Future.successful(()))
+
+  val getRequestFromCYA: FakeRequest[AnyContent] = getRequest.withQueryParams("from" -> "CYA")
+
+  val getRequestFromTL: FakeRequest[AnyContent] = getRequest.withQueryParams("from" -> "TL")
+
+  val getRequestFromIES: FakeRequest[AnyContent] = getRequest.withQueryParams("from" -> "IES")
 
   val preFilledSession: WithSessionRefiner =
     preEnrichedActionRefiner(
@@ -197,12 +121,8 @@ trait TestBaseSpec
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings),
     aboutLeaseOrAgreementPartOne: Option[AboutLeaseOrAgreementPartOne] = Some(prefilledAboutLeaseOrAgreementPartOne),
     aboutLeaseOrAgreementPartTwo: Option[AboutLeaseOrAgreementPartTwo] = Some(prefilledAboutLeaseOrAgreementPartTwo),
-    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(
-      prefilledAboutLeaseOrAgreementPartThree
-    ),
-    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(
-      prefilledAboutLeaseOrAgreementPartFour
-    ),
+    aboutLeaseOrAgreementPartThree: Option[AboutLeaseOrAgreementPartThree] = Some(prefilledAboutLeaseOrAgreementPartThree),
+    aboutLeaseOrAgreementPartFour: Option[AboutLeaseOrAgreementPartFour] = Some(prefilledAboutLeaseOrAgreementPartFour),
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA),
     lettingHistory: Option[LettingHistory] = None,
     accommodationDetails: Option[AccommodationDetails] = None

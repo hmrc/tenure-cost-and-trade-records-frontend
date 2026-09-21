@@ -16,22 +16,21 @@
 
 package controllers
 
-import play.api.http.Status
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class ApplicationSpec extends TestBaseSpec:
+class ApplicationSpec extends ControllerSpec:
 
   private val controller = inject[controllers.Application]
 
   "GET /" should {
     "return 200" in {
-      val result = controller.index(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller.index(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller.index(fakeRequest)
+      val result = controller.index(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }

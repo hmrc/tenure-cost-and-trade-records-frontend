@@ -21,9 +21,9 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class TotalSiteCapacity6045ControllerSpec extends TestBaseSpec:
+class TotalSiteCapacity6045ControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -35,13 +35,13 @@ class TotalSiteCapacity6045ControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "TotalSiteCapacity6045Controller GET /" should {
     "return 200 and HTML with is parking rent paid separately is present in session" in {
-      val result = totalSiteCapacity6045Controller().show(fakeRequest)
+      val result = totalSiteCapacity6045Controller().show(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -49,7 +49,7 @@ class TotalSiteCapacity6045ControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML if total site capacity is none in session" in {
       val controller = totalSiteCapacity6045Controller(aboutTheTradingHistoryPartOne = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")

@@ -21,15 +21,14 @@ import form.Errors
 import form.aboutyouandtheproperty.WebsiteForPropertyForm.*
 import models.ForType.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class WebsiteForPropertyControllerSpec extends TestBaseSpec:
+class WebsiteForPropertyControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -44,7 +43,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       websiteForPropertyView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def websiteForPropertyController6030(
@@ -56,7 +55,7 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       websiteForPropertyView,
       preEnrichedActionRefiner(forType = FOR6030, aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def websiteForPropertyController6045(
@@ -68,17 +67,17 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       websiteForPropertyView,
       preEnrichedActionRefiner(forType = FOR6045, aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "WebsiteForProperty controller" should {
     "GET / return 200 website present in session" in {
-      val result = websiteForPropertyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = websiteForPropertyController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = websiteForPropertyController().show(fakeRequest)
+      val result = websiteForPropertyController().show(getRequest)
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -87,8 +86,8 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec:
     }
 
     "GET / return 200 website not present in session" in {
-      val result = websiteForPropertyController6030().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = websiteForPropertyController6030().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -97,8 +96,8 @@ class WebsiteForPropertyControllerSpec extends TestBaseSpec:
     }
 
     "GET / return 200 website not present in session 6045" in {
-      val result = websiteForPropertyController6045().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = websiteForPropertyController6045().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

@@ -22,22 +22,26 @@ import models.ForType.*
 import models.audit.UserData
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsObject, Json, Writes}
-import play.api.mvc.Result
+import play.api.mvc.{MessagesRequest, Result}
 import play.api.test.Helpers.*
+import play.api.test.FakeRequest
 import security.LoginToBackend.{Postcode, RefNumber}
 import security.NoExistingDocument
 import stub.StubSessionRepo
+import test.ControllerSpec
 import uk.gov.hmrc.http.HeaderCarrier
 import util.DateUtil.nowInUK
-import utils.Helpers.fakeRequest2MessageRequest
-import utils.TestBaseSpec
 import views.html.login
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.language.implicitConversions
 
-class LoginControllerSpec extends TestBaseSpec:
+class LoginControllerSpec extends ControllerSpec:
 
   private val loginToBackend = mock[LoginToBackendAction]
+
+  implicit def fakeRequest2MessageRequest[A](fakeRequest: FakeRequest[A]): MessagesRequest[A] =
+    MessagesRequest[A](fakeRequest, stubMessagesApi())
 
   "LoginDetails" should:
     "reference number cleaned" in {
@@ -74,7 +78,7 @@ class LoginControllerSpec extends TestBaseSpec:
         inject[views.html.testSign]
       )
 
-      val result = loginController.show(fakeRequest)
+      val result = loginController.show(getRequest)
 
       status(result) shouldBe OK
 
@@ -100,7 +104,7 @@ class LoginControllerSpec extends TestBaseSpec:
         inject[views.html.testSign]
       )
 
-      val result = loginController.loggedOut(fakeRequest)
+      val result = loginController.loggedOut(getRequest)
 
       status(result) shouldBe OK
 
@@ -126,7 +130,7 @@ class LoginControllerSpec extends TestBaseSpec:
         inject[views.html.testSign]
       )
 
-      val result = loginController.lockedOut(fakeRequest)
+      val result = loginController.lockedOut(getRequest)
 
       status(result) shouldBe UNAUTHORIZED
     }
@@ -149,7 +153,7 @@ class LoginControllerSpec extends TestBaseSpec:
 
       val attemptsRemaining = 1
 
-      val result: Future[Result] = loginController.loginFailed(attemptsRemaining)(fakeRequest)
+      val result: Future[Result] = loginController.loginFailed(attemptsRemaining)(getRequest)
 
       status(result) shouldBe UNAUTHORIZED
     }
@@ -179,11 +183,11 @@ class LoginControllerSpec extends TestBaseSpec:
         mock[views.html.lockedOut],
         inject[views.html.loggedOut],
         preFilledSession,
-        mockSessionRepo,
+        mockSessionRepository,
         mock[views.html.testSign]
       )
 
-      val response = loginController.verifyLogin("01234567000", "BN12 1AB")(using fakeRequest)
+      val response = loginController.verifyLogin("01234567000", "BN12 1AB")(using getRequest)
 
       status(response) shouldBe SEE_OTHER
 
@@ -221,11 +225,11 @@ class LoginControllerSpec extends TestBaseSpec:
         mock[views.html.lockedOut],
         inject[views.html.loggedOut],
         preFilledSession,
-        mockSessionRepo,
+        mockSessionRepository,
         mock[views.html.testSign]
       )
 
-      val result = loginController.logout(fakeRequest)
+      val result = loginController.logout(getRequest)
 
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(routes.LoginController.loggedOut.url)

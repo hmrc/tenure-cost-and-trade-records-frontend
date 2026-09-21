@@ -32,12 +32,12 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
   override val form: Form[RemoveConnectionsDetails] = RemoveConnectionForm.removeConnectionForm
 
   private def createView: () => Html =
-    () => removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+    () => removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using getRequest, messages)
 
   private def createViewUsingForm: Form[RemoveConnectionsDetails] => Html =
-    form => removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using fakeRequest, messages)
+    form => removeConnectionView(form, Summary("99996010001", Some(prefilledAddress)), backLink)(using getRequest, messages)
 
-  "Past connection view" should {
+  "Remove connection view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
@@ -50,23 +50,19 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
 
     "has a reference number and address banner" in {
       val doc = asDocument(createView())
+
       assertContainsText(doc, "Reference:")
       assertContainsText(doc, "99996010/001")
       assertContainsText(doc, "Property:")
       assertContainsText(doc, "001, GORING ROAD, GORING-BY-SEA, WORTHING, WEST SUSSEX, BN12 4AX")
     }
 
-    "has a link marked with back.link.label leading to have you ever had a connection Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.notconnected.routes.PastConnectionController.show().url
-    }
+    behave like pageWithBackLink(createView, "Have you ever had a connection", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.connectionToTheProperty")}"""
     }
 
@@ -78,6 +74,7 @@ class RemoveConnectionViewSpec extends QuestionViewBehaviours[RemoveConnectionsD
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

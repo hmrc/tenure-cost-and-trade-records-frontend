@@ -19,15 +19,14 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.ProvideDetailsOfYourLeaseForm.provideDetailsOfYourLeaseForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class ProvideDetailsOfYourLeaseControllerSpec extends TestBaseSpec:
+class ProvideDetailsOfYourLeaseControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,13 +41,13 @@ class ProvideDetailsOfYourLeaseControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       provideDetailsOfYourLeaseView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Connected To Landlord Details in the session" in {
-      val result = provideDetailsOfYourLeaseController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = provideDetailsOfYourLeaseController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class ProvideDetailsOfYourLeaseControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML Connected To Landlord Details with none in the session" in {
       val controller = provideDetailsOfYourLeaseController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

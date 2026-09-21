@@ -17,14 +17,13 @@
 package controllers.aboutthetradinghistory
 
 import navigation.AboutTheTradingHistoryNavigator
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
-import utils.TestBaseSpec
+import test.ControllerSpec
 import views.html.taskList.taskList
 
-class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec:
+class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends ControllerSpec:
 
   private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
 
@@ -36,7 +35,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec:
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
     preFilledSession,
-    mockSessionRepo
+    mockSessionRepository
   )
 
   private val checkYourAnswersAboutTradingHistoryController6015 = CheckYourAnswersAboutTheTradingHistoryController(
@@ -44,7 +43,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec:
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
     preFilledSession6015,
-    mockSessionRepo
+    mockSessionRepository
   )
 
   private val checkYourAnswersAboutTradingHistoryController6020 = CheckYourAnswersAboutTheTradingHistoryController(
@@ -52,7 +51,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec:
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
     preFilledSession6020,
-    mockSessionRepo
+    mockSessionRepository
   )
 
   private val checkYourAnswersAboutTradingHistoryController6045 = CheckYourAnswersAboutTheTradingHistoryController(
@@ -60,7 +59,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec:
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
     preFilledSession6045,
-    mockSessionRepo
+    mockSessionRepository
   )
 
   private val checkYourAnswersAboutTradingHistoryController6048 = CheckYourAnswersAboutTheTradingHistoryController(
@@ -68,7 +67,7 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec:
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
     preFilledSession6048,
-    mockSessionRepo
+    mockSessionRepository
   )
 
   private val checkYourAnswersAboutTradingHistoryController6076 = CheckYourAnswersAboutTheTradingHistoryController(
@@ -76,66 +75,66 @@ class CheckYourAnswersAboutTheTradingHistoryControllerSpec extends TestBaseSpec:
     mockAboutTheTradingHistoryNavigator,
     checkYourAnswersAboutTheTradingHistoryView,
     preFilledSession6076,
-    mockSessionRepo
+    mockSessionRepository
   )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersAboutTradingHistoryController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersAboutTradingHistoryController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersAboutTradingHistoryController.show(fakeRequest)
+      val result = checkYourAnswersAboutTradingHistoryController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 6015" in {
-      val result = checkYourAnswersAboutTradingHistoryController6015.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersAboutTradingHistoryController6015.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML 6015" in {
-      val result = checkYourAnswersAboutTradingHistoryController6015.show(fakeRequest)
+      val result = checkYourAnswersAboutTradingHistoryController6015.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 6020" in {
-      val result = checkYourAnswersAboutTradingHistoryController6020.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersAboutTradingHistoryController6020.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML 6020" in {
-      val result = checkYourAnswersAboutTradingHistoryController6020.show(fakeRequest)
+      val result = checkYourAnswersAboutTradingHistoryController6020.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 6045" in {
-      val result = checkYourAnswersAboutTradingHistoryController6045.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersAboutTradingHistoryController6045.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML 6045" in {
-      val result = checkYourAnswersAboutTradingHistoryController6045.show(fakeRequest)
+      val result = checkYourAnswersAboutTradingHistoryController6045.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 6048" in {
-      val result = checkYourAnswersAboutTradingHistoryController6048.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersAboutTradingHistoryController6048.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return 200 6076" in {
-      val result = checkYourAnswersAboutTradingHistoryController6076.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersAboutTradingHistoryController6076.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML 6076" in {
-      val result = checkYourAnswersAboutTradingHistoryController6076.show(fakeRequest)
+      val result = checkYourAnswersAboutTradingHistoryController6076.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -32,7 +32,7 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
       0,
       "separate business",
       Summary("99996010001")
-    )(using fakeRequest, messages)
+    )(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[CalculatingTheRent]) =>
     calculatingTheRentView(
@@ -40,42 +40,40 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
       0,
       "separate business",
       Summary("99996010001")
-    )(using fakeRequest, messages)
+    )(using getRequest, messages)
 
   "Catering operation rent details view" should {
 
     behave like normalPageWithMessageExtra(createView, "calculating.the.rent.for", "separate business")
 
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx = 0).url
-    }
+    behave like pageWithBackLink(createView, "Rent received", controllers.aboutfranchisesorlettings.routes.RentReceivedFromController.show(idx = 0).url)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutConcessionsOrLettings")}"""
     }
 
     "contain text box " in {
       val doc      = asDocument(createViewUsingForm(form))
       val forLabel = doc.getElementsByAttributeValue("for", "rentDetails").text()
-      assert(forLabel == messages("calculating.the.rent.for.explain"))
+
+      forLabel shouldBe messages("calculating.the.rent.for.explain")
     }
 
     "contain date legend for label.dateInput" in {
       val doc    = asDocument(createViewUsingForm(form))
       val legend = doc.getElementsByClass("govuk-fieldset__legend govuk-!-font-weight-bold").text()
-      assert(legend == messages("calculating.the.rent.for.label"))
+
+      legend shouldBe messages("calculating.the.rent.for.label")
     }
 
     "contain date format hint for dateInput-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("dateInput-hint").text()
-      assert(firstOccupyHint == messages("hint.date.example"))
+
+      firstOccupyHint shouldBe messages("hint.date.example")
     }
 
     "contain date field for the value dateInput.day" in {
@@ -99,12 +97,14 @@ class CalculatingTheRentForViewSpec extends QuestionViewBehaviours[CalculatingTh
     "contain continue button with the value Continue" in {
       val doc            = asDocument(createViewUsingForm(form))
       val continueButton = doc.getElementById("continue-button").text()
-      assert(continueButton == messages("button.continue.label"))
+
+      continueButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

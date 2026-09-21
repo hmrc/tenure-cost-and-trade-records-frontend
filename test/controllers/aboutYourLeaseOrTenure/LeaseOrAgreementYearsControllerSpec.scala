@@ -19,12 +19,11 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import navigation.AboutYourLeaseOrTenureNavigator
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec:
+class LeaseOrAgreementYearsControllerSpec extends ControllerSpec:
 
   val mockAboutYourLeaseOrTenureNavigator: AboutYourLeaseOrTenureNavigator = mock[AboutYourLeaseOrTenureNavigator]
 
@@ -39,13 +38,13 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       leaseOrAgreementYearsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with yes data in the session" in {
-      val result = leaseOrAgreementYearsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = leaseOrAgreementYearsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -55,8 +54,8 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with no data in the session" in {
       val controller = leaseOrAgreementYearsController(aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -66,8 +65,8 @@ class LeaseOrAgreementYearsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with none data in the session" in {
       val controller = leaseOrAgreementYearsController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

@@ -18,41 +18,47 @@ package form.lettingHistory
 
 import form.lettingHistory.ResidentDetailForm.theForm
 import models.submissions.lettingHistory.ResidentDetail
+import test.FormSpec
 
 class ResidentDetailFormSpec extends FormSpec:
 
-  it should "bind good data as expected" in:
-    val data  = Map(
-      "name"    -> "name",
-      "address" -> "address"
-    )
-    val bound = theForm.bind(data)
-    bound.hasErrors mustBe false
-    bound.data mustBe data
-
-  it should "unbind good data as expected" in {
-    val residentDetail = ResidentDetail(
-      name = "name",
-      address = "address"
-    )
-    val filled         = theForm.fill(residentDetail)
-    filled.hasErrors mustBe false
-    filled.data mustBe Map(
-      "name"    -> "name",
-      "address" -> "address"
-    )
-  }
-
-  it should "detect errors" in {
-    // When the form gets submitted before being filled
-    val bound = theForm.bind(
-      Map(
-        "name"    -> "",
-        "address" -> ""
+  "ResidentDetailForm" should {
+    "bind good data as expected" in {
+      val data  = Map(
+        "name"    -> "name",
+        "address" -> "address"
       )
-    )
-    bound.hasErrors mustBe true
-    bound.errors must have size 2
-    bound.error("name").value.message mustBe "lettingHistory.residentDetail.name.required"
-    bound.error("address").value.message mustBe "lettingHistory.residentDetail.address.required"
+      val bound = theForm.bind(data)
+
+      bound.hasErrors shouldBe false
+      bound.data      shouldBe data
+    }
+
+    "unbind good data as expected" in {
+      val residentDetail = ResidentDetail(
+        name = "name",
+        address = "address"
+      )
+      val filled         = theForm.fill(residentDetail)
+
+      filled.hasErrors shouldBe false
+      filled.data      shouldBe Map(
+        "name"    -> "name",
+        "address" -> "address"
+      )
+    }
+
+    "detect errors" in {
+      val bound = theForm.bind(
+        Map(
+          "name"    -> "",
+          "address" -> ""
+        )
+      )
+
+      bound.hasErrors                    shouldBe true
+      bound.errors                         should have size 2
+      bound.error("name").get.message    shouldBe "lettingHistory.residentDetail.name.required"
+      bound.error("address").get.message shouldBe "lettingHistory.residentDetail.address.required"
+    }
   }

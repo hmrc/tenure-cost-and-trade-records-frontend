@@ -24,13 +24,11 @@ import play.api.libs.json.Json
 import play.api.mvc.AnyContent
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import java.time.LocalDate
 
-class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec:
-
-  import utils.FormBindingTestAssertions.*
+class CompletedCommercialLettingsWelshControllerSpec extends ControllerSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
@@ -54,33 +52,33 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec:
     aboutYouAndThePropertyNavigator,
     completedCommercialLettingsWelshView,
     preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-    mockSessionRepo
+    mockSessionRepository
   )
 
   private val sessionRequest: SessionRequest[AnyContent] =
-    SessionRequest[AnyContent](stillConnectedDetails6048YesSession, fakeRequest)
+    SessionRequest[AnyContent](stillConnectedDetails6048YesSession, getRequest)
 
   "GET /" should {
     "return 200" in {
-      val result = controller().show(fakeRequest)
+      val result = controller().show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(fakeRequest)
+      val result = controller().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
-      val result = controller().show()(fakeRequestFromCYA)
+      val result = controller().show()(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
 
     "return correct backLink when no query param is present" in {
-      val result = controller().show()(fakeRequest)
+      val result = controller().show()(getRequest)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show().url
       )
@@ -95,7 +93,7 @@ class CompletedCommercialLettingsWelshControllerSpec extends TestBaseSpec:
 
     "save the form data and redirect to the next page" in {
       val res = controller().submit(
-        fakePostRequest.withFormUrlEncodedBody(formData*)
+        postRequest.withFormUrlEncodedBody(formData*)
       )
       status(res) shouldBe SEE_OTHER
     }

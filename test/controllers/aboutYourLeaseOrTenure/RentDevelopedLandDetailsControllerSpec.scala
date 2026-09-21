@@ -19,15 +19,14 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.RentDevelopedLandDetailsForm.rentDevelopedLandDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class RentDevelopedLandDetailsControllerSpec extends TestBaseSpec:
+class RentDevelopedLandDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,13 +41,13 @@ class RentDevelopedLandDetailsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       rentDevelopedLandDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Rent Developed Land Details in the session" in {
-      val result = rentDevelopedLandDetailsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentDevelopedLandDetailsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class RentDevelopedLandDetailsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Rent Developed Land Details in the session" in {
       val controller = rentDevelopedLandDetailsController(None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

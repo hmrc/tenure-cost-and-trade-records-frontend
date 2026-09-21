@@ -22,20 +22,19 @@ import models.submissions.aboutfranchisesorlettings.*
 import models.submissions.aboutfranchisesorlettings.TypeOfIncome.{TypeConcession, TypeFranchise, TypeLetting}
 import models.submissions.common.AnswersYesNo.AnswerYes
 import models.{ForType, Session}
-import play.api.http.Status
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import java.time.LocalDate
 import scala.concurrent.Future
 import scala.language.reflectiveCalls
 
-class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpec:
+class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -47,7 +46,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6045),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def checkYourAnswersAboutFranchiseOrLettingsController6020(
@@ -60,7 +59,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def checkYourAnswersAboutFranchiseOrLettingsControllerNo(
@@ -73,47 +72,46 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       aboutFranchisesOrLettingsNavigator,
       checkYourAnswersAboutFranchiseOrLettings,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
-
     "return HTML FOR6010 about Franchise or Lettings" in new ControllerFixture(forType = FOR6010) {
-      val result: Future[Result] = controller.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result: Future[Result] = controller.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6015 about Concessions or Lettings" in new ControllerFixture(forType = FOR6015) {
-      val result: Future[Result] = controller.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result: Future[Result] = controller.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6020 about Lettings" in new ControllerFixture(forType = FOR6020) {
-      val result: Future[Result] = controller.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result: Future[Result] = controller.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6030 about Franchise or Lettings" in new ControllerFixture(forType = FOR6030) {
-      val result: Future[Result] = controller.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result: Future[Result] = controller.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6045 about Concessions, Franchises or Lettings" in new ControllerFixture(forType = FOR6045) {
-      val result: Future[Result] = controller.show(fakeRequest)
+      val result: Future[Result] = controller.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return HTML FOR6046 about Concessions, Franchises or Lettings" in new ControllerFixture(forType = FOR6046) {
-      val result: Future[Result] = controller.show(fakeRequest)
+      val result: Future[Result] = controller.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -135,7 +133,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
     }
   }
 
-  "SUBMIT /"                               should {
+  "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted for 6020" in {
       val res = checkYourAnswersAboutFranchiseOrLettingsController6020().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -143,6 +141,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
       status(res) shouldBe BAD_REQUEST
     }
   }
+
   "Add another letting accommodation form" should {
     "error if addAnotherCateringOperationOrLettingAccommodation is missing" in {
       val formData = baseFormData - errorKey.checkYourAnswersAboutFranchiseOrLettings
@@ -160,7 +159,7 @@ class CheckYourAnswersAboutFranchiseOrLettingsControllerSpec extends TestBaseSpe
 
     val baseFormData: Map[String, String] = Map("checkYourAnswersAboutFranchiseOrLettings" -> "yes")
 
-  trait ControllerFixture(forType: ForType) extends TestBaseSpec:
+  trait ControllerFixture(forType: ForType) extends ControllerSpec:
     val repository: SessionRepo = mock[SessionRepo]
     when(repository.saveOrUpdate(any[Session])(using any[HeaderCarrier])).thenReturn(Future.unit)
 

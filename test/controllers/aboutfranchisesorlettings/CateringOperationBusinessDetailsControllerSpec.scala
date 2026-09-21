@@ -25,21 +25,21 @@ import org.mockito.ArgumentCaptor
 import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
+import test.JsoupHelpers
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.JsoupHelpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.concurrent.Future
 
-class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
+class CateringOperationBusinessDetailsControllerSpec extends ControllerSpec with JsoupHelpers:
 
   "the CateringOperationBusinessDetails controller" when {
-    "handling GET / requests"  should {
+    "handling GET / requests" should {
       "reply 200 with a fresh HTML form and expected backLink" in new ControllerFixture {
-        val result: Future[Result] = controller.show(index = None)(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(index = None)(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
 
         val html: Document = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()    shouldBe "concessionTypeDetails.heading"
@@ -49,10 +49,10 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
       }
 
       "reply 200 with a pre-filled HTML form and expected backLink" in new ControllerFixture {
-        val result: Future[Result] = controller.show(index = Some(2))(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(index = Some(2))(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
 
         val html: Document = contentAsJsoup(result)
         html.getElementsByTag("h1").first().text()    shouldBe "concessionTypeDetails.heading"
@@ -61,9 +61,10 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
         html.backLink                                   should endWith(routes.TypeOfIncomeController.show(Some(2)).url)
       }
     }
+
     "handling POST / requests" should {
       "reply 400 and error messages when the form is submitted with invalid data" in new ControllerFixture {
-        val result: Future[Result] = controller.submit(index = None)(fakePostRequest)
+        val result: Future[Result] = controller.submit(index = None)(postRequest)
         val content: String        = contentAsString(result)
 
         status(result) shouldBe BAD_REQUEST
@@ -75,34 +76,34 @@ class CateringOperationBusinessDetailsControllerSpec extends TestBaseSpec:
 
       "reply 303 when the form is submitted with good data and index=0" in new ControllerFixture {
         val result: Future[Result] = controller.submit(index = Some(0))(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "operatorName6030"          -> "Another Operator",
             "typeOfBusiness"            -> "Different Business",
             "howBusinessPropertyIsUsed" -> "Tea room"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.FeeReceivedController.show(0).url
+        redirectLocation(result).get shouldBe routes.FeeReceivedController.show(0).url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
       }
 
       "reply 303 when the 6030 form is submitted with good data missing index" in new ControllerFixture {
         val result: Future[Result] = controller.submit(index = None)(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "operatorName6030"          -> "Another Operator",
             "typeOfBusiness"            -> "Different Business",
             "howBusinessPropertyIsUsed" -> "Tea room"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.FeeReceivedController.show(0).url
+        redirectLocation(result).get shouldBe routes.FeeReceivedController.show(0).url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
 
         val updatedCateringOperationDetails: ConcessionBusinessDetails =
-          data.getValue.aboutFranchisesOrLettings.value.rentalIncome.value.head
+          data.getValue.aboutFranchisesOrLettings.get.rentalIncome.get.head
             .asInstanceOf[ConcessionIncomeRecord]
             .businessDetails
-            .value
+            .get
         updatedCateringOperationDetails.operatorName   shouldBe "Another Operator" // instead of "Operator Name"
         updatedCateringOperationDetails.typeOfBusiness shouldBe "Different Business" // instead of "Type of Business"
         reset(repository)

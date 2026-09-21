@@ -20,110 +20,12 @@ import models.ForType.FOR6048
 import models.Session
 import models.submissions.common.Address as CommonAddress
 import models.submissions.lettingHistory.LettingHistory.*
-import org.scalatest.OptionValues
-import org.scalatest.matchers.must.Matchers
-import org.scalatest.wordspec.AnyWordSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
+class OnlineAdvertisingSpec extends BaseSpec:
 
-  "the OnlineAdvertising trait" when {
-    "copying the session withHasOnlineAdvertising" should {
-      "set a boolean value although lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session: SessionWrapper = withHasOnlineAdvertising(true)
-        session.changed mustBe true
-        session.data.lettingHistory mustNot be(None)
-        hasOnlineAdvertising(session.data).value mustBe true
-      }
-
-      "set a boolean value although lettingHistory.hasOnlineAdvertising was None" in new SessionWithSomeLettingHistory {
-        val session: SessionWrapper = withHasOnlineAdvertising(true)
-        session.changed mustBe true
-        hasOnlineAdvertising(session.data).value mustBe true
-        // onlineAdvertising(session.data) must be(empty)
-      }
-
-      "confirm the boolean value which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
-        List(niceApartment)
-      ) {
-        val session: SessionWrapper = withHasOnlineAdvertising(true)
-        session.changed mustBe false
-        hasOnlineAdvertising(session.data).value mustBe true
-        onlineAdvertising(session.data) mustNot be(empty)
-      }
-
-      "negate the boolean value which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
-        List(niceApartment)
-      ) {
-        val session: SessionWrapper = withHasOnlineAdvertising(false)
-        session.changed mustBe true
-        hasOnlineAdvertising(session.data).value mustBe false
-        onlineAdvertising(session.data) mustBe empty
-      }
-
-      "double negate the boolean value which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
-        List(niceApartment)
-      ) {
-        val session1: SessionWrapper = withHasOnlineAdvertising(false)
-        val session2: SessionWrapper = withHasOnlineAdvertising(true)(using session1.data)
-        session2.changed mustBe true
-        hasOnlineAdvertising(session2.data).value mustBe true
-      }
-    }
-
-    "copying the session byAddingOrUpdatingOnlineAdvertising" should {
-      "set a non-empty onlineAdvertising list although the lettingHistory was None" in new SessionWithNoLettingHistory {
-        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = None, niceApartment)
-        session.changed mustBe true
-        session.data.lettingHistory mustNot be(None)
-        hasOnlineAdvertising(session.data).value mustBe true
-        onlineAdvertising(session.data) must have size 1
-        onlineAdvertising(session.data).head mustBe niceApartment
-      }
-
-      "set the very first list value when lettingHistory is not None" in new SessionWithSomeLettingHistory {
-        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = None, niceApartment)
-        session.changed mustBe true
-        hasOnlineAdvertising(session.data).value mustBe true
-        onlineAdvertising(session.data) must have size 1
-        onlineAdvertising(session.data).head mustBe niceApartment
-      }
-
-      "confirm online advert which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
-        List(niceApartment)
-      ) {
-        pending
-        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = Some(0), niceApartment)
-        session.changed mustBe false
-        hasOnlineAdvertising(session.data).value mustBe true
-        onlineAdvertising(session.data) must have size 1
-        onlineAdvertising(session.data).head mustBe niceApartment
-      }
-
-      "change online advert which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
-        List(niceApartment)
-      ) {
-        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = Some(0), uglyApartment)
-        session.changed mustBe true
-        hasOnlineAdvertising(session.data).value mustBe true
-        onlineAdvertising(session.data) must have size 1
-        onlineAdvertising(session.data).head mustBe uglyApartment
-      }
-
-      "append a online advert to the existing list" in new SessionWithSomeLettingHistory(onlineAdvertising =
-        List(niceApartment)
-      ) {
-        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = None, uglyApartment)
-        session.changed mustBe true
-        hasOnlineAdvertising(session.data).value mustBe true
-        onlineAdvertising(session.data) must have size 2
-        onlineAdvertising(session.data).head mustBe niceApartment
-        onlineAdvertising(session.data).last mustBe uglyApartment
-      }
-    }
-  }
-
-  val session: Session = Session(
-    referenceNumber = "99996010004",
+  private val session: Session = Session(
+    referenceNumber = "99996048004",
     forType = FOR6048,
     address = CommonAddress("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX"),
     token = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
@@ -131,18 +33,113 @@ class OnlineAdvertisingSpec extends AnyWordSpec with Matchers with OptionValues:
     lettingHistory = None
   )
 
-  val niceApartment: AdvertisingDetail = AdvertisingDetail(
+  private val niceApartment: AdvertisingDetail = AdvertisingDetail(
     websiteAddress = "http://www.myproperty.com/properties/12569",
     propertyReferenceNumber = "12569"
   )
 
-  val uglyApartment: AdvertisingDetail = AdvertisingDetail(
+  private val uglyApartment: AdvertisingDetail = AdvertisingDetail(
     websiteAddress = "http://www.booking.com/properties/99999",
     propertyReferenceNumber = "99999"
   )
 
+  "the OnlineAdvertising trait" when {
+    "copying the session withHasOnlineAdvertising" should {
+      "set a boolean value although lettingHistory was None" in new SessionWithNoLettingHistory {
+        val session: SessionWrapper = withHasOnlineAdvertising(true)
+        session.changed                        shouldBe true
+        session.data.lettingHistory           shouldNot be(None)
+        hasOnlineAdvertising(session.data).get shouldBe true
+      }
+
+      "set a boolean value although lettingHistory.hasOnlineAdvertising was None" in new SessionWithSomeLettingHistory {
+        val session: SessionWrapper = withHasOnlineAdvertising(true)
+        session.changed                        shouldBe true
+        hasOnlineAdvertising(session.data).get shouldBe true
+      }
+
+      "confirm the boolean value which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
+        List(niceApartment)
+      ) {
+        val session: SessionWrapper = withHasOnlineAdvertising(true)
+        session.changed                        shouldBe false
+        hasOnlineAdvertising(session.data).get shouldBe true
+        onlineAdvertising(session.data)       shouldNot be(empty)
+      }
+
+      "negate the boolean value which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
+        List(niceApartment)
+      ) {
+        val session: SessionWrapper = withHasOnlineAdvertising(false)
+        session.changed                        shouldBe true
+        hasOnlineAdvertising(session.data).get shouldBe false
+        onlineAdvertising(session.data)        shouldBe empty
+      }
+
+      "double negate the boolean value which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
+        List(niceApartment)
+      ) {
+        val session1: SessionWrapper = withHasOnlineAdvertising(false)
+        val session2: SessionWrapper = withHasOnlineAdvertising(true)(using session1.data)
+        session2.changed                        shouldBe true
+        hasOnlineAdvertising(session2.data).get shouldBe true
+      }
+    }
+
+    "copying the session byAddingOrUpdatingOnlineAdvertising" should {
+      "set a non-empty onlineAdvertising list although the lettingHistory was None" in new SessionWithNoLettingHistory {
+        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = None, niceApartment)
+        session.changed                        shouldBe true
+        session.data.lettingHistory           shouldNot be(None)
+        hasOnlineAdvertising(session.data).get shouldBe true
+        onlineAdvertising(session.data)          should have size 1
+        onlineAdvertising(session.data).head   shouldBe niceApartment
+      }
+
+      "set the very first list value when lettingHistory is not None" in new SessionWithSomeLettingHistory {
+        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = None, niceApartment)
+        session.changed                        shouldBe true
+        hasOnlineAdvertising(session.data).get shouldBe true
+        onlineAdvertising(session.data)          should have size 1
+        onlineAdvertising(session.data).head   shouldBe niceApartment
+      }
+
+      "confirm online advert which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
+        List(niceApartment)
+      ) {
+        pending
+        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = Some(0), niceApartment)
+        session.changed                        shouldBe false
+        hasOnlineAdvertising(session.data).get shouldBe true
+        onlineAdvertising(session.data)          should have size 1
+        onlineAdvertising(session.data).head   shouldBe niceApartment
+      }
+
+      "change online advert which was already set" in new SessionWithSomeLettingHistory(onlineAdvertising =
+        List(niceApartment)
+      ) {
+        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = Some(0), uglyApartment)
+        session.changed                        shouldBe true
+        hasOnlineAdvertising(session.data).get shouldBe true
+        onlineAdvertising(session.data)          should have size 1
+        onlineAdvertising(session.data).head   shouldBe uglyApartment
+      }
+
+      "append a online advert to the existing list" in new SessionWithSomeLettingHistory(onlineAdvertising =
+        List(niceApartment)
+      ) {
+        val session: SessionWrapper = byAddingOrUpdatingOnlineAdvertising(index = None, uglyApartment)
+        session.changed                        shouldBe true
+        hasOnlineAdvertising(session.data).get shouldBe true
+        onlineAdvertising(session.data)          should have size 2
+        onlineAdvertising(session.data).head   shouldBe niceApartment
+        onlineAdvertising(session.data).last   shouldBe uglyApartment
+      }
+    }
+  }
+
   trait SessionWithNoLettingHistory:
-    given Session = session // having lettingHistory = None
+    given Session = session
 
   trait SessionWithSomeLettingHistory(onlineAdvertising: List[AdvertisingDetail] = Nil):
 

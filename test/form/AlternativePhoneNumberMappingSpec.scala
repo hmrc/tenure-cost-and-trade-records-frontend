@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
 import form.AlternativePhoneNumberMapping.validateAlternativePhoneNumber
-import org.scalatest.matchers.should
-import org.scalatest.prop.TableDrivenPropertyChecks
-import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.data.Form
 import play.api.data.Forms.single
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AlternativePhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
+class AlternativePhoneNumberMappingSpec extends BaseSpec:
 
   trait Setup:
     val form: Form[String] = Form(single("phone" -> validateAlternativePhoneNumber))
@@ -46,7 +44,7 @@ class AlternativePhoneNumberMappingSpec extends AnyWordSpecLike with should.Matc
         ("+44 790-590-5876", true)
       )
 
-      TableDrivenPropertyChecks.forAll(lengths) { (phone, isValid) =>
+      forAll(lengths) { (phone, isValid) =>
         val res: Form[String] = form.bind(Map("phone" -> phone))
 
         if isValid then
@@ -64,7 +62,7 @@ class AlternativePhoneNumberMappingSpec extends AnyWordSpecLike with should.Matc
         "00447!904098765"
       )
 
-      TableDrivenPropertyChecks.forAll(invalidPhoneNumbers) { phone =>
+      forAll(invalidPhoneNumbers) { phone =>
         val res: Form[String] = form.bind(Map("phone" -> phone))
         res.errors.head.message shouldBe "error.invalid_phone"
       }

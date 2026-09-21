@@ -35,10 +35,10 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture(
         isYearlyAvailable = Some(true)
       ) {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.hasOnlineAdvertising.heading"
         page.backLink          shouldBe routes.IsYearlyAvailableController.show.url
@@ -48,14 +48,14 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
 
       "be handling POST answer='yes' and reply 303 redirect to the 'OnlineAdvertisingDetail' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value   shouldBe routes.AdvertisingDetailController.show().url
+        redirectLocation(result).get   shouldBe routes.AdvertisingDetailController.show().url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        hasOnlineAdvertising(data).value shouldBe true
+        hasOnlineAdvertising(data).get shouldBe true
       }
     }
 
@@ -64,10 +64,10 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
           onlineAdvertising = oneAdvertising
         ) {
-          val result: Future[Result] = controller.show(fakeGetRequest)
-          status(result)            shouldBe OK
-          contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF8
+          val result: Future[Result] = controller.show(getRequest)
+          status(result)          shouldBe OK
+          contentType(result).get shouldBe HTML
+          charset(result).get     shouldBe UTF8
           val page: Document = contentAsJsoup(result)
           page.radios("answer") shouldNot be(empty)
           page.radios("answer")    should haveChecked("yes")
@@ -78,15 +78,15 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           onlineAdvertising = oneAdvertising
         ) {
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value   shouldBe routes.AdvertisingListController.show.url
+          redirectLocation(result).get   shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          hasOnlineAdvertising(data).value shouldBe true
-          onlineAdvertising(data)          shouldBe oneAdvertising
+          hasOnlineAdvertising(data).get shouldBe true
+          onlineAdvertising(data)        shouldBe oneAdvertising
         }
 
         "be handling POST answer='no' and reply 303 redirect to the 'CheckYourAnswers' page" in new ControllerFixture(
@@ -95,14 +95,14 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         ) {
           // Answering 'no' will clear out all online advertising
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "answer" -> "no"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value                                   shouldBe routes.CheckYourAnswersLettingHistoryController.show.url
+          redirectLocation(result).get                                     shouldBe routes.CheckYourAnswersLettingHistoryController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          hasOnlineAdvertising(data).value                                 shouldBe false
+          hasOnlineAdvertising(data).get                                   shouldBe false
           onlineAdvertising(data)                                          shouldBe Nil
           mayHaveMoreEntitiesOf(kind = "onlineAdvertising", data.getValue) shouldBe None
         }
@@ -113,15 +113,15 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
           onlineAdvertising = fiveAdvertising
         ) {
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value   shouldBe routes.AdvertisingListController.show.url
+          redirectLocation(result).get   shouldBe routes.AdvertisingListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          hasOnlineAdvertising(data).value shouldBe true
-          onlineAdvertising(data)            should have size 5
+          hasOnlineAdvertising(data).get shouldBe true
+          onlineAdvertising(data)          should have size 5
         }
       }
     }
@@ -131,7 +131,7 @@ class HasOnlineAdvertisingSpec extends LettingHistoryControllerSpec:
         isYearlyAvailable = Some(false)
       ) {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing
           )
         )

@@ -26,7 +26,7 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDeci
 
   private val messageKeyPrefix = "capitalSumPaidDetails6048"
 
-  private val sessionRequest = SessionRequest(baseFilled6048Session, fakeRequest)
+  private val sessionRequest = SessionRequest(baseFilled6048Session, getRequest)
 
   override val form: Form[BigDecimal] = PayACapitalSumAmountDetailsForm.payACapitalSumAmountDetailsForm
 
@@ -38,21 +38,16 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDeci
   private def createViewUsingForm = (form: Form[BigDecimal]) =>
     payACapitalSumAmountDetailsView(form, backLink, Summary("99996048001"))(using sessionRequest, messages)
 
-  "capital sum or premium view" should {
+  "Capital sum or premium view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to pay a capital sum Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.PayACapitalSumController.show().url
-    }
+    behave like pageWithBackLink(createView, "Pay A Capital Sum", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
@@ -64,6 +59,7 @@ class PayACapitalSumAmountDetailsViewSpec extends QuestionViewBehaviours[BigDeci
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

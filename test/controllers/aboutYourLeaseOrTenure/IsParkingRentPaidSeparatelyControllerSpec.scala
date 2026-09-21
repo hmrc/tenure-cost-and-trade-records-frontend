@@ -21,17 +21,16 @@ import form.aboutYourLeaseOrTenure.IsParkingRentPaidSeparatelyForm.isParkingRent
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
 /**
   * @author Yuriy Tumakha
   */
-class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec:
+class IsParkingRentPaidSeparatelyControllerSpec extends ControllerSpec:
 
   import TestData.*
-  import utils.FormBindingTestAssertions.*
 
   val mockAudit: Audit = mock[Audit]
 
@@ -43,13 +42,13 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200 and HTML with is parking rent paid separately is present in session" in {
-      val result = isParkingRentPaidSeparatelyController().show(fakeRequest)
+      val result = isParkingRentPaidSeparatelyController().show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
@@ -60,7 +59,7 @@ class IsParkingRentPaidSeparatelyControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML is parking rent paid separately is none in session" in {
       val controller = isParkingRentPaidSeparatelyController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)

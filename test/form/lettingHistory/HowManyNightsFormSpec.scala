@@ -17,36 +17,39 @@
 package form.lettingHistory
 
 import form.lettingHistory.HowManyNightsForm.theForm
+import test.FormSpec
 
 class HowManyNightsFormSpec extends FormSpec:
 
-  it should "bind data as expected" in:
-    val data  = Map(
-      "nights" -> "12"
-    )
-    val bound = theForm.bind(data)
-    bound.hasErrors mustBe false
-    bound.data mustBe data
-
-  it should "unbind data as expected" in {
-    val filled = theForm.fill(34)
-    filled.hasErrors mustBe false
-    filled.data mustBe Map(
-      "nights" -> "34"
-    )
-  }
-
-  it should "detect errors" in {
-    // When the form gets submitted before being filled
-    val bound = theForm.bind(
-      Map(
-        "nights" -> "" // missing data
+  "HowManyNightsForm" should {
+    "bind data as expected" in {
+      val data  = Map(
+        "nights" -> "12"
       )
-    )
-    bound.hasErrors mustBe true
-    bound.errors must have size 1
-    bound
-      .error("nights")
-      .value
-      .message mustBe "error.number"
+      val bound = theForm.bind(data)
+
+      bound.hasErrors shouldBe false
+      bound.data      shouldBe data
+    }
+
+    "unbind data as expected" in {
+      val filled = theForm.fill(34)
+
+      filled.hasErrors shouldBe false
+      filled.data      shouldBe Map(
+        "nights" -> "34"
+      )
+    }
+
+    "detect errors" in {
+      val bound = theForm.bind(
+        Map(
+          "nights" -> ""
+        )
+      )
+
+      bound.hasErrors                   shouldBe true
+      bound.errors                        should have size 1
+      bound.error("nights").get.message shouldBe "error.number"
+    }
   }

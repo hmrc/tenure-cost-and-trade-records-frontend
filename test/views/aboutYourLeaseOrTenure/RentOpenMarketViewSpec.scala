@@ -22,7 +22,7 @@ import models.pages.Summary
 import models.submissions.common.AnswersYesNo
 import models.submissions.common.AnswersYesNo.*
 import play.api.data.Form
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.AnyContent
 import views.behaviours.QuestionViewBehaviours
 
 class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
@@ -31,43 +31,31 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
 
   override val form: Form[AnswersYesNo] = RentOpenMarketValueForm.rentOpenMarketValuesForm
 
-  private val sessionRequest6020full: SessionRequest[AnyContentAsEmpty.type] =
-    SessionRequest(prefilledFull6020Session, fakeRequest)
+  private val sessionRequest6020full: SessionRequest[AnyContent] = SessionRequest(prefilledFull6020Session, getRequest)
 
   private val backLink = controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
 
   private def createView = () =>
-    rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   private def createView6020 = () =>
     rentOpenMarketValueView(form, backLink, Summary("99996020001"))(using sessionRequest6020full, messages)
 
   private def createViewUsingForm = (form: Form[AnswersYesNo]) =>
-    rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using fakeRequest, messages)
+    rentOpenMarketValueView(form, backLink, Summary("99996010001"))(using getRequest, messages)
 
   "Rent open market view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
-    }
+    behave like pageWithBackLink(createView, "Rent Include Fixture And Fittings", backLink)
 
-    "has a link marked with back.link.label leading to the franchise or letting tied to property Page 6020" in {
-      val doc          = asDocument(createView6020())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeFixtureAndFittingsController.show().url
-    }
+    behave like pageWithBackLink(createView6020, "Rent Include Fixture And Fittings 6020", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourLeaseOrTenure")}"""
     }
 
@@ -98,6 +86,7 @@ class RentOpenMarketViewSpec extends QuestionViewBehaviours[AnswersYesNo]:
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

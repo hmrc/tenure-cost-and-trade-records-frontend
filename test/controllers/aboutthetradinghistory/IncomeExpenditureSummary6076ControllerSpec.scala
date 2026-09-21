@@ -18,13 +18,11 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec:
+class IncomeExpenditureSummary6076ControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,17 +35,17 @@ class IncomeExpenditureSummary6076ControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       incomeExpenditureSummary6076View,
       preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(fakeRequest)
+      val result = controller().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -29,10 +29,10 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
   override val form: Form[ReferenceNumber] = ReferenceNumberForm.theForm
 
   private def createView = () =>
-    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using fakeRequest, messages)
+    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[ReferenceNumber]) =>
-    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using fakeRequest, messages)
+    referenceNumberView(form, call = routes.DownloadPDFReferenceNumberController.submit())(using getRequest, messages)
 
   "Download PDF reference number view" should {
 
@@ -43,13 +43,7 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
       "referenceNumber"
     )
 
-    "has a link marked with back.link.label leading to the Login Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.Application.index.url
-    }
+    behave like pageWithBackLink(createView, "Login", controllers.routes.Application.index.url)
 
     "paragraph text" in {
       val doc = asDocument(createView())
@@ -63,7 +57,9 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
 
     "contain link for I do not have a reference number" in {
       val doc = asDocument(createView())
+
       assert(doc.select("a[class=govuk-link]").toString.contains(messages("label.requestReference")))
+
       assert(
         doc.toString.contains(
           controllers.requestReferenceNumber.routes.RequestReferenceNumberPropertyDetailsController
@@ -76,6 +72,7 @@ class DownloadPDFReferenceNumberViewSpec extends QuestionViewBehaviours[Referenc
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

@@ -18,12 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec:
+class TenantsAdditionsDisregardedDetailsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,13 +35,13 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       tenantsAdditionsDisregardedDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Tenants Additional Disregard Details in the session" in {
-      val result = tenantsAdditionsDisregardedDetailsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = tenantsAdditionsDisregardedDetailsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -52,8 +51,8 @@ class TenantsAdditionsDisregardedDetailsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML Tenants Additional Disregard Details with none in the session" in {
       val controller = tenantsAdditionsDisregardedDetailsController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(

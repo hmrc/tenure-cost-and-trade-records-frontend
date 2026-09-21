@@ -33,26 +33,21 @@ class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlantType
   override val form: Form[RenewablesPlantType] = RenewablesPlantForm.theForm
 
   private def createView: () => Html =
-    () => renewablesPlantView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
+    () => renewablesPlantView(form, backLink, Summary("99996076001"), false)(using getRequest, messages)
 
   private def createViewUsingForm: Form[RenewablesPlantType] => Html =
-    form => renewablesPlantView(form, backLink, Summary("99996076001"), false)(using fakeRequest, messages)
+    form => renewablesPlantView(form, backLink, Summary("99996076001"), false)(using getRequest, messages)
 
   "Renewables plant view" should {
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe backLink
-    }
+    behave like pageWithBackLink(createView, "Contact details question", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutTheProperty")}"""
     }
 
@@ -83,12 +78,14 @@ class RenewablesPlantViewSpec extends QuestionViewBehaviours[RenewablesPlantType
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
 
     "contain save as draft button with the value Save as draft" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("save-button").text()
-      assert(loginButton == messages("button.save.label"))
+
+      loginButton shouldBe messages("button.save.label")
     }
   }

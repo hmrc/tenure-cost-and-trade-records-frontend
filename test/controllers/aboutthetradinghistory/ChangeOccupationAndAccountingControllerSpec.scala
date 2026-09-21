@@ -20,12 +20,12 @@ import connectors.Audit
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class ChangeOccupationAndAccountingControllerSpec extends TestBaseSpec:
+class ChangeOccupationAndAccountingControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -35,18 +35,18 @@ class ChangeOccupationAndAccountingControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045)),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200" in {
-      val result = changeOccupationAndAccountingController.show(fakeRequest)
+      val result = changeOccupationAndAccountingController.show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = changeOccupationAndAccountingController.show(fakeRequest)
+      val result = changeOccupationAndAccountingController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

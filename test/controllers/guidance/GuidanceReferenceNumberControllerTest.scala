@@ -21,22 +21,23 @@ import org.jsoup.nodes.Document
 import org.mockito.ArgumentCaptor
 import play.api.mvc.Result
 import play.api.test.Helpers.*
+import test.JsoupHelpers
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.ControllerSpec
 import views.html.referenceNumber as ReferenceNumberView
 
 import scala.concurrent.Future
 import scala.concurrent.Future.{failed, successful}
 
-class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpers:
+class GuidanceReferenceNumberControllerTest extends ControllerSpec with JsoupHelpers:
 
   "the GuidanceReferenceNumber controller" when {
     "the user has not provided any reference number yet" should {
       "be handling GET and reply 200 with an empty HTML from" in new ControllerFixture {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading                shouldBe "referenceNumber.heading"
         page.backLink               shouldBe controllers.routes.Application.index.url
@@ -47,14 +48,14 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
     "the user has already provided their reference number" should {
       "be handling GET and reply 200 with prefilled HTML form" in new ControllerFixture {
         val result: Future[Result] = controller.show(
-          fakeGetRequest
+          getRequest
             .withSession(
               "referenceNumber" -> "99996076012"
             )
         )
         status(result) shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading                        shouldBe "referenceNumber.heading"
         page.backLink                       shouldBe controllers.routes.Application.index.url
@@ -65,7 +66,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
     "regardless of the user providing answers" should {
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest
+          postRequest
             .withFormUrlEncodedBody(
               "referenceNumber" -> "" // missing
             )
@@ -77,13 +78,13 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
 
       "be handling POST referenceNumber by replying 303 redirect to the 'GuidancePage' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest
+          postRequest
             .withFormUrlEncodedBody(
               "referenceNumber" -> "99996076012"
             )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe controllers.guidance.routes.GuidancePageController.show("FOR6012").url
+        redirectLocation(result).get shouldBe controllers.guidance.routes.GuidancePageController.show("FOR6012").url
         val arg0: ArgumentCaptor[String] = captor[String]
         verify(connector, once).retrieveFORType(arg0, any[HeaderCarrier])
         arg0.getValue shouldBe "99996076012"
@@ -93,7 +94,7 @@ class GuidanceReferenceNumberControllerTest extends TestBaseSpec with JsoupHelpe
         when(connector.retrieveFORType(anyString, any[HeaderCarrier]))
           .thenReturn(failed(Exception("Failed to retrieve FOR type")))
         val result: Future[Result] = controller.submit(
-          fakePostRequest
+          postRequest
             .withFormUrlEncodedBody(
               "referenceNumber" -> "b@d nUm83r" // invalid !!!
             )

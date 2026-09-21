@@ -19,12 +19,11 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import org.jsoup.Jsoup
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class PayACapitalSumDetailsControllerSpec extends TestBaseSpec:
+class PayACapitalSumDetailsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,13 +36,13 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       payACapitalSumDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with capital sum or premium with yes in the session" in {
-      val result = payACapitalSumDetailsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = payACapitalSumDetailsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -54,8 +53,8 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec:
     "return 200 and HTML with capital sum or premium with no in the session" in {
       val controller =
         payACapitalSumDetailsController(aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -65,8 +64,8 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML capital sum or premium with none in the session" in {
       val controller = payACapitalSumDetailsController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -83,11 +82,11 @@ class PayACapitalSumDetailsControllerSpec extends TestBaseSpec:
 
     "display the page with the fields prefilled in" when {
       "exists within the session" in {
-        val result = payACapitalSumDetailsController().show()(fakeRequest)
+        val result = payACapitalSumDetailsController().show()(getRequest)
         val html   = Jsoup.parse(contentAsString(result))
-        Option(html.getElementById("capitalSumPaidDetailsDateInput.day").`val`()).value   shouldBe "1"
-        Option(html.getElementById("capitalSumPaidDetailsDateInput.month").`val`()).value shouldBe "6"
-        Option(html.getElementById("capitalSumPaidDetailsDateInput.year").`val`()).value  shouldBe "2022"
+        Option(html.getElementById("capitalSumPaidDetailsDateInput.day").`val`()).get   shouldBe "1"
+        Option(html.getElementById("capitalSumPaidDetailsDateInput.month").`val`()).get shouldBe "6"
+        Option(html.getElementById("capitalSumPaidDetailsDateInput.year").`val`()).get  shouldBe "2022"
       }
     }
   }

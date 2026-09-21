@@ -25,8 +25,8 @@ import play.api.libs.json.JsObject
 import play.api.mvc.{Request, Result}
 import play.api.test.Helpers.*
 import stub.StubSessionRepo
+import test.ControllerSpec
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import utils.TestBaseSpec
 import views.html.confirmation
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -34,7 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   * @author Yuriy Tumakha
   */
-class FormSubmissionControllerSpec extends TestBaseSpec:
+class FormSubmissionControllerSpec extends ControllerSpec:
 
   private val sessionRepo         = StubSessionRepo()
   private val submissionConnector = mock[SubmissionConnector]
@@ -56,7 +56,7 @@ class FormSubmissionControllerSpec extends TestBaseSpec:
       sessionRepo.saveOrUpdate(prefilledBaseSession)
       when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
         .thenReturn(Future.successful(HttpResponse(CREATED)))
-      val result = formSubmissionController.submit(fakeRequest)
+      val result = formSubmissionController.submit(getRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(controllers.routes.FormSubmissionController.confirmation().url)
     }
@@ -64,7 +64,7 @@ class FormSubmissionControllerSpec extends TestBaseSpec:
     "show submission confirmation" in {
       sessionRepo.saveOrUpdate(baseFilled6011Session)
 
-      val result = formSubmissionController.confirmation(fakeRequest)
+      val result = formSubmissionController.confirmation(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
 
@@ -81,7 +81,7 @@ class FormSubmissionControllerSpec extends TestBaseSpec:
       when(errorHandler.internalServerErrorTemplate(using any[Request[?]]))
         .thenReturn(Future.successful(play.twirl.api.HtmlFormat.empty))
 
-      val result: Future[Result] = formSubmissionController.submit(fakeRequest)
+      val result: Future[Result] = formSubmissionController.submit(getRequest)
 
       status(result) shouldBe INTERNAL_SERVER_ERROR
       verify(audit, times(2)).sendExplicitAudit(anyString, any[JsObject])(

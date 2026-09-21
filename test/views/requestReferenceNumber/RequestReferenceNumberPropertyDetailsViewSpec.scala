@@ -18,6 +18,7 @@ package views.requestReferenceNumber
 
 import form.requestReferenceNumber.RequestReferenceNumberPropertyDetailsForm
 import play.api.data.Form
+import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
 class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviours[String]:
@@ -26,10 +27,10 @@ class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviou
 
   override val form: Form[String] = RequestReferenceNumberPropertyDetailsForm.theForm
 
-  private def createView = () => requestReferenceNumberPropertyDetailsView(form)(using fakeRequest, messages)
+  private def createView = () => requestReferenceNumberPropertyDetailsView(form)(using getRequest, messages)
 
   private def createViewUsingForm = (form: Form[String]) =>
-    requestReferenceNumberPropertyDetailsView(form)(using fakeRequest, messages)
+    requestReferenceNumberPropertyDetailsView(form)(using getRequest, messages)
 
   "No reference number view" should {
 
@@ -40,13 +41,7 @@ class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviou
       "businessTradingName"
     )
 
-    "has a link marked with back.link.label leading to the Login Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.LoginController.show.url
-    }
+    behave like pageWithBackLink(createView, "Login", controllers.routes.LoginController.show.url)
 
     "contain subheading" in {
       val doc = asDocument(createView())
@@ -86,6 +81,7 @@ class RequestReferenceNumberPropertyDetailsViewSpec extends QuestionViewBehaviou
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

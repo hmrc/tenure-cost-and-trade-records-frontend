@@ -16,34 +16,40 @@
 
 package navigation.identifiers
 
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AccommodationIdentifiersSpec extends TestBaseSpec:
+class AccommodationIdentifiersSpec extends BaseSpec:
 
-  "Letting history identifiers" when {
+  "Accommodation unit page identifiers" should {
+    "be correct for the accommodation unit page" in {
+      AccommodationUnitPageId.toString shouldBe "accommodationUnitPage"
+    }
 
-    "Identifier for accommodation unit page" in
-      assert(AccommodationUnitPageId.toString.equals("accommodationUnitPage"))
+    "be correct for the available rooms page" in {
+      AvailableRoomsPageId.toString shouldBe "availableRoomsPage"
+    }
 
-    "Identifier for available rooms page" in
-      assert(AvailableRoomsPageId.toString.equals("availableRoomsPage"))
+    "be correct for the accommodation letting history page" in {
+      AccommodationLettingHistoryPageId.toString shouldBe "accommodationLettingHistoryPage"
+    }
 
-    "Identifier for accommodation letting history page" in
-      assert(AccommodationLettingHistoryPageId.toString.equals("accommodationLettingHistoryPage"))
+    "be correct for the high season tariff page" in {
+      HighSeasonTariffPageId.toString shouldBe "highSeasonTariffPage"
+    }
 
-    "Identifier for high season tariff page" in
-      assert(HighSeasonTariffPageId.toString.equals("highSeasonTariffPage"))
+    "be correct for the included tariff items page" in {
+      IncludedTariffItemsPageId.toString shouldBe "includedTariffItemsPage"
+    }
 
-    "Identifier for included tariff items page" in
-      assert(IncludedTariffItemsPageId.toString.equals("includedTariffItemsPage"))
+    "be correct for the accommodation unit list page" in {
+      AccommodationUnitListPageId.toString shouldBe "accommodationUnitListPage"
+    }
 
-    "Identifier for accommodation unit list page" in
-      assert(AccommodationUnitListPageId.toString.equals("accommodationUnitListPage"))
+    "be correct for the added maximum accommodation units page" in {
+      AddedMaximumAccommodationUnitsPageId.toString shouldBe "addedMaximumAccommodationUnitsPage"
+    }
 
-    "Identifier for added maximum accommodation units page" in
-      assert(AddedMaximumAccommodationUnitsPageId.toString.equals("addedMaximumAccommodationUnitsPage"))
-
-    "Identifier for accommodation details CYA page" in
-      assert(AccommodationDetailsCYAPageId.toString.equals("accommodationDetailsCYAPage"))
-
+    "be correct for the accommodation details CYA page" in {
+      AccommodationDetailsCYAPageId.toString shouldBe "accommodationDetailsCYAPage"
+    }
   }

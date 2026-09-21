@@ -18,12 +18,11 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import controllers.aboutthetradinghistory
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class OperationalExpensesControllerSpec extends TestBaseSpec:
+class OperationalExpensesControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,17 +36,17 @@ class OperationalExpensesControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = operationalExpensesController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = operationalExpensesController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = operationalExpensesController.show(fakeRequest)
+      val result = operationalExpensesController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
       val content = contentAsString(result)
@@ -55,7 +54,7 @@ class OperationalExpensesControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = operationalExpensesController.show(fakeRequestFromCYA)
+      val result  = operationalExpensesController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("""href="/send-trade-and-cost-information/check-your-answers-about-the-trading-history"""")
       content should not include "/premises-costs"
@@ -89,10 +88,10 @@ class OperationalExpensesControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = operationalExpensesController.submit(
-        fakePostRequest.withFormUrlEncodedBody(operationalExpensesFormData*)
+        postRequest.withFormUrlEncodedBody(operationalExpensesFormData*)
       )
 
-      status(res)           shouldBe Status.SEE_OTHER
+      status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(aboutthetradinghistory.routes.HeadOfficeExpensesController.show().url)
     }
 

@@ -29,7 +29,7 @@ class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDur
 
   private val backLink = controllers.routes.TaskListController.show.url
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, fakeRequest)
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6010YesSession, getRequest)
 
   override val form: Form[MonthsYearDuration] = OccupationalInformationForm.occupationalInformationForm(using messages)
 
@@ -43,24 +43,20 @@ class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDur
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.routes.TaskListController.show.url
-    }
+    behave like pageWithBackLink(createView, "Task list", backLink)
 
     "Section heading is visible" in {
       val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "contain date format hint for firstOccupy-hint" in {
       val doc             = asDocument(createViewUsingForm(form))
       val firstOccupyHint = doc.getElementById("firstOccupy-hint").text()
-      assert(firstOccupyHint == messages("hint.month.year.example"))
+
+      firstOccupyHint shouldBe messages("hint.month.year.example")
     }
 
     "contain date field for the value firstOccupy.month" in {
@@ -78,6 +74,7 @@ class WhenDidYouFirstOccupyViewSpec extends QuestionViewBehaviours[MonthsYearDur
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

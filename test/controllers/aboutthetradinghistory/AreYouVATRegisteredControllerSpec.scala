@@ -20,12 +20,12 @@ import connectors.Audit
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AreYouVATRegisteredControllerSpec extends TestBaseSpec:
+class AreYouVATRegisteredControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -35,13 +35,13 @@ class AreYouVATRegisteredControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6048)),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200" in {
-      val result = areYouVATRegisteredController.show(fakeRequest)
+      val result = areYouVATRegisteredController.show(getRequest)
       status(result) shouldBe OK
     }
   }

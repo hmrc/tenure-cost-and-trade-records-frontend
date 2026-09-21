@@ -18,12 +18,11 @@ package controllers.additionalinformation
 
 import connectors.Audit
 import models.submissions.additionalinformation.AdditionalInformation
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec:
+class FurtherInformationOrRemarksControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,7 +35,7 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec:
       additionalInformationNavigator,
       furtherInformationOrRemarksView,
       preEnrichedActionRefiner(additionalInformation = additionalInformation),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def furtherInformationOrRemarksControllerEmpty(
@@ -48,17 +47,17 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec:
       additionalInformationNavigator,
       furtherInformationOrRemarksView,
       preEnrichedActionRefiner(additionalInformation = additionalInformation),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = furtherInformationOrRemarksController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = furtherInformationOrRemarksController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = furtherInformationOrRemarksController().show(fakeRequest)
+      val result = furtherInformationOrRemarksController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
@@ -66,8 +65,8 @@ class FurtherInformationOrRemarksControllerSpec extends TestBaseSpec:
 
   "GET / empty additional info" should {
     "return html with 200" in {
-      val result = furtherInformationOrRemarksControllerEmpty().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = furtherInformationOrRemarksControllerEmpty().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }

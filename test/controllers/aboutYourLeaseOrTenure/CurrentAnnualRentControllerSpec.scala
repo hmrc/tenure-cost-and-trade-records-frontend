@@ -20,12 +20,11 @@ import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class CurrentAnnualRentControllerSpec extends TestBaseSpec:
+class CurrentAnnualRentControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,13 +38,13 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       currentAnnualRentView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Current Annual Rent in the session" in {
-      val result = currentAnnualRentController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = currentAnnualRentController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -55,8 +54,8 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Connected To Landlord Yes in the session for 6011" in {
       val controller = currentAnnualRentController(FOR6011)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -66,8 +65,8 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Connected To Landlord No in the session for 6011" in {
       val controller = currentAnnualRentController(FOR6011, Some(prefilledAboutLeaseOrAgreementPartOneNo))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -77,8 +76,8 @@ class CurrentAnnualRentControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Connected To Landlord in the session for 6011" in {
       val controller = currentAnnualRentController(FOR6011, None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

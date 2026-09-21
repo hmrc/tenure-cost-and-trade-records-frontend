@@ -31,6 +31,9 @@ import views.html.feedback.{feedback, feedbackThx}
 import views.html.notconnected.*
 import views.html.requestReferenceNumber.{requestReferenceNumberCheckYourAnswers, requestReferenceNumberConfirmation, requestReferenceNumberContactDetails, requestReferenceNumberPropertyDetails}
 
+/**
+  * @author Yuriy Tumakha
+  */
 trait InjectedViews:
 
   this: Injecting =>
@@ -170,6 +173,7 @@ trait InjectedViews:
   val grossReceiptsExcludingVATView: grossReceiptsExcludingVAT           = inject[grossReceiptsExcludingVAT]
   val grossReceiptsForBaseLoadView: grossReceiptsForBaseLoad             = inject[grossReceiptsForBaseLoad]
   val premisesCostsView: premisesCosts                                   = inject[premisesCosts]
+  val costOfSalesView: costOfSales                                       = inject[costOfSales]
   val otherIncome6076View: otherIncome6076                               = inject[otherIncome6076]
   val costOfSales6076View: costOfSales6076                               = inject[costOfSales6076]
   val costOfSales6076IntermittentView: costOfSales6076Intermittent       = inject[costOfSales6076Intermittent]

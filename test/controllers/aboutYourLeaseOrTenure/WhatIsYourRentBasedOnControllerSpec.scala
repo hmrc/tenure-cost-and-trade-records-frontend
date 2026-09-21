@@ -18,12 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec:
+class WhatIsYourRentBasedOnControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,7 +35,7 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       whatIsYourRentBasedOnView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def whatIsYourRentBasedOnControllerNone: WhatIsYourRentBasedOnController =
@@ -46,13 +45,13 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       whatIsYourRentBasedOnView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with What Is Your Rent Based On in the session" in {
-      val result = whatIsYourRentBasedOnController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = whatIsYourRentBasedOnController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -62,8 +61,8 @@ class WhatIsYourRentBasedOnControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no What Is Your Rent Based On in the session" in {
       val controller = whatIsYourRentBasedOnController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(

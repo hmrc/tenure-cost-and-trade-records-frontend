@@ -19,13 +19,11 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.BenefitsGivenForm.benefitsGivenForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class BenefitsGivenControllerSpec extends TestBaseSpec:
+class BenefitsGivenControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -40,13 +38,13 @@ class BenefitsGivenControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       benefitsGivenView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "BenefitsGivenController GET /" should {
     "return 200 and HTML with Benefits Given in the session" in {
-      val result = benefitsGivenController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = benefitsGivenController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -56,8 +54,8 @@ class BenefitsGivenControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Benefits Given in the session" in {
       val controller = benefitsGivenController(None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

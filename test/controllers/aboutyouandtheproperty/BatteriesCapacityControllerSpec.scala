@@ -19,16 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.BatteriesCapacityForm.batteriesCapacityForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class BatteriesCapacityControllerSpec extends TestBaseSpec:
+class BatteriesCapacityControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -43,7 +41,7 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       batteriesCapacityView,
       preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def batteriesCapacityControllerNone(): BatteriesCapacityController =
@@ -53,24 +51,24 @@ class BatteriesCapacityControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       batteriesCapacityView,
       preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 about you in the session" in {
-      val result = batteriesCapacityController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = batteriesCapacityController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = batteriesCapacityController().show(fakeRequest)
+      val result = batteriesCapacityController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 plant and technology in the session" in {
-      val result = batteriesCapacityControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = batteriesCapacityControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

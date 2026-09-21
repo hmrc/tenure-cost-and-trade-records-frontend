@@ -19,15 +19,14 @@ package controllers.aboutfranchisesorlettings
 import form.aboutfranchisesorlettings.CheckYourAnswersAboutFranchiseOrLettingsForm.theForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBaseSpec:
+class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -43,7 +42,7 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
         forType = FOR6016,
         aboutFranchisesOrLettings = aboutFranchisesOrLettings
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def checkYourAnswersAboutFranchiseOrLettingsControllerNo(
@@ -58,28 +57,28 @@ class CheckYourAnswersAboutFranchiseOrLettings6016ControllerSpec extends TestBas
         forType = FOR6016,
         aboutFranchisesOrLettings = aboutFranchisesOrLettings
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersAboutFranchiseOrLettingsController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsController().show(fakeRequest)
+      val result = checkYourAnswersAboutFranchiseOrLettingsController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 No" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML No" in {
-      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(fakeRequest)
+      val result = checkYourAnswersAboutFranchiseOrLettingsControllerNo().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

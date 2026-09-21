@@ -16,16 +16,16 @@
 
 package navigation.identifiers
 
-import utils.TestBaseSpec
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AdditionalInformationIdentifiersSpec extends TestBaseSpec:
+class AdditionalInformationIdentifiersSpec extends BaseSpec:
 
-  "Additional information identifiers" when {
+  "Additional information page identifiers" should {
+    "be correct for the further information page" in {
+      FurtherInformationId.toString shouldBe "furtherInformationPage"
+    }
 
-    "Identifier for further information page" in
-      assert(FurtherInformationId.toString.equals("furtherInformationPage"))
-
-    "Identifier for CYA page" in
-      assert(CheckYourAnswersAdditionalInformationId.toString.equals("checkYourAnswersAdditionalInformationPage"))
-
+    "be correct for the additional information CYA page" in {
+      CheckYourAnswersAdditionalInformationId.toString shouldBe "checkYourAnswersAdditionalInformationPage"
+    }
   }

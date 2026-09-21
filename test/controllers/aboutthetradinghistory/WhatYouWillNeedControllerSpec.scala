@@ -19,11 +19,10 @@ package controllers.aboutthetradinghistory
 import controllers.aboutthetradinghistory
 import models.ForType
 import models.ForType.*
-import play.api.http.Status
-import play.api.test.Helpers.{charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class WhatYouWillNeedControllerSpec extends TestBaseSpec:
+class WhatYouWillNeedControllerSpec extends ControllerSpec:
 
   def whatYouWillNeedController(forType: ForType = FOR6010): WhatYouWillNeedController =
     WhatYouWillNeedController(
@@ -34,89 +33,89 @@ class WhatYouWillNeedControllerSpec extends TestBaseSpec:
         forType = forType,
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = whatYouWillNeedController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = whatYouWillNeedController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = whatYouWillNeedController().show(fakeRequest)
+      val result = whatYouWillNeedController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return OK for FOR6010" in {
-      val result = whatYouWillNeedController(FOR6010).show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = whatYouWillNeedController(FOR6010).show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML FOR6010" in {
-      val result = whatYouWillNeedController(FOR6010).show(fakeRequest)
+      val result = whatYouWillNeedController(FOR6010).show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return OK for FOR6011" in {
-      val result = whatYouWillNeedController(FOR6011).show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = whatYouWillNeedController(FOR6011).show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML FOR6011" in {
-      val result = whatYouWillNeedController(FOR6011).show(fakeRequest)
+      val result = whatYouWillNeedController(FOR6011).show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return OK for FOR6045" in {
-      val result = whatYouWillNeedController(FOR6045).show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = whatYouWillNeedController(FOR6045).show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML FOR6045" in {
-      val result = whatYouWillNeedController(FOR6045).show(fakeRequest)
+      val result = whatYouWillNeedController(FOR6045).show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return OK for FOR6046" in {
-      val result = whatYouWillNeedController(FOR6046).show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = whatYouWillNeedController(FOR6046).show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML FOR6046" in {
-      val result = whatYouWillNeedController(FOR6046).show(fakeRequest)
+      val result = whatYouWillNeedController(FOR6046).show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return OK for FOR6048" in {
-      val result = whatYouWillNeedController(FOR6048).show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = whatYouWillNeedController(FOR6048).show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML FOR6048" in {
-      val result = whatYouWillNeedController(FOR6048).show(fakeRequest)
+      val result = whatYouWillNeedController(FOR6048).show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return OK for FOR6076" in {
-      val result = whatYouWillNeedController(FOR6076).show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = whatYouWillNeedController(FOR6076).show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
     }
 
     "return HTML FOR6076" in {
-      val result = whatYouWillNeedController(FOR6076).show(fakeRequest)
+      val result = whatYouWillNeedController(FOR6076).show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -124,8 +123,8 @@ class WhatYouWillNeedControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "redirect if a form is submitted" in {
-      val res = whatYouWillNeedController().submit(fakePostRequest.withFormUrlEncodedBody("whatYouWillNeed" -> "confirmed"))
-      status(res) shouldBe Status.SEE_OTHER
+      val res = whatYouWillNeedController().submit(postRequest.withFormUrlEncodedBody("whatYouWillNeed" -> "confirmed"))
+      status(res) shouldBe SEE_OTHER
 
       redirectLocation(res) shouldBe Some(aboutthetradinghistory.routes.WhenDidYouFirstOccupyController.show().url)
     }

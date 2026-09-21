@@ -16,15 +16,14 @@
 
 package models.submissions.aboutthetradinghistory
 
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json.Json
 import test.TestObjects
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AboutTheTradingHistorySpec extends AnyWordSpec with Matchers with TestObjects:
+class AboutTheTradingHistorySpec extends BaseSpec with TestObjects:
 
   "AboutTheTradingHistory" should {
     "handle turnover models" in {

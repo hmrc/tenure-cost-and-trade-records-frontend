@@ -21,16 +21,14 @@ import form.Errors
 import form.aboutyouandtheproperty.RenewablesPlantForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
 import models.submissions.common.AnswersYesNo.*
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class RenewablesPlanControllerSpec extends TestBaseSpec:
+class RenewablesPlanControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -45,7 +43,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       renewablesPlantView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def renewablesPlantControllerNone(
@@ -57,20 +55,20 @@ class RenewablesPlanControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       renewablesPlantView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 when renewables plant in the session" in {
-      val result = renewablesPlantController().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = renewablesPlantController().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 when  no renewables plant in the session" in {
-      val result = renewablesPlantControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = renewablesPlantControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -96,7 +94,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec:
     "return correct backLink when altDetailsQuestion is AnswerYes" in {
       val aboutYouAndThePropertyWithAltDetails =
         prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(AnswerYes))
-      val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
+      val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(getRequest)
       val html                                 = contentAsString(result)
 
       html should include(controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url)
@@ -105,7 +103,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec:
     "return correct backLink when altDetailsQuestion is AnswerNo" in {
       val aboutYouAndThePropertyWithAltDetails =
         prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = Some(AnswerNo))
-      val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
+      val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(getRequest)
       val html                                 = contentAsString(result)
 
       html should include(controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url)
@@ -114,7 +112,7 @@ class RenewablesPlanControllerSpec extends TestBaseSpec:
     "return correct backLink when altDetailsQuestion is None" in {
       val aboutYouAndThePropertyWithAltDetails =
         prefilledAboutYouAndThePropertyYes.copy(altDetailsQuestion = None)
-      val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(fakeRequest)
+      val result                               = renewablesPlantController(Some(aboutYouAndThePropertyWithAltDetails)).show(getRequest)
       val html                                 = contentAsString(result)
 
       html should include(controllers.aboutyouandtheproperty.routes.ContactDetailsQuestionController.show().url)

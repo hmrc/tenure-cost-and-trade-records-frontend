@@ -18,12 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec:
+class IncentivesPaymentsConditionsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,13 +35,13 @@ class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       incentivesPaymentsConditionsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Incentives Payments Conditions in the session" in {
-      val result = incentivesPaymentsConditionsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = incentivesPaymentsConditionsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -52,8 +51,8 @@ class IncentivesPaymentsConditionsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with no Incentives Payments Conditions in the session" in {
       val controller = incentivesPaymentsConditionsController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(

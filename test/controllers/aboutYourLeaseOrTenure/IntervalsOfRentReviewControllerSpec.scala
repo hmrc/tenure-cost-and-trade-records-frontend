@@ -20,13 +20,12 @@ import connectors.Audit
 import form.aboutYourLeaseOrTenure.IntervalsOfRentReviewForm.intervalsOfRentReviewForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import org.jsoup.Jsoup
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
 
-class IntervalsOfRentReviewControllerSpec extends TestBaseSpec:
+import test.ControllerSpec
+
+class IntervalsOfRentReviewControllerSpec extends ControllerSpec:
 
   private val test2001character = "x" * 2001
 
@@ -41,13 +40,13 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       intervalsOfRentReviewView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with vacant property start date present in session" in {
-      val result = intervalsOfRentReviewController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = intervalsOfRentReviewController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -59,8 +58,8 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec:
       val controller = intervalsOfRentReviewController(aboutLeaseOrAgreementPartTwo =
         Some(prefilledAboutLeaseOrAgreementPartTwoNoDate)
       )
-      val result     = controller.show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -70,8 +69,8 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML vacant property start date is none in session" in {
       val controller = intervalsOfRentReviewController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -80,11 +79,11 @@ class IntervalsOfRentReviewControllerSpec extends TestBaseSpec:
     }
 
     "display the page with the fields prefilled when exists within the session" in {
-      val result = intervalsOfRentReviewController().show()(fakeRequest)
+      val result = intervalsOfRentReviewController().show()(getRequest)
       val html   = Jsoup.parse(contentAsString(result))
-      Option(html.getElementById("nextReview.day").`val`()).value   shouldBe "1"
-      Option(html.getElementById("nextReview.month").`val`()).value shouldBe "6"
-      Option(html.getElementById("nextReview.year").`val`()).value  shouldBe "2022"
+      Option(html.getElementById("nextReview.day").`val`()).get   shouldBe "1"
+      Option(html.getElementById("nextReview.month").`val`()).get shouldBe "6"
+      Option(html.getElementById("nextReview.year").`val`()).get  shouldBe "2022"
     }
   }
 

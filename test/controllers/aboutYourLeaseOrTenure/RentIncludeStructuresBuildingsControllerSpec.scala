@@ -19,15 +19,15 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.RentIncludeStructuresBuildingsForm.rentIncludeStructuresBuildingsForm
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartThree}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.{TestBaseSpec, toOpt}
 
+import test.ControllerSpec
+
+import scala.language.implicitConversions
 import scala.language.reflectiveCalls
 
-class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
+class RentIncludeStructuresBuildingsControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -46,13 +46,13 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
         aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with rent Include Structures Buildings in the session" in {
-      val result = rentIncludeStructuresBuildingsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentIncludeStructuresBuildingsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -62,8 +62,8 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no rent Include Structures Buildings in the session" in {
       val controller = rentIncludeStructuresBuildingsController(aboutLeaseOrAgreementPartFour = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -73,8 +73,8 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no rent Include Structures Buildings in the session with no rentDevelopedLand" in {
       val controller = rentIncludeStructuresBuildingsController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -84,8 +84,8 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no rent Include Structures Buildings in the session with no rentDevelopedLand123" in {
       val controller = rentIncludeStructuresBuildingsController(prefilledAboutLeaseOrAgreementPartThreeNoDevelopedLand)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -96,7 +96,6 @@ class RentIncludeStructuresBuildingsControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-
       val res = rentIncludeStructuresBuildingsController().submit(
         FakeRequest().withFormUrlEncodedBody(Seq.empty*)
       )

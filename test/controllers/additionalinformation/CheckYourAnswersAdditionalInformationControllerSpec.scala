@@ -18,15 +18,14 @@ package controllers.additionalinformation
 
 import form.additionalinformation.CheckYourAnswersAdditionalInformationForm.checkYourAnswersAdditionalInformationForm
 import models.submissions.additionalinformation.AdditionalInformation
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec:
+class CheckYourAnswersAdditionalInformationControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -38,7 +37,7 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec:
       additionalInformationNavigator,
       checkYourAnswersAdditionalInformationView,
       preEnrichedActionRefiner(additionalInformation = additionalInformation),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def checkYourAdditionalInformationControllerEmpty(
@@ -49,17 +48,17 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec:
       additionalInformationNavigator,
       checkYourAnswersAdditionalInformationView,
       preEnrichedActionRefiner(additionalInformation = additionalInformation),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAdditionalInformationController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAdditionalInformationController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = checkYourAdditionalInformationController().show(fakeRequest)
+      val result = checkYourAdditionalInformationController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
@@ -67,8 +66,8 @@ class CheckYourAnswersAdditionalInformationControllerSpec extends TestBaseSpec:
 
   "GET / empty additional info" should {
     "return html with 200" in {
-      val result = checkYourAdditionalInformationControllerEmpty().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = checkYourAdditionalInformationControllerEmpty().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }

@@ -20,15 +20,14 @@ import form.Errors
 import form.notconnected.RemoveConnectionForm.removeConnectionForm
 import models.submissions.notconnected.RemoveConnectionDetails
 import play.api.data.FormError
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.mustContainError
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class RemoveConnectionControllerSpec extends TestBaseSpec:
+class RemoveConnectionControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -40,25 +39,25 @@ class RemoveConnectionControllerSpec extends TestBaseSpec:
       removeConnectionNavigator,
       removeConnectionView,
       preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "Remove connection controller" should {
     "return 200" in {
-      val result = removeConnectionController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = removeConnectionController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = removeConnectionController().show(fakeRequest)
+      val result = removeConnectionController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
 
     "return 200 for empty session" in {
       val controller = removeConnectionController(removeConnectionDetails = None)
-      val result     = controller.show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
@@ -84,14 +83,14 @@ class RemoveConnectionControllerSpec extends TestBaseSpec:
 
   "calculateBackLink" should {
     "return back link to NotConnected CYA page when 'from=CYA' query param is present and user is not connected to the property" in {
-      val result = removeConnectionController().show(fakeRequestFromCYA)
+      val result = removeConnectionController().show(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
       )
     }
 
     "return back link to past connection page if 'from' query param is not present" in {
-      val result = removeConnectionController().show(fakeRequest)
+      val result = removeConnectionController().show(getRequest)
       contentAsString(result) should include(controllers.notconnected.routes.PastConnectionController.show().url)
     }
   }

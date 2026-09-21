@@ -18,12 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec:
+class RentPayableVaryOnQuantityOfBeersControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,13 +35,13 @@ class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       rentPayableVaryOnQuantityOfBeersView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML for rent payable vary on quantity of beer" in {
-      val result = rentPayableVaryOnQuantityOfBeersController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentPayableVaryOnQuantityOfBeersController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -52,8 +51,8 @@ class RentPayableVaryOnQuantityOfBeersControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with none for rent payable vary on quantity of beer" in {
       val controller = rentPayableVaryOnQuantityOfBeersController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(

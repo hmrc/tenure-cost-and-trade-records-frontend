@@ -18,14 +18,13 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import navigation.AboutTheTradingHistoryNavigator
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
-import utils.TestBaseSpec
+import test.ControllerSpec
 import views.html.aboutthetradinghistory.whenDidYouFirstOccupy as WhenDidYouFirstOccupyView
 
-class OccupationalAndAccountingInformationControllerSpec extends TestBaseSpec:
+class OccupationalAndAccountingInformationControllerSpec extends ControllerSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
@@ -39,17 +38,17 @@ class OccupationalAndAccountingInformationControllerSpec extends TestBaseSpec:
     mockAboutYouNavigator,
     mockWhenDidYouFirstOccupyView,
     preFilledSession,
-    mockSessionRepo
+    mockSessionRepository
   )
 
   "GET /" should {
     "return 200" in {
-      val result = aboutYourTradingHistoryController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = aboutYourTradingHistoryController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = aboutYourTradingHistoryController.show(fakeRequest)
+      val result = aboutYourTradingHistoryController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

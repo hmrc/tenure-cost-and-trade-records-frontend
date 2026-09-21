@@ -16,7 +16,7 @@
 
 package controllers.connectiontoproperty
 
-import connectors.{Audit, MockAddressLookup}
+import connectors.Audit
 import models.Session
 import models.submissions.common.Address
 import models.submissions.connectiontoproperty.*
@@ -25,19 +25,20 @@ import org.mockito.ArgumentCaptor
 import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
-import utils.{JsoupHelpers, TestBaseSpec}
+import test.{JsoupHelpers, MockAddressLookup}
+import test.ControllerSpec
 
 import scala.concurrent.Future
 
-class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with JsoupHelpers:
+class LettingPartOfPropertyDetailsControllerSpec extends ControllerSpec with JsoupHelpers:
 
   "the LettingPartOfPropertyDetails controller" when {
     "handling GET / requests" should {
       "reply 200 with an empty form" in new ControllerFixture {
-        val result: Future[Result] = controller.show(index = None)(fakeRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(index = None)(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
 
         val page: Document = contentAsJsoup(result)
         page.heading                     shouldBe "tenantDetails.heading"
@@ -57,10 +58,10 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
           )
         )
       ) {
-        val result: Future[Result] = controller.show(index = Some(0))(fakeRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(index = Some(0))(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
 
         val page: Document = contentAsJsoup(result)
         page.heading                     shouldBe "tenantDetails.heading"
@@ -71,19 +72,19 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
 
       "generate back Link" should {
         "to CYA page if query param present" in new ControllerFixture {
-          val result: Future[Result] = controller.show(index = Some(0))(fakeRequestFromCYA)
+          val result: Future[Result] = controller.show(index = Some(0))(getRequestFromCYA)
           val page: Document         = contentAsJsoup(result)
           page.backLink shouldBe routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
         }
 
         "to previous letting page" in new ControllerFixture {
-          val result: Future[Result] = controller.show(index = Some(1))(fakeRequest)
+          val result: Future[Result] = controller.show(index = Some(1))(getRequest)
           val page: Document         = contentAsJsoup(result)
           page.backLink shouldBe routes.AddAnotherLettingPartOfPropertyController.show(0).url
         }
 
         "to Is Rent Received From page if there is only 1 letting" in new ControllerFixture {
-          val result: Future[Result] = controller.show(index = Some(0))(fakeRequest)
+          val result: Future[Result] = controller.show(index = Some(0))(getRequest)
           val page: Document         = contentAsJsoup(result)
           page.backLink shouldBe routes.IsRentReceivedFromLettingController.show().url
         }
@@ -93,7 +94,7 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
     "handling POST /" should {
       "reply 400 and error message if the submitted data is invalid" in new ControllerFixture {
         val result: Future[Result] = controller.submit(index = None)(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "tenantName"           -> "", // missing,
             "descriptionOfLetting" -> "1234567890" * 6 // too long
           )
@@ -107,21 +108,21 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
 
       "reply 303 redirect to the address lookup page when given new details" in new ControllerFixture {
         val result: Future[Result] = controller.submit(index = None)(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "tenantName"           -> "New tenant",
             "descriptionOfLetting" -> "This has never been given before"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/on-ramp"
+        redirectLocation(result).get shouldBe "/on-ramp"
 
         val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         val captured                         = session.getValue
 
-        captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
+        captured.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex shouldBe 0
 
-        val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
+        val details = captured.stillConnectedDetails.get.lettingPartOfPropertyDetails
         details                                          should have size 1
         details(0).tenantDetails.name                  shouldBe "New tenant"
         details(0).tenantDetails.descriptionOfLetting  shouldBe "This has never been given before"
@@ -132,21 +133,21 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         lettingPartOfPropertyDetails = oneLettingPartOfPropertyDetails
       ) {
         val result: Future[Result] = controller.submit(index = Some(0))(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "tenantName"           -> "Mario Rossi",
             "descriptionOfLetting" -> "This is updating the existing one"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/on-ramp"
+        redirectLocation(result).get shouldBe "/on-ramp"
 
         val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
         val captured                         = session.getValue
 
-        captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
+        captured.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex shouldBe 0
 
-        val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
+        val details = captured.stillConnectedDetails.get.lettingPartOfPropertyDetails
         details                                          should have size 1
         details(0).tenantDetails.name                  shouldBe "Mario Rossi"
         details(0).tenantDetails.descriptionOfLetting  shouldBe "This is updating the existing one"
@@ -158,9 +159,9 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
       "reply 303 redirect to the next page" in new ControllerFixture(
         lettingPartOfPropertyDetails = oneLettingPartOfPropertyDetails
       ) {
-        val result: Future[Result] = controller.addressLookupCallback(0, "confirmedAddress")(fakeRequest)
-        status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.LettingPartOfPropertyDetailsRentController.show(0).url
+        val result: Future[Result] = controller.addressLookupCallback(0, "confirmedAddress")(getRequest)
+        status(result)               shouldBe SEE_OTHER
+        redirectLocation(result).get shouldBe routes.LettingPartOfPropertyDetailsRentController.show(0).url
 
         val id: ArgumentCaptor[String] = captor[String]
         verify(addressLookupConnector, once).getConfirmedAddress(id)(using any)
@@ -170,13 +171,13 @@ class LettingPartOfPropertyDetailsControllerSpec extends TestBaseSpec with Jsoup
         verify(repository, once).saveOrUpdate(session)(using any)
         val captured                         = session.getValue
 
-        captured.stillConnectedDetails.value.lettingPartOfPropertyDetailsIndex shouldBe 0
+        captured.stillConnectedDetails.get.lettingPartOfPropertyDetailsIndex shouldBe 0
 
-        val details = captured.stillConnectedDetails.value.lettingPartOfPropertyDetails
-        details                                                should have size 1
-        details(0).tenantDetails.name                        shouldBe "John Doe"
-        details(0).tenantDetails.descriptionOfLetting        shouldBe "Short term rental"
-        details(0).tenantDetails.correspondenceAddress.value shouldBe Address(
+        val details = captured.stillConnectedDetails.get.lettingPartOfPropertyDetails
+        details                                              should have size 1
+        details(0).tenantDetails.name                      shouldBe "John Doe"
+        details(0).tenantDetails.descriptionOfLetting      shouldBe "Short term rental"
+        details(0).tenantDetails.correspondenceAddress.get shouldBe Address(
           buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
           street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
           town = addressLookupConfirmedAddress.address.lines.get.last,

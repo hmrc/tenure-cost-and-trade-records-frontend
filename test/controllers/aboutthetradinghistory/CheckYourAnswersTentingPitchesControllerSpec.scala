@@ -18,15 +18,13 @@ package controllers.aboutthetradinghistory
 
 import models.ForType.*
 import navigation.AboutTheTradingHistoryNavigator
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
-import utils.TestBaseSpec
+import test.ControllerSpec
 import views.html.taskList.taskList
 
-class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec:
+class CheckYourAnswersTentingPitchesControllerSpec extends ControllerSpec:
 
   private val mockAboutTheTradingHistoryNavigator = mock[AboutTheTradingHistoryNavigator]
   private val mockTaskListView                    = mock[taskList]
@@ -42,7 +40,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec:
       forType = FOR6045,
       aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOneCYA6045)
     ),
-    mockSessionRepo
+    mockSessionRepository
   )
 
   private val checkYourAnswersTentingPitchesControllerYesTent = CheckYourAnswersTentingPitchesController(
@@ -54,7 +52,7 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec:
       forType = FOR6045,
       aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOneTentYes)
     ),
-    mockSessionRepo
+    mockSessionRepository
   )
 
   private val checkYourAnswersTentingPitchesControllerNoTent = CheckYourAnswersTentingPitchesController(
@@ -66,39 +64,39 @@ class CheckYourAnswersTentingPitchesControllerSpec extends TestBaseSpec:
       forType = FOR6045,
       aboutTheTradingHistoryPartOne = Some(prefilledAboutTheTradingHistoryPartOneTentNo)
     ),
-    mockSessionRepo
+    mockSessionRepository
   )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersTentingPitchesController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersTentingPitchesController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersTentingPitchesController.show(fakeRequest)
+      val result = checkYourAnswersTentingPitchesController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 yes tent" in {
-      val result = checkYourAnswersTentingPitchesControllerYesTent.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersTentingPitchesControllerYesTent.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML yes tent" in {
-      val result = checkYourAnswersTentingPitchesControllerYesTent.show(fakeRequest)
+      val result = checkYourAnswersTentingPitchesControllerYesTent.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 no tent" in {
-      val result = checkYourAnswersTentingPitchesControllerNoTent.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersTentingPitchesControllerNoTent.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML no tent" in {
-      val result = checkYourAnswersTentingPitchesControllerNoTent.show(fakeRequest)
+      val result = checkYourAnswersTentingPitchesControllerNoTent.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

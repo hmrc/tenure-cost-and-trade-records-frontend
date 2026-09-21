@@ -42,7 +42,7 @@ import views.behaviours.QuestionViewBehaviours
 class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOperatingExpenses]]:
 
   private val messageKeyPrefix = "fixedOperatingExpenses"
-  private val sessionRequest   = SessionRequest(baseFilled6015Session, fakeRequest)
+  private val sessionRequest   = SessionRequest(baseFilled6015Session, getRequest)
 
   override val form: Form[Seq[FixedOperatingExpenses]] =
     FixedOperatingExpensesForm.fixedOperatingExpensesForm(Seq("2026", "2025", "2024"))(using messages)
@@ -56,29 +56,27 @@ class FixedOperatingExpensesViewSpec extends QuestionViewBehaviours[Seq[FixedOpe
 
     behave like normalPage(createView, messageKeyPrefix)
 
-    "has a link marked with back.link.label leading to the task list Page" in {
-      val doc          = asDocument(createView())
-      val backlinkText = doc.select("a[class=govuk-back-link]").text()
-      backlinkText shouldBe messages("back.link.label")
-      val backlinkUrl = doc.select("a[class=govuk-back-link]").attr("href")
-      backlinkUrl shouldBe controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show().url
-    }
+    behave like
+      pageWithBackLink(createView, "Variable Operating Expenses", controllers.aboutthetradinghistory.routes.VariableOperatingExpensesController.show().url)
 
     "Section heading is visible" in {
-      val doc  = asDocument(createViewUsingForm(form)) // govuk-caption-m
+      val doc  = asDocument(createViewUsingForm(form))
       val html = doc.getElementsByClass("govuk-caption-m").html()
+
       html shouldBe s"""<span class="govuk-visually-hidden">This section is </span>${messages("label.section.aboutYourTradingHistory")}"""
     }
 
     "Page heading is visible" in {
       val doc         = asDocument(createViewUsingForm(form))
       val sectionText = doc.getElementsByClass("govuk-heading-l").text()
-      assert(sectionText == messages("fixedOperatingExpenses.heading"))
+
+      sectionText shouldBe messages("fixedOperatingExpenses.heading")
     }
 
     "contain continue button with the value Continue" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

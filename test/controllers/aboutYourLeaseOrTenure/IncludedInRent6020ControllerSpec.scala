@@ -21,12 +21,12 @@ import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class IncludedInRent6020ControllerSpec extends TestBaseSpec:
+class IncludedInRent6020ControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -38,13 +38,13 @@ class IncludedInRent6020ControllerSpec extends TestBaseSpec:
       includedInRent6020View,
       aboutYourLeaseOrTenureNavigator,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200 and HTML with Rented Equipment Details in the session" in {
-      val result = includedInRent6020Controller().show(fakeRequest)
+      val result = includedInRent6020Controller().show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -55,7 +55,7 @@ class IncludedInRent6020ControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with no Rented Equipment Details in the session" in {
       val controller = includedInRent6020Controller(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")

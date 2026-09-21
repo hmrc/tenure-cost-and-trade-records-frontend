@@ -20,9 +20,9 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.compatible.Assertion
 import play.twirl.api.Html
-import utils.TestBaseSpec
+import test.TCTRAppSpec
 
-trait ViewSpecBase extends TestBaseSpec:
+trait ViewSpecBase extends TCTRAppSpec:
 
   def asDocument(html: Html): Document = Jsoup.parse(html.toString())
 

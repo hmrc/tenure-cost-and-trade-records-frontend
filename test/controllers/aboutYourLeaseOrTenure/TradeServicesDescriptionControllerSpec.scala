@@ -21,12 +21,11 @@ import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
 import org.jsoup.Jsoup
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class TradeServicesDescriptionControllerSpec extends TestBaseSpec:
+class TradeServicesDescriptionControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,37 +38,37 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec:
       inject[AboutYourLeaseOrTenureNavigator],
       tradeServicesDescriptionView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Trade Services Description in the session" in {
-      val result = tradeServicesDescriptionController().show(Some(0))(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = tradeServicesDescriptionController().show(Some(0))(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 and HTML Trade Services Description with none in the session" in {
       val controller = tradeServicesDescriptionController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(None)(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result     = controller.show(None)(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render a page with an empty form when not given an index" in {
-      val result = tradeServicesDescriptionController().show(None)(fakeRequest)
+      val result = tradeServicesDescriptionController().show(None)(getRequest)
       val html   = Jsoup.parse(contentAsString(result))
 
-      Option(html.getElementById("description").`val`()).value shouldBe ""
+      Option(html.getElementById("description").`val`()).get shouldBe ""
     }
 
     "given an index which doesn't already exist in the session" in {
-      val result = tradeServicesDescriptionController().show(Some(2))(fakeRequest)
+      val result = tradeServicesDescriptionController().show(Some(2))(getRequest)
       val html   = Jsoup.parse(contentAsString(result))
 
-      Option(html.getElementById("description").`val`()).value shouldBe ""
+      Option(html.getElementById("description").`val`()).get shouldBe ""
     }
   }
 
@@ -101,13 +100,13 @@ class TradeServicesDescriptionControllerSpec extends TestBaseSpec:
   "getBackLink" should {
     "return the correct backLink" in {
       val controller = tradeServicesDescriptionController()
-      val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, fakeRequest), 1)
+      val result     = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, getRequest), 1)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.RentIncludeTradeServicesController.show().url
     }
 
     "return the correct backLink if view was accessed via 'Change' link" in {
       val controller        = tradeServicesDescriptionController()
-      val requestWithChange = requestWithQueryParam(fakeRequest, "from=Change")
+      val requestWithChange = getRequest.withQueryParams("from" -> "Change")
       val result            = controller.getBackLink(SessionRequest(stillConnectedDetails6030NoSession, requestWithChange), 1)
       result shouldBe controllers.aboutYourLeaseOrTenure.routes.TradeServicesListController.show(1).url
     }

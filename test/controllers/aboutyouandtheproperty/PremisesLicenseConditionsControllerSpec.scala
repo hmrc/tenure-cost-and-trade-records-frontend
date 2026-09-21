@@ -19,15 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.PremisesLicenseConditionsForm.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class PremisesLicenseConditionsControllerSpec extends TestBaseSpec:
+class PremisesLicenseConditionsControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,7 +41,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       premisesLicensableView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def premisesLicenseControllerNo(
@@ -54,7 +53,7 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       premisesLicensableView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def premisesLicenseControllerNone(): PremisesLicenseConditionsController =
@@ -64,17 +63,17 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       premisesLicensableView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 license conditions yes in the session" in {
-      val result = premisesLicenseController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = premisesLicenseController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = premisesLicenseController().show(fakeRequest)
+      val result = premisesLicenseController().show(getRequest)
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -83,8 +82,8 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec:
     }
 
     "GET / return 200 license conditions no in the session" in {
-      val result = premisesLicenseControllerNo().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = premisesLicenseControllerNo().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -93,8 +92,8 @@ class PremisesLicenseConditionsControllerSpec extends TestBaseSpec:
     }
 
     "GET / return 200 no license conditions in the session" in {
-      val result = premisesLicenseControllerNone().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = premisesLicenseControllerNone().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

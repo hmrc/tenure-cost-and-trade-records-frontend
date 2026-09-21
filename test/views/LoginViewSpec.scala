@@ -28,9 +28,9 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails]:
 
   override val form: Form[LoginDetails] = LoginController.loginForm
 
-  private def createView = () => login(form)(using fakeRequest, messages)
+  private def createView = () => login(form)(using getRequest, messages)
 
-  private def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(using fakeRequest, messages)
+  private def createViewUsingForm = (form: Form[LoginDetails]) => login(form)(using getRequest, messages)
 
   "Login view" should {
 
@@ -41,6 +41,7 @@ class LoginViewSpec extends QuestionViewBehaviours[LoginDetails]:
     "contain Login button with the value Login" in {
       val doc         = asDocument(createViewUsingForm(form))
       val loginButton = doc.getElementById("continue-button").text()
-      assert(loginButton == messages("button.continue.label"))
+
+      loginButton shouldBe messages("button.continue.label")
     }
   }

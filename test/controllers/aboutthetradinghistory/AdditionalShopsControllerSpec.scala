@@ -18,14 +18,12 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import form.aboutthetradinghistory.AdditionalShopsForm
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
 
-class AdditionalShopsControllerSpec extends TestBaseSpec:
+import test.ControllerSpec
+
+class AdditionalShopsControllerSpec extends ControllerSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
@@ -53,29 +51,29 @@ class AdditionalShopsControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller.show(fakeRequest)
+      val result = controller.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = controller.show(fakeRequestFromCYA)
+      val result  = controller.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-additional-activities")
     }
 
     "render a correct back link to additional activities on site page" in {
-      val result  = controller.show(fakeRequest)
+      val result  = controller.show(getRequest)
       val content = contentAsString(result)
       content should include("/additional-activities-on-site")
     }
@@ -89,7 +87,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec:
 
     "save the form data and redirect to the next page" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(52)*)
+        postRequest.withFormUrlEncodedBody(formData(52)*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
@@ -99,7 +97,7 @@ class AdditionalShopsControllerSpec extends TestBaseSpec:
 
     "return 400 and error message for invalid weeks" in {
       val res = controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(formData(53)*)
+        postRequest.withFormUrlEncodedBody(formData(53)*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include("""<a href="#additionalShops[0].weeks">error.weeksMapping.invalid</a>""")

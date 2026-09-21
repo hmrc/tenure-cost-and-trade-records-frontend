@@ -20,9 +20,9 @@ import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec:
+class ServicePaidSeparatelyChargeControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -35,12 +35,12 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       servicePaidSeparatelyChargeView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Service Paid Separately Charge in the session" in {
-      val result = servicePaidSeparatelyChargeController().show(0)(fakeRequest)
+      val result = servicePaidSeparatelyChargeController().show(0)(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -53,7 +53,7 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec:
       val controller = servicePaidSeparatelyChargeController(
         aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThreeNo)
       )
-      val result     = controller.show(0)(fakeRequest)
+      val result     = controller.show(0)(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -64,7 +64,7 @@ class ServicePaidSeparatelyChargeControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with none in the session" in {
       val controller = servicePaidSeparatelyChargeController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(0)(fakeRequest)
+      val result     = controller.show(0)(getRequest)
       status(result) shouldBe SEE_OTHER
     }
   }

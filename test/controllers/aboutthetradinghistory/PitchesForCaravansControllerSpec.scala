@@ -17,13 +17,11 @@
 package controllers.aboutthetradinghistory
 
 import connectors.Audit
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class PitchesForCaravansControllerSpec extends TestBaseSpec:
+class PitchesForCaravansControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,23 +35,23 @@ class PitchesForCaravansControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = pitchesForCaravansController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = pitchesForCaravansController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = pitchesForCaravansController.show(fakeRequest)
+      val result = pitchesForCaravansController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = pitchesForCaravansController.show(fakeRequestFromCYA)
+      val result  = pitchesForCaravansController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-tenting-pitches")
     }

@@ -19,15 +19,14 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.UltimatelyResponsibleIBuildingInsuranceForm.ultimatelyResponsibleBuildingInsuranceForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
-import utils.FormBindingTestAssertions.*
-import utils.TestBaseSpec
+
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec:
+class UltimatelyResponsibleBuildingInsuranceControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,13 +41,13 @@ class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       ultimatelyResponsibleBuildingInsuranceView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Ultimately Responsible Building Insurance in the session" in {
-      val result = ultimatelyResponsibleBuildingInsuranceController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = ultimatelyResponsibleBuildingInsuranceController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class UltimatelyResponsibleBuildingInsuranceControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Ultimately Responsible Building Insurance in the session" in {
       val controller = ultimatelyResponsibleBuildingInsuranceController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

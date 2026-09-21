@@ -14,47 +14,37 @@
  * limitations under the License.
  */
 
-package form.lettingHistory
+package test
 
 import actions.SessionRequest
+import controllers.lettingHistory.FiscalYearSupport
 import models.ForType.FOR6048
 import models.Session
 import models.submissions.common.Address
-import org.scalatest.OptionValues
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.must.Matchers
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.Application
-import play.api.i18n.Lang.defaultLang
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.AnyContent
-import play.api.test.{FakeRequest, Injecting}
+import play.api.test.FakeRequest
 import util.DateUtilLocalised
 
-class FormSpec extends AnyFlatSpec with Matchers with OptionValues with GuiceOneAppPerSuite with Injecting:
+import scala.language.implicitConversions
 
-  override def fakeApplication(): Application =
-    GuiceApplicationBuilder()
-      .configure(
-        "metrics.jvm"                         -> false,
-        "metrics.enabled"                     -> false,
-        "create-internal-auth-token-on-start" -> false,
-        "urls.tctrFrontend"                   -> "someUrl"
-      )
-      .build()
+/**
+  * @author Yuriy Tumakha
+  */
+abstract class FormSpec extends TCTRAppSpec:
 
-  given Messages          = inject[MessagesApi].preferred(Seq(defaultLang))
   given DateUtilLocalised = inject[DateUtilLocalised]
 
   def sessionRequest(isWelsh: Boolean): SessionRequest[AnyContent] =
     SessionRequest[AnyContent](
       Session(
-        referenceNumber = "99996010004",
+        referenceNumber = "99996048004",
         forType = FOR6048,
-        address = Address("001", Some("GORING ROAD"), "GORING-BY-SEA, WORTHING", Some("WEST SUSSEX"), "BN12 4AX"),
+        address = Address("001", "GORING ROAD", "GORING-BY-SEA, WORTHING", "WEST SUSSEX", "BN12 4AX"),
         token = "Basic OTk5OTYwMTAwMDQ6U2Vuc2l0aXZlKC4uLik=",
         isWelsh = isWelsh
       ),
       FakeRequest("GET", "/")
     )
+
+  trait SessionFixture(isWelsh: Boolean = false) extends FiscalYearSupport:
+    given SessionRequest[AnyContent] = sessionRequest(isWelsh)
