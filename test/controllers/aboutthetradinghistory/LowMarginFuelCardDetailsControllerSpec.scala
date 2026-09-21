@@ -19,13 +19,11 @@ package controllers.aboutthetradinghistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import navigation.AboutTheTradingHistoryNavigator
 import org.jsoup.Jsoup
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
-import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec:
+class LowMarginFuelCardDetailsControllerSpec extends ControllerSpec:
 
   private val mockNavigator = mock[AboutTheTradingHistoryNavigator]
 
@@ -37,17 +35,17 @@ class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec:
       mockNavigator,
       lowMarginFuelCardsDetailsView,
       preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = createLowMarginFuelCardDetailsController().show(None)(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = createLowMarginFuelCardDetailsController().show(None)(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = createLowMarginFuelCardDetailsController().show(None)(fakeRequest)
+      val result = createLowMarginFuelCardDetailsController().show(None)(getRequest)
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }
@@ -56,9 +54,9 @@ class LowMarginFuelCardDetailsControllerSpec extends TestBaseSpec:
       val result =
         createLowMarginFuelCardDetailsController(prefilledAboutTheTradingHistoryForLowMarginFuelCardsDetails).show(
           Some(0)
-        )(fakeRequest)
+        )(getRequest)
       val html   = Jsoup.parse(contentAsString(result))
-      Option(html.getElementById("name").`val`()).value shouldBe "Low Margin Card"
+      Option(html.getElementById("name").`val`()).get shouldBe "Low Margin Card"
     }
   }
 

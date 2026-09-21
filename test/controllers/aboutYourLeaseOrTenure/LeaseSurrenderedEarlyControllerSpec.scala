@@ -18,12 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec:
+class LeaseSurrenderedEarlyControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -40,13 +39,13 @@ class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
         aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with additional disregarded yes in the session" in {
-      val result = leaseSurrenderedEarlyController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = leaseSurrenderedEarlyController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -57,8 +56,8 @@ class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec:
     "return 200 and HTML with additional disregarded no in the session" in {
       val controller =
         leaseSurrenderedEarlyController(aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -69,8 +68,8 @@ class LeaseSurrenderedEarlyControllerSpec extends TestBaseSpec:
     "return 200 and HTML with none data in the session" in {
       val controller =
         leaseSurrenderedEarlyController(aboutLeaseOrAgreementPartTwo = None, aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

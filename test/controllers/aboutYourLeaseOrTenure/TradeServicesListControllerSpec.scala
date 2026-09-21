@@ -21,15 +21,14 @@ import connectors.Audit
 import form.aboutYourLeaseOrTenure.TradeServicesListForm.theForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import navigation.AboutYourLeaseOrTenureNavigator
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class TradeServicesListControllerSpec extends TestBaseSpec:
+class TradeServicesListControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -45,7 +44,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec:
       tradeServicesListView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def tradeServicesListControllerNone: TradeServicesListController =
@@ -56,13 +55,13 @@ class TradeServicesListControllerSpec extends TestBaseSpec:
       tradeServicesListView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Trade Services List in the session" in {
-      val result = tradeServicesListController().show(0)(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = tradeServicesListController().show(0)(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -72,8 +71,8 @@ class TradeServicesListControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Trade Services List in the session" in {
       val controller = tradeServicesListController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(0)(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result     = controller.show(0)(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
@@ -81,7 +80,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val result = tradeServicesListController().submit(1)(fakeRequest)
+      val result = tradeServicesListController().submit(1)(getRequest)
       status(result) shouldBe BAD_REQUEST
     }
 
@@ -95,7 +94,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec:
 
   "REMOVE /" should {
     "redirect if an empty form is submitted" in {
-      val result = tradeServicesListController().remove(1)(fakeRequest)
+      val result = tradeServicesListController().remove(1)(getRequest)
       status(result) shouldBe SEE_OTHER
     }
   }
@@ -104,7 +103,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec:
     "render the removal confirmation page on remove" in {
       val controller     = tradeServicesListController()
       val idxToRemove    = 0
-      val sessionRequest = SessionRequest(stillConnectedDetails6030NoSession, fakeRequest)
+      val sessionRequest = SessionRequest(stillConnectedDetails6030NoSession, getRequest)
       val result         = controller.remove(idxToRemove)(sessionRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
@@ -113,7 +112,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec:
     "handle form submission with 'Yes' and perform removal" in {
       val controller      = tradeServicesListController()
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
       val sessionRequest  = SessionRequest(stillConnectedDetails6030NoSession, requestWithForm)
       val result          = controller.performRemove(idxToRemove)(sessionRequest)
       status(result) shouldBe BAD_REQUEST
@@ -122,7 +121,7 @@ class TradeServicesListControllerSpec extends TestBaseSpec:
     "handle form submission with 'No' and cancel removal" in {
       val controller      = tradeServicesListController()
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
       status(result) shouldBe BAD_REQUEST
     }

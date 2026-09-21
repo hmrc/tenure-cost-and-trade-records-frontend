@@ -19,13 +19,12 @@ package controllers.aboutthetradinghistory
 import actions.SessionRequest
 import connectors.Audit
 import models.Session
-import play.api.http.Status
 import play.api.mvc.AnyContent
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class FinancialYearEndDatesControllerSpec extends TestBaseSpec:
+class FinancialYearEndDatesControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -40,19 +39,19 @@ class FinancialYearEndDatesControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = session.aboutTheTradingHistory,
         aboutTheTradingHistoryPartOne = session.aboutTheTradingHistoryPartOne
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
-  private def sessionRequest6010(request: FakeRequest[AnyContent] = fakeRequest) =
+  private def sessionRequest6010(request: FakeRequest[AnyContent] = getRequest) =
     SessionRequest(aboutYourTradingHistory6010YesSession, request)
 
-  private def sessionRequest6030(request: FakeRequest[AnyContent] = fakeRequest) =
+  private def sessionRequest6030(request: FakeRequest[AnyContent] = getRequest) =
     SessionRequest(aboutYourTradingHistory6030YesSession, request)
 
   "FinancialYearEndDatesController" should {
     "return 200 for 6010" in {
       val result = financialYearEndDatesController(aboutYourTradingHistory6010YesSession).show(sessionRequest6010())
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return HTML for 6010" in {
@@ -70,7 +69,7 @@ class FinancialYearEndDatesControllerSpec extends TestBaseSpec:
 
     "return 200 for 6030" in {
       val result = financialYearEndDatesController(aboutYourTradingHistory6030YesSession).show(sessionRequest6030())
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return HTML for 6030" in {

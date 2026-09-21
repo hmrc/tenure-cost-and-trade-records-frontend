@@ -20,7 +20,7 @@ import actions.SessionRequest
 import form.aboutthetradinghistory.AccountingInformationForm.accountingInformationForm
 import models.submissions.Form6010.DayMonthsDuration
 import play.api.data.Form
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.AnyContent
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
@@ -28,7 +28,7 @@ class FinancialYearEndViewSpec extends QuestionViewBehaviours[(DayMonthsDuration
 
   private val messageKeyPrefix = "financialYearEnd"
 
-  private val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(aboutYourTradingHistory6010YesSession, getRequest)
+  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(aboutYourTradingHistory6010YesSession, getRequest)
 
   override val form: Form[(DayMonthsDuration, Boolean)] = accountingInformationForm(using messages)
 

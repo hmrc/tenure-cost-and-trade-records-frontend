@@ -20,12 +20,11 @@ import actions.SessionRequest
 import connectors.Audit
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.mvc.request.RequestTarget
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class RentDetailsControllerSpec extends TestBaseSpec:
+class RentDetailsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -38,33 +37,33 @@ class RentDetailsControllerSpec extends TestBaseSpec:
       aboutFranchisesOrLettingsNavigator,
       rentDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 for ATM rent details" in {
-      val result = rentDetailsController().show(0)(fakeRequest)
+      val result = rentDetailsController().show(0)(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = rentDetailsController().show(0)(fakeRequest)
+      val result = rentDetailsController().show(0)(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 for telco Mast rent details" in {
-      val result = rentDetailsController().show(1)(fakeRequest)
+      val result = rentDetailsController().show(1)(getRequest)
       status(result) shouldBe OK
     }
 
     "return 200 for advertising right rent details" in {
-      val result = rentDetailsController().show(2)(fakeRequest)
+      val result = rentDetailsController().show(2)(getRequest)
       status(result) shouldBe OK
     }
 
     "return 200 for other rent details" in {
-      val result = rentDetailsController().show(3)(fakeRequest)
+      val result = rentDetailsController().show(3)(getRequest)
       status(result) shouldBe OK
     }
   }
@@ -160,10 +159,8 @@ class RentDetailsControllerSpec extends TestBaseSpec:
       "dateInput.month" -> "5",
       "dateInput.year"  -> "2020"
     )
-    val request   = FakeRequest(POST, "/rent-details-submit")
-      .withTarget(
-        RequestTarget("", "", Map("from" -> Seq("CYA")))
-      )
+    val request   = postRequest
+      .withQueryParams("from" -> "CYA")
       .withFormUrlEncodedBody(validData.toSeq*)
 
     val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, request)

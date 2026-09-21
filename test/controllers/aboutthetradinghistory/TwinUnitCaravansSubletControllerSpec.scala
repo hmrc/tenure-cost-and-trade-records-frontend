@@ -20,9 +20,9 @@ import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec:
+class TwinUnitCaravansSubletControllerSpec extends ControllerSpec:
 
   private val previousPage = aboutthetradinghistory.routes.TwinUnitCaravansOwnedByOperatorController.show().url
   private val nextPage     = aboutthetradinghistory.routes.TwinUnitCaravansAgeCategoriesController.show().url
@@ -37,19 +37,19 @@ class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents(),
       mockAudit
     )
 
   "GET /" should {
     "return 200" in {
-      val result = twinUnitCaravansSubletController.show(fakeRequest)
+      val result = twinUnitCaravansSubletController.show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = twinUnitCaravansSubletController.show(fakeRequest)
+      val result = twinUnitCaravansSubletController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -59,7 +59,7 @@ class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = twinUnitCaravansSubletController.show(fakeRequestFromCYA)
+      val result  = twinUnitCaravansSubletController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include previousPage
@@ -84,7 +84,7 @@ class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = twinUnitCaravansSubletController.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
@@ -92,7 +92,7 @@ class TwinUnitCaravansSubletControllerSpec extends TestBaseSpec:
 
     "return 400 and error message for invalid weeks" in {
       val res = twinUnitCaravansSubletController.submit(
-        fakePostRequest.withFormUrlEncodedBody(invalidFormData*)
+        postRequest.withFormUrlEncodedBody(invalidFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(

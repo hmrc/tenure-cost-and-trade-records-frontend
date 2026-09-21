@@ -19,15 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.EnforcementActionDetailsForm.enforcementActionDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec:
+class EnforcementActionBeenTakenDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,7 +41,7 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       enforcementActionBeenTakenDetailsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def enforcementActionBeenTakenDetailsControllerNone(): EnforcementActionBeenTakenDetailsController =
@@ -52,24 +51,24 @@ class EnforcementActionBeenTakenDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       enforcementActionBeenTakenDetailsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 c" in {
-      val result = enforcementActionBeenTakenDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = enforcementActionBeenTakenDetailsController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = enforcementActionBeenTakenDetailsController().show(fakeRequest)
+      val result = enforcementActionBeenTakenDetailsController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 no enforcement action details in the session" in {
-      val result = enforcementActionBeenTakenDetailsControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = enforcementActionBeenTakenDetailsControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -18,14 +18,12 @@ package controllers.aboutyouandtheproperty
 
 import connectors.Audit
 import form.aboutyouandtheproperty.PartsUnavailableForm.partsUnavailableForm
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class PartsUnavailableControllerSpec extends TestBaseSpec:
+class PartsUnavailableControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -38,42 +36,42 @@ class PartsUnavailableControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       partsUnavailableView,
       preEnrichedActionRefiner(isWelsh = isWelsh),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(fakeRequest)
+      val result = controller().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return correct backLink when 'from=TL' query param is present" in {
-      val result = controller().show()(fakeRequestFromTL)
+      val result = controller().show()(getRequestFromTL)
       contentAsString(result) should include(s"${controllers.routes.TaskListController.show.url}#family-usage")
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
-      val result = controller().show()(fakeRequestFromCYA)
+      val result = controller().show()(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
 
     "return correct backLink when no query param is present fo english property" in {
-      val result = controller().show()(fakeRequest)
+      val result = controller().show()(getRequest)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsController.show().url
       )
     }
 
     "return correct backLink when no query param is present fo welsh property" in {
-      val result = controller(isWelsh = true).show()(fakeRequest)
+      val result = controller(isWelsh = true).show()(getRequest)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CompletedCommercialLettingsWelshController.show().url
       )

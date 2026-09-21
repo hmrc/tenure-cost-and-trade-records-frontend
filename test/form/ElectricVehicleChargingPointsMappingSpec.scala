@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
 import form.ElectricVehicleChargingPointsMapping.validateSpacesOrBays
-import org.scalatest.matchers.should
-import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
-import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.prop.TableFor2
 import play.api.data.Form
 import play.api.data.Forms.single
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
+class ElectricVehicleChargingPointsMappingSpec extends BaseSpec:
 
   trait Setup:
     val form: Form[Int] = Form(single("electricVehicleChargingPoints" -> validateSpacesOrBays))
@@ -36,7 +35,7 @@ class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with shou
         ("", false)
       )
 
-      TableDrivenPropertyChecks.forAll(isInput) { (electricVehicleChargingPoints, isValid) =>
+      forAll(isInput) { (electricVehicleChargingPoints, isValid) =>
         val res: Form[Int] = form.bind(Map("electricVehicleChargingPoints" -> electricVehicleChargingPoints))
 
         if isValid then
@@ -53,7 +52,7 @@ class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with shou
         ("-1", false)
       )
 
-      TableDrivenPropertyChecks.forAll(isInput) { (electricVehicleChargingPoints, isValid) =>
+      forAll(isInput) { (electricVehicleChargingPoints, isValid) =>
         val res: Form[Int] = form.bind(Map("electricVehicleChargingPoints" -> electricVehicleChargingPoints))
 
         if isValid then
@@ -70,7 +69,7 @@ class ElectricVehicleChargingPointsMappingSpec extends AnyWordSpecLike with shou
         ("9999", false)
       )
 
-      TableDrivenPropertyChecks.forAll(isInput) { (electricVehicleChargingPoints, isValid) =>
+      forAll(isInput) { (electricVehicleChargingPoints, isValid) =>
         val res: Form[Int] = form.bind(Map("electricVehicleChargingPoints" -> electricVehicleChargingPoints))
 
         if isValid then

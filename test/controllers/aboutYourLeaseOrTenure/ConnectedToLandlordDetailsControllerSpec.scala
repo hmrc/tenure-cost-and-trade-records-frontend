@@ -19,15 +19,14 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordDetailsForm.connectedToLandlordDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec:
+class ConnectedToLandlordDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,13 +41,13 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       connectedToLandlordDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Connected To Landlord Details in the session" in {
-      val result = connectedToLandlordDetailsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = connectedToLandlordDetailsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class ConnectedToLandlordDetailsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Connected To Landlord Details in the session" in {
       val controller = connectedToLandlordDetailsController(None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(

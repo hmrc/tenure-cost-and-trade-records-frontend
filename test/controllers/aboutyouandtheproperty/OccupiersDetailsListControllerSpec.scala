@@ -20,15 +20,13 @@ import actions.SessionRequest
 import connectors.Audit
 import form.aboutyouandtheproperty.OccupiersDetailsListForm.theForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndThePropertyPartTwo, OccupiersDetails}
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.libs.json.Json
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{POST, charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class OccupiersDetailsListControllerSpec extends TestBaseSpec:
+class OccupiersDetailsListControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -44,21 +42,21 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
       occupiersDetailsListView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Trade Services List in the session" in {
-      val result = controller().show(0)(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = controller().show(0)(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 and HTML when no Occupiers details List in the session" in {
       val noSesController = controller(aboutYouAndThePropertyPartTwo = None)
-      val result          = noSesController.show(0)(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result          = noSesController.show(0)(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -66,7 +64,7 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val result = controller().submit(1)(fakeRequest)
+      val result = controller().submit(1)(getRequest)
       status(result) shouldBe BAD_REQUEST
     }
 
@@ -100,7 +98,7 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
 
   "REMOVE /" should {
     "redirect if an empty form is submitted" in {
-      val result = controller().remove(1)(fakeRequest)
+      val result = controller().remove(1)(getRequest)
       status(result) shouldBe SEE_OTHER
     }
   }
@@ -110,7 +108,7 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
       val partTwo        =
         prefilledAboutYouAndThePropertyPartTwo6048.copy(occupiersList = IndexedSeq(OccupiersDetails("Mike", "Bristol")))
       val idxToRemove    = 0
-      val sessionRequest = SessionRequest(stillConnectedDetails6048YesSession, fakeRequest)
+      val sessionRequest = SessionRequest(stillConnectedDetails6048YesSession, getRequest)
       val result         = controller(Some(partTwo)).remove(idxToRemove)(sessionRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
@@ -118,7 +116,7 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
 
     "handle form submission with 'Yes' and perform removal" in {
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
       val sessionRequest  = SessionRequest(stillConnectedDetails6048YesSession, requestWithForm)
       val result          = controller().performRemove(idxToRemove)(sessionRequest)
       status(result)           shouldBe SEE_OTHER
@@ -129,7 +127,7 @@ class OccupiersDetailsListControllerSpec extends TestBaseSpec:
 
     "handle form submission with 'No' and cancel removal" in {
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
       val result          = controller().performRemove(idxToRemove)(requestWithForm)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(

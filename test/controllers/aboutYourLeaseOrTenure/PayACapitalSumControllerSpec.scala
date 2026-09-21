@@ -21,15 +21,14 @@ import form.aboutYourLeaseOrTenure.PayACapitalSumForm.payACapitalSumForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartThree, AboutLeaseOrAgreementPartTwo}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class PayACapitalSumControllerSpec extends TestBaseSpec:
+class PayACapitalSumControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -52,13 +51,13 @@ class PayACapitalSumControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree,
         aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with tenant additional disregarded with yes in the session" in {
-      val result = payACapitalSumController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = payACapitalSumController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -69,8 +68,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec:
     "return 200 and HTML with tenant additional disregarded with no in the session" in {
       val controller =
         payACapitalSumController(aboutLeaseOrAgreementPartTwo = Some(prefilledAboutLeaseOrAgreementPartTwoNo))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -80,8 +79,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML tenant additional disregarded with none in the session" in {
       val controller = payACapitalSumController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -91,8 +90,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with benefit given with yes in the session with 6020" in {
       val controller = payACapitalSumController(FOR6020)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -105,8 +104,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec:
         FOR6020,
         aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThreeNo)
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -116,8 +115,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML benefit given with none in the session with 6020" in {
       val controller = payACapitalSumController(FOR6020, aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -127,8 +126,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML back link rent free period details with Yes in the session with 6045" in {
       val controller = payACapitalSumController(FOR6045)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -138,8 +137,8 @@ class PayACapitalSumControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML back link rent free period details with none in the session with 6045" in {
       val controller = payACapitalSumController(FOR6045, aboutLeaseOrAgreementPartFour = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

@@ -19,12 +19,11 @@ package controllers.connectiontoproperty
 import connectors.Audit
 import models.submissions.connectiontoproperty.AddressConnectionType.*
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class VacantPropertiesControllerSpec extends TestBaseSpec:
+class VacantPropertiesControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,13 +36,13 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       vacantPropertiesView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with vacant property is present in session" in {
-      val result = vacantPropertiesController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = vacantPropertiesController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -53,8 +52,8 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with vacant property is not present in session" in {
       val controller = vacantPropertiesController(Some(prefilledStillConnectedDetailsEdit))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -67,7 +66,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
     "return back link to CYA page when 'from=CYA' query param is present for vacant properties" in {
       val result = vacantPropertiesController(
         stillConnectedDetails = Some(prefilledStillConnectedVacantYes)
-      ).show(fakeRequestFromCYA)
+      ).show(getRequestFromCYA)
 
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
@@ -77,7 +76,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
     "return back link to CYA page when 'from=CYA' query param is present for not vacant properties" in {
       val result = vacantPropertiesController(
         stillConnectedDetails = Some(prefilledStillConnectedVacantNo)
-      ).show(fakeRequestFromCYA)
+      ).show(getRequestFromCYA)
 
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
@@ -85,7 +84,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
     }
 
     "return back link to Task list page when 'from=TL' query param is present for not vacant properties" in {
-      val result = vacantPropertiesController().show(fakeRequestFromTL)
+      val result = vacantPropertiesController().show(getRequestFromTL)
       contentAsString(result) should include(controllers.routes.TaskListController.show.url + "#vacant-properties")
     }
 
@@ -96,7 +95,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
 
       val result = vacantPropertiesController(
         stillConnectedDetails = Some(prefilledStillConnectedChangedAddress)
-      ).show(fakeRequest)
+      ).show(getRequest)
 
       contentAsString(result) should include(controllers.connectiontoproperty.routes.EditAddressController.show().url)
     }
@@ -104,7 +103,7 @@ class VacantPropertiesControllerSpec extends TestBaseSpec:
     "return Are You Still Connected page URL when addressConnectionType is not AddressConnectionTypeYesChangeAddress and 'from' is not set" in {
       val result = vacantPropertiesController(
         stillConnectedDetails = Some(prefilledStillConnectedDetailsYes)
-      ).show(fakeRequest)
+      ).show(getRequest)
 
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url

@@ -19,12 +19,12 @@ package controllers.aboutthetradinghistory
 import connectors.Audit
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AcceptLowMarginFuelCardControllerSpec extends TestBaseSpec:
+class AcceptLowMarginFuelCardControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -34,18 +34,18 @@ class AcceptLowMarginFuelCardControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourTradingHistoryNavigator,
       preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6020)),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200" in {
-      val result = acceptLowMarginFuelCardController.show(fakeRequest)
+      val result = acceptLowMarginFuelCardController.show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = acceptLowMarginFuelCardController.show(fakeRequest)
+      val result = acceptLowMarginFuelCardController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

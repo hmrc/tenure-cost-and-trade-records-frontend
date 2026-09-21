@@ -19,20 +19,19 @@ package controllers.aboutthetradinghistory
 import actions.SessionRequest
 import connectors.Audit
 import navigation.AboutTheTradingHistoryNavigator
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import play.twirl.api.HtmlFormat
-import utils.TestBaseSpec
+import test.ControllerSpec
 import views.html.aboutthetradinghistory.costOfSales
 
 import scala.concurrent.ExecutionContext
 
-class CostOfSalesControllerSpec extends TestBaseSpec:
+class CostOfSalesControllerSpec extends ControllerSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
-  private val sessionRequest           = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
+  private val sessionRequest           = SessionRequest(aboutYourTradingHistory6015YesSession, getRequest)
   private val mockCostOfSalesNavigator = mock[AboutTheTradingHistoryNavigator]
   private val mockCostOfSalesView      = mock[costOfSales]
   when(mockCostOfSalesView.apply(any, any)(using any, any)).thenReturn(HtmlFormat.empty)
@@ -43,13 +42,13 @@ class CostOfSalesControllerSpec extends TestBaseSpec:
     mockCostOfSalesNavigator,
     mockCostOfSalesView,
     preEnrichedActionRefiner(aboutTheTradingHistory = aboutYourTradingHistory6015YesSession.aboutTheTradingHistory),
-    mockSessionRepo
+    mockSessionRepository
   )(using inject[ExecutionContext])
 
   "GET /" should {
     "return 200" in {
       val result = costOfSalesController.show(sessionRequest)
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return HTML" in {

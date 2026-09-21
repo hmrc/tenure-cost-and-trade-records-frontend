@@ -19,15 +19,14 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.RentPayableVaryAccordingToGrossOrNetDetailsForm.rentPayableVaryAccordingToGrossOrNetInformationForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBaseSpec:
+class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,13 +41,13 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
       aboutYourLeaseOrTenureNavigator,
       rentPayableVaryAccordingToGrossOrNetDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 with Rent Payable Vary Gross or Net Details in the session" in {
-      val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentPayableVaryAccordingToGrossOrNetDetailsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class RentPayableVaryAccordingToGrossOrNetDetailsControllerSpec extends TestBase
 
     "return 200 with Rent Payable Vary Gross or Net Details with none in the session" in {
       val controller = rentPayableVaryAccordingToGrossOrNetDetailsController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

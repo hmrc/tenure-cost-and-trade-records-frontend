@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
 import form.WebsiteMapping.validateWebAddress
-import org.scalatest.matchers.should
-import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
-import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.prop.TableFor2
 import play.api.data.Form
 import play.api.data.Forms.single
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
+class WebsiteMappingSpec extends BaseSpec:
 
   trait Setup:
     val form: Form[String] = Form(single("websiteAddressForProperty" -> validateWebAddress))
@@ -38,7 +37,7 @@ class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with Table
         ("www.test.co.uk", true)
       )
 
-      TableDrivenPropertyChecks.forAll(lengths) { (websiteAddressForProperty, isValid) =>
+      forAll(lengths) { (websiteAddressForProperty, isValid) =>
         val res: Form[String] = form.bind(Map("websiteAddressForProperty" -> websiteAddressForProperty))
 
         if isValid then
@@ -59,7 +58,7 @@ class WebsiteMappingSpec extends AnyWordSpecLike with should.Matchers with Table
         ("", false)
       )
 
-      TableDrivenPropertyChecks.forAll(isInput) { (websiteAddressForProperty, isValid) =>
+      forAll(isInput) { (websiteAddressForProperty, isValid) =>
         val res: Form[String] = form.bind(Map("websiteAddressForProperty" -> websiteAddressForProperty))
 
         if isValid then

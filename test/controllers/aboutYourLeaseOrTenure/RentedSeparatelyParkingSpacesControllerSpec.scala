@@ -19,12 +19,12 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec:
+class RentedSeparatelyParkingSpacesControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -34,13 +34,13 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThree)),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200 and HTML with Rented Separate parking spaces in the session" in {
-      val result = rentedSeparatelyParkingSpacesController.show(fakeRequest)
+      val result = rentedSeparatelyParkingSpacesController.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -50,7 +50,7 @@ class RentedSeparatelyParkingSpacesControllerSpec extends TestBaseSpec:
     }
 
     "return 200 and HTML Rented Equipment Details with none in the session" in {
-      val result = rentedSeparatelyParkingSpacesController.show(fakeRequest)
+      val result = rentedSeparatelyParkingSpacesController.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")

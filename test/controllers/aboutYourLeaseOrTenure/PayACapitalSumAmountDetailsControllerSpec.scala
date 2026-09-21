@@ -18,12 +18,11 @@ package controllers.aboutYourLeaseOrTenure
 
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec:
+class PayACapitalSumAmountDetailsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,7 +35,7 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       payACapitalSumAmountDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def payACapitalSumAmountDetailsNoPremiumController(
@@ -48,13 +47,13 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       payACapitalSumAmountDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with pay a capital sum amount in the session" in {
-      val result = payACapitalSumAmountDetailsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = payACapitalSumAmountDetailsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -64,8 +63,8 @@ class PayACapitalSumAmountDetailsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML method fix current rent is none in the session" in {
       val controller = payACapitalSumAmountDetailsNoPremiumController()
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

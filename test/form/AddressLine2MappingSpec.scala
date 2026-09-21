@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
 import form.AddressLine2Mapping.validateAddressLineTwo
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
-import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.prop.TableFor2
 import play.api.data.Form
 import play.api.data.Forms.single
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDrivenPropertyChecks:
+class AddressLine2MappingSpec extends BaseSpec:
 
   trait Setup:
     val form: Form[String] = Form(single("line2" -> validateAddressLineTwo))
@@ -37,7 +36,7 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
         ("Apt 45, Building XYZ", true)
       )
 
-      TableDrivenPropertyChecks.forAll(lengths) { (line2, isValid) =>
+      forAll(lengths) { (line2, isValid) =>
         val res: Form[String] = form.bind(Map("line2" -> line2))
 
         if isValid then
@@ -54,7 +53,7 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
         ("Valid Address Line Two", true)
       )
 
-      TableDrivenPropertyChecks.forAll(validFormat) { (line2, isValid) =>
+      forAll(validFormat) { (line2, isValid) =>
         val res: Form[String] = form.bind(Map("line2" -> line2))
 
         if isValid then
@@ -71,7 +70,7 @@ class AddressLine2MappingSpec extends AnyWordSpecLike with Matchers with TableDr
         ("", false)
       )
 
-      TableDrivenPropertyChecks.forAll(isInput) { (line2, isValid) =>
+      forAll(isInput) { (line2, isValid) =>
         val res: Form[String] = form.bind(Map("line2" -> line2))
 
         if isValid then

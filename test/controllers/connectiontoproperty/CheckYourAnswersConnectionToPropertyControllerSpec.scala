@@ -18,15 +18,14 @@ package controllers.connectiontoproperty
 
 import form.CheckYourAnswersAndConfirmForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec:
+class CheckYourAnswersConnectionToPropertyControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -38,13 +37,13 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       checkYourAnswersConnectionToProperty,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Connection to property CYA in session" in {
-      val result = checkYourAnswersConnectionToPropertyController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = checkYourAnswersConnectionToPropertyController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -53,8 +52,8 @@ class CheckYourAnswersConnectionToPropertyControllerSpec extends TestBaseSpec:
     }
 
     "return 200 and HTML with None in session" in {
-      val result = checkYourAnswersConnectionToPropertyController(None).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = checkYourAnswersConnectionToPropertyController(None).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(

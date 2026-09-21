@@ -22,12 +22,12 @@ import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class IsRentReviewPlannedSpec extends TestBaseSpec:
+class IsRentReviewPlannedSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -40,13 +40,13 @@ class IsRentReviewPlannedSpec extends TestBaseSpec:
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200 and HTML with isRentReviewPlanned is present in session" in {
-      val result = isRentReviewPlannedController().show(fakeRequest)
+      val result = isRentReviewPlannedController().show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -57,7 +57,7 @@ class IsRentReviewPlannedSpec extends TestBaseSpec:
 
     "return 200 and HTML isRentReviewPlanned is none in session" in {
       val controller = isRentReviewPlannedController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")

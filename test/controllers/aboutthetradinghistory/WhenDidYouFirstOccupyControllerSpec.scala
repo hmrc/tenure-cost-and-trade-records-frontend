@@ -23,15 +23,14 @@ import form.aboutthetradinghistory.OccupationalInformationForm.occupationalInfor
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec:
+class WhenDidYouFirstOccupyControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -50,13 +49,13 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec:
         forType = forType,
         aboutTheTradingHistory = aboutTheTradingHistory
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "About your trading history controller" should {
     "return 200" in {
-      val result = aboutYourTradingHistoryController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = aboutYourTradingHistoryController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return 200 for 6048" in {
@@ -64,20 +63,20 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec:
       val sessionRequest = SessionRequest(session6048, FakeRequest())
 
       val result = aboutYourTradingHistoryController(session6048.forType, session6048.aboutTheTradingHistory).show(sessionRequest)
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = aboutYourTradingHistoryController().show(fakeRequest)
+      val result = aboutYourTradingHistoryController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 and HTML for 6045" in {
       val controller = aboutYourTradingHistoryController(forType = FOR6045)
-      val result     = controller.show()(fakeRequest)
+      val result     = controller.show()(getRequest)
 
-      status(result)        shouldBe Status.OK
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -87,9 +86,9 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML for 6076" in {
       val controller = aboutYourTradingHistoryController(forType = FOR6076)
-      val result     = controller.show()(fakeRequest)
+      val result     = controller.show()(getRequest)
 
-      status(result)        shouldBe Status.OK
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -99,9 +98,9 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML for 6048" in {
       val controller = aboutYourTradingHistoryController(forType = FOR6048)
-      val result     = controller.show()(fakeRequest)
+      val result     = controller.show()(getRequest)
 
-      status(result)        shouldBe Status.OK
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -111,9 +110,9 @@ class WhenDidYouFirstOccupyControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when the session is None" in {
       val controller = aboutYourTradingHistoryController(aboutTheTradingHistory = None)
-      val result     = controller.show()(fakeRequest)
+      val result     = controller.show()(getRequest)
 
-      status(result)        shouldBe Status.OK
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

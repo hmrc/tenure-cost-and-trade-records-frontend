@@ -19,15 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.PremisesLicenseGrantedForm.premisesLicenseGrantedForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class PremisesLicenseGrantedControllerSpec extends TestBaseSpec:
+class PremisesLicenseGrantedControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,7 +41,7 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       premisesLicenceGrantedView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def premisesLicenseGrantedControllerNone(): PremisesLicenseGrantedController =
@@ -52,24 +51,24 @@ class PremisesLicenseGrantedControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       premisesLicenceGrantedView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 license granted in the session" in {
-      val result = premisesLicenseGrantedController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = premisesLicenseGrantedController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = premisesLicenseGrantedController().show(fakeRequest)
+      val result = premisesLicenseGrantedController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 no license granted in the session" in {
-      val result = premisesLicenseGrantedControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = premisesLicenseGrantedControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -22,9 +22,9 @@ import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
 import test.JsoupHelpers
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class ConcessionTypeDetailsControllerSpec extends TestBaseSpec with JsoupHelpers:
+class ConcessionTypeDetailsControllerSpec extends ControllerSpec with JsoupHelpers:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,46 +37,47 @@ class ConcessionTypeDetailsControllerSpec extends TestBaseSpec with JsoupHelpers
       aboutFranchisesOrLettingsNavigator,
       concessionTypeDetailsView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller().show(0)(fakeRequest)
+      val result = controller().show(0)(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(0)(fakeRequest)
+      val result = controller().show(0)(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render a page with an empty form if index not present" in {
-      val result = controller().show(1)(fakeRequest)
+      val result = controller().show(1)(getRequest)
       val html   = contentAsJsoup(result)
 
-      Option(html.getElementById("operatorName").`val`()).value   shouldBe ""
-      Option(html.getElementById("typeOfBusiness").`val`()).value shouldBe ""
-      Option(html.getElementById("howIsUsed").`val`()).value      shouldBe ""
+      Option(html.getElementById("operatorName").`val`()).get   shouldBe ""
+      Option(html.getElementById("typeOfBusiness").`val`()).get shouldBe ""
+      Option(html.getElementById("howIsUsed").`val`()).get      shouldBe ""
     }
+
     "render a page with non empty form if data present" in {
-      val result = controller().show(0)(fakeRequest)
+      val result = controller().show(0)(getRequest)
       val html   = contentAsJsoup(result)
 
-      Option(html.getElementById("operatorName").`val`()).value   shouldBe "Operator"
-      Option(html.getElementById("typeOfBusiness").`val`()).value shouldBe "Bar"
-      Option(html.getElementById("howIsUsed").`val`()).value      shouldBe "Leased"
+      Option(html.getElementById("operatorName").`val`()).get   shouldBe "Operator"
+      Option(html.getElementById("typeOfBusiness").`val`()).get shouldBe "Bar"
+      Option(html.getElementById("howIsUsed").`val`()).get      shouldBe "Leased"
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = controller().show(0)(fakeRequestFromCYA)
+      val result  = controller().show(0)(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-franchise-or-lettings")
     }
 
     "render a correct back link to type of income page if no query parameters in the url " in {
-      val result  = controller().show(0)(fakeRequest)
+      val result  = controller().show(0)(getRequest)
       val content = contentAsString(result)
       content should include("/type-of-income")
     }

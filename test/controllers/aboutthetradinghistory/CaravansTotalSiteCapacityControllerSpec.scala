@@ -20,9 +20,9 @@ import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec:
+class CaravansTotalSiteCapacityControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -38,18 +38,18 @@ class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200" in {
-      val result = caravansTotalSiteCapacityController.show(fakeRequest)
+      val result = caravansTotalSiteCapacityController.show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = caravansTotalSiteCapacityController.show(fakeRequest)
+      val result = caravansTotalSiteCapacityController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -59,7 +59,7 @@ class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = caravansTotalSiteCapacityController.show(fakeRequestFromCYA)
+      val result  = caravansTotalSiteCapacityController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include previousPage
@@ -89,7 +89,7 @@ class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = caravansTotalSiteCapacityController.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
@@ -97,7 +97,7 @@ class CaravansTotalSiteCapacityControllerSpec extends TestBaseSpec:
 
     "return 400 and error message for invalid number" in {
       val res = caravansTotalSiteCapacityController.submit(
-        fakePostRequest.withFormUrlEncodedBody(invalidNumberFormData*)
+        postRequest.withFormUrlEncodedBody(invalidNumberFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(

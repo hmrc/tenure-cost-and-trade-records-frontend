@@ -20,22 +20,20 @@ import config.ErrorHandler
 import connectors.{Audit, SubmissionConnector}
 import models.submissions.ConnectedSubmission
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.mvc.Request
-import play.api.test.Helpers.{CREATED, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import play.twirl.api.Html
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.concurrent.Future
 
-class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec:
+class ConnectionToPropertySubmissionControllerSpec extends ControllerSpec:
 
   val audit: Audit                             = mock[Audit]
   val submissionConnector: SubmissionConnector = mock[SubmissionConnector]
   val errorHandler: ErrorHandler               = mock[ErrorHandler]
 
-  // doNothing().when(audit).sendExplicitAudit(any[String], any[JsObject])(any[HeaderCarrier], any[ExecutionContext])
   def connectionToPropertySubmissionController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
   ): ConnectionToPropertySubmissionController =
@@ -46,7 +44,7 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec:
       confirmation,
       audit,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "Submit method" when {
@@ -54,8 +52,8 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec:
       "redirect (HTTP 303)" in {
         when(submissionConnector.submitConnected(anyString, any[ConnectedSubmission])(using any[HeaderCarrier]))
           .thenReturn(Future.successful(HttpResponse(CREATED)))
-        val result = connectionToPropertySubmissionController().submit(fakeRequest)
-        status(result) shouldBe Status.SEE_OTHER
+        val result = connectionToPropertySubmissionController().submit(getRequest)
+        status(result) shouldBe SEE_OTHER
       }
     }
 
@@ -65,15 +63,15 @@ class ConnectionToPropertySubmissionControllerSpec extends TestBaseSpec:
           .thenReturn(Future.failed(RuntimeException("Test error")))
         when(errorHandler.internalServerErrorTemplate(using org.mockito.ArgumentMatchers.any(classOf[Request[?]])))
           .thenReturn(Future.successful(Html("Some Error Message")))
-        val result = connectionToPropertySubmissionController().submit(fakeRequest)
-        status(result) shouldBe Status.INTERNAL_SERVER_ERROR
+        val result = connectionToPropertySubmissionController().submit(getRequest)
+        status(result) shouldBe INTERNAL_SERVER_ERROR
       }
     }
   }
 
   "Confirmation method" should {
     "display the confirmation view" in {
-      val result = connectionToPropertySubmissionController().confirmation(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = connectionToPropertySubmissionController().confirmation(getRequest)
+      status(result) shouldBe OK
     }
   }

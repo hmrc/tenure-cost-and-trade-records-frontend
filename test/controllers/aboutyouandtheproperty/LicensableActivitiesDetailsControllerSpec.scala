@@ -19,15 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.LicensableActivitiesInformationForm.licensableActivitiesDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec:
+class LicensableActivitiesDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,7 +41,7 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       licensableActivitiesDetailsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def licensableActivitiesDetailsControllerNone(): LicensableActivitiesDetailsController =
@@ -52,24 +51,24 @@ class LicensableActivitiesDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       licensableActivitiesDetailsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 licensable activities details in the session" in {
-      val result = licensableActivitiesDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = licensableActivitiesDetailsController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = licensableActivitiesDetailsController().show(fakeRequest)
+      val result = licensableActivitiesDetailsController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 no licensable activities details in the session" in {
-      val result = licensableActivitiesDetailsControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = licensableActivitiesDetailsControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

@@ -36,10 +36,10 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
       "be handling GET requests by replying 200 with the form showing just the nights field" in new ControllerFixture(
         hasCompletedLettings = Some(false)
       ) {
-        val result: Future[Result] = controller.show()(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show()(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading       shouldBe "lettingHistory.intendedLettings.nights.heading"
         page.backLink      shouldBe routes.HasCompletedLettingsController.show.url
@@ -50,15 +50,15 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         isWelsh = false,
         hasStopped = Some(true)
       ) {
-        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = postRequest.withFormUrlEncodedBody(
           "nights" -> "140" // meets criteria (England)
         )
         val result: Future[Result]                           = controller.submit(request)
-        status(result)                            shouldBe SEE_OTHER
-        redirectLocation(result).value            shouldBe routes.IsYearlyAvailableController.show.url
+        status(result)                        shouldBe SEE_OTHER
+        redirectLocation(result).get          shouldBe routes.IsYearlyAvailableController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        intendedLettings(data).value.nights.value shouldBe 140
-        intendedLettings(data).value.hasStopped   shouldBe None
+        intendedLettings(data).get.nights.get shouldBe 140
+        intendedLettings(data).get.hasStopped shouldBe None
       }
     }
 
@@ -69,10 +69,10 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         nights = Some(100),
         hasStopped = Some(false)
       ) {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.backLink      shouldBe routes.OccupierListController.show.url
         page.input("nights") should haveValue("100")
@@ -83,22 +83,22 @@ class HowManyNightsControllerSpec extends LettingHistoryControllerSpec:
         nights = Some(100),
         hasStopped = Some(false)
       ) {
-        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = postRequest.withFormUrlEncodedBody(
           "nights" -> "251" // still does NOT meet criteria (in Wales)
         )
         val result: Future[Result]                           = controller.submit(request)
-        status(result)                                shouldBe SEE_OTHER
-        redirectLocation(result).value                shouldBe routes.HasStoppedLettingController.show.url
+        status(result)                            shouldBe SEE_OTHER
+        redirectLocation(result).get              shouldBe routes.HasStoppedLettingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        intendedLettings(data).value.nights.value     shouldBe 251
-        intendedLettings(data).value.hasStopped.value shouldBe false
+        intendedLettings(data).get.nights.get     shouldBe 251
+        intendedLettings(data).get.hasStopped.get shouldBe false
       }
     }
 
     "regardless of what users might have submitted" should {
       "be handling invalid POST by replying 400 with error messages" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "nights" -> ""
           )
         )

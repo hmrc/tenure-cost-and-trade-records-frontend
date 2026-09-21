@@ -19,16 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.CostsBreakdownForm.costsBreakdownForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class CostsBreakdownControllerSpec extends TestBaseSpec:
+class CostsBreakdownControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -43,7 +41,7 @@ class CostsBreakdownControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       costsBreakdownView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def costsBreakdownControllerNone(): CostsBreakdownController =
@@ -53,24 +51,24 @@ class CostsBreakdownControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       costsBreakdownView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 about you in the session" in {
-      val result = costsBreakdownController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = costsBreakdownController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = costsBreakdownController().show(fakeRequest)
+      val result = costsBreakdownController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 plant and technology in the session" in {
-      val result = costsBreakdownControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = costsBreakdownControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

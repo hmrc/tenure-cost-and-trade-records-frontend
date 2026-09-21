@@ -22,9 +22,9 @@ import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class TypeOfLettingControllerSpec extends TestBaseSpec:
+class TypeOfLettingControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,28 +37,29 @@ class TypeOfLettingControllerSpec extends TestBaseSpec:
       aboutFranchisesOrLettingsNavigator,
       typeOfLettingView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-      mockSessionRepo
+      mockSessionRepository
     )
 
-  "GET /"    should {
+  "GET /" should {
     "return 200" in {
-      val result = typeOfLettingController().show(Some(0))(fakeRequest)
+      val result = typeOfLettingController().show(Some(0))(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = typeOfLettingController().show(Some(0))(fakeRequest)
+      val result = typeOfLettingController().show(Some(0))(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = typeOfLettingController().show(Some(0))(fakeRequestFromCYA)
+      val result  = typeOfLettingController().show(Some(0))(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-franchise-or-lettings")
       content should not include "/financial-year-end"
     }
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
       val res = typeOfLettingController().submit(Some(0))(
@@ -79,6 +80,7 @@ class TypeOfLettingControllerSpec extends TestBaseSpec:
       "/send-trade-and-cost-information/check-your-answers-about-franchise-or-lettings"
     )
   }
+
   "update letting and redirect to telcomMast when data is different" in {
     val controller     = typeOfLettingController()
     val request        = FakeRequest(POST, "/submit-path")
@@ -88,7 +90,7 @@ class TypeOfLettingControllerSpec extends TestBaseSpec:
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/telecom-mast-letting?idx=0")
-    verify(mockSessionRepo).saveOrUpdate(any)(using any)
+    verify(mockSessionRepository).saveOrUpdate(any)(using any)
   }
 
   "update letting and redirect to ATM when not from CYA" in {

@@ -18,17 +18,15 @@ package controllers.aboutthetradinghistory
 
 import actions.SessionRequest
 import connectors.Audit
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class OtherCostsControllerSpec extends TestBaseSpec:
+class OtherCostsControllerSpec extends ControllerSpec:
 
   private val mockAudit: Audit = mock[Audit]
 
-  private val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, fakeRequest)
-  private val postRequest    = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
+  private val sessionRequest = SessionRequest(aboutYourTradingHistory6015YesSession, getRequest)
 
   private val otherCostsController = OtherCostsController(
     stubMessagesControllerComponents(),
@@ -38,13 +36,13 @@ class OtherCostsControllerSpec extends TestBaseSpec:
     preEnrichedActionRefiner(
       aboutTheTradingHistory = aboutYourTradingHistory6015YesSession.aboutTheTradingHistory
     ),
-    mockSessionRepo
+    mockSessionRepository
   )
 
   "GET /" should {
     "return 200" in {
       val result = otherCostsController.show(sessionRequest)
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
@@ -70,7 +68,9 @@ class OtherCostsControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "redirect to the next page if no other costs filled" in {
-      val result = otherCostsController.submit(postRequest)
+      val postFormRequest = sessionRequest.copy(request = FakeRequest("POST", "/").withFormUrlEncodedBody(Seq.empty*))
+      val result          = otherCostsController.submit(postFormRequest)
+
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(
         controllers.aboutthetradinghistory.routes.IncomeExpenditureSummaryController.show().url

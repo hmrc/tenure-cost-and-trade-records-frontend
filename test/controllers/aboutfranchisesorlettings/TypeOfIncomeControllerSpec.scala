@@ -26,9 +26,9 @@ import play.api.libs.json.{JsError, Json}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
 import test.TestObjects
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects:
+class TypeOfIncomeControllerSpec extends ControllerSpec with TestObjects:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -41,7 +41,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects:
       aboutFranchisesOrLettingsNavigator,
       typeOfIncomeView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6045),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "IncomeRecord" should {
@@ -115,31 +115,32 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects:
     }
   }
 
-  "GET /"    should {
+  "GET /" should {
     "return 200" in {
-      val result = typeOfIncomeController().show(Some(0))(fakeRequest)
+      val result = typeOfIncomeController().show(Some(0))(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = typeOfIncomeController().show(Some(0))(fakeRequest)
+      val result = typeOfIncomeController().show(Some(0))(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = typeOfIncomeController().show(Some(0))(fakeRequestFromCYA)
+      val result  = typeOfIncomeController().show(Some(0))(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-franchise-or-lettings")
       content should not include "/financial-year-end"
     }
 
     "render a  back link to 'franchise-or-lettings-tied-to-property' " in {
-      val result  = typeOfIncomeController().show(Some(0))(fakeRequest)
+      val result  = typeOfIncomeController().show(Some(0))(getRequest)
       val content = contentAsString(result)
       content should include("/franchise-or-lettings-tied-to-property")
     }
   }
+
   "SUBMIT /" should {
     "throw a BAD_REQUEST on empty form submission" in {
       val res = typeOfIncomeController().submit(Some(0))(
@@ -158,7 +159,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects:
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/franchise-type-details?idx=0")
-    verify(mockSessionRepo).saveOrUpdate(any)(using any)
+    verify(mockSessionRepository).saveOrUpdate(any)(using any)
   }
 
   "update income and redirect to franchise details if type selected is Franchise type" in {
@@ -170,7 +171,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects:
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/franchise-type-details?idx=0")
-    verify(mockSessionRepo, times(2)).saveOrUpdate(any)(using any)
+    verify(mockSessionRepository, times(2)).saveOrUpdate(any)(using any)
   }
 
   "update income and redirect to concession details if type selected is concession type" in {
@@ -182,7 +183,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects:
 
     status(result)           shouldBe SEE_OTHER
     redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/concession-type-details?idx=0")
-    verify(mockSessionRepo, times(3)).saveOrUpdate(any)(using any)
+    verify(mockSessionRepository, times(3)).saveOrUpdate(any)(using any)
   }
 
   "update income and redirect to letting details if type selected is letting type" in {
@@ -197,6 +198,7 @@ class TypeOfIncomeControllerSpec extends TestBaseSpec with TestObjects:
       "/send-trade-and-cost-information/letting-type-details?idx=0"
     )
   }
+
   "redirect to MaxOfLettingsReachedController when rental income records exceed the limit for letting" in {
     val maxRentalRecords = IndexedSeq.fill(5)(LettingIncomeRecord(sourceType = TypeLetting))
     val controller       = typeOfIncomeController(

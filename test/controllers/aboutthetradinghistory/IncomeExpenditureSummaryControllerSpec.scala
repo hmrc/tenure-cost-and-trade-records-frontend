@@ -17,12 +17,11 @@
 package controllers.aboutthetradinghistory
 
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class IncomeExpenditureSummaryControllerSpec extends TestBaseSpec:
+class IncomeExpenditureSummaryControllerSpec extends ControllerSpec:
 
   def incomeExpenditureSummaryController(
     aboutTheTradingHistory: Option[AboutTheTradingHistory] = Some(prefilledAboutYourTradingHistory)
@@ -32,17 +31,17 @@ class IncomeExpenditureSummaryControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       incomeExpenditureSummaryView,
       preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = incomeExpenditureSummaryController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = incomeExpenditureSummaryController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = incomeExpenditureSummaryController().show(fakeRequest)
+      val result = incomeExpenditureSummaryController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

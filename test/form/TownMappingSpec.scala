@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
 import form.TownMapping.validateTown
-import org.scalatest.matchers.should
-import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
-import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.prop.TableFor2
 import play.api.data.Form
 import play.api.data.Forms.single
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class TownMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
+class TownMappingSpec extends BaseSpec:
 
   trait Setup:
     val form: Form[String] = Form(single("town" -> validateTown))
@@ -38,7 +37,7 @@ class TownMappingSpec extends AnyWordSpecLike with should.Matchers with TableDri
         ("County", true)
       )
 
-      TableDrivenPropertyChecks.forAll(lengths) { (town, isValid) =>
+      forAll(lengths) { (town, isValid) =>
         val res: Form[String] = form.bind(Map("town" -> town))
 
         if isValid then
@@ -55,7 +54,7 @@ class TownMappingSpec extends AnyWordSpecLike with should.Matchers with TableDri
         ("", false)
       )
 
-      TableDrivenPropertyChecks.forAll(isInput) { (town, isValid) =>
+      forAll(isInput) { (town, isValid) =>
         val res: Form[String] = form.bind(Map("town" -> town))
 
         if isValid then

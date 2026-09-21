@@ -23,6 +23,7 @@ import models.submissions.aboutfranchisesorlettings.TelecomMastLetting
 import models.submissions.common.Address
 import org.jsoup.nodes.Document
 import org.mockito.ArgumentCaptor
+import org.scalatest.Inside
 import play.api.mvc.Codec.utf_8 as UTF_8
 import play.api.mvc.Result
 import play.api.test.FakeRequest
@@ -30,11 +31,11 @@ import play.api.test.Helpers.*
 import repositories.SessionRepo
 import test.{JsoupHelpers, MockAddressLookup}
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.concurrent.Future
 
-class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
+class TelecomMastLettingControllerSpec extends ControllerSpec with JsoupHelpers with Inside:
 
   trait ControllerFixture(havingNoLettings: Boolean = false) extends MockAddressLookup:
     val repository: SessionRepo = mock[SessionRepo]
@@ -60,31 +61,34 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
     )
 
   "the TelecomMastLetting controller" when {
-    "handling GET requests"            should {
+    "handling GET requests" should {
       "reply 200 with a fresh HTML form" in new ControllerFixture {
-        val result: Future[Result] = controller.show(index = Some(5))(fakeRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF_8.charset
+        val result: Future[Result] = controller.show(index = Some(5))(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF_8.charset
 
         val page: Document = contentAsJsoup(result)
         page.heading                     shouldBe "label.telecomMastLetting.heading"
         page.input("operatingCompanyName") should beEmpty
         page.input("siteOfMast")           should beEmpty
       }
+
       "reply 200 with a pre-filled HTML form if given a known index" in new ControllerFixture {
-        val result: Future[Result] = controller.show(index = Some(1))(fakeRequest)
+        val result: Future[Result] = controller.show(index = Some(1))(getRequest)
         val page: Document         = contentAsJsoup(result)
         page.input("operatingCompanyName") should haveValue("Vodafone")
         page.input("siteOfMast")           should haveValue("roof")
       }
+
       "render back link to CYA if come from CYA" in new ControllerFixture {
-        val result: Future[Result] = controller.show(Some(0))(fakeRequestFromCYA)
+        val result: Future[Result] = controller.show(Some(0))(getRequestFromCYA)
         val page: Document         = contentAsJsoup(result)
         page.backLink shouldBe routes.CheckYourAnswersAboutFranchiseOrLettingsController.show().url
       }
     }
-    "handling POST requests"           should {
+
+    "handling POST requests" should {
       "reply 400 BAD_REQUEST if an empty form is submitted" in new ControllerFixture {
         val result: Future[Result] = controller.submit(index = Some(0))(
           FakeRequest().withFormUrlEncodedBody(Seq.empty*)
@@ -94,52 +98,55 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
         page.error("operatingCompanyName") shouldBe "error.operatingCompanyName.required"
         page.error("siteOfMast")           shouldBe "error.siteOfMast.required"
       }
+
       "save new record and reply 303 and redirect to address lookup page" in new ControllerFixture(havingNoLettings = true) {
         val operatingCompanyName   = "New Bread and Butter Ltd"
         val siteOfMast             = "Terrace"
         val result: Future[Result] = controller.submit(index = Some(0))(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "operatingCompanyName" -> operatingCompanyName,
             "siteOfMast"           -> siteOfMast
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/on-ramp"
+        redirectLocation(result).get shouldBe "/on-ramp"
 
         val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
-        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(0)) {
+        inside(session.getValue.aboutFranchisesOrLettings.get.lettings.get.apply(0)) {
           case record: TelecomMastLetting =>
-            record.operatingCompanyName.value shouldBe operatingCompanyName
-            record.siteOfMast.value           shouldBe siteOfMast
+            record.operatingCompanyName.get shouldBe operatingCompanyName
+            record.siteOfMast.get           shouldBe siteOfMast
         }
       }
+
       "update existing record and reply 303 and redirect to address lookup page" in new ControllerFixture {
         val operatingCompanyName   = "Turned into Bread and Butter Ltd"
         val siteOfMast             = "Terrace"
         val result: Future[Result] = controller.submit(index = Some(1))(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "operatingCompanyName" -> operatingCompanyName,
             "siteOfMast"           -> siteOfMast
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe "/on-ramp"
+        redirectLocation(result).get shouldBe "/on-ramp"
 
         val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session.capture())(using any)
-        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
+        inside(session.getValue.aboutFranchisesOrLettings.get.lettings.get.apply(1)) {
           case record: TelecomMastLetting =>
-            record.operatingCompanyName.value shouldBe operatingCompanyName
-            record.siteOfMast.value           shouldBe siteOfMast
+            record.operatingCompanyName.get shouldBe operatingCompanyName
+            record.siteOfMast.get           shouldBe siteOfMast
         }
       }
     }
+
     "retrieving the confirmed address" should {
       "save record and reply 303 redirect to the next page" in new ControllerFixture {
-        val result: Future[Result] = controller.addressLookupCallback(idx = 1, "confirmedAddress")(fakeRequest)
-        status(result)                 shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe routes.RentDetailsController.show(idx = 1).url
+        val result: Future[Result] = controller.addressLookupCallback(idx = 1, "confirmedAddress")(getRequest)
+        status(result)               shouldBe SEE_OTHER
+        redirectLocation(result).get shouldBe routes.RentDetailsController.show(idx = 1).url
 
         val id: ArgumentCaptor[String] = captor[String]
         verify(addressLookupConnector, once).getConfirmedAddress(id)(using any[HeaderCarrier])
@@ -147,9 +154,9 @@ class TelecomMastLettingControllerSpec extends TestBaseSpec with JsoupHelpers:
 
         val session: ArgumentCaptor[Session] = captor[Session]
         verify(repository, once).saveOrUpdate(session)(using any)
-        inside(session.getValue.aboutFranchisesOrLettings.value.lettings.value.apply(1)) {
+        inside(session.getValue.aboutFranchisesOrLettings.get.lettings.get.apply(1)) {
           case record: TelecomMastLetting =>
-            record.correspondenceAddress.value shouldBe Address(
+            record.correspondenceAddress.get shouldBe Address(
               buildingNameNumber = addressLookupConfirmedAddress.address.lines.get.head,
               street1 = Some(addressLookupConfirmedAddress.address.lines.get.apply(1)),
               town = addressLookupConfirmedAddress.address.lines.get.last,

@@ -17,11 +17,10 @@
 package controllers.connectiontoproperty
 
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
-import play.api.test.Helpers.{charset, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class CheckYourAnswersConnectionToVacantPropertyControllerSpec extends TestBaseSpec:
+class CheckYourAnswersConnectionToVacantPropertyControllerSpec extends ControllerSpec:
 
   def checkYourAnswersConnectionToVacantPropertyController(
     stillConnectedDetails: Option[StillConnectedDetails] = Some(prefilledNotVacantPropertiesCYA)
@@ -30,17 +29,17 @@ class CheckYourAnswersConnectionToVacantPropertyControllerSpec extends TestBaseS
       stubMessagesControllerComponents(),
       checkYourAnswersConnectionToVacantProperty,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = checkYourAnswersConnectionToVacantPropertyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = checkYourAnswersConnectionToVacantPropertyController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = checkYourAnswersConnectionToVacantPropertyController().show(fakeRequest)
+      val result = checkYourAnswersConnectionToVacantPropertyController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }

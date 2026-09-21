@@ -19,15 +19,14 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.ConnectedToLandlordForm.connectedToLandlordForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class ConnectedToLandlordControllerSpec extends TestBaseSpec:
+class ConnectedToLandlordControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,13 +41,13 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       connectedToLandlordView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Connected To Landlord in the session" in {
-      val result = connectedToLandlordController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = connectedToLandlordController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class ConnectedToLandlordControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Connected To Landlord in the session" in {
       val controller = connectedToLandlordController(None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

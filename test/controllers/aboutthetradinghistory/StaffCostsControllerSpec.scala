@@ -17,13 +17,11 @@
 package controllers.aboutthetradinghistory
 
 import connectors.Audit
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class StaffCostsControllerSpec extends TestBaseSpec:
+class StaffCostsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -38,7 +36,7 @@ class StaffCostsControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def staffCostsBaseloadController: StaffCostsController =
@@ -52,23 +50,23 @@ class StaffCostsControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = staffCostsController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = staffCostsController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = staffCostsController.show(fakeRequest)
+      val result = staffCostsController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = staffCostsController.show(fakeRequestFromCYA)
+      val result  = staffCostsController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"
@@ -84,7 +82,7 @@ class StaffCostsControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA Baseload" in {
-      val result  = staffCostsBaseloadController.show(fakeRequestFromCYA)
+      val result  = staffCostsBaseloadController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"

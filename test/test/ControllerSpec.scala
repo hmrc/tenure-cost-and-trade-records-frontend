@@ -29,7 +29,8 @@ import models.submissions.lettingHistory.LettingHistory
 import models.submissions.notconnected.RemoveConnectionDetails
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
 import models.{ForType, Session}
-import play.api.mvc.{Request, Result}
+import play.api.mvc.{AnyContent, Request, Result}
+import play.api.test.FakeRequest
 import repositories.SessionRepository
 
 import scala.concurrent.Future
@@ -38,7 +39,7 @@ import scala.language.implicitConversions
 /**
   * @author Yuriy Tumakha
   */
-abstract class ControllerSpec extends TCTRAppSpec:
+abstract class ControllerSpec extends TCTRAppSpec with InjectedNavigation:
 
   val mockSessionRepository: SessionRepository = mock[SessionRepository]
 
@@ -46,11 +47,64 @@ abstract class ControllerSpec extends TCTRAppSpec:
   when(mockSessionRepository.saveOrUpdate(any[Session])(using any)).thenReturn(Future.successful(()))
   when(mockSessionRepository.remove()(using any)).thenReturn(Future.successful(()))
 
+  val getRequestFromCYA: FakeRequest[AnyContent] = getRequest.withQueryParams("from" -> "CYA")
+
+  val getRequestFromTL: FakeRequest[AnyContent] = getRequest.withQueryParams("from" -> "TL")
+
+  val getRequestFromIES: FakeRequest[AnyContent] = getRequest.withQueryParams("from" -> "IES")
+
   val preFilledSession: WithSessionRefiner =
     preEnrichedActionRefiner(
       stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
       removeConnectionDetails = Some(prefilledRemoveConnection),
       aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo)
+    )
+
+  val preFilledSession6015: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
+      removeConnectionDetails = Some(prefilledRemoveConnection),
+      aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
+      forType = FOR6015
+    )
+
+  val preFilledSession6020: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
+      removeConnectionDetails = Some(prefilledRemoveConnection),
+      aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
+      forType = FOR6020
+    )
+
+  val preFilledSession6076: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      stillConnectedDetails = Some(prefilledStillConnectedDetailsYes),
+      removeConnectionDetails = Some(prefilledRemoveConnection),
+      aboutYouAndTheProperty = Some(prefilledAboutYouAndThePropertyNo),
+      forType = FOR6076
+    )
+
+  val preFilledSessionNone: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      stillConnectedDetails = None,
+      removeConnectionDetails = None,
+      aboutYouAndTheProperty = None
+    )
+
+  val preFilledSession6045: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      referenceNumber = "99996045004",
+      aboutTheTradingHistory = prefilledAboutYourTradingHistory6045,
+      aboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6045,
+      forType = FOR6045
+    )
+
+  val preFilledSession6048: WithSessionRefiner =
+    preEnrichedActionRefiner(
+      referenceNumber = "99996048004",
+      aboutTheTradingHistory = prefilledAboutYourTradingHistory6048,
+      aboutTheTradingHistoryPartOne = prefilledAboutTheTradingHistoryPartOneCYA6048,
+      forType = FOR6048
     )
 
   def preEnrichedActionRefiner(

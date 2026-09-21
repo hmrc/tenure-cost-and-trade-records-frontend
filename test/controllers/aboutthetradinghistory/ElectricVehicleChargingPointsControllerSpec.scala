@@ -18,12 +18,11 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec:
+class ElectricVehicleChargingPointsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,23 +35,23 @@ class ElectricVehicleChargingPointsControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       electricVehicleChargingPointsView,
       preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = electricVehicleChargingPointsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = electricVehicleChargingPointsController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = electricVehicleChargingPointsController().show(fakeRequest)
+      val result = electricVehicleChargingPointsController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = electricVehicleChargingPointsController().show(fakeRequestFromCYA)
+      val result  = electricVehicleChargingPointsController().show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
 import controllers.LoginController.loginForm
 import form.Errors

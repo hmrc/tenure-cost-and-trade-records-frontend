@@ -18,12 +18,11 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import controllers.aboutthetradinghistory
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class ElectricityGeneratedControllerSpec extends TestBaseSpec:
+class ElectricityGeneratedControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,17 +36,17 @@ class ElectricityGeneratedControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = electricityGeneratedController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = electricityGeneratedController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = electricityGeneratedController.show(fakeRequest)
+      val result = electricityGeneratedController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -58,7 +57,7 @@ class ElectricityGeneratedControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = electricityGeneratedController.show(fakeRequestFromCYA)
+      val result  = electricityGeneratedController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/warning-check-accounting-info"
@@ -84,15 +83,15 @@ class ElectricityGeneratedControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = electricityGeneratedController.submit(
-        fakePostRequest.withFormUrlEncodedBody(electricityGeneratedFormData*)
+        postRequest.withFormUrlEncodedBody(electricityGeneratedFormData*)
       )
-      status(res)           shouldBe Status.SEE_OTHER
+      status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(aboutthetradinghistory.routes.GrossReceiptsExcludingVATController.show().url)
     }
 
     "return 400 and error message for invalid weeks" in {
       val res = electricityGeneratedController.submit(
-        fakePostRequest.withFormUrlEncodedBody(invalidWeeksFormData*)
+        postRequest.withFormUrlEncodedBody(invalidWeeksFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include("""<a href="#turnover[0].weeks">error.weeksMapping.invalid</a>""")

@@ -20,15 +20,14 @@ import connectors.Audit
 import form.Errors
 import form.connectiontoproperty.ConnectionToThePropertyForm.connectionToThePropertyForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class ConnectionToThePropertyControllerSpec extends TestBaseSpec:
+class ConnectionToThePropertyControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -43,13 +42,13 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       connectionToThePropertyView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with connection to the property in session" in {
-      val result = connectionToThePropertyController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = connectionToThePropertyController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -60,8 +59,8 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec:
 
   "GET edit address" should {
     "return 200 and HTML with connection to the property with edit address in session" in {
-      val result = connectionToThePropertyController(Some(prefilledStillConnectedDetailsEdit)).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = connectionToThePropertyController(Some(prefilledStillConnectedDetailsEdit)).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -72,7 +71,7 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec:
 
   "GET empty still connected" should {
     "return exception" in {
-      val result = connectionToThePropertyController(None).show(fakeRequest)
+      val result = connectionToThePropertyController(None).show(getRequest)
       result.failed.recover { case e: Exception =>
         e.getMessage shouldBe "Navigation for connection to property page reached with error Unknown connection to property back link"
       }
@@ -82,7 +81,7 @@ class ConnectionToThePropertyControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = connectionToThePropertyController().submit(
-        fakeRequest.withFormUrlEncodedBody(Seq.empty*)
+        getRequest.withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }

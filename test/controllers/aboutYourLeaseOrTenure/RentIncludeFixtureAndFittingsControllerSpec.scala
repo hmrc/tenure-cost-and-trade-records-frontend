@@ -20,12 +20,11 @@ import connectors.Audit
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartThree}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
+class RentIncludeFixtureAndFittingsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -44,13 +43,13 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
         aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Rent Includes trade services with yes in the session" in {
-      val result = rentIncludeFixtureAndFittingsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentIncludeFixtureAndFittingsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -62,8 +61,8 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
       val controller = rentIncludeFixtureAndFittingsController(
         aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo)
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -73,8 +72,8 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML Rent Includes trade services with none in the session" in {
       val controller = rentIncludeFixtureAndFittingsController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -83,8 +82,8 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
     }
 
     "return 200 and HTML with Rent Paid Separately with yes in the session for 6020" in {
-      val result = rentIncludeFixtureAndFittingsController(forType = FOR6020).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentIncludeFixtureAndFittingsController(forType = FOR6020).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -96,8 +95,8 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
       val result = rentIncludeFixtureAndFittingsController(
         forType = FOR6020,
         aboutLeaseOrAgreementPartThree = None
-      ).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      ).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -106,8 +105,8 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
     }
 
     "return 200 and HTML with Payment For Trade Services with yes in the session for 6030" in {
-      val result = rentIncludeFixtureAndFittingsController(forType = FOR6030).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = rentIncludeFixtureAndFittingsController(forType = FOR6030).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -119,8 +118,8 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
       val result = rentIncludeFixtureAndFittingsController(
         forType = FOR6030,
         aboutLeaseOrAgreementPartThree = Some(prefilledAboutLeaseOrAgreementPartThreeNo)
-      ).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      ).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -132,8 +131,8 @@ class RentIncludeFixtureAndFittingsControllerSpec extends TestBaseSpec:
       val result = rentIncludeFixtureAndFittingsController(
         forType = FOR6030,
         aboutLeaseOrAgreementPartThree = None
-      ).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      ).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

@@ -33,10 +33,10 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
   "the IsYearlyAvailable controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.eitherMeetsCriteriaOrHasNotStopped.heading"
         page.backLink          shouldBe routes.HowManyNightsController.show.url
@@ -46,7 +46,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
 
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing answer!
           )
         )
@@ -57,14 +57,14 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
 
       "be handling POST answer='yes' by replying 303 redirect to the 'Do you advert online' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                       shouldBe routes.HasOnlineAdvertisingController.show.url
+        redirectLocation(result).get                     shouldBe routes.HasOnlineAdvertisingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        intendedLettings(data).value.isYearlyAvailable.value shouldBe true
+        intendedLettings(data).get.isYearlyAvailable.get shouldBe true
       }
     }
 
@@ -73,10 +73,10 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         hasStopped = Some(true),
         isYearlyAvailable = Some(true)
       ) {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.intendedLettings.isYearlyAvailable.hasStoppedLetting.heading"
         page.backLink          shouldBe routes.WhenWasLastLetController.show.url
@@ -90,7 +90,7 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         isYearlyAvailable = Some(true)
       ) {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing answer!
           )
         )
@@ -104,14 +104,14 @@ class IsYearlyAvailableControllerSpec extends LettingHistoryControllerSpec:
         isYearlyAvailable = Some(true)
       ) {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "no"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value                       shouldBe routes.TradingSeasonController.show.url
+        redirectLocation(result).get                     shouldBe routes.TradingSeasonController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        intendedLettings(data).value.isYearlyAvailable.value shouldBe false
+        intendedLettings(data).get.isYearlyAvailable.get shouldBe false
       }
     }
   }

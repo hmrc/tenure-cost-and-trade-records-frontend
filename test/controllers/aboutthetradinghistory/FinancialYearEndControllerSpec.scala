@@ -25,18 +25,17 @@ import models.submissions.Form6010.DayMonthsDuration
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import models.{ForType, Session}
 import play.api.data.Form
-import play.api.http.Status
 import play.api.mvc.{AnyContentAsFormUrlEncoded, Result}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.http.HeaderCarrier
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.concurrent.Future
 import scala.language.reflectiveCalls
 
-class FinancialYearEndControllerSpec extends TestBaseSpec:
+class FinancialYearEndControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -54,17 +53,17 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
         aboutYourTradingHistoryNavigator,
         financialYearEndView,
         preEnrichedActionRefiner(forType = forType, aboutTheTradingHistory = aboutTheTradingHistory),
-        mockSessionRepo
+        mockSessionRepository
       )
 
   "GET /" should {
     "return 200" in new ControllerFixture {
-      val result: Future[Result] = financialYearEndController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result: Future[Result] = financialYearEndController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in new ControllerFixture {
-      val result: Future[Result] = financialYearEndController().show(fakeRequest)
+      val result: Future[Result] = financialYearEndController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -130,15 +129,15 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
         "yearEndChanged"      -> "true"
       )
       val request: FakeRequest[AnyContentAsFormUrlEncoded] = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      when(mockSessionRepository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       // Act
       val result: Future[Result] = financialYearEndController().submit(request)
 
       // Assert
-      status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
+      status(result)               shouldBe SEE_OTHER
+      redirectLocation(result).get shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
     "redirect to the next page when valid 6030 data is submitted" in new ControllerFixture {
       // Arrange
@@ -149,15 +148,15 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
       )
       val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(aboutYourTradingHistory6030YesSession, request)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      when(mockSessionRepository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       // Act
       val result: Future[Result] = financialYearEndController(FOR6030, Some(prefilledAboutYourTradingHistory6030)).submit(sessionRequest)
 
       // Assert
-      status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
+      status(result)               shouldBe SEE_OTHER
+      redirectLocation(result).get shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
 
     "redirect to the next page when valid 6020 data is submitted" in new ControllerFixture {
@@ -169,15 +168,15 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
       )
       val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/your-route").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(aboutYourTradingHistory6020YesSession, request)
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      when(mockSessionRepository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       // Act
       val result: Future[Result] = financialYearEndController(FOR6020, Some(prefilledAboutYourTradingHistory6020)).submit(sessionRequest)
 
       // Assert
-      status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
+      status(result)               shouldBe SEE_OTHER
+      redirectLocation(result).get shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
 
     "redirect to the next page when valid 6045 data is submitted" in new ControllerFixture {
@@ -190,13 +189,13 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
       val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(session6045, request)
 
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      when(mockSessionRepository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       val result: Future[Result] = financialYearEndController(session6045.forType, session6045.aboutTheTradingHistory).submit(sessionRequest)
 
-      status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
+      status(result)               shouldBe SEE_OTHER
+      redirectLocation(result).get shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
 
     "redirect to the next page when valid 6048 data is submitted" in new ControllerFixture {
@@ -209,13 +208,13 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
       val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(session6048, request)
 
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      when(mockSessionRepository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       val result: Future[Result] = financialYearEndController(session6048.forType, session6048.aboutTheTradingHistory).submit(sessionRequest)
 
-      status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
+      status(result)               shouldBe SEE_OTHER
+      redirectLocation(result).get shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
 
     "redirect to the next page when valid 6076 data is submitted" in new ControllerFixture {
@@ -228,13 +227,13 @@ class FinancialYearEndControllerSpec extends TestBaseSpec:
       val request: FakeRequest[AnyContentAsFormUrlEncoded]           = FakeRequest(POST, "/").withFormUrlEncodedBody(validFormData.toSeq*)
       val sessionRequest: SessionRequest[AnyContentAsFormUrlEncoded] = SessionRequest(session6076, request)
 
-      when(mockSessionRepo.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
+      when(mockSessionRepository.saveOrUpdate(any[Session])(using any[HeaderCarrier]))
         .thenReturn(Future.unit)
 
       val result: Future[Result] = financialYearEndController(session6076.forType, session6076.aboutTheTradingHistory).submit(sessionRequest)
 
-      status(result)                 shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe routes.FinancialYearEndDatesSummaryController.show().url
+      status(result)               shouldBe SEE_OTHER
+      redirectLocation(result).get shouldBe routes.FinancialYearEndDatesSummaryController.show().url
     }
   }
 

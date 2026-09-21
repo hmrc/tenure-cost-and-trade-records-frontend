@@ -20,14 +20,12 @@ import actions.SessionRequest
 import connectors.Audit
 import form.aboutyouandtheproperty.OccupiersDetailsForm.occupiersDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{POST, charset, contentAsString, contentType, redirectLocation, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class OccupiersDetailsControllerSpec extends TestBaseSpec:
+class OccupiersDetailsControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,7 +40,7 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       occupiersDetailsView,
       preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def aboutYouControllerNone(): OccupiersDetailsController =
@@ -52,37 +50,37 @@ class OccupiersDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       occupiersDetailsView,
       preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 about you in the session" in {
-      val result = controller().show(None)(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller().show(None)(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = controller().show(None)(fakeRequest)
+      val result = controller().show(None)(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 no about you in the session" in {
-      val result = controller().show(None)(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = controller().show(None)(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
-      val result = controller().show(None)(fakeRequestFromCYA)
+      val result = controller().show(None)(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
 
     "return correct backLink when 'from=CYA' query param is not present" in {
-      val result = controller().show(None)(fakeRequest)
+      val result = controller().show(None)(getRequest)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.PartsUnavailableController.show().url
       )

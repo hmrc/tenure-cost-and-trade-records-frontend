@@ -16,7 +16,6 @@
 
 package controllers
 
-import play.api.http.Status
 import play.api.test.Helpers.*
 import test.ControllerSpec
 
@@ -27,7 +26,7 @@ class ApplicationSpec extends ControllerSpec:
   "GET /" should {
     "return 200" in {
       val result = controller.index(getRequest)
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return HTML" in {

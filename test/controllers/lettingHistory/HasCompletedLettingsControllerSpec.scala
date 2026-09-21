@@ -33,10 +33,10 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
   "the HasCompletedLettings controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET by replying 200 with the HTML form having unchecked radios" in new ControllerFixture {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.hasCompletedLettings.heading"
         page.backLink          shouldBe routes.HasPermanentResidentsController.show.url
@@ -46,14 +46,14 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
 
       "be handling POST answer='yes' by replying 303 redirect to 'CompletedLettingsDetail' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value   shouldBe routes.OccupierDetailController.show(index = None).url
+        redirectLocation(result).get   shouldBe routes.OccupierDetailController.show(index = None).url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        hasCompletedLettings(data).value shouldBe true
+        hasCompletedLettings(data).get shouldBe true
       }
     }
 
@@ -63,10 +63,10 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           permanentResidents = twoResidents,
           completedLettings = twoOccupiers
         ) {
-          val result: Future[Result] = controller.show(fakeGetRequest)
-          status(result)            shouldBe OK
-          contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF8
+          val result: Future[Result] = controller.show(getRequest)
+          status(result)          shouldBe OK
+          contentType(result).get shouldBe HTML
+          charset(result).get     shouldBe UTF8
           val page: Document = contentAsJsoup(result)
           page.backLink          shouldBe routes.ResidentListController.show.url
           page.radios("answer") shouldNot be(empty)
@@ -78,15 +78,15 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           completedLettings = twoOccupiers
         ) {
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
+          redirectLocation(result).get   shouldBe routes.OccupierListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          hasCompletedLettings(data).value shouldBe true
-          completedLettings(data)          shouldBe twoOccupiers
+          hasCompletedLettings(data).get shouldBe true
+          completedLettings(data)        shouldBe twoOccupiers
         }
 
         "be handling POST answer='no' by replying 303 redirect to the 'LettingIntention' page" in new ControllerFixture(
@@ -95,14 +95,14 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
         ) {
           // Answering 'no' will clear out all completed lettings
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "answer" -> "no"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value                                   shouldBe routes.HowManyNightsController.show.url
+          redirectLocation(result).get                                     shouldBe routes.HowManyNightsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          hasCompletedLettings(data).value                                 shouldBe false
+          hasCompletedLettings(data).get                                   shouldBe false
           completedLettings(data)                                          shouldBe Nil
           mayHaveMoreEntitiesOf(kind = "completedLettings", data.getValue) shouldBe None
         }
@@ -113,15 +113,15 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
           completedLettings = fiveOccupiers
         ) {
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value   shouldBe routes.OccupierListController.show.url
+          redirectLocation(result).get   shouldBe routes.OccupierListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          hasCompletedLettings(data).value shouldBe true
-          completedLettings(data)            should have size 5
+          hasCompletedLettings(data).get shouldBe true
+          completedLettings(data)          should have size 5
         }
       }
     }
@@ -129,7 +129,7 @@ class HasCompletedLettingsControllerSpec extends LettingHistoryControllerSpec:
     "regardless of the user providing answers" should {
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest
+          postRequest
             .withFormUrlEncodedBody(
               "answer" -> "" // missing
             )

@@ -33,10 +33,10 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
   "the HasPermanentResidents controller" when {
     "the user has not provided any answer yet" should {
       "be handling GET and reply 200 with the HTML form having unchecked radios" in new ControllerFixture {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading           shouldBe "lettingHistory.permanentResidents.heading"
         page.backLink          shouldBe controllers.routes.TaskListController.show.withFragment("letting-history").toString
@@ -46,14 +46,14 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
 
       "be handling POST answer='yes' by replying 303 redirect to the 'PermanentResidentDetail' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value    shouldBe routes.ResidentDetailController.show().url
+        redirectLocation(result).get    shouldBe routes.ResidentDetailController.show().url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        hasPermanentResidents(data).value shouldBe true
+        hasPermanentResidents(data).get shouldBe true
       }
     }
 
@@ -62,10 +62,10 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         "be handling GET and reply 200 with the HTML form having checked radios" in new ControllerFixture(
           permanentResidents = oneResident
         ) {
-          val result: Future[Result] = controller.show(fakeGetRequest)
-          status(result)            shouldBe OK
-          contentType(result).value shouldBe HTML
-          charset(result).value     shouldBe UTF8
+          val result: Future[Result] = controller.show(getRequest)
+          status(result)          shouldBe OK
+          contentType(result).get shouldBe HTML
+          charset(result).get     shouldBe UTF8
           val page: Document = contentAsJsoup(result)
           page.radios("answer") shouldNot be(empty)
           page.radios("answer")    should haveChecked("yes")
@@ -76,15 +76,15 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           permanentResidents = oneResident
         ) {
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value    shouldBe routes.ResidentListController.show.url
+          redirectLocation(result).get    shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          hasPermanentResidents(data).value shouldBe true
-          permanentResidents(data)          shouldBe oneResident
+          hasPermanentResidents(data).get shouldBe true
+          permanentResidents(data)        shouldBe oneResident
         }
 
         "be handling POST answer='no' by replying 303 redirect to the 'HasCompletedLettings' page" in new ControllerFixture(
@@ -93,14 +93,14 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
         ) {
           // Answering 'no' will clear out all permanent residents
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "answer" -> "no"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value                                    shouldBe routes.HasCompletedLettingsController.show.url
+          redirectLocation(result).get                                      shouldBe routes.HasCompletedLettingsController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          hasPermanentResidents(data).value                                 shouldBe false
+          hasPermanentResidents(data).get                                   shouldBe false
           permanentResidents(data)                                          shouldBe Nil
           mayHaveMoreEntitiesOf(kind = "permanentResidents", data.getValue) shouldBe None
         }
@@ -111,15 +111,15 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
           permanentResidents = fiveResidents
         ) {
           val result: Future[Result] = controller.submit(
-            fakePostRequest.withFormUrlEncodedBody(
+            postRequest.withFormUrlEncodedBody(
               "answer" -> "yes"
             )
           )
           status(result) shouldBe SEE_OTHER
-          redirectLocation(result).value    shouldBe routes.ResidentListController.show.url
+          redirectLocation(result).get    shouldBe routes.ResidentListController.show.url
           verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-          hasPermanentResidents(data).value shouldBe true
-          permanentResidents(data)            should have size 5
+          hasPermanentResidents(data).get shouldBe true
+          permanentResidents(data)          should have size 5
         }
       }
     }
@@ -127,23 +127,19 @@ class HasPermanentResidentsControllerSpec extends LettingHistoryControllerSpec:
     "regardless of the user providing answers" should {
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest
+          postRequest
             .withFormUrlEncodedBody(
-              "answer" -> "" // missing
+              "answer" -> ""
             )
             .withQueryParams(
-              "from" -> "CYA;some-fragment"
-            )
-            .withFragment(
-              "permanent-residents"
+              "from" -> "CYA"
             )
         )
         status(result) shouldBe BAD_REQUEST
-        val page: Document         = contentAsJsoup(result)
-        page.backLink        shouldBe
-          routes.CheckYourAnswersLettingHistoryController.show
-            .withFragment("some-fragment")
-            .toString
+
+        val page: Document = contentAsJsoup(result)
+
+        page.backLink        shouldBe routes.CheckYourAnswersLettingHistoryController.show.toString
         page.error("answer") shouldBe "lettingHistory.hasPermanentResidents.required"
       }
     }

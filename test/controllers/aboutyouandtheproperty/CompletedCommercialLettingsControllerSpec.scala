@@ -20,15 +20,13 @@ import actions.SessionRequest
 import connectors.Audit
 import form.aboutyouandtheproperty.CompletedCommercialLettingsForm.completedCommercialLettingsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndThePropertyPartTwo
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.mvc.AnyContent
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class CompletedCommercialLettingsControllerSpec extends TestBaseSpec:
+class CompletedCommercialLettingsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -43,40 +41,40 @@ class CompletedCommercialLettingsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       completedCommercialLettingsView,
       preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
-  given SessionRequest[AnyContent] = SessionRequest(stillConnectedDetails6048YesSession, fakeRequest)
+  given SessionRequest[AnyContent] = SessionRequest(stillConnectedDetails6048YesSession, getRequest)
 
   "GET /" should {
     "return 200" in {
-      val result = controller().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(fakeRequest)
+      val result = controller().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 and HTML when the session is None" in {
       val controllerNone = controller(aboutYouAndThePropertyPartTwo = None)
-      val result         = controllerNone.show()(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result         = controllerNone.show()(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
-      val result = controller().show()(fakeRequestFromCYA)
+      val result = controller().show()(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CheckYourAnswersAboutThePropertyController.show().url
       )
     }
 
     "return correct backLink when no query param is present" in {
-      val result = controller().show()(fakeRequest)
+      val result = controller().show()(getRequest)
       contentAsString(result) should include(
         controllers.aboutyouandtheproperty.routes.CommercialLettingAvailabilityController.show().url
       )

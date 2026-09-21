@@ -24,9 +24,9 @@ import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, redirectLocation, status, stubMessagesControllerComponents}
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class RentalIncomeListControllerSpec extends TestBaseSpec:
+class RentalIncomeListControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,24 +42,24 @@ class RentalIncomeListControllerSpec extends TestBaseSpec:
       rentalIncomeListView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller().show(0)(fakeRequest)
+      val result = controller().show(0)(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(0)(fakeRequest)
+      val result = controller().show(0)(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = controller().submit(1)(fakeRequest)
+        val result = controller().submit(1)(getRequest)
         status(result) shouldBe BAD_REQUEST
       }
       "throw a BAD_REQUEST if an empty form is submitted via CYA" in {
@@ -70,7 +70,7 @@ class RentalIncomeListControllerSpec extends TestBaseSpec:
 
     "REMOVE /" should {
       "return OK " in {
-        val result = controller().remove(1)(fakeRequest)
+        val result = controller().remove(1)(getRequest)
         status(result) shouldBe OK
       }
     }
@@ -126,10 +126,11 @@ class RentalIncomeListControllerSpec extends TestBaseSpec:
       )
     }
   }
-  "Remove a letting"               should {
+
+  "Remove a letting" should {
     "render the removal confirmation page on remove" in {
       val idxToRemove    = 0
-      val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6045, fakeRequest)
+      val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6045, getRequest)
       val result         = controller().remove(idxToRemove)(sessionRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
@@ -138,18 +139,19 @@ class RentalIncomeListControllerSpec extends TestBaseSpec:
 
   "performRemove" should {
     "display error messages " in {
-      val indexToRemove   = 1
-      val fakePostRequest = FakeRequest(POST, "/remove-letting-confirm") // missing genericRemoveConfirmation param
+      val indexToRemove = 1
+      val postRequest   = FakeRequest(POST, "/remove-letting-confirm") // missing genericRemoveConfirmation param
 
-      val result = controller().performRemove(indexToRemove)(fakePostRequest)
+      val result = controller().performRemove(indexToRemove)(postRequest)
       status(result) shouldBe BAD_REQUEST
     }
+
     "redirect to the updated rental income  list on confirmation " in {
-      val indexToRemove   = 1
-      val fakePostRequest = FakeRequest(POST, "/remove-letting-confirm")
+      val indexToRemove = 1
+      val postRequest   = FakeRequest(POST, "/remove-letting-confirm")
         .withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
 
-      val result = controller().performRemove(indexToRemove)(fakePostRequest)
+      val result = controller().performRemove(indexToRemove)(postRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/rental-income-list?idx=0")
     }

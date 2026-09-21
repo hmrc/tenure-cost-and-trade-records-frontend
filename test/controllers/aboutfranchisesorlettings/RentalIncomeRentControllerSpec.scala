@@ -20,13 +20,11 @@ import connectors.Audit
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
 import navigation.AboutFranchisesOrLettingsNavigator
 import org.jsoup.Jsoup
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class RentalIncomeRentControllerSpec extends TestBaseSpec:
+class RentalIncomeRentControllerSpec extends ControllerSpec:
 
   val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
   val mockAudit: Audit                                                           = mock[Audit]
@@ -40,30 +38,31 @@ class RentalIncomeRentControllerSpec extends TestBaseSpec:
       mockAboutFranchisesOrLettingsNavigator,
       rentalIncomeRentView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller().show(0)(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller().show(0)(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(0)(fakeRequest)
+      val result = controller().show(0)(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
+
     "render a page with an empty form" when {
       "given an index" which {
         "doesn't already exist in the session" in {
-          val result = controller().show(0)(fakeRequest)
+          val result = controller().show(0)(getRequest)
           val html   = Jsoup.parse(contentAsString(result))
 
-          Option(html.getElementById("annualRent").`val`()).value      shouldBe ""
-          Option(html.getElementById("dateInput.day").`val`()).value   shouldBe ""
-          Option(html.getElementById("dateInput.month").`val`()).value shouldBe ""
-          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe ""
+          Option(html.getElementById("annualRent").`val`()).get      shouldBe ""
+          Option(html.getElementById("dateInput.day").`val`()).get   shouldBe ""
+          Option(html.getElementById("dateInput.month").`val`()).get shouldBe ""
+          Option(html.getElementById("dateInput.year").`val`()).get  shouldBe ""
         }
       }
     }
@@ -71,18 +70,19 @@ class RentalIncomeRentControllerSpec extends TestBaseSpec:
     "display the page with the fields prefilled in" when {
       "given an index" which {
         "exists within the session" in {
-          val result = controller().show(1)(fakeRequest)
+          val result = controller().show(1)(getRequest)
           val html   = Jsoup.parse(contentAsString(result))
 
-          Option(html.getElementById("annualRent").`val`()).value      shouldBe "15000.0"
-          Option(html.getElementById("dateInput.day").`val`()).value   shouldBe "1"
-          Option(html.getElementById("dateInput.month").`val`()).value shouldBe "1"
-          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2021"
+          Option(html.getElementById("annualRent").`val`()).get      shouldBe "15000.0"
+          Option(html.getElementById("dateInput.day").`val`()).get   shouldBe "1"
+          Option(html.getElementById("dateInput.month").`val`()).get shouldBe "1"
+          Option(html.getElementById("dateInput.year").`val`()).get  shouldBe "2021"
         }
       }
     }
+
     "render back link to CYA if come from CYA" in {
-      val result  = controller().show(0)(fakeRequestFromCYA)
+      val result  = controller().show(0)(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-franchise-or-lettings")
     }
@@ -90,7 +90,7 @@ class RentalIncomeRentControllerSpec extends TestBaseSpec:
     "render a correct back link to franchise type details if no query parameters in the url for 6010 " in {
       // franchise is on index 0
       val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010))
-      val result         = controller6010.show(0)(fakeRequest)
+      val result         = controller6010.show(0)(getRequest)
       val content        = contentAsString(result)
       content should include("/franchise-type-details?idx=0")
     }
@@ -98,14 +98,14 @@ class RentalIncomeRentControllerSpec extends TestBaseSpec:
     "render a correct back link to letting type details if no query parameters in the url for 6010 " in {
       // letting on index 1
       val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010))
-      val result         = controller6010.show(1)(fakeRequest)
+      val result         = controller6010.show(1)(getRequest)
       val content        = contentAsString(result)
       content should include("/letting-type-details?idx=1")
     }
 
     "render a correct back link to letting type details if no query parameters in the url for 6045 " in {
       // letting on index 1
-      val result  = controller().show(1)(fakeRequest)
+      val result  = controller().show(1)(getRequest)
       val content = contentAsString(result)
       content should include("/letting-type-details?idx=1")
     }

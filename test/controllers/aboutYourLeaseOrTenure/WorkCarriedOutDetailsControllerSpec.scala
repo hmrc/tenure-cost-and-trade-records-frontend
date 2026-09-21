@@ -19,15 +19,14 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import form.aboutYourLeaseOrTenure.WorkCarriedOutDetailsForm.workCarriedOutDetailsForm
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
-import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec:
+class WorkCarriedOutDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,13 +41,13 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       workCarriedOutDetailsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Work Carried Out Details in the session" in {
-      val result = workCarriedOutDetailsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = workCarriedOutDetailsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class WorkCarriedOutDetailsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with None in the session" in {
       val controller = workCarriedOutDetailsController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

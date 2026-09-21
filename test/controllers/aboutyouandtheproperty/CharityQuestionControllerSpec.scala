@@ -23,11 +23,11 @@ import play.api.http.Status.*
 import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class CharityQuestionControllerSpec extends TestBaseSpec:
+class CharityQuestionControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,7 +42,7 @@ class CharityQuestionControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       charityQuestionView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def charityQuestionControllerNone(): CharityQuestionController =
@@ -52,23 +52,23 @@ class CharityQuestionControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       charityQuestionView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 charity question in the session" in {
-      val result = charityQuestionController().show(fakeRequest)
+      val result = charityQuestionController().show(getRequest)
       status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = charityQuestionController().show(fakeRequest)
+      val result = charityQuestionController().show(getRequest)
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }
 
     "GET / return 200 no charity question in the session" in {
-      val result = charityQuestionControllerNone().show(fakeRequest)
+      val result = charityQuestionControllerNone().show(getRequest)
       status(result)          shouldBe OK
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")

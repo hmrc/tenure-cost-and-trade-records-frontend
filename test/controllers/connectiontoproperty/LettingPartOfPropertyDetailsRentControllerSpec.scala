@@ -19,12 +19,11 @@ package controllers.connectiontoproperty
 import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
 import org.jsoup.Jsoup
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec:
+class LettingPartOfPropertyDetailsRentControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,13 +36,13 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       lettingPartOfPropertyRentDetailsView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Letting Part of Property Details Rent in session" in {
-      val result = lettingPartOfPropertyDetailsRentController().show(0)(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = lettingPartOfPropertyDetailsRentController().show(0)(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -54,7 +53,7 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec:
     "redirect the user to the other Letting other part of property details rent page" when {
       "given an index" which {
         "does not exist within the session" in {
-          val result = lettingPartOfPropertyDetailsRentController().show(2)(fakeRequest)
+          val result = lettingPartOfPropertyDetailsRentController().show(2)(getRequest)
           status(result) shouldBe SEE_OTHER
 
           redirectLocation(result) shouldBe Some(
@@ -67,12 +66,12 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec:
     "display the page with the fields prefilled in" when {
       "given an index" which {
         "exists within the session" in {
-          val result = lettingPartOfPropertyDetailsRentController().show(0)(fakeRequest)
+          val result = lettingPartOfPropertyDetailsRentController().show(0)(getRequest)
           val html   = Jsoup.parse(contentAsString(result))
 
-          Option(html.getElementById("annualRent").`val`()).value      shouldBe "2000"
-          Option(html.getElementById("dateInput.month").`val`()).value shouldBe "6"
-          Option(html.getElementById("dateInput.year").`val`()).value  shouldBe "2022"
+          Option(html.getElementById("annualRent").`val`()).get      shouldBe "2000"
+          Option(html.getElementById("dateInput.month").`val`()).get shouldBe "6"
+          Option(html.getElementById("dateInput.year").`val`()).get  shouldBe "2022"
         }
       }
     }
@@ -113,7 +112,7 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec:
 
   "calculateBackLink" should {
     "return back link to CYA page when 'from=CYA' query param is present and user is connected to the property" in {
-      val result = lettingPartOfPropertyDetailsRentController().show(0)(fakeRequestFromCYA)
+      val result = lettingPartOfPropertyDetailsRentController().show(0)(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       )
@@ -121,7 +120,7 @@ class LettingPartOfPropertyDetailsRentControllerSpec extends TestBaseSpec:
   }
 
   "return correct back link with corresponding index" in {
-    val result = lettingPartOfPropertyDetailsRentController().show(0)(fakeRequest)
+    val result = lettingPartOfPropertyDetailsRentController().show(0)(getRequest)
     contentAsString(result) should include(
       controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsController.show(Some(0)).url
     )

@@ -25,12 +25,12 @@ import play.api.mvc.Result
 import play.api.test.Helpers.*
 import repositories.SessionRepo
 import test.JsoupHelpers
-import utils.TestBaseSpec
+import test.ControllerSpec
 import views.html.aboutthetradinghistory.checkYourAnswerNoFinancialYears as CheckYourAnswerNoFinancialYearsView
 
 import scala.concurrent.Future
 
-class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with JsoupHelpers:
+class CheckYourAnswersNoFinancialYearsControllerSpec extends ControllerSpec with JsoupHelpers:
 
   trait ControllerFixture:
     val repository: SessionRepo = mock[SessionRepo]
@@ -57,10 +57,10 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
 
   "GET /" should {
     "reply 200 with unchecked form" in new ControllerFixture {
-      val result: Future[Result] = controller().show()(fakeGetRequest)
-      status(result)            shouldBe OK
-      contentType(result).value shouldBe HTML
-      charset(result).value     shouldBe UTF8
+      val result: Future[Result] = controller().show()(getRequest)
+      status(result)          shouldBe OK
+      contentType(result).get shouldBe HTML
+      charset(result).get     shouldBe UTF8
 
       val page: Document = contentAsJsoup(result)
       page.heading  shouldBe "checkYourAnswersAboutTheTradingHistory.heading"
@@ -71,31 +71,31 @@ class CheckYourAnswersNoFinancialYearsControllerSpec extends TestBaseSpec with J
   "POST /" should {
     "reply with 303 redirect to the next page" in new ControllerFixture {
       val result: Future[Result] = controller().submit()(
-        fakePostRequest.withFormUrlEncodedBody(
+        postRequest.withFormUrlEncodedBody(
           "correct"   -> "true",
           "completed" -> "yes"
         )
       )
       status(result) shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
+      redirectLocation(result).get shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
 
       val newSession: ArgumentCaptor[Session] = captor[Session]
       verify(repository).saveOrUpdate(newSession.capture())(using any)
-      newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
+      newSession.getValue.aboutTheTradingHistory.get.checkYourAnswersAboutTheTradingHistory.get shouldBe AnswerYes
     }
 
     "eventually reset turnover section" in new ControllerFixture {
       val result: Future[Result] = controller(emptyTurnoverSections = true).submit()(
-        fakePostRequest.withFormUrlEncodedBody(
+        postRequest.withFormUrlEncodedBody(
           "correct"   -> "true",
           "completed" -> "yes"
         )
       )
       status(result) shouldBe SEE_OTHER
-      redirectLocation(result).value shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
+      redirectLocation(result).get shouldBe controllers.routes.TaskListController.show.withFragment("tradingHistory").toString
 
       val newSession: ArgumentCaptor[Session] = captor[Session]
       verify(repository).saveOrUpdate(newSession.capture())(using any)
-      newSession.getValue.aboutTheTradingHistory.value.checkYourAnswersAboutTheTradingHistory.value shouldBe AnswerYes
+      newSession.getValue.aboutTheTradingHistory.get.checkYourAnswersAboutTheTradingHistory.get shouldBe AnswerYes
     }
   }

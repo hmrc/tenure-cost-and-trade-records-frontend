@@ -22,12 +22,12 @@ import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartThree
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class IsRentUnderReviewControllerSpec extends TestBaseSpec:
+class IsRentUnderReviewControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -40,13 +40,13 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec:
       mockAudit,
       aboutYourLeaseOrTenureNavigator,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartThree = aboutLeaseOrAgreementPartThree),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200 and HTML with is rent under review is present in session" in {
-      val result = isRentUnderReviewController().show(fakeRequest)
+      val result = isRentUnderReviewController().show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -57,7 +57,7 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML is rent under review is none in session" in {
       val controller = isRentUnderReviewController(aboutLeaseOrAgreementPartThree = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
@@ -68,7 +68,7 @@ class IsRentUnderReviewControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML is rent under review is present in session for 6045" in {
       val controller = isRentUnderReviewController(FOR6045)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")

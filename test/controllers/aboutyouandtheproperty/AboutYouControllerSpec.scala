@@ -20,15 +20,14 @@ import connectors.Audit
 import form.Errors
 import form.aboutyouandtheproperty.AboutYouForm.theForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class AboutYouControllerSpec extends TestBaseSpec:
+class AboutYouControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -43,7 +42,7 @@ class AboutYouControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       aboutYouView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def aboutYouControllerNone(): AboutYouController =
@@ -53,24 +52,24 @@ class AboutYouControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       aboutYouView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 about you in the session" in {
-      val result = aboutYouController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = aboutYouController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = aboutYouController().show(fakeRequest)
+      val result = aboutYouController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 no about you in the session" in {
-      val result = aboutYouControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = aboutYouControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

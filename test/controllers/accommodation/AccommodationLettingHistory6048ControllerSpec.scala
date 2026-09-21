@@ -18,12 +18,12 @@ package controllers.accommodation
 
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec:
+class AccommodationLettingHistory6048ControllerSpec extends ControllerSpec:
 
   private val nextPage = controllers.accommodation.routes.HighSeasonTariff6048Controller.show.url + "?idx=0"
 
@@ -35,7 +35,7 @@ class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec:
         referenceNumber = "99996048008", // England
         accommodationDetails = Some(prefilledAccommodationDetails)
       ),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
@@ -48,7 +48,7 @@ class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec:
 
   "GET /" should {
     "return 200" in {
-      val result = accommodationLettingHistory6048Controller.show(fakeRequest)
+      val result = accommodationLettingHistory6048Controller.show(getRequest)
       status(result) shouldBe OK
 
     }
@@ -64,7 +64,7 @@ class AccommodationLettingHistory6048ControllerSpec extends TestBaseSpec:
 
     "save the form data and redirect to the next page" in {
       val res = accommodationLettingHistory6048Controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)

@@ -18,13 +18,11 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class TurnoverControllerSpec extends TestBaseSpec:
+class TurnoverControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,17 +35,17 @@ class TurnoverControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       turnoverView,
       preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = turnoverController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = turnoverController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = turnoverController().show(fakeRequest)
+      val result = turnoverController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

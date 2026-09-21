@@ -18,12 +18,11 @@ package controllers.connectiontoproperty
 
 import connectors.Audit
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpec:
+class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,13 +35,13 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
       connectedToPropertyNavigator,
       lettingPartOfPropertyRentIncludesView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Letting Part of PropertyItems Included in session" in {
-      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -52,8 +51,8 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
 
     "return 200 and HTML no Letting Part of PropertyItems Included with None in session" in {
       val controller = lettingPartOfPropertyItemsIncludedInRentController(stillConnectedDetails = None)
-      val result     = controller.show(0)(fakeRequest)
-      status(result) shouldBe Status.SEE_OTHER
+      val result     = controller.show(0)(getRequest)
+      status(result) shouldBe SEE_OTHER
     }
   }
 
@@ -86,14 +85,14 @@ class LettingPartOfPropertyItemsIncludedInRentControllerSpec extends TestBaseSpe
 
   "calculateBackLink" should {
     "return back link to CYA page when 'from=CYA' query param is present and user is connected to the property" in {
-      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequestFromCYA)
+      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToVacantPropertyController.show().url
       )
     }
 
     "return correct back link with corresponding index" in {
-      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(fakeRequest)
+      val result = lettingPartOfPropertyItemsIncludedInRentController().show(0)(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.LettingPartOfPropertyDetailsRentController.show(0).url
       )

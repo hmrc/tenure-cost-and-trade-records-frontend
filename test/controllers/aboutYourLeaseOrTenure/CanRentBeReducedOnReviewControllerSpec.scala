@@ -21,14 +21,13 @@ import form.aboutYourLeaseOrTenure.CanRentBeReducedOnReviewForm.canRentBeReduced
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec:
+class CanRentBeReducedOnReviewControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -44,13 +43,13 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       canRentBeReducedOnReviewView,
       preEnrichedActionRefiner(forType = forType, aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Can Rent Be Reduced On Review in the session" in {
-      val result = canRentBeReducedOnReviewController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = canRentBeReducedOnReviewController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -60,8 +59,8 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Can Rent Be Reduced On Review in the session 6020" in {
       val controller = canRentBeReducedOnReviewController(FOR6020)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -71,8 +70,8 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Can Rent Be Reduced On Review in the session 6020" in {
       val controller = canRentBeReducedOnReviewController(FOR6020, None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -82,8 +81,8 @@ class CanRentBeReducedOnReviewControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Can Rent Be Reduced On Review in the session" in {
       val controller = canRentBeReducedOnReviewController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

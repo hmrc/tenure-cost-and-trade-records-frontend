@@ -18,12 +18,12 @@ package controllers.accommodation
 
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 /**
   * @author Yuriy Tumakha
   */
-class AccommodationDetailsCYA6048ControllerSpec extends TestBaseSpec:
+class AccommodationDetailsCYA6048ControllerSpec extends ControllerSpec:
 
   private val nextPage = "/send-trade-and-cost-information/task-list#accommodation-details"
 
@@ -32,7 +32,7 @@ class AccommodationDetailsCYA6048ControllerSpec extends TestBaseSpec:
       accommodationDetailsCYAView,
       accommodationNavigator,
       preEnrichedActionRefiner(accommodationDetails = Some(prefilledAccommodationDetails)),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
@@ -43,7 +43,7 @@ class AccommodationDetailsCYA6048ControllerSpec extends TestBaseSpec:
 
   "GET /" should {
     "return 200" in {
-      val result = accommodationDetailsCYA6048Controller.show(fakeRequest)
+      val result = accommodationDetailsCYA6048Controller.show(getRequest)
       status(result) shouldBe OK
     }
   }
@@ -58,7 +58,7 @@ class AccommodationDetailsCYA6048ControllerSpec extends TestBaseSpec:
 
     "save the form data and redirect to the next page" in {
       val res = accommodationDetailsCYA6048Controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)

@@ -19,15 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.TiedForGoodsForm.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class TiedForGoodsControllerSpec extends TestBaseSpec:
+class TiedForGoodsControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,7 +41,7 @@ class TiedForGoodsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       tiedForGoodsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def tiedForGoodsControllerNoEnforcement(
@@ -54,7 +53,7 @@ class TiedForGoodsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       tiedForGoodsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def tiedForGoodsControllerNone(): TiedForGoodsController =
@@ -64,17 +63,17 @@ class TiedForGoodsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       tiedForGoodsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 tied goods in the session" in {
-      val result = tiedForGoodsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = tiedForGoodsController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = tiedForGoodsController().show(fakeRequest)
+      val result = tiedForGoodsController().show(getRequest)
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -83,8 +82,8 @@ class TiedForGoodsControllerSpec extends TestBaseSpec:
     }
 
     "return 200 no to enforcement in the session" in {
-      val result = tiedForGoodsControllerNoEnforcement().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = tiedForGoodsControllerNoEnforcement().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -93,8 +92,8 @@ class TiedForGoodsControllerSpec extends TestBaseSpec:
     }
 
     "return 200 no tied goods in the session" in {
-      val result = tiedForGoodsControllerNone().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = tiedForGoodsControllerNone().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

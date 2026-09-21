@@ -21,9 +21,9 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class CustomerCreditAccountsControllerSpec extends TestBaseSpec:
+class CustomerCreditAccountsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,7 +36,7 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       customerCreditAccountsView,
       preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def customerCreditAccountsControllerNoBunkered(
@@ -48,34 +48,34 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       customerCreditAccountsView,
       preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "Customer credit account controller" should {
     "return 200" in {
-      val result = customerCreditAccountsController().show(fakeRequest)
+      val result = customerCreditAccountsController().show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = customerCreditAccountsController().show(fakeRequest)
+      val result = customerCreditAccountsController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 No Bunkered" in {
-      val result = customerCreditAccountsControllerNoBunkered().show(fakeRequest)
+      val result = customerCreditAccountsControllerNoBunkered().show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML No Bunkered" in {
-      val result = customerCreditAccountsControllerNoBunkered().show(fakeRequest)
+      val result = customerCreditAccountsControllerNoBunkered().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = customerCreditAccountsController().show(fakeRequestFromCYA)
+      val result  = customerCreditAccountsController().show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"
@@ -89,7 +89,7 @@ class CustomerCreditAccountsControllerSpec extends TestBaseSpec:
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val res = customerCreditAccountsController().submit(fakeRequest.withFormUrlEncodedBody(Seq.empty*))
+      val res = customerCreditAccountsController().submit(getRequest.withFormUrlEncodedBody(Seq.empty*))
       status(res) shouldBe BAD_REQUEST
     }
   }

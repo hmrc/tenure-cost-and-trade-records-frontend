@@ -20,9 +20,9 @@ import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec:
+class SingleCaravansAgeCategoriesControllerSpec extends ControllerSpec:
 
   private val previousPage = aboutthetradinghistory.routes.SingleCaravansSubletController.show().url
 
@@ -36,19 +36,19 @@ class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents(),
       mockAudit
     )
 
   "GET /" should {
     "return 200" in {
-      val result = singleCaravansAgeCategoriesController.show(fakeRequest)
+      val result = singleCaravansAgeCategoriesController.show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = singleCaravansAgeCategoriesController.show(fakeRequest)
+      val result = singleCaravansAgeCategoriesController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -59,7 +59,7 @@ class SingleCaravansAgeCategoriesControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = singleCaravansAgeCategoriesController.show(fakeRequestFromCYA)
+      val result  = singleCaravansAgeCategoriesController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include previousPage

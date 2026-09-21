@@ -20,9 +20,9 @@ import connectors.Audit
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.Helpers.{GET, POST, contentAsString, contentType, status, stubMessagesControllerComponents}
 import play.api.test.{FakeRequest, Helpers}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class BunkeredFuelQuestionControllerSpec extends TestBaseSpec:
+class BunkeredFuelQuestionControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -33,23 +33,23 @@ class BunkeredFuelQuestionControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       bunkeredFuelQuestionView,
       preEnrichedActionRefiner(aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory)),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = bunkeredFuelQuestionController.show(fakeRequest)
+      val result = bunkeredFuelQuestionController.show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = bunkeredFuelQuestionController.show(fakeRequest)
+      val result = bunkeredFuelQuestionController.show(getRequest)
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = bunkeredFuelQuestionController.show(fakeRequestFromCYA)
+      val result  = bunkeredFuelQuestionController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include "/financial-year-end"

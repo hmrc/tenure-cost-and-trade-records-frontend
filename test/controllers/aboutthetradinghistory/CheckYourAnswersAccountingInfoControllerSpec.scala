@@ -22,12 +22,11 @@ import controllers.aboutthetradinghistory
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutthetradinghistory.{AboutTheTradingHistory, AboutTheTradingHistoryPartOne}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class CheckYourAnswersAccountingInfoControllerSpec extends TestBaseSpec:
+class CheckYourAnswersAccountingInfoControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -46,13 +45,13 @@ class CheckYourAnswersAccountingInfoControllerSpec extends TestBaseSpec:
         aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne,
         forType = forType
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
       val result = controller().show()(FakeRequest())
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return 200 for 6048" in {
@@ -62,7 +61,7 @@ class CheckYourAnswersAccountingInfoControllerSpec extends TestBaseSpec:
       val result = controller(session6048.aboutTheTradingHistory, session6048.forType).show()(
         sessionRequest
       )
-      status(result) shouldBe Status.OK
+      status(result) shouldBe OK
     }
 
     "return HTML" in {

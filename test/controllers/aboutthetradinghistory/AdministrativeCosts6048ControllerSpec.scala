@@ -20,9 +20,9 @@ import connectors.Audit
 import controllers.aboutthetradinghistory
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class AdministrativeCosts6048ControllerSpec extends TestBaseSpec:
+class AdministrativeCosts6048ControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -41,18 +41,18 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6048),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6048)
       ),
-      mockSessionRepo,
+      mockSessionRepository,
       stubMessagesControllerComponents()
     )
 
   "GET /" should {
     "return 200" in {
-      val result = administrativeCosts6048Controller.show(fakeRequest)
+      val result = administrativeCosts6048Controller.show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = administrativeCosts6048Controller.show(fakeRequest)
+      val result = administrativeCosts6048Controller.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -62,7 +62,7 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = administrativeCosts6048Controller.show(fakeRequestFromCYA)
+      val result  = administrativeCosts6048Controller.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include(cyaPage)
       content should not include previousPage
@@ -91,7 +91,7 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = administrativeCosts6048Controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
@@ -99,7 +99,7 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec:
 
     "return 400 and error message for invalid form data - negative value" in {
       val res = administrativeCosts6048Controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(invalidFormData*)
+        postRequest.withFormUrlEncodedBody(invalidFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(
@@ -109,7 +109,7 @@ class AdministrativeCosts6048ControllerSpec extends TestBaseSpec:
 
     "return 400 and error message for invalid form data - missed value" in {
       val res = administrativeCosts6048Controller.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormDataPerYear(2)*)
+        postRequest.withFormUrlEncodedBody(validFormDataPerYear(2)*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include(

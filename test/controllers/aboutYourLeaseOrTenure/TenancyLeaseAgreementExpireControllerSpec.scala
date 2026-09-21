@@ -19,15 +19,14 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartTwo
 import org.jsoup.Jsoup
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit.DAYS
 
-class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec:
+class TenancyLeaseAgreementExpireControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -40,13 +39,13 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       tenantsLeaseAgreementExpireView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Tenancy Lease Agreement Expire in the session" in {
-      val result = tenancyLeaseAgreementExpireController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = tenancyLeaseAgreementExpireController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec:
       val controller = tenancyLeaseAgreementExpireController(aboutLeaseOrAgreementPartTwo =
         Some(prefilledAboutLeaseOrAgreementPartTwoNoDate)
       )
-      val result     = controller.show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -69,8 +68,8 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Tenancy Lease Agreement Expire in the session" in {
       val controller = tenancyLeaseAgreementExpireController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -80,11 +79,11 @@ class TenancyLeaseAgreementExpireControllerSpec extends TestBaseSpec:
 
     "display the page with the fields prefilled in" when {
       "exists within the session" in {
-        val result = tenancyLeaseAgreementExpireController().show()(fakeRequest)
+        val result = tenancyLeaseAgreementExpireController().show()(getRequest)
         val html   = Jsoup.parse(contentAsString(result))
-        Option(html.getElementById("tenancyLeaseAgreementExpire.day").`val`()).value   shouldBe "1"
-        Option(html.getElementById("tenancyLeaseAgreementExpire.month").`val`()).value shouldBe "6"
-        Option(html.getElementById("tenancyLeaseAgreementExpire.year").`val`()).value  shouldBe "2022"
+        Option(html.getElementById("tenancyLeaseAgreementExpire.day").`val`()).get   shouldBe "1"
+        Option(html.getElementById("tenancyLeaseAgreementExpire.month").`val`()).get shouldBe "6"
+        Option(html.getElementById("tenancyLeaseAgreementExpire.year").`val`()).get  shouldBe "2022"
       }
     }
   }

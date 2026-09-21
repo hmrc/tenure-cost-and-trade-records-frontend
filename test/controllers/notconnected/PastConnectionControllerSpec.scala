@@ -19,14 +19,13 @@ package controllers.notconnected
 import form.Errors
 import form.notconnected.PastConnectionForm.*
 import models.submissions.notconnected.RemoveConnectionDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class PastConnectionControllerSpec extends TestBaseSpec:
+class PastConnectionControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -38,13 +37,13 @@ class PastConnectionControllerSpec extends TestBaseSpec:
       removeConnectionNavigator,
       pastConnectionView,
       preEnrichedActionRefiner(removeConnectionDetails = removeConnectionDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Past Connections with yes in the session" in {
-      val result = pastConnectionController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = pastConnectionController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -54,8 +53,8 @@ class PastConnectionControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Past Connections with none in the session" in {
       val controller = pastConnectionController(Some(prefilledNotConnectedNone))
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -65,8 +64,8 @@ class PastConnectionControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML Past Connections with none in the session" in {
       val controller = pastConnectionController(None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -79,8 +78,8 @@ class PastConnectionControllerSpec extends TestBaseSpec:
     "return 303 with location pointing to next page" in {
       val request = FakeRequest(POST, "/").withFormUrlEncodedBody("pastConnectionType" -> "yes")
       val result  = pastConnectionController().submit(request)
-      status(result)                   shouldBe Status.SEE_OTHER
-      header("Location", result).value shouldBe controllers.notconnected.routes.RemoveConnectionController.show().url
+      status(result)                 shouldBe SEE_OTHER
+      header("Location", result).get shouldBe controllers.notconnected.routes.RemoveConnectionController.show().url
     }
 
     "throw a BAD_REQUEST if an empty form is submitted" in {
@@ -91,14 +90,14 @@ class PastConnectionControllerSpec extends TestBaseSpec:
 
   "calculateBackLink" should {
     "return back link to NotConnected CYA page when 'from=CYA' query param is present and user is not connected to the property" in {
-      val result = pastConnectionController().show(fakeRequestFromCYA)
+      val result = pastConnectionController().show(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
       )
     }
 
     "return back link to Are You Still Connected page if 'from' query param is not present" in {
-      val result = pastConnectionController().show(fakeRequest)
+      val result = pastConnectionController().show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.AreYouStillConnectedController.show().url
       )

@@ -21,7 +21,7 @@ import form.CheckYourAnswersAndConfirmForm
 import models.pages.Summary
 import models.submissions.common.CheckYourAnswersAndConfirm
 import play.api.data.Form
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.AnyContent
 import play.twirl.api.Html
 import views.behaviours.QuestionViewBehaviours
 
@@ -33,7 +33,7 @@ class CheckYourAnswersConnectionToPropertyViewSpec extends QuestionViewBehaviour
 
   private val backLink: String = controllers.connectiontoproperty.routes.AreYouThirdPartyController.show().url
 
-  private val sessionRequest: SessionRequest[AnyContentAsEmpty.type] = SessionRequest(baseFilled6010Session, getRequest)
+  private val sessionRequest: SessionRequest[AnyContent] = SessionRequest(baseFilled6010Session, getRequest)
 
   def createView: () => Html =
     () => checkYourAnswersConnectionToProperty(form, backLink, Summary("99996010001"))(using sessionRequest, messages)

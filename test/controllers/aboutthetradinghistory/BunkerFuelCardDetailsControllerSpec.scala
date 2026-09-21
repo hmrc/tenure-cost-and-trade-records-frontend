@@ -19,13 +19,11 @@ package controllers.aboutthetradinghistory
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
 import navigation.AboutTheTradingHistoryNavigator
 import org.jsoup.Jsoup
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
-import play.api.test.Helpers.{contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec:
+class BunkerFuelCardDetailsControllerSpec extends ControllerSpec:
 
   private val mockNavigator = mock[AboutTheTradingHistoryNavigator]
 
@@ -37,17 +35,17 @@ class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec:
       mockNavigator,
       bunkerFuelCardDetailsView,
       preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = createBunkerFuelCardDetailsController().show(None)(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = createBunkerFuelCardDetailsController().show(None)(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = createBunkerFuelCardDetailsController().show(None)(fakeRequest)
+      val result = createBunkerFuelCardDetailsController().show(None)(getRequest)
       contentType(result)     shouldBe Some("text/html")
       Helpers.charset(result) shouldBe Some("utf-8")
     }
@@ -55,9 +53,9 @@ class BunkerFuelCardDetailsControllerSpec extends TestBaseSpec:
     "return prefilled HTML" in {
       val result = createBunkerFuelCardDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails).show(
         Some(0)
-      )(fakeRequest)
+      )(getRequest)
       val html   = Jsoup.parse(contentAsString(result))
-      Option(html.getElementById("name").`val`()).value shouldBe "Card 1"
+      Option(html.getElementById("name").`val`()).get shouldBe "Card 1"
     }
   }
 

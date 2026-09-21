@@ -19,15 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.AboutThePropertyStringForm.aboutThePropertyStringForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class AboutThePropertyStringControllerSpec extends TestBaseSpec:
+class AboutThePropertyStringControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,7 +41,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       aboutThePropertyStringView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def aboutThePropertyStringControllerNo(
@@ -54,7 +53,7 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       aboutThePropertyStringView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def aboutThePropertyStringControllerNone(): AboutThePropertyStringController =
@@ -64,17 +63,17 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       aboutThePropertyStringView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 about the property string with yes in the session" in {
-      val result = aboutThePropertyStringController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = aboutThePropertyStringController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = aboutThePropertyStringController().show(fakeRequest)
+      val result = aboutThePropertyStringController().show(getRequest)
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -83,8 +82,8 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec:
     }
 
     "GET / return 200 about the property string with no in the session" in {
-      val result = aboutThePropertyStringControllerNo().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = aboutThePropertyStringControllerNo().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -93,8 +92,8 @@ class AboutThePropertyStringControllerSpec extends TestBaseSpec:
     }
 
     "GET / return 200 no about the property string in the session" in {
-      val result = aboutThePropertyStringControllerNone().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = aboutThePropertyStringControllerNone().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

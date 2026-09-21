@@ -17,13 +17,11 @@
 package controllers.aboutthetradinghistory
 
 import connectors.Audit
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class GrossReceiptsForBaseLoadControllerSpec extends TestBaseSpec:
+class GrossReceiptsForBaseLoadControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,17 +35,17 @@ class GrossReceiptsForBaseLoadControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6076),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6076)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = grossReceiptsForBaseLoadController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = grossReceiptsForBaseLoadController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = grossReceiptsForBaseLoadController.show(fakeRequest)
+      val result = grossReceiptsForBaseLoadController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

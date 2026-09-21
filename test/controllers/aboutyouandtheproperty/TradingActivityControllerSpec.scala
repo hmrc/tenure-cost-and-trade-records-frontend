@@ -23,11 +23,11 @@ import play.api.http.Status.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{POST, charset, contentType, status, stubMessagesControllerComponents}
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class TradingActivityControllerSpec extends TestBaseSpec:
+class TradingActivityControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,7 +42,7 @@ class TradingActivityControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       tradingActivityView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def tradingActivityControllerNone(): TradingActivityController =
@@ -52,23 +52,23 @@ class TradingActivityControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       tradingActivityView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "TradingActivityController controller" should {
     "return 200 trading activity in the session" in {
-      val result = tradingActivityController().show(fakeRequest)
+      val result = tradingActivityController().show(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = tradingActivityController().show(fakeRequest)
+      val result = tradingActivityController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 no trading activity in the session" in {
-      val result = tradingActivityControllerNone().show(fakeRequest)
+      val result = tradingActivityControllerNone().show(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")

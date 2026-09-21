@@ -19,12 +19,11 @@ package controllers.aboutYourLeaseOrTenure
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
+class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends ControllerSpec:
 
   def cYAAboutYourLeaseOrTenureController(
     forType: ForType = FOR6010,
@@ -40,13 +39,13 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne,
         aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with CYA and Legal Planning Restrictions (Yes) in the session" in {
-      val result = cYAAboutYourLeaseOrTenureController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = cYAAboutYourLeaseOrTenureController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -56,8 +55,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no CYA in the session" in {
       val controller = cYAAboutYourLeaseOrTenureController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -69,8 +68,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
       val controller = cYAAboutYourLeaseOrTenureController(aboutLeaseOrAgreementPartTwo =
         Some(prefilledAboutLeaseOrAgreementPartTwoNo)
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -83,8 +82,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartOne = Some(prefilledAboutLeaseOrAgreementPartOneNo),
         aboutLeaseOrAgreementPartTwo = None
       )
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -94,8 +93,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with CYA and when no Legal Planning Restrictions in the session for 6010" in {
       val controller = cYAAboutYourLeaseOrTenureController(aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -106,8 +105,8 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
     "return 200 and HTML with CYA and when no Legal Planning Restrictions (Yes) in the session for 6011" in {
       val controller =
         cYAAboutYourLeaseOrTenureController(forType = FOR6011, aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -118,7 +117,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
     "return exception with CYA and when no Legal Planning Restrictions in the session for other forms" in {
       val controller =
         cYAAboutYourLeaseOrTenureController(forType = FOR6020, aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       result.failed.recover { case e: Exception =>
         e.getMessage shouldBe "Navigation for CYA about lease without correct selection of conditions by controller"
       }
@@ -127,7 +126,7 @@ class CheckYourAnswersAboutYourLeaseOrTenureControllerSpec extends TestBaseSpec:
     "return exception with CYA and when no Legal Planning Restrictions in the session for 6076" in {
       val controller =
         cYAAboutYourLeaseOrTenureController(forType = FOR6076, aboutLeaseOrAgreementPartTwo = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       result.failed.recover { case e: Exception =>
         e.getMessage shouldBe "Navigation for CYA about lease without correct selection of conditions by controller"
       }

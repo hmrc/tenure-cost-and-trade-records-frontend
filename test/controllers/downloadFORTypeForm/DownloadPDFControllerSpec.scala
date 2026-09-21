@@ -17,11 +17,10 @@
 package controllers.downloadFORTypeForm
 
 import connectors.Audit
-import play.api.http.Status
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class DownloadPDFControllerSpec extends TestBaseSpec:
+class DownloadPDFControllerSpec extends ControllerSpec:
 
   val audit: Audit = mock[Audit]
 
@@ -34,16 +33,16 @@ class DownloadPDFControllerSpec extends TestBaseSpec:
 
   "GET /" should {
     "return 200" in {
-      mockSessionRepo.saveOrUpdate(prefilledBaseSession)
+      mockSessionRepository.saveOrUpdate(prefilledBaseSession)
 
-      val result = downloadPDFController.show("FOR2016")(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = downloadPDFController.show("FOR2016")(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      mockSessionRepo.saveOrUpdate(prefilledBaseSession)
+      mockSessionRepository.saveOrUpdate(prefilledBaseSession)
 
-      val result = downloadPDFController.show("FOR2016")(fakeRequest)
+      val result = downloadPDFController.show("FOR2016")(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }

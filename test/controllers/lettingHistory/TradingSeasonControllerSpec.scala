@@ -36,10 +36,10 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
   "the TradingSeasonLength controller" when {
     "the user has not entered any period yet" should {
       "be handling GET by replying 200 with the form showing date fields" in new ControllerFixture {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading               shouldBe "lettingHistory.intendedLettings.tradingSeason.heading"
         page.backLink              shouldBe routes.IsYearlyAvailableController.show.url
@@ -50,22 +50,22 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
       }
 
       "be handling POST index=0 by replying 303 redirect to 'Occupier List' page" in new ControllerFixture {
-        val request: FakeRequest[AnyContentAsFormUrlEncoded] = fakePostRequest.withFormUrlEncodedBody(
+        val request: FakeRequest[AnyContentAsFormUrlEncoded] = postRequest.withFormUrlEncodedBody(
           "fromDate.day"   -> "1",
           "fromDate.month" -> "4",
           "toDate.day"     -> "31",
           "toDate.month"   -> "3"
         )
         val result: Future[Result]                           = controller.submit(request)
-        status(result)                                            shouldBe SEE_OTHER
-        redirectLocation(result).value                            shouldBe routes.HasOnlineAdvertisingController.show.url
+        status(result)                                        shouldBe SEE_OTHER
+        redirectLocation(result).get                          shouldBe routes.HasOnlineAdvertisingController.show.url
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        intendedLettings(data).value.tradingSeason.value.fromDate shouldBe LocalDate.of(
+        intendedLettings(data).get.tradingSeason.get.fromDate shouldBe LocalDate.of(
           Year.now.getValue,
           4,
           1
         )
-        intendedLettings(data).value.tradingSeason.value.toDate   shouldBe LocalDate.of(
+        intendedLettings(data).get.tradingSeason.get.toDate   shouldBe LocalDate.of(
           Year.now.getValue,
           3,
           31
@@ -82,10 +82,10 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
           )
         )
       ) {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.backLink              shouldBe routes.IsYearlyAvailableController.show.url
         page.input("fromDate.day")   should haveValue("10")
@@ -98,7 +98,7 @@ class TradingSeasonControllerSpec extends LettingHistoryControllerSpec with Fisc
     "regardless users having entered period or not" should {
       "be handling invalid POST /detail by replying 400 with error messages" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "fromDate.day"   -> "",
             "fromDate.month" -> "",
             "toDate.day"     -> "",

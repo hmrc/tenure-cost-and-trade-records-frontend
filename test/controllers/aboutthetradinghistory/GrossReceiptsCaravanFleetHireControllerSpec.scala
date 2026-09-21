@@ -18,12 +18,11 @@ package controllers.aboutthetradinghistory
 
 import connectors.Audit
 import controllers.aboutthetradinghistory
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec:
+class GrossReceiptsCaravanFleetHireControllerSpec extends ControllerSpec:
 
   private val previousPage = aboutthetradinghistory.routes.StaticCaravansController.show().url
   private val nextPage     = aboutthetradinghistory.routes.SingleCaravansOwnedByOperatorController.show().url
@@ -40,17 +39,17 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec:
         aboutTheTradingHistory = Some(prefilledAboutYourTradingHistory6045),
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = grossReceiptsCaravanFleetHireController.show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = grossReceiptsCaravanFleetHireController.show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = grossReceiptsCaravanFleetHireController.show(fakeRequest)
+      val result = grossReceiptsCaravanFleetHireController.show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
 
@@ -61,7 +60,7 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec:
     }
 
     "render back link to CYA if come from CYA" in {
-      val result  = grossReceiptsCaravanFleetHireController.show(fakeRequestFromCYA)
+      val result  = grossReceiptsCaravanFleetHireController.show(getRequestFromCYA)
       val content = contentAsString(result)
       content should include("/check-your-answers-about-the-trading-history")
       content should not include previousPage
@@ -87,15 +86,15 @@ class GrossReceiptsCaravanFleetHireControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "save the form data and redirect to the next page" in {
       val res = grossReceiptsCaravanFleetHireController.submit(
-        fakePostRequest.withFormUrlEncodedBody(validFormData*)
+        postRequest.withFormUrlEncodedBody(validFormData*)
       )
-      status(res)           shouldBe Status.SEE_OTHER
+      status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(nextPage)
     }
 
     "return 400 and error message for invalid weeks" in {
       val res = grossReceiptsCaravanFleetHireController.submit(
-        fakePostRequest.withFormUrlEncodedBody(invalidWeeksFormData*)
+        postRequest.withFormUrlEncodedBody(invalidWeeksFormData*)
       )
       status(res)        shouldBe BAD_REQUEST
       contentAsString(res) should include("""<a href="#turnover[0].weeks">error.weeksMapping.invalid</a>""")

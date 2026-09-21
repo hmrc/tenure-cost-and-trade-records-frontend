@@ -20,16 +20,14 @@ import actions.SessionRequest
 import connectors.Audit
 import form.aboutthetradinghistory.AddAnotherBunkerFuelCardsDetailsForm.theForm
 import models.submissions.aboutthetradinghistory.AboutTheTradingHistory
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
-import play.api.test.Helpers.{POST, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec:
+class AddAnotherBunkerFuelCardsDetailsControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -45,25 +43,25 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec:
       addAnotherBunkerFuelCardsDetailsView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutTheTradingHistory = aboutTheTradingHistory),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = createAddAnotherBunkerFuelCardsDetailsController().show(0)(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = createAddAnotherBunkerFuelCardsDetailsController().show(0)(getRequest)
+      status(result) shouldBe OK
     }
   }
 
   "return HTML" in {
-    val result = createAddAnotherBunkerFuelCardsDetailsController().show(0)(fakeRequest)
+    val result = createAddAnotherBunkerFuelCardsDetailsController().show(0)(getRequest)
     contentType(result)     shouldBe Some("text/html")
     Helpers.charset(result) shouldBe Some("utf-8")
   }
 
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
-      val result = createAddAnotherBunkerFuelCardsDetailsController().submit(1)(fakeRequest)
+      val result = createAddAnotherBunkerFuelCardsDetailsController().submit(1)(getRequest)
       status(result) shouldBe BAD_REQUEST
     }
 
@@ -95,7 +93,7 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec:
     "render the removal confirmation page on remove" in {
       val controller     = createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
       val idxToRemove    = 0
-      val sessionRequest = SessionRequest(aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession, fakeRequest)
+      val sessionRequest = SessionRequest(aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession, getRequest)
       val result         = controller.remove(idxToRemove)(sessionRequest)
 
       status(result)      shouldBe OK
@@ -105,7 +103,7 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec:
     "handle form submission with 'Yes' and perform removal" in {
       val controller      = createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
       val sessionRequest  = SessionRequest(aboutYourTradingHistoryWithBunkerFuelCardsDetailsSession, requestWithForm)
       val result          = controller.performRemove(idxToRemove)(sessionRequest)
       status(result) shouldBe BAD_REQUEST
@@ -114,7 +112,7 @@ class AddAnotherBunkerFuelCardsDetailsControllerSpec extends TestBaseSpec:
     "handle form submission with 'No' and cancel removal" in {
       val controller      = createAddAnotherBunkerFuelCardsDetailsController(prefilledAboutTheTradingHistoryForBunkerFuelCardsDetails)
       val idxToRemove     = 0
-      val requestWithForm = fakeRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
+      val requestWithForm = getRequest.withFormUrlEncodedBody("genericRemoveConfirmation" -> "no")
       val result          = controller.performRemove(idxToRemove)(requestWithForm)
       status(result) shouldBe BAD_REQUEST
     }

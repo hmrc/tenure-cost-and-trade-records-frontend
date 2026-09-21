@@ -20,15 +20,14 @@ import connectors.Audit
 import form.connectiontoproperty.AreYouThirdPartyForm.theForm
 import models.submissions.common.AnswersYesNo.*
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class AreYouThirdPartyControllerSpec extends TestBaseSpec:
+class AreYouThirdPartyControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -43,13 +42,13 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       areYouThirdPartyView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with are you third party in session" in {
-      val result = areYouThirdPartyController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = areYouThirdPartyController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
     }
 
     "return 200 and HTML no value own property value" in {
-      val result = areYouThirdPartyController(Some(prefilledStillConnectedDetailsNoToAll)).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = areYouThirdPartyController(Some(prefilledStillConnectedDetailsNoToAll)).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -68,8 +67,8 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
     }
 
     "return 200 and HTML none own property value" in {
-      val result = areYouThirdPartyController(Some(prefilledStillConnectedDetailsNoneOwnProperty)).show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = areYouThirdPartyController(Some(prefilledStillConnectedDetailsNoneOwnProperty)).show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -128,7 +127,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
 
   "getBackLink" should {
     "return back link to CYA page if query param present" in {
-      val result = areYouThirdPartyController().show(fakeRequestFromCYA)
+      val result = areYouThirdPartyController().show(getRequestFromCYA)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
       )
@@ -139,7 +138,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
         tradingNameOwnTheProperty = Some(AnswerYes)
       )
 
-      val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsYes)).show(fakeRequest)
+      val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsYes)).show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.TradingNameOwnThePropertyController.show().url
       )
@@ -150,7 +149,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
         tradingNameOwnTheProperty = Some(AnswerNo)
       )
 
-      val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsNo)).show(fakeRequest)
+      val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsNo)).show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
       )
@@ -161,7 +160,7 @@ class AreYouThirdPartyControllerSpec extends TestBaseSpec:
         tradingNameOwnTheProperty = None
       )
 
-      val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsNone)).show(fakeRequest)
+      val result = areYouThirdPartyController(stillConnectedDetails = Some(prefilledDetailsNone)).show(getRequest)
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.TradingNamePayingRentController.show().url
       )

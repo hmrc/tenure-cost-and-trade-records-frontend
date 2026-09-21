@@ -19,15 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.PremisesLicenseConditionsDetailsForm.premisesLicenceDetailsForm
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec:
+class PremisesLicenseConditionsDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -42,7 +41,7 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       premisesLicenceConditionsDetailsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def premisesLicenseConditionsDetailsControllerNone(): PremisesLicenseConditionsDetailsController =
@@ -52,24 +51,24 @@ class PremisesLicenseConditionsDetailsControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       premisesLicenceConditionsDetailsView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 license conditions details in the session" in {
-      val result = premisesLicenseConditionsDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = premisesLicenseConditionsDetailsController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = premisesLicenseConditionsDetailsController().show(fakeRequest)
+      val result = premisesLicenseConditionsDetailsController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 no license conditions details in the session" in {
-      val result = premisesLicenseConditionsDetailsControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = premisesLicenseConditionsDetailsControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }

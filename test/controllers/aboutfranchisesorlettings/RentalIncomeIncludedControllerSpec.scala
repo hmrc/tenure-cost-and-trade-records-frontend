@@ -18,50 +18,44 @@ package controllers.aboutfranchisesorlettings
 
 import connectors.Audit
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import navigation.AboutFranchisesOrLettingsNavigator
 import org.jsoup.Jsoup
-import play.api.http.Status
-import play.api.http.Status.BAD_REQUEST
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.mvc.MessagesControllerComponents
+import play.api.i18n.Messages
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import play.api.test.Helpers.*
+import test.ControllerSpec
 
-class RentalIncomeIncludedControllerSpec extends TestBaseSpec:
+class RentalIncomeIncludedControllerSpec extends ControllerSpec:
 
-  val mockAboutFranchisesOrLettingsNavigator: AboutFranchisesOrLettingsNavigator = mock[AboutFranchisesOrLettingsNavigator]
-  val controllerComponents: MessagesControllerComponents                         = stubMessagesControllerComponents()
-  override val messagesApi: MessagesApi                                          = controllerComponents.messagesApi
-  override val messages: Messages                                                = messagesApi.preferred(fakeRequest)
-  val mockAudit: Audit                                                           = mock[Audit]
+  val mockAudit: Audit = mock[Audit]
 
   def controller(
     aboutFranchisesOrLettings: Option[AboutFranchisesOrLettings] = Some(prefilledAboutFranchiseOrLettings6045)
   ): RentalIncomeIncludedController =
     RentalIncomeIncludedController(
-      controllerComponents,
+      stubMessagesControllerComponents(),
       mockAudit,
-      mockAboutFranchisesOrLettingsNavigator,
+      aboutFranchisesOrLettingsNavigator,
       rentalIncomeIncludedView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller().show(0)(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = controller().show(0)(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller().show(0)(fakeRequest)
+      val result = controller().show(0)(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render a page with necessary content" in {
-      val result = controller().show(0)(fakeRequest)
+      given messages: Messages = stubMessagesControllerComponents().messagesApi.preferred(getRequest)
+
+      val result = controller().show(0)(getRequest)
 
       val html = Jsoup.parse(contentAsString(result))
 
@@ -87,7 +81,7 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec:
   }
 
   "render back link to CYA if come from CYA" in {
-    val result  = controller().show(0)(fakeRequestFromCYA)
+    val result  = controller().show(0)(getRequestFromCYA)
     val content = contentAsString(result)
     content should include("/check-your-answers-about-franchise-or-lettings")
   }
@@ -95,7 +89,7 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec:
   "render a correct back link to franchise type details if no query parameters in the url for 6010 " in {
     // franchise is on index 0
     val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010))
-    val result         = controller6010.show(0)(fakeRequest)
+    val result         = controller6010.show(0)(getRequest)
     val content        = contentAsString(result)
     content should include("/rental-income-rent?idx=0")
   }
@@ -103,13 +97,13 @@ class RentalIncomeIncludedControllerSpec extends TestBaseSpec:
   "render a correct back link to letting type details if no query parameters in the url for 6010 " in {
     // letting is on index 1
     val controller6010 = controller(Some(prefilledAboutFranchiseOrLettings6010))
-    val result         = controller6010.show(1)(fakeRequest)
+    val result         = controller6010.show(1)(getRequest)
     val content        = contentAsString(result)
     content should include("/rental-income-rent?idx=1")
   }
 
   "render a correct back link to letting type rent if no query parameters in the url for 6045 " in {
-    val result  = controller().show(1)(fakeRequest)
+    val result  = controller().show(1)(getRequest)
     val content = contentAsString(result)
     content should include("/rental-income-rent?idx=1")
   }

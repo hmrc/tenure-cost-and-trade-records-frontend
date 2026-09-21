@@ -20,15 +20,14 @@ import connectors.Audit
 import form.Errors
 import form.connectiontoproperty.AreYouStillConnectedForm.theForm
 import models.submissions.connectiontoproperty.StillConnectedDetails
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class AreYouStillConnectedControllerSpec extends TestBaseSpec:
+class AreYouStillConnectedControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -43,13 +42,13 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
       connectedToPropertyNavigator,
       areYouStillConnectedView,
       preEnrichedActionRefiner(stillConnectedDetails = stillConnectedDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with are you still connected in session" in {
-      val result = areYouStillConnectedController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = areYouStillConnectedController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -58,8 +57,8 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
     }
 
     "return 200 for empty session" in {
-      val result = areYouStillConnectedController(None).show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = areYouStillConnectedController(None).show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some(UTF8)
     }
@@ -69,7 +68,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
     "return back link to CYA page when 'from=CYA' query param is present and user is connected to the property" in {
       val result = areYouStillConnectedController(
         stillConnectedDetails = Some(prefilledStillConnectedDetailsYes)
-      ).show(fakeRequestFromCYA)
+      ).show(getRequestFromCYA)
 
       contentAsString(result) should include(
         controllers.connectiontoproperty.routes.CheckYourAnswersConnectionToPropertyController.show().url
@@ -79,7 +78,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
     "return back link to NotConnected CYA page when 'from=CYA' query param is present and user is not connected to the property" in {
       val result = areYouStillConnectedController(
         stillConnectedDetails = Some(prefilledStillConnectedDetailsNo)
-      ).show(fakeRequestFromCYA)
+      ).show(getRequestFromCYA)
 
       contentAsString(result) should include(
         controllers.notconnected.routes.CheckYourAnswersNotConnectedController.show().url
@@ -87,13 +86,13 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
     }
 
     "return back link to Task List when 'from=TL' query param is present" in {
-      val result = areYouStillConnectedController().show(fakeRequestFromTL)
+      val result = areYouStillConnectedController().show(getRequestFromTL)
 
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
     "return back link to Login page when no 'from' query param is present" in {
-      val result = areYouStillConnectedController().show(fakeRequest)
+      val result = areYouStillConnectedController().show(getRequest)
 
       contentAsString(result) should include(controllers.routes.LoginController.show.url)
     }
@@ -102,7 +101,7 @@ class AreYouStillConnectedControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = areYouStillConnectedController().submit(
-        fakeRequest.withFormUrlEncodedBody(Seq.empty*)
+        getRequest.withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }

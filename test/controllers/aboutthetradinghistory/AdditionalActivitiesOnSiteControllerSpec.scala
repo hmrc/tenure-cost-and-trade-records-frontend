@@ -22,9 +22,9 @@ import models.submissions.aboutthetradinghistory.AboutTheTradingHistoryPartOne
 import play.api.http.Status.{BAD_REQUEST, OK, SEE_OTHER}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec:
+class AdditionalActivitiesOnSiteControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -41,12 +41,12 @@ class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec:
       aboutYourTradingHistoryNavigator,
       additionalActivitiesOnSiteView,
       preEnrichedActionRefiner(aboutTheTradingHistoryPartOne = aboutTheTradingHistoryPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "AdditionalActivitiesOnSiteController GET /" should {
     "return 200 and HTML when data present in session" in {
-      val result = additionalActivitiesOnSiteController().show(fakeRequest)
+      val result = additionalActivitiesOnSiteController().show(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
@@ -54,7 +54,7 @@ class AdditionalActivitiesOnSiteControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when data is none in session" in {
       val controller = additionalActivitiesOnSiteController(aboutTheTradingHistoryPartOne = None)
-      val result     = controller.show(fakeRequest)
+      val result     = controller.show(getRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")

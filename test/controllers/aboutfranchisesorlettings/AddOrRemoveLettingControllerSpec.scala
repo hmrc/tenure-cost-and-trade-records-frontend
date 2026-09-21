@@ -21,15 +21,14 @@ import connectors.Audit
 import form.aboutfranchisesorlettings.AddAnotherLettingForm.addAnotherLettingForm
 import models.ForType.*
 import models.submissions.aboutfranchisesorlettings.AboutFranchisesOrLettings
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class AddOrRemoveLettingControllerSpec extends TestBaseSpec:
+class AddOrRemoveLettingControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -45,24 +44,24 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec:
       addOrRemoveLettingView,
       genericRemoveConfirmationView,
       preEnrichedActionRefiner(aboutFranchisesOrLettings = aboutFranchisesOrLettings, forType = FOR6020),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = addOrRemoveLettingController().show(0)(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = addOrRemoveLettingController().show(0)(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = addOrRemoveLettingController().show(0)(fakeRequest)
+      val result = addOrRemoveLettingController().show(0)(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "SUBMIT /" should {
       "throw a BAD_REQUEST if an empty form is submitted" in {
-        val result = addOrRemoveLettingController().submit(1)(fakeRequest)
+        val result = addOrRemoveLettingController().submit(1)(getRequest)
         status(result) shouldBe BAD_REQUEST
       }
       "throw a BAD_REQUEST if an empty form is submitted via CYA" in {
@@ -73,7 +72,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec:
 
     "REMOVE /" should {
       "return OK " in {
-        val result = addOrRemoveLettingController().remove(1)(fakeRequest)
+        val result = addOrRemoveLettingController().remove(1)(getRequest)
         status(result) shouldBe OK
       }
     }
@@ -163,7 +162,7 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec:
     "render the removal confirmation page on remove" in {
       val controller     = addOrRemoveLettingController()
       val idxToRemove    = 0
-      val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, fakeRequest)
+      val sessionRequest = SessionRequest(sessionAboutFranchiseOrLetting6020Session, getRequest)
       val result         = controller.remove(idxToRemove)(sessionRequest)
       status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
@@ -173,45 +172,45 @@ class AddOrRemoveLettingControllerSpec extends TestBaseSpec:
   "performRemove" should {
 
     "redirect to the updated letting list on confirmation of atm removal" in {
-      val indexToRemove   = 0
-      val fakePostRequest = FakeRequest(POST, "/remove-letting-confirm")
+      val indexToRemove = 0
+      val postRequest   = FakeRequest(POST, "/remove-letting-confirm")
         .withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
-      val controller      = addOrRemoveLettingController()
+      val controller    = addOrRemoveLettingController()
 
-      val result = controller.performRemove(indexToRemove)(fakePostRequest)
+      val result = controller.performRemove(indexToRemove)(postRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/add-another-letting?idx=2")
     }
 
     "redirect to the updated letting list on confirmation of telco removal" in {
-      val indexToRemove   = 1
-      val fakePostRequest = FakeRequest(POST, "/remove-letting-confirm")
+      val indexToRemove = 1
+      val postRequest   = FakeRequest(POST, "/remove-letting-confirm")
         .withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
-      val controller      = addOrRemoveLettingController()
+      val controller    = addOrRemoveLettingController()
 
-      val result = controller.performRemove(indexToRemove)(fakePostRequest)
+      val result = controller.performRemove(indexToRemove)(postRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/add-another-letting?idx=2")
     }
 
     "redirect to the updated letting list on confirmation of advert removal" in {
-      val indexToRemove   = 2
-      val fakePostRequest = FakeRequest(POST, "/remove-letting-confirm")
+      val indexToRemove = 2
+      val postRequest   = FakeRequest(POST, "/remove-letting-confirm")
         .withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
-      val controller      = addOrRemoveLettingController()
+      val controller    = addOrRemoveLettingController()
 
-      val result = controller.performRemove(indexToRemove)(fakePostRequest)
+      val result = controller.performRemove(indexToRemove)(postRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/add-another-letting?idx=2")
     }
 
     "redirect to the updated letting list on confirmation of other removal" in {
-      val indexToRemove   = 3
-      val fakePostRequest = FakeRequest(POST, "/remove-letting-confirm")
+      val indexToRemove = 3
+      val postRequest   = FakeRequest(POST, "/remove-letting-confirm")
         .withFormUrlEncodedBody("genericRemoveConfirmation" -> "yes")
-      val controller      = addOrRemoveLettingController()
+      val controller    = addOrRemoveLettingController()
 
-      val result = controller.performRemove(indexToRemove)(fakePostRequest)
+      val result = controller.performRemove(indexToRemove)(postRequest)
       status(result)           shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some("/send-trade-and-cost-information/add-another-letting?idx=2")
     }

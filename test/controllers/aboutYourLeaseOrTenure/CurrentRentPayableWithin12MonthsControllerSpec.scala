@@ -19,12 +19,11 @@ package controllers.aboutYourLeaseOrTenure
 import connectors.Audit
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import org.jsoup.Jsoup
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec:
+class CurrentRentPayableWithin12MonthsControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -37,13 +36,13 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       currentRentPayableWithin12MonthsView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Current Rent Payable Within 12 Months in the session" in {
-      val result = currentRentPayableWithin12MonthsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = currentRentPayableWithin12MonthsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -55,8 +54,8 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec:
       val controller = currentRentPayableWithin12MonthsController(aboutLeaseOrAgreementPartOne =
         Some(prefilledAboutLeaseOrAgreementPartOneNoStartDate)
       )
-      val result     = controller.show()(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show()(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some(UTF8)
       contentAsString(result) should include(
@@ -66,11 +65,11 @@ class CurrentRentPayableWithin12MonthsControllerSpec extends TestBaseSpec:
 
     "display the page with the fields prefilled in" when {
       "exists within the session" in {
-        val result = currentRentPayableWithin12MonthsController().show()(fakeRequest)
+        val result = currentRentPayableWithin12MonthsController().show()(getRequest)
         val html   = Jsoup.parse(contentAsString(result))
-        Option(html.getElementById("dateReview.day").`val`()).value   shouldBe "1"
-        Option(html.getElementById("dateReview.month").`val`()).value shouldBe "6"
-        Option(html.getElementById("dateReview.year").`val`()).value  shouldBe "2022"
+        Option(html.getElementById("dateReview.day").`val`()).get   shouldBe "1"
+        Option(html.getElementById("dateReview.month").`val`()).get shouldBe "6"
+        Option(html.getElementById("dateReview.year").`val`()).get  shouldBe "2022"
       }
     }
   }

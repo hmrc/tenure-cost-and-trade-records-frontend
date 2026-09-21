@@ -21,15 +21,14 @@ import form.aboutYourLeaseOrTenure.UltimatelyResponsibleOutsideRepairsForm.ultim
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.{AboutLeaseOrAgreementPartFour, AboutLeaseOrAgreementPartOne, AboutLeaseOrAgreementPartTwo}
-import play.api.http.Status
 import play.api.test.*
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec:
+class UltimatelyResponsibleOutsideRepairsControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -52,13 +51,13 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec:
         aboutLeaseOrAgreementPartTwo = aboutLeaseOrAgreementPartTwo,
         aboutLeaseOrAgreementPartFour = aboutLeaseOrAgreementPartFour
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Ultimately Responsible Outside Repairs in the session" in {
-      val result = ultimatelyResponsibleOutsideRepairsController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = ultimatelyResponsibleOutsideRepairsController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -68,8 +67,8 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Ultimately Responsible Outside Repairs 6020 in the session" in {
       val controller = ultimatelyResponsibleOutsideRepairsController(forType = FOR6020)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -79,8 +78,8 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML when no Ultimately Responsible Outside Repairs in the session" in {
       val controller = ultimatelyResponsibleOutsideRepairsController(FOR6020, None, None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -90,8 +89,8 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Ultimately Responsible Outside Repairs for 6045 in the session" in {
       val controller = ultimatelyResponsibleOutsideRepairsController(forType = FOR6045)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -101,8 +100,8 @@ class UltimatelyResponsibleOutsideRepairsControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with Ultimately Responsible Outside Repairs for 6045 no structure build details in the session" in {
       val controller = ultimatelyResponsibleOutsideRepairsController(FOR6045, None, None, None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

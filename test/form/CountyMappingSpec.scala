@@ -14,54 +14,53 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
-import form.BuildingNameNumberMapping.validateBuildingNameNumber
-import org.scalatest.matchers.should
-import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
-import org.scalatest.wordspec.AnyWordSpecLike
+import form.CountyMapping.validateCounty
+import org.scalatest.prop.TableFor2
 import play.api.data.Form
 import play.api.data.Forms.single
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class BuildingNameNumberMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
+class CountyMappingSpec extends BaseSpec:
 
   trait Setup:
-    val form: Form[String] = Form(single("buildingNameNumber" -> validateBuildingNameNumber))
+    val form: Form[String] = Form(single("county" -> validateCounty))
 
-  "BuildingNameNumber validation" should {
+  "county validation" should {
     "catch invalid length error" in new Setup {
       val lengths: TableFor2[String, Boolean] = Table(
-        ("buildingNameNumber", "validity"),
+        ("county", "validity"),
         ("ICantBelieveTheNameForThisTestIsMoreThanFiftyCharactersLong", false), // 59
         ("ICantBelieveTheNameForThisTestIsEvenMoreThanFiftyCharactersLong", false), // 63
-        ("Test Business", true),
-        ("Business", true)
+        ("Test County", true),
+        ("County", true)
       )
 
-      TableDrivenPropertyChecks.forAll(lengths) { (buildingNameNumber, isValid) =>
-        val res: Form[String] = form.bind(Map("buildingNameNumber" -> buildingNameNumber))
+      forAll(lengths) { (county, isValid) =>
+        val res: Form[String] = form.bind(Map("county" -> county))
 
         if isValid then
           res.hasErrors         shouldBe false
         else
-          res.errors(0).message shouldBe "error.buildingNameNumber.maxLength"
+          res.errors(0).message shouldBe "error.county.maxLength"
       }
     }
 
     "catch mandatory condition" in new Setup {
       val isInput: TableFor2[String, Boolean] = Table(
-        ("buildingNameNumber", "validity"),
-        ("001", true),
+        ("county", "validity"),
+        ("Lancashire", true),
         ("", false)
       )
 
-      TableDrivenPropertyChecks.forAll(isInput) { (buildingNameNumber, isValid) =>
-        val res: Form[String] = form.bind(Map("buildingNameNumber" -> buildingNameNumber))
+      forAll(isInput) { (county, isValid) =>
+        val res: Form[String] = form.bind(Map("county" -> county))
 
         if isValid then
           res.hasErrors         shouldBe false
         else
-          res.errors(0).message shouldBe "error.buildingNameNumber.required"
+          res.errors(0).message shouldBe "error.county.required"
       }
     }
   }

@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
 import form.{Errors, PostcodeMapping}
-import org.scalatest.EitherValues
-import org.scalatest.matchers.should
-import org.scalatest.prop.TableDrivenPropertyChecks
-import org.scalatest.wordspec.AnyWordSpec
 import play.api.data.{Form, FormError}
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class PostcodeMappingSpec extends AnyWordSpec with should.Matchers with EitherValues with TableDrivenPropertyChecks:
+class PostcodeMappingSpec extends BaseSpec:
 
   private val positiveTestData = Table(
     ("raw postcode", "formated postcode"),

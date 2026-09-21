@@ -21,12 +21,11 @@ import form.aboutYourLeaseOrTenure.IncludedInYourRentForm.includedInYourRentForm
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
 import play.api.data.Form
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class IncludedInYourRentControllerSpec extends TestBaseSpec:
+class IncludedInYourRentControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -39,13 +38,13 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec:
       aboutYourLeaseOrTenureNavigator,
       includedInYourRentView,
       preEnrichedActionRefiner(aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200 and HTML with Included In Your Rent Details in the session" in {
-      val result = includedInYourRentController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = includedInYourRentController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -55,8 +54,8 @@ class IncludedInYourRentControllerSpec extends TestBaseSpec:
 
     "return 200 and HTML with no Included In Your Rent Details in the session" in {
       val controller = includedInYourRentController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(

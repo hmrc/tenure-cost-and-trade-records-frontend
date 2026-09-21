@@ -19,19 +19,15 @@ package controllers.requestReferenceNumber
 import form.Errors
 import form.requestReferenceNumber.RequestReferenceNumberContactDetailsForm.theForm
 import models.submissions.requestReferenceNumber.RequestReferenceNumberDetails
-import play.api.http.Status
-import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec:
+class NoReferenceNumberContactDetailsControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
-
-  private val postRequest = FakeRequest("POST", "/")
 
   def requestReferenceNumberContactDetailsController(
     requestReferenceNumberDetails: Option[RequestReferenceNumberDetails] = Some(prefilledRequestRefNumCYA)
@@ -41,7 +37,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec:
       requestReferenceNumberNavigator,
       requestReferenceNumberContactDetailsView,
       preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def requestReferenceNumberContactDetailsControllerBlank(
@@ -52,24 +48,24 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec:
       requestReferenceNumberNavigator,
       requestReferenceNumberContactDetailsView,
       preEnrichedActionRefiner(requestReferenceNumberDetails = requestReferenceNumberDetails),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = requestReferenceNumberContactDetailsController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = requestReferenceNumberContactDetailsController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = requestReferenceNumberContactDetailsController().show(fakeRequest)
+      val result = requestReferenceNumberContactDetailsController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "return 200 with empty session" in {
-      val result = requestReferenceNumberContactDetailsControllerBlank().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = requestReferenceNumberContactDetailsControllerBlank().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -78,7 +74,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = requestReferenceNumberContactDetailsController().submit(
-        fakeRequest.withFormUrlEncodedBody(Seq.empty*)
+        getRequest.withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }
@@ -92,7 +88,7 @@ class NoReferenceNumberContactDetailsControllerSpec extends TestBaseSpec:
           "requestReferenceNumberContactDetailsAdditionalInformation" -> "Additional information"
         )
       )
-      status(result) shouldBe Status.SEE_OTHER
+      status(result) shouldBe SEE_OTHER
       redirectLocation(result) shouldBe Some(
         controllers.requestReferenceNumber.routes.RequestReferenceNumberCheckYourAnswersController.show().url
       )

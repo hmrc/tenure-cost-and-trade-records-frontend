@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package controllers.form
+package form
 
 import form.PhoneNumberMapping.validatePhoneNumber
-import org.scalatest.matchers.should
-import org.scalatest.prop.{TableDrivenPropertyChecks, TableFor2}
-import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.prop.TableFor2
 import play.api.data.Form
 import play.api.data.Forms.single
+import uk.gov.hmrc.vo.unit.test.BaseSpec
 
-class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with TableDrivenPropertyChecks:
+class PhoneNumberMappingSpec extends BaseSpec:
 
   trait Setup:
     val form: Form[String] = Form(single("phone" -> validatePhoneNumber))
@@ -46,7 +45,7 @@ class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with T
         ("+44 790-590-5876", true)
       )
 
-      TableDrivenPropertyChecks.forAll(lengths) { (phone, isValid) =>
+      forAll(lengths) { (phone, isValid) =>
         val res: Form[String] = form.bind(Map("phone" -> phone))
 
         if isValid then
@@ -64,7 +63,7 @@ class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with T
         "00447!904098765"
       )
 
-      TableDrivenPropertyChecks.forAll(invalidPhoneNumbers) { phone =>
+      forAll(invalidPhoneNumbers) { phone =>
         val res: Form[String] = form.bind(Map("phone" -> phone))
         res.errors.head.message shouldBe "error.invalid_phone"
       }
@@ -77,7 +76,7 @@ class PhoneNumberMappingSpec extends AnyWordSpecLike with should.Matchers with T
         ("", false)
       )
 
-      TableDrivenPropertyChecks.forAll(isNumber) { (phone, isValid) =>
+      forAll(isNumber) { (phone, isValid) =>
         val res: Form[String] = form.bind(Map("phone" -> phone))
 
         if isValid then

@@ -22,17 +22,16 @@ import form.aboutYourLeaseOrTenure.AboutTheLandlordForm.theForm
 import models.ForType
 import models.ForType.*
 import models.submissions.aboutYourLeaseOrTenure.AboutLeaseOrAgreementPartOne
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import test.MockAddressLookup
+import test.ControllerSpec
 import uk.gov.hmrc.http.HeaderCarrier
-import utils.TestBaseSpec
 
 import scala.concurrent.Future.successful
 import scala.language.reflectiveCalls
 
-class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLookup:
+class AboutYourLandlordControllerSpec extends ControllerSpec with MockAddressLookup:
 
   import TestData.{baseFormData, errorKey}
 
@@ -53,13 +52,13 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
       forType = forType,
       aboutLeaseOrAgreementPartOne = aboutLeaseOrAgreementPartOne
     ),
-    mockSessionRepo
+    mockSessionRepository
   )
 
   "GET /" should {
     "return 200 and HTML with About Your Landlord in the session" in {
-      val result = aboutYourLandlordController().show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result = aboutYourLandlordController().show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -69,8 +68,8 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
 
     "return 200 and HTML with About Your Landlord in the session for 6020" in {
       val controller = aboutYourLandlordController(forType = FOR6020)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -80,8 +79,8 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
 
     "return 200 and HTML when no About Your Landlord in the session" in {
       val controller = aboutYourLandlordController(aboutLeaseOrAgreementPartOne = None)
-      val result     = controller.show(fakeRequest)
-      status(result)        shouldBe Status.OK
+      val result     = controller.show(getRequest)
+      status(result)        shouldBe OK
       contentType(result)   shouldBe Some("text/html")
       charset(result)       shouldBe Some("utf-8")
       contentAsString(result) should include(
@@ -90,7 +89,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
     }
 
     "return correct backLink when 'from=CYA' query param is present" in {
-      val result = aboutYourLandlordController().show()(fakeRequestFromCYA)
+      val result = aboutYourLandlordController().show()(getRequestFromCYA)
       contentAsString(result) should include(controllers.routes.TaskListController.show.url)
     }
 
@@ -114,8 +113,8 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
       val res = aboutYourLandlordController().submit(
         FakeRequest("POST", "/").withFormUrlEncodedBody(baseFormData.toSeq*)
       )
-      status(res)                 shouldBe SEE_OTHER
-      redirectLocation(res).value shouldBe "/on-ramp"
+      status(res)               shouldBe SEE_OTHER
+      redirectLocation(res).get shouldBe "/on-ramp"
     }
   }
 
@@ -127,7 +126,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
         Some("id")
       )
       when(addressLookupConnector.getConfirmedAddress(any[String])).thenReturn(successful(lookup))
-      val res    = aboutYourLandlordController().addressLookupCallback("confirmedAddress")(fakeRequest)
+      val res    = aboutYourLandlordController().addressLookupCallback("confirmedAddress")(getRequest)
       status(res) shouldBe SEE_OTHER
     }
 
@@ -139,7 +138,7 @@ class AboutYourLandlordControllerSpec extends TestBaseSpec with MockAddressLooku
       )
       given HeaderCarrier  = any[HeaderCarrier]
       when(addressLookupConnector.getConfirmedAddress(any[String])).thenReturn(successful(confirmedAddress))
-      val res              = aboutYourLandlordController().addressLookupCallback("confirmedAddress")(fakeRequestFromCYA)
+      val res              = aboutYourLandlordController().addressLookupCallback("confirmedAddress")(getRequestFromCYA)
       status(res)           shouldBe SEE_OTHER
       redirectLocation(res) shouldBe Some(
         controllers.aboutYourLeaseOrTenure.routes.CheckYourAnswersAboutYourLeaseOrTenureController.show().url

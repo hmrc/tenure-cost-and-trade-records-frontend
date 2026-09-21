@@ -35,9 +35,9 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
       "be handling GET by replying 200 with the empty form" in new ControllerFixture(
         hasOnlineAdvertising = Some(false)
       ) {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
         val page: Document = contentAsJsoup(result)
         page.heading  shouldBe "lettingHistory.checkYourAnswers.heading"
         page.backLink shouldBe routes.HasOnlineAdvertisingController.show.url
@@ -45,7 +45,7 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
 
       "be handling invalid POST by replying 400 with error message" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "" // missing
           )
         )
@@ -60,23 +60,23 @@ class CheckYourAnswersLettingHistoryControllerSpec extends LettingHistoryControl
         isYearlyAvailable = Some(false),
         hasOnlineAdvertising = Some(true)
       ) {
-        val result: Future[Result] = controller.show(fakeGetRequest)
-        status(result)            shouldBe OK
-        contentType(result).value shouldBe HTML
-        charset(result).value     shouldBe UTF8
+        val result: Future[Result] = controller.show(getRequest)
+        status(result)          shouldBe OK
+        contentType(result).get shouldBe HTML
+        charset(result).get     shouldBe UTF8
       }
 
       "be handling POST answer='yes' by replying 303 redirect to the 'TaskList' page" in new ControllerFixture {
         val result: Future[Result] = controller.submit(
-          fakePostRequest.withFormUrlEncodedBody(
+          postRequest.withFormUrlEncodedBody(
             "answer" -> "yes"
           )
         )
         status(result) shouldBe SEE_OTHER
-        redirectLocation(result).value shouldBe
+        redirectLocation(result).get shouldBe
           controllers.routes.TaskListController.show.withFragment("letting-history").toString
         verify(repository, once).saveOrUpdate(data.capture())(using any[HeaderCarrier])
-        sectionCompleted(data).value   shouldBe true
+        sectionCompleted(data).get   shouldBe true
       }
     }
   }

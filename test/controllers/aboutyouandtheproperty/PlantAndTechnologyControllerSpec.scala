@@ -20,16 +20,14 @@ import connectors.Audit
 import form.aboutyouandtheproperty.PlantAndTechnologyForm.plantAndTechnologyForm
 import models.submissions.aboutyouandtheproperty.{AboutYouAndTheProperty, AboutYouAndThePropertyPartTwo}
 import models.submissions.common.AnswersYesNo.*
-import play.api.http.Status
-import play.api.http.Status.{BAD_REQUEST, SEE_OTHER}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{GET, POST, charset, contentAsString, contentType, status, stubMessagesControllerComponents}
+import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class PlantAndTechnologyControllerSpec extends TestBaseSpec:
+class PlantAndTechnologyControllerSpec extends ControllerSpec:
 
   import TestData.{baseFormData, errorKey}
 
@@ -48,7 +46,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec:
         aboutYouAndTheProperty = aboutYouAndTheProperty,
         aboutYouAndThePropertyPartTwo = aboutYouAndThePropertyPartTwo
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def plantAndTechnologyControllerNone(): PlantAndTechnologyController =
@@ -58,24 +56,24 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       plantAndTechnologyView,
       preEnrichedActionRefiner(aboutYouAndThePropertyPartTwo = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 about you in the session" in {
-      val result = plantAndTechnologyController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = plantAndTechnologyController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = plantAndTechnologyController().show(fakeRequest)
+      val result = plantAndTechnologyController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 plant and technology in the session" in {
-      val result = plantAndTechnologyControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = plantAndTechnologyControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -101,7 +99,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec:
     "return correct backLink when threeYearsConstructed is AnswerYes" in {
       val aboutYouAndThePropertyWith3YData =
         prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = Some(AnswerYes))
-      val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(fakeRequest)
+      val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(getRequest)
       val html                             = contentAsString(result)
 
       html should include(controllers.aboutyouandtheproperty.routes.CostsBreakdownController.show().url)
@@ -110,7 +108,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec:
     "return correct backLink when threeYearsConstructed is AnswerNo" in {
       val aboutYouAndThePropertyWith3YData =
         prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = Some(AnswerNo))
-      val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(fakeRequest)
+      val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(getRequest)
       val html                             = contentAsString(result)
 
       html should include(controllers.aboutyouandtheproperty.routes.ThreeYearsConstructedController.show().url)
@@ -119,7 +117,7 @@ class PlantAndTechnologyControllerSpec extends TestBaseSpec:
     "return correct backLink when threeYearsConstructed is None" in {
       val aboutYouAndThePropertyWith3YData =
         prefilledAboutYouAndThePropertyYes.copy(threeYearsConstructed = None)
-      val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(fakeRequest)
+      val result                           = plantAndTechnologyController(Some(aboutYouAndThePropertyWith3YData)).show(getRequest)
       val html                             = contentAsString(result)
 
       html should include(controllers.routes.TaskListController.show.url)

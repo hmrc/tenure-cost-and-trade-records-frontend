@@ -19,15 +19,14 @@ package controllers.aboutyouandtheproperty
 import connectors.Audit
 import form.aboutyouandtheproperty.LicensableActivitiesForm.*
 import models.submissions.aboutyouandtheproperty.AboutYouAndTheProperty
-import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
-import utils.TestBaseSpec
+import test.ControllerSpec
 
 import scala.language.reflectiveCalls
 
-class LicensableActivitiesControllerSpec extends TestBaseSpec:
+class LicensableActivitiesControllerSpec extends ControllerSpec:
 
   import TestData.*
 
@@ -42,7 +41,7 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       licensableActivitiesView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = aboutYouAndTheProperty),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   def licensableActivitiesControllerNone(): LicensableActivitiesController =
@@ -52,24 +51,24 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec:
       aboutYouAndThePropertyNavigator,
       licensableActivitiesView,
       preEnrichedActionRefiner(aboutYouAndTheProperty = None),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "GET / return 200 licensable activities in the session" in {
-      val result = licensableActivitiesController().show(fakeRequest)
-      status(result) shouldBe Status.OK
+      val result = licensableActivitiesController().show(getRequest)
+      status(result) shouldBe OK
     }
 
     "GET / return HTML" in {
-      val result = licensableActivitiesController().show(fakeRequest)
+      val result = licensableActivitiesController().show(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "GET / return 200 no licensable activities in the session" in {
-      val result = licensableActivitiesControllerNone().show(fakeRequest)
-      status(result)      shouldBe Status.OK
+      val result = licensableActivitiesControllerNone().show(getRequest)
+      status(result)      shouldBe OK
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
@@ -83,7 +82,7 @@ class LicensableActivitiesControllerSpec extends TestBaseSpec:
   "SUBMIT /" should {
     "throw a BAD_REQUEST if an empty form is submitted" in {
       val res = licensableActivitiesController().submit(
-        fakeRequest.withFormUrlEncodedBody(Seq.empty*)
+        getRequest.withFormUrlEncodedBody(Seq.empty*)
       )
       status(res) shouldBe BAD_REQUEST
     }

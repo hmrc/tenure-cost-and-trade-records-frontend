@@ -20,9 +20,9 @@ import connectors.Audit
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{charset, contentAsString, contentType, status, stubMessagesControllerComponents}
-import utils.TestBaseSpec
+import test.ControllerSpec
 
-class ConcessionTypeFeesControllerSpec extends TestBaseSpec:
+class ConcessionTypeFeesControllerSpec extends ControllerSpec:
 
   val mockAudit: Audit = mock[Audit]
 
@@ -36,23 +36,23 @@ class ConcessionTypeFeesControllerSpec extends TestBaseSpec:
         aboutTheTradingHistoryPartOne = Some(prefilledTurnoverSections6045),
         aboutFranchisesOrLettings = Some(prefilledAboutFranchiseOrLettings6045)
       ),
-      mockSessionRepo
+      mockSessionRepository
     )
 
   "GET /" should {
     "return 200" in {
-      val result = controller.show(0)(fakeRequest)
+      val result = controller.show(0)(getRequest)
       status(result) shouldBe OK
     }
 
     "return HTML" in {
-      val result = controller.show(0)(fakeRequest)
+      val result = controller.show(0)(getRequest)
       contentType(result) shouldBe Some("text/html")
       charset(result)     shouldBe Some("utf-8")
     }
 
     "render a correct back link to concession type details if no query parameters in the url " in {
-      val result  = controller.show(0)(fakeRequest)
+      val result  = controller.show(0)(getRequest)
       val content = contentAsString(result)
       content should include("/concession-type-details")
     }
