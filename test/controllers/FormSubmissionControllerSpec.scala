@@ -70,7 +70,7 @@ class FormSubmissionControllerSpec extends ControllerSpec:
 
       val content = contentAsString(result)
       content should include("confirmation.heading")
-      content should include("print-link")
+      content should include("print-link-in-text")
     }
 
     "handle errors in submit form" in {
