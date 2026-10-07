@@ -1,22 +1,15 @@
-.print-link {
-  display: inline-block;
-  background: transparent no-repeat 0 50%;
-  zoom: 1;
+.js-enabled-block {
+  display: none;
+}
+
+.js-enabled .js-enabled-block {
+  display: block;
 }
 
 @media print {
-  a.print-link, a, .govuk-summary-list__actions,
-  .govuk-button, .button, button, .govuk-back-link,
-  .no-print, footer,  .form-help-toggle, .help-container, .govuk-details:not([open]) {
+  .govuk-summary-list__actions, .govuk-button, .button, button, .govuk-back-link,
+  footer, .form-help-toggle, .help-container, .govuk-details:not([open]) {
     display: none !important;
-  }
-}
-
-@media print {
-  .la-link-print {
-    text-decoration: none;
-    color: #0b0c0c !important;
-    display: block !important;
   }
 }
 
