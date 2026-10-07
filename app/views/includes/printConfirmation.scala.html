@@ -22,6 +22,11 @@
         <a class="govuk-link print-link-in-text" href="">@messages("print.link")</a>
         @messages("print.printOrPdf")
     </p>
+    <noscript>
+        <p class="govuk-body">
+            @messages("print.link.cantPrintLater") @messages("print.link")
+        </p>
+    </noscript>
 </div>
 
 <script>
