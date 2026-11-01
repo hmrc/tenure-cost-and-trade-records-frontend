@@ -35,7 +35,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 import views.html.lettingHistory.residentList as ResidentListView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

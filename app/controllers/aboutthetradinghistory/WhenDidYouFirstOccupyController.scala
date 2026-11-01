@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import util.AccountingInformationUtil.*
 import views.html.aboutthetradinghistory.whenDidYouFirstOccupy as WhenDidYouFirstOccupyView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

@@ -41,7 +41,7 @@ import util.DateUtil.nowInUK
 import views.html.*
 
 import java.time.{ZoneOffset, ZonedDateTime}
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 case class LoginDetails(referenceNumber: String, postcode: String, startTime: ZonedDateTime):

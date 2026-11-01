@@ -29,7 +29,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.completedCommercialLettings
 
-import javax.inject.{Inject, Named}
+import jakarta.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
 
 class CompletedCommercialLettingsController @Inject() (

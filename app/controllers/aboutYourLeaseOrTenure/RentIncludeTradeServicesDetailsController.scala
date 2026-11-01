@@ -34,7 +34,7 @@ import repositories.SessionRepo
 import util.NumberUtil.zeroBigDecimal
 import views.html.aboutYourLeaseOrTenure.{rentIncludeTradeServicesDetails, rentIncludeTradeServicesDetailsTextArea}
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

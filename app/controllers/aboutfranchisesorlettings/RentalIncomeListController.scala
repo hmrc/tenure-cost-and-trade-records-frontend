@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.rentalIncomeList as RentalIncomeListView
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

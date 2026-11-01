@@ -33,7 +33,7 @@ import views.html.requestReferenceNumber.{requestReferenceNumberCheckYourAnswers
 
 import java.time.Instant
 import java.util.UUID
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

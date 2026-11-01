@@ -29,7 +29,7 @@ import uk.gov.hmrc.play.audit.http.config.AuditingConfig
 import uk.gov.hmrc.play.audit.http.connector.{AuditChannel, AuditConnector, AuditResult, DatastreamMetrics}
 import uk.gov.hmrc.play.audit.model.DataEvent
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @ImplementedBy(classOf[TctrAuditConnector])

@@ -27,7 +27,7 @@ import navigation.identifiers.*
 import play.api.Logging
 import play.api.mvc.Call
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class ConnectionToPropertyNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 

@@ -31,7 +31,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.atmLetting
 
-import javax.inject.{Inject, Named}
+import jakarta.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
 
 class AtmLettingController @Inject() (

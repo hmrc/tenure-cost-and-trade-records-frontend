@@ -30,7 +30,7 @@ import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.caravansTotalSiteCapacity
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 /**

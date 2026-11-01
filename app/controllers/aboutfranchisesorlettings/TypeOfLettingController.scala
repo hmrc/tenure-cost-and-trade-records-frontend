@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.aboutfranchisesorlettings.typeOfLetting
 
-import javax.inject.{Inject, Named}
+import jakarta.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
 class TypeOfLettingController @Inject() (

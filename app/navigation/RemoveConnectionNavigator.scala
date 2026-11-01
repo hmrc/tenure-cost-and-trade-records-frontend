@@ -21,7 +21,7 @@ import models.Session
 import navigation.identifiers.{Identifier, PastConnectionId, RemoveConnectionId}
 import play.api.mvc.Call
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class RemoveConnectionNavigator @Inject() (audit: Audit) extends Navigator(audit):
 

@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.isRentReceivedFromLetting
 
 import java.util.concurrent.TimeUnit
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

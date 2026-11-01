@@ -16,7 +16,7 @@
 
 package config
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 import play.api.Configuration
 import play.api.mvc.{Call, RequestHeader}
 import uk.gov.hmrc.vo.service.config.VOServiceConfig

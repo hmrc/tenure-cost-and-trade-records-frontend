@@ -27,7 +27,7 @@ import play.api.Logging
 import play.api.mvc.{AnyContent, Call, Request}
 import uk.gov.hmrc.http.HeaderCarrier
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class AboutTheTradingHistoryNavigator @Inject() (audit: Audit) extends Navigator(audit) with Logging:
 

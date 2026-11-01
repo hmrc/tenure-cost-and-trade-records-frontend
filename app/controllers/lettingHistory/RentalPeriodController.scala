@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import util.DateUtilLocalised
 import views.html.lettingHistory.rentalPeriod as RentalPeriodView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

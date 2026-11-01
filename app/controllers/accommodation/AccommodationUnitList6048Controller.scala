@@ -33,7 +33,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents, Result}
 import repositories.SessionRepo
 import views.html.accommodation.{accommodationUnitList6048, removeLastUnit6048}
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 /**

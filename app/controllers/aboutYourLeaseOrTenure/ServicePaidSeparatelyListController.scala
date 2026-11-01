@@ -33,7 +33,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.servicePaidSeparatelyList
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 
 @Singleton
 class ServicePaidSeparatelyListController @Inject() (

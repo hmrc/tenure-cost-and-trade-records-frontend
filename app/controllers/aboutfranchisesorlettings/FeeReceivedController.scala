@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutfranchisesorlettings.feeReceived
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

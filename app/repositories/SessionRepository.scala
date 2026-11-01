@@ -30,7 +30,7 @@ import uk.gov.hmrc.mongo.play.json.{Codecs, PlayMongoRepository}
 import uk.gov.hmrc.mdc.Mdc
 
 import java.time.Instant
-import javax.inject.Inject
+import jakarta.inject.Inject
 import scala.concurrent.duration.*
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.implicitConversions

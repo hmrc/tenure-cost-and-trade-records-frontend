@@ -26,7 +26,7 @@ import play.api.mvc.{AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.caravansAgeCategories
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 
 /**
   * 6045/6046 Trading history - How old are the twin-unit static caravans on site.

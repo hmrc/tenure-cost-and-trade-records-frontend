@@ -25,7 +25,7 @@ import play.api.mvc.MessagesControllerComponents
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.caravansTrading6045
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 
 /**
   * 6045/46 Trading history - twin-unit caravans owned by operator.

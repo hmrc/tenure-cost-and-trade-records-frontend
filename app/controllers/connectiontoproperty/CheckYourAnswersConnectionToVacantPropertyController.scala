@@ -24,7 +24,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.connectiontoproperty.checkYourAnswersConnectionToVacantProperty
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 
 @Singleton
 class CheckYourAnswersConnectionToVacantPropertyController @Inject() (

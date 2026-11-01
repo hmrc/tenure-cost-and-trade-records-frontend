@@ -29,7 +29,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.benefitsGivenDetails
 
-import javax.inject.{Inject, Named}
+import jakarta.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
 
 class BenefitsGivenDetailsController @Inject() (

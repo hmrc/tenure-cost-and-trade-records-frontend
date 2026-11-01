@@ -31,7 +31,7 @@ import util.AccountingInformationUtil
 import views.html.accommodation.accommodationLettingHistory6048
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 /**

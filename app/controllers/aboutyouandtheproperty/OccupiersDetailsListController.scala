@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.occupiersDetailsList as OccupiersDetailsListView
 import views.html.genericRemoveConfirmation as RemoveConfirmationView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

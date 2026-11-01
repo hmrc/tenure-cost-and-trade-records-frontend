@@ -21,7 +21,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import views.html.taskList.taskList
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 
 @Singleton
 class TaskListController @Inject() (

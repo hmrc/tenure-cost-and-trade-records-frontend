@@ -19,7 +19,7 @@ package crypto
 import play.api.Configuration
 import uk.gov.hmrc.crypto.{Crypted, Decrypter, Encrypter, PlainBytes, PlainContent, PlainText, SymmetricCryptoFactory}
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 
 @Singleton
 class MongoCrypto @Inject() (configuration: Configuration) extends Encrypter with Decrypter:

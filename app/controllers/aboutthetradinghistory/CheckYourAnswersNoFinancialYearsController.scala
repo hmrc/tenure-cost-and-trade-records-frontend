@@ -29,7 +29,7 @@ import repositories.SessionRepo
 import util.AccountingInformationUtil.backLinkToFinancialYearEndDates
 import views.html.aboutthetradinghistory.checkYourAnswerNoFinancialYears as CheckYourAnswerNoFinancialYearsView
 
-import javax.inject.{Inject, Named}
+import jakarta.inject.{Inject, Named}
 import scala.concurrent.ExecutionContext
 
 class CheckYourAnswersNoFinancialYearsController @Inject (

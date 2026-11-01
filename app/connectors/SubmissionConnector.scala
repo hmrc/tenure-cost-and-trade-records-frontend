@@ -27,7 +27,7 @@ import uk.gov.hmrc.http.{Authorization, BadRequestException, HeaderCarrier, Http
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import java.net.URL
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

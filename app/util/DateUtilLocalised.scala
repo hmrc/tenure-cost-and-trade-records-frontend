@@ -23,7 +23,7 @@ import uk.gov.hmrc.play.language.LanguageUtils
 import util.DateUtil.*
 
 import java.time.{LocalDate, MonthDay, YearMonth}
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 
 @Singleton
 class DateUtilLocalised @Inject() (langUtil: LanguageUtils):
