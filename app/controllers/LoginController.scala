@@ -22,6 +22,7 @@ import connectors.{Audit, BackendConnector}
 import controllers.LoginController.startPage
 import form.Errors
 import form.PostcodeMapping.customPostcodeMapping
+import jakarta.inject.{Inject, Named, Singleton}
 import models.ForType.*
 import models.audit.DownloadPDFAudit
 import models.submissions.common.Address
@@ -37,11 +38,10 @@ import security.NoExistingDocument
 import uk.gov.hmrc.http.HeaderNames.trueClientIp
 import uk.gov.hmrc.http.{HeaderCarrier, JsValidationException, UpstreamErrorResponse}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import util.DateUtil.nowInUK
+import uk.gov.hmrc.vo.service.conversion.DateConversion.*
 import views.html.*
 
 import java.time.{ZoneOffset, ZonedDateTime}
-import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 case class LoginDetails(referenceNumber: String, postcode: String, startTime: ZonedDateTime):

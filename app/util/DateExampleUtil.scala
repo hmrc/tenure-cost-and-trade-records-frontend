@@ -16,32 +16,30 @@
 
 package util
 
+import uk.gov.hmrc.vo.service.conversion.DateConversion.*
+
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.time.{LocalDate, ZoneId, ZonedDateTime}
 import java.util.Locale
 
 /**
   * @author Yuriy Tumakha
   */
-object DateUtil:
+object DateExampleUtil:
+
+  private val shortSlashDateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.UK)
 
   extension (localDate: LocalDate)
 
-    def shortDate: String =
-      localDate.format(shortDateFormatter)
+    def shortSlashDate: String =
+      localDate.format(shortSlashDateFormatter)
 
     def toEpochMilli: Long =
       localDate.atStartOfDay(ukTimezone).toInstant.toEpochMilli
 
-  val defaultTimeZoneId          = "Europe/London"
-  private val ukTimezone: ZoneId = ZoneId.of(defaultTimeZoneId)
-
-  private val shortDateFormatter: DateTimeFormatter           = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.UK)
   private val dayMonthYearExampleFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("d M yyyy", Locale.UK)
   private val monthYearExampleFormatter: DateTimeFormatter    = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
   private val dayMonthExampleFormatter: DateTimeFormatter     = DateTimeFormatter.ofPattern("d M", Locale.UK)
-
-  def nowInUK: ZonedDateTime = ZonedDateTime.now(ukTimezone)
 
   def exampleDayMonthYear(minusYears: Int): String =
     nowInUK.minusYears(minusYears).format(dayMonthYearExampleFormatter)

@@ -21,7 +21,7 @@ import play.api.data.FormError
 import play.api.data.Forms.*
 import play.api.data.format.Formatter
 import play.api.i18n.Messages
-import util.DateUtil.nowInUK
+import uk.gov.hmrc.vo.service.conversion.DateConversion.*
 
 import java.time.LocalDate
 import scala.collection.immutable.Seq

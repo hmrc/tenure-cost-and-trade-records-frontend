@@ -50,8 +50,6 @@ class SubmissionConnectorSpec extends TCTRAppSpec:
         connector.submitNotConnected(refNumber, notConnectedSubmission)
       }.futureValue
 
-      println(exception.getMessage)
-
       exception.getMessage shouldBe """"Bad Request""""
 
       verify(httpMock)

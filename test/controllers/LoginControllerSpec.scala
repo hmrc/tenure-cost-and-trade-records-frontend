@@ -30,7 +30,7 @@ import security.NoExistingDocument
 import stub.StubSessionRepo
 import test.ControllerSpec
 import uk.gov.hmrc.http.HeaderCarrier
-import util.DateUtil.nowInUK
+import uk.gov.hmrc.vo.service.conversion.DateConversion.*
 import views.html.login
 
 import scala.concurrent.{ExecutionContext, Future}
