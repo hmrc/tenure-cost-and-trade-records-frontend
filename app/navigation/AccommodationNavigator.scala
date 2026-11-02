@@ -22,7 +22,7 @@ import models.Session
 import navigation.identifiers.*
 import play.api.mvc.Call
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class AccommodationNavigator @Inject() (audit: Audit) extends Navigator(audit):
 

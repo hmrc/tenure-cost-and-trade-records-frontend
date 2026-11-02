@@ -28,7 +28,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.requestReferenceNumber.requestReferenceNumberContactDetails
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

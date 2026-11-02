@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import views.html.aboutYourLeaseOrTenure.currentRentFirstPaid
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

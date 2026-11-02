@@ -18,17 +18,18 @@ package util
 
 import com.ibm.icu.text.SimpleDateFormat
 import com.ibm.icu.util.{TimeZone, ULocale}
+import jakarta.inject.{Inject, Singleton}
 import play.api.i18n.Messages
 import uk.gov.hmrc.play.language.LanguageUtils
-import util.DateUtil.*
+import uk.gov.hmrc.vo.service.conversion.DateConversion.ukTimezone
+import util.DateExampleUtil.*
 
 import java.time.{LocalDate, MonthDay, YearMonth}
-import javax.inject.{Inject, Singleton}
 
 @Singleton
 class DateUtilLocalised @Inject() (langUtil: LanguageUtils):
 
-  private val ibmTimeZone: TimeZone = TimeZone.getTimeZone(defaultTimeZoneId)
+  private val ibmTimeZone: TimeZone = TimeZone.getTimeZone(ukTimezone.getId)
 
   private val monthYearFormatEN: SimpleDateFormat = createDateFormatForPattern("MMMM yyyy", "en")
   private val monthYearFormatCY: SimpleDateFormat = createDateFormatForPattern("MMMM yyyy", "cy")

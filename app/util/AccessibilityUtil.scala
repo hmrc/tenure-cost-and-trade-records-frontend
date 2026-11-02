@@ -19,7 +19,7 @@ package util
 import play.api.i18n.Messages
 
 import java.time.LocalDate
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 
 @Singleton
 class AccessibilityUtil @Inject() (dateUtilLocalised: DateUtilLocalised):

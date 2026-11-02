@@ -33,7 +33,7 @@ import views.html.confirmation
 import views.html.notconnected.checkYourAnswersNotConnected
 
 import java.time.Instant
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

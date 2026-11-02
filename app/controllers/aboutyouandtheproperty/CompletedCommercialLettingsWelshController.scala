@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.completedCommercialLettingsWelsh
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named}
+import jakarta.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 
 class CompletedCommercialLettingsWelshController @Inject() (

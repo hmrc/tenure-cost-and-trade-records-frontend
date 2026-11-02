@@ -36,7 +36,7 @@ import util.AccountingInformationUtil.*
 import views.html.aboutthetradinghistory.financialYearEnd
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

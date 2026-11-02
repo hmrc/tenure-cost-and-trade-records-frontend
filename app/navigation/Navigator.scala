@@ -25,7 +25,7 @@ import play.api.mvc.Results.Redirect
 import play.api.mvc.{AnyContent, Call, Request, Result}
 import uk.gov.hmrc.http.HeaderCarrier
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 abstract class Navigator @Inject() (audit: Audit):
 

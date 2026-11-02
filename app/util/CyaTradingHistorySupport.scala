@@ -28,7 +28,7 @@ import uk.gov.hmrc.govukfrontend.views.html.components.*
 import util.NumberUtil.*
 
 import java.time.LocalDate
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class CyaTradingHistorySupport @Inject() (
   val govukSummaryList: GovukSummaryList,

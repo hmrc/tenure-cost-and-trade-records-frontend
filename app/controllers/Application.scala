@@ -21,7 +21,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.start
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 
 @Singleton
 class Application @Inject() (

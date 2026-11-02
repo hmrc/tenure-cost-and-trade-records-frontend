@@ -30,7 +30,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.changeOccupationAndAccountingInfo
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 
 /**
   * @author Yuriy Tumakha

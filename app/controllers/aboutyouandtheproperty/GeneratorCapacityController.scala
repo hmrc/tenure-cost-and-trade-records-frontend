@@ -28,7 +28,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutyouandtheproperty.generatorCapacity as GeneratorCapacityView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

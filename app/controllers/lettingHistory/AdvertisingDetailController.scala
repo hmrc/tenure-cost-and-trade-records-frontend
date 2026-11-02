@@ -30,7 +30,7 @@ import play.api.mvc.*
 import repositories.SessionRepo
 import views.html.lettingHistory.advertisingDetail as OnlineAdvertisingDetailView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

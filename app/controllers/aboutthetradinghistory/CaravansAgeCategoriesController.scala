@@ -32,7 +32,7 @@ import play.api.mvc.{Action, AnyContent, Call, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.aboutthetradinghistory.caravansAgeCategories
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 
 /**

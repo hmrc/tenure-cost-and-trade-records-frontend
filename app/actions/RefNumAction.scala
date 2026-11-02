@@ -20,7 +20,7 @@ import play.api.i18n.MessagesApi
 import play.api.mvc.Results.*
 import play.api.mvc.*
 import controllers.*
-import javax.inject.Inject
+import jakarta.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class RefNumRequest[A](val refNum: String, request: Request[A], messagesApi: MessagesApi) extends MessagesRequest[A](request, messagesApi)

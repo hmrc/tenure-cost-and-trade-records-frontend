@@ -17,7 +17,7 @@
 package util
 
 import uk.gov.hmrc.vo.unit.test.BaseSpec
-import util.DateUtil.*
+import util.DateExampleUtil.*
 
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDate, ZoneId, ZonedDateTime}
@@ -26,7 +26,7 @@ import java.util.Locale
 /**
   * @author Yuriy Tumakha
   */
-class DateUtilSpec extends BaseSpec:
+class DateExampleUtilSpec extends BaseSpec:
 
   private val ukTimezone                   = ZoneId.of("Europe/London")
   private val nowInUK                      = ZonedDateTime.now(ukTimezone)
@@ -34,6 +34,20 @@ class DateUtilSpec extends BaseSpec:
   private val dayMonthYearExampleFormatter = DateTimeFormatter.ofPattern("d M yyyy", Locale.UK)
   private val monthYearExampleFormatter    = DateTimeFormatter.ofPattern("M yyyy", Locale.UK)
   private val dayMonthExampleFormatter     = DateTimeFormatter.ofPattern("d M", Locale.UK)
+
+  "DateExampleUtil" should {
+    "return example DayMonthYear" in {
+      exampleDayMonthYear(0) shouldBe nowInUK.format(dayMonthYearExampleFormatter)
+    }
+
+    "return example MonthYear" in {
+      exampleMonthYear(0) shouldBe nowInUK.format(monthYearExampleFormatter)
+    }
+
+    "return example DayMonth" in {
+      exampleDayMonth(0) shouldBe nowInUK.format(dayMonthExampleFormatter)
+    }
+  }
 
   "LocalDate extension" should {
     "convert LocalDate to Epoch Milliseconds using ukTimezone" in {
@@ -45,20 +59,6 @@ class DateUtilSpec extends BaseSpec:
     }
 
     "format LocalDate using short date format 'dd/MM/yyyy'" in {
-      testLocalDate.shortDate shouldBe "12/02/2024"
-    }
-  }
-
-  "DateUtil" should {
-    "return example DayMonthYear" in {
-      DateUtil.exampleDayMonthYear(0) shouldBe nowInUK.format(dayMonthYearExampleFormatter)
-    }
-
-    "return example MonthYear" in {
-      DateUtil.exampleMonthYear(0) shouldBe nowInUK.format(monthYearExampleFormatter)
-    }
-
-    "return example DayMonth" in {
-      DateUtil.exampleDayMonth(0) shouldBe nowInUK.format(dayMonthExampleFormatter)
+      testLocalDate.shortSlashDate shouldBe "12/02/2024"
     }
   }

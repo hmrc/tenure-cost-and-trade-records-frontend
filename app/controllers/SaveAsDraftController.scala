@@ -32,7 +32,7 @@ import util.{AlphanumericPasswordGenerator, DateUtilLocalised}
 import views.html.{customPasswordSaveAsDraft, saveAsDraftLogin, sessionTimeout, submissionDraftSaved}
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 /**

@@ -22,7 +22,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
-import javax.inject.{Inject, Named}
+import jakarta.inject.{Inject, Named}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.implicitConversions
 

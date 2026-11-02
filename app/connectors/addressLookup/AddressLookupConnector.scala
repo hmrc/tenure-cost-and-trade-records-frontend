@@ -29,7 +29,7 @@ import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendHeaderCarrierProvider
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import scala.concurrent.Future.{failed, successful}
 import scala.concurrent.{ExecutionContext, Future}
 

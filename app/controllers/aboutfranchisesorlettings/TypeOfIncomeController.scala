@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.http.HeaderCarrier
 import views.html.aboutfranchisesorlettings.typeOfIncome
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

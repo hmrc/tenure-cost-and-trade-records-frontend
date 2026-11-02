@@ -31,7 +31,7 @@ import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepo
 import views.html.lettingHistory.checkYourAnswersLettingHistory as CheckYourAnswersView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

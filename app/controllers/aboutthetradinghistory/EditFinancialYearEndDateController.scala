@@ -31,7 +31,7 @@ import repositories.SessionRepo
 import views.html.aboutthetradinghistory.editFinancialYearEndDate
 
 import java.time.{LocalDate, MonthDay}
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

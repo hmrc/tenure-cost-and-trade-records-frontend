@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import views.html.connectiontoproperty.vacantPropertyStartDate
 
 import java.time.LocalDate
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton

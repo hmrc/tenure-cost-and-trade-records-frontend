@@ -32,7 +32,7 @@ import repositories.SessionRepo
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.requestReferenceNumber.requestReferenceNumberPropertyDetails as RequestReferenceNumberPropertyDetailsView
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future.successful
 

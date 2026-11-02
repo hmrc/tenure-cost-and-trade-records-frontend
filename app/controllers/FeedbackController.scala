@@ -30,7 +30,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.confirmation
 import views.html.feedback.{feedback, feedbackThx}
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 
 @Singleton
 class FeedbackController @Inject() (

@@ -30,7 +30,7 @@ import repositories.SessionRepo
 import util.DateUtilLocalised
 import views.html.accommodation.highSeasonTariff6048
 
-import javax.inject.{Inject, Named, Singleton}
+import jakarta.inject.{Inject, Named, Singleton}
 import scala.concurrent.ExecutionContext
 
 /**

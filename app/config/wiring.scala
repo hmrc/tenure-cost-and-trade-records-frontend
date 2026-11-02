@@ -21,7 +21,7 @@ import connectors.BackendConnector
 import security.LoginToBackend.LoginToBackend
 import uk.gov.hmrc.http.*
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 
 /**
